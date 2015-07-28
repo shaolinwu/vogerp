@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl" table="COMM_MODULEGROUP">
+    <id name="groupId" column="GROUPID">
+      <generator class="native" />
+    </id>
+    <property name="parentId" column="PARENTID"/>
+    <property name="name" column="NAME"/>
+    <property name="description" column="DESCRIPTION"/>
+    <property name="smallIcon" column="SMALLICON"/>
+    <property name="bigIcon" column="BIGICON"/>
+    <property name="accessURL" column="ACCESSURL"/>
+    <property name="_enable" type="boolean" column="_enable"/>
+  </class>
+</hibernate-mapping>

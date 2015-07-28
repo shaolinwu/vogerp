@@ -1,0 +1,872 @@
+<?xml version="1.0" ?>
+<ns2:RDBDiagram xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/Page" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <name>CommonModel</name>
+  <systemVersion>0</systemVersion>
+  <ns2:diagramPackage>org.shaolin.vogerp.commonmodel.diagram</ns2:diagramPackage>
+  <ns2:daoPackage>org.shaolin.vogerp.commonmodel.dao</ns2:daoPackage>
+  <ns2:table>
+    <entityName>COMM_PARTYRELATIONSHIP</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="TYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="SRCPARTYID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="TARPARTYID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:column name="_version" type="INTEGER" length="2" default="0"></ns2:column>
+    <ns2:column name="_starttime" type="TIMESTAMP"></ns2:column>
+    <ns2:column name="_endtime" type="TIMESTAMP"></ns2:column>
+    <ns2:column name="_optuserid" type="BIGINT" default="0"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.PartyRelationship"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="srcPartyId" columnName="SRCPARTYID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="tarPartyId" columnName="TARPARTYID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_version" columnName="_version"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_starttime" columnName="_starttime"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_endtime" columnName="_endtime"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_optuserid" columnName="_optuserid"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>COMM_PARTYEVENT</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="SRCPARTYID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="TARPARTYID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="EVENTRECORD" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="PAGEINFO" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="EVENTTYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="EVENTSTATE" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:column name="_version" type="INTEGER" length="2" default="0"></ns2:column>
+    <ns2:column name="_starttime" type="TIMESTAMP"></ns2:column>
+    <ns2:column name="_endtime" type="TIMESTAMP"></ns2:column>
+    <ns2:column name="_optuserid" type="BIGINT" length="38" default="0"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.PartyEvent"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="srcPartyId" columnName="SRCPARTYID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="tarPartyId" columnName="TARPARTYID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="pageInfo" columnName="PAGEINFO"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="eventRecord" columnName="EVENTRECORD"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="eventType" columnName="EVENTTYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="eventState" columnName="EVENTSTATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_version" columnName="_version"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_starttime" columnName="_starttime"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_endtime" columnName="_endtime"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_optuserid" columnName="_optuserid"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>COMM_ORGANIZATION</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="PARENTID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="ORGCODE" type="VARCHAR" length="38" isNull="true"></ns2:column>
+    <ns2:column name="NAME" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="TYPE" type="VARCHAR" length="100" isNull="true" default="-1"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.Organization"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="parentId" columnName="PARENTID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="orgCode" columnName="ORGCODE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="name" columnName="NAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>COMM_LEGALORGANIZATIONINFO</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="ORGID" type="BIGINT" isNull="false"></ns2:column>
+    <ns2:column name="LEGALPERSON" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="TRADELICENSENUMBER" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="BUSILICENSENUMBER" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="BUSILICENSEDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="TAXREGISTRATIONNUMBER" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="TAXREGISTRATIONDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="LOCALTAXREGISTRATIONNUMBER" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="LOCALTAXREGISTRATIONDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="ENTERPRISECODE" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="BANKACCOUNT" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="BANKTYPE" type="INTEGER" length="2" isNull="true" default="-1"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfo"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="orgId" columnName="ORGID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="legalPerson" columnName="LEGALPERSON"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="tradeLicenseNumber" columnName="TRADELICENSENUMBER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="busiLicenseNumber" columnName="BUSILICENSENUMBER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="busiLicenseDate" columnName="BUSILICENSEDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="taxRegistrationNumber" columnName="TAXREGISTRATIONNUMBER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="taxRegistrationDate" columnName="TAXREGISTRATIONDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="localTaxRegistrationNumber" columnName="LOCALTAXREGISTRATIONNUMBER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="localTaxRegistrationDate" columnName="LOCALTAXREGISTRATIONDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="enterpriseCode" columnName="ENTERPRISECODE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="bankAccount" columnName="BANKACCOUNT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="bankType" columnName="BANKTYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>COMM_ORGANIZATION_CONTRACT</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="ORGID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="TYPE" type="INTEGER" length="2" isNull="true" default="-1"></ns2:column>
+    <ns2:column name="TERMS" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="EXPIRATIONDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.OrganizationContract"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="orgId" columnName="ORGID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="terms" columnName="TERMS"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="expirationDate" columnName="EXPIRATIONDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>COMM_PERSONINFO</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="FIRSTNAME" type="VARCHAR" length="20" isNull="true"></ns2:column>
+    <ns2:column name="LASTNAME" type="VARCHAR" length="50" isNull="true"></ns2:column>
+    <ns2:column name="GENDER" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="MARRIED" type="BIT" isNull="true"></ns2:column>
+    <ns2:column name="IDENTITYCARDID" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="DISCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="BIRTHDAY" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="LANGUAGE" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="EDUCATION" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="MAJOR" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="COMMENT" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="TYPE" type="VARCHAR" length="100" isNull="true" default="-1"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="firstName" columnName="FIRSTNAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="lastName" columnName="LASTNAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="gender" columnName="GENDER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="married" columnName="MARRIED"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="identityCardId" columnName="IDENTITYCARDID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="discription" columnName="DISCRIPTION"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="birthday" columnName="BIRTHDAY"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="language" columnName="LANGUAGE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="education" columnName="EDUCATION"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="major" columnName="MAJOR"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="COMM_PERSONINFOADDRESSINFO_JT" collectionElement="org.shaolin.vogerp.commonmodel.be.AddressInfo" mappingType="One-to-Many" beFieldName="addresses"></ns2:fieldMapping>
+      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="COMM_PERSONINFOCONTACTINFO_JT" collectionElement="org.shaolin.vogerp.commonmodel.be.ContactInfo" mappingType="One-to-Many" beFieldName="contacts"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="comment" columnName="COMMENT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>COMM_PERSONALACCOUNT</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="PERSONALID" type="BIGINT" isNull="false"></ns2:column>
+    <ns2:column name="USERNAME" type="VARCHAR" isNull="true" length="50"></ns2:column>
+    <ns2:column name="PASSWORD" type="VARCHAR" isNull="true" length="50"></ns2:column>
+    <ns2:column name="LOCALE" type="VARCHAR" isNull="true" length="10"></ns2:column>
+    <ns2:column name="ATTEMPT" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="ISLOCKED" type="BIT" isNull="true"></ns2:column>
+    <ns2:column name="LOCKEDMOMENT" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="EXPIRATIONDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="LASTLOGIN" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:column name="_version" type="INTEGER" length="2" default="0"></ns2:column>
+    <ns2:column name="_starttime" type="TIMESTAMP"></ns2:column>
+    <ns2:column name="_endtime" type="TIMESTAMP"></ns2:column>
+    <ns2:column name="_optuserid" type="BIGINT" default="0"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.PersonalAccount"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="userName" columnName="USERNAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="password" columnName="PASSWORD"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="locale" columnName="LOCALE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="attempt" columnName="ATTEMPT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="isLocked" columnName="ISLOCKED"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="lockedMoment" columnName="LOCKEDMOMENT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="expirationDate" columnName="EXPIRATIONDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="lastLogin" columnName="LASTLOGIN"></ns2:fieldMapping>
+      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="COMM_PERSONALACCOUNT_PERSONINFO_JT" collectionElement="org.shaolin.vogerp.commonmodel.be.PersonalInfo" mappingType="One-to-One" beFieldName="info" columnName="PERSONALID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_version" columnName="_version"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_starttime" columnName="_starttime"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_endtime" columnName="_endtime"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_optuserid" columnName="_optuserid"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>COMM_ADDRESSINFO</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="COUNTRY" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="CITY" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="STREET" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="BLOCK" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="ZIPCODE" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.AddressInfo"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="country" columnName="COUNTRY"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="city" columnName="CITY"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="street" columnName="STREET"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="block" columnName="BLOCK"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="zipcode" columnName="ZIPCODE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>COMM_CONTACTINFO</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="TELEPHONE" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="MOBILE" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="EMAIL" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="HOMEPAGE" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="REMARK" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.ContactInfo"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="telephone" columnName="TELEPHONE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="mobile" columnName="MOBILE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="email" columnName="EMAIL"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="homepage" columnName="HOMEPAGE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="remark" columnName="REMARK"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>COMM_MODELPERMISSION</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="MODULEID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="PARTYTYPE" type="VARCHAR" length="100" isNull="false" default="-1"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.ModelPermission"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="moduleId" columnName="MODULEID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="partyType" columnName="PARTYTYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>COMM_UIWIDGETPERMISSION</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="PAGENAME" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="WIDGETID" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="PARTYTYPE" type="VARCHAR" length="100" isNull="false" default="-1"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.UIWidgetPermission"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="pageName" columnName="PAGENAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="widgetId" columnName="WIDGETID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="partyType" columnName="PARTYTYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>COMM_BEPERMISSION</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="BENAME" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="FIELD" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="PARTYTYPE" type="VARCHAR" length="100" isNull="false" default="-1"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.BEPermission"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="beName" columnName="BENAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="field" columnName="FIELD"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="partyType" columnName="PARTYTYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:joinTable name="COMM_PERSONINFOADDRESSINFO_JT" srcTable="COMM_PERSONINFO" srcPKColumn="ADDRESSES" tarTable="COMM_ADDRESSINFO" tarPKColumn="id"></ns2:joinTable>
+  <ns2:joinTable name="COMM_PERSONINFOCONTACTINFO_JT" srcTable="COMM_PERSONINFO" srcPKColumn="CONTACTS" tarTable="COMM_CONTACTINFO" tarPKColumn="id"></ns2:joinTable>
+
+  <ns2:query queryName="authenticateUserInfo">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalAccount" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalAccount"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.userName</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.userName</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getUserName() != null && scFlow.getUserName().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalAccount"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  <ns2:query queryName="searchUserAccount">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalAccount" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalAccount"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+    	<ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.userName</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.userName</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getUserName() != null && scFlow.getUserName().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.info</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.getInfo().getId()</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getInfo() != null && scFlow.getInfo().getId() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalAccount"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  <ns2:query queryName="searchPersonInfo">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.id</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.id</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getId() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.firstName</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:StarLikeOperatorType">
+                    <ns2:type>LIKE %*</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.firstName</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getFirstName() != null && scFlow.getFirstName().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:fieldMapping>
+            <!-- Family name must be exactly matched. -->
+            <ns2:toDataFieldPath>inFlow.lastName</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:StarLikeOperatorType">
+                    <ns2:type>LIKE %*</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.lastName</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getLastName() != null && scFlow.getLastName().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.birthday</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>&gt;=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.birthdayStart</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getBirthdayStart() != null]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.birthday</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>&lt;=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.birthdayEnd</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getBirthdayEnd() != null]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+       <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.genderInt</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.getGender().getIntValue()</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getGender() != null && scFlow.getGender() != org.shaolin.vogerp.commonmodel.ce.Gender.NOT_SPECIFIED]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+    <ns2:orderBy isAscending="false">
+        <ns2:field>inFlow.lastName</ns2:field>
+    </ns2:orderBy>
+  </ns2:query>
+  <ns2:query queryName="searchPartyRelationshipInfo">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.PartyRelationship" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.PartyRelationship"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.PartyRelationship"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  <ns2:query queryName="searchRootOrganizationInfo">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.Organization" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.Organization"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.parentId</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.parentId</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getParentId() == 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.orgCode</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:StarLikeOperatorType">
+                    <ns2:type>LIKE %*</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.orgCode</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getOrgCode() != null && scFlow.getOrgCode().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.Organization"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  <ns2:query queryName="searchSubOrganizationInfo">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.Organization" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.Organization"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.id</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.id</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getId() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.parentId</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.parentId</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getParentId() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.orgCode</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:StarLikeOperatorType">
+                    <ns2:type>LIKE %*</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.orgCode</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getOrgCode() != null && scFlow.getOrgCode().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.Organization"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  <ns2:query queryName="searchOrganization">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.Organization" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.Organization"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+       <ns2:fieldMapping>
+           <ns2:toDataFieldPath>inFlow.orgCode</ns2:toDataFieldPath>
+           <ns2:conditionValue>
+               <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                   <ns2:type>=</ns2:type>
+               </ns2:operator>
+               <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                   <ns2:valueFieldPath>scFlow.orgCode</ns2:valueFieldPath>
+               </ns2:value>
+               <ns2:condition>
+                   <expressionString><![CDATA[scFlow.getOrgCode() != null && scFlow.getOrgCode().length() > 0]]></expressionString>
+               </ns2:condition>
+           </ns2:conditionValue>
+       </ns2:fieldMapping>
+       <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+           <type entityName="org.shaolin.vogerp.commonmodel.be.Organization"/>
+       </ns2:searchConditionData>
+   </ns2:searchConditionMapping>
+   </ns2:query>
+   <ns2:query queryName="searchModelPermission">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.ModelPermission" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.ModelPermission"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+    	<ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.moduleId</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.moduleId</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getModuleId() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.partyType</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.partyType</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getPartyType() != null && scFlow.getPartyType().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.ModelPermission"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  <ns2:query queryName="searchUIWidgetPermission">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.UIWidgetPermission" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.UIWidgetPermission"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.partyType</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.partyType</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getPartyType() != null && scFlow.getPartyType().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.UIWidgetPermission"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  <ns2:query queryName="searchBEPermission">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.BEPermission" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.BEPermission"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.partyType</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.partyType</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getPartyType() != null && scFlow.getPartyType().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.BEPermission"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  <ns2:query queryName="searchContract">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.OrganizationContract" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.OrganizationContract"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.typeInt</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.getType().getIntValue()</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getType() != null && scFlow.getType() != org.shaolin.vogerp.commonmodel.ce.ContractType.NOT_SPECIFIED]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.OrganizationContract"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+
+</ns2:RDBDiagram>

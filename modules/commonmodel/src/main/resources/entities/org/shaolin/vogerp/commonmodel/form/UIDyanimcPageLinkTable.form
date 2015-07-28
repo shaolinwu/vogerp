@@ -1,0 +1,296 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.commonmodel.form.UIDyanimcPageLinkTable</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="createItem">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createItem_-136152444">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl;
+        { 
+            Table tableWidget = (Table)@page.getElement("itemTable");
+            tableWidget.addRow(new UIDyanimcPageLinkImpl());
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="deleteItem">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deleteItem_209729176">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl;
+        { 
+            Table tableWidget = (Table)@page.getElement("itemTable");
+            if (tableWidget.getSelectedRow() == null) {
+                return;
+            }
+            tableWidget.deleteRow(tableWidget.getSelectedIndex());
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Save">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+      <ns2:expressionString>{this.itemTable.syncBodyDataToServer();}</ns2:expressionString>
+    </ns2:ops>
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveItem-20150713-125459">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl;
+        import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+        import java.util.List;
+        { 
+            Table tableWidget = @page.getTable("itemTable");
+            if (tableWidget.getAddItems() != null && tableWidget.getAddItems().size() > 0) {
+            	List items = tableWidget.getAddItems();
+            	for (int i=0;i<items.size();i++) {
+            		UIDyanimcPageLinkImpl beObject = (UIDyanimcPageLinkImpl)items.get(i);
+                    if (beObject.getId() == 0) {
+                        ModularityModel.INSTANCE.create(beObject);
+                    } else {
+                        ModularityModel.INSTANCE.update(beObject);
+                    }
+            	}
+            }
+            if (tableWidget.getDeleteItems() != null) {
+            List items = tableWidget.getDeleteItems();
+            for (int i=0;i<items.size();i++) {
+            		UIDyanimcPageLinkImpl beObject = (UIDyanimcPageLinkImpl)items.get(i);
+                    if (beObject.getId() > 0) {
+                        ModularityModel.INSTANCE.delete(beObject);
+                    }
+            	}
+            }
+            if (tableWidget.getUpdateItems() != null) {
+            	List items = tableWidget.getUpdateItems();
+            	for (int i=0;i<items.size();i++) {
+            		UIDyanimcPageLinkImpl beObject = (UIDyanimcPageLinkImpl)items.get(i);
+                    if (beObject.getId() == 0) {
+                        ModularityModel.INSTANCE.create(beObject);
+                    } else {
+                        ModularityModel.INSTANCE.update(beObject);
+                    }
+            	}
+            }
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Cancel">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-884197646">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UITableType" UIID="itemTable">
+        <ns2:editable xsi:type="ns2:BooleanPropertyType">
+          <ns2:value>true</ns2:value>
+        </ns2:editable>
+        <ns2:beElement>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink</ns2:beElement>
+        <ns2:initQuery>
+          <ns2:expression>
+            <expressionString><![CDATA[
+        import java.util.List;
+        {
+            return $list;
+        }]]></expressionString>
+          </ns2:expression>
+        </ns2:initQuery>
+        <ns2:query>
+          <ns2:expression>
+            <expressionString><![CDATA[
+        import java.util.List;
+        {
+            return $table.getListData();
+        }]]></expressionString>
+          </ns2:expression>
+        </ns2:query>
+        <ns2:totalCount>
+          <ns2:expression>
+            <expressionString><![CDATA[
+        import java.util.List;
+        {
+            return $table.getListData().size();
+        }]]></expressionString>
+          </ns2:expression>
+        </ns2:totalCount>
+        <ns2:defaultRowSize>20</ns2:defaultRowSize>
+        <ns2:showActionBar>true</ns2:showActionBar>
+        <ns2:showFilter>false</ns2:showFilter>
+        <ns2:editableCell>true</ns2:editableCell>
+        <ns2:column>
+          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+            <ns2:key>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink.srcUIName</ns2:key>
+          </ns2:title>
+          <ns2:beFieldId>rowBE.srcUIName</ns2:beFieldId>
+          <ns2:uiType>
+            <ns2:type>Text</ns2:type>
+          </ns2:uiType>
+        </ns2:column>
+        <ns2:column>
+          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+            <ns2:key>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink.srcUIPanel</ns2:key>
+          </ns2:title>
+          <ns2:beFieldId>rowBE.srcUIPanel</ns2:beFieldId>
+          <ns2:uiType>
+            <ns2:type>Text</ns2:type>
+          </ns2:uiType>
+        </ns2:column>
+        <ns2:column>
+          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+            <ns2:key>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink.srcUIWidget</ns2:key>
+          </ns2:title>
+          <ns2:beFieldId>rowBE.srcUIWidget</ns2:beFieldId>
+          <ns2:uiType>
+            <ns2:type>Text</ns2:type>
+          </ns2:uiType>
+        </ns2:column>
+        <ns2:column>
+          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+            <ns2:key>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink.linkComment</ns2:key>
+          </ns2:title>
+          <ns2:beFieldId>rowBE.linkComment</ns2:beFieldId>
+          <ns2:uiType>
+            <ns2:type>Text</ns2:type>
+          </ns2:uiType>
+        </ns2:column>
+        <ns2:column>
+          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+            <ns2:key>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink.tarUIName</ns2:key>
+          </ns2:title>
+          <ns2:beFieldId>rowBE.tarUIName</ns2:beFieldId>
+          <ns2:uiType>
+            <ns2:type>Text</ns2:type>
+          </ns2:uiType>
+        </ns2:column>
+        <ns2:column>
+          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+            <ns2:key>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink.tarUITab</ns2:key>
+          </ns2:title>
+          <ns2:beFieldId>rowBE.tarUITab</ns2:beFieldId>
+          <ns2:uiType>
+            <ns2:type>Text</ns2:type>
+          </ns2:uiType>
+        </ns2:column>
+        <ns2:column>
+          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+            <ns2:key>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink.tarUIArchor</ns2:key>
+          </ns2:title>
+          <ns2:beFieldId>rowBE.tarUIArchor</ns2:beFieldId>
+          <ns2:uiType>
+            <ns2:type>Text</ns2:type>
+          </ns2:uiType>
+        </ns2:column>
+        <ns2:defaultActions>
+          <ns2:defaultNewAction>createItem</ns2:defaultNewAction>
+          <ns2:defaultDeleteAction>deleteItem</ns2:defaultDeleteAction>
+        </ns2:defaultActions>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>itemTable</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Save"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:editable xsi:type="ns2:ExpressionPropertyType">
+          <ns2:expression>
+            <expressionString>{return $editable;}</expressionString>
+          </ns2:expression>
+        </ns2:editable>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>OKbtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Cancel"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>Cancelbtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>okbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="list" category="JavaClass">
+      <type entityName="java.util.List"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
+    <ns2:DataToUIMappingOperation>
+      <expressionString><![CDATA[
+      import java.util.List;
+      import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl;
+      import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+      {
+        UIDyanimcPageLinkImpl pageLink = new UIDyanimcPageLinkImpl();
+        List pageLinks = ModularityModel.INSTANCE.searchDynamicPageLink(pageLink, null, 0, -1);
+        $list = pageLinks;
+        @odContext.executeAllMappings();
+      }]]></expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>{
+@odContext.executeAllMappings();
+}</expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

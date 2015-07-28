@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bediagram:BEDiagram xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:bediagram="http://bmdp.shaolin.org/datamodel/BEDiagram"
+	xmlns:common="http://bmdp.shaolin.org/datamodel/Common">
+	<name>ProductModel</name>
+	<bePackage>org.shaolin.vogerp.productmodel.be</bePackage>
+	<cePackage>org.shaolin.vogerp.productmodel.ce</cePackage>
+	<diagramPackage>org.shaolin.vogerp.productmodel.diagram</diagramPackage>
+	
+	<bediagram:beEntity needPersist="true" needUIEntity="true">
+		<common:entityName>Product</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>parentId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>name</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>serialNumber</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+            <bediagram:name>onSaleDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <!-- for data range search query solution -->
+        <bediagram:member>
+            <bediagram:name>onSaleDateStart</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>onSaleDateEnd</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>saleEndDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>saleEndDateStart</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>saleEndDateEnd</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+		<bediagram:member>
+			<bediagram:name>description</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- this value provided by the "type" CE icon. -->
+			<bediagram:name>icon</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>photos</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>type</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<!-- 
+		<bediagram:member>
+            <bediagram:name>type</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="ProductType" />
+            </bediagram:type>
+        </bediagram:member>
+         -->
+        <bediagram:member>
+            <bediagram:name>interestedPartyType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.ce.PartyType" />
+            </bediagram:type>
+        </bediagram:member>
+	</bediagram:beEntity>
+	
+	<bediagram:beEntity needPersist="true" needUIEntity="true">
+		<common:entityName>ProductCode</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>productId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>code</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+            <bediagram:name>type</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="ProductCodeType" />
+            </bediagram:type>
+        </bediagram:member>
+	</bediagram:beEntity>
+	
+	<bediagram:beEntity needPersist="true" needUIEntity="true">
+		<common:entityName>ProductCharacteristic</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>productId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>product</bediagram:name>
+			<bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.productmodel.be.Product" />
+            </bediagram:type>
+		</bediagram:member>
+		<bediagram:member>
+			<!-- the dynamic values implementation that all values will be stored as JSON pattern. Excellent! -->
+			<bediagram:name>ceValues</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+	</bediagram:beEntity>
+	
+	<!-- estimate the cost of each product -->
+	<bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
+		<common:entityName>ProductCost</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>productId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>product</bediagram:name>
+			<bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.productmodel.be.Product" />
+            </bediagram:type>
+		</bediagram:member>
+		<bediagram:member>
+			<!-- the product package is support for special combination. 
+			the combination comes from ProductCharacteristic.-->
+			<bediagram:name>packages</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+        <bediagram:member>
+        	<!-- the default price can be RMB -->
+            <bediagram:name>price</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>comments</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>type</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="CostType" />
+            </bediagram:type>
+        </bediagram:member>
+	</bediagram:beEntity>
+	
+	<!-- the sale price to the market according to the cost estimation -->
+	<bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
+		<common:entityName>ProductPrice</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>productId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>product</bediagram:name>
+			<bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.productmodel.be.Product" />
+            </bediagram:type>
+		</bediagram:member>
+		<bediagram:member>
+			<!-- the product package is support for special combination. 
+			the combination comes from ProductCharacteristic.-->
+			<bediagram:name>packages</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- the price can be specific to a party optionally. -->
+			<bediagram:name>partyId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+        <bediagram:member>
+        	<!-- the default price can be RMB -->
+            <bediagram:name>price</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+        	<!-- 超出数量享受折扣 -->
+            <bediagram:name>exceedAmount</bediagram:name>
+            <bediagram:type xsi:type="bediagram:IntType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>discount</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>comments</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>type</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="PriceType" />
+            </bediagram:type>
+        </bediagram:member>
+	</bediagram:beEntity>
+	
+	<!-- Manufacturer, Suppiler defined in party organization. -->
+	<bediagram:beEntity needPersist="true" needUIEntity="true">
+		<common:entityName>SupplierProduct</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- the suppiler defines in the organization table -->
+			<bediagram:name>orgId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>productId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>description</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 可供应起始日期 -->
+            <bediagram:name>feasibleStartDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+        	<!-- 标准交付时间 -->
+            <bediagram:name>standardDays</bediagram:name>
+            <bediagram:type xsi:type="bediagram:IntType" />
+        </bediagram:member>
+        <bediagram:member>
+        	<!-- 优先类型 -->
+            <bediagram:name>priorityType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="SupplyPriorityType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+        	<!-- 等级类型 -->
+            <bediagram:name>levelType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="SupplyLevelType" />
+            </bediagram:type>
+        </bediagram:member>
+	</bediagram:beEntity>
+
+	<bediagram:beEntity needHistory="true" needPersist="true" needUIEntity="true">
+		<common:entityName>Warehouse</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>parentId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>name</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>description</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- allows to fill a photo path for better look and feel -->
+			<bediagram:name>photoPath</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 存放地点 -->
+			<bediagram:name>location</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+        <bediagram:member>
+        	<!-- 容器类型 -->
+            <bediagram:name>containerType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="StorageContainerType" />
+            </bediagram:type>
+        </bediagram:member>
+	</bediagram:beEntity>
+	
+	<!-- the product storage is quite updatable while changing the numbers, moving the location and etc, we need the history record.-->
+	<bediagram:beEntity needHistory="true" needPersist="true" needUIEntity="true">
+		<common:entityName>StorageItem</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>productId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>warehouseId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>warehouse</bediagram:name>
+			<bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="Warehouse" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+        	<bediagram:name>product</bediagram:name>
+			<bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="Product" />
+            </bediagram:type>
+        </bediagram:member>
+		<bediagram:member>
+			<!-- 容器里物品的存放坐标:可以是三维信息x,y,z 也可以是二维x,y. 取决产品的特殊性 -->
+			<bediagram:name>coordinate</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+        <bediagram:member>
+        	<!-- 存储项目状态 -->
+            <bediagram:name>itemStatus</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="StorageItemStatusType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+        	<!-- 产品数量 -->
+			<bediagram:name>number</bediagram:name>
+			<bediagram:type xsi:type="bediagram:IntType" />
+		</bediagram:member>
+		<bediagram:member>
+        	<!-- 产品序列号 -->
+			<bediagram:name>serialNumber</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+	</bediagram:beEntity>
+	
+	<bediagram:ceEntity>
+		<common:entityName>ProductType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Good</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Good</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Service</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Service</bediagram:description>
+		</bediagram:constantValue>
+		<!-- TODO: add more type to DB through industry categories -->
+	</bediagram:ceEntity>
+	<bediagram:ceEntity>
+		<common:entityName>ProductCodeType</common:entityName>
+		<bediagram:constantValue>
+			<!-- 厂商标识号 -->
+			<bediagram:value>FactoryCode</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Factory Code</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<!-- SKU库存单元 -->
+			<bediagram:value>SKUCode</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>SKU Code</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<!-- ISBNl国际标准图书代码 -->
+			<bediagram:value>ISBNCode</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>ISBN Code</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<!-- UPCA美国通用产品代码 -->
+			<bediagram:value>UPCACode</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>UPCA Code</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<!-- UPCE欧洲通用产品代码 -->
+			<bediagram:value>UPCECode</bediagram:value>
+			<bediagram:intValue>4</bediagram:intValue>
+			<bediagram:description>UPCE Code</bediagram:description>
+		</bediagram:constantValue>
+		<!-- TODO: add more type to DB through industry categories -->
+	</bediagram:ceEntity>
+	
+	<bediagram:ceEntity>
+	    <common:entityName>PCQualityType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>A</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>A level</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>B</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>B level</bediagram:description>
+		</bediagram:constantValue>
+		<!-- TODO: add more type to DB through industry categories -->
+	</bediagram:ceEntity>
+	<bediagram:ceEntity>
+		<common:entityName>PCColorType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>White</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>White</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Red</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Red</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Black</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>Black</bediagram:description>
+		</bediagram:constantValue>
+		<!-- TODO: add more type to DB through industry categories -->
+	</bediagram:ceEntity>
+	<bediagram:ceEntity>
+		<common:entityName>PCNumberSizeType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Size7_7</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>7*7</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Size8_8</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>8*8</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Size9_9</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>9*9</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Size10_10</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>10*10</bediagram:description>
+		</bediagram:constantValue>
+		<!-- TODO: add more type to DB through industry categories -->
+	</bediagram:ceEntity>
+	<bediagram:ceEntity>
+		<common:entityName>PCSizeType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Small</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Small</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Large</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Large</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>XLarge</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>Extra Large</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>XXLarge</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>Double Extra Large</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	<bediagram:ceEntity>
+		<common:entityName>PCUnitType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Inch</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Inch</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Pound</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Pound</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Catty</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>Catty</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	<bediagram:ceEntity>
+		<common:entityName>PCTradeIconType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Inch</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Inch</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Pound</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Pound</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	<bediagram:ceEntity>
+		<common:entityName>PCSoftwareType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Inch</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Inch</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Pound</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Pound</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	<bediagram:ceEntity>
+		<common:entityName>PCHardwareType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Inch</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Inch</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Pound</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Pound</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	<bediagram:ceEntity>
+		<common:entityName>PCPaymentType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Daily</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Day</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Weekly</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Weekly</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Monthly</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>Monthly</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Season</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>Season</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Year</bediagram:value>
+			<bediagram:intValue>4</bediagram:intValue>
+			<bediagram:description>Year</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	<bediagram:ceEntity>
+		<common:entityName>SupplyPriorityType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Level1</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Day</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Level2</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Weekly</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Level3</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>Monthly</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Level4</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>Season</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	<bediagram:ceEntity>
+		<common:entityName>SupplyLevelType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Level1</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Day</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Level2</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Weekly</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Level3</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>Monthly</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Level4</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>Season</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	
+	<bediagram:ceEntity>
+		<common:entityName>StorageContainerType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Normal</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Normal Container</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	<bediagram:ceEntity>
+		<common:entityName>StorageItemStatusType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Good</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Good</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Defect</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Defect</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Damaged</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>Damaged</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	
+	<bediagram:ceEntity>
+		<common:entityName>PriceType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Base</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Basic Price</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>BaseNorth</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Basic Price in north</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>BaseSouth</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>Basic Price in south</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>DiscountNorth</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>Discounted Price in north</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>DiscountSouth</bediagram:value>
+			<bediagram:intValue>4</bediagram:intValue>
+			<bediagram:description>Discounted Price in south</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Extra</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>Extra Price</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Offer</bediagram:value>
+			<bediagram:intValue>4</bediagram:intValue>
+			<bediagram:description>Offerred Price by the manufactoring</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	<bediagram:ceEntity>
+		<common:entityName>CostType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Purchase</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Purchase Estimation</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>ManagementFee</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Management Fee</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>DeliveryFee</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>Delivery Fee</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>HumanFee</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>Human Fee</bediagram:description>
+		</bediagram:constantValue>
+		<!-- TODO: add more type to DB through industry categories -->
+	</bediagram:ceEntity>
+	
+</bediagram:BEDiagram>

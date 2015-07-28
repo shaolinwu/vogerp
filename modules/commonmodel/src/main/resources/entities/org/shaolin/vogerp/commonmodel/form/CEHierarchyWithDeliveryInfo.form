@@ -1,0 +1,326 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.commonmodel.form.CEHierarchyWithDeliveryInfo</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="ChangeItem">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="ChangeItem_201507012234">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import java.util.List;
+        import java.util.ArrayList;
+		import org.shaolin.uimaster.page.AjaxContext;
+		import org.shaolin.uimaster.page.ajax.*;
+		import org.shaolin.vogerp.order.be.SaleOrderImpl;
+		import org.shaolin.vogerp.order.dao.OrderModel;
+		import org.shaolin.vogerp.commonmodel.dao.CustCommonModel;
+		import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+		{ 
+			ComboBox typeUI = @page.getComboBox("typeUI");
+		    List[] partyList = CustCommonModel.INSTANCE.getIndividualParties(typeUI.getValue());
+	      	ArrayList values = (ArrayList)partyList[0];
+	      	ArrayList displayItems = (ArrayList)partyList[1];
+		    
+		    ComboBox partyUI = @page.getComboBox("partyUI");
+		    partyUI.setOptions(displayItems, values);
+		}]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+    <ns2:ops></ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="ChangePaty">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="ChangePaty_201507112220">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import java.util.List;
+        import java.util.ArrayList;
+		import org.shaolin.uimaster.page.AjaxContext;
+		import org.shaolin.uimaster.page.ajax.*;
+		import org.shaolin.vogerp.order.be.SaleOrderImpl;
+		import org.shaolin.vogerp.order.dao.OrderModel;
+		import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+		import org.shaolin.vogerp.commonmodel.dao.CustCommonModel;
+		import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+		import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
+		import org.shaolin.vogerp.commonmodel.be.IContactInfo;
+		import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+		{ 
+		    ComboBox partyUI = @page.getComboBox("partyUI");
+		    long customerId = Long.valueOf(partyUI.getValue());
+		    if (customerId <= 0) {
+		    	return;
+		    }
+		    
+		    PersonalInfoImpl custCriteria = new PersonalInfoImpl();
+        	custCriteria.setId(customerId);
+        	List result = CommonModel.INSTANCE.searchPersonInfo(custCriteria, null, 0, 1);
+		    PersonalInfoImpl personalInfo = (PersonalInfoImpl)result.get(0);
+		    
+		    List[] addressList = CustomerInfoUtil.getAddressInfo(personalInfo.getAddresses());
+            ArrayList values = (ArrayList)addressList[0];
+            ArrayList displayItems = (ArrayList)addressList[1];
+	      	
+	      	ComboBox addressUI = @page.getComboBox("addressUI");
+		    addressUI.setOptions(displayItems, values);
+	      	
+	      	List[] contactList = CustomerInfoUtil.getContactInfo(personalInfo.getContacts());
+	      	values = (ArrayList)contactList[0];
+	      	displayItems = (ArrayList)contactList[1];
+	      	
+	      	ComboBox contactUI = @page.getComboBox("contactUI");
+		    contactUI.setOptions(displayItems, values);
+	      	
+		}]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+    <ns2:ops></ns2:ops>
+  </ns2:eventHandler>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="typeUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+          <ns2:value>分类</ns2:value>
+        </ns2:widgetLabel>
+        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
+          <ns2:handler functionName="ChangeItem"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
+        <ns2:allowBlankText xsi:type="ns2:ResourceBundlePropertyType">
+            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+            <ns2:key>org.shaolin.vogerp.commonmodel.form.CEHierarchyWithParty.typeUI.allowBlankText</ns2:key>
+        </ns2:allowBlankText>
+        <!-- 
+        <ns2:editable xsi:type="ns2:ExpressionPropertyType">
+          <ns2:expression>
+            <expressionString>{return $editable;}</expressionString>
+          </ns2:expression>
+        </ns2:editable>
+         -->
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="partyUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+          <ns2:value>当事人</ns2:value>
+        </ns2:widgetLabel>
+        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
+          <ns2:handler functionName="ChangePaty"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
+        <ns2:allowBlankText xsi:type="ns2:ResourceBundlePropertyType">
+            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+            <ns2:key>org.shaolin.vogerp.commonmodel.form.CEHierarchyWithParty.partyUI.allowBlankText</ns2:key>
+        </ns2:allowBlankText>
+        <!-- 
+        <ns2:editable xsi:type="ns2:ExpressionPropertyType">
+          <ns2:expression>
+            <expressionString>{return $editable;}</expressionString>
+          </ns2:expression>
+        </ns2:editable>
+         -->
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="addressUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+          <ns2:value>地址</ns2:value>
+        </ns2:widgetLabel>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="contactUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+          <ns2:value>联系人</ns2:value>
+        </ns2:widgetLabel>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
+      </ns2:component>
+	  <ns2:layoutConstraint>
+        <ns2:componentId>typeUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>partyUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>addressUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>contactUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="personalInfo" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="partyId" category="JavaPrimitive">
+      <type entityName="java.lang.Long"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="addressId" category="JavaPrimitive">
+      <type entityName="java.lang.Long"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="contactId" category="JavaPrimitive">
+      <type entityName="java.lang.Long"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="ceName" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    
+    <ns2:DataEntity scope="InOut" name="value" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="values" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="displayItems" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="value1" category="JavaPrimitive">
+      <type entityName="java.lang.Long"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="values1" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="displayItems1" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    
+    <ns2:DataEntity scope="InOut" name="value2" category="JavaPrimitive">
+      <type entityName="java.lang.Long"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="values2" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="displayItems2" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="value3" category="JavaPrimitive">
+      <type entityName="java.lang.Long"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="values3" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="displayItems3" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    
+	<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="value" paramName="Value"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values" paramName="OptionValues"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="partyUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="value1" paramName="Value"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values1" paramName="OptionValues"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems1" paramName="OptionDisplayValues"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="addressUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="value2" paramName="Value"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values2" paramName="OptionValues"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems2" paramName="OptionDisplayValues"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="contactUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="value3" paramName="Value"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values3" paramName="OptionValues"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems3" paramName="OptionDisplayValues"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:DataToUIMappingOperation>
+      <expressionString><![CDATA[
+      import java.util.ArrayList;
+      import java.util.List;
+      import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+      import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+      import org.shaolin.vogerp.commonmodel.dao.CustCommonModel;
+      {
+      	  if ($ceName == null || $ceName.length() == 0) {
+      	      // get the default value logged in customer context.
+      	  	  $ceName = "org.shaolin.vogerp.commonmodel.ce.PartyType";
+      	  }
+      	  if ($personalInfo != null) {
+      	      $value = $personalInfo.getType();
+	          $value1 = $personalInfo.getId();
+	      } 
+      	  
+      	  if ($editable == null || $editable.booleanValue()) {
+	          ArrayList values = new ArrayList();
+	          ArrayList displayItems = new ArrayList();
+	          CEOperationUtil.getCEComboBox("", null, values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
+	      	  $values = values;
+	      	  $displayItems = displayItems;
+	      	  
+	      	  if ($value == null || $value.length() == 0 && values.size() > 0) {
+	      	     $value = values.get(1).toString();
+	      	  }
+	          List[] partyList = CustCommonModel.INSTANCE.getIndividualParties($value);
+	      	  $values1 = (ArrayList)partyList[0];
+	      	  $displayItems1 = (ArrayList)partyList[1];
+	      	  
+	      	  List[] addressList = CustomerInfoUtil.getAddressInfo($personalInfo.getAddresses());
+	      	  $values2 = (ArrayList)addressList[0];
+	      	  $displayItems2 = (ArrayList)addressList[1];
+	      	  
+	      	  List[] contactList = CustomerInfoUtil.getContactInfo($personalInfo.getContacts());
+	      	  $values3 = (ArrayList)contactList[0];
+	      	  $displayItems3 = (ArrayList)contactList[1];
+	      	  
+		      @odContext.executeAllMappings();
+      	  } else {
+      	  	  
+      	  }
+      }   
+    ]]></expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>
+      {
+      	if ($editable == null || $editable.booleanValue()) {
+			@odContext.executeMapping("simpleMapping1");
+			@odContext.executeMapping("simpleMapping2");
+			@odContext.executeMapping("simpleMapping3");
+			
+			$partyId = Long.valueOf($value1);
+		}
+	  }
+	  </expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

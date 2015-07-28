@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.order.page.OrderManagement</entityName>
+	<systemVersion>0</systemVersion>
+	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<ns2:eventHandler functionName="createSaleOrder">
+		   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showBlankorderInfoPanel3413">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.order.be.SaleOrderImpl;
+                    {
+                        SaleOrderImpl defaultUser = new SaleOrderImpl();
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.order.form.SaleOrder", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Create Sale Order", new TableCallBack("saleOrderTable"), 690, 500);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="openSaleOrder">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showorderInfoPanel543542">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.order.be.SaleOrderImpl;
+                    {
+                        Table orderInfoTable = (Table)@page.getElement("saleOrderTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        SaleOrderImpl defaultUser = (SaleOrderImpl)orderInfoTable.getSelectedRow();
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.order.form.SaleOrder", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Open Sale Order", new TableCallBack("saleOrderTable"), 690, 500);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
+        <ns2:eventHandler functionName="openSaleOrderItem">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openSaleOrderItem5673456">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.order.be.SaleOrderImpl;
+                    import org.shaolin.vogerp.order.dao.OrderModel;
+                    import org.shaolin.vogerp.order.dao.CustOrderModel;
+                    {
+                        Table personalInfoTable = (Table)@page.getElement("saleOrderTable");
+                        if (personalInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        SaleOrderImpl defaultUser = (SaleOrderImpl)personalInfoTable.getSelectedRow();
+                        HashMap input = new HashMap();
+                        input.put("list", CustOrderModel.INSTANCE.getOrderItems(defaultUser));
+                        input.put("parentId", new Long(defaultUser.getId()));
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.order.form.OrderItemTable", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Order Items", new TableCallBack("saleOrderTable"), 690, 380);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="openSaleOrderTracker">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openSaleOrderTracker-20150614">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.order.be.SaleOrderImpl;
+                    import org.shaolin.vogerp.order.dao.OrderModel;
+                    import org.shaolin.vogerp.order.dao.CustOrderModel;
+                    {
+                        Table personalInfoTable = (Table)@page.getElement("saleOrderTable");
+                        if (personalInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        SaleOrderImpl defaultUser = (SaleOrderImpl)personalInfoTable.getSelectedRow();
+                        HashMap input = new HashMap();
+                        input.put("list", CustOrderModel.INSTANCE.getOrderItems(defaultUser));
+                        input.put("parentId", new Long(defaultUser.getId()));
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.order.form.OrderHierarchyTable", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Order Items", new TableCallBack("saleOrderTable"), 690, 380);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+		    <ns2:UISkin xsi:type="ns2:UISkinType">
+                <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
+                <ns2:param name="text">
+                    <ns2:value xsi:type="ns2:StringPropertyType">
+                        <ns2:value></ns2:value>
+                    </ns2:value>
+                </ns2:param>
+            </ns2:UISkin>
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
+			    <ns2:ajaxLoad>true</ns2:ajaxLoad>
+                <ns2:tab uiid="saleOrderInfoPanel">
+                    <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+                        <ns2:bundle>org_shaolin_vogerp_order_i18n</ns2:bundle>
+                        <ns2:key>org.shaolin.vogerp.order.page.OrderManagement.saleOrderInfoPanel</ns2:key>
+                    </ns2:title>
+                    <ns2:panel UIID="saleOrderInfoPanel">
+		                <ns2:layout xsi:type="ns2:TableLayoutType">
+		                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+		                    <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+		                </ns2:layout>
+		                <ns2:component xsi:type="ns2:UITableType" UIID="saleOrderTable">
+		                    <ns2:beElement>org.shaolin.vogerp.order.be.SaleOrder</ns2:beElement>
+		                    <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Multiple</ns2:selectMode>
+		                    <ns2:defaultRowSize>10</ns2:defaultRowSize>
+		                    <ns2:showActionBar>true</ns2:showActionBar>
+		                    <ns2:showFilter>true</ns2:showFilter>
+		                    <ns2:query xsi:type="ns2:ExpressionPropertyType">
+		                        <ns2:expression xsi:type="ns2:ExpressionType">
+		                            <ns2:expressionString><![CDATA[
+		                            import java.util.List;
+		                            import org.shaolin.uimaster.page.ajax.TableConditions;
+		                            import org.shaolin.vogerp.order.be.ISaleOrder;
+		                            import org.shaolin.vogerp.order.be.SaleOrderImpl;
+		                            import org.shaolin.vogerp.order.dao.OrderModel;
+		                            {
+		                                  if ($tableCondition == null) {
+		                                     $tableCondition = TableConditions.createCondition(new SaleOrderImpl());
+		                                  }
+		                                  SaleOrderImpl condition = (SaleOrderImpl)$tableCondition.getCondition();
+		                                  return OrderModel.INSTANCE.searchSaleOrder(condition,
+		                                                $tableCondition.getOrders(),
+		                                                $tableCondition.getOffset(), 
+		                                                $tableCondition.getCount());
+		                            }]]></ns2:expressionString>
+		                        </ns2:expression>
+		                    </ns2:query>
+		                    <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
+		                        <ns2:expression xsi:type="ns2:ExpressionType">
+		                            <ns2:expressionString><![CDATA[
+		                            import java.util.List;
+		                            import org.shaolin.uimaster.page.ajax.TableConditions;
+		                            import org.shaolin.vogerp.order.be.ISaleOrder;
+		                            import org.shaolin.vogerp.order.be.SaleOrderImpl;
+		                            import org.shaolin.vogerp.order.dao.OrderModel;
+		                            {
+		                                  if ($tableCondition == null) {
+		                                     $tableCondition = TableConditions.createCondition(new SaleOrderImpl());
+		                                  }
+		                                  SaleOrderImpl condition = (SaleOrderImpl)$tableCondition.getCondition();
+		                                  return OrderModel.INSTANCE.searchSaleOrderCount(condition);
+		                            }]]></ns2:expressionString>
+		                        </ns2:expression>
+		                    </ns2:totalCount>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Serial Number</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.serialNumber</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Customer Info</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.customuerId</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+		                        <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+		                        	<ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.bmdp.runtime.AppContext;
+		                                {
+		                                	return $rowBE.getCustomer().getFirstName() + " " + $rowBE.getCustomer().getLastName();
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:rowExpression>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+		                            <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.bmdp.runtime.AppContext;
+		                                {
+		                                	if (!"".equals($value) && !"null".equals($value)) {
+		                                    	//$rowBE.getCustomer().setName($value);
+		                                	} else {
+		                                		//`$rowBE.getCustomer().setName(null);
+		                                    }
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:updateCondition>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Description</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.description</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Status</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.status</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+		                            <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.bmdp.runtime.AppContext;
+		                                import org.shaolin.vogerp.order.ce.OrderStatusType;
+		                                {
+		                                    $rowBE.setStatus((OrderStatusType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.order.ce.OrderStatusType").getByIntValue(Integer.valueOf($value).intValue()));
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:updateCondition>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Create Date</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+		                          <ns2:type>DateRange</ns2:type>
+		                          <ns2:startCondition>rowBE.startCreateDate</ns2:startCondition> 
+		                          <ns2:endCondition>rowBE.endCreateDate</ns2:endCondition>
+		                        </ns2:uiType>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+		                            <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.uimaster.page.od.formats.FormatUtil;
+		                                import java.util.Date;
+		                                {
+		                                    if ($value == null || "".equals($value)) {
+		                                        if ("rowBE.startCreateDate".equals($filterId)) {
+		                                            $rowBE.setStartCreateDate(null);
+		                                        } else {
+		                                            $rowBE.setEndCreateDate(null);
+		                                        }
+		                                    } else {
+		                                        Date d = (Date)FormatUtil.convertUIToData(FormatUtil.DATE, $value);
+		                                        if ("rowBE.startCreateDate".equals($filterId)) {
+		                                            $rowBE.setStartCreateDate(d);
+		                                        } else {
+		                                            $rowBE.setEndCreateDate(d);
+		                                        }
+		                                    }
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:updateCondition>
+		                    </ns2:column>
+		                    <ns2:defaultActions>
+		                        <ns2:defaultNewAction>createSaleOrder</ns2:defaultNewAction>
+		                        <ns2:defaultOpenAction>openSaleOrder</ns2:defaultOpenAction>
+		                        <!-- can be default actions. -->
+		                        <ns2:defaultDeleteAction>deleteProduct</ns2:defaultDeleteAction>
+		                        <ns2:defaultEnableAction>enableProduct</ns2:defaultEnableAction>
+		                        <ns2:defaultDisableAction>disableProduct</ns2:defaultDisableAction>
+		                    </ns2:defaultActions>
+		                    <ns2:actionGroup>
+		                        <ns2:type>radio</ns2:type>
+		                        <ns2:action>
+		                            <ns2:uiid>openSaleOrderTracker</ns2:uiid>
+		                            <ns2:title xsi:type="ns2:StringPropertyType">
+		                                <ns2:value>Order Tracker</ns2:value>
+		                            </ns2:title>
+		                            <ns2:icon>ui-icon-note</ns2:icon>
+		                            <ns2:function>openSaleOrderTracker</ns2:function>
+		                        </ns2:action>
+		                    </ns2:actionGroup>
+		                </ns2:component>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>saleOrderTable</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="0" y="0" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+                    </ns2:panel>
+                </ns2:tab>
+                <ns2:tab uiid="purcharseOrderInfoPanel">
+                    <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+                        <ns2:bundle>org_shaolin_vogerp_order_i18n</ns2:bundle>
+                        <ns2:key>org.shaolin.vogerp.order.page.OrderManagement.purcharseOrderInfoPanel</ns2:key>
+                    </ns2:title>
+                    <ns2:panel UIID="purcharseOrderInfoPanel">
+		                <ns2:layout xsi:type="ns2:TableLayoutType">
+		                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+		                    <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+		                </ns2:layout>
+		                <ns2:component xsi:type="ns2:UITableType" UIID="purchaseOrderInfoTable">
+		                    <ns2:beElement>org.shaolin.vogerp.order.be.PurchaseOrder</ns2:beElement>
+		                    <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Multiple</ns2:selectMode>
+		                    <ns2:defaultRowSize>10</ns2:defaultRowSize>
+		                    <ns2:showActionBar>true</ns2:showActionBar>
+		                    <ns2:showFilter>true</ns2:showFilter>
+		                    <ns2:query xsi:type="ns2:ExpressionPropertyType">
+		                        <ns2:expression xsi:type="ns2:ExpressionType">
+		                            <ns2:expressionString><![CDATA[
+		                            import java.util.List;
+		                            import org.shaolin.uimaster.page.ajax.TableConditions;
+		                            import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
+		                            import org.shaolin.vogerp.order.dao.OrderModel;
+		                            {
+		                                  if ($tableCondition == null) {
+		                                     $tableCondition = TableConditions.createCondition(new PurchaseOrderImpl());
+		                                  }
+		                                  PurchaseOrderImpl condition = (PurchaseOrderImpl)$tableCondition.getCondition();
+		                                  return OrderModel.INSTANCE.searchPurchaseOrder(condition,
+		                                                $tableCondition.getOrders(),
+		                                                $tableCondition.getOffset(), 
+		                                                $tableCondition.getCount());
+		                            }]]></ns2:expressionString>
+		                        </ns2:expression>
+		                    </ns2:query>
+		                    <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
+		                        <ns2:expression xsi:type="ns2:ExpressionType">
+		                            <ns2:expressionString><![CDATA[
+		                            import java.util.List;
+		                            import org.shaolin.uimaster.page.ajax.TableConditions;
+		                            import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
+		                            import org.shaolin.vogerp.order.dao.OrderModel;
+		                            {
+		                                  if ($tableCondition == null) {
+		                                     $tableCondition = TableConditions.createCondition(new PurchaseOrderImpl());
+		                                  }
+		                                  PurchaseOrderImpl condition = (PurchaseOrderImpl)$tableCondition.getCondition();
+		                                  return OrderModel.INSTANCE.searchPurchaseOrderCount(condition);
+		                            }]]></ns2:expressionString>
+		                        </ns2:expression>
+		                    </ns2:totalCount>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Customer Info</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.supplierId</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+		                            <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.bmdp.runtime.AppContext;
+		                                {
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:updateCondition>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Serial Number</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.serialNumber</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Description</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.description</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Status</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.status</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+		                            <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.bmdp.runtime.AppContext;
+		                                import org.shaolin.vogerp.order.ce.OrderStatusType;
+		                                {
+		                                    $rowBE.setStatus((OrderStatusType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.order.ce.OrderStatusType").getByIntValue(Integer.valueOf($value).intValue()));
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:updateCondition>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Create Date</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+		                          <ns2:type>DateRange</ns2:type>
+		                          <ns2:startCondition>rowBE.startCreateDate</ns2:startCondition> 
+		                          <ns2:endCondition>rowBE.endCreateDate</ns2:endCondition>
+		                        </ns2:uiType>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+		                            <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.uimaster.page.od.formats.FormatUtil;
+		                                import java.util.Date;
+		                                {
+		                                    if ($value == null || "".equals($value)) {
+		                                        if ("rowBE.startCreateDate".equals($filterId)) {
+		                                            $rowBE.setStartCreateDate(null);
+		                                        } else {
+		                                            $rowBE.setEndCreateDate(null);
+		                                        }
+		                                    } else {
+		                                        Date d = (Date)FormatUtil.convertUIToData(FormatUtil.DATE, $value);
+		                                        if ("rowBE.startCreateDate".equals($filterId)) {
+		                                            $rowBE.setStartCreateDate(d);
+		                                        } else {
+		                                            $rowBE.setEndCreateDate(d);
+		                                        }
+		                                    }
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:updateCondition>
+		                    </ns2:column>
+		                    <ns2:defaultActions>
+		                        <ns2:defaultNewAction>createSaleOrder</ns2:defaultNewAction>
+		                        <ns2:defaultOpenAction>openSaleOrder</ns2:defaultOpenAction>
+		                        <!-- can be default actions. -->
+		                        <ns2:defaultDeleteAction>deleteProduct</ns2:defaultDeleteAction>
+		                        <ns2:defaultEnableAction>enableProduct</ns2:defaultEnableAction>
+		                        <ns2:defaultDisableAction>disableProduct</ns2:defaultDisableAction>
+		                    </ns2:defaultActions>
+		                    <ns2:actionGroup>
+		                        <ns2:type>radio</ns2:type>
+		                        <ns2:action>
+		                            <ns2:uiid>openPurchaseOrderItem</ns2:uiid>
+		                            <ns2:title xsi:type="ns2:StringPropertyType">
+		                                <ns2:value>Order Items</ns2:value>
+		                            </ns2:title>
+		                            <ns2:icon>ui-icon-note</ns2:icon>
+		                            <ns2:function>openPurchaseOrderItem</ns2:function>
+		                        </ns2:action>
+		                    </ns2:actionGroup>
+		                </ns2:component>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>purchaseOrderInfoTable</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="0" y="0" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+                    </ns2:panel>
+                </ns2:tab>
+            </ns2:component>
+			<ns2:layoutConstraint>
+                <ns2:componentId>functionsTab</ns2:componentId>
+                <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                    x="0" y="0" align="FULL"></ns2:constraint>
+            </ns2:layoutConstraint>
+		</ns2:body>
+	</ns2:UIEntity>
+	<ns2:ODMapping>
+	</ns2:ODMapping>
+	<ns2:in>
+	</ns2:in>
+</ns2:UIPage>

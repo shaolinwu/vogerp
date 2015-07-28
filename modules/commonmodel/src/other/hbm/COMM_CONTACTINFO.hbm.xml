@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.shaolin.vogerp.commonmodel.be.ContactInfoImpl" table="COMM_CONTACTINFO">
+    <id name="id" column="ID">
+      <generator class="native" />
+    </id>
+    <property name="telephone" column="TELEPHONE"/>
+    <property name="mobile" column="MOBILE"/>
+    <property name="email" column="EMAIL"/>
+    <property name="homepage" column="HOMEPAGE"/>
+    <property name="remark" column="REMARK"/>
+    <property name="_enable" type="boolean" column="_enable"/>
+  </class>
+</hibernate-mapping>

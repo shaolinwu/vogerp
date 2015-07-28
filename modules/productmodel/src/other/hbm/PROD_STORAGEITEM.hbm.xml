@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.shaolin.vogerp.productmodel.be.StorageItemImpl" table="PROD_STORAGEITEM">
+    <id name="id" column="ID">
+      <generator class="native" />
+    </id>
+    <property name="productId" column="PRODUCTID"/>
+    <property name="warehouseId" column="WAREHOUSEID"/>
+    <many-to-one name="product" column="PRODUCTID" unique="true" not-null="true" lazy="false" insert="false" update="false"/>
+    <many-to-one name="warehouse" column="WAREHOUSEID" unique="true" not-null="true" lazy="false" insert="false" update="false"/>
+    <property name="coordinate" column="COORDINATE"/>
+    <property name="itemStatusInt" type="integer" column="ITEMSTATUS"/>
+    <property name="number" column="NUMBER"/>
+    <property name="serialNumber" column="SERIALNUMBER"/>
+    <property name="_enable" type="boolean" column="_enable"/>
+    <property name="_version" type="int" column="_version"/>
+    <property name="_starttime" type="timestamp" column="_starttime"/>
+    <property name="_endtime" type="timestamp" column="_endtime"/>
+    <property name="_optuserid" type="long" column="_optuserid"/>
+  </class>
+</hibernate-mapping>

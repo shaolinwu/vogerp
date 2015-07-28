@@ -1,0 +1,463 @@
+<?xml version="1.0" ?>
+<ns2:RDBDiagram xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/Page" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <name>ModularityModel</name>
+  <systemVersion>0</systemVersion>
+  <ns2:diagramPackage>org.shaolin.vogerp.commonmodel.diagram</ns2:diagramPackage>
+  <ns2:daoPackage>org.shaolin.vogerp.commonmodel.dao</ns2:daoPackage>
+  <ns2:table>
+    <entityName>COMM_MODULEGROUP</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="GROUPID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="PARENTID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="NAME" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="SMALLICON" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="BIGICON" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="ACCESSURL" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>GROUPID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.ModuleGroup"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="groupId" columnName="GROUPID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="parentId" columnName="PARENTID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="name" columnName="NAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="smallIcon" columnName="SMALLICON"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="bigIcon" columnName="BIGICON"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="accessURL" columnName="ACCESSURL"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>COMM_CEENTITYINFO</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="CENAME" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="I18NKEY" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="ICON" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.CEEntityInfo"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="ceName" columnName="CENAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="i18nKey" columnName="I18NKEY"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="icon" columnName="ICON"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>COMM_CEEXTENSION</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="CENAME" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="INTVALUE" type="INTEGER" isNull="true"></ns2:column>
+    <ns2:column name="STRINGVALUE" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="I18NKEY" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="ICON" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.CEExtension"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="ceName" columnName="CENAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="intValue" columnName="INTVALUE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="stringValue" columnName="STRINGVALUE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="i18nKey" columnName="I18NKEY"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="icon" columnName="ICON"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>COMM_CEHIERARCHY</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="parentCeName" type="VARCHAR"></ns2:column>
+    <ns2:column name="parentCeItem" type="INTEGER" length="2"></ns2:column>
+    <ns2:column name="CENAME" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.CEHierarchy"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="parentCeName" columnName="parentCeName"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="parentCeItem" columnName="parentCeItem"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="ceName" columnName="CENAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>COMM_UIDYANICITEM</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="uiEntityName" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="uipanel" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="labelName" type="INTEGER" isNull="true"></ns2:column>
+    <ns2:column name="ceName" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="ceSelectMode" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="filter" type="INTEGER" length="10" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.UIDyanimcItem"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="uiEntityName" columnName="uiEntityName"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="uipanel" columnName="uipanel"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="labelName" columnName="labelName"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="ceName" columnName="ceName"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="ceSelectMode" columnName="ceSelectMode"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="filter" columnName="filter"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>COMM_UIDYANICPAGELINK</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="SRCUIName" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="SRCUIPanel" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="SRCUIWidget" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="LinkComment" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="TARUIName" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="srcUIName" columnName="SRCUIName"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="srcUIPanel" columnName="SRCUIPanel"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="srcUIWidget" columnName="SRCUIwidget"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="tarUIName" columnName="TARUIName"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="linkComment" columnName="LinkComment"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  
+  <ns2:query queryName="searchModuleGroup">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.ModuleGroup" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.ModuleGroup"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+    	<ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.groupId</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.groupId</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getGroupId() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.name</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.name</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getName() != null && scFlow.getName().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.parentId</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.parentId</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getParentId() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.ModuleGroup"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  <ns2:query queryName="searchCEInfo">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.CEEntityInfo" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.CEEntityInfo"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.ceName</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>ceName</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[ceName != null && ceName.length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:searchConditionData name="ceName" category="JavaPrimitive" searchable="false">
+            <type entityName="java.lang.String"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  <ns2:query queryName="searchCEExtension">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.CEExtension" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.CEExtension"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.ceName</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.ceName</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getCeName() != null && scFlow.getCeName().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.CEExtension"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  <ns2:query queryName="searchCEHierarchy">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.CEHierarchy" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.CEHierarchy"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.ceName</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.ceName</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getCeName() != null && scFlow.getCeName().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.parentCeName</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.parentCeName</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getParentCeName() != null && scFlow.getParentCeName().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.parentCeItem</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.parentCeItem</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getParentCeItem() >= 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.CEHierarchy"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  
+  <ns2:query queryName="searchDynamicItemEntities">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.UIDyanimcItem" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.UIDyanimcItem"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.uiEntityName</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.uiEntityName</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getUiEntityName() != null && scFlow.getUiEntityName().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.UIDyanimcItem"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  
+  <ns2:query queryName="searchDynamicItems">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.UIDyanimcItem" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.UIDyanimcItem"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.uiEntityName</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.uiEntityName</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getUiEntityName() != null && scFlow.getUiEntityName().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.UIDyanimcItem"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  
+  <ns2:query queryName="searchDynamicPageLink">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.id</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.id</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getId() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  
+</ns2:RDBDiagram>

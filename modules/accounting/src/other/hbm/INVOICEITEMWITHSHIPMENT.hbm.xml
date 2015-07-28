@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.shaolin.vogerp.accounting.be.InvoiceItemWithShipmentImpl" table="INVOICEITEMWITHSHIPMENT">
+    <property name="id" column="ID"/>
+    <property name="invoiceId" column="INVOICEID"/>
+    <property name="invoiceItemId" column="INVOICEITEMID"/>
+    <property name="shipmentId" column="SHIPMENTID"/>
+    <property name="shipmentItemId" column="SHIPMENTITEMID"/>
+    <property name="amount" column="AMOUNT"/>
+    <property name="_enable" type="boolean" column="_enable"/>
+  </class>
+</hibernate-mapping>

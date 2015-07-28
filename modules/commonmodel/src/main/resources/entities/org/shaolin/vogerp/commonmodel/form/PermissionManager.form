@@ -1,0 +1,398 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+    <entityName>org.shaolin.vogerp.commonmodel.form.PermissionManager</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:eventHandler functionName="createModelPerm">
+       <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showBlankpermissionInfoPanel14314">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.AjaxActionHelper;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl;
+                {
+                    HashMap input = new HashMap();
+                    input.put("beObject", new ModelPermissionImpl());
+                    input.put("editable", new Boolean(true));
+                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.ModelPermission", input);
+                    @page.addElement(form);
+                    
+                    form.openInWindows("Add Item", new TableCallBack("modelPermissionTable"));
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
+    <ns2:eventHandler functionName="openModelPerm">
+        <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showpermissionInfoPanel253244">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl;
+                {
+                    Table modelPermissionTable = (Table)@page.getElement("modelPermissionTable");
+                    if (modelPermissionTable.getSelectedRow() == null) {
+                        return;
+                    }
+                    
+                    ModelPermissionImpl defaultUser = (ModelPermissionImpl)modelPermissionTable.getSelectedRow();
+                    HashMap input = new HashMap();
+                    input.put("beObject", defaultUser);
+                    input.put("editable", new Boolean(true));
+                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.ModelPermission", input);
+                    @page.addElement(form);
+                    
+                    form.openInWindows("Modify Item", new TableCallBack("modelPermissionTable"));
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
+    <ns2:eventHandler functionName="deleteModelPerm">
+        <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deleteModePerm73563">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl;
+                import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                {
+                    Table modelPermissionTable = (Table)@page.getElement("modelPermissionTable");
+                    if (modelPermissionTable.getSelectedRow() == null) {
+                        return;
+                    }
+                    
+                    ModelPermissionImpl defaultUser = (ModelPermissionImpl)modelPermissionTable.getSelectedRow();
+                    CommonModel.INSTANCE.delete(defaultUser);
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
+    <ns2:eventHandler functionName="createUIModelPerm">
+       <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showBlankpermissionInfoPanel14314kjhkj">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.AjaxActionHelper;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl;
+                {
+                    HashMap input = new HashMap();
+                    input.put("beObject", new UIWidgetPermissionImpl());
+                    input.put("editable", new Boolean(true));
+                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.UIWidgetPermission", input);
+                    @page.addElement(form);
+                    
+                    form.openInWindows("Add Item", new TableCallBack("uiPermissionTable"));
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
+    <ns2:eventHandler functionName="openUIModelPerm">
+        <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showpermissionInfoPanel253244asf">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl;
+                {
+                    Table modelPermissionTable = (Table)@page.getElement("uiPermissionTable");
+                    if (modelPermissionTable.getSelectedRow() == null) {
+                        return;
+                    }
+                    
+                    UIWidgetPermissionImpl defaultUser = (UIWidgetPermissionImpl)modelPermissionTable.getSelectedRow();
+                    HashMap input = new HashMap();
+                    input.put("beObject", defaultUser);
+                    input.put("editable", new Boolean(true));
+                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.UIWidgetPermission", input);
+                    @page.addElement(form);
+                    
+                    form.openInWindows("Modify Item", new TableCallBack("uiPermissionTable"));
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
+    <ns2:eventHandler functionName="deleteUIModelPerm">
+        <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deleteUIModePermvdadfds">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl;
+                import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                {
+                    Table modelPermissionTable = (Table)@page.getElement("uiPermissionTable");
+                    if (modelPermissionTable.getSelectedRow() == null) {
+                        return;
+                    }
+                    
+                    UIWidgetPermissionImpl defaultUser = (UIWidgetPermissionImpl)modelPermissionTable.getSelectedRow();
+                    CommonModel.INSTANCE.delete(defaultUser);
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
+    <ns2:eventHandler functionName="createBEPerm">
+       <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showBlankpermissionInfoPanel143142333">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.AjaxActionHelper;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.vogerp.commonmodel.be.BEPermissionImpl;
+                {
+                    HashMap input = new HashMap();
+                    input.put("beObject", new BEPermissionImpl());
+                    input.put("editable", new Boolean(true));
+                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.BEPermission", input);
+                    @page.addElement(form);
+                    
+                    form.openInWindows("Add Item", new TableCallBack("bePermissionTable"));
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
+    <ns2:eventHandler functionName="openBEPerm">
+        <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showpermissionInfoPanel253244534">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.vogerp.commonmodel.be.BEPermissionImpl;
+                {
+                    Table modelPermissionTable = (Table)@page.getElement("bePermissionTable");
+                    if (modelPermissionTable.getSelectedRow() == null) {
+                        return;
+                    }
+                    
+                    BEPermissionImpl defaultUser = (BEPermissionImpl)modelPermissionTable.getSelectedRow();
+                    HashMap input = new HashMap();
+                    input.put("beObject", defaultUser);
+                    input.put("editable", new Boolean(true));
+                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.BEPermission", input);
+                    @page.addElement(form);
+                    
+                    form.openInWindows("Modify Item", new TableCallBack("bePermissionTable"));
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
+    <ns2:eventHandler functionName="deleteUser"></ns2:eventHandler>
+    <ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+        <ns2:layout xsi:type="ns2:TableLayoutType">
+            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+        </ns2:layout>
+        <ns2:component xsi:type="ns2:UIPanelType" UIID="permissionInfoPanel">
+            <ns2:layout xsi:type="ns2:TableLayoutType">
+                <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+            </ns2:layout>
+            <ns2:component xsi:type="ns2:UITableType" UIID="uiPermissionTable">
+                <ns2:beElement>org.shaolin.vogerp.commonmodel.be.UIWidgetPermission</ns2:beElement>
+                <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Multiple</ns2:selectMode>
+                <ns2:defaultRowSize>10</ns2:defaultRowSize>
+                <ns2:showActionBar>true</ns2:showActionBar>
+                <ns2:showFilter>true</ns2:showFilter>
+                <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                    <ns2:expression xsi:type="ns2:ExpressionType">
+                        <ns2:expressionString><![CDATA[
+                        import java.util.List;
+                        import org.shaolin.uimaster.page.ajax.TableConditions;
+                        import org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl;
+                        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                        {
+                              if ($tableCondition == null) {
+                                 $tableCondition = TableConditions.createCondition(new UIWidgetPermissionImpl());
+                              }
+                              UIWidgetPermissionImpl condition = (UIWidgetPermissionImpl)$tableCondition.getCondition();
+                              return CommonModel.INSTANCE.searchUIWidgetPermission(condition,
+                                            $tableCondition.getOrders(),
+                                            $tableCondition.getOffset(), 
+                                            $tableCondition.getCount());
+                        }]]></ns2:expressionString>
+                    </ns2:expression>
+                </ns2:query>
+                <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
+                    <ns2:expression xsi:type="ns2:ExpressionType">
+                        <ns2:expressionString><![CDATA[
+                        import java.util.List;
+                        import org.shaolin.uimaster.page.ajax.TableConditions;
+                        import org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl;
+                        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                        {
+                              if ($tableCondition == null) {
+                                 $tableCondition = TableConditions.createCondition(new UIWidgetPermissionImpl());
+                              }
+                              UIWidgetPermissionImpl condition = (UIWidgetPermissionImpl)$tableCondition.getCondition();
+                              return CommonModel.INSTANCE.searchUIWidgetPermissionCount(condition);
+                        }]]></ns2:expressionString>
+                    </ns2:expression>
+                </ns2:totalCount>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>Page Name</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.pageName</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                </ns2:column>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>UI Widget Id</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.widgetId</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                </ns2:column>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>Permission</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.partyType</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                    <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                        <ns2:expression xsi:type="ns2:ExpressionType">
+                            <ns2:expressionString><![CDATA[
+                            import org.shaolin.bmdp.runtime.AppContext;
+                            import org.shaolin.vogerp.commonmodel.ce.PermissionType;
+                            {
+                            }]]></ns2:expressionString>
+                        </ns2:expression>
+                    </ns2:updateCondition>
+                </ns2:column>
+                <ns2:defaultActions>
+                    <ns2:defaultNewAction>createUIModelPerm</ns2:defaultNewAction>
+                    <ns2:defaultOpenAction>openUIModelPerm</ns2:defaultOpenAction>
+                    <ns2:defaultDeleteAction>deleteUIModelPerm</ns2:defaultDeleteAction>
+                </ns2:defaultActions>
+            </ns2:component>
+            <ns2:component xsi:type="ns2:UITableType" UIID="bePermissionTable">
+                <ns2:beElement>org.shaolin.vogerp.commonmodel.be.BEPermission</ns2:beElement>
+                <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Multiple</ns2:selectMode>
+                <ns2:defaultRowSize>10</ns2:defaultRowSize>
+                <ns2:showActionBar>true</ns2:showActionBar>
+                <ns2:showFilter>true</ns2:showFilter>
+                <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                    <ns2:expression xsi:type="ns2:ExpressionType">
+                        <ns2:expressionString><![CDATA[
+                        import java.util.List;
+                        import org.shaolin.uimaster.page.ajax.TableConditions;
+                        import org.shaolin.vogerp.commonmodel.be.BEPermissionImpl;
+                        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                        {
+                              if ($tableCondition == null) {
+                                 $tableCondition = TableConditions.createCondition(new BEPermissionImpl());
+                              }
+                              BEPermissionImpl condition = (BEPermissionImpl)$tableCondition.getCondition();
+                              return CommonModel.INSTANCE.searchBEPermission(condition,
+                                            $tableCondition.getOrders(),
+                                            $tableCondition.getOffset(), 
+                                            $tableCondition.getCount());
+                        }]]></ns2:expressionString>
+                    </ns2:expression>
+                </ns2:query>
+                <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
+                    <ns2:expression xsi:type="ns2:ExpressionType">
+                        <ns2:expressionString><![CDATA[
+                        import java.util.List;
+                        import org.shaolin.uimaster.page.ajax.TableConditions;
+                        import org.shaolin.vogerp.commonmodel.be.BEPermissionImpl;
+                        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                        {
+                              if ($tableCondition == null) {
+                                 $tableCondition = TableConditions.createCondition(new BEPermissionImpl());
+                              }
+                              BEPermissionImpl condition = (BEPermissionImpl)$tableCondition.getCondition();
+                              return CommonModel.INSTANCE.searchBEPermissionCount(condition);
+                        }]]></ns2:expressionString>
+                    </ns2:expression>
+                </ns2:totalCount>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>BE Name</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.beName</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                </ns2:column>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>Field</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.field</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                </ns2:column>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>Permission</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.partyType</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                    <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                        <ns2:expression xsi:type="ns2:ExpressionType">
+                            <ns2:expressionString><![CDATA[
+                            import org.shaolin.bmdp.runtime.AppContext;
+                            import org.shaolin.vogerp.commonmodel.ce.PermissionType;
+                            {
+                            }]]></ns2:expressionString>
+                        </ns2:expression>
+                    </ns2:updateCondition>
+                </ns2:column>
+                <ns2:defaultActions>
+                    <ns2:defaultNewAction>createBEPerm</ns2:defaultNewAction>
+                    <ns2:defaultOpenAction>openBEPerm</ns2:defaultOpenAction>
+                    <ns2:defaultDeleteAction>deleteBElPerm</ns2:defaultDeleteAction>
+                </ns2:defaultActions>
+            </ns2:component>
+            <ns2:layoutConstraint>
+                <ns2:componentId>uiPermissionTable</ns2:componentId>
+                <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                    x="0" y="0" align="FULL"></ns2:constraint>
+            </ns2:layoutConstraint>
+            <ns2:layoutConstraint>
+                <ns2:componentId>bePermissionTable</ns2:componentId>
+                <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                    x="0" y="1" align="FULL"></ns2:constraint>
+            </ns2:layoutConstraint>
+        </ns2:component>
+        <ns2:layoutConstraint>
+            <ns2:componentId>permissionInfoPanel</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                x="0" y="0" align="FULL"></ns2:constraint>
+        </ns2:layoutConstraint>
+    </ns2:body>
+    <ns2:mapping>
+	    <systemVersion>0</systemVersion>
+        <ns2:DataEntity scope="InOut" name="tableCondition" category="JavaClass">
+          <type entityName="org.shaolin.uimaster.page.ajax.TableConditions"></type>
+        </ns2:DataEntity>
+	    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+	      <type entityName="java.lang.Boolean"></type>
+	    </ns2:DataEntity>
+	    <ns2:DataToUIMappingOperation>
+	      <expressionString><![CDATA[{
+			@odContext.executeAllMappings();
+	      }]]></expressionString>
+	    </ns2:DataToUIMappingOperation>
+	    <ns2:UIToDataMappingOperation>
+	      <expressionString>{
+	@odContext.executeAllMappings();
+	}</expressionString>
+	    </ns2:UIToDataMappingOperation>
+	  </ns2:mapping>
+</ns2:UIEntity>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.shaolin.vogerp.order.be.SaleOrderImpl" table="ORDER_SALEORDER">
+    <id name="id" column="ID">
+      <generator class="native" />
+    </id>
+    <property name="parentId" column="PARENTID"/>
+    <property name="serialNumber" column="SERIALNUMBER"/>
+    <property name="description" column="DESCRIPTION"/>
+    <property name="createDate" type="date" column="CREATEDATE"/>
+    <property name="deliveryDate" type="date" column="DELIVERYDATE"/>
+    <property name="discount" column="DISCOUNT"/>
+    <property name="statusInt" type="integer" column="STATUS"/>
+    <list name="items" table="ORDER_SALEORDER_ORDERITEM_JT" cascade="all" lazy="false">
+        <key column="id"/>
+        <index column="_index"/>
+        <many-to-many unique="true" class="org.shaolin.vogerp.order.be.OrderItemImpl"/>
+    </list>
+    <property name="customerId" column="CUSTOMERID"/>
+    <property name="deliveryInfoId" column="DELIVERYINFOID"/>
+    <many-to-one name="customer" column="CUSTOMERID" unique="true" not-null="true" lazy="false" insert="false" update="false"/>
+    <many-to-one name="deliveryInfo" column="DELIVERYINFOID" unique="true" not-null="true" lazy="false" insert="false" update="false"/>
+    <property name="purchasedOrderId" column="PURCHASEDORDERID"/>
+    <property name="_enable" type="boolean" column="_enable"/>
+  </class>
+</hibernate-mapping>

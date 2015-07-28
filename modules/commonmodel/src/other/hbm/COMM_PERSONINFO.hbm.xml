@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl" table="COMM_PERSONINFO">
+    <id name="id" column="ID">
+      <generator class="native" />
+    </id>
+    <property name="firstName" column="FIRSTNAME"/>
+    <property name="lastName" column="LASTNAME"/>
+    <property name="genderInt" type="integer" column="GENDER"/>
+    <property name="married" column="MARRIED"/>
+    <property name="identityCardId" column="IDENTITYCARDID"/>
+    <property name="discription" column="DISCRIPTION"/>
+    <property name="birthday" type="date" column="BIRTHDAY"/>
+    <property name="languageInt" type="integer" column="LANGUAGE"/>
+    <property name="educationInt" type="integer" column="EDUCATION"/>
+    <property name="major" column="MAJOR"/>
+    <property name="type" column="TYPE"/>
+    <list name="addresses" table="COMM_PERSONINFOADDRESSINFO_JT" cascade="all" lazy="false">
+        <key column="id"/>
+        <index column="_index"/>
+        <many-to-many unique="true" class="org.shaolin.vogerp.commonmodel.be.AddressInfoImpl"/>
+    </list>
+    <list name="contacts" table="COMM_PERSONINFOCONTACTINFO_JT" cascade="all" lazy="false">
+        <key column="id"/>
+        <index column="_index"/>
+        <many-to-many unique="true" class="org.shaolin.vogerp.commonmodel.be.ContactInfoImpl"/>
+    </list>
+    <property name="comment" column="COMMENT"/>
+    <property name="_enable" type="boolean" column="_enable"/>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl" table="COMM_UIDYANICITEM">
+    <id name="id" column="ID">
+      <generator class="native" />
+    </id>
+    <property name="uiEntityName" column="uiEntityName"/>
+    <property name="uipanel" column="uipanel"/>
+    <property name="labelName" column="labelName"/>
+    <property name="ceName" column="ceName"/>
+    <property name="ceSelectModeInt" type="integer" column="ceSelectMode"/>
+    <property name="filter" column="filter"/>
+    <property name="_enable" type="boolean" column="_enable"/>
+  </class>
+</hibernate-mapping>

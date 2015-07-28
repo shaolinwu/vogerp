@@ -1,0 +1,122 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.commonmodel.form.PartyDeliveryInfo</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="addressUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+          <ns2:value>地址</ns2:value>
+        </ns2:widgetLabel>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="contactUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+          <ns2:value>联系人</ns2:value>
+        </ns2:widgetLabel>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
+      </ns2:component>
+	  <ns2:layoutConstraint>
+        <ns2:componentId>addressUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>contactUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="personalInfo" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="value" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="values" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="displayItems" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="value1" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="values1" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="displayItems1" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+	<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="addressUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="value" paramName="Value"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values" paramName="OptionValues"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="contactUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="value1" paramName="Value"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values1" paramName="OptionValues"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems1" paramName="OptionDisplayValues"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:DataToUIMappingOperation>
+      <expressionString><![CDATA[
+      import java.util.ArrayList;
+      import java.util.List;
+      import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+      import org.shaolin.vogerp.commonmodel.dao.CustCommonModel;
+      {
+      	  if ($editable == null || $editable.booleanValue()) {
+	          ArrayList values = new ArrayList();
+	          ArrayList displayItems = new ArrayList();
+	      	  $values = values;
+	      	  $displayItems = displayItems;
+	      	  
+	      	  values = new ArrayList();
+	          displayItems = new ArrayList();
+	      	  $values1 = values;
+	      	  $displayItems1 = displayItems;
+	      	  
+		      @odContext.executeAllMappings();
+      	  } else {
+      	  	  
+      	  }
+      }   
+    ]]></expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>
+      {
+		@odContext.executeMapping("simpleMapping1");
+	  }
+	  </expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

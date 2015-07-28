@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.shaolin.vogerp.order.be.ProductOrderImpl" table="ORDER_PRODUCTORDER">
+    <id name="id" column="ID">
+      <generator class="native" />
+    </id>
+    <property name="parentId" column="PARENTID"/>
+    <property name="serialNumber" column="SERIALNUMBER"/>
+    <property name="description" column="DESCRIPTION"/>
+    <property name="createDate" type="date" column="CREATEDATE"/>
+    <property name="startCreateDate" type="date" column="STARTCREATEDATE"/>
+    <property name="endCreateDate" type="date" column="ENDCREATEDATE"/>
+    <property name="discount" column="DISCOUNT"/>
+    <property name="statusInt" type="integer" column="STATUS"/>
+    <list name="items" table="ORDER_PRODUCTORDER_ORDERITEM_JT" cascade="all" lazy="false">
+        <key column="id"/>
+        <index column="_index"/>
+        <many-to-many unique="true" class="org.shaolin.vogerp.order.be.OrderItemImpl"/>
+    </list>
+    <property name="_enable" type="boolean" column="_enable"/>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.shaolin.vogerp.order.be.DeliveryInfoImpl" table="ORDER_DELIVERYINFO">
+    <id name="id" column="ID">
+      <generator class="native" />
+    </id>
+    <property name="addressId" column="ADDRESSID"/>
+    <many-to-one name="address" column="ADDRESSID" unique="true" not-null="true" lazy="false" insert="false" update="false"/>
+    <property name="contactId" column="CONTACTID"/>
+    <many-to-one name="contact" column="CONTACTID" unique="true" not-null="true" lazy="false" insert="false" update="false"/>
+    <property name="comment" column="COMMENT"/>
+    <property name="_enable" type="boolean" column="_enable"/>
+    <property name="_version" type="int" column="_version"/>
+    <property name="_starttime" type="timestamp" column="_starttime"/>
+    <property name="_endtime" type="timestamp" column="_endtime"/>
+    <property name="_optuserid" type="long" column="_optuserid"/>
+  </class>
+</hibernate-mapping>

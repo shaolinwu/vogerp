@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bediagram:BEDiagram xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:bediagram="http://bmdp.shaolin.org/datamodel/BEDiagram"
+	xmlns:common="http://bmdp.shaolin.org/datamodel/Common">
+	<name>CommonModel</name>
+	<bePackage>org.shaolin.vogerp.commonmodel.be</bePackage>
+	<cePackage>org.shaolin.vogerp.commonmodel.ce</cePackage>
+	<diagramPackage>org.shaolin.vogerp.commonmodel.diagram</diagramPackage>
+
+	<!-- 
+	        当事人： 与某事有着直接关联的人. 比例： 一个人（ CEO，部分经理，管理员， 销售人员， 会计师，库存管理员），一个组织（外企业，民企，政府，银行，部门）等 
+                 简单的理解为当事人是本系统所有对象实体的抽象类。即面对对象的Object.
+	-->
+	<bediagram:beEntity>
+		<common:entityName>Party</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- every party type can be an entity or just a type. 
+			for each individual the type could be either the job title or the employee role.-->
+			<bediagram:name>type</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+			<!-- 
+			<bediagram:elementType xsi:type="bediagram:CEObjRefType">
+				<bediagram:targetEntity entityName="PartyType" />
+			</bediagram:elementType>
+			 -->
+		</bediagram:member>
+	</bediagram:beEntity>
+	<!-- 
+		for example: 
+		- the relationship between a person and another person.
+	    - the relationship between a person and an organization.
+	    - the relationship between an organization and another organization.
+	    
+	    Organization tree with sub organizations
+	    Organization tree with employees
+	-->
+	<bediagram:beEntity needPersist="true" needHistory="true" needUIEntity="true">
+		<common:entityName>PartyRelationship</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>type</bediagram:name>
+			<bediagram:type xsi:type="bediagram:CEObjRefType">
+				<bediagram:targetEntity entityName="PartyRelationType" />
+			</bediagram:type>
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>srcPartyId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>tarPartyId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+	</bediagram:beEntity>
+	
+	<!-- Party event indicates the event recorded when a party made some change or finish an event. -->
+    <bediagram:beEntity needPersist="true" needHistory="true">
+        <common:entityName>PartyEvent</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>srcPartyId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>tarPartyId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>pageInfo</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>eventRecord</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>eventType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="PartyEventType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>eventState</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="PartyEventStatusType" />
+            </bediagram:type>
+        </bediagram:member>
+    </bediagram:beEntity>
+    
+    <!-- Person, Organization modelling -->
+    <bediagram:beEntity needPersist="true" needUIEntity="true">
+        <common:entityName>Organization</common:entityName>
+        <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
+            <bediagram:targetEntity entityName="Party" />
+        </bediagram:parentObject>
+        <bediagram:member>
+            <bediagram:name>parentId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>orgCode</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>name</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>description</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+    </bediagram:beEntity>
+	<bediagram:beEntity needPersist="true" needUIEntity="true">
+		<common:entityName>LegalOrganizationInfo</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>orgId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 法人 -->
+            <bediagram:name>legalPerson</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+		<bediagram:member>
+			<!-- 行业许可证字号 -->
+            <bediagram:name>tradeLicenseNumber</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+			<!-- 营业执照号码 -->
+            <bediagram:name>busiLicenseNumber</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+			<!-- 营业执照发证日期 -->
+            <bediagram:name>busiLicenseDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+			<!-- 国税登记号-->
+            <bediagram:name>taxRegistrationNumber</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+			<!-- 国税登记时间-->
+            <bediagram:name>taxRegistrationDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+			<!-- 地税登记号-->
+            <bediagram:name>localTaxRegistrationNumber</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+			<!-- 地税登记时间-->
+            <bediagram:name>localTaxRegistrationDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+			<!-- 企业代码-->
+            <bediagram:name>enterpriseCode</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+			<!-- 银行帐号-->
+            <bediagram:name>bankAccount</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+			<!-- 银行帐号类型-->
+            <bediagram:name>bankType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="BankType" />
+            </bediagram:type>
+        </bediagram:member>
+	</bediagram:beEntity>
+
+	<bediagram:beEntity needPersist="true" needUIEntity="true">
+        <common:entityName>OrganizationContract</common:entityName>
+        <bediagram:member>
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>orgId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>type</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="ContractType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+        	<!-- the terms of the contrat, this value will be the patch of the agreement made in open CMS. -->
+            <bediagram:name>terms</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>expirationDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+    </bediagram:beEntity>
+    
+    <bediagram:beEntity needPersist="true" needUIEntity="true">
+        <common:entityName>PersonalInfo</common:entityName>
+        <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
+            <bediagram:targetEntity entityName="Party" />
+        </bediagram:parentObject>
+        <bediagram:member>
+            <bediagram:name>firstName</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>lastName</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>gender</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="Gender" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>married</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BooleanType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>identityCardId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>discription</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>birthday</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <!-- the date range supported for birthday. both fields are not persistent. -->
+        <bediagram:member>
+            <bediagram:name>birthdayStart</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>birthdayEnd</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>language</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="LanguageType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>education</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="EducationLevel" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>major</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>addresses</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEListType">
+                <bediagram:elementType xsi:type="bediagram:BEObjRefType">
+                    <bediagram:targetEntity entityName="AddressInfo" />
+                </bediagram:elementType>
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>contacts</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEListType">
+                <bediagram:elementType xsi:type="bediagram:BEObjRefType">
+                    <bediagram:targetEntity entityName="ContactInfo" />
+                </bediagram:elementType>
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>comment</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+    </bediagram:beEntity>
+    
+    <bediagram:beEntity needPersist="true" needUIEntity="true" needHistory="true">
+        <common:entityName>PersonalAccount</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>userName</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>password</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>personalId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>info</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="PersonalInfo" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>locale</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>attempt</bediagram:name>
+            <bediagram:type xsi:type="bediagram:IntType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>isLocked</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BooleanType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>lockedMoment</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>expirationDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>lastLogin</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+    </bediagram:beEntity>
+
+    <bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
+        <common:entityName>AddressInfo</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>country</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>city</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>street</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>block</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>zipcode</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>description</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+    </bediagram:beEntity>
+
+    <bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
+        <common:entityName>ContactInfo</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>telephone</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>mobile</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>email</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>homepage</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>remark</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+    </bediagram:beEntity>
+    
+    <!-- “基于角色的权限控制”，核心思想是将权限控制通过当事人所属角色来实现，当事人本身并不直接绑定权限。 
+    
+            设计思路都是这样的：首先在系统开发时登记注册所有功能模块及代码，系统运行时由系统管理员来维护角色列表、
+            并为每一种角色设定可访问的模块（角色和模块相关联）。业务人员登录系统后，系统递归读取当前用户所属的全部角色，
+            并再次递归读取这些角色能够访问的所有模块资源、形成一个模块代码列表，存储为CS系统的全局变量或者BS系统
+            的Session。每当用户试图进入一个功能模块前，系统都判断一下当前模块代码是否包含在“模块代码列表”中。
+            如果包含，判断其是否存在“拒绝”属性，“拒绝”优先于“授予”。如果没有“拒绝”属性，只有“授予”属性，说明该用户有权限，
+            允许进入；否则，说明该用户无权操作此功能模块，程序给出权限不足的提示，并退出。以此实现权限控制。
+     
+     Permission Levels:
+     1. model access: accept/deny
+     2. ui widget: viewable/editable
+     3. BE data access: show/hide
+    -->
+    <bediagram:beEntity>
+        <common:entityName>PartyPermission</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>partyType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType">
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>type</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="PermissionType" />
+            </bediagram:type>
+        </bediagram:member>
+    </bediagram:beEntity>
+    <bediagram:beEntity needPersist="true" needUIEntity="true">
+        <common:entityName>ModelPermission</common:entityName>
+        <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
+            <bediagram:targetEntity entityName="PartyPermission" />
+        </bediagram:parentObject>
+        <bediagram:member>
+            <bediagram:name>moduleId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+    </bediagram:beEntity>
+    <bediagram:beEntity needPersist="true" needUIEntity="true">
+        <common:entityName>UIWidgetPermission</common:entityName>
+        <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
+            <bediagram:targetEntity entityName="PartyPermission" />
+        </bediagram:parentObject>
+        <bediagram:member>
+            <bediagram:name>pageName</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>widgetId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+        	<!-- table support -->
+            <bediagram:name>columnId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+    </bediagram:beEntity>
+    <bediagram:beEntity needPersist="true" needUIEntity="true">
+        <common:entityName>BEPermission</common:entityName>
+        <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
+            <bediagram:targetEntity entityName="PartyPermission" />
+        </bediagram:parentObject>
+        <bediagram:member>
+            <bediagram:name>beName</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>field</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+    </bediagram:beEntity>
+    
+    <bediagram:ceEntity>
+        <common:entityName>PartyType</common:entityName>
+         <!-- Individual -->
+        <bediagram:constantValue>
+            <bediagram:value>Organization</bediagram:value>
+            <bediagram:intValue>0</bediagram:intValue>
+            <bediagram:description>Organization</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>BusinessPartners</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>Business Partners</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Supplier</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>Supplier</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Distributor</bediagram:value>
+            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:description>Distributor</bediagram:description>
+        </bediagram:constantValue>
+        
+    </bediagram:ceEntity>    
+	<bediagram:ceEntity>
+		<common:entityName>PartyRelationType</common:entityName>
+	</bediagram:ceEntity>
+    <bediagram:ceEntity>
+        <common:entityName>PartyEventStatusType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>Scheduled</bediagram:value>
+            <bediagram:intValue>0</bediagram:intValue>
+            <bediagram:description>Scheduled</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Waiting for Solution</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>Waiting for Solution</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Finished</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>Finished</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Cancelled</bediagram:value>
+            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:description>Cancelled</bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
+    <bediagram:ceEntity>
+        <common:entityName>PartyEventType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>Telephone</bediagram:value>
+            <bediagram:intValue>0</bediagram:intValue>
+            <bediagram:description>Telephone</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Email</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>Email</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Face2Face</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>Face to Face</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>WebForm</bediagram:value>
+            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:description>Web Form</bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
+	<bediagram:ceEntity>
+		<common:entityName>LanguageType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Chinese</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Chinese</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>English</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>English</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	<bediagram:ceEntity>
+		<common:entityName>EducationLevel</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>SENIORSCHOOL</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>SENIORSCHOOL</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>JUNIORCOLLEGE</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>JUNIORCOLLEGE</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>UNDERGRADUATE</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>UNDERGRADUATE</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>MASTER</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>MASTER</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>DOCTOR</bediagram:value>
+			<bediagram:intValue>4</bediagram:intValue>
+			<bediagram:description>DOCTOR</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>POSTDOCTOR</bediagram:value>
+			<bediagram:intValue>5</bediagram:intValue>
+			<bediagram:description>POSTDOCTOR</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	<bediagram:ceEntity>
+		<common:entityName>Gender</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>MALE</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>MALE</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>FEMALE</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>FEMALE</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	<!-- 
+	Permission Levels:
+     1. model access: accept/deny
+     2. ui widget: viewable/editable
+     3. BE data access: show/hide
+	 -->
+	<bediagram:ceEntity>
+		<common:entityName>PermissionType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Acceptable</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Acceptable</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Deniable</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Deniable</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Viewable</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>Viewable</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Editable</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>Editable</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Show</bediagram:value>
+			<bediagram:intValue>4</bediagram:intValue>
+			<bediagram:description>Show</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Hidden</bediagram:value>
+			<bediagram:intValue>5</bediagram:intValue>
+			<bediagram:description>Hidden</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	
+	<bediagram:ceEntity>
+		<common:entityName>ContractType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Trial</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Trial for free in two monthes</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Monthly</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Monthly</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Season</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>Season</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Year</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>Year</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	
+	<!-- 中国建设银行——CCB
+中国农业银行——ABC 
+中国工商银行——ICBC 
+中国银行——BOC
+中国民生银行——CMBC
+招商银行 ——CMB
+兴业银行 ——CIB 
+交通银行——BCM
+中国光大银行——CEB 
+广东发展银行——GDB -->
+	<bediagram:ceEntity>
+		<common:entityName>BankType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>CCB</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>中国建设银行</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>ABC</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>中国农业银行</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>ICBC</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>中国工商银行</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>BOC</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>中国银行</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>CMBC</bediagram:value>
+			<bediagram:intValue>4</bediagram:intValue>
+			<bediagram:description>中国民生银行</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>CMB</bediagram:value>
+			<bediagram:intValue>5</bediagram:intValue>
+			<bediagram:description>招商银行</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>CIB</bediagram:value>
+			<bediagram:intValue>6</bediagram:intValue>
+			<bediagram:description>兴业银行</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>BCM</bediagram:value>
+			<bediagram:intValue>7</bediagram:intValue>
+			<bediagram:description>交通银行</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>CEB</bediagram:value>
+			<bediagram:intValue>8</bediagram:intValue>
+			<bediagram:description>中国光大银行</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+
+	<bediagram:ceEntity>
+		<common:entityName>CityType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>ShangHai</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>上海市</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+</bediagram:BEDiagram>

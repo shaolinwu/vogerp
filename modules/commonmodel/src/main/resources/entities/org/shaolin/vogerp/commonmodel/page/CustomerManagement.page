@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.commonmodel.page.CustomerManagement</entityName>
+	<systemVersion>0</systemVersion>
+	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<ns2:eventHandler functionName="createCustomer">
+		   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createCustomer-201507132249">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+                    {
+                        PersonalInfoImpl defaultUser = new PersonalInfoImpl();
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.PersonalInfo", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Create Personal Information", new TableCallBack("customerInfoTable"));
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="openCustomerDetail">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openCustomerDetail-201507132246">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+                    {
+                        Table customerInfoTable = (Table)@page.getElement("customerInfoTable");
+                        if (customerInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        PersonalInfoImpl defaultUser = (PersonalInfoImpl)customerInfoTable.getSelectedRow();
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.PersonalInfo", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Modify Personal Information", new TableCallBack("customerInfoTable"));
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="openAddresses">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openAddresses-201507132240">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+                    {
+                        Table customerInfoTable = (Table)@page.getElement("customerInfoTable");
+                        if (customerInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        PersonalInfoImpl defaultUser = (PersonalInfoImpl)customerInfoTable.getSelectedRow();
+                        
+                        HashMap input = new HashMap();
+                        input.put("list", defaultUser.getAddresses());
+                        input.put("parentId", new Long(defaultUser.getId()));
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.AddressInfoTable", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Modify Personal Information", new TableCallBack("customerInfoTable"));
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="openContacts">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openContacts-201507132240">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+                    {
+                        Table customerInfoTable = (Table)@page.getElement("customerInfoTable");
+                        if (customerInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        PersonalInfoImpl defaultUser = (PersonalInfoImpl)customerInfoTable.getSelectedRow();
+                        
+                        HashMap input = new HashMap();
+                        input.put("list", defaultUser.getContacts());
+                        input.put("parentId", new Long(defaultUser.getId()));
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.ContactInfoTable", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Modify Personal Information", new TableCallBack("customerInfoTable"));
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
+		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+		    <ns2:UISkin xsi:type="ns2:UISkinType">
+                <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
+                <ns2:param name="text">
+                    <ns2:value xsi:type="ns2:StringPropertyType">
+                        <ns2:value></ns2:value>
+                    </ns2:value>
+                </ns2:param>
+                <ns2:param name="skin_titlepanel_content">
+                    <ns2:value xsi:type="ns2:StringPropertyType">
+                        <ns2:value>cust_skin_titlepanel_content</ns2:value>
+                    </ns2:value>
+                </ns2:param>
+            </ns2:UISkin>
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
+			    <ns2:ajaxLoad>false</ns2:ajaxLoad>
+                <ns2:tab uiid="customerInfoPanel">
+                    <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+                        <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+                        <ns2:key>org.shaolin.vogerp.commonmodel.page.PartyConfiguration.customerInfoPanel</ns2:key>
+                    </ns2:title>
+                    <ns2:panel UIID="customerInfoPanel">
+		                <ns2:layout xsi:type="ns2:TableLayoutType">
+		                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+		                    <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+		                </ns2:layout>
+		                <ns2:component xsi:type="ns2:UITableType" UIID="customerInfoTable">
+		                    <ns2:beElement>org.shaolin.vogerp.commonmodel.be.PersonalInfo</ns2:beElement>
+		                    <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Multiple</ns2:selectMode>
+		                    <ns2:defaultRowSize>10</ns2:defaultRowSize>
+		                    <ns2:showActionBar>true</ns2:showActionBar>
+		                    <ns2:showFilter>true</ns2:showFilter>
+		                    <ns2:query xsi:type="ns2:ExpressionPropertyType">
+		                        <ns2:expression xsi:type="ns2:ExpressionType">
+		                            <ns2:expressionString><![CDATA[
+		                            import java.util.List;
+		                            import org.shaolin.uimaster.page.ajax.TableConditions;
+		                            import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
+		                            import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+		                            import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+		                            {
+		                                  if ($tableCondition == null) {
+		                                     PersonalInfoImpl condition = new PersonalInfoImpl();
+		                                     $tableCondition = TableConditions.createCondition(condition);
+		                                  }
+		                                  PersonalInfoImpl condition = (PersonalInfoImpl)$tableCondition.getCondition();
+		                                  return CommonModel.INSTANCE.searchPersonInfo(condition,
+		                                                $tableCondition.getOrders(),
+		                                                $tableCondition.getOffset(), 
+		                                                $tableCondition.getCount());
+		                            }]]></ns2:expressionString>
+		                        </ns2:expression>
+		                    </ns2:query>
+		                    <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
+		                        <ns2:expression xsi:type="ns2:ExpressionType">
+		                            <ns2:expressionString><![CDATA[
+		                            import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
+		                            import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+		                            import org.shaolin.uimaster.page.ajax.TableConditions;
+		                            import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+		                            {
+		                                 if ($tableCondition == null) {
+		                                    $tableCondition = TableConditions.createCondition(new PersonalInfoImpl());
+		                                 }
+		                                 PersonalInfoImpl condition = (PersonalInfoImpl)$tableCondition.getCondition();
+		                                 return CommonModel.INSTANCE.searchPersonInfoCount(condition);
+		                            }]]></ns2:expressionString>
+		                        </ns2:expression>
+		                    </ns2:totalCount>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Name</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.firstName</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+		                        <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+		                            <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[$rowBE.getLastName() + " " + $rowBE.getFirstName()]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:rowExpression>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+		                            <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[{
+		                                    if($value.indexOf(" ") != -1) {
+		                                        String[] items = $value.split(" ");
+		                                        String firstName = items[0];
+		                                        String lastName = items[1];
+		                                        $rowBE.setFirstName(firstName);
+		                                        $rowBE.setLastName(lastName);
+		                                    } else {
+		                                        //prefer the first name if there is no space
+		                                        $rowBE.setFirstName($value);
+		                                    }
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:updateCondition>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Type</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.type</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+		                            <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.vogerp.commonmodel.ce.OrganizationType;
+		                                import org.shaolin.bmdp.runtime.AppContext;
+		                                import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+		                                {
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:updateCondition>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Gender</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.gender</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+		                            <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.bmdp.runtime.AppContext;
+		                                import org.shaolin.vogerp.commonmodel.ce.Gender;
+		                                {
+		                                    $rowBE.setGender((Gender)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.commonmodel.ce.Gender").getByIntValue(Integer.valueOf($value).intValue()));
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:updateCondition>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Is Married</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.married</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>CheckBox</ns2:type></ns2:uiType>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+		                            <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[$rowBE.setMarried("on".equals($value));]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:updateCondition>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Social Card</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.identityCardId</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Birthday</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.birthday</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+		                          <ns2:type>DateRange</ns2:type>
+		                          <ns2:startCondition>rowBE.birthdayStart</ns2:startCondition> 
+		                          <ns2:endCondition>rowBE.birthdayEnd</ns2:endCondition>
+		                        </ns2:uiType>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+		                            <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.vogerp.commonmodel.ce.Gender;
+		                                import org.shaolin.uimaster.page.od.formats.FormatUtil;
+		                                import java.util.Date;
+		                                {
+		                                    if ($value == null || "".equals($value)) {
+		                                        if ("rowBE.birthdayStart".equals($filterId)) {
+		                                            $rowBE.setBirthdayStart(null);
+		                                        } else {
+		                                            $rowBE.setBirthdayEnd(null);
+		                                        }
+		                                    } else {
+		                                        Date d = (Date)FormatUtil.convertUIToData(FormatUtil.DATE, $value);
+		                                        if ("rowBE.birthdayStart".equals($filterId)) {
+		                                            $rowBE.setBirthdayStart(d);
+		                                        } else {
+		                                            $rowBE.setBirthdayEnd(d);
+		                                        }
+		                                    }
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:updateCondition>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Education</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.education</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+		                            <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.vogerp.commonmodel.ce.EducationLevel;
+		                                import org.shaolin.bmdp.runtime.AppContext;
+		                                {
+		                                    $rowBE.setEducation((EducationLevel)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.commonmodel.ce.EducationLevel").getByIntValue(Integer.valueOf($value).intValue()));
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:updateCondition>
+		                    </ns2:column>
+		                    <ns2:defaultActions>
+		                        <ns2:defaultNewAction>createCustomer</ns2:defaultNewAction>
+		                        <ns2:defaultOpenAction>openCustomerDetail</ns2:defaultOpenAction>
+		                        <ns2:defaultEnableAction>enableUser</ns2:defaultEnableAction>
+		                        <ns2:defaultDisableAction>disableUser</ns2:defaultDisableAction>
+		                    </ns2:defaultActions>
+		                    <ns2:actionGroup>
+		                        <ns2:type>radio</ns2:type>
+		                        <ns2:action>
+		                            <ns2:uiid>openPAccount</ns2:uiid>
+		                            <ns2:title xsi:type="ns2:StringPropertyType">
+		                                <ns2:value>Open Personal Account</ns2:value>
+		                            </ns2:title>
+		                            <ns2:icon>ui-icon-note</ns2:icon>
+		                            <ns2:function>openPersonalAccount</ns2:function>
+		                        </ns2:action>
+		                        <ns2:action>
+		                            <ns2:uiid>openAddresses</ns2:uiid>
+		                            <ns2:title xsi:type="ns2:StringPropertyType">
+		                                <ns2:value>Open Addresses</ns2:value>
+		                            </ns2:title>
+		                            <ns2:icon>ui-icon-note</ns2:icon>
+		                            <ns2:function>openAddresses</ns2:function>
+		                        </ns2:action>
+		                        <ns2:action>
+		                            <ns2:uiid>openContacts</ns2:uiid>
+		                            <ns2:title xsi:type="ns2:StringPropertyType">
+		                                <ns2:value>Open Contacts</ns2:value>
+		                            </ns2:title>
+		                            <ns2:icon>ui-icon-note</ns2:icon>
+		                            <ns2:function>openContacts</ns2:function>
+		                        </ns2:action>
+		                    </ns2:actionGroup>
+		                </ns2:component>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>customerInfoTable</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="0" y="0" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+                    </ns2:panel>
+                </ns2:tab>
+            </ns2:component>
+			<ns2:layoutConstraint>
+                <ns2:componentId>functionsTab</ns2:componentId>
+                <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                    x="0" y="0" align="FULL"></ns2:constraint>
+            </ns2:layoutConstraint>
+		</ns2:body>
+	</ns2:UIEntity>
+	<ns2:ODMapping>
+		<ns2:DataEntity scope="InOut" name="personalInfo" category="BusinessEntity">
+	      <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo"></type>
+	    </ns2:DataEntity>
+	</ns2:ODMapping>
+	<ns2:in>
+		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">
+			<ns2:expressionString><![CDATA[
+			import org.shaolin.bmdp.runtime.AppContext;
+			{
+			  @odContext.executeAllMappings();
+			}]]></ns2:expressionString>
+		</ns2:serverOperation>
+	</ns2:in>
+</ns2:UIPage>

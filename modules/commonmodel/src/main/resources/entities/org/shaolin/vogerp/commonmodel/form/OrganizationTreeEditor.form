@@ -1,0 +1,367 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.commonmodel.form.OrganizationTreeEditor</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="clickTreeNode">
+      <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showSubOrgInfoPanel">
+           <ns2:exp>
+               <ns2:expressionString><![CDATA[
+               import java.util.HashMap;
+               import org.shaolin.uimaster.page.AjaxContext;
+               import org.shaolin.uimaster.page.AjaxActionHelper;
+               import org.shaolin.uimaster.page.ajax.*;
+               import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+               import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+               {
+                   Tree tree = (Tree)@page.getElement("organizationTree");
+                   if (tree.getSelectedItemId() == null || tree.getSelectedItemId().length() == 0) {
+                      return;
+                   }
+                   
+                   if (@page.existElement("newOrgForm")) {
+                       @page.getElement("newOrgForm").remove();
+                   }
+                   OrganizationImpl condition = new OrganizationImpl();
+                   condition.setOrgCode(tree.getSelectedItemId());
+                   java.util.List subgroups = CommonModel.INSTANCE.searchOrganization(condition, null, 0, -1);
+                   
+                   HashMap input = new HashMap();
+                   input.put("beObject", subgroups.get(0));
+                   input.put("editable", new Boolean(true));
+                   RefForm form = new RefForm("newOrgForm", "org.shaolin.vogerp.commonmodel.form.Organization", input);
+                   Panel detailPanel = (Panel)@page.getElement("detailPanel");
+                   detailPanel.append(form);
+               }
+               ]]></ns2:expressionString>
+           </ns2:exp>
+       </ns2:ops>
+       <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+            $(elementList["organizationTreeForm.detailPanel"]).css("height","270px");
+            $(elementList["organizationTreeForm.newOrgForm.okbtn"]).addClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
+            $(elementList["organizationTreeForm.newOrgForm.cancelbtn"]).addClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only");
+            $(elementList["organizationTreeForm.newOrgForm.okbtn"]).parent().css("text-align","right");
+            $(elementList["organizationTreeForm.newOrgForm.cancelbtn"]).parent().css("text-align","right");
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="createSubOrg">
+      <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createSubOrgInfoPanel">
+           <ns2:exp>
+               <ns2:expressionString><![CDATA[
+               import java.util.HashMap;
+               import org.shaolin.uimaster.page.AjaxContext;
+               import org.shaolin.uimaster.page.AjaxActionHelper;
+               import org.shaolin.uimaster.page.ajax.*;
+               import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+               import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+               {
+                   Tree tree = (Tree)@page.getElement("organizationTree");
+                   if (tree.getSelectedItemId() == null || tree.getSelectedItemId().length() == 0) {
+                      return;
+                   }
+                   
+                   if (@page.existElement("newOrgForm")) {
+                       @page.getElement("newOrgForm").remove();
+                   }
+               
+                   OrganizationImpl defaultUser = new OrganizationImpl();
+                   defaultUser.setOrgCode(tree.getSelectedParentItemId());
+                   java.util.List subgroups = CommonModel.INSTANCE.searchOrganization(defaultUser, null, 0, -1);
+                   OrganizationImpl parent = (OrganizationImpl)subgroups.get(0);
+                   defaultUser.setParentId(parent.getId());
+                   defaultUser.setOrgCode(tree.getSelectedItemId());
+                   defaultUser.setName(tree.getSelectedNodeName());
+                   
+                   HashMap input = new HashMap();
+                   input.put("beObject", defaultUser);
+                   input.put("editable", new Boolean(true));
+                   RefForm form = new RefForm("newOrgForm", "org.shaolin.vogerp.commonmodel.form.Organization", input);
+                   @page.addElement(form);
+                   
+                   Panel detailPanel = (Panel)@page.getElement("detailPanel");
+                   detailPanel.append(form);
+               }
+               ]]></ns2:expressionString>
+           </ns2:exp>
+       </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="expandTree">
+      <ns2:ops xsi:type="ns2:OpCallAjaxType" name="expandTreeNode">
+           <ns2:exp>
+               <ns2:expressionString><![CDATA[
+               import java.util.List;
+               import java.util.ArrayList;
+               import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+               import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+               import org.shaolin.uimaster.page.ajax.Tree;
+               import org.shaolin.uimaster.page.ajax.TreeItem;
+               import org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute;
+               import org.shaolin.uimaster.page.ajax.TreeConditions;
+               {
+                   Tree tree = (Tree)@page.getElement("organizationTree");
+                   if (tree.getSelectedItemId() == null || tree.getSelectedItemId().length() == 0) {
+                      return;
+                   }
+                   
+                   OrganizationImpl condition = new OrganizationImpl();
+                   condition.setOrgCode(tree.getSelectedItemId());
+                   List subgroups = CommonModel.INSTANCE.searchOrganization(condition, null, 0, -1);
+                   
+                   OrganizationImpl parentOrg = (OrganizationImpl)subgroups.get(0);
+                   condition.setParentId(parentOrg.getId());
+                   condition.setOrgCode(null);
+                   subgroups = CommonModel.INSTANCE.searchSubOrganizationInfo(condition, null, 0, -1);
+                   
+                   ArrayList result = new ArrayList();
+                   for (int i=0;i<subgroups.size();i++) {
+                       OrganizationImpl mg = (OrganizationImpl)subgroups.get(i);
+                       TreeItem gitem = new TreeItem();
+                       gitem.setId(mg.getOrgCode());
+                       gitem.setText(mg.getName());
+                       //gitem.setIcon(mg.getSmallIcon());
+                       gitem.setHasChildren(true);
+                            
+                       result.add(gitem);
+                   }
+                   return result;
+               }
+               ]]></ns2:expressionString>
+           </ns2:exp>
+       </ns2:ops>
+  </ns2:eventHandler>
+    <ns2:eventHandler functionName="deleteNode">
+      <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deleteTreeNode">
+           <ns2:exp>
+               <ns2:expressionString><![CDATA[
+               import java.util.List;
+               import java.util.ArrayList;
+               import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+               import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+               import org.shaolin.uimaster.page.ajax.Tree;
+               import org.shaolin.uimaster.page.ajax.TreeItem;
+               import org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute;
+               import org.shaolin.uimaster.page.ajax.TreeConditions;
+               {
+                   Tree tree = (Tree)@page.getElement("organizationTree");
+                   if (tree.getSelectedItemId() == null || tree.getSelectedItemId().length() == 0) {
+                      return;
+                   }
+                   
+                   OrganizationImpl condition = new OrganizationImpl();
+                   condition.setOrgCode(tree.getSelectedItemId());
+                   List subgroups = CommonModel.INSTANCE.searchOrganization(condition, null, 0, -1);
+                   CommonModel.INSTANCE.delete(((OrganizationImpl)subgroups.get(0)));
+               }
+               ]]></ns2:expressionString>
+           </ns2:exp>
+       </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Cancel">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-1509902581">
+      <ns2:exp>
+        <expressionString>
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            form.closeIfinWindows();
+            
+            @page.removeForm(@page.getEntityUiid()); 
+        }
+        </expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="rootPanel">
+      <!-- 
+      <ns2:UISkin xsi:type="ns2:UISkinType">
+        <ns2:skinName>org.shaolin.uimaster.page.skin.SlidePanel</ns2:skinName>
+        <ns2:param name="leftPanel">
+            <ns2:value xsi:type="ns2:StringPropertyType">
+                <ns2:value>treePanel</ns2:value>
+            </ns2:value>
+        </ns2:param>
+        <ns2:param name="rightPanel">
+            <ns2:value xsi:type="ns2:StringPropertyType">
+                <ns2:value>detailPanel</ns2:value>
+            </ns2:value>
+        </ns2:param>
+      </ns2:UISkin>
+       -->
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>80</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIPanelType" UIID="treePanel">
+        <ns2:UISkin xsi:type="ns2:UISkinType">
+            <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
+            <ns2:param name="text">
+                <ns2:value xsi:type="ns2:StringPropertyType">
+                    <ns2:value></ns2:value>
+                </ns2:value>
+            </ns2:param>
+        </ns2:UISkin>
+        <ns2:layout xsi:type="ns2:TableLayoutType">
+            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+            <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        </ns2:layout>
+        <ns2:component xsi:type="ns2:UIWebTreeType" UIID="organizationTree">
+            <ns2:title xsi:type="ns2:StringPropertyType">
+                <ns2:value>Organization Overview</ns2:value>
+            </ns2:title>
+            <ns2:opened>true</ns2:opened>
+            <ns2:nodeIcon>/images/nodeicon.jpg</ns2:nodeIcon>
+            <ns2:itemIcon>/images/itemicon.jpg</ns2:itemIcon>
+            <ns2:selectMode>Multiple</ns2:selectMode>
+            <ns2:expandTreeEvent>expandTreeNode</ns2:expandTreeEvent>
+            <ns2:selectNodeEvent>clickTreeNode</ns2:selectNodeEvent>
+            <ns2:addNodeEvent>createSubOrg</ns2:addNodeEvent>
+            <ns2:deleteNodeEvent>deleteNode</ns2:deleteNodeEvent>
+            <ns2:refreshNodeEvent>expandTreeNode</ns2:refreshNodeEvent>
+            <ns2:initExpression xsi:type="ns2:ExpressionPropertyType">
+                <ns2:expression xsi:type="ns2:ExpressionType">
+                    <ns2:expressionString><![CDATA[
+                    import java.util.List;
+                    import java.util.ArrayList;
+                    import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+                    import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                    import org.shaolin.uimaster.page.ajax.TreeItem;
+                    import org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute;
+                    import org.shaolin.uimaster.page.ajax.TreeConditions;
+                    {
+                        OrganizationImpl root = (OrganizationImpl)$beObject;
+                        TreeItem gitem = new TreeItem();
+                        gitem.setId(root.getOrgCode());
+                        gitem.setText(root.getName());
+                        //gitem.setIcon(root.getSmallIcon());
+                        
+                        ArrayList result = new ArrayList();
+                        result.add(gitem);
+                        
+                        OrganizationImpl subCondition = new OrganizationImpl();
+                        subCondition.setParentId(root.getId());
+                        List categories = CommonModel.INSTANCE.searchSubOrganizationInfo(subCondition, null, 0, -1);
+                        for (int j=0;j<categories.size();j++) {
+                            OrganizationImpl m = (OrganizationImpl)categories.get(j);
+                            TreeItem item = new TreeItem();
+                            item.setId(m.getOrgCode());
+                            item.setText(m.getName());
+                            //item.setA_attr(new org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute(m.getAccessURL()));
+                            //item.setIcon(m.getSmallIcon());
+                            item.setHasChildren(true);
+                            
+                            gitem.getChildren().add(item);
+                        } 
+                        return result;
+                    }]]></ns2:expressionString>
+                </ns2:expression>
+            </ns2:initExpression>
+        </ns2:component>
+        <ns2:layoutConstraint>
+            <ns2:componentId>organizationTree</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                x="0" y="0" align="FULL"></ns2:constraint>
+        </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="detailPanel">
+        <ns2:UISkin xsi:type="ns2:UISkinType">
+            <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
+            <ns2:param name="text">
+                <ns2:value xsi:type="ns2:StringPropertyType">
+                    <ns2:value></ns2:value>
+                </ns2:value>
+            </ns2:param>
+        </ns2:UISkin>
+        <ns2:layout xsi:type="ns2:TableLayoutType">
+            <ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
+            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+        </ns2:layout>
+    </ns2:component>
+    <ns2:layoutConstraint>
+        <ns2:componentId>treePanel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+            x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+        <ns2:componentId>detailPanel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+            x="1" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Cancel"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:editable xsi:type="ns2:ExpressionPropertyType">
+          <ns2:expression>
+            <expressionString>{return $editable;}</expressionString>
+          </ns2:expression>
+        </ns2:editable>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>OKbtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Cancel"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>Cancelbtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>okbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>rootPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.commonmodel.be.Organization"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
+    <ns2:DataToUIMappingOperation>
+      <expressionString>{
+@odContext.executeAllMappings();
+}</expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>{
+@odContext.executeAllMappings();
+}</expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

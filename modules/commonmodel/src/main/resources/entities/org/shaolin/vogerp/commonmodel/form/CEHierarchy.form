@@ -1,0 +1,212 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.commonmodel.form.CEHierarchy</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="createItem">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createItem_tretrqew">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
+        { 
+            Table tableWidget = (Table)@page.getElement("constantItemTable");
+            int i = tableWidget.getListData().size();
+            String pid = @page.getLabel("selectCENameUI").getValue();
+            CEExtensionImpl item = new CEExtensionImpl();
+            item.setCeName(pid);
+            tableWidget.addRow(item);
+            
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="deleteItem">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="delete_fqw23423">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            Table tableWidget = (Table)@page.getElement("constantItemTable");
+            if (tableWidget.getSelectedRow() == null) {
+                return;
+            }
+            tableWidget.deleteRow(tableWidget.getSelectedIndex());
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Save">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveItem_2040990210">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.List;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.uimaster.page.ajax.*;
+		import org.shaolin.bmdp.runtime.ce.ConstantServiceImpl;
+        import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
+        import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+        import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+        import org.shaolin.bmdp.runtime.ce.ConstantServiceImpl;
+        import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
+        { 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="expandTreeNode">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="expandTreeNode_2040990210">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.List;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.uimaster.page.ajax.*;
+		import org.shaolin.bmdp.runtime.ce.ConstantServiceImpl;
+        import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
+        import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+        import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+        import org.shaolin.bmdp.runtime.ce.ConstantServiceImpl;
+        import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
+        { 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Cancel">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail1358686533">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            form.closeIfinWindows(true);
+            @page.removeForm(@page.getEntityUiid()); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="selectCENameUI">
+          <ns2:secure>true</ns2:secure>
+      </ns2:component>
+	  <ns2:component xsi:type="ns2:UIWebTreeType" UIID="ceTree">
+	      <ns2:title xsi:type="ns2:StringPropertyType">
+	          <ns2:value>Constant Hierarchy</ns2:value>
+	      </ns2:title>
+	      <ns2:opened>true</ns2:opened>
+	      <ns2:nodeIcon>/images/nodeicon.jpg</ns2:nodeIcon>
+	      <ns2:itemIcon>/images/itemicon.jpg</ns2:itemIcon>
+	      <ns2:selectMode>Multiple</ns2:selectMode>
+	      <ns2:expandTreeEvent>expandTreeNode</ns2:expandTreeEvent>
+	      <ns2:selectNodeEvent>clickTreeNode</ns2:selectNodeEvent>
+	      <ns2:deleteNodeEvent>moveNode</ns2:deleteNodeEvent>
+	      <ns2:initExpression xsi:type="ns2:ExpressionPropertyType">
+	          <ns2:expression xsi:type="ns2:ExpressionType">
+	              <ns2:expressionString><![CDATA[
+	              import java.util.ArrayList;
+	              import org.shaolin.bmdp.runtime.AppContext;
+	              import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+	              {
+	              	  ArrayList result = new ArrayList();
+	                  CEOperationUtil.getCEHierarchy(null, result, null, AppContext.get().getConstantService().getConstantEntity($ceName));
+	                  return result;
+	              }]]></ns2:expressionString>
+	          </ns2:expression>
+	      </ns2:initExpression>
+	  </ns2:component>
+	  <ns2:layoutConstraint>
+        <ns2:componentId>ceTree</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Save"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:editable xsi:type="ns2:ExpressionPropertyType">
+          <ns2:expression>
+            <expressionString>{return $editable;}</expressionString>
+          </ns2:expression>
+        </ns2:editable>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>OKbtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Cancel"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>Cancelbtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>okbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="ceName" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+		<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+		<ns2:UIComponent componentPath="selectCENameUI" paramName="UIWidgetType"></ns2:UIComponent>
+		<ns2:DataComponent xsi:type="ns2:ComponentParamType"
+			componentPath="ceName" paramName="StringData"></ns2:DataComponent>
+	</ns2:ComponentMapping>
+    <ns2:DataToUIMappingOperation>
+      <expressionString><![CDATA[
+      {
+	      @odContext.executeAllMappings();
+      }   
+    ]]></expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>
+      {
+		@odContext.executeAllMappings();
+	  }
+	  </expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

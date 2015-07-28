@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.shaolin.vogerp.accounting.be.DoubleEntryImpl" table="DOUBLEENTRY">
+    <property name="id" column="ID"/>
+    <property name="relatedTransId" column="RELATEDTRANSID"/>
+    <property name="isLended" column="ISLENDED"/>
+    <property name="amount" column="AMOUNT"/>
+    <property name="comments" column="COMMENTS"/>
+    <property name="typeInt" type="integer" column="TYPE"/>
+    <property name="_enable" type="boolean" column="_enable"/>
+  </class>
+</hibernate-mapping>

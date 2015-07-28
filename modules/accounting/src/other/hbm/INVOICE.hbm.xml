@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.shaolin.vogerp.accounting.be.InvoiceImpl" table="INVOICE">
+    <property name="id" column="ID"/>
+    <property name="serialNumber" column="SERIALNUMBER"/>
+    <property name="customerInfo" column="CUSTOMERINFO"/>
+    <property name="description" column="DESCRIPTION"/>
+    <property name="createDate" type="date" column="CREATEDATE"/>
+    <property name="roleInt" type="integer" column="ROLE"/>
+    <property name="statusInt" type="integer" column="STATUS"/>
+    <property name="paymentPartyId" column="PAYMENTPARTYID"/>
+    <property name="source" column="SOURCE"/>
+    <property name="targetPartyId" column="TARGETPARTYID"/>
+    <property name="destination" column="DESTINATION"/>
+    <property name="_enable" type="boolean" column="_enable"/>
+    <property name="_version" type="int" column="_version"/>
+    <property name="_starttime" type="timestamp" column="_starttime"/>
+    <property name="_endtime" type="timestamp" column="_endtime"/>
+    <property name="_optuserid" type="long" column="_optuserid"/>
+  </class>
+</hibernate-mapping>

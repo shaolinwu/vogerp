@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.shaolin.vogerp.productmodel.be.ProductPriceImpl" table="PROD_PRODUCTPRICE">
+    <id name="id" column="ID">
+      <generator class="native" />
+    </id>
+    <property name="productId" column="PRODUCTID"/>
+    <property name="partyId" column="PARTYID"/>
+    <property name="price" column="PRICE"/>
+    <property name="packages" column="PACKAGE"/>
+    <property name="exceedAmount" column="EXCEEDAMOUNT"/>
+    <property name="discount" column="DISCOUNT"/>
+    <property name="comments" column="COMMENTS"/>
+    <property name="typeInt" type="integer" column="TYPE"/>
+    <property name="_enable" type="boolean" column="_enable"/>
+  </class>
+</hibernate-mapping>

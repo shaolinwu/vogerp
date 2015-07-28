@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.shaolin.vogerp.productmodel.be.WarehouseImpl" table="PROD_WAREHOUSE">
+    <id name="id" column="ID">
+      <generator class="native" />
+    </id>
+    <property name="parentId" column="PARENTID"/>
+    <property name="name" column="NAME"/>
+    <property name="description" column="DESCRIPTION"/>
+    <property name="containerTypeInt" type="integer" column="CONTAINERTYPE"/>
+    <property name="location" column="LOCATION"/>
+    <property name="photoPath" column="PHOTOPATH"/>
+    <property name="_enable" type="boolean" column="_enable"/>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bediagram:BEDiagram xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:bediagram="http://bmdp.shaolin.org/datamodel/BEDiagram"
+	xmlns:common="http://bmdp.shaolin.org/datamodel/Common">
+	<name>AccountingModel</name>
+	<bePackage>org.shaolin.vogerp.accounting.be</bePackage>
+	<cePackage>org.shaolin.vogerp.accounting.ce</cePackage>
+	<diagramPackage>org.shaolin.vogerp.accounting.diagram</diagramPackage>
+	
+	<!-- 
+	一个完整的企业财务模型包括三张表：资产负债表、利润表、现金流量表。这三张表相互联系，互相影响，构成了对一个企业财务运营的完整模拟。
+	通过对模型参数的调整，可以对企业的各种运营状况进行研究，从而对现金流和估值有深入的分析。
+	 -->
+	
+	<bediagram:beEntity needHistory="true" needPersist="true" needUIEntity="true">
+		<common:entityName>Transaction</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>partyId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>invoiceId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>amount</bediagram:name>
+			<bediagram:type xsi:type="bediagram:DoubleType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 税后 -->
+			<bediagram:name>plusTax</bediagram:name>
+			<bediagram:type xsi:type="bediagram:DoubleType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>comments</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+            <bediagram:name>type</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="ClassifyOfAccounts" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>doubleEnties</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEListType">
+                <bediagram:elementType xsi:type="bediagram:BEObjRefType">
+                    <bediagram:targetEntity entityName="DoubleEntry" />
+                </bediagram:elementType>
+            </bediagram:type>
+        </bediagram:member>
+	</bediagram:beEntity>
+	
+	<!-- 复式记账法 -->
+	<bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
+		<common:entityName>DoubleEntry</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 一个会计事务，可以基于别一个会计事务 -->
+			<bediagram:name>relatedTransId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 借、贷 -->
+			<bediagram:name>isLended</bediagram:name>
+			<bediagram:type xsi:type="bediagram:BooleanType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>amount</bediagram:name>
+			<bediagram:type xsi:type="bediagram:DoubleType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>comments</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+            <bediagram:name>type</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="ClassifyOfAccounts" />
+            </bediagram:type>
+        </bediagram:member>
+	</bediagram:beEntity>
+	
+	<!-- 预算是企业用来财务控制的一般方法，对资金的使用进行统一计划的一种机制。可分为月，季或年度预算等。 
+	
+	企业预算一般分为业务预算、资本支出预算、财务预算三种。业务预算指的是与企业基本生产经营活动相关的预算，
+	主要包括销售预算、生产预算、材料预算、人工预算、费用预算（制造费用预算、期间费用预算）等。资本支出预算是
+	企业长期投资项目（如固定资产购建、扩建等）的预算。财务预算指有关现金收支、经营成果、财务状况的预算，包括
+	现金预算、预计利润表、预计资产负债表。销售预算是整个预算编制工作的起点和主要依据。
+	公司应根据当年的经营目标，通过市场预测，结合各种产品的历史销售量、销售价格等数据，确定预测年度的销售数量、单价和销售收入。
+	在销售预算的基础上，编制生产预算，根据预测销售量、预测期初和期末的存货量，得出预测生产量。然后，根据生产
+	预算，编制材料预算、人工预算，制造费用预算。制造费用预算的编制分变动制造费用和固定制造费用两部分，变动
+	制造费用预算的编制以生产预算为基础，根据预计的各种产品产量以及单位产品所需工时和每小时的变动制造费用
+	率计算编制。产品成本预算根据生产预算、材料预算、人工预算、制造费用预算编制。销售费用预算根据销售预算编制
+	而成。管理费用预算一般根据历史实际开支为基础编制。现金预算是财务预算的核心。现金预算的内容包括现金的收入
+	、支出、盈赤（现金的多余或不足）、筹措与利用等。现金预算的编制以各项业务预算、资本支出预算的数据为基础。
+	预计损益表是对企业经营成果的预测，根据业务预算编制而成。预计资产负债表是对企业财务状况的预测，根据期初
+	资产负债表、业务预算编制而成。
+	-->
+	<bediagram:beEntity needPersist="true" needUIEntity="true">
+		<common:entityName>Budget</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+            <bediagram:name>dateType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="BudgetDateType" />
+            </bediagram:type>
+        </bediagram:member>
+		<bediagram:member>
+            <bediagram:name>startDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>endDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+			<bediagram:name>partyType</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 定期预算就是以会计年度为单位编制的各类预算。滚动预算又称永续预算，其主要特点在于：
+			不将预算期与会计年度挂钩，而是始终保持十二个月，每过去一个月，就根据新的情况进行调整和修订后几个月的预算，
+			并在原预算基础上增补下一个月预算，从而逐期向后滚动，连续不断地以预算形式规划未来经营活动。
+			定期预算与滚动预算的区别：
+			定期预算一般以会计年度为单位定期编制，滚动预算不将预算期与会计年度挂钩，而是连续不断向后滚动,始终保持十二个月。 -->
+			<bediagram:name>isRolling</bediagram:name>
+			<bediagram:type xsi:type="bediagram:BooleanType" />
+		</bediagram:member>
+		<bediagram:member>
+            <bediagram:name>type</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="ClassifyOfAccounts" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>state</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="BudgetStatusType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>	
+            <bediagram:name>items</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEListType">
+                <bediagram:elementType xsi:type="bediagram:BEObjRefType">
+                    <bediagram:targetEntity entityName="BudgetItem" />
+                </bediagram:elementType>
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+			<bediagram:name>comments</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+	</bediagram:beEntity>
+
+	<bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
+		<common:entityName>BudgetItem</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>amount</bediagram:name>
+			<bediagram:type xsi:type="bediagram:DoubleType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>reason</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+	</bediagram:beEntity>
+
+	<!-- 
+	会计期间(accounting period),(fiscal period):前提是根据连续经营假设，将连续的经营过程划分为适当的时间段落，
+	在每一段落结束时办理一次结算，此种时间段落作为计算损益的时间单位，称为会计期间。例如，一个月，一个季度，一个年度。
+	会计期间通常以“年”来计量，称为会计年度，中国企业会计准则规定了中国企业以日历年度为企业会计年度，即从公历元月1日
+	起到12月31日止。此外，还可进一步分为季度与月度。有了会计期间假定，才有了企业“某年盈利多少”，“某年亏损多少”等说法。
+	 -->	
+	<!-- 资产负债表 -->
+	<bediagram:beEntity needHistory="true" needPersist="true" needUIEntity="true">
+		<common:entityName>InBalanceSheet</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>transId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+	</bediagram:beEntity>
+	
+	<!-- 损益表是反映企业在一定会计期间经营成果的报表由于它反映的是某一期间的情况，所以，又称为动态报表。有时，利润表也称为损益表、收益表。 -->
+	<bediagram:beEntity needHistory="true" needPersist="true" needUIEntity="true">
+		<common:entityName>ProfitSheet</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>transId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+	</bediagram:beEntity>
+	
+	<!-- 现金流表 -->
+	<bediagram:beEntity needHistory="true" needPersist="true" needUIEntity="true">
+		<common:entityName>CashFlowSheet</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>transId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+	</bediagram:beEntity>
+	
+	<bediagram:ceEntity>
+		<!-- 会计科目表，从网上下载。 -->
+		<common:entityName>ClassifyOfAccounts</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Assets</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Assets Classification</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Liabilities</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Liabilities Classification</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>OwnerEquity</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>Owner Equity Classification</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Common</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>Common Classification</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Profit</bediagram:value>
+			<bediagram:intValue>4</bediagram:intValue>
+			<bediagram:description>Profit Classification</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Cost</bediagram:value>
+			<bediagram:intValue>5</bediagram:intValue>
+			<bediagram:description>Cost Classification</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	
+	<bediagram:ceEntity>
+		<common:entityName>BudgetType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Assets</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Assets Classification</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Marketing</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Marketing Classification</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Production</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>Production Classification</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>InternalAdmin</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>Internal Administrative Classification</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	
+	<bediagram:ceEntity>
+		<common:entityName>BudgetStatusType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Created</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Created</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Requested</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Requested</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Rejected</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>Rejected</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Cancelled</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>Cancelled</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Approved</bediagram:value>
+			<bediagram:intValue>4</bediagram:intValue>
+			<bediagram:description>Approved</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	
+	<bediagram:ceEntity>
+		<common:entityName>BudgetDateType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Yearly</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>Yearly</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Seasonly</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>Seasonly</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Monthly</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>Monthly</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Weekly</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>Weekly</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	
+</bediagram:BEDiagram>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.commonmodel.page.CustomerInformation</entityName>
+	<systemVersion>0</systemVersion>
+	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<ns2:eventHandler functionName="createUser">
+		   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showBlankpersonalInfoPanel">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+                    {
+                        PersonalInfoImpl defaultUser = new PersonalInfoImpl();
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.PersonalInfo", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Create Personal Information", new TableCallBack("personalInfoTable"));
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="openUserDetail">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showpersonalInfoPanel">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+                    {
+                        Table personalInfoTable = (Table)@page.getElement("personalInfoTable");
+                        if (personalInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        PersonalInfoImpl defaultUser = (PersonalInfoImpl)personalInfoTable.getSelectedRow();
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.PersonalInfo", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Modify Personal Information", new TableCallBack("personalInfoTable"));
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="deleteUser"></ns2:eventHandler>
+		<ns2:eventHandler functionName="createOrg">
+           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showBlankOrgInfoPanel">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+                    {
+                        OrganizationImpl defaultUser = new OrganizationImpl();
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("organizationForm", "org.shaolin.vogerp.commonmodel.form.Organization", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Create Organization Information", new TableCallBack("organizationInfoTable"));
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+		    <ns2:UISkin xsi:type="ns2:UISkinType">
+                <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
+                <ns2:param name="text">
+                    <ns2:value xsi:type="ns2:StringPropertyType">
+                        <ns2:value></ns2:value>
+                    </ns2:value>
+                </ns2:param>
+                <ns2:param name="skin_titlepanel_content">
+                    <ns2:value xsi:type="ns2:StringPropertyType">
+                        <ns2:value>cust_skin_titlepanel_content</ns2:value>
+                    </ns2:value>
+                </ns2:param>
+            </ns2:UISkin>
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
+			    <ns2:ajaxLoad>true</ns2:ajaxLoad>
+                <ns2:tab uiid="personalInfoForm">
+                    <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+                        <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+                        <ns2:key>org.shaolin.vogerp.commonmodel.page.CustomerInformation.personalInfoPanel</ns2:key>
+                    </ns2:title>
+                    <ns2:refEntity UIID="personalInfoForm">
+		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.PersonalInfo" />
+		            </ns2:refEntity>
+                </ns2:tab>
+                <ns2:tab uiid="personalAccountForm">
+                    <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+                        <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+                        <ns2:key>org.shaolin.vogerp.commonmodel.page.CustomerInformation.personalAccountPanel</ns2:key>
+                    </ns2:title>
+                    <ns2:refEntity UIID="personalAccountForm">
+		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.PersonalAccount" />
+		            </ns2:refEntity>
+                </ns2:tab>
+                <ns2:tab uiid="contractForm">
+                    <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+                        <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+                        <ns2:key>org.shaolin.vogerp.commonmodel.page.CustomerInformation.contractPanel</ns2:key>
+                    </ns2:title>
+                    <ns2:refEntity UIID="contractForm">
+		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.ContactInfoTable" />
+		            </ns2:refEntity>
+                </ns2:tab>
+                <ns2:tab uiid="addressForm">
+                    <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+                        <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+                        <ns2:key>org.shaolin.vogerp.commonmodel.page.CustomerInformation.addressPanel</ns2:key>
+                    </ns2:title>
+                    <ns2:refEntity UIID="addressForm">
+		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.AddressInfoTable" />
+		            </ns2:refEntity>
+                </ns2:tab>
+            </ns2:component>
+			<ns2:layoutConstraint>
+                <ns2:componentId>functionsTab</ns2:componentId>
+                <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                    x="0" y="0" align="FULL"></ns2:constraint>
+            </ns2:layoutConstraint>
+		</ns2:body>
+	</ns2:UIEntity>
+	<ns2:ODMapping>
+		<ns2:DataEntity scope="InOut" name="personalInfo" category="BusinessEntity">
+	      <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo"></type>
+	    </ns2:DataEntity>
+	    <ns2:DataEntity scope="InOut" name="personalAccount" category="BusinessEntity">
+	      <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalAccount"></type>
+	    </ns2:DataEntity>
+	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+	      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.PersonalInfo"></ns2:mappingRule>
+	      <ns2:UIComponent componentPath="personalInfoForm" paramName="UIWidgetType"></ns2:UIComponent>
+	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalInfo" paramName="beObject"></ns2:DataComponent>
+	      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
+	        <ns2:expression>
+	          <expressionString>Boolean.TRUE</expressionString>
+	        </ns2:expression>
+	      </ns2:DataComponent>
+	    </ns2:ComponentMapping>
+	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.PersonalAccount"></ns2:mappingRule>
+          <ns2:UIComponent componentPath="personalAccountForm" paramName="UIWidgetType"></ns2:UIComponent>
+          <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalAccount" paramName="beObject"></ns2:DataComponent>
+          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
+	        <ns2:expression>
+	          <expressionString>Boolean.TRUE</expressionString>
+	        </ns2:expression>
+	      </ns2:DataComponent>
+        </ns2:ComponentMapping>
+        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.ContactInfoTable"></ns2:mappingRule>
+          <ns2:UIComponent componentPath="contractForm" paramName="UIWidgetType"></ns2:UIComponent>
+          <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalInfo.contacts" paramName="list"></ns2:DataComponent>
+          <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalInfo.id" paramName="parentId"></ns2:DataComponent>
+          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
+	        <ns2:expression>
+	          <expressionString>Boolean.TRUE</expressionString>
+	        </ns2:expression>
+	      </ns2:DataComponent>
+        </ns2:ComponentMapping>
+        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
+          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.AddressInfoTable"></ns2:mappingRule>
+          <ns2:UIComponent componentPath="addressForm" paramName="UIWidgetType"></ns2:UIComponent>
+          <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalInfo.addresses" paramName="list"></ns2:DataComponent>
+          <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalInfo.id" paramName="parentId"></ns2:DataComponent>
+          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
+	        <ns2:expression>
+	          <expressionString>Boolean.TRUE</expressionString>
+	        </ns2:expression>
+	      </ns2:DataComponent>
+        </ns2:ComponentMapping>
+	</ns2:ODMapping>
+	<ns2:in>
+		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">
+			<ns2:expressionString><![CDATA[
+			import org.shaolin.bmdp.runtime.AppContext;
+		    import org.shaolin.vogerp.commonmodel.IUserService;
+		    import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
+		    import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+		    import org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl;
+		    import org.shaolin.uimaster.page.flow.WebflowConstants;
+			{
+			  $personalAccount = (PersonalAccountImpl)@odContext.getRequest().getSession().getAttribute(WebflowConstants.USER_SESSION_KEY);
+			  $personalInfo = $personalAccount.getInfo();
+			  //$contract = new OrganizationContractImpl();
+			  
+			  @odContext.executeAllMappings();
+			}]]></ns2:expressionString>
+		</ns2:serverOperation>
+	</ns2:in>
+</ns2:UIPage>

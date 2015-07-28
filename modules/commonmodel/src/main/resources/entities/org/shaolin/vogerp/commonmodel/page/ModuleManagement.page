@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.commonmodel.page.ModuleManagement</entityName>
+	<systemVersion>0</systemVersion>
+	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+	    <ns2:eventHandler functionName="newModuleGroup">
+           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="newModuleGroup35433">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl;
+                    {
+                        ModuleGroupImpl defaultUser = new ModuleGroupImpl();
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("moduleGroupForm", "org.shaolin.vogerp.commonmodel.form.ModuleGroup", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Create Moduel Group", null);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="openModuleDetail">
+            <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+                <ns2:expressionString><![CDATA[
+                {   
+                    var constraint_result = this.groupFlow.checkSelection();
+                    if (constraint_result != true && constraint_result != null) {
+                        return false;
+                    }
+                }
+                ]]></ns2:expressionString>
+            </ns2:ops>
+           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openModuleDetail543543">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.List;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl;
+                    import org.shaolin.bmdp.runtime.be.IBusinessEntity;
+                    {
+                        FlowDiagram diagram = (FlowDiagram)@page.getElement("groupFlow");
+                        if (diagram.getSelectedNode() == null) {
+                            return;
+                        }
+                        ModuleGroupImpl defaultUser = null;
+                        String selectedNode = diagram.getSelectedNode();
+                        List entities = diagram.getAllEntities();
+	                    for (int i=0;i<entities.size();i++) {
+	                       if (((ModuleGroupImpl)entities.get(i)).getName().equals(selectedNode)) {
+	                           defaultUser = (ModuleGroupImpl)entities.get(i);
+	                           break;
+	                       }
+	                    }
+	                    if (defaultUser == null) {
+		                    entities = diagram.getCreateEntities();
+	                        for (int i=0;i<entities.size();i++) {
+	                           if (((ModuleGroupImpl)entities.get(i)).getName().equals(selectedNode)) {
+	                               defaultUser = (ModuleGroupImpl)entities.get(i);
+	                               break;
+	                           }
+	                        }
+                        }
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("moduleGroupForm", "org.shaolin.vogerp.commonmodel.form.ModuleGroup", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Modify Moduel Group", null);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="deleteModuleGroup">
+            <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+		        <ns2:expressionString><![CDATA[
+		        {   
+		            var constraint_result = this.groupFlow.checkSelection();
+		            if (constraint_result != true && constraint_result != null) {
+		                return false;
+		            }
+		        }
+		        ]]></ns2:expressionString>
+		    </ns2:ops>
+           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deleteModule23423">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.List;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl;
+                    {
+                        FlowDiagram diagram = (FlowDiagram)@page.getElement("groupFlow");
+                        if (diagram.getSelectedNode() == null) {
+                            return;
+                        }
+                        ModuleGroupImpl defaultUser = null;
+                        String selectedNode = diagram.getSelectedNode();
+                        List entities = diagram.getAllEntities();
+                        for (int i=0;i<entities.size();i++) {
+                           if (((ModuleGroupImpl)entities.get(i)).getName().equals(selectedNode)) {
+                               defaultUser = (ModuleGroupImpl)entities.get(i);
+                               break;
+                           }
+                        }
+                        if (defaultUser != null && defaultUser.getGroupId() > 0) {
+                            diagram.getDeleteEntities().add(defaultUser);
+                        }
+                        diagram.deleteNode(selectedNode);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="saveModuleGroup">
+           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveModuleGroup432423">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.ArrayList;
+                    import java.util.List;
+                    import org.shaolin.bmdp.runtime.entity.EntityUtil;
+                    import org.shaolin.bmdp.workflow.ce.ModuleType;
+                    import org.shaolin.bmdp.workflow.be.UIFlowsImpl;
+                    import org.shaolin.bmdp.workflow.dao.WorkflowModel;
+                    import org.shaolin.bmdp.datamodel.flowdiagram.NodeType;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+                    import org.shaolin.vogerp.commonmodel.util.ModularityUtil;
+                    {
+                        FlowDiagram flow = (FlowDiagram)@page.getElement("groupFlow");
+                        ModularityModel.INSTANCE.batchInsert(flow.getCreateEntities());
+                        ModularityModel.INSTANCE.batchUpdate(flow.getUpdateEntities());
+                        ModularityModel.INSTANCE.batchDelete(flow.getDeleteEntities());
+                        ModularityUtil.syncViewWithNewModules(flow.getCreateEntities(), flow.getFlowView());
+                        flow.refreshModel();
+                        
+                        ModularityUtil.updateWebFlowLinks();
+                        
+                        UIFlowsImpl searchCriteria = new UIFlowsImpl();
+                        searchCriteria.setModuleType(ModuleType.BUSINESSFUNCTION);
+                        searchCriteria.setName("ModuleManagement");
+                        int count = (int)WorkflowModel.INSTANCE.searchFlowsCount(searchCriteria);
+                        if (count == 0) {
+                            searchCriteria.setFlow(flow.getFlowXML());
+                            WorkflowModel.INSTANCE.create(searchCriteria);
+                        } else {
+	                        List groupflow = WorkflowModel.INSTANCE.searchFlows(searchCriteria, null, 0, 1);
+                            ((UIFlowsImpl)groupflow.get(0)).setFlow(flow.getFlowXML());
+                            WorkflowModel.INSTANCE.update((UIFlowsImpl)groupflow.get(0));
+                        }
+                        flow.saveSuccess();
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="refreshModuleGroup">
+           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="refreshModuleGroup432423">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.ArrayList;
+                    import java.util.List;
+                    import java.io.StringWriter;
+                    import org.shaolin.bmdp.runtime.entity.EntityUtil;
+                    import org.shaolin.bmdp.workflow.be.UIFlowsImpl;
+                    import org.shaolin.bmdp.datamodel.flowdiagram.NodeType;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+                    {
+                        FlowDiagram flow = (FlowDiagram)@page.getElement("groupFlow");
+                        
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UIPanelType" UIID="topPanel">
+				<ns2:layout xsi:type="ns2:TableLayoutType">
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+				</ns2:layout>
+				<ns2:component xsi:type="ns2:UIFlowDiagramType" UIID="groupFlow">
+				    <ns2:loadDateModel xsi:type="ns2:ExpressionPropertyType">
+                        <ns2:expression xsi:type="ns2:ExpressionType">
+                            <ns2:expressionString><![CDATA[
+                            import java.util.ArrayList;
+                            import java.util.List;
+                            import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+                            import org.shaolin.vogerp.commonmodel.be.IModuleGroup;
+                            import org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl;
+                            {
+                                List list = ModularityModel.INSTANCE.list(0, -1, IModuleGroup.class, ModuleGroupImpl.class);
+                                return list;
+                            }]]></ns2:expressionString>
+                        </ns2:expression>
+                    </ns2:loadDateModel>
+				    <ns2:loadFlow xsi:type="ns2:ExpressionPropertyType">
+                        <ns2:expression xsi:type="ns2:ExpressionType">
+                            <ns2:expressionString><![CDATA[
+                            import java.util.ArrayList;
+							import java.util.List;
+							import java.io.StringReader;
+							import org.shaolin.bmdp.runtime.entity.EntityUtil;
+							import org.shaolin.vogerp.commonmodel.be.IModuleGroup;
+                            import org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl;
+							import org.shaolin.bmdp.workflow.ce.ModuleType;
+							import org.shaolin.bmdp.workflow.be.UIFlowsImpl;
+							import org.shaolin.bmdp.workflow.dao.WorkflowModel;
+							import org.shaolin.bmdp.datamodel.flowdiagram.FlowChunk;
+							import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+							import org.shaolin.vogerp.commonmodel.util.ModularityUtil;
+                            {
+                                UIFlowsImpl searchCriteria = new UIFlowsImpl();
+						        searchCriteria.setModuleType(ModuleType.BUSINESSFUNCTION);
+						        searchCriteria.setModuleItemId(-1);
+						        int count = (int)WorkflowModel.INSTANCE.searchFlowsCount(searchCriteria);
+						        if (count == 0) {
+						        	List list = ModularityModel.INSTANCE.list(0, -1, IModuleGroup.class, ModuleGroupImpl.class);
+						        	FlowChunk newChunk = new FlowChunk();
+						        	ModularityUtil.syncView(list, newChunk);
+						            return newChunk;
+						        } else {
+							        List groupflow = WorkflowModel.INSTANCE.searchFlows(searchCriteria, null, 0, 1);
+						            String xml = ((UIFlowsImpl)groupflow.get(0)).getFlow();
+						            StringReader reader = new StringReader(xml);
+						            return EntityUtil.unmarshaller(FlowChunk.class, reader);
+						        }
+                            }]]></ns2:expressionString>
+                        </ns2:expression>
+                    </ns2:loadFlow>
+                    <ns2:defaultActions>
+                        <ns2:newNode>newModuleGroup</ns2:newNode>
+                        <ns2:openNode>openModuleDetail</ns2:openNode>
+                        <ns2:deleteNode>deleteModuleGroup</ns2:deleteNode>
+                        <ns2:saveFlow>saveModuleGroup</ns2:saveFlow>                        
+                        <ns2:refreshFlow>refreshModuleGroup</ns2:refreshFlow>
+                        <ns2:discardChange>discardChange</ns2:discardChange>
+                    </ns2:defaultActions>
+                    <ns2:actionGroup>
+                        <ns2:type>radio</ns2:type>
+                        <ns2:action>
+                            <ns2:uiid>addModule</ns2:uiid>
+                            <ns2:title xsi:type="ns2:StringPropertyType">
+                                <ns2:value>Add Module</ns2:value>
+                            </ns2:title>
+                            <ns2:icon>ui-icon-note</ns2:icon>
+                            <ns2:function>addModule</ns2:function>
+                        </ns2:action>
+                        <ns2:action>
+                            <ns2:uiid>openModule</ns2:uiid>
+                            <ns2:title xsi:type="ns2:StringPropertyType">
+                                <ns2:value>Open Module</ns2:value>
+                            </ns2:title>
+                            <ns2:icon>ui-icon-note</ns2:icon>
+                            <ns2:function>openModule</ns2:function>
+                        </ns2:action>
+                        <ns2:action>
+                            <ns2:uiid>deleteModule</ns2:uiid>
+                            <ns2:title xsi:type="ns2:StringPropertyType">
+                                <ns2:value>Delete Module</ns2:value>
+                            </ns2:title>
+                            <ns2:icon>ui-icon-note</ns2:icon>
+                            <ns2:function>deleteModule</ns2:function>
+                        </ns2:action>
+                    </ns2:actionGroup>
+                </ns2:component>
+                <ns2:layoutConstraint>
+	                <ns2:componentId>groupFlow</ns2:componentId>
+	                <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	                    x="0" y="0" align="FULL"></ns2:constraint>
+	            </ns2:layoutConstraint>
+			</ns2:component>
+			<ns2:layoutConstraint>
+				<ns2:componentId>topPanel</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="0" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+		</ns2:body>
+	</ns2:UIEntity>
+	<ns2:ODMapping />
+</ns2:UIPage>

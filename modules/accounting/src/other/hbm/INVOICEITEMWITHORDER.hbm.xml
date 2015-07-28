@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.shaolin.vogerp.accounting.be.InvoiceItemWithOrderImpl" table="INVOICEITEMWITHORDER">
+    <property name="id" column="ID"/>
+    <property name="invoiceId" column="INVOICEID"/>
+    <property name="invoiceItemId" column="INVOICEITEMID"/>
+    <property name="invoiceAmount" column="INVOICEAMOUNT"/>
+    <property name="orderId" column="ORDERID"/>
+    <property name="orderItemId" column="ORDERITEMID"/>
+    <property name="orderAmount" column="ORDERAMOUNT"/>
+    <property name="orderUnitPricet" column="ORDERUNITPRICET"/>
+    <property name="_enable" type="boolean" column="_enable"/>
+  </class>
+</hibernate-mapping>

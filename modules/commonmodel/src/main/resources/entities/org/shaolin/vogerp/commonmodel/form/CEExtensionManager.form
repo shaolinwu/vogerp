@@ -1,0 +1,349 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+    <entityName>org.shaolin.vogerp.commonmodel.form.CEExtensionManager</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:eventHandler functionName="createCE">
+        <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+	        <ns2:expressionString><![CDATA[
+	        {
+	        	var o = this;
+	        	new UIMaster.ui.dialog({
+		            dialogType: UIMaster.ui.dialog.INPUT_DIALOG,
+		            message:'Please enter an unique Constant Name:',
+		            messageType:UIMaster.ui.dialog.Information,
+		            title:'',
+		            height:150,
+		            width:300,
+		            handler: function() {
+						if (this.value == null || this.value == "") {
+							return;
+						}
+						o.CENameUI.setValue(this.value);
+						UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createCE_rewrews222",UIMaster.getValue(eventsource),o.__entityName);
+		            }
+	        	}).open();
+	        	return;
+	        }
+	        ]]></ns2:expressionString>
+	    </ns2:ops>
+       <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createCE_rewrews222">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import java.util.ArrayList;
+                import java.util.List;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.AjaxActionHelper;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.bmdp.runtime.AppContext;
+                import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+                import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+                {
+                	String entityName = @page.getHidden("CENameUI").getValue();
+                	if (entityName == null || entityName.trim().isEmpty()) {
+                		return;
+                	}
+                    HashMap input = new HashMap();
+                    
+                    if (AppContext.get().getConstantService().hasConstantEntity(entityName)) {
+						IConstantEntity c = AppContext.get().getConstantService().getConstantEntity(entityName);
+						List list = CEOperationUtil.convertD2C(c.getEntityName());
+						input.put("list", list);
+					} else {
+	                    input.put("list", new ArrayList());
+					}
+                    input.put("ceName", entityName);
+                    input.put("editable", new Boolean(true));
+                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.CEExtension", input);
+                    @page.addElement(form);
+                    
+                    form.openInWindows("Add Item", new TableCallBack("constantInfoTable"), 690, 400);
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
+    <ns2:eventHandler functionName="openCEDetail">
+        <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showconstantInfoPanel">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import java.util.List;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+                import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+                {
+                    Table constantInfoTable = (Table)@page.getElement("constantInfoTable");
+                    if (constantInfoTable.getSelectedRow() == null) {
+                        return;
+                    }
+                    
+                    IConstantEntity defaultUser = (IConstantEntity)constantInfoTable.getSelectedRow();
+                    List list = CEOperationUtil.convertD2C(defaultUser.getEntityName());
+                    
+                    HashMap input = new HashMap();
+                    input.put("list", list);
+                    input.put("ceName", defaultUser.getEntityName());
+                    input.put("i18nBundle", defaultUser.getI18nBundle());
+                    input.put("editable", new Boolean(true));
+                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.CEExtension", input);
+                    @page.addElement(form);
+                    
+                    form.openInWindows("Modify Item", new TableCallBack("constantInfoTable"), 690, 400);
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
+    <ns2:eventHandler functionName="reloadAllCE">
+    	<ns2:ops xsi:type="ns2:OpExecuteScriptType">
+	        <ns2:expressionString><![CDATA[
+	        {
+	        	var o = this;
+	        	new UIMaster.ui.dialog({
+		            dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
+		            message:'Are you sure reload the whole constant cache?',
+		            messageType:UIMaster.ui.dialog.Information,
+		            title:'',
+		            height:150,
+		            width:300,
+		            handler: function() {
+						UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"copyCE_243242dd",UIMaster.getValue(eventsource),o.__entityName);
+		            }
+	        	}).open();
+	        	return;
+	        }
+	        ]]></ns2:expressionString>
+	    </ns2:ops>
+        <ns2:ops xsi:type="ns2:OpCallAjaxType" name="reloadAllCE_24eeeeee2">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import java.util.List;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+                import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+                {
+                    
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
+    <ns2:eventHandler functionName="copyCE">
+        <ns2:ops xsi:type="ns2:OpCallAjaxType" name="copyCE_243242dd">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import java.util.List;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+                import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+                {
+                    Table constantInfoTable = (Table)@page.getElement("constantInfoTable");
+                    if (constantInfoTable.getSelectedRow() == null) {
+                        return;
+                    }
+                    
+                    IConstantEntity defaultUser = (IConstantEntity)constantInfoTable.getSelectedRow();
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
+    <ns2:eventHandler functionName="viewHierarchy">
+        <ns2:ops xsi:type="ns2:OpCallAjaxType" name="viewHierarchy_243242dd">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import java.util.List;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+                import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+                {
+                    Table constantInfoTable = (Table)@page.getElement("constantInfoTable");
+                    if (constantInfoTable.getSelectedRow() == null) {
+                        return;
+                    }
+                    
+                    IConstantEntity defaultUser = (IConstantEntity)constantInfoTable.getSelectedRow();
+                    
+                    HashMap input = new HashMap();
+                    input.put("ceName", defaultUser.getEntityName());
+                    input.put("editable", new Boolean(true));
+                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.CEHierarchy", input);
+                    @page.addElement(form);
+                    
+                    form.openInWindows("Hierarchy", new TableCallBack("constantInfoTable"), 690, 400);
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
+    <ns2:eventHandler functionName="deleteUser"></ns2:eventHandler>
+    <ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+        <ns2:layout xsi:type="ns2:TableLayoutType">
+            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+        </ns2:layout>
+        <ns2:component xsi:type="ns2:UIHiddenType" UIID="CENameUI">
+        <!-- unsecure for creating new constant. -->
+        </ns2:component>
+        <ns2:component xsi:type="ns2:UIPanelType" UIID="constantInfoPanel">
+            <ns2:layout xsi:type="ns2:TableLayoutType">
+                <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+            </ns2:layout>
+            <ns2:component xsi:type="ns2:UITableType" UIID="constantInfoTable">
+                <ns2:beElement>org.shaolin.bmdp.runtime.ce.IConstantEntity</ns2:beElement>
+                <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Multiple</ns2:selectMode>
+                <ns2:defaultRowSize>10</ns2:defaultRowSize>
+                <ns2:showActionBar>true</ns2:showActionBar>
+                <ns2:showFilter>true</ns2:showFilter>
+                <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                    <ns2:expression xsi:type="ns2:ExpressionType">
+                        <ns2:expressionString><![CDATA[
+                        import java.util.List;
+                        import org.shaolin.uimaster.page.ajax.TableConditions;
+                        import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+                        import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+                        import org.shaolin.bmdp.runtime.ce.DynamicConstant;
+                        {
+                        	  if ($tableCondition == null) {
+                                 $tableCondition = TableConditions.createCondition(new DynamicConstant("", -1));
+                              }
+                              return CEOperationUtil.query((DynamicConstant)$tableCondition.getAdditionalCondition(), $tableCondition.getOffset(), $tableCondition.getCount());
+                        }]]></ns2:expressionString>
+                    </ns2:expression>
+                </ns2:query>
+                <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
+                    <ns2:expression xsi:type="ns2:ExpressionType">
+                        <ns2:expressionString><![CDATA[
+                        import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
+                        import org.shaolin.uimaster.page.ajax.TableConditions;
+                        import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+                        import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+                        import org.shaolin.bmdp.runtime.ce.DynamicConstant;
+                        {
+                             return CEOperationUtil.queryCount((DynamicConstant)$tableCondition.getAdditionalCondition());
+                        }]]></ns2:expressionString>
+                    </ns2:expression>
+                </ns2:totalCount>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>Name</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.entityName</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                        <ns2:expression xsi:type="ns2:ExpressionType">
+                            <ns2:expressionString><![CDATA[$rowBE.getEntityName()]]></ns2:expressionString>
+                        </ns2:expression>
+                    </ns2:rowExpression>
+                    <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                        <ns2:expression xsi:type="ns2:ExpressionType">
+                            <ns2:expressionString><![CDATA[{((org.shaolin.bmdp.runtime.ce.DynamicConstant)$rowBE).setEntityName($value);}]]></ns2:expressionString>
+                        </ns2:expression>
+                    </ns2:updateCondition>
+                </ns2:column>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>I18n Bundle</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.i18nBundle</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                        <ns2:expression xsi:type="ns2:ExpressionType">
+                            <ns2:expressionString><![CDATA[$rowBE.getI18nBundle()]]></ns2:expressionString>
+                        </ns2:expression>
+                    </ns2:rowExpression>
+                    <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                        <ns2:expression xsi:type="ns2:ExpressionType">
+                            <ns2:expressionString><![CDATA[{$rowBE.setI18nBundle($value);}]]></ns2:expressionString>
+                        </ns2:expression>
+                    </ns2:updateCondition>
+                </ns2:column>
+                <ns2:defaultActions>
+                    <ns2:defaultNewAction>createCE</ns2:defaultNewAction>
+                    <ns2:defaultOpenAction>openCEDetail</ns2:defaultOpenAction>
+                </ns2:defaultActions>
+                <ns2:actionGroup>
+                    <ns2:type>button</ns2:type>
+                    <ns2:action>
+                        <ns2:uiid>viewHierarchy</ns2:uiid>
+                        <ns2:title xsi:type="ns2:StringPropertyType">
+                            <ns2:value>Constant Hierarchy</ns2:value>
+                        </ns2:title>
+                        <ns2:icon>ui-icon-note</ns2:icon>
+                        <ns2:function>viewHierarchy</ns2:function>
+                    </ns2:action>
+                    <ns2:action>
+                        <ns2:uiid>copyCE</ns2:uiid>
+                        <ns2:title xsi:type="ns2:StringPropertyType">
+                            <ns2:value>Copy Constant</ns2:value>
+                        </ns2:title>
+                        <ns2:icon>ui-icon-note</ns2:icon>
+                        <ns2:function>copyCE</ns2:function>
+                    </ns2:action>
+                    <ns2:action>
+                        <ns2:uiid>reloadAllCE</ns2:uiid>
+                        <ns2:title xsi:type="ns2:StringPropertyType">
+                            <ns2:value>reload All Constants</ns2:value>
+                        </ns2:title>
+                        <ns2:icon>ui-icon-note</ns2:icon>
+                        <ns2:function>reloadAllCE</ns2:function>
+                    </ns2:action>
+                </ns2:actionGroup>
+            </ns2:component>
+            <ns2:layoutConstraint>
+                <ns2:componentId>constantInfoTable</ns2:componentId>
+                <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                    x="0" y="0" align="FULL"></ns2:constraint>
+            </ns2:layoutConstraint>
+        </ns2:component>
+        <ns2:layoutConstraint>
+            <ns2:componentId>constantInfoPanel</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                x="0" y="0" align="FULL"></ns2:constraint>
+        </ns2:layoutConstraint>
+    </ns2:body>
+    <ns2:mapping>
+	    <systemVersion>0</systemVersion>
+	    <ns2:DataEntity scope="InOut" name="CEName" category="JavaPrimitive">
+          <type entityName="java.lang.String"></type>
+        </ns2:DataEntity>
+        <ns2:DataEntity scope="InOut" name="tableCondition" category="JavaClass">
+          <type entityName="org.shaolin.uimaster.page.ajax.TableConditions"></type>
+        </ns2:DataEntity>
+	    <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
+	      <type entityName="org.shaolin.vogerp.commonmodel.be.CEExtension"></type>
+	    </ns2:DataEntity>
+	    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+	      <type entityName="java.lang.Boolean"></type>
+	    </ns2:DataEntity>
+	    <ns2:DataToUIMappingOperation>
+	      <expressionString><![CDATA[
+	      import org.shaolin.uimaster.page.ajax.TableConditions;
+          import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
+	      {
+	        CEExtensionImpl condition = new CEExtensionImpl();
+	        if ($CEName != null) {
+	           condition.setCeName($CEName);
+	        }
+	        $tableCondition = TableConditions.createCondition(condition);
+	      
+			@odContext.executeAllMappings();
+		  }
+	      ]]></expressionString>
+	    </ns2:DataToUIMappingOperation>
+	    <ns2:UIToDataMappingOperation>
+	      <expressionString>{
+	@odContext.executeAllMappings();
+	}</expressionString>
+	    </ns2:UIToDataMappingOperation>
+	  </ns2:mapping>
+</ns2:UIEntity>

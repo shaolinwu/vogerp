@@ -1,0 +1,1 @@
+<%@ page contentType="text/html;charset=UTF-8"%><%response.sendRedirect(request.getContextPath()+"/webflow.do?_chunkname=org.shaolin.vogerp.herewego.diagram.WelcomeMainPage&_nodename=Main");if(true){return;}%>

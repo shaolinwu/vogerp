@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.shaolin.vogerp.accounting.be.TransactionImpl" table="TRANSACTION">
+    <property name="id" column="ID"/>
+    <property name="partyId" column="PARTYID"/>
+    <property name="invoiceId" column="INVOICEID"/>
+    <property name="amount" column="AMOUNT"/>
+    <property name="plusTax" column="PLUSTAX"/>
+    <property name="comments" column="COMMENTS"/>
+    <property name="typeInt" type="integer" column="TYPE"/>
+    <property name="_enable" type="boolean" column="_enable"/>
+    <property name="_version" type="int" column="_version"/>
+    <property name="_starttime" type="timestamp" column="_starttime"/>
+    <property name="_endtime" type="timestamp" column="_endtime"/>
+    <property name="_optuserid" type="long" column="_optuserid"/>
+  </class>
+</hibernate-mapping>

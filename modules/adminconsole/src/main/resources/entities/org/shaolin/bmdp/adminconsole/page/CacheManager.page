@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.bmdp.adminconsole.page.CacheManager</entityName>
+	<systemVersion>0</systemVersion>
+	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<ns2:eventHandler functionName="ReloadFunction">
+			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="openPage">
+				<ns2:exp>
+					<ns2:expressionString><![CDATA[
+					import org.shaolin.uimaster.page.AjaxContext;
+					import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+					import java.io.File;
+					{
+					}
+					]]></ns2:expressionString>
+				</ns2:exp>
+			</ns2:ops>
+		</ns2:eventHandler>
+		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+		    <ns2:UISkin xsi:type="ns2:UISkinType">
+                <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
+                <ns2:param name="text">
+                    <ns2:value xsi:type="ns2:StringPropertyType">
+                        <ns2:value></ns2:value>
+                    </ns2:value>
+                </ns2:param>
+            </ns2:UISkin>
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
+                <ns2:tab uiid="cacheListPanel">
+                    <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+                        <ns2:bundle>org_shaolin_vogerp_adminconsole_i18n</ns2:bundle>
+                        <ns2:key>org.shaolin.bmdp.adminconsole.page.CacheManager.cacheListPanel</ns2:key>
+                    </ns2:title>
+                    <ns2:panel UIID="cacheListPanel">
+		                <ns2:layout xsi:type="ns2:TableLayoutType">
+		                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+		                    <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+		                </ns2:layout>
+		                <ns2:component xsi:type="ns2:UITableType" UIID="cacheInfoTable">
+		                    <ns2:beElement>org.shaolin.bmdp.runtime.cache.ICacheInfo</ns2:beElement>
+		                    <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Multiple</ns2:selectMode>
+		                    <ns2:defaultRowSize>10</ns2:defaultRowSize>
+		                    <ns2:showActionBar>true</ns2:showActionBar>
+		                    <ns2:showFilter>true</ns2:showFilter>
+		                    <ns2:query xsi:type="ns2:ExpressionPropertyType">
+		                        <ns2:expression xsi:type="ns2:ExpressionType">
+		                            <ns2:expressionString><![CDATA[
+		                            import java.util.List;
+		                            import org.shaolin.bmdp.runtime.cache.CacheManager;
+		                            {
+		                            	return org.shaolin.bmdp.runtime.cache.CacheManager.getInstance().getCacheBes();
+		                            }]]></ns2:expressionString>
+		                        </ns2:expression>
+		                    </ns2:query>
+		                    <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
+		                        <ns2:expression xsi:type="ns2:ExpressionType">
+		                            <ns2:expressionString><![CDATA[
+		                            import org.shaolin.bmdp.runtime.cache.CacheManager;
+		                            {
+		                                 return org.shaolin.bmdp.runtime.cache.CacheManager.getInstance().getCacheSize();
+		                            }]]></ns2:expressionString>
+		                        </ns2:expression>
+		                    </ns2:totalCount>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Cache Name</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.name</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Description</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.description</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Size</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.size</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>ReadCount</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.readCount</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>WriteCount</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.writeCount</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+		                    </ns2:column>
+		                    <ns2:defaultActions>
+		                        <ns2:defaultNewAction>createAccount</ns2:defaultNewAction>
+		                        <ns2:defaultOpenAction>openAccount</ns2:defaultOpenAction>
+		                        <ns2:defaultEnableAction>enableUser</ns2:defaultEnableAction>
+		                        <ns2:defaultDisableAction>disableUser</ns2:defaultDisableAction>
+		                    </ns2:defaultActions>
+		                </ns2:component>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>cacheInfoTable</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="0" y="0" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+		            </ns2:panel>  
+                </ns2:tab>
+            </ns2:component>
+            <ns2:layoutConstraint>
+                <ns2:componentId>functionsTab</ns2:componentId>
+                <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                    x="0" y="0" align="FULL"></ns2:constraint>
+            </ns2:layoutConstraint>
+		</ns2:body>
+	</ns2:UIEntity>
+	<ns2:ODMapping>
+	</ns2:ODMapping>
+	<ns2:in>
+	</ns2:in>
+</ns2:UIPage>
