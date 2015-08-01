@@ -230,6 +230,25 @@
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>orgCode</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>empId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>empLevel</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="EmployeeLevel" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>photoPath</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <!-- the additional attributes. -->
+        <bediagram:member>
             <bediagram:name>gender</bediagram:name>
             <bediagram:type xsi:type="bediagram:CEObjRefType">
                 <bediagram:targetEntity entityName="Gender" />
@@ -748,4 +767,19 @@
 			<bediagram:description>上海市</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>
+	
+	<bediagram:ceEntity>
+		<common:entityName>EmployeeLevel</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Junior</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>初级</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Senior</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>高级</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	
 </bediagram:BEDiagram>

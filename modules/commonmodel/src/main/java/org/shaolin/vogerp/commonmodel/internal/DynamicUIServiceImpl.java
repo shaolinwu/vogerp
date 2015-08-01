@@ -49,7 +49,9 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
 	    			} catch (Exception e1) {
 	    				Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
 	    			} 
-	    		} catch (ParsingException | ClassNotFoundException e) {
+	    		} catch (ParsingException e) {
+	    			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
+	    		} catch (ClassNotFoundException e) {
 	    			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
 	    		}
 	        }
@@ -109,7 +111,9 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
     			} catch (Exception e1) {
     				Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
     			} 
-    		} catch (ParsingException | ClassNotFoundException e) {
+    		} catch (ParsingException e) {
+    			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
+    		} catch (ClassNotFoundException e) {
     			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
     		}
         }		
