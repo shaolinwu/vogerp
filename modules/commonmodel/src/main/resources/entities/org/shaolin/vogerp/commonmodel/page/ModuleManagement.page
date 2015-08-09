@@ -143,6 +143,8 @@
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
                     import org.shaolin.vogerp.commonmodel.util.ModularityUtil;
+                    import org.shaolin.vogerp.commonmodel.internal.ModuleServiceImpl;
+                    import org.shaolin.bmdp.runtime.AppContext;
                     {
                         FlowDiagram flow = (FlowDiagram)@page.getElement("groupFlow");
                         ModularityModel.INSTANCE.batchInsert(flow.getCreateEntities());
@@ -151,7 +153,8 @@
                         ModularityUtil.syncViewWithNewModules(flow.getCreateEntities(), flow.getFlowView());
                         flow.refreshModel();
                         
-                        ModularityUtil.updateWebFlowLinks();
+                        ModuleServiceImpl service = (ModuleServiceImpl)AppContext.get().getService(ModuleServiceImpl.class);
+                        service.reload();
                         
                         UIFlowsImpl searchCriteria = new UIFlowsImpl();
                         searchCriteria.setModuleType(ModuleType.BUSINESSFUNCTION);

@@ -176,8 +176,8 @@
 							        ModuleGroupImpl root = null;
 							        for (int i=0;i<all.size();i++) {
 							        	ModuleGroupImpl mg = (ModuleGroupImpl)all.get(i);
-							        	if (mg.getName().length() == 0) {
-							        		root = mg;
+							        	if ("uimaster".equals(mg.getName())) {
+							        		   root = mg;
 							        	    break;
 							        	}
 							        }
