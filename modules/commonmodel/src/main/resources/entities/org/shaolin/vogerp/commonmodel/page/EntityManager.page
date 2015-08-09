@@ -13,9 +13,13 @@
 					import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 					import java.io.File;
 					{
+					 @page.getButton("reloadBtn").setWidgetLabel("");
+					
 						String value = @page.getTextField("reloadPathText").getValue();
 						File path = new File(value);
 						IServerServiceManager.INSTANCE.getEntityManager().reloadDir(path);
+						
+						@page.getButton("reloadBtn").setWidgetLabel("Reloaded.");
 					}
 					]]></ns2:expressionString>
 				</ns2:exp>

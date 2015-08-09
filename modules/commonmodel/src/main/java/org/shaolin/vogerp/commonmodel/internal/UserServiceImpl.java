@@ -71,8 +71,6 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 				return "user.login.passwordrules.algoerror";
 			}
 			
-			matchedUser.getInfo();//manually initialized the user info.
-			
 			matchedUser.setLastLogin(new Date());
 			matchedUser.setAttempt(0);
 			matchedUser.setIsLocked(false);

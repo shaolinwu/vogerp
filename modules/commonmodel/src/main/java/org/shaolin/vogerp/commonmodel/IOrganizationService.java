@@ -5,7 +5,6 @@ import java.util.List;
 import org.shaolin.vogerp.commonmodel.be.ILegalOrganizationInfo;
 import org.shaolin.vogerp.commonmodel.be.IOrganization;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
-import org.shaolin.vogerp.commonmodel.ce.PartyRoleType;
 
 public interface IOrganizationService {
 
@@ -17,13 +16,15 @@ public interface IOrganizationService {
 	
 	public List<IPersonalInfo> getEmployeese(String orgCode);
 	
-	public List<PartyRoleType> getOrganizationRoles();
+	public List<String> getOrganizationRoles();
 	
 	/**
 	 * The role-permission is managed in the system configuration.
 	 * 
 	 * @return
 	 */
-	public List<PartyRoleType> getEmployeeseRoles();
+	public List<String> getEmployeeseRoles();
+	
+	public List<String> getEmployeeseByRole();
 	
 }
