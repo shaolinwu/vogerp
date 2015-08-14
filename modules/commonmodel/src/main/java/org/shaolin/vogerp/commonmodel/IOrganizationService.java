@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.shaolin.vogerp.commonmodel.be.ILegalOrganizationInfo;
 import org.shaolin.vogerp.commonmodel.be.IOrganization;
-import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
+import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
 
 public interface IOrganizationService {
 
@@ -14,7 +14,7 @@ public interface IOrganizationService {
 	
 	public List<IOrganization> getSubOrganization(String orgCode);
 	
-	public List<IPersonalInfo> getEmployeese(String orgCode);
+	public List<PersonalInfoImpl> getEmployeese(String orgCode);
 	
 	public List<String> getOrganizationRoles();
 	

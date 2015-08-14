@@ -48,6 +48,9 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 		
 		DynamicUIServiceImpl dynamicUIService = new DynamicUIServiceImpl();
 		serviceManger.register(dynamicUIService);
+		
+		OrganizationServiceImpl orgService = new OrganizationServiceImpl();
+		serviceManger.register(orgService);
 	}
 	
 	@Override

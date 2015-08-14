@@ -107,12 +107,15 @@
 					<ns2:component xsi:type="ns2:UITextFieldType" UIID="searchContext">
 					</ns2:component>
 					<ns2:component xsi:type="ns2:UIButtonType" UIID="searchButton">
+						<ns2:text xsi:type="ns2:StringPropertyType">
+							<ns2:value>Search</ns2:value>
+						</ns2:text>
 						<ns2:EventListener xsi:type="ns2:ClickListenerType">
 							<ns2:handler functionName="search" />
 						</ns2:EventListener>
-						<ns2:title xsi:type="ns2:StringPropertyType">
+						<ns2:value xsi:type="ns2:StringPropertyType">
 							<ns2:value>Search</ns2:value>
-						</ns2:title>
+						</ns2:value>
 					</ns2:component>
 					<ns2:layoutConstraint>
 					<ns2:componentId>searchContext</ns2:componentId>
@@ -128,25 +131,64 @@
 				<ns2:component xsi:type="ns2:UIPanelType" UIID="topRightPanel">
 					<ns2:layout xsi:type="ns2:TableLayoutType">
 						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+						<ns2:columnWidthWeight>60</ns2:columnWidthWeight>
 						<ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
-						<ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
-						<ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+						<ns2:columnWidthWeight>60</ns2:columnWidthWeight>
+						<ns2:columnWidthWeight>60</ns2:columnWidthWeight>
+						<ns2:columnWidthWeight>60</ns2:columnWidthWeight>
 					</ns2:layout>
 					<ns2:component xsi:type="ns2:UIImageType" UIID="userIcon">
-						<ns2:title xsi:type="ns2:StringPropertyType">
-							<ns2:value>User Information</ns2:value>
-						</ns2:title>
+						<ns2:Property name="text" >
+      			<ns2:value xsi:type="ns2:StringPropertyType">
+            <value>User Information</value>
+      			</ns2:value>
+      	</ns2:Property>
 						<ns2:src xsi:type="ns2:ImagePropertyType">
 							<ns2:location>admin/tree/manager.png</ns2:location>
 						</ns2:src>
 						<ns2:EventListener xsi:type="ns2:ClickListenerType">
 							<ns2:handler functionName="showUserInfo" />
 						</ns2:EventListener>
+						<ns2:showWords xsi:type="ns2:BooleanPropertyType">
+							<ns2:value>true</ns2:value>
+						</ns2:showWords>
 					</ns2:component>
 					<ns2:component xsi:type="ns2:UIReferenceEntityType"
 						UIID="userForm">
 						<ns2:referenceEntity
 							entityName="org.shaolin.vogerp.commonmodel.form.UserAccount"></ns2:referenceEntity>
+					</ns2:component>
+					<ns2:component xsi:type="ns2:UIImageType" UIID="taskIcon">
+						<ns2:Property name="text" >
+      			<ns2:value xsi:type="ns2:StringPropertyType">
+            <value>Tasks</value>
+      			</ns2:value>
+      	</ns2:Property>
+						<ns2:src xsi:type="ns2:ImagePropertyType">
+							<ns2:location>admin/tree/manager.png</ns2:location>
+						</ns2:src>
+						<ns2:EventListener xsi:type="ns2:ClickListenerType">
+							<ns2:handler functionName="showUserInfo" />
+						</ns2:EventListener>
+						<ns2:showWords xsi:type="ns2:BooleanPropertyType">
+							<ns2:value>true</ns2:value>
+						</ns2:showWords>
+					</ns2:component>
+					<ns2:component xsi:type="ns2:UIImageType" UIID="notificationIcon">
+						<ns2:Property name="text" >
+      			<ns2:value xsi:type="ns2:StringPropertyType">
+            <value>Notification</value>
+      			</ns2:value>
+      	</ns2:Property>
+						<ns2:src xsi:type="ns2:ImagePropertyType">
+							<ns2:location>admin/tree/manager.png</ns2:location>
+						</ns2:src>
+						<ns2:EventListener xsi:type="ns2:ClickListenerType">
+							<ns2:handler functionName="showUserInfo" />
+						</ns2:EventListener>
+						<ns2:showWords xsi:type="ns2:BooleanPropertyType">
+							<ns2:value>true</ns2:value>
+						</ns2:showWords>
 					</ns2:component>
 					<ns2:component xsi:type="ns2:UIImageType" UIID="userLogout">
 						<ns2:title xsi:type="ns2:StringPropertyType">
@@ -170,9 +212,19 @@
 							x="1" y="0" align="FULL" cellUIClass=""></ns2:constraint>
 					</ns2:layoutConstraint>
 					<ns2:layoutConstraint>
-						<ns2:componentId>userLogout</ns2:componentId>
+						<ns2:componentId>taskIcon</ns2:componentId>
 						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 							x="2" y="0" align="FULL"></ns2:constraint>
+					</ns2:layoutConstraint>
+					<ns2:layoutConstraint>
+						<ns2:componentId>notificationIcon</ns2:componentId>
+						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+							x="3" y="0" align="FULL"></ns2:constraint>
+					</ns2:layoutConstraint>
+					<ns2:layoutConstraint>
+						<ns2:componentId>userLogout</ns2:componentId>
+						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+							x="4" y="0" align="FULL"></ns2:constraint>
 					</ns2:layoutConstraint>
 				</ns2:component>
 				<ns2:layoutConstraint>
@@ -317,19 +369,24 @@
 						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 					</ns2:layout>
 					<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
-						<!-- will be added by the tree dynamically. <ns2:tab uiid="functionsTab_entityManagerNode"> 
+						<ns2:tab uiid="MainTabPanel"> 
 							<ns2:title xsi:type="ns2:ResourceBundlePropertyType"> <ns2:bundle>org_shaolin_vogerp_adminconsole_i18n</ns2:bundle> 
-							<ns2:key>org.shaolin.bmdp.adminconsole.page.Main.entityManager</ns2:key> 
-							</ns2:title> <ns2:frame chunkName="org.shaolin.bmdp.adminconsole.diagram.MainFunctions" 
-							nodeName="EntityManager"/> </ns2:tab> <ns2:tab uiid="functionsTab_flow1Node"> 
-							<ns2:title xsi:type="ns2:ResourceBundlePropertyType"> <ns2:bundle>org_shaolin_vogerp_adminconsole_i18n</ns2:bundle> 
-							<ns2:key>org.shaolin.bmdp.adminconsole.page.Main.moduleManagerNode</ns2:key> 
-							</ns2:title> <ns2:frame chunkName="org.shaolin.bmdp.adminconsole.diagram.MainFunctions" 
-							nodeName="moduleManagerNode"/> </ns2:tab> <ns2:tab uiid="functionsTab_userMgmt"> 
-							<ns2:title xsi:type="ns2:ResourceBundlePropertyType"> <ns2:bundle>org_shaolin_vogerp_adminconsole_i18n</ns2:bundle> 
-							<ns2:key>org.shaolin.bmdp.adminconsole.page.Main.userMgmt</ns2:key> </ns2:title> 
-							<ns2:frame chunkName="org.shaolin.bmdp.security.diagram.SecurityModel" nodeName="UserConfiguration"/> 
-							</ns2:tab> -->
+							<ns2:key>org.shaolin.bmdp.adminconsole.page.Main</ns2:key> 
+							</ns2:title> 
+							<ns2:panel UIID="MainTabPanel">
+	       <ns2:layout xsi:type="ns2:TableLayoutType">
+	           <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+	           <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+	       </ns2:layout>
+								<ns2:component xsi:type="ns2:UIPanelType" UIID="MainTab">
+									<ns2:layout xsi:type="ns2:TableLayoutType">
+										<ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
+										<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+									</ns2:layout>
+								</ns2:component>
+							</ns2:panel>
+							</ns2:tab> 
+							<!-- more tabs will be added by the tree dynamically. -->
 					</ns2:component>
 					<ns2:layoutConstraint>
 						<ns2:componentId>functionsTab</ns2:componentId>

@@ -8,23 +8,6 @@ function org_shaolin_vogerp_commonmodel_form_OrganizationTreeEditor(json)
         ui: elementList[prefix + "organizationTree"]
     });
 
-    var okbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "okbtn"]
-    });
-
-    var cancelbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "cancelbtn"]
-    });
-
-    var actionPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "actionPanel"]
-        ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
-    });
-
     var detailPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "detailPanel"]
@@ -36,7 +19,6 @@ function org_shaolin_vogerp_commonmodel_form_OrganizationTreeEditor(json)
     var treePanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "treePanel"]
-        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
         ,subComponents: [prefix + "organizationTree"]
     });
@@ -51,22 +33,16 @@ function org_shaolin_vogerp_commonmodel_form_OrganizationTreeEditor(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [organizationTree,okbtn,cancelbtn,rootPanel,treePanel,detailPanel,actionPanel]
+        ,items: [organizationTree,rootPanel,treePanel,detailPanel]
     });
 
     Form.organizationTree=organizationTree;
-
-    Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
 
     Form.rootPanel=rootPanel;
 
     Form.treePanel=treePanel;
 
     Form.detailPanel=detailPanel;
-
-    Form.actionPanel=actionPanel;
 
     Form.user_constructor = function()
     {

@@ -150,4 +150,29 @@ public class CustCommonModel extends BEEntityDaoObject {
             session.getTransaction().commit();
         }
     }
+    
+    public List<ArrayList<String>>[] getOrgEmployeeGroup() {
+    	String sql = "SELECT count(p.id), b.name, b.orgcode FROM comm_personinfo p, comm_organization b where p.orgcode=b.orgcode group by b.id;";
+    	Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        try {
+        	SQLQuery sqlQuery = session.createSQLQuery(sql);
+        	List<Object[]> list = sqlQuery.list();
+        	
+        	ArrayList<String> valueResult = new ArrayList<String>();
+        	valueResult.add("-1");
+        	ArrayList<String> displayResult = new ArrayList<String>();
+        	displayResult.add(IConstantEntity.CONSTANT_DEFAULT_VALUE);
+        	if (list.size() == 0) {
+        		return new List[] {valueResult, displayResult};
+        	}
+        	for (Object[] row : list) {
+        		valueResult.add(row[2].toString());
+        		displayResult.add(row[1] + "-" + row[2] + "(" + row[0] + ")");
+        	}
+        	return new List[] {valueResult, displayResult};
+        } finally {
+            session.getTransaction().commit();
+        }
+    }
 }

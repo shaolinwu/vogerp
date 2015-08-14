@@ -161,6 +161,9 @@
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="FIRSTNAME" type="VARCHAR" length="20" isNull="true"></ns2:column>
     <ns2:column name="LASTNAME" type="VARCHAR" length="50" isNull="true"></ns2:column>
+    <ns2:column name="ORGCODE" type="VARCHAR" length="38" isNull="true"></ns2:column>
+    <ns2:column name="EMPID" type="VARCHAR" length="38" isNull="true"></ns2:column>
+    <ns2:column name="EMPLEVEL" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="GENDER" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="MARRIED" type="BIT" isNull="true"></ns2:column>
     <ns2:column name="IDENTITYCARDID" type="VARCHAR" isNull="true"></ns2:column>
@@ -179,6 +182,9 @@
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo"></ns2:businessEntity>
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="orgCode" columnName="ORGCODE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="empId" columnName="EMPID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="empLevel" columnName="EMPLEVEL"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="firstName" columnName="FIRSTNAME"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="lastName" columnName="LASTNAME"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="gender" columnName="GENDER"></ns2:fieldMapping>
@@ -711,6 +717,41 @@
        </ns2:fieldMapping>
        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
            <type entityName="org.shaolin.vogerp.commonmodel.be.Organization"/>
+       </ns2:searchConditionData>
+   </ns2:searchConditionMapping>
+   </ns2:query>
+   <ns2:query queryName="searchOrgaLegalInfo">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfo" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfo"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+       <ns2:fieldMapping>
+           <ns2:toDataFieldPath>inFlow.orgId</ns2:toDataFieldPath>
+           <ns2:conditionValue>
+               <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                   <ns2:type>=</ns2:type>
+               </ns2:operator>
+               <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                   <ns2:valueFieldPath>scFlow.orgId</ns2:valueFieldPath>
+               </ns2:value>
+               <ns2:condition>
+                   <expressionString><![CDATA[scFlow.getOrgId() > 0]]></expressionString>
+               </ns2:condition>
+           </ns2:conditionValue>
+       </ns2:fieldMapping>
+       <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+           <type entityName="org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfo"/>
        </ns2:searchConditionData>
    </ns2:searchConditionMapping>
    </ns2:query>
