@@ -1,6 +1,7 @@
 package org.shaolin.vogerp.commonmodel.internal;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -13,16 +14,22 @@ import org.shaolin.bmdp.runtime.cache.ICache;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.javacc.exception.ParsingException;
 import org.shaolin.uimaster.page.cache.UIFlowCacheManager;
+import org.shaolin.vogerp.commonmodel.be.IModuleGroup;
 import org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl;
 import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
 
 public class ModuleServiceImpl implements IServiceProvider {
 
-	private final ICache<String, Long> modules;
+	private final ICache<String, Long> moduleLinks;
+	
+	private final ICache<Long, IModuleGroup> modules;
+	
 	
 	public ModuleServiceImpl() {
 		modules = CacheManager.getInstance().getCache(AppContext.get().getAppName() 
-				+ "_modules_cache", String.class, Long.class);
+				+ "_modules_cache", Long.class, IModuleGroup.class);
+		moduleLinks = CacheManager.getInstance().getCache(AppContext.get().getAppName() 
+				+ "_modules_link_cache", String.class, Long.class);
 		init();
 	}
 	
@@ -39,7 +46,7 @@ public class ModuleServiceImpl implements IServiceProvider {
             	if (chunkNameIndex != -1) {
 	            	String path = accessURL.substring(chunkNameIndex + "_chunkname=".length(), _nodenameIndex - 1);
 	            	path += "." + accessURL.substring(_nodenameIndex + "_nodename=".length(), _framenameIndex -1);
-	            	modules.put(path, module.getGroupId());
+	            	moduleLinks.put(path, module.getGroupId());
             	}
         	}
         }
@@ -52,16 +59,29 @@ public class ModuleServiceImpl implements IServiceProvider {
 	}
 	
 	public void reload() {
+		moduleLinks.clear();
 		modules.clear();
 		init();
 	}
 	
 	public long getModuleId(String chunkName, String nodeName) {
 		String path = chunkName + "." + nodeName;
-		if (modules.containsKey(path)) {
-			return modules.get(path);
+		if (moduleLinks.containsKey(path)) {
+			return moduleLinks.get(path);
 		}
 		return -1;
+	}
+	
+	public ArrayList[] getModuleListInOptions() {
+		ArrayList<String> optionsValues = new ArrayList<String>();
+		ArrayList<String> displayItems = new ArrayList<String>();
+		Iterator<IModuleGroup> i = modules.getValues().iterator();
+		while(i.hasNext()) {
+			IModuleGroup module = i.next();
+			optionsValues.add(module.getGroupId() + "");
+			displayItems.add(module.getName());
+		} 
+		return new ArrayList[]{optionsValues, displayItems};
 	}
 	
 	@Override
@@ -69,19 +89,20 @@ public class ModuleServiceImpl implements IServiceProvider {
 		return ModuleServiceImpl.class;
 	}
 	
-	static void updateWebFlowLinks() throws ParsingException {
+	void updateWebFlowLinks() throws ParsingException {
 		ModuleGroupImpl condition = new ModuleGroupImpl();
         List<ModuleGroupImpl> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
         updateWebFlowLinks(all);
 	}
 	
-	static void updateWebFlowLinks(List<ModuleGroupImpl> all) throws ParsingException {
+	void updateWebFlowLinks(List<ModuleGroupImpl> all) throws ParsingException {
         // find AppContext.get().getAppName()
         ModuleGroupImpl root = null;
         for (int i=0;i<all.size();i++) {
         	ModuleGroupImpl mg = (ModuleGroupImpl)all.get(i);
         	if (mg.getName().equals(AppContext.get().getAppName())) {
         		root = mg;
+        		modules.put(mg.getGroupId(), mg);
         	    break;
         	}
         }
@@ -96,6 +117,7 @@ public class ModuleServiceImpl implements IServiceProvider {
             if (mg.getParentId() != root.getGroupId()) {
             	continue;
             }
+            modules.put(mg.getGroupId(), mg);
             // webflow.do?_chunkname=org.shaolin.bmdp.adminconsole.diagram.MainFunctions&_nodename=ModuleManager&_framename=moduleManager&_framePrefix=
             String accessURL = mg.getAccessURL();
 			if (accessURL != null && !"#".equals(accessURL)) {
@@ -121,6 +143,8 @@ public class ModuleServiceImpl implements IServiceProvider {
             for (int j=0;j<all.size();j++) {
             	if (mg.getGroupId() == ((ModuleGroupImpl)all.get(j)).getParentId()) {
             		ModuleGroupImpl m = (ModuleGroupImpl)all.get(j);
+            		modules.put(m.getGroupId(), m);
+                    
             		accessURL = m.getAccessURL();
         			if (accessURL != null && !"#".equals(accessURL)) {
                     	int chunkNameIndex = accessURL.indexOf("_chunkname=");

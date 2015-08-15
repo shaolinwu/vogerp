@@ -3,16 +3,6 @@
 function org_shaolin_vogerp_commonmodel_form_ModelPermission(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var moduleIdUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "moduleIdUILabel"]
-    });
-
-    var moduleIdUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "moduleIdUI"]
-    });
-
     var typeUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "typeUILabel"]
@@ -48,18 +38,14 @@ function org_shaolin_vogerp_commonmodel_form_ModelPermission(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "moduleIdUILabel",prefix + "moduleIdUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "modulesUILabel",prefix + "modulesUI"]
+        ,subComponents: [prefix + "typeUILabel",prefix + "typeUI",prefix + "modulesUILabel",prefix + "modulesUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [moduleIdUILabel,moduleIdUI,typeUILabel,modulesUILabel,okbtn,cancelbtn,typeUI,modulesUI,fieldPanel,actionPanel]
+        ,items: [typeUILabel,modulesUILabel,okbtn,cancelbtn,typeUI,modulesUI,fieldPanel,actionPanel]
     });
-
-    Form.moduleIdUILabel=moduleIdUILabel;
-
-    Form.moduleIdUI=moduleIdUI;
 
     Form.typeUILabel=typeUILabel;
 
@@ -102,7 +88,7 @@ function org_shaolin_vogerp_commonmodel_form_ModelPermission(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail824426062",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20150815-0648",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ModelPermission_Save */
@@ -113,7 +99,7 @@ function org_shaolin_vogerp_commonmodel_form_ModelPermission(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-1385217932",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20150815-0648",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ModelPermission_Cancel */

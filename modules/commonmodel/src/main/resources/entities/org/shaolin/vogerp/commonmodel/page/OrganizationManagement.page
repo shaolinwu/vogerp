@@ -103,12 +103,11 @@
                         
                         HashMap input = new HashMap();
                         input.put("type", defaultUser.getType());
-                        input.put("selectedModelList", defaultUser.getType());
                         input.put("editable", new Boolean(true));
                         RefForm form = new RefForm("partyRelationForm", "org.shaolin.vogerp.commonmodel.form.ModelPermission", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Create Party Relationship Information", new TableCallBack("partyRelationTable"), 690, 500, true);
+                        form.openInWindows("Roles Assignment", null, 552, 322);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>

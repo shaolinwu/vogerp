@@ -1,6 +1,6 @@
 /* null */
 /* auto generated constructor */
-function org_shaolin_vogerp_commonmodel_form_ListToListSelector(json)
+function org_shaolin_vogerp_commonmodel_form_ListToListCESelector(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
     var leftListUI = new UIMaster.ui.list
@@ -71,70 +71,70 @@ function org_shaolin_vogerp_commonmodel_form_ListToListSelector(json)
 
     Form.user_constructor = function()
     {
-        /* Construct_FIRST:org_shaolin_vogerp_commonmodel_form_ListToListSelector */
-        /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_ListToListSelector */
+        /* Construct_FIRST:org_shaolin_vogerp_commonmodel_form_ListToListCESelector */
+        /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_ListToListCESelector */
     };
 
-    Form.moveToRight = org_shaolin_vogerp_commonmodel_form_ListToListSelector_moveToRight;
+    Form.moveToRight = org_shaolin_vogerp_commonmodel_form_ListToListCESelector_moveToRight;
 
-    Form.moveAllToRight = org_shaolin_vogerp_commonmodel_form_ListToListSelector_moveAllToRight;
+    Form.moveAllToRight = org_shaolin_vogerp_commonmodel_form_ListToListCESelector_moveAllToRight;
 
-    Form.moveToLeft = org_shaolin_vogerp_commonmodel_form_ListToListSelector_moveToLeft;
+    Form.moveToLeft = org_shaolin_vogerp_commonmodel_form_ListToListCESelector_moveToLeft;
 
-    Form.moveAllToLeft = org_shaolin_vogerp_commonmodel_form_ListToListSelector_moveAllToLeft;
+    Form.moveAllToLeft = org_shaolin_vogerp_commonmodel_form_ListToListCESelector_moveAllToLeft;
 
-    Form.__entityName="org.shaolin.vogerp.commonmodel.form.ListToListSelector";
+    Form.__entityName="org.shaolin.vogerp.commonmodel.form.ListToListCESelector";
 
     Form.init();
     return Form;
 };
 
     /* EventHandler Functions */
-/* Other_Func_FIRST:org_shaolin_vogerp_commonmodel_form_ListToListSelector */
-/* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_ListToListSelector */
+/* Other_Func_FIRST:org_shaolin_vogerp_commonmodel_form_ListToListCESelector */
+/* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_ListToListCESelector */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_ListToListSelector_moveToRight(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ListToListSelector_moveToRight */
+    function org_shaolin_vogerp_commonmodel_form_ListToListCESelector_moveToRight(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ListToListCESelector_moveToRight */
 
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"moveToRight-20150815-0821",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ListToListSelector_moveToRight */
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ListToListCESelector_moveToRight */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_ListToListSelector_moveAllToRight(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ListToListSelector_moveAllToRight */
+    function org_shaolin_vogerp_commonmodel_form_ListToListCESelector_moveAllToRight(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ListToListCESelector_moveAllToRight */
 
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"moveAllToRight-20150815-0821",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ListToListSelector_moveAllToRight */
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ListToListCESelector_moveAllToRight */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_ListToListSelector_moveToLeft(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ListToListSelector_moveToLeft */
+    function org_shaolin_vogerp_commonmodel_form_ListToListCESelector_moveToLeft(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ListToListCESelector_moveToLeft */
 
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"moveToLeft-20150815-0821",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ListToListSelector_moveToLeft */
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ListToListCESelector_moveToLeft */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_ListToListSelector_moveAllToLeft(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ListToListSelector_moveAllToLeft */
+    function org_shaolin_vogerp_commonmodel_form_ListToListCESelector_moveAllToLeft(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ListToListCESelector_moveAllToLeft */
 
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"moveAllToLeft-20150815-0821",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ListToListSelector_moveAllToLeft */
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ListToListCESelector_moveAllToLeft */
 
 
 

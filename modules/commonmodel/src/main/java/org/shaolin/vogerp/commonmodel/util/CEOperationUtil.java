@@ -336,4 +336,42 @@ public class CEOperationUtil {
 			throw new IllegalArgumentException("Failed to convert the CE JSON string: " + value, e);
 		}
 	}
+	
+	public static ArrayList<String> syncRightDisplayItems(List<String> selectedValues, List<String> allValues, List<String> displayItems) {
+		if (selectedValues == null || selectedValues.isEmpty()) {
+			return new ArrayList();
+		}
+		ArrayList selectedDisplayItems = new ArrayList();
+		for (int i = 0; i < allValues.size(); i++) {
+			for (int j = 0; j < selectedValues.size(); j++) {
+				if (allValues.get(i).equals(selectedValues.get(j))) {
+					selectedDisplayItems.add(displayItems.get(i));
+					break;
+				}
+			}
+		}
+		return selectedDisplayItems;
+	}
+	
+	public static ArrayList[] syncLeftDisplayItems(List<String> selectedRightValues, List<String> allValues, List<String> displayItems) {
+		if (selectedRightValues == null || selectedRightValues.isEmpty()) {
+			return new ArrayList[]{(ArrayList)allValues, (ArrayList)displayItems};
+		}
+		ArrayList selectedLeftValues = new ArrayList();
+		ArrayList selectedDisplayItems = new ArrayList();
+		for (int i = 0; i < allValues.size(); i++) {
+			boolean has = false;
+			for (int j = 0; j < selectedRightValues.size(); j++) {
+				if (allValues.get(i).equals(selectedRightValues.get(j))) {
+					has = true;
+					break;
+				}
+			}
+			if (!has) {
+				selectedLeftValues.add(allValues.get(i));
+				selectedDisplayItems.add(displayItems.get(i));
+			}
+		}
+		return new ArrayList[]{selectedLeftValues, selectedDisplayItems};
+	}
 }

@@ -40,7 +40,10 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 		userService.init();
 		serviceManger.register(userService);
 		
-		PermissionServiceImpl permissionService = new PermissionServiceImpl(new ModuleServiceImpl());
+		ModuleServiceImpl moduleService = new ModuleServiceImpl();
+		serviceManger.register(moduleService);
+		
+		PermissionServiceImpl permissionService = new PermissionServiceImpl(moduleService);
 		serviceManger.register(permissionService);
 		
 		UIPermissionManager uiPermiManager = new UIPermissionManager(permissionService);

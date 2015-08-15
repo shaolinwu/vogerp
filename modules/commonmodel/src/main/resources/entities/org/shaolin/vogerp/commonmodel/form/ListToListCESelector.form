@@ -1,24 +1,14 @@
 <?xml version="1.0" ?>
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
-  <entityName>org.shaolin.vogerp.commonmodel.form.ListToListSelector</entityName>
+  <entityName>org.shaolin.vogerp.commonmodel.form.ListToListCESelector</entityName>
   <systemVersion>0</systemVersion>
   <ns2:eventHandler functionName="moveToRight">
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="moveToRight-20150815-0821">
       <ns2:exp>
         <expressionString><![CDATA[
-        import java.util.List;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         { 
-           AList leftList = @page.getList("leftListUI");
-        			AList rightList = @page.getList("rightListUI");
-        			List values = leftList.getValues();
-        			for (int i=0;i<values.size();i++) {
-					        			rightList.addOption(leftList.getOptionName((String)values.get(i)), (String)values.get(i));
-					        			leftList.removeOption((String)values.get(i));
-        			}
-        			//leftList.clearValues();
-        			//rightList.clearValues();
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -27,16 +17,9 @@
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="moveAllToRight-20150815-0821">
       <ns2:exp>
         <expressionString><![CDATA[
-        import java.util.List;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         { 
-           AList leftList = @page.getList("leftListUI");
-        			AList rightList = @page.getList("rightListUI");
-        			rightList.setOptions(leftList.getOptionDisplayValues(), leftList.getOptionValues());
-        			rightList.clearValues();
-        			leftList.clearValues();
-        			leftList.removeAllOptions();
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -45,19 +28,9 @@
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="moveToLeft-20150815-0821">
       <ns2:exp>
         <expressionString><![CDATA[
-        import java.util.List;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         { 
-           AList leftList = @page.getList("leftListUI");
-        			AList rightList = @page.getList("rightListUI");
-        			List values = rightList.getValues();
-        			for (int i=0;i<values.size();i++) {
-					        			leftList.addOption(rightList.getOptionName((String)values.get(i)), (String)values.get(i));
-					        			rightList.removeOption((String)values.get(i));
-        			}
-        			//leftList.clearValues();
-        			//rightList.clearValues();
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -66,16 +39,9 @@
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="moveAllToLeft-20150815-0821">
       <ns2:exp>
         <expressionString><![CDATA[
-        import java.util.List;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         { 
-           AList leftList = @page.getList("leftListUI");
-        			AList rightList = @page.getList("rightListUI");
-        			leftList.setOptions(rightList.getOptionDisplayValues(), rightList.getOptionValues());
-        			leftList.clearValues();
-        			rightList.clearValues();
-        			rightList.removeAllOptions();
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -247,14 +213,11 @@
     ]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
-      <expressionString><![CDATA[
-      import java.util.ArrayList;
+      <expressionString>
       {
-         $rightValues = new ArrayList();
-		       @odContext.executeAllMappings();
-		       $selectedValues = $rightValues;
-	     }
-	  ]]></expressionString>
+		@odContext.executeAllMappings();
+	  }
+	  </expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>
 </ns2:UIEntity>
