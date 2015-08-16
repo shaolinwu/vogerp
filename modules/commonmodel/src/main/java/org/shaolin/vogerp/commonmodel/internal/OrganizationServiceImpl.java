@@ -37,7 +37,7 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 		}
 	}
 	
-	void reload() {
+	public void reload() {
 		this.allItems.clear();
 		
 		OrganizationImpl searchCriteria = new OrganizationImpl();
@@ -83,7 +83,24 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 		condition.setOrgCode(orgCode);
 		return CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, -1);
 	}
-
+	
+	@Override
+	public PersonalInfoImpl getEmployee(int id) {
+		PersonalInfoImpl condition = new PersonalInfoImpl();
+		condition.setId(id);
+		List<PersonalInfoImpl> list = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, -1);
+		if (list != null && list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
+	}
+	
+	@Override
+	public List<PersonalInfoImpl> getEmployeese() {
+		PersonalInfoImpl condition = new PersonalInfoImpl();
+		return CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, -1);
+	}
+		
 	@Override
 	public List<String> getOrganizationRoles() {
 		return null;

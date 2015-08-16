@@ -38,6 +38,8 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
 
     Form.openSaleOrderTracker = org_shaolin_vogerp_order_page_OrderManagement_openSaleOrderTracker;
 
+    Form.approveSaleOrder = org_shaolin_vogerp_order_page_OrderManagement_approveSaleOrder;
+
     Form.initPageJs = org_shaolin_vogerp_order_page_OrderManagement_initPageJs;
 
     Form.finalizePageJs = org_shaolin_vogerp_order_page_OrderManagement_finalizePageJs;
@@ -96,6 +98,17 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_order_page_OrderManagement_openSaleOrderTracker */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_order_page_OrderManagement_approveSaleOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_page_OrderManagement_approveSaleOrder */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"approveSaleOrder-20150815-0906",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_order_page_OrderManagement_approveSaleOrder */
 
 
     function org_shaolin_vogerp_order_page_OrderManagement_initPageJs(){/* Gen_First:org_shaolin_vogerp_order_page_OrderManagement_initPageJs */

@@ -27,15 +27,11 @@
         import org.shaolin.vogerp.commonmodel.internal.PasswordCheckResult;
         import org.shaolin.vogerp.commonmodel.internal.PasswordVerifier;
         { 
-            PersonalAccountImpl defaultUser = new PersonalAccountImpl();
-            
-            HashMap input = new HashMap();
-            input.put("beObject", defaultUser);
-            input.put("editable", new Boolean(true));
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            form.ui2Data(input);
+            HashMap input = (HashMap)form.ui2Data();
+            PersonalAccountImpl defaultUser = (PersonalAccountImpl)input.get("beObject");
             
-	        IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
+	           IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
             PersonalAccountImpl inputAccount = (PersonalAccountImpl)@page.removeTempUserData("accountData");
             defaultUser = (PersonalAccountImpl)input.get("beObject");
             String v = @page.getHidden("idUI").getValue();

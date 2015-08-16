@@ -16,6 +16,10 @@ public interface IOrganizationService {
 	
 	public List<PersonalInfoImpl> getEmployeese(String orgCode);
 	
+	public PersonalInfoImpl getEmployee(int id);
+	
+	public List<PersonalInfoImpl> getEmployeese();
+	
 	public List<String> getOrganizationRoles();
 	
 	/**

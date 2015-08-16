@@ -54,6 +54,9 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 		
 		OrganizationServiceImpl orgService = new OrganizationServiceImpl();
 		serviceManger.register(orgService);
+		
+		ResourceManagerImpl resourceManager = new ResourceManagerImpl(orgService);
+		serviceManger.register(resourceManager);
 	}
 	
 	@Override

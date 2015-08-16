@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.shaolin.bmdp.i18n.Localizer;
 import org.shaolin.bmdp.i18n.ResourceUtil;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
-import org.shaolin.uimaster.page.AjaxContext;
 import org.shaolin.uimaster.page.flow.WebflowConstants;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
@@ -22,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 public class UserServiceImpl implements IServiceProvider, IUserService {
 
-	private static final Logger logger = LoggerFactory.getLogger(AjaxContext.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	
 	private static Localizer LOCALIZER = new Localizer("org_shaolin_vogerp_commonmodel_i18n");
 	

@@ -27,18 +27,10 @@
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
         import org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl;
         { 
-            ModuleGroupImpl defaultUser = new ModuleGroupImpl();
-            ArrayList values = new ArrayList();
-            
-            HashMap input = new HashMap();
-            input.put("beObject", defaultUser);
-            input.put("editable", new Boolean(true));
-            input.put("values", values);
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            Map out = form.ui2Data(input);
-            values = (ArrayList)out.get("values");
-            
-            defaultUser = (ModuleGroupImpl)out.get("beObject");
+            Map out = (Map)form.ui2Data();
+            ArrayList values = (ArrayList)out.get("values");
+            ModuleGroupImpl defaultUser = (ModuleGroupImpl)out.get("beObject");
             String v = @page.getHidden("groupIdUI").getValue();
             if (v != null && v.length() > 0) {
             	Long objectId = Long.valueOf(v);

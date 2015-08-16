@@ -11,14 +11,10 @@
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl;
         { 
-            LegalOrganizationInfoImpl defaultUser = new LegalOrganizationInfoImpl();
-            HashMap input = new HashMap();
-            input.put("beObject", defaultUser);
-            input.put("editable", new Boolean(true));
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            form.ui2Data(input);
+            HashMap input = (HashMap)form.ui2Data();
 
-            defaultUser = (LegalOrganizationInfoImpl)input.get("beObject");
+            LegalOrganizationInfoImpl defaultUser = (LegalOrganizationInfoImpl)input.get("beObject");
             String v = @page.getHidden("idUI").getValue();
             if (v != null && v.length() > 0) {
             	   Long objectId = Long.valueOf(v);

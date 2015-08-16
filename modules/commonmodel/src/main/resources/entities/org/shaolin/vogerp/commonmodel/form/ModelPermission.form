@@ -15,12 +15,8 @@
         import org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl;
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
         { 
-            Map input = new HashMap();
-            input.put("type", "");
-            input.put("selectedModelList", new ArrayList());
-            
 												RefForm form = (RefForm)@page.getElement(@page.getEntityUiid());
-												input = form.ui2Data(input);
+												HashMap input = (HashMap)form.ui2Data();
 												
 												ArrayList selectedModules = (ArrayList)input.get("selectedModelList");
 												System.out.println("all: " + input);
