@@ -12,14 +12,10 @@
         import org.shaolin.vogerp.productmodel.be.StorageItemImpl;
         import org.shaolin.vogerp.productmodel.dao.ProductModel;
         { 
-            StorageItemImpl defaultUser = new StorageItemImpl();
-            HashMap input = new HashMap();
-            input.put("beObject", defaultUser);
-            input.put("editable", new Boolean(true));
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            form.ui2Data(input);
+            HashMap input = (HashMap)form.ui2Data();
 
-            defaultUser = (StorageItemImpl)input.get("beObject");
+            StorageItemImpl defaultUser = (StorageItemImpl)input.get("beObject");
             String v = @page.getHidden("idUI").getValue();
             if (v != null && v.length() > 0) {
             	   Long objectId = Long.valueOf(v);

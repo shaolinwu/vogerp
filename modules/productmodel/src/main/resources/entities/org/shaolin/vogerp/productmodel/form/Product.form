@@ -22,15 +22,9 @@
         import org.shaolin.vogerp.productmodel.be.ProductImpl;
         import org.shaolin.vogerp.productmodel.dao.ProductModel;
         { 
-            ProductImpl defaultUser = new ProductImpl();
-            
-            HashMap input = new HashMap();
-            input.put("beObject", defaultUser);
-            input.put("editable", new Boolean(true));
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            form.ui2Data(input);
-            
-            defaultUser = (ProductImpl)input.get("beObject");
+            HashMap input = (HashMap)form.ui2Data();
+            ProductImpl defaultUser = (ProductImpl)input.get("beObject");
             String v = @page.getHidden("idUI").getValue();
             if (v != null && v.length() > 0) {
             	Long objectId = Long.valueOf(v);

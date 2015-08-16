@@ -12,14 +12,9 @@
         import org.shaolin.vogerp.productmodel.be.ProductCostImpl;
         import org.shaolin.vogerp.productmodel.dao.ProductModel;
         { 
-            ProductCostImpl defaultUser = new ProductCostImpl();
-            HashMap input = new HashMap();
-            input.put("beObject", defaultUser);
-            input.put("editable", new Boolean(true));
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            form.ui2Data(input);
-
-            defaultUser = (ProductCostImpl)input.get("beObject");
+            HashMap input = (HashMap)form.ui2Data();
+            ProductCostImpl defaultUser = (ProductCostImpl)input.get("beObject");
             String v = @page.getHidden("idUI").getValue();
             String pid = @page.getHidden("productIdUI").getValue();
             if (v != null && v.length() > 0) {

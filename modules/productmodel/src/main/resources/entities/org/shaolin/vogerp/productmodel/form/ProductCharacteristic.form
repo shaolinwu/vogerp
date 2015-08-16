@@ -12,14 +12,9 @@
         import org.shaolin.vogerp.productmodel.be.ProductCharacteristicImpl;
         import org.shaolin.vogerp.productmodel.dao.ProductModel;
         { 
-            ProductCharacteristicImpl defaultUser = new ProductCharacteristicImpl();
-            HashMap input = new HashMap();
-            input.put("beObject", defaultUser);
-            input.put("editable", new Boolean(true));
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            form.ui2Data(input);
-
-            defaultUser = (ProductCharacteristicImpl)input.get("beObject");
+            HashMap input = (HashMap)form.ui2Data();
+            ProductCharacteristicImpl defaultUser = (ProductCharacteristicImpl)input.get("beObject");
             String v = @page.getHidden("idUI").getValue();
             String pid = @page.getHidden("productIdUI").getValue();
             if (v != null && v.length() > 0) {

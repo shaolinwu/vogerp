@@ -11,14 +11,10 @@
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.order.be.ProductOrderImpl;
         { 
-            ProductOrderImpl defaultUser = new ProductOrderImpl();
-            HashMap input = new HashMap();
-            input.put("beObject", defaultUser);
-            input.put("editable", new Boolean(true));
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            form.ui2Data(input);
+            HashMap input = (HashMap)form.ui2Data();
 
-            defaultUser = (ProductOrderImpl)input.get("beObject");
+            ProductOrderImpl defaultUser = (ProductOrderImpl)input.get("beObject");
             String v = @page.getHidden("idUI").getValue();
             if (v != null && v.length() > 0) {
             	   Long objectId = Long.valueOf(v);

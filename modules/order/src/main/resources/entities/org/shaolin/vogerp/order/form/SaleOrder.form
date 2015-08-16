@@ -25,34 +25,30 @@
         <expressionString><![CDATA[
         import java.util.HashMap;
         import java.util.List;
-		import org.shaolin.uimaster.page.AjaxContext;
-		import org.shaolin.uimaster.page.ajax.*;
-		import org.shaolin.vogerp.order.be.*;
-		import org.shaolin.vogerp.order.dao.OrderModel;
-		{ 
-			SaleOrderImpl defaultUser = new SaleOrderImpl();
-			HashMap input = new HashMap();
-			input.put("beObject", defaultUser);
-			input.put("editable", new Boolean(true));
-			RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-			form.ui2Data(input);
-		
-			defaultUser = (SaleOrderImpl)input.get("beObject");
-			String v = @page.getHidden("idUI").getValue();
-			if (v != null && v.length() > 0) {
-				   Long objectId = Long.valueOf(v);
-				   defaultUser.setId(objectId.longValue());
-			}
-            System.out.println("Items: " + defaultUser.getItems());
-		    if (defaultUser.getId() == 0) {
-				OrderModel.INSTANCE.create(defaultUser);
-			} else {
-				OrderModel.INSTANCE.update(defaultUser);
-			}
-			
-			form.closeIfinWindows();
-			@page.removeForm(@page.getEntityUiid()); 
-		}]]></expressionString>
+								import org.shaolin.uimaster.page.AjaxContext;
+								import org.shaolin.uimaster.page.ajax.*;
+								import org.shaolin.vogerp.order.be.*;
+								import org.shaolin.vogerp.order.dao.OrderModel;
+								{ 
+									RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+									HashMap input = (HashMap)form.ui2Data();
+								
+									SaleOrderImpl defaultUser = (SaleOrderImpl)input.get("beObject");
+									String v = @page.getHidden("idUI").getValue();
+									if (v != null && v.length() > 0) {
+										   Long objectId = Long.valueOf(v);
+										   defaultUser.setId(objectId.longValue());
+									}
+						            System.out.println("Items: " + defaultUser.getItems());
+								    if (defaultUser.getId() == 0) {
+										OrderModel.INSTANCE.create(defaultUser);
+									} else {
+										OrderModel.INSTANCE.update(defaultUser);
+									}
+									
+									form.closeIfinWindows();
+									@page.removeForm(@page.getEntityUiid()); 
+								}]]></expressionString>
       </ns2:exp>
     </ns2:ops>
     <ns2:ops></ns2:ops>
