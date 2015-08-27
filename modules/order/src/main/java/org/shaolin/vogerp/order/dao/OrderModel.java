@@ -55,7 +55,7 @@ public class OrderModel extends BEEntityDaoObject {
         return count(IDeliveryInfo.class);
     }
 
-    public List<org.shaolin.vogerp.order.be.SaleOrderImpl> searchSaleOrder(org.shaolin.vogerp.order.be.SaleOrderImpl scObject,
+    public List<org.shaolin.vogerp.order.be.ISaleOrder> searchSaleOrder(org.shaolin.vogerp.order.be.SaleOrderImpl scObject,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -74,7 +74,7 @@ public class OrderModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.order.be.SaleOrderImpl> searchSaleOrder(org.shaolin.vogerp.order.be.SaleOrderImpl scObject,
+    public List<org.shaolin.vogerp.order.be.ISaleOrder> searchSaleOrder(org.shaolin.vogerp.order.be.SaleOrderImpl scObject,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.SaleOrderImpl.class, "inObject");
@@ -113,7 +113,7 @@ public class OrderModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.order.be.PurchaseOrderImpl> searchPurchaseOrder(org.shaolin.vogerp.order.be.PurchaseOrderImpl scObject,
+    public List<org.shaolin.vogerp.order.be.IPurchaseOrder> searchPurchaseOrder(org.shaolin.vogerp.order.be.PurchaseOrderImpl scObject,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -132,7 +132,7 @@ public class OrderModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.order.be.PurchaseOrderImpl> searchPurchaseOrder(org.shaolin.vogerp.order.be.PurchaseOrderImpl scObject,
+    public List<org.shaolin.vogerp.order.be.IPurchaseOrder> searchPurchaseOrder(org.shaolin.vogerp.order.be.PurchaseOrderImpl scObject,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.PurchaseOrderImpl.class, "inObject");
@@ -171,7 +171,7 @@ public class OrderModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.order.be.ProductOrderImpl> searchProductOrder(org.shaolin.vogerp.order.be.ProductOrderImpl scObject,
+    public List<org.shaolin.vogerp.order.be.IProductOrder> searchProductOrder(org.shaolin.vogerp.order.be.ProductOrderImpl scObject,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -190,7 +190,7 @@ public class OrderModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.order.be.ProductOrderImpl> searchProductOrder(org.shaolin.vogerp.order.be.ProductOrderImpl scObject,
+    public List<org.shaolin.vogerp.order.be.IProductOrder> searchProductOrder(org.shaolin.vogerp.order.be.ProductOrderImpl scObject,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.ProductOrderImpl.class, "inObject");
@@ -229,7 +229,7 @@ public class OrderModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.order.be.OrderItemImpl> searchOrderItem(org.shaolin.vogerp.order.be.OrderItemImpl scObject,
+    public List<org.shaolin.vogerp.order.be.IOrderItem> searchOrderItem(org.shaolin.vogerp.order.be.OrderItemImpl scObject,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -248,7 +248,7 @@ public class OrderModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.order.be.OrderItemImpl> searchOrderItem(org.shaolin.vogerp.order.be.OrderItemImpl scObject,
+    public List<org.shaolin.vogerp.order.be.IOrderItem> searchOrderItem(org.shaolin.vogerp.order.be.OrderItemImpl scObject,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.OrderItemImpl.class, "inObject");
@@ -287,7 +287,7 @@ public class OrderModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.order.be.OrderHandlingInfoImpl> searchOrderHandlingInfo(org.shaolin.vogerp.order.be.OrderHandlingInfoImpl scObject,
+    public List<org.shaolin.vogerp.order.be.IOrderHandlingInfo> searchOrderHandlingInfo(org.shaolin.vogerp.order.be.OrderHandlingInfoImpl scObject,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -306,7 +306,7 @@ public class OrderModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.order.be.OrderHandlingInfoImpl> searchOrderHandlingInfo(org.shaolin.vogerp.order.be.OrderHandlingInfoImpl scObject,
+    public List<org.shaolin.vogerp.order.be.IOrderHandlingInfo> searchOrderHandlingInfo(org.shaolin.vogerp.order.be.OrderHandlingInfoImpl scObject,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.OrderHandlingInfoImpl.class, "inObject");
@@ -345,7 +345,7 @@ public class OrderModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.order.be.DeliveryInfoImpl> searchDeliveryInfo(org.shaolin.vogerp.order.be.DeliveryInfoImpl scObject,
+    public List<org.shaolin.vogerp.order.be.IDeliveryInfo> searchDeliveryInfo(org.shaolin.vogerp.order.be.DeliveryInfoImpl scObject,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -364,7 +364,7 @@ public class OrderModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.order.be.DeliveryInfoImpl> searchDeliveryInfo(org.shaolin.vogerp.order.be.DeliveryInfoImpl scObject,
+    public List<org.shaolin.vogerp.order.be.IDeliveryInfo> searchDeliveryInfo(org.shaolin.vogerp.order.be.DeliveryInfoImpl scObject,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.DeliveryInfoImpl.class, "inObject");

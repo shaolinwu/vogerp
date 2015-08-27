@@ -25,7 +25,7 @@ public class ModularityModel extends BEEntityDaoObject {
     private ModularityModel() {
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl> searchModuleGroup(org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IModuleGroup> searchModuleGroup(org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -53,7 +53,7 @@ public class ModularityModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl> searchModuleGroup(org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IModuleGroup> searchModuleGroup(org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl.class, "inFlow");
@@ -119,7 +119,7 @@ public class ModularityModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.CEEntityInfoImpl> searchCEInfo(java.lang.String ceName,
+    public List<org.shaolin.vogerp.commonmodel.be.ICEEntityInfo> searchCEInfo(java.lang.String ceName,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -141,7 +141,7 @@ public class ModularityModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.CEEntityInfoImpl> searchCEInfo(java.lang.String ceName,
+    public List<org.shaolin.vogerp.commonmodel.be.ICEEntityInfo> searchCEInfo(java.lang.String ceName,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.CEEntityInfoImpl.class, "inFlow");
@@ -189,7 +189,7 @@ public class ModularityModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.CEExtensionImpl> searchCEExtension(org.shaolin.vogerp.commonmodel.be.CEExtensionImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.ICEExtension> searchCEExtension(org.shaolin.vogerp.commonmodel.be.CEExtensionImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -211,7 +211,7 @@ public class ModularityModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.CEExtensionImpl> searchCEExtension(org.shaolin.vogerp.commonmodel.be.CEExtensionImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.ICEExtension> searchCEExtension(org.shaolin.vogerp.commonmodel.be.CEExtensionImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.CEExtensionImpl.class, "inFlow");
@@ -259,7 +259,7 @@ public class ModularityModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl> searchCEHierarchy(org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.ICEHierarchy> searchCEHierarchy(org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -287,7 +287,7 @@ public class ModularityModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl> searchCEHierarchy(org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.ICEHierarchy> searchCEHierarchy(org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl.class, "inFlow");
@@ -353,7 +353,7 @@ public class ModularityModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl> searchDynamicItemEntities(org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IUIDyanimcItem> searchDynamicItemEntities(org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -375,7 +375,7 @@ public class ModularityModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl> searchDynamicItemEntities(org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IUIDyanimcItem> searchDynamicItemEntities(org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl.class, "inFlow");
@@ -423,7 +423,7 @@ public class ModularityModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl> searchDynamicItems(org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IUIDyanimcItem> searchDynamicItems(org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -445,7 +445,7 @@ public class ModularityModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl> searchDynamicItems(org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IUIDyanimcItem> searchDynamicItems(org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl.class, "inFlow");
@@ -493,7 +493,7 @@ public class ModularityModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl> searchDynamicPageLink(org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IUIDyanimcPageLink> searchDynamicPageLink(org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -515,7 +515,7 @@ public class ModularityModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl> searchDynamicPageLink(org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IUIDyanimcPageLink> searchDynamicPageLink(org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl.class, "inFlow");

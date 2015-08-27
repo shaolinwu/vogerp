@@ -13,6 +13,8 @@ import org.shaolin.uimaster.page.cache.UIFormObject;
 import org.shaolin.uimaster.page.cache.UIPageObject;
 import org.shaolin.uimaster.page.widgets.HTMLDynamicUIItem;
 import org.shaolin.vogerp.commonmodel.IDynamicUIService;
+import org.shaolin.vogerp.commonmodel.be.IUIDyanimcItem;
+import org.shaolin.vogerp.commonmodel.be.IUIDyanimcPageLink;
 import org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl;
 import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl;
 import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
@@ -36,8 +38,8 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
         try {
 			UIDyanimcItemImpl condition = new UIDyanimcItemImpl();
 			condition.setEnabled(true);
-	        List<UIDyanimcItemImpl> all = ModularityModel.INSTANCE.searchDynamicItemEntities(condition, session, null, 0, -1);
-	        for (UIDyanimcItemImpl module: all) {
+	        List<IUIDyanimcItem> all = ModularityModel.INSTANCE.searchDynamicItemEntities(condition, session, null, 0, -1);
+	        for (IUIDyanimcItem module: all) {
 	        	HTMLDynamicUIItem object = convert(module);
 	    		try {
 	    			UIFormObject uiCache = PageCacheManager.getUIFormObject(module.getUiEntityName());
@@ -59,8 +61,8 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
 	        // load dynamic ui links.
 	        UIDyanimcPageLinkImpl pageLink = new UIDyanimcPageLinkImpl();
 	        pageLink.setEnabled(true);
-	        List<UIDyanimcPageLinkImpl> pageLinks = ModularityModel.INSTANCE.searchDynamicPageLink(pageLink, session, null, 0, -1);
-	        for (UIDyanimcPageLinkImpl module: pageLinks) {
+	        List<IUIDyanimcPageLink> pageLinks = ModularityModel.INSTANCE.searchDynamicPageLink(pageLink, session, null, 0, -1);
+	        for (IUIDyanimcPageLink module: pageLinks) {
 	        	String linkInfo = module.getTarUIName() + ";" + module.getLinkComment();
 	        	try {
 		        	UIFormObject uiCache = PageCacheManager.getUIFormObject(module.getSrcUIName());
@@ -80,7 +82,7 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
         
 	}
 
-	private HTMLDynamicUIItem convert(UIDyanimcItemImpl module) {
+	private HTMLDynamicUIItem convert(IUIDyanimcItem module) {
 		HTMLDynamicUIItem object = new HTMLDynamicUIItem();
 		object.setFilter(module.getFilter());
 		object.setUiEntityName(module.getUiEntityName());
@@ -96,8 +98,8 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
 		UIDyanimcItemImpl condition = new UIDyanimcItemImpl();
 		condition.setUiEntityName(uiformName);
 		condition.setEnabled(true);
-        List<UIDyanimcItemImpl> all = ModularityModel.INSTANCE.searchDynamicItemEntities(condition, null, 0, -1);
-        for (UIDyanimcItemImpl module: all) {
+        List<IUIDyanimcItem> all = ModularityModel.INSTANCE.searchDynamicItemEntities(condition, null, 0, -1);
+        for (IUIDyanimcItem module: all) {
         	HTMLDynamicUIItem object = convert(module);
         	try {
         		UIFormObject uiCache = PageCacheManager.getUIFormObject(uiformName);
@@ -123,8 +125,8 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
 		// load dynamic ui links.
         UIDyanimcPageLinkImpl pageLink = new UIDyanimcPageLinkImpl();
         pageLink.setEnabled(true);
-        List<UIDyanimcPageLinkImpl> pageLinks = ModularityModel.INSTANCE.searchDynamicPageLink(pageLink, null, 0, -1);
-        for (UIDyanimcPageLinkImpl module: pageLinks) {
+        List<IUIDyanimcPageLink> pageLinks = ModularityModel.INSTANCE.searchDynamicPageLink(pageLink, null, 0, -1);
+        for (IUIDyanimcPageLink module: pageLinks) {
         	String linkInfo = module.getTarUIName() + ";" + module.getLinkComment();
         	try {
 	        	UIFormObject uiCache = PageCacheManager.getUIFormObject(module.getSrcUIName());

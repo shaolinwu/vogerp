@@ -7,6 +7,7 @@ import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.vogerp.commonmodel.IOrganizationService;
 import org.shaolin.vogerp.commonmodel.be.ILegalOrganizationInfo;
 import org.shaolin.vogerp.commonmodel.be.IOrganization;
+import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 import org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl;
 import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
 import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
@@ -14,7 +15,7 @@ import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 
 public class OrganizationServiceImpl implements IOrganizationService, IServiceProvider {
 
-	private final List<OrganizationImpl> allItems;
+	private final List<IOrganization> allItems;
 	
 	private IOrganization root;
 	
@@ -23,7 +24,7 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 	public OrganizationServiceImpl() {
 		OrganizationImpl searchCriteria = new OrganizationImpl();
 		this.allItems = CommonModel.INSTANCE.searchSubOrganizationInfo(searchCriteria, null, 0, -1);
-		for (OrganizationImpl item : allItems) {
+		for (IOrganization item : allItems) {
 			if (item.getParentId() == 0) {
 				this.root = item;
 				break;
@@ -42,7 +43,7 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 		
 		OrganizationImpl searchCriteria = new OrganizationImpl();
 		this.allItems.addAll(CommonModel.INSTANCE.searchSubOrganizationInfo(searchCriteria, null, 0, -1));
-		for (OrganizationImpl item : allItems) {
+		for (IOrganization item : allItems) {
 			if (item.getParentId() == 0) {
 				this.root = item;
 				break;
@@ -69,7 +70,7 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 	@Override
 	public List<IOrganization> getSubOrganization(String orgCode) {
 		List<IOrganization> subList = new ArrayList<IOrganization>();
-		for (OrganizationImpl org: this.allItems) {
+		for (IOrganization org: this.allItems) {
 			if (org.getOrgCode().equals(orgCode)) {
 				subList.add(org);
 			}
@@ -78,17 +79,17 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 	}
 
 	@Override
-	public List<PersonalInfoImpl> getEmployeese(String orgCode) {
+	public List<IPersonalInfo> getEmployeese(String orgCode) {
 		PersonalInfoImpl condition = new PersonalInfoImpl();
 		condition.setOrgCode(orgCode);
 		return CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, -1);
 	}
 	
 	@Override
-	public PersonalInfoImpl getEmployee(int id) {
+	public IPersonalInfo getEmployee(int id) {
 		PersonalInfoImpl condition = new PersonalInfoImpl();
 		condition.setId(id);
-		List<PersonalInfoImpl> list = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, -1);
+		List<IPersonalInfo> list = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, -1);
 		if (list != null && list.size() > 0) {
 			return list.get(0);
 		}
@@ -96,7 +97,7 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 	}
 	
 	@Override
-	public List<PersonalInfoImpl> getEmployeese() {
+	public List<IPersonalInfo> getEmployeese() {
 		PersonalInfoImpl condition = new PersonalInfoImpl();
 		return CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, -1);
 	}

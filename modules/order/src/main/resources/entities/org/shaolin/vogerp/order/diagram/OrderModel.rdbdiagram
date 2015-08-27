@@ -19,6 +19,7 @@
     <ns2:column name="DELIVERYINFOID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="PURCHASEDORDERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:column name="_taskId" type="BIGINT" length="38" default="0"></ns2:column>
     <ns2:primaryKey>
       <ns2:columnName>ID</ns2:columnName>
     </ns2:primaryKey>
@@ -40,6 +41,7 @@
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="SALEORDERDELIVERYINFO" mappingType="One-to-One" beFieldName="deliveryInfo" columnName="DELIVERYINFOID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="purchasedOrderId" columnName="PURCHASEDORDERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_taskId" columnName="_taskId"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
   <ns2:table>
@@ -56,6 +58,7 @@
     <ns2:column name="STATUS" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="SUPPLIERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:column name="_taskId" type="BIGINT" length="38" default="0"></ns2:column>
     <ns2:primaryKey>
       <ns2:columnName>ID</ns2:columnName>
     </ns2:primaryKey>
@@ -74,6 +77,7 @@
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ORDER_PURCHASEORDER_ORDERITEM_JT" collectionElement="org.shaolin.vogerp.order.be.OrderItem" mappingType="One-to-Many" beFieldName="items"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="supplierId" columnName="SUPPLIERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_taskId" columnName="_taskId"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
   <ns2:table>

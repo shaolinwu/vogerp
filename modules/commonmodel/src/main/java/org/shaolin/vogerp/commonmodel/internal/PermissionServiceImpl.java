@@ -14,6 +14,10 @@ import org.shaolin.bmdp.runtime.security.IPermissionService;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.vogerp.commonmodel.be.BEPermissionImpl;
 import org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl;
+import org.shaolin.vogerp.commonmodel.be.IBEPermission;
+import org.shaolin.vogerp.commonmodel.be.ICEHierarchy;
+import org.shaolin.vogerp.commonmodel.be.IModelPermission;
+import org.shaolin.vogerp.commonmodel.be.IUIWidgetPermission;
 import org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl;
 import org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl;
 import org.shaolin.vogerp.commonmodel.ce.PermissionType;
@@ -43,10 +47,10 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	        session.beginTransaction();
 	        try {
-	        	List<ModelPermissionImpl> modelPermissions = new ArrayList<ModelPermissionImpl>();
+	        	List<IModelPermission> modelPermissions = new ArrayList<IModelPermission>();
 	        	CEHierarchyImpl condition = new CEHierarchyImpl();
 	        	condition.setCeName(partyType.getEntityName());
-				List<CEHierarchyImpl> hierarchy = ModularityModel.INSTANCE.searchCEHierarchy(condition, session, null, 0, 1);
+				List<ICEHierarchy> hierarchy = ModularityModel.INSTANCE.searchCEHierarchy(condition, session, null, 0, 1);
 	        	if (hierarchy.size() > 0) {
 	        		// user's module role points to the parent item.
 		        	ModelPermissionImpl model = new ModelPermissionImpl();
@@ -56,11 +60,11 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 	        	
 				BEPermissionImpl bePermission = new BEPermissionImpl();
 				bePermission.setPartyType(strValue);
-				List<BEPermissionImpl> bePermissions = CommonModel.INSTANCE.searchBEPermission(bePermission, session, null, 0, -1);
+				List<IBEPermission> bePermissions = CommonModel.INSTANCE.searchBEPermission(bePermission, session, null, 0, -1);
 				
 				UIWidgetPermissionImpl uiwidget = new UIWidgetPermissionImpl();
 				uiwidget.setPartyType(strValue);
-				List<UIWidgetPermissionImpl> uiwidgetPermissions = CommonModel.INSTANCE.searchUIWidgetPermission(uiwidget, session, null, 0, -1);
+				List<IUIWidgetPermission> uiwidgetPermissions = CommonModel.INSTANCE.searchUIWidgetPermission(uiwidget, session, null, 0, -1);
 				
 				rolePermissions.put(partyType, new SingleRolePermission(strValue, bePermissions, modelPermissions, uiwidgetPermissions));
 	        } finally {
@@ -169,12 +173,12 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 	class SingleRolePermission {
 		
 		final String role;
-		final List<BEPermissionImpl> bePermissions;
-		final List<ModelPermissionImpl> modelPermissions;
-		final List<UIWidgetPermissionImpl> uiwidgetPermissions;
+		final List<IBEPermission> bePermissions;
+		final List<IModelPermission> modelPermissions;
+		final List<IUIWidgetPermission> uiwidgetPermissions;
 		
-		public SingleRolePermission(String role, List<BEPermissionImpl> bePermissions, 
-				List<ModelPermissionImpl> modelPermissions, List<UIWidgetPermissionImpl> uiwidgetPermissions) {
+		public SingleRolePermission(String role, List<IBEPermission> bePermissions, 
+				List<IModelPermission> modelPermissions, List<IUIWidgetPermission> uiwidgetPermissions) {
 			this.role = role;
 			this.bePermissions = bePermissions;
 			this.modelPermissions = modelPermissions;
@@ -187,7 +191,7 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 			}
 			
 			if (modelPermissions != null && modelPermissions.size() > 0) {
-				for (ModelPermissionImpl m : modelPermissions) {
+				for (IModelPermission m : modelPermissions) {
 					if (m.getModuleId() == moduleId) {
 						return PermissionType.ACCEPTABLE;
 					}
@@ -202,7 +206,7 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 			}
 			
 			if (bePermissions != null && bePermissions.size() > 0) {
-				for (BEPermissionImpl m : bePermissions) {
+				for (IBEPermission m : bePermissions) {
 					if (m.getBeName().equals(beName) && m.getField().equals(field)) {
 						return PermissionType.EDITABLE;
 					}
@@ -217,7 +221,7 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 			}
 			
 			if (uiwidgetPermissions != null && uiwidgetPermissions.size() > 0) {
-				for (UIWidgetPermissionImpl m : uiwidgetPermissions) {
+				for (IUIWidgetPermission m : uiwidgetPermissions) {
 					if (m.getPageName().equals(pageName) && m.getWidgetId().equals(widgetId)) {
 						return PermissionType.EDITABLE;
 					}

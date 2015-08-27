@@ -34,7 +34,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 	
 	@Override
 	public String login(IPersonalAccount user, HttpServletRequest request) {
-		List<PersonalAccountImpl> result = CommonModel.INSTANCE.authenticateUserInfo((PersonalAccountImpl)user, null, 0, -1);
+		List<IPersonalAccount> result = CommonModel.INSTANCE.authenticateUserInfo((PersonalAccountImpl)user, null, 0, -1);
 		if (result.size() == 1) {
 			IPersonalAccount matchedUser = result.get(0);
 			

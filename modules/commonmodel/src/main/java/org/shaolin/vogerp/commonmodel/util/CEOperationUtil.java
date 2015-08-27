@@ -18,6 +18,8 @@ import org.shaolin.uimaster.page.ajax.json.JSONArray;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
 import org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl;
+import org.shaolin.vogerp.commonmodel.be.ICEExtension;
+import org.shaolin.vogerp.commonmodel.be.ICEHierarchy;
 import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
 
 public class CEOperationUtil {
@@ -73,12 +75,12 @@ public class CEOperationUtil {
 	 * @param values
 	 * @return
 	 */
-	public static IConstantEntity[] convertC2D(List<CEExtensionImpl> values) throws Exception {
+	public static IConstantEntity[] convertC2D(List<ICEExtension> values) throws Exception {
 		if (values == null || values.size() == 0) {
 			return new AbstractConstant[0];
 		}
 		Map<String, AbstractConstant> ceMap = new LinkedHashMap<String, AbstractConstant>();
-		for (CEExtensionImpl v : values) {
+		for (ICEExtension v : values) {
 			AbstractConstant record = null;
 			try {
 				// supposed it's a static constant first.
@@ -119,7 +121,7 @@ public class CEOperationUtil {
 		return constants;
 	}
 	
-	public static IConstantEntity convertSingleC2D(List<CEExtensionImpl> values) throws Exception {
+	public static IConstantEntity convertSingleC2D(List<ICEExtension> values) throws Exception {
 		IConstantEntity[] items = convertC2D(values);
 		if (items.length > 0) {
 			return items[0];
@@ -151,7 +153,7 @@ public class CEOperationUtil {
 	 * @param ce
 	 * @return
 	 */
-	public static ArrayList<TreeItem> getCEHierarchy(List<CEHierarchyImpl> hierarchy, ArrayList<TreeItem> result, TreeItem parentNode, IConstantEntity ce) {
+	public static ArrayList<TreeItem> getCEHierarchy(List<ICEHierarchy> hierarchy, ArrayList<TreeItem> result, TreeItem parentNode, IConstantEntity ce) {
 		if (hierarchy == null) {
 			CEHierarchyImpl condition = new CEHierarchyImpl();
 			condition.setParentCeItem(-1);
@@ -184,7 +186,7 @@ public class CEOperationUtil {
 			
 			if (hierarchy.size() > 0 && hasChild(item.getEntityName(), item.getIntValue(), hierarchy)){
 				ceItem.setHasChildren(true);
-				for (CEHierarchyImpl c : hierarchy) {
+				for (ICEHierarchy c : hierarchy) {
 					if (c.getParentCeName().equals(item.getEntityName()) 
 							&& c.getParentCeItem() == item.getIntValue()) {
 						getCEHierarchy(hierarchy, null, ceItem, 
@@ -198,7 +200,7 @@ public class CEOperationUtil {
 		return result;
 	}
 	
-	public static void getCEComboBox(String space, List<CEHierarchyImpl> hierarchy, 
+	public static void getCEComboBox(String space, List<ICEHierarchy> hierarchy, 
 			ArrayList<String> values, ArrayList<String> displayItems, 
 			IConstantEntity ce) {
 		if (hierarchy == null) {
@@ -224,7 +226,7 @@ public class CEOperationUtil {
 			values.add(nodeId + "," + item.getIntValue());
 			displayItems.add(space + item.getDisplayName());
 			if (hierarchy.size() > 0 && hasChild(item.getEntityName(), item.getIntValue(), hierarchy)){
-				for (CEHierarchyImpl c : hierarchy) {
+				for (ICEHierarchy c : hierarchy) {
 					if (c.getParentCeName().equals(item.getEntityName()) 
 							&& c.getParentCeItem() == item.getIntValue()) {
 						getCEComboBox(space + "--", hierarchy, values, displayItems, 
@@ -247,8 +249,8 @@ public class CEOperationUtil {
 		}
 	}
 	
-	private static boolean hasChild(String ceName, int intValue, List<CEHierarchyImpl> children) {
-		for (CEHierarchyImpl c : children) {
+	private static boolean hasChild(String ceName, int intValue, List<ICEHierarchy> children) {
+		for (ICEHierarchy c : children) {
 			if (ceName.equals(c.getParentCeName()) && intValue == c.getParentCeItem()) {
 				return true;
 			}

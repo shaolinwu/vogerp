@@ -11,6 +11,8 @@ import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.uimaster.page.UIPermissionManager;
 import org.shaolin.vogerp.commonmodel.be.CEEntityInfoImpl;
 import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
+import org.shaolin.vogerp.commonmodel.be.ICEEntityInfo;
+import org.shaolin.vogerp.commonmodel.be.ICEExtension;
 import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
 import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
 
@@ -21,15 +23,15 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 		IAppServiceManager serviceManger = AppContext.get();
 		if (AppContext.isMasterNode()) {
 			try {
-				List<CEExtensionImpl> ceItems = ModularityModel.INSTANCE.searchCEExtension(
+				List<ICEExtension> ceItems = ModularityModel.INSTANCE.searchCEExtension(
 						new CEExtensionImpl(), null, 0, -1);
 				((ConstantServiceImpl) IServerServiceManager.INSTANCE.getConstantService())
 						.importData(CEOperationUtil.convertC2D(ceItems));
 			} catch (Exception e) {
 				throw new IllegalStateException("Failed to parse CE items: " + e.getMessage(), e);
 			}
-			List<CEEntityInfoImpl> ceInfos = ModularityModel.INSTANCE.searchCEInfo(null, null, 0, -1);
-			for (CEEntityInfoImpl ceInfo : ceInfos) {
+			List<ICEEntityInfo> ceInfos = ModularityModel.INSTANCE.searchCEInfo(null, null, 0, -1);
+			for (ICEEntityInfo ceInfo : ceInfos) {
 				AbstractConstant ce = (AbstractConstant)IServerServiceManager.INSTANCE.getConstantService().
 						getConstantEntity(ceInfo.getCeName());
 				ce.setEntityInfo(ceInfo.getDescription(), ceInfo.getI18nKey(), ceInfo.getIcon());

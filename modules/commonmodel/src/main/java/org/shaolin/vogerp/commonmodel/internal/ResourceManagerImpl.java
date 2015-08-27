@@ -7,7 +7,7 @@ import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.workflow.be.ITask;
 import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
 import org.shaolin.bmdp.workflow.coordinator.IResourceManager;
-import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +17,7 @@ public class ResourceManagerImpl implements IResourceManager {
 
 	private final OrganizationServiceImpl orgService;
 	
-	private final List<PersonalInfoImpl> allResources;
+	private final List<IPersonalInfo> allResources;
 	
 	public ResourceManagerImpl(OrganizationServiceImpl orgService) {
 		this.orgService = orgService;
@@ -37,7 +37,7 @@ public class ResourceManagerImpl implements IResourceManager {
 		if (task.getPartyType() == null || task.getPartyType().isEmpty()) {
 			throw new IllegalArgumentException("Please specify the party type for this task: " + task.getSubject());
 		}
-		List<PersonalInfoImpl> freeResources = getFreeResource(task.getPartyType());
+		List<IPersonalInfo> freeResources = getFreeResource(task.getPartyType());
 		if (freeResources == null || freeResources.isEmpty()) {
 			throw new IllegalStateException("Please assign the party type for a resource or an employee: " + task.getPartyType());
 		}
@@ -51,7 +51,7 @@ public class ResourceManagerImpl implements IResourceManager {
 			boolean assigned = false;
 			long lessBusyId = -1;
 			int lessCount = Integer.MAX_VALUE;
-			for (PersonalInfoImpl employee: freeResources) {
+			for (IPersonalInfo employee: freeResources) {
 				int taskCount = coordinator.getPartyTasks(employee.getId()).size();
 				if (taskCount == 0) {
 					task.setPartyId(employee.getId());
@@ -76,7 +76,7 @@ public class ResourceManagerImpl implements IResourceManager {
 	}
 	
 	public Object getResource(long partyId) {
-		for (PersonalInfoImpl employee : allResources) {
+		for (IPersonalInfo employee : allResources) {
 			if (employee.getId() == partyId) {
 				return employee.getEmpId() + "(" + employee.getLastName() + " "
 						+ employee.getFirstName() + ")";
@@ -85,9 +85,9 @@ public class ResourceManagerImpl implements IResourceManager {
 		return null;
 	}
 	
-	public List<PersonalInfoImpl> getFreeResource(String partType) {
-		List<PersonalInfoImpl> availableResources = new ArrayList<PersonalInfoImpl>();
-		for (PersonalInfoImpl employee : allResources) {
+	public List<IPersonalInfo> getFreeResource(String partType) {
+		List<IPersonalInfo> availableResources = new ArrayList<IPersonalInfo>();
+		for (IPersonalInfo employee : allResources) {
 			if (employee.getType().equals(partType)) {
 				availableResources.add(employee);
 			}

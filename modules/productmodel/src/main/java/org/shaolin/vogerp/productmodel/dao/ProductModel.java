@@ -45,7 +45,7 @@ public class ProductModel extends BEEntityDaoObject {
         return count(IStorageItem.class);
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.ProductImpl> searchProductInfo(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
+    public List<org.shaolin.vogerp.productmodel.be.IProduct> searchProductInfo(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -88,7 +88,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.ProductImpl> searchProductInfo(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
+    public List<org.shaolin.vogerp.productmodel.be.IProduct> searchProductInfo(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.productmodel.be.ProductImpl.class, "inFlow");
@@ -199,7 +199,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.ProductImpl> searchProductParent(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
+    public List<org.shaolin.vogerp.productmodel.be.IProduct> searchProductParent(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -221,7 +221,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.ProductImpl> searchProductParent(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
+    public List<org.shaolin.vogerp.productmodel.be.IProduct> searchProductParent(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.productmodel.be.ProductImpl.class, "inFlow");
@@ -269,7 +269,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.ProductCodeImpl> searchProductCode(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
+    public List<org.shaolin.vogerp.productmodel.be.IProductCode> searchProductCode(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -291,7 +291,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.ProductCodeImpl> searchProductCode(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
+    public List<org.shaolin.vogerp.productmodel.be.IProductCode> searchProductCode(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.productmodel.be.ProductCodeImpl.class, "inFlow");
@@ -339,7 +339,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.ProductCharacteristicImpl> searchProductCharacteristic(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
+    public List<org.shaolin.vogerp.productmodel.be.IProductCharacteristic> searchProductCharacteristic(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -361,7 +361,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.ProductCharacteristicImpl> searchProductCharacteristic(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
+    public List<org.shaolin.vogerp.productmodel.be.IProductCharacteristic> searchProductCharacteristic(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.productmodel.be.ProductCharacteristicImpl.class, "inFlow");
@@ -409,7 +409,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.SupplierProductImpl> searchProductSupplier(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
+    public List<org.shaolin.vogerp.productmodel.be.ISupplierProduct> searchProductSupplier(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -431,7 +431,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.SupplierProductImpl> searchProductSupplier(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
+    public List<org.shaolin.vogerp.productmodel.be.ISupplierProduct> searchProductSupplier(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.productmodel.be.SupplierProductImpl.class, "inFlow");
@@ -479,7 +479,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.WarehouseImpl> searchWarehouse(org.shaolin.vogerp.productmodel.be.WarehouseImpl scFlow,
+    public List<org.shaolin.vogerp.productmodel.be.IWarehouse> searchWarehouse(org.shaolin.vogerp.productmodel.be.WarehouseImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -510,7 +510,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.WarehouseImpl> searchWarehouse(org.shaolin.vogerp.productmodel.be.WarehouseImpl scFlow,
+    public List<org.shaolin.vogerp.productmodel.be.IWarehouse> searchWarehouse(org.shaolin.vogerp.productmodel.be.WarehouseImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.productmodel.be.WarehouseImpl.class, "inFlow");
@@ -585,7 +585,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.WarehouseImpl> searchWarehouseRoot(org.shaolin.vogerp.productmodel.be.WarehouseImpl scFlow,
+    public List<org.shaolin.vogerp.productmodel.be.IWarehouse> searchWarehouseRoot(org.shaolin.vogerp.productmodel.be.WarehouseImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -607,7 +607,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.WarehouseImpl> searchWarehouseRoot(org.shaolin.vogerp.productmodel.be.WarehouseImpl scFlow,
+    public List<org.shaolin.vogerp.productmodel.be.IWarehouse> searchWarehouseRoot(org.shaolin.vogerp.productmodel.be.WarehouseImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.productmodel.be.WarehouseImpl.class, "inFlow");
@@ -655,7 +655,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.StorageItemImpl> searchStorageItems(org.shaolin.vogerp.productmodel.be.StorageItemImpl scFlow,
+    public List<org.shaolin.vogerp.productmodel.be.IStorageItem> searchStorageItems(org.shaolin.vogerp.productmodel.be.StorageItemImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -692,7 +692,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.StorageItemImpl> searchStorageItems(org.shaolin.vogerp.productmodel.be.StorageItemImpl scFlow,
+    public List<org.shaolin.vogerp.productmodel.be.IStorageItem> searchStorageItems(org.shaolin.vogerp.productmodel.be.StorageItemImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.productmodel.be.StorageItemImpl.class, "inFlow");
@@ -785,7 +785,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.ProductPriceImpl> searchProductPrice(org.shaolin.vogerp.productmodel.be.ProductImpl scObject,
+    public List<org.shaolin.vogerp.productmodel.be.IProductPrice> searchProductPrice(org.shaolin.vogerp.productmodel.be.ProductImpl scObject,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -807,7 +807,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.ProductPriceImpl> searchProductPrice(org.shaolin.vogerp.productmodel.be.ProductImpl scObject,
+    public List<org.shaolin.vogerp.productmodel.be.IProductPrice> searchProductPrice(org.shaolin.vogerp.productmodel.be.ProductImpl scObject,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.productmodel.be.ProductPriceImpl.class, "inObject");
@@ -855,7 +855,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.ProductCostImpl> searchProductCost(org.shaolin.vogerp.productmodel.be.ProductImpl scObject,
+    public List<org.shaolin.vogerp.productmodel.be.IProductCost> searchProductCost(org.shaolin.vogerp.productmodel.be.ProductImpl scObject,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -877,7 +877,7 @@ public class ProductModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.ProductCostImpl> searchProductCost(org.shaolin.vogerp.productmodel.be.ProductImpl scObject,
+    public List<org.shaolin.vogerp.productmodel.be.IProductCost> searchProductCost(org.shaolin.vogerp.productmodel.be.ProductImpl scObject,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.productmodel.be.ProductCostImpl.class, "inObject");

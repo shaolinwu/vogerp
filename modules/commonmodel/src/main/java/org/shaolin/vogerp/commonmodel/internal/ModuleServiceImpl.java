@@ -36,8 +36,8 @@ public class ModuleServiceImpl implements IServiceProvider {
 	private void init() {
 		ModuleGroupImpl condition = new ModuleGroupImpl();
 		condition.setEnabled(true);
-        List<ModuleGroupImpl> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
-        for (ModuleGroupImpl module: all) {
+        List<IModuleGroup> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
+        for (IModuleGroup module: all) {
         	String accessURL = module.getAccessURL();
         	if (accessURL != null && !"#".equals(accessURL)) {
             	int chunkNameIndex = accessURL.indexOf("_chunkname=");
@@ -91,11 +91,11 @@ public class ModuleServiceImpl implements IServiceProvider {
 	
 	void updateWebFlowLinks() throws ParsingException {
 		ModuleGroupImpl condition = new ModuleGroupImpl();
-        List<ModuleGroupImpl> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
+        List<IModuleGroup> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
         updateWebFlowLinks(all);
 	}
 	
-	void updateWebFlowLinks(List<ModuleGroupImpl> all) throws ParsingException {
+	void updateWebFlowLinks(List<IModuleGroup> all) throws ParsingException {
         // find AppContext.get().getAppName()
         ModuleGroupImpl root = null;
         for (int i=0;i<all.size();i++) {

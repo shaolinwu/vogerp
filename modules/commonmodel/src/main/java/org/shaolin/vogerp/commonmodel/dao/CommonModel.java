@@ -55,7 +55,7 @@ public class CommonModel extends BEEntityDaoObject {
         return count(IPersonalAccount.class);
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl> authenticateUserInfo(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IPersonalAccount> authenticateUserInfo(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -77,7 +77,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl> authenticateUserInfo(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IPersonalAccount> authenticateUserInfo(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl.class, "inFlow");
@@ -125,7 +125,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl> searchUserAccount(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IPersonalAccount> searchUserAccount(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -150,7 +150,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl> searchUserAccount(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IPersonalAccount> searchUserAccount(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl.class, "inFlow");
@@ -207,7 +207,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl> searchPersonInfo(org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IPersonalInfo> searchPersonInfo(org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -246,7 +246,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl> searchPersonInfo(org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IPersonalInfo> searchPersonInfo(org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl.class, "inFlow");
@@ -341,7 +341,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl> searchPartyRelationshipInfo(org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IPartyRelationship> searchPartyRelationshipInfo(org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -360,7 +360,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl> searchPartyRelationshipInfo(org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IPartyRelationship> searchPartyRelationshipInfo(org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl.class, "inFlow");
@@ -399,7 +399,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.OrganizationImpl> searchRootOrganizationInfo(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IOrganization> searchRootOrganizationInfo(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -424,7 +424,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.OrganizationImpl> searchRootOrganizationInfo(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IOrganization> searchRootOrganizationInfo(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
@@ -481,7 +481,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.OrganizationImpl> searchSubOrganizationInfo(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IOrganization> searchSubOrganizationInfo(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -509,7 +509,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.OrganizationImpl> searchSubOrganizationInfo(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IOrganization> searchSubOrganizationInfo(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
@@ -575,7 +575,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.OrganizationImpl> searchOrganization(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IOrganization> searchOrganization(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -597,7 +597,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.OrganizationImpl> searchOrganization(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IOrganization> searchOrganization(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
@@ -645,7 +645,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl> searchOrgaLegalInfo(org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.ILegalOrganizationInfo> searchOrgaLegalInfo(org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -667,7 +667,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl> searchOrgaLegalInfo(org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.ILegalOrganizationInfo> searchOrgaLegalInfo(org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl.class, "inFlow");
@@ -715,7 +715,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl> searchModelPermission(org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IModelPermission> searchModelPermission(org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -740,7 +740,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl> searchModelPermission(org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IModelPermission> searchModelPermission(org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl.class, "inFlow");
@@ -797,7 +797,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl> searchUIWidgetPermission(org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IUIWidgetPermission> searchUIWidgetPermission(org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -819,7 +819,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl> searchUIWidgetPermission(org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IUIWidgetPermission> searchUIWidgetPermission(org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl.class, "inFlow");
@@ -867,7 +867,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.BEPermissionImpl> searchBEPermission(org.shaolin.vogerp.commonmodel.be.BEPermissionImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IBEPermission> searchBEPermission(org.shaolin.vogerp.commonmodel.be.BEPermissionImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -889,7 +889,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.BEPermissionImpl> searchBEPermission(org.shaolin.vogerp.commonmodel.be.BEPermissionImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IBEPermission> searchBEPermission(org.shaolin.vogerp.commonmodel.be.BEPermissionImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.BEPermissionImpl.class, "inFlow");
@@ -937,7 +937,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl> searchContract(org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IOrganizationContract> searchContract(org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl scFlow,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -959,7 +959,7 @@ public class CommonModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl> searchContract(org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl scFlow,
+    public List<org.shaolin.vogerp.commonmodel.be.IOrganizationContract> searchContract(org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl scFlow,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl.class, "inFlow");

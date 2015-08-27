@@ -8,9 +8,9 @@ import org.shaolin.uimaster.page.exception.FormatException;
 import org.shaolin.uimaster.page.od.formats.FormatUtil;
 import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
 import org.shaolin.vogerp.productmodel.be.IProduct;
+import org.shaolin.vogerp.productmodel.be.IProductCharacteristic;
 import org.shaolin.vogerp.productmodel.be.IProductCost;
 import org.shaolin.vogerp.productmodel.be.IProductPrice;
-import org.shaolin.vogerp.productmodel.be.ProductCharacteristicImpl;
 import org.shaolin.vogerp.productmodel.be.ProductImpl;
 import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
 import org.shaolin.vogerp.productmodel.ce.PriceType;
@@ -25,7 +25,7 @@ public class ProductUtil {
 	}
 	
 	public static String getProductCharacter(IProduct product) {
-		List<ProductCharacteristicImpl> character = ProductModel.INSTANCE.searchProductCharacteristic((ProductImpl)product, null, 0, 1);
+		List<IProductCharacteristic> character = ProductModel.INSTANCE.searchProductCharacteristic((ProductImpl)product, null, 0, 1);
 		if (character.size() > 0) {
 			return CEOperationUtil.toHTMLString(character.get(0).getCeValues());
 		}
