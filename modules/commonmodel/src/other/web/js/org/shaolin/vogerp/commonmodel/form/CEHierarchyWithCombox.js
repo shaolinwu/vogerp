@@ -31,6 +31,8 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox(json)
         /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox */
     };
 
+    Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox_invokeDynamicFunction;
+
     Form.__entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox";
 
     Form.init();
@@ -40,5 +42,16 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox */
 /* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox_invokeDynamicFunction */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox_invokeDynamicFunction */
+
 
 

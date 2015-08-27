@@ -12,6 +12,28 @@ function org_shaolin_vogerp_productmodel_page_StorageManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
     });
+    var storageTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "storageTable"]
+    });
+
+    var storagePanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "storagePanel"]
+        ,items: []
+        ,subComponents: [prefix + "storageTable"]
+    });
+    var storageItemTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "storageItemTable"]
+    });
+
+    var storageItemPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "storageItemPanel"]
+        ,items: []
+        ,subComponents: [prefix + "storageItemTable"]
+    });
 
     var Form = new UIMaster.ui.panel
     ({

@@ -7,6 +7,19 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
     });
+    var organizationInfoPanel = new org_shaolin_vogerp_commonmodel_form_OrganizationTreeEditor({"prefix":prefix + "organizationInfoPanel."});
+
+    var employeeInfoTablel = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "employeeInfoTablel"]
+    });
+
+    var employeeInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "employeeInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "employeeInfoTablel"]
+    });
 
     var organizationInfoPanel = new org_shaolin_vogerp_commonmodel_form_OrganizationTreeEditor({"prefix":prefix + "organizationInfoPanel."});
 

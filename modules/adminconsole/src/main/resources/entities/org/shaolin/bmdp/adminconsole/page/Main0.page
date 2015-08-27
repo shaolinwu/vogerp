@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.bmdp.adminconsole.page.Main0</entityName>
+	<systemVersion>0</systemVersion>
+	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<ns2:eventHandler functionName="Submit"></ns2:eventHandler>
+		<ns2:eventHandler functionName="logout">
+			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="logout-945221342">
+				<ns2:exp>
+					<expressionString><![CDATA[
+		        import org.shaolin.uimaster.page.AjaxContext;
+		        import org.shaolin.uimaster.page.ajax.*;
+		        import org.shaolin.vogerp.commonmodel.IUserService;
+		        import org.shaolin.bmdp.runtime.AppContext;
+		        { 
+		            IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+		            userService.logout(@page.getRequest().getSession());
+		            @page.executeJavaScript("window.location.reload();");
+		        }
+		        ]]></expressionString>
+				</ns2:exp>
+			</ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="showUserInfo">
+			<ns2:ops xsi:type="ns2:OpExecuteScriptType">
+				<ns2:expressionString><![CDATA[
+      {
+          var value = $("#topPanel").width();
+								  var self = $("#div-topRightPanel-1_0").width();
+								  $("#div-topRightPanel-1_0").css("left", (value - self + 5) + "px");
+          if ($("#div-topRightPanel-1_0").css("display") == "none") {
+              $("#div-topRightPanel-1_0").slideDown();
+          } else {
+              $("#div-topRightPanel-1_0").slideUp();
+          }
+      }
+      ]]></ns2:expressionString>
+			</ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="search">
+			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="search-201506102211">
+				<ns2:exp>
+					<expressionString><![CDATA[
+		        import org.shaolin.uimaster.page.AjaxContext;
+		        import org.shaolin.uimaster.page.ajax.*;
+		        import org.shaolin.vogerp.commonmodel.IUserService;
+		        import org.shaolin.bmdp.runtime.AppContext;
+		        { 
+		            System.out.println("Searching for :" + @page.getTextField("searchContext").getValue());
+		        }
+		        ]]></expressionString>
+				</ns2:exp>
+			</ns2:ops>
+		</ns2:eventHandler>
+		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>40</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>400</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+			</ns2:layout>
+				<ns2:component xsi:type="ns2:UIPanelType" UIID="topPanel">
+					<ns2:layout xsi:type="ns2:TableLayoutType">
+						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+						<ns2:columnWidthWeight>60</ns2:columnWidthWeight>
+						<ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+						<ns2:columnWidthWeight>60</ns2:columnWidthWeight>
+						<ns2:columnWidthWeight>60</ns2:columnWidthWeight>
+						<ns2:columnWidthWeight>60</ns2:columnWidthWeight>
+					</ns2:layout>
+					<ns2:component xsi:type="ns2:UIImageType" UIID="userIcon">
+						<ns2:Property name="text" >
+      			<ns2:value xsi:type="ns2:StringPropertyType">
+            <value>User Information</value>
+      			</ns2:value>
+      	</ns2:Property>
+						<ns2:src xsi:type="ns2:ImagePropertyType">
+							<ns2:location>admin/tree/manager.png</ns2:location>
+						</ns2:src>
+						<ns2:EventListener xsi:type="ns2:ClickListenerType">
+							<ns2:handler functionName="showUserInfo" />
+						</ns2:EventListener>
+						<ns2:showWords xsi:type="ns2:BooleanPropertyType">
+							<ns2:value>true</ns2:value>
+						</ns2:showWords>
+					</ns2:component>
+					<ns2:component xsi:type="ns2:UIReferenceEntityType"
+						UIID="userForm">
+						<ns2:referenceEntity
+							entityName="org.shaolin.vogerp.commonmodel.form.UserAccount"></ns2:referenceEntity>
+					</ns2:component>
+					<ns2:component xsi:type="ns2:UIImageType" UIID="taskIcon">
+						<ns2:Property name="text" >
+      			<ns2:value xsi:type="ns2:StringPropertyType">
+            <value>Tasks</value>
+      			</ns2:value>
+      	</ns2:Property>
+						<ns2:src xsi:type="ns2:ImagePropertyType">
+							<ns2:location>admin/tree/manager.png</ns2:location>
+						</ns2:src>
+						<ns2:EventListener xsi:type="ns2:ClickListenerType">
+							<ns2:handler functionName="showUserInfo" />
+						</ns2:EventListener>
+						<ns2:showWords xsi:type="ns2:BooleanPropertyType">
+							<ns2:value>true</ns2:value>
+						</ns2:showWords>
+					</ns2:component>
+					<ns2:component xsi:type="ns2:UIImageType" UIID="notificationIcon">
+						<ns2:Property name="text" >
+      			<ns2:value xsi:type="ns2:StringPropertyType">
+            <value>Notification</value>
+      			</ns2:value>
+      	</ns2:Property>
+						<ns2:src xsi:type="ns2:ImagePropertyType">
+							<ns2:location>admin/tree/manager.png</ns2:location>
+						</ns2:src>
+						<ns2:EventListener xsi:type="ns2:ClickListenerType">
+							<ns2:handler functionName="showUserInfo" />
+						</ns2:EventListener>
+						<ns2:showWords xsi:type="ns2:BooleanPropertyType">
+							<ns2:value>true</ns2:value>
+						</ns2:showWords>
+					</ns2:component>
+					<ns2:component xsi:type="ns2:UIImageType" UIID="userLogout">
+						<ns2:title xsi:type="ns2:StringPropertyType">
+							<ns2:value>Logout</ns2:value>
+						</ns2:title>
+						<ns2:src xsi:type="ns2:ImagePropertyType">
+							<ns2:location>admin/logout.png</ns2:location>
+						</ns2:src>
+						<ns2:EventListener xsi:type="ns2:ClickListenerType">
+							<ns2:handler functionName="logout" />
+						</ns2:EventListener>
+				 </ns2:component>
+					<ns2:layoutConstraint>
+						<ns2:componentId>userIcon</ns2:componentId>
+						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+							x="0" y="0" align="FULL"></ns2:constraint>
+					</ns2:layoutConstraint>
+					<ns2:layoutConstraint>
+						<ns2:componentId>userForm</ns2:componentId>
+						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+							x="1" y="0" align="FULL" cellUIClass=""></ns2:constraint>
+					</ns2:layoutConstraint>
+					<ns2:layoutConstraint>
+						<ns2:componentId>taskIcon</ns2:componentId>
+						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+							x="2" y="0" align="FULL"></ns2:constraint>
+					</ns2:layoutConstraint>
+					<ns2:layoutConstraint>
+						<ns2:componentId>notificationIcon</ns2:componentId>
+						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+							x="3" y="0" align="FULL"></ns2:constraint>
+					</ns2:layoutConstraint>
+					<ns2:layoutConstraint>
+						<ns2:componentId>userLogout</ns2:componentId>
+						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+							x="4" y="0" align="FULL"></ns2:constraint>
+					</ns2:layoutConstraint>
+				</ns2:component>
+				<ns2:component xsi:type="ns2:UIPanelType" UIID="searchPanel">
+     <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+      <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+     </ns2:layout>
+     <ns2:component xsi:type="ns2:UIImageType" UIID="vogerplogo">
+      <ns2:title xsi:type="ns2:StringPropertyType">
+       <ns2:value>Vogue ERP</ns2:value>
+      </ns2:title>
+      <ns2:src xsi:type="ns2:ImagePropertyType">
+       <ns2:location>/vogerp.jpg</ns2:location>
+      </ns2:src>
+     </ns2:component>
+     <ns2:component xsi:type="ns2:UITextFieldType" UIID="searchContext">
+     </ns2:component>
+     <ns2:component xsi:type="ns2:UIButtonType" UIID="searchButton">
+      <ns2:text xsi:type="ns2:StringPropertyType">
+       <ns2:value>Search</ns2:value>
+      </ns2:text>
+      <ns2:EventListener xsi:type="ns2:ClickListenerType">
+       <ns2:handler functionName="search" />
+      </ns2:EventListener>
+      <ns2:value xsi:type="ns2:StringPropertyType">
+       <ns2:value>Search</ns2:value>
+      </ns2:value>
+     </ns2:component>
+     <ns2:layoutConstraint>
+     <ns2:componentId>searchContext</ns2:componentId>
+     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+      x="0" y="0" align="FULL"></ns2:constraint>
+     </ns2:layoutConstraint>
+     <ns2:layoutConstraint>
+      <ns2:componentId>searchButton</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+       x="1" y="0" align="FULL"></ns2:constraint>
+     </ns2:layoutConstraint>
+     <ns2:layoutConstraint>
+       <ns2:componentId>vogerplogo</ns2:componentId>
+       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+        x="0" y="1" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+				<ns2:layoutConstraint>
+					<ns2:componentId>topPanel</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="0" y="0" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+				<ns2:layoutConstraint>
+					<ns2:componentId>searchPanel</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="0" y="1" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+		</ns2:body>
+	</ns2:UIEntity>
+	<ns2:ODMapping>
+		<ns2:DataEntity category="BusinessEntity" name="userAccount" scope="In">
+			<ns2:type entityName="org.shaolin.vogerp.commonmodel.be.PersonalAccount" />
+		</ns2:DataEntity>
+		<!-- 
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
+			name="simpleMapping0">
+			<ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.UserAccount"></ns2:mappingRule>
+			<ns2:UIComponent componentPath="userForm" paramName="UIWidgetType"></ns2:UIComponent>
+			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
+				componentPath="userAccount" paramName="beObject"></ns2:DataComponent>
+			<ns2:DataComponent xsi:type="ns2:ExpressionParamType"
+				paramName="editable">
+				<ns2:expression>
+					<expressionString>false</expressionString>
+				</ns2:expression>
+			</ns2:DataComponent>
+		</ns2:ComponentMapping>
+			 -->
+	</ns2:ODMapping>
+	<ns2:in>
+		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">
+			<ns2:expressionString><![CDATA[
+			import org.shaolin.bmdp.runtime.AppContext;
+   import org.shaolin.vogerp.commonmodel.IUserService;
+   import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
+   import org.shaolin.uimaster.page.flow.WebflowConstants;
+			{
+			  @odContext.executeAllMappings();
+			}]]></ns2:expressionString>
+		</ns2:serverOperation>
+	</ns2:in>
+</ns2:UIPage>

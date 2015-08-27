@@ -56,6 +56,8 @@ function org_shaolin_vogerp_commonmodel_form_PermissionManager(json)
 
     Form.deleteUser = org_shaolin_vogerp_commonmodel_form_PermissionManager_deleteUser;
 
+    Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_PermissionManager_invokeDynamicFunction;
+
     Form.__entityName="org.shaolin.vogerp.commonmodel.form.PermissionManager";
 
     Form.init();
@@ -159,6 +161,17 @@ function org_shaolin_vogerp_commonmodel_form_PermissionManager(json)
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_PermissionManager_deleteUser */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_PermissionManager_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_PermissionManager_invokeDynamicFunction */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_PermissionManager_invokeDynamicFunction */
 
 
 

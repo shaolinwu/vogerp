@@ -12,6 +12,17 @@ function org_shaolin_vogerp_commonmodel_page_AccountManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
     });
+    var personalInfoTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "personalInfoTable"]
+    });
+
+    var personalInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "personalInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "personalInfoTable"]
+    });
 
     var Form = new UIMaster.ui.panel
     ({

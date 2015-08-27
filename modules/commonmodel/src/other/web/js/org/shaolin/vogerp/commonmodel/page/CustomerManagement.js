@@ -12,6 +12,17 @@ function org_shaolin_vogerp_commonmodel_page_CustomerManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
     });
+    var customerInfoTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "customerInfoTable"]
+    });
+
+    var customerInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "customerInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "customerInfoTable"]
+    });
 
     var Form = new UIMaster.ui.panel
     ({

@@ -259,7 +259,7 @@
 				</ns2:UISkin>
 				<ns2:layout xsi:type="ns2:TableLayoutType">
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-					<ns2:columnWidthWeight>80</ns2:columnWidthWeight>
+					<ns2:columnWidthWeight>280</ns2:columnWidthWeight>
 					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 				</ns2:layout>
 				<ns2:component xsi:type="ns2:UIPanelType" UIID="treePanel">

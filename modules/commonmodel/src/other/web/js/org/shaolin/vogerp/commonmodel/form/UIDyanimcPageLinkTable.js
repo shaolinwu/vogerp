@@ -63,6 +63,8 @@ function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable(json)
 
     Form.Cancel = org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_Cancel;
 
+    Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_invokeDynamicFunction;
+
     Form.__entityName="org.shaolin.vogerp.commonmodel.form.UIDyanimcPageLinkTable";
 
     Form.init();
@@ -115,6 +117,17 @@ function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable(json)
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_invokeDynamicFunction */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_invokeDynamicFunction */
 
 
 

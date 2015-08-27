@@ -27,6 +27,38 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
     ({
         ui: elementList[prefix + "functionsTab"]
     });
+    var reloadPathText = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "reloadPathText"]
+    });
+
+    var reloadBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "reloadBtn"]
+    });
+
+    var reloadCECacheText = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "reloadCECacheText"]
+    });
+
+    var reloadCECacheBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "reloadCECacheBtn"]
+    });
+
+    var reloadPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "reloadPanel"]
+        ,items: []
+        ,subComponents: [prefix + "reloadPathText",prefix + "reloadBtn",prefix + "reloadCECacheText",prefix + "reloadCECacheBtn"]
+    });
+    var ceentityPanel = new org_shaolin_vogerp_commonmodel_form_CEExtensionManager({"prefix":prefix + "ceentityPanel."});
+
+    var dynamicUIPanel = new org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager({"prefix":prefix + "dynamicUIPanel."});
+
+    var dynamicPageLinkPanel = new org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable({"prefix":prefix + "dynamicPageLinkPanel."});
+
 
     var Form = new UIMaster.ui.panel
     ({

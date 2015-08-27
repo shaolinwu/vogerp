@@ -7,6 +7,14 @@ function org_shaolin_vogerp_commonmodel_page_CustomerInformation(json)
     ({
         ui: elementList[prefix + "functionsTab"]
     });
+    var personalInfoForm = new org_shaolin_vogerp_commonmodel_form_PersonalInfo({"prefix":prefix + "personalInfoForm."});
+
+    var personalAccountForm = new org_shaolin_vogerp_commonmodel_form_PersonalAccount({"prefix":prefix + "personalAccountForm."});
+
+    var contractForm = new org_shaolin_vogerp_commonmodel_form_ContactInfoTable({"prefix":prefix + "contractForm."});
+
+    var addressForm = new org_shaolin_vogerp_commonmodel_form_AddressInfoTable({"prefix":prefix + "addressForm."});
+
 
     var personalInfoForm = new org_shaolin_vogerp_commonmodel_form_PersonalInfo({"prefix":prefix + "personalInfoForm."});
 

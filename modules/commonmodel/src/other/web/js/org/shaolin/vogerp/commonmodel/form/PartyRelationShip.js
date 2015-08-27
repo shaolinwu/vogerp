@@ -100,6 +100,8 @@ function org_shaolin_vogerp_commonmodel_form_PartyRelationship(json)
 
     Form.Cancel = org_shaolin_vogerp_commonmodel_form_PartyRelationship_Cancel;
 
+    Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_PartyRelationship_invokeDynamicFunction;
+
     Form.__entityName="org.shaolin.vogerp.commonmodel.form.PartyRelationship";
 
     Form.init();
@@ -130,6 +132,17 @@ function org_shaolin_vogerp_commonmodel_form_PartyRelationship(json)
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_PartyRelationship_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_PartyRelationship_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_PartyRelationship_invokeDynamicFunction */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_PartyRelationship_invokeDynamicFunction */
 
 
 

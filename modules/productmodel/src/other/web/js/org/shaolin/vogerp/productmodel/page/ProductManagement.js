@@ -12,6 +12,19 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
     });
+    var productInfoTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "productInfoTable"]
+    });
+
+    var productInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "productInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "productInfoTable"]
+    });
+    var productTreePanel = new org_shaolin_vogerp_commonmodel_form_CEHierarchy({"prefix":prefix + "productTreePanel."});
+
 
     var Form = new UIMaster.ui.panel
     ({

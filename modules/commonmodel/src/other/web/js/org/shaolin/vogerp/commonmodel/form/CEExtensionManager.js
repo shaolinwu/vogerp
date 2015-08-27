@@ -50,6 +50,8 @@ function org_shaolin_vogerp_commonmodel_form_CEExtensionManager(json)
 
     Form.deleteUser = org_shaolin_vogerp_commonmodel_form_CEExtensionManager_deleteUser;
 
+    Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_CEExtensionManager_invokeDynamicFunction;
+
     Form.__entityName="org.shaolin.vogerp.commonmodel.form.CEExtensionManager";
 
     Form.init();
@@ -156,6 +158,17 @@ function org_shaolin_vogerp_commonmodel_form_CEExtensionManager(json)
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEExtensionManager_deleteUser */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_CEExtensionManager_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEExtensionManager_invokeDynamicFunction */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEExtensionManager_invokeDynamicFunction */
 
 
 

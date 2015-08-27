@@ -40,6 +40,8 @@ function org_shaolin_vogerp_commonmodel_form_PartyDeliveryInfo(json)
         /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_PartyDeliveryInfo */
     };
 
+    Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_PartyDeliveryInfo_invokeDynamicFunction;
+
     Form.__entityName="org.shaolin.vogerp.commonmodel.form.PartyDeliveryInfo";
 
     Form.init();
@@ -49,5 +51,16 @@ function org_shaolin_vogerp_commonmodel_form_PartyDeliveryInfo(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_commonmodel_form_PartyDeliveryInfo */
 /* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_PartyDeliveryInfo */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_PartyDeliveryInfo_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_PartyDeliveryInfo_invokeDynamicFunction */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_PartyDeliveryInfo_invokeDynamicFunction */
+
 
 

@@ -12,6 +12,28 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
     });
+    var saleOrderTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "saleOrderTable"]
+    });
+
+    var saleOrderInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "saleOrderInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "saleOrderTable"]
+    });
+    var purchaseOrderInfoTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "purchaseOrderInfoTable"]
+    });
+
+    var purcharseOrderInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "purcharseOrderInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "purchaseOrderInfoTable"]
+    });
 
     var Form = new UIMaster.ui.panel
     ({

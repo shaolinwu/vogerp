@@ -93,6 +93,8 @@ function org_shaolin_vogerp_productmodel_form_ProductCode(json)
 
     Form.Cancel = org_shaolin_vogerp_productmodel_form_ProductCode_Cancel;
 
+    Form.invokeDynamicFunction = org_shaolin_vogerp_productmodel_form_ProductCode_invokeDynamicFunction;
+
     Form.__entityName="org.shaolin.vogerp.productmodel.form.ProductCode";
 
     Form.init();
@@ -123,6 +125,17 @@ function org_shaolin_vogerp_productmodel_form_ProductCode(json)
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductCode_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_productmodel_form_ProductCode_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductCode_invokeDynamicFunction */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductCode_invokeDynamicFunction */
 
 
 

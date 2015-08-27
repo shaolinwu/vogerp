@@ -223,6 +223,8 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
 
     Form.Cancel = org_shaolin_vogerp_commonmodel_form_PersonalInfo_Cancel;
 
+    Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_PersonalInfo_invokeDynamicFunction;
+
     Form.__entityName="org.shaolin.vogerp.commonmodel.form.PersonalInfo";
 
     Form.init();
@@ -260,6 +262,17 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_PersonalInfo_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_PersonalInfo_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_PersonalInfo_invokeDynamicFunction */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_PersonalInfo_invokeDynamicFunction */
 
 
 

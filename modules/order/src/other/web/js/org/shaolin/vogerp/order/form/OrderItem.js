@@ -156,6 +156,8 @@ function org_shaolin_vogerp_order_form_OrderItem(json)
 
     Form.Cancel = org_shaolin_vogerp_order_form_OrderItem_Cancel;
 
+    Form.invokeDynamicFunction = org_shaolin_vogerp_order_form_OrderItem_invokeDynamicFunction;
+
     Form.__entityName="org.shaolin.vogerp.order.form.OrderItem";
 
     Form.init();
@@ -186,6 +188,17 @@ function org_shaolin_vogerp_order_form_OrderItem(json)
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_order_form_OrderItem_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_order_form_OrderItem_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_OrderItem_invokeDynamicFunction */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_order_form_OrderItem_invokeDynamicFunction */
 
 
 
