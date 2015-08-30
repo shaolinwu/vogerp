@@ -119,7 +119,7 @@
                                break;
                            }
                         }
-                        if (defaultUser != null && defaultUser.getGroupId() > 0) {
+                        if (defaultUser != null && defaultUser.getId() > 0) {
                             diagram.getDeleteEntities().add(defaultUser);
                         }
                         diagram.deleteNode(selectedNode);

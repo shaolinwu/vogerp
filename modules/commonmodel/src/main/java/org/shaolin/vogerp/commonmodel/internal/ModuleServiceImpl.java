@@ -46,7 +46,7 @@ public class ModuleServiceImpl implements IServiceProvider {
             	if (chunkNameIndex != -1) {
 	            	String path = accessURL.substring(chunkNameIndex + "_chunkname=".length(), _nodenameIndex - 1);
 	            	path += "." + accessURL.substring(_nodenameIndex + "_nodename=".length(), _framenameIndex -1);
-	            	moduleLinks.put(path, module.getGroupId());
+	            	moduleLinks.put(path, module.getId());
             	}
         	}
         }
@@ -78,7 +78,7 @@ public class ModuleServiceImpl implements IServiceProvider {
 		Iterator<IModuleGroup> i = modules.getValues().iterator();
 		while(i.hasNext()) {
 			IModuleGroup module = i.next();
-			optionsValues.add(module.getGroupId() + "");
+			optionsValues.add(module.getId() + "");
 			displayItems.add(module.getName());
 		} 
 		return new ArrayList[]{optionsValues, displayItems};
@@ -102,7 +102,7 @@ public class ModuleServiceImpl implements IServiceProvider {
         	ModuleGroupImpl mg = (ModuleGroupImpl)all.get(i);
         	if (mg.getName().equals(AppContext.get().getAppName())) {
         		root = mg;
-        		modules.put(mg.getGroupId(), mg);
+        		modules.put(mg.getId(), mg);
         	    break;
         	}
         }
@@ -114,10 +114,10 @@ public class ModuleServiceImpl implements IServiceProvider {
         List<PageNodeType> webNodes = new ArrayList<PageNodeType>();
         for (int i=0;i<all.size();i++) {
             ModuleGroupImpl mg = (ModuleGroupImpl)all.get(i);
-            if (mg.getParentId() != root.getGroupId()) {
+            if (mg.getParentId() != root.getId()) {
             	continue;
             }
-            modules.put(mg.getGroupId(), mg);
+            modules.put(mg.getId(), mg);
             // webflow.do?_chunkname=org.shaolin.bmdp.adminconsole.diagram.MainFunctions&_nodename=ModuleManager&_framename=moduleManager&_framePrefix=
             String accessURL = mg.getAccessURL();
 			if (accessURL != null && !"#".equals(accessURL)) {
@@ -141,9 +141,9 @@ public class ModuleServiceImpl implements IServiceProvider {
             }
             // find children
             for (int j=0;j<all.size();j++) {
-            	if (mg.getGroupId() == ((ModuleGroupImpl)all.get(j)).getParentId()) {
+            	if (mg.getId() == ((ModuleGroupImpl)all.get(j)).getParentId()) {
             		ModuleGroupImpl m = (ModuleGroupImpl)all.get(j);
-            		modules.put(m.getGroupId(), m);
+            		modules.put(m.getId(), m);
                     
             		accessURL = m.getAccessURL();
         			if (accessURL != null && !"#".equals(accessURL)) {

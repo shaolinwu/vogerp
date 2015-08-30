@@ -56,7 +56,7 @@
             </bediagram:type>
         </bediagram:member>
 	</bediagram:beEntity>
-	<bediagram:beEntity needPersist="true" needTask="true" needUIEntity="true" needUITableEditor="true">
+	<bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
 		<!-- the order tracker -->
 		<common:entityName>OrderHierarchy</common:entityName>
 		<bediagram:member pk="true">
@@ -131,7 +131,7 @@
 			<bediagram:type xsi:type="bediagram:LongType" />
 		</bediagram:member>
 	</bediagram:beEntity>
-	<bediagram:beEntity needPersist="true" needUIEntity="true">
+	<bediagram:beEntity needPersist="true" needTask="true" needUIEntity="true">
 		<common:entityName>PurchaseOrder</common:entityName>
 		<bediagram:parentObject xsi:type="bediagram:BEObjRefType">
             <bediagram:targetEntity entityName="Order" />
@@ -142,7 +142,7 @@
 			<bediagram:type xsi:type="bediagram:LongType" />
 		</bediagram:member>
 	</bediagram:beEntity>
-	<bediagram:beEntity needPersist="true" needUIEntity="true">
+	<bediagram:beEntity needPersist="true" needTask="true" needUIEntity="true">
 		<common:entityName>ProductOrder</common:entityName>
 		<bediagram:parentObject xsi:type="bediagram:BEObjRefType">
             <bediagram:targetEntity entityName="Order" />

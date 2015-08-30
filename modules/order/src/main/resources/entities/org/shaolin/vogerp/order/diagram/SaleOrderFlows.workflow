@@ -31,14 +31,24 @@
 			</ns2:process>
 			<ns2:dest name="createdOrder"></ns2:dest>
 		</ns2:start-node>
-	<ns2:mission-node name="createdOrder" expiredDays="0" expiredHours="1"
-		partyType="GenericOrganizationType.Director,0" 
-		actionPage="org.shaolin.vogerp.order.form.SaleOrder" actionName="ApproveOrder" actionText="批准">
+		<ns2:mission-node name="createdOrder" expiredDays="0" expiredHours="1"
+			actionPage="org.shaolin.vogerp.order.form.SaleOrder" actionName="ApproveOrder" actionText="批准"
+			partyType="GenericOrganizationType.Director,0" autoTrigger="true">
 			<ns2:description>建立销售订单</ns2:description>
 			<ns2:actionExpression>
-			   <expressionString> {
-			      System.out.println("workflow action!!!");
-			   }</expressionString>
+				<expressionString><![CDATA[
+				import java.util.HashMap;
+				import org.shaolin.uimaster.page.AjaxContext;
+    import org.shaolin.uimaster.page.ajax.*;
+				{
+					    System.out.println("workflow action!!!");
+					    RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+					    HashMap values = (HashMap)form.ui2Data();
+					    form.closeIfinWindows(true);
+         @page.removeForm(@page.getEntityUiid()); 
+         return values;
+					}
+				]]></expressionString>
 			</ns2:actionExpression>
 			<ns2:process>
 				<ns2:expression>

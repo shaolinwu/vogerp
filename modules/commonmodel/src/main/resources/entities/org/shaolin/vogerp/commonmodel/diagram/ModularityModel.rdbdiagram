@@ -7,7 +7,7 @@
   <ns2:table>
     <entityName>COMM_MODULEGROUP</entityName>
     <systemVersion>0</systemVersion>
-    <ns2:column name="GROUPID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="PARENTID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="NAME" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
@@ -16,12 +16,12 @@
     <ns2:column name="ACCESSURL" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2"></ns2:column>
     <ns2:primaryKey>
-      <ns2:columnName>GROUPID</ns2:columnName>
+      <ns2:columnName>ID</ns2:columnName>
     </ns2:primaryKey>
     <ns2:mapping>
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.ModuleGroup"></ns2:businessEntity>
-      <ns2:fieldMapping beFieldName="groupId" columnName="GROUPID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="parentId" columnName="PARENTID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="name" columnName="NAME"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
@@ -172,16 +172,16 @@
     </ns2:searchResultMapping>
     <ns2:searchConditionMapping name="Search">
     	<ns2:fieldMapping>
-            <ns2:toDataFieldPath>inFlow.groupId</ns2:toDataFieldPath>
+            <ns2:toDataFieldPath>inFlow.id</ns2:toDataFieldPath>
             <ns2:conditionValue>
                 <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
                     <ns2:type>=</ns2:type>
                 </ns2:operator>
                 <ns2:value xsi:type="ns2:SimpleFieldValueType">
-                    <ns2:valueFieldPath>scFlow.groupId</ns2:valueFieldPath>
+                    <ns2:valueFieldPath>scFlow.id</ns2:valueFieldPath>
                 </ns2:value>
                 <ns2:condition>
-                    <expressionString><![CDATA[scFlow.getGroupId() > 0]]></expressionString>
+                    <expressionString><![CDATA[scFlow.getId() > 0]]></expressionString>
                 </ns2:condition>
             </ns2:conditionValue>
         </ns2:fieldMapping>

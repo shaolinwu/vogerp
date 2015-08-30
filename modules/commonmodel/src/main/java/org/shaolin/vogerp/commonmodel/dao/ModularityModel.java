@@ -36,8 +36,8 @@ public class ModularityModel extends BEEntityDaoObject {
                 this._addOrders(inFlowCriteria, orders);
             }
 
-            if (scFlow.getGroupId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.groupId", scFlow.getGroupId()));
+            if (scFlow.getId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
             }
             if (scFlow.getName() != null && scFlow.getName().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.name", scFlow.getName()));
@@ -62,8 +62,8 @@ public class ModularityModel extends BEEntityDaoObject {
                 this._addOrders(inFlowCriteria, orders);
             }
 
-            if (scFlow.getGroupId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.groupId", scFlow.getGroupId()));
+            if (scFlow.getId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
             }
             if (scFlow.getName() != null && scFlow.getName().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.name", scFlow.getName()));
@@ -84,8 +84,8 @@ public class ModularityModel extends BEEntityDaoObject {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl.class, "inFlow");
 
-            if (scFlow.getGroupId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.groupId", scFlow.getGroupId()));
+            if (scFlow.getId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
             }
             if (scFlow.getName() != null && scFlow.getName().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.name", scFlow.getName()));
@@ -104,8 +104,8 @@ public class ModularityModel extends BEEntityDaoObject {
         try {
             Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl.class, "inFlow");
 
-            if (scFlow.getGroupId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.groupId", scFlow.getGroupId()));
+            if (scFlow.getId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
             }
             if (scFlow.getName() != null && scFlow.getName().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.name", scFlow.getName()));

@@ -310,17 +310,12 @@
     ]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
-      <expressionString>
+      <expressionString><![CDATA[
       {
-      	if ($editable == null || $editable.booleanValue()) {
-			@odContext.executeMapping("simpleMapping1");
-			@odContext.executeMapping("simpleMapping2");
-			@odContext.executeMapping("simpleMapping3");
-			
-			$partyId = Long.valueOf($value1);
-		}
-	  }
-	  </expressionString>
+									 @odContext.executeAllMappings();
+										$partyId = Long.valueOf($value1);
+				  }
+	    ]]></expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>
 </ns2:UIEntity>

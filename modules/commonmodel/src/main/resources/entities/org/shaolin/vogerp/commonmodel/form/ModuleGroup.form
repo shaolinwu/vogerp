@@ -34,7 +34,7 @@
             String v = @page.getHidden("groupIdUI").getValue();
             if (v != null && v.length() > 0) {
             	Long objectId = Long.valueOf(v);
-            	defaultUser.setGroupId(objectId.longValue());
+            	defaultUser.setId(objectId.longValue());
             }
             v = @page.getHidden("parentIdUI").getValue();
             if (v != null && v.length() > 0) {
@@ -43,7 +43,7 @@
             }
             
             ModelPermissionImpl model = new ModelPermissionImpl();
-			model.setModuleId(defaultUser.getGroupId());
+			model.setModuleId(defaultUser.getId());
 			List modelPermissions = CommonModel.INSTANCE.searchModelPermission(model, null, 0, -1);
 			if (modelPermissions != null && modelPermissions.size() > 0) {
 			    CommonModel.INSTANCE.batchDelete(modelPermissions);
@@ -52,7 +52,7 @@
             for (int i=0;i<values.size();i++) {
             	System.out.println(values.get(i));
             	ModelPermissionImpl m = new ModelPermissionImpl();
-			    m.setModuleId(defaultUser.getGroupId());
+			    m.setModuleId(defaultUser.getId());
 			    m.setPartyType((String)values.get(i));
 			    newItems.add(m);
             }
@@ -61,11 +61,11 @@
             // the all data will be saved in ModuleManagement.save action.
             FlowDiagram diagram = (FlowDiagram)@page.getElementByAbsoluteId("groupFlow", @page.getFrameId());
             if (diagram != null) {
-	            if (defaultUser.getGroupId() > 0) {
+	            if (defaultUser.getId() > 0) {
 	                boolean found = false;
 	                List entities = diagram.getUpdateEntities();
 	                for (int i=0;i<entities.size();i++) {
-	                   if (((ModuleGroupImpl)entities.get(i)).getGroupId() == defaultUser.getGroupId()) {
+	                   if (((ModuleGroupImpl)entities.get(i)).getId() == defaultUser.getId()) {
 		                   entities.set(i, defaultUser);
 		                   found = true;
 		                   break;
@@ -74,7 +74,7 @@
 	                if (!found) {
 	                   entities.add(defaultUser);
 	                }
-	                diagram.updateNode("g_" + defaultUser.getGroupId() + "_");
+	                diagram.updateNode("g_" + defaultUser.getId() + "_");
 	            } else {
 	               diagram.getCreateEntities().add(defaultUser);
 	               int id = (int) (java.lang.Math.random() * 10000);
@@ -308,7 +308,7 @@
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMappingUserId">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
       <ns2:UIComponent componentPath="groupIdUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.groupId" paramName="Number"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.id" paramName="Number"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
@@ -363,7 +363,7 @@
       import org.shaolin.vogerp.commonmodel.dao.CommonModel;
       {
         ModelPermissionImpl model = new ModelPermissionImpl();
-		model.setModuleId($beObject.getGroupId());
+		model.setModuleId($beObject.getId());
 		List modelPermissions = CommonModel.INSTANCE.searchModelPermission(model, null, 0, -1);
 		if (modelPermissions == null || modelPermissions.size() == 0) {
 		   $values = new ArrayList();

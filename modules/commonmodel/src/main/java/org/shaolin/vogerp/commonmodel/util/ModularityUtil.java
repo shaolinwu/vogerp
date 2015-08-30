@@ -18,7 +18,7 @@ public class ModularityUtil {
 		int y = 10;
 		for (IModuleGroup module : modules) {
 			RectangleNodeType rectNode = new RectangleNodeType();
-			rectNode.setId(NodeIDPrefix + module.getGroupId() + "_");
+			rectNode.setId(NodeIDPrefix + module.getId() + "_");
 			rectNode.setName(module.getName());
 			rectNode.setDescription(module.getDescription());
 			rectNode.setX(x);
@@ -32,8 +32,8 @@ public class ModularityUtil {
 			if (module.getParentId() > 0) {
 				IModuleGroup parent = getParent(module.getParentId(), modules);
 				Connection conn = new Connection();
-				String srcId = NodeIDPrefix + module.getGroupId() + "_";
-				String tarId = NodeIDPrefix + parent.getGroupId() + "_";
+				String srcId = NodeIDPrefix + module.getId() + "_";
+				String tarId = NodeIDPrefix + parent.getId() + "_";
 				conn.setName(srcId + tarId);
 				conn.setSourceAnchor(srcId + "TopCenter");
 				conn.setTargetAnchor(tarId + "BottomCenter");
@@ -44,7 +44,7 @@ public class ModularityUtil {
 	
 	public static IModuleGroup getParent(long id, List<IModuleGroup> modules) {
 		for (IModuleGroup module : modules) {
-			if (module.getGroupId() == id) {
+			if (module.getId() == id) {
 				return module;
 			}
 		}
@@ -57,7 +57,7 @@ public class ModularityUtil {
 		for (IModuleGroup module : modules) {
 			for (NodeType n : nodes) {
 				if (module.getName().equals(n.getName())) {
-					String newId = NodeIDPrefix + module.getGroupId() + "_";
+					String newId = NodeIDPrefix + module.getId() + "_";
 					String oldId = n.getId();
 					for (Connection conn : conns) {
 						if (conn.getSourceAnchor().startsWith(oldId)) {

@@ -10,7 +10,7 @@
 	<bediagram:beEntity needPersist="true" needUIEntity="true">
 		<common:entityName>ModuleGroup</common:entityName>
 		<bediagram:member pk="true">
-			<bediagram:name>groupId</bediagram:name>
+			<bediagram:name>id</bediagram:name>
 			<bediagram:type xsi:type="bediagram:LongType" />
 		</bediagram:member>
 		<bediagram:member>
