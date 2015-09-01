@@ -15,9 +15,11 @@
 	</ns2:conf>
 	<ns2:flow name="Mission0" eventConsumer="SaleOrder">
 		<ns2:conf>
+		 <!-- 
 			<ns2:param name="saleOrder" category="BusinessEntity">
 				<type entityName="org.shaolin.vogerp.order.be.SaleOrder"></type>
 			</ns2:param>
+			 -->
 		</ns2:conf>
 		<ns2:start-node name="init">
 			<ns2:process>
@@ -45,16 +47,21 @@
 									    HashMap values = (HashMap)form.ui2Data();
 									    form.closeIfinWindows(true);
 				         @page.removeForm(@page.getEntityUiid()); 
-				         return values;
+				         HashMap result = new HashMap();
+				         result.put("saleOrder", values.get("beObject"));
+				         return result;
 									}
 								]]></expressionString>
 					</ns2:expression>
 			</ns2:uiAction>
 			<ns2:participant partyType="GenericOrganizationType.Director,0" />
 			<ns2:process>
+			 <ns2:var name="saleOrder" category="BusinessEntity" scope="InOut">
+	    <type entityName="org.shaolin.vogerp.order.be.SaleOrder"></type>
+	   </ns2:var>
 				<ns2:expression>
 					<expressionString>{
-						System.out.println("approved the created order: " + @saleOrder);
+						System.out.println("approved the created order: " + $saleOrder);
 						}
 					</expressionString>
 				</ns2:expression>
