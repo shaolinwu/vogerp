@@ -66,8 +66,44 @@
 					</expressionString>
 				</ns2:expression>
 			</ns2:process>
-			<ns2:dest name="endNode"></ns2:dest>
+			<ns2:dest name="deliveryOrder"></ns2:dest>
 		</ns2:mission-node>
+		<!-- the actionName must be unique as well as the node name does! -->
+		<ns2:mission-node name="deliveryOrder" expiredDays="2" expiredHours="0" autoTrigger="false">
+   <ns2:description>发送订单</ns2:description>
+   <ns2:uiAction actionPage="org.shaolin.vogerp.order.form.SaleOrder" actionName="DeliveryOrder" actionText="确认订单寄出完成">
+     <ns2:expression>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        {
+             System.out.println("workflow action!!!");
+             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+             HashMap values = (HashMap)form.ui2Data();
+             form.closeIfinWindows(true);
+             @page.removeForm(@page.getEntityUiid()); 
+             HashMap result = new HashMap();
+             result.put("saleOrder", values.get("beObject"));
+             return result;
+         }
+        ]]></expressionString>
+     </ns2:expression>
+   </ns2:uiAction>
+   <ns2:participant partyType="GenericOrganizationType.Director,0" />
+   <ns2:process>
+    <ns2:var name="saleOrder" category="BusinessEntity" scope="InOut">
+     <type entityName="org.shaolin.vogerp.order.be.SaleOrder"></type>
+    </ns2:var>
+    <ns2:expression>
+     <expressionString>{
+      System.out.println("delivered the sale order: " + $saleOrder);
+      }
+     </expressionString>
+    </ns2:expression>
+   </ns2:process>
+   <ns2:dest name="endNode"></ns2:dest>
+  </ns2:mission-node>
 		<ns2:end-node name="endNode"></ns2:end-node>
 	</ns2:flow>
 </ns2:Workflow>

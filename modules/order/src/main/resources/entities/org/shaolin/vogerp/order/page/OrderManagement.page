@@ -113,35 +113,6 @@
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
-        <ns2:eventHandler functionName="approveSaleOrder">
-            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="approveSaleOrder-20150815-0906">
-                <ns2:exp>
-                    <ns2:expressionString><![CDATA[
-                    import java.util.HashMap;
-                    import org.shaolin.bmdp.runtime.AppContext;
-                    import org.shaolin.uimaster.page.AjaxContext;
-                    import org.shaolin.uimaster.page.ajax.*;
-                    import org.shaolin.vogerp.order.be.SaleOrderImpl;
-                    import org.shaolin.vogerp.order.dao.OrderModel;
-                    import org.shaolin.vogerp.order.dao.CustOrderModel;
-                    import org.shaolin.bmdp.workflow.internal.WorkFlowEventProcessor;
-                    import org.shaolin.bmdp.runtime.spi.EventProcessor;
-                    import org.shaolin.bmdp.runtime.spi.FlowEvent;
-                    {
-                        Table personalInfoTable = (Table)@page.getElement("saleOrderTable");
-                        if (personalInfoTable.getSelectedRow() == null) {
-                            return;
-                        }
-                        SaleOrderImpl defaultUser = (SaleOrderImpl)personalInfoTable.getSelectedRow();
-                        EventProcessor processor = (EventProcessor)AppContext.get().getService(WorkFlowEventProcessor.class);
-																        FlowEvent evt = new FlowEvent("SaleOrder");
-																        evt.setAttribute("saleOrder", defaultUser);
-                        processor.process(evt);
-                    }
-                    ]]></ns2:expressionString>
-                </ns2:exp>
-            </ns2:ops>
-        </ns2:eventHandler>approveSaleOrder
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 		    <ns2:UISkin xsi:type="ns2:UISkinType">
                 <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
@@ -322,14 +293,6 @@
 		                            <ns2:icon>ui-icon-note</ns2:icon>
 		                            <ns2:function>openSaleOrderTracker</ns2:function>
 		                        </ns2:action>
-		                        <ns2:action>
-                              <ns2:uiid>approveSaleOrder</ns2:uiid>
-                              <ns2:title xsi:type="ns2:StringPropertyType">
-                                  <ns2:value>Approve Order</ns2:value>
-                              </ns2:title>
-                              <ns2:icon>ui-icon-note</ns2:icon>
-                              <ns2:function>approveSaleOrder</ns2:function>
-                          </ns2:action>
 		                    </ns2:actionGroup>
 		                </ns2:component>
 		                <ns2:layoutConstraint>
