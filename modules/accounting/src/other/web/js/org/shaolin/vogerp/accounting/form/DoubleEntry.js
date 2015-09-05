@@ -8,54 +8,54 @@ function org_shaolin_vogerp_accounting_form_DoubleEntry(json)
         ui: elementList[prefix + "idUI"]
     });
 
-    var relatedTransIdUILabel = new UIMaster.ui.label
+    var commentUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "relatedTransIdUILabel"]
+        ui: elementList[prefix + "commentUILabel"]
     });
 
-    var relatedTransIdUI = new UIMaster.ui.textfield
+    var commentUI = new UIMaster.ui.textfield
     ({
-        ui: elementList[prefix + "relatedTransIdUI"]
+        ui: elementList[prefix + "commentUI"]
     });
 
-    var isLendedUILabel = new UIMaster.ui.label
+    var generalLedgerUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "isLendedUILabel"]
+        ui: elementList[prefix + "generalLedgerUILabel"]
     });
 
-    var isLendedUI = new UIMaster.ui.checkbox
+    var generalLedgerUI = new UIMaster.ui.combobox
     ({
-        ui: elementList[prefix + "isLendedUI"]
+        ui: elementList[prefix + "generalLedgerUI"]
     });
 
-    var amountUILabel = new UIMaster.ui.label
+    var subLedgerUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "amountUILabel"]
+        ui: elementList[prefix + "subLedgerUILabel"]
     });
 
-    var amountUI = new UIMaster.ui.textfield
+    var subLedgerUI = new UIMaster.ui.textfield
     ({
-        ui: elementList[prefix + "amountUI"]
+        ui: elementList[prefix + "subLedgerUI"]
     });
 
-    var commentsUILabel = new UIMaster.ui.label
+    var debitAmountUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "commentsUILabel"]
+        ui: elementList[prefix + "debitAmountUILabel"]
     });
 
-    var commentsUI = new UIMaster.ui.textfield
+    var debitAmountUI = new UIMaster.ui.textfield
     ({
-        ui: elementList[prefix + "commentsUI"]
+        ui: elementList[prefix + "debitAmountUI"]
     });
 
-    var typeUILabel = new UIMaster.ui.label
+    var creditAmountUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "typeUILabel"]
+        ui: elementList[prefix + "creditAmountUILabel"]
     });
 
-    var typeUI = new UIMaster.ui.combobox
+    var creditAmountUI = new UIMaster.ui.textfield
     ({
-        ui: elementList[prefix + "typeUI"]
+        ui: elementList[prefix + "creditAmountUI"]
     });
 
     var okbtn = new UIMaster.ui.button
@@ -79,36 +79,36 @@ function org_shaolin_vogerp_accounting_form_DoubleEntry(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "relatedTransIdUILabel",prefix + "relatedTransIdUI",prefix + "isLendedUILabel",prefix + "isLendedUI",prefix + "amountUILabel",prefix + "amountUI",prefix + "commentsUILabel",prefix + "commentsUI",prefix + "typeUILabel",prefix + "typeUI"]
+        ,subComponents: [prefix + "idUI",prefix + "commentUILabel",prefix + "commentUI",prefix + "generalLedgerUILabel",prefix + "generalLedgerUI",prefix + "subLedgerUILabel",prefix + "subLedgerUI",prefix + "debitAmountUILabel",prefix + "debitAmountUI",prefix + "creditAmountUILabel",prefix + "creditAmountUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,relatedTransIdUILabel,relatedTransIdUI,isLendedUILabel,isLendedUI,amountUILabel,amountUI,commentsUILabel,commentsUI,typeUILabel,typeUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,commentUILabel,commentUI,generalLedgerUILabel,generalLedgerUI,subLedgerUILabel,subLedgerUI,debitAmountUILabel,debitAmountUI,creditAmountUILabel,creditAmountUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
 
-    Form.relatedTransIdUILabel=relatedTransIdUILabel;
+    Form.commentUILabel=commentUILabel;
 
-    Form.relatedTransIdUI=relatedTransIdUI;
+    Form.commentUI=commentUI;
 
-    Form.isLendedUILabel=isLendedUILabel;
+    Form.generalLedgerUILabel=generalLedgerUILabel;
 
-    Form.isLendedUI=isLendedUI;
+    Form.generalLedgerUI=generalLedgerUI;
 
-    Form.amountUILabel=amountUILabel;
+    Form.subLedgerUILabel=subLedgerUILabel;
 
-    Form.amountUI=amountUI;
+    Form.subLedgerUI=subLedgerUI;
 
-    Form.commentsUILabel=commentsUILabel;
+    Form.debitAmountUILabel=debitAmountUILabel;
 
-    Form.commentsUI=commentsUI;
+    Form.debitAmountUI=debitAmountUI;
 
-    Form.typeUILabel=typeUILabel;
+    Form.creditAmountUILabel=creditAmountUILabel;
 
-    Form.typeUI=typeUI;
+    Form.creditAmountUI=creditAmountUI;
 
     Form.okbtn=okbtn;
 
@@ -128,6 +128,8 @@ function org_shaolin_vogerp_accounting_form_DoubleEntry(json)
 
     Form.Cancel = org_shaolin_vogerp_accounting_form_DoubleEntry_Cancel;
 
+    Form.invokeDynamicFunction = org_shaolin_vogerp_accounting_form_DoubleEntry_invokeDynamicFunction;
+
     Form.__entityName="org.shaolin.vogerp.accounting.form.DoubleEntry";
 
     Form.init();
@@ -143,7 +145,7 @@ function org_shaolin_vogerp_accounting_form_DoubleEntry(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20150719-235625",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20150904-084549",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_DoubleEntry_Save */
@@ -154,10 +156,21 @@ function org_shaolin_vogerp_accounting_form_DoubleEntry(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20150719-235625",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20150904-084549",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_DoubleEntry_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_accounting_form_DoubleEntry_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_form_DoubleEntry_invokeDynamicFunction */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_accounting_form_DoubleEntry_invokeDynamicFunction */
 
 
 

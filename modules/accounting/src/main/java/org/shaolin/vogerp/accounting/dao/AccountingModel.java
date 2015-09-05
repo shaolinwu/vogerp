@@ -15,8 +15,6 @@ import org.shaolin.bmdp.persistence.BEEntityDaoObject;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.persistence.query.operator.Operator;
 
-import org.shaolin.vogerp.accounting.be.ITransaction;
-import org.shaolin.vogerp.accounting.be.TransactionImpl;
 import org.shaolin.vogerp.accounting.be.IInBalanceSheet;
 import org.shaolin.vogerp.accounting.be.InBalanceSheetImpl;
 import org.shaolin.vogerp.accounting.be.IProfitSheet;
@@ -31,14 +29,6 @@ public class AccountingModel extends BEEntityDaoObject {
     public static final AccountingModel INSTANCE = new AccountingModel();
 
     private AccountingModel() {
-    }
-
-    public List<ITransaction> listITransactions(int offset, int count) {
-        return list(offset, count, ITransaction.class, TransactionImpl.class);
-    }
-
-    public long listITransactionCount() {
-        return count(ITransaction.class);
     }
 
     public List<IInBalanceSheet> listIInBalanceSheets(int offset, int count) {
@@ -65,12 +55,12 @@ public class AccountingModel extends BEEntityDaoObject {
         return count(ICashFlowSheet.class);
     }
 
-    public List<org.shaolin.vogerp.accounting.be.TransactionImpl> searchTransaction(org.shaolin.vogerp.accounting.be.TransactionImpl scObject,
+    public List<org.shaolin.vogerp.accounting.be.IAccountVoucher> searchAccountVoucher(org.shaolin.vogerp.accounting.be.AccountVoucherImpl scObject,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.TransactionImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.AccountVoucherImpl.class, "inObject");
             if (orders == null) {
             } else {
                 this._addOrders(inObjectCriteria, orders);
@@ -84,10 +74,10 @@ public class AccountingModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.accounting.be.TransactionImpl> searchTransaction(org.shaolin.vogerp.accounting.be.TransactionImpl scObject,
+    public List<org.shaolin.vogerp.accounting.be.IAccountVoucher> searchAccountVoucher(org.shaolin.vogerp.accounting.be.AccountVoucherImpl scObject,
            Session session, List<Order> orders, int offset, int count) {
         try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.TransactionImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.AccountVoucherImpl.class, "inObject");
             if (orders == null) {
             } else {
                 this._addOrders(inObjectCriteria, orders);
@@ -100,11 +90,11 @@ public class AccountingModel extends BEEntityDaoObject {
         }
     }
 
-    public long searchTransactionCount(org.shaolin.vogerp.accounting.be.TransactionImpl scObject) {
+    public long searchAccountVoucherCount(org.shaolin.vogerp.accounting.be.AccountVoucherImpl scObject) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.TransactionImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.AccountVoucherImpl.class, "inObject");
 
 
             return this._count(inObjectCriteria);
@@ -113,9 +103,9 @@ public class AccountingModel extends BEEntityDaoObject {
         }
     }
 
-    public long searchTransactionCount(org.shaolin.vogerp.accounting.be.TransactionImpl scObject, Session session) {
+    public long searchAccountVoucherCount(org.shaolin.vogerp.accounting.be.AccountVoucherImpl scObject, Session session) {
         try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.TransactionImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.AccountVoucherImpl.class, "inObject");
 
 
             return this._count(inObjectCriteria);
@@ -123,7 +113,7 @@ public class AccountingModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.accounting.be.DoubleEntryImpl> searchDoubleEntry(org.shaolin.vogerp.accounting.be.DoubleEntryImpl scObject,
+    public List<org.shaolin.vogerp.accounting.be.IDoubleEntry> searchDoubleEntry(org.shaolin.vogerp.accounting.be.DoubleEntryImpl scObject,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -142,7 +132,7 @@ public class AccountingModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.accounting.be.DoubleEntryImpl> searchDoubleEntry(org.shaolin.vogerp.accounting.be.DoubleEntryImpl scObject,
+    public List<org.shaolin.vogerp.accounting.be.IDoubleEntry> searchDoubleEntry(org.shaolin.vogerp.accounting.be.DoubleEntryImpl scObject,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.DoubleEntryImpl.class, "inObject");
@@ -181,7 +171,7 @@ public class AccountingModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.accounting.be.BudgetImpl> searchBudget(org.shaolin.vogerp.accounting.be.BudgetImpl scObject,
+    public List<org.shaolin.vogerp.accounting.be.IBudget> searchBudget(org.shaolin.vogerp.accounting.be.BudgetImpl scObject,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -200,7 +190,7 @@ public class AccountingModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.accounting.be.BudgetImpl> searchBudget(org.shaolin.vogerp.accounting.be.BudgetImpl scObject,
+    public List<org.shaolin.vogerp.accounting.be.IBudget> searchBudget(org.shaolin.vogerp.accounting.be.BudgetImpl scObject,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.BudgetImpl.class, "inObject");
@@ -239,7 +229,7 @@ public class AccountingModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.accounting.be.BudgetItemImpl> searchBudgetItem(org.shaolin.vogerp.accounting.be.BudgetItemImpl scObject,
+    public List<org.shaolin.vogerp.accounting.be.IBudgetItem> searchBudgetItem(org.shaolin.vogerp.accounting.be.BudgetItemImpl scObject,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -258,7 +248,7 @@ public class AccountingModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.accounting.be.BudgetItemImpl> searchBudgetItem(org.shaolin.vogerp.accounting.be.BudgetItemImpl scObject,
+    public List<org.shaolin.vogerp.accounting.be.IBudgetItem> searchBudgetItem(org.shaolin.vogerp.accounting.be.BudgetItemImpl scObject,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.BudgetItemImpl.class, "inObject");
@@ -297,7 +287,7 @@ public class AccountingModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.accounting.be.InBalanceSheetImpl> searchInBalanceSheet(org.shaolin.vogerp.accounting.be.InBalanceSheetImpl scObject,
+    public List<org.shaolin.vogerp.accounting.be.IInBalanceSheet> searchInBalanceSheet(org.shaolin.vogerp.accounting.be.InBalanceSheetImpl scObject,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -316,7 +306,7 @@ public class AccountingModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.accounting.be.InBalanceSheetImpl> searchInBalanceSheet(org.shaolin.vogerp.accounting.be.InBalanceSheetImpl scObject,
+    public List<org.shaolin.vogerp.accounting.be.IInBalanceSheet> searchInBalanceSheet(org.shaolin.vogerp.accounting.be.InBalanceSheetImpl scObject,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InBalanceSheetImpl.class, "inObject");
@@ -355,7 +345,7 @@ public class AccountingModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.accounting.be.ProfitSheetImpl> searchProfitSheet(org.shaolin.vogerp.accounting.be.ProfitSheetImpl scObject,
+    public List<org.shaolin.vogerp.accounting.be.IProfitSheet> searchProfitSheet(org.shaolin.vogerp.accounting.be.ProfitSheetImpl scObject,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -374,7 +364,7 @@ public class AccountingModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.accounting.be.ProfitSheetImpl> searchProfitSheet(org.shaolin.vogerp.accounting.be.ProfitSheetImpl scObject,
+    public List<org.shaolin.vogerp.accounting.be.IProfitSheet> searchProfitSheet(org.shaolin.vogerp.accounting.be.ProfitSheetImpl scObject,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.ProfitSheetImpl.class, "inObject");
@@ -413,7 +403,7 @@ public class AccountingModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.accounting.be.CashFlowSheetImpl> searchCashFlowSheet(org.shaolin.vogerp.accounting.be.CashFlowSheetImpl scObject,
+    public List<org.shaolin.vogerp.accounting.be.ICashFlowSheet> searchCashFlowSheet(org.shaolin.vogerp.accounting.be.CashFlowSheetImpl scObject,
            List<Order> orders, int offset, int count) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -432,7 +422,7 @@ public class AccountingModel extends BEEntityDaoObject {
         }
     }
 
-    public List<org.shaolin.vogerp.accounting.be.CashFlowSheetImpl> searchCashFlowSheet(org.shaolin.vogerp.accounting.be.CashFlowSheetImpl scObject,
+    public List<org.shaolin.vogerp.accounting.be.ICashFlowSheet> searchCashFlowSheet(org.shaolin.vogerp.accounting.be.CashFlowSheetImpl scObject,
            Session session, List<Order> orders, int offset, int count) {
         try {
             Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.CashFlowSheetImpl.class, "inObject");

@@ -198,6 +198,8 @@ function org_shaolin_vogerp_accounting_form_Invoice(json)
 
     Form.Cancel = org_shaolin_vogerp_accounting_form_Invoice_Cancel;
 
+    Form.invokeDynamicFunction = org_shaolin_vogerp_accounting_form_Invoice_invokeDynamicFunction;
+
     Form.__entityName="org.shaolin.vogerp.accounting.form.Invoice";
 
     Form.init();
@@ -213,7 +215,7 @@ function org_shaolin_vogerp_accounting_form_Invoice(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-313689245",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20150904-084552",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_Invoice_Save */
@@ -224,10 +226,21 @@ function org_shaolin_vogerp_accounting_form_Invoice(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail1743519473",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20150904-084552",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_Invoice_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_accounting_form_Invoice_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_form_Invoice_invokeDynamicFunction */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_accounting_form_Invoice_invokeDynamicFunction */
 
 
 

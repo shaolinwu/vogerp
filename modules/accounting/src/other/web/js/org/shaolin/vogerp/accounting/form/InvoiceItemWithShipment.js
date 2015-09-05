@@ -128,6 +128,8 @@ function org_shaolin_vogerp_accounting_form_InvoiceItemWithShipment(json)
 
     Form.Cancel = org_shaolin_vogerp_accounting_form_InvoiceItemWithShipment_Cancel;
 
+    Form.invokeDynamicFunction = org_shaolin_vogerp_accounting_form_InvoiceItemWithShipment_invokeDynamicFunction;
+
     Form.__entityName="org.shaolin.vogerp.accounting.form.InvoiceItemWithShipment";
 
     Form.init();
@@ -143,7 +145,7 @@ function org_shaolin_vogerp_accounting_form_InvoiceItemWithShipment(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail876728565",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20150904-084553",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_InvoiceItemWithShipment_Save */
@@ -154,10 +156,21 @@ function org_shaolin_vogerp_accounting_form_InvoiceItemWithShipment(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail239057424",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20150904-084553",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_InvoiceItemWithShipment_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_accounting_form_InvoiceItemWithShipment_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_form_InvoiceItemWithShipment_invokeDynamicFunction */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_accounting_form_InvoiceItemWithShipment_invokeDynamicFunction */
 
 
 

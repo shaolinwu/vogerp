@@ -3,7 +3,7 @@
   <entityName>org.shaolin.vogerp.accounting.form.BudgetItemTable</entityName>
   <systemVersion>0</systemVersion>
   <ns2:eventHandler functionName="createItem">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createItem_20150719-235627">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createItem_20150904-084550">
       <ns2:exp>
         <expressionString><![CDATA[
         import org.shaolin.uimaster.page.AjaxContext;
@@ -17,7 +17,7 @@
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="deleteItem">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deleteItem_20150719-235627">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deleteItem_20150904-084550">
       <ns2:exp>
         <expressionString><![CDATA[
         import org.shaolin.uimaster.page.AjaxContext;
@@ -37,7 +37,7 @@
     <ns2:ops xsi:type="ns2:OpExecuteScriptType">
       <ns2:expressionString>{this.itemTable.syncBodyDataToServer();}</ns2:expressionString>
     </ns2:ops>
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveItem-20150719-235627">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveItem-20150904-084550">
       <ns2:exp>
         <expressionString><![CDATA[
         import org.shaolin.uimaster.page.AjaxContext;
@@ -93,7 +93,7 @@
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="Cancel">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20150719-235627">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20150904-084550">
       <ns2:exp>
         <expressionString><![CDATA[
         import org.shaolin.uimaster.page.AjaxContext;

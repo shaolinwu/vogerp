@@ -14,21 +14,21 @@ function org_shaolin_vogerp_accounting_form_DoubleEntryTable(json)
         ,editable: true
     });
 
-    var okbtn = new UIMaster.ui.button
+    var totalAmountUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "okbtn"]
+        ui: elementList[prefix + "totalAmountUILabel"]
     });
 
-    var cancelbtn = new UIMaster.ui.button
+    var totalAmountUI = new UIMaster.ui.textfield
     ({
-        ui: elementList[prefix + "cancelbtn"]
+        ui: elementList[prefix + "totalAmountUI"]
     });
 
-    var actionPanel = new UIMaster.ui.panel
+    var totalPanel = new UIMaster.ui.panel
     ({
-        ui: elementList[prefix + "actionPanel"]
+        ui: elementList[prefix + "totalPanel"]
         ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "totalAmountUILabel",prefix + "totalAmountUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -41,20 +41,20 @@ function org_shaolin_vogerp_accounting_form_DoubleEntryTable(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentIdUI,itemTable,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [parentIdUI,itemTable,totalAmountUILabel,totalAmountUI,fieldPanel,totalPanel]
     });
 
     Form.parentIdUI=parentIdUI;
 
     Form.itemTable=itemTable;
 
-    Form.okbtn=okbtn;
+    Form.totalAmountUILabel=totalAmountUILabel;
 
-    Form.cancelbtn=cancelbtn;
+    Form.totalAmountUI=totalAmountUI;
 
     Form.fieldPanel=fieldPanel;
 
-    Form.actionPanel=actionPanel;
+    Form.totalPanel=totalPanel;
 
     Form.user_constructor = function()
     {
@@ -66,9 +66,7 @@ function org_shaolin_vogerp_accounting_form_DoubleEntryTable(json)
 
     Form.deleteItem = org_shaolin_vogerp_accounting_form_DoubleEntryTable_deleteItem;
 
-    Form.Save = org_shaolin_vogerp_accounting_form_DoubleEntryTable_Save;
-
-    Form.Cancel = org_shaolin_vogerp_accounting_form_DoubleEntryTable_Cancel;
+    Form.invokeDynamicFunction = org_shaolin_vogerp_accounting_form_DoubleEntryTable_invokeDynamicFunction;
 
     Form.__entityName="org.shaolin.vogerp.accounting.form.DoubleEntryTable";
 
@@ -85,7 +83,7 @@ function org_shaolin_vogerp_accounting_form_DoubleEntryTable(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_20150719-235626",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_20150904-084549",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_DoubleEntryTable_createItem */
@@ -96,32 +94,21 @@ function org_shaolin_vogerp_accounting_form_DoubleEntryTable(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_20150719-235626",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_20150904-084549",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_DoubleEntryTable_deleteItem */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_accounting_form_DoubleEntryTable_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_form_DoubleEntryTable_Save */
-{this.itemTable.syncBodyDataToServer();}
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveItem-20150719-235626",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
-    }/* Gen_Last:org_shaolin_vogerp_accounting_form_DoubleEntryTable_Save */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_accounting_form_DoubleEntryTable_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_form_DoubleEntryTable_Cancel */
+    function org_shaolin_vogerp_accounting_form_DoubleEntryTable_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_form_DoubleEntryTable_invokeDynamicFunction */
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20150719-235626",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
-    }/* Gen_Last:org_shaolin_vogerp_accounting_form_DoubleEntryTable_Cancel */
+    }/* Gen_Last:org_shaolin_vogerp_accounting_form_DoubleEntryTable_invokeDynamicFunction */
 
 
 

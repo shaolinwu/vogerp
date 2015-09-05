@@ -184,6 +184,8 @@ function org_shaolin_vogerp_accounting_form_Budget(json)
 
     Form.Cancel = org_shaolin_vogerp_accounting_form_Budget_Cancel;
 
+    Form.invokeDynamicFunction = org_shaolin_vogerp_accounting_form_Budget_invokeDynamicFunction;
+
     Form.__entityName="org.shaolin.vogerp.accounting.form.Budget";
 
     Form.init();
@@ -199,7 +201,7 @@ function org_shaolin_vogerp_accounting_form_Budget(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20150719-235626",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20150904-084549",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_Budget_Save */
@@ -210,10 +212,21 @@ function org_shaolin_vogerp_accounting_form_Budget(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20150719-235626",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20150904-084549",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_Budget_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_accounting_form_Budget_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_form_Budget_invokeDynamicFunction */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_accounting_form_Budget_invokeDynamicFunction */
 
 
 

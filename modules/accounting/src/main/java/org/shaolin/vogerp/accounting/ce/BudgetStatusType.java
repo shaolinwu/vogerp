@@ -1,6 +1,6 @@
 /*
  * This code is generated automatically, any change will be replaced after rebuild.
- * Generated on Sun Jul 19 23:56:24 CST 2015
+ * Generated on Sat Sep 05 13:11:34 CST 2015
  */
 
 package org.shaolin.vogerp.accounting.ce;

@@ -217,11 +217,11 @@
 											      ArrayList result = new ArrayList();
 									        for (int i=0;i<all.size();i++) {
 								                ModuleGroupImpl mg = (ModuleGroupImpl)all.get(i);
-								                if (mg.getParentId() != root.getGroupId()) {
+								                if (mg.getParentId() != root.getId()) {
 								                	continue;
 								                }
 		                TreeItem gitem = new TreeItem();
-		                gitem.setId("mg_" + mg.getGroupId());
+		                gitem.setId("mg_" + mg.getId());
 		                gitem.setText(mg.getName());
 		                gitem.setIcon(mg.getSmallIcon());
 		                gitem.setState(new org.shaolin.uimaster.page.ajax.TreeItem.State());
@@ -230,10 +230,10 @@
 		                
 		                // find children
 		                for (int j=0;j<all.size();j++) {
-		                	  if (mg.getGroupId() == ((ModuleGroupImpl)all.get(j)).getParentId()) {
+		                	  if (mg.getId() == ((ModuleGroupImpl)all.get(j)).getParentId()) {
 		                		   ModuleGroupImpl m = (ModuleGroupImpl)all.get(j);
 											            TreeItem item = new TreeItem();
-											            item.setId("mg_" + m.getGroupId());
+											            item.setId("mg_" + m.getId());
 											            item.setText(m.getName());
 											            item.setA_attr(new org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute(m.getAccessURL()));
 											            item.setState(new org.shaolin.uimaster.page.ajax.TreeItem.State());

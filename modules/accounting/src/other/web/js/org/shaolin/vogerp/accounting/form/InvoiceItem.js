@@ -48,16 +48,6 @@ function org_shaolin_vogerp_accounting_form_InvoiceItem(json)
         ui: elementList[prefix + "unitPriceUI"]
     });
 
-    var isTaxedUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "isTaxedUILabel"]
-    });
-
-    var isTaxedUI = new UIMaster.ui.checkbox
-    ({
-        ui: elementList[prefix + "isTaxedUI"]
-    });
-
     var typeUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "typeUILabel"]
@@ -109,13 +99,13 @@ function org_shaolin_vogerp_accounting_form_InvoiceItem(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "invoiceIdUILabel",prefix + "invoiceIdUI",prefix + "productIdUILabel",prefix + "productIdUI",prefix + "amountUILabel",prefix + "amountUI",prefix + "unitPriceUILabel",prefix + "unitPriceUI",prefix + "isTaxedUILabel",prefix + "isTaxedUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "isAdjustedUILabel",prefix + "isAdjustedUI",prefix + "statementUILabel",prefix + "statementUI"]
+        ,subComponents: [prefix + "idUI",prefix + "invoiceIdUILabel",prefix + "invoiceIdUI",prefix + "productIdUILabel",prefix + "productIdUI",prefix + "amountUILabel",prefix + "amountUI",prefix + "unitPriceUILabel",prefix + "unitPriceUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "isAdjustedUILabel",prefix + "isAdjustedUI",prefix + "statementUILabel",prefix + "statementUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,invoiceIdUILabel,invoiceIdUI,productIdUILabel,productIdUI,amountUILabel,amountUI,unitPriceUILabel,unitPriceUI,isTaxedUILabel,isTaxedUI,typeUILabel,typeUI,isAdjustedUILabel,isAdjustedUI,statementUILabel,statementUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,invoiceIdUILabel,invoiceIdUI,productIdUILabel,productIdUI,amountUILabel,amountUI,unitPriceUILabel,unitPriceUI,typeUILabel,typeUI,isAdjustedUILabel,isAdjustedUI,statementUILabel,statementUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -135,10 +125,6 @@ function org_shaolin_vogerp_accounting_form_InvoiceItem(json)
     Form.unitPriceUILabel=unitPriceUILabel;
 
     Form.unitPriceUI=unitPriceUI;
-
-    Form.isTaxedUILabel=isTaxedUILabel;
-
-    Form.isTaxedUI=isTaxedUI;
 
     Form.typeUILabel=typeUILabel;
 
@@ -170,6 +156,8 @@ function org_shaolin_vogerp_accounting_form_InvoiceItem(json)
 
     Form.Cancel = org_shaolin_vogerp_accounting_form_InvoiceItem_Cancel;
 
+    Form.invokeDynamicFunction = org_shaolin_vogerp_accounting_form_InvoiceItem_invokeDynamicFunction;
+
     Form.__entityName="org.shaolin.vogerp.accounting.form.InvoiceItem";
 
     Form.init();
@@ -185,7 +173,7 @@ function org_shaolin_vogerp_accounting_form_InvoiceItem(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-958311855",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20150904-084552",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_InvoiceItem_Save */
@@ -196,10 +184,21 @@ function org_shaolin_vogerp_accounting_form_InvoiceItem(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-1206416687",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20150904-084552",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_InvoiceItem_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_accounting_form_InvoiceItem_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_form_InvoiceItem_invokeDynamicFunction */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_accounting_form_InvoiceItem_invokeDynamicFunction */
 
 
 

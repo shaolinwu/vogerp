@@ -5,61 +5,78 @@
   <ns2:diagramPackage>org.shaolin.vogerp.accounting.diagram</ns2:diagramPackage>
   <ns2:daoPackage>org.shaolin.vogerp.accounting.dao</ns2:daoPackage>
   <ns2:table>
-    <entityName>TRANSACTION</entityName>
-    <systemVersion>0</systemVersion>
-    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="PARTYID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="INVOICEID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="AMOUNT" type="DECIMAL" isNull="true"></ns2:column>
-    <ns2:column name="PLUSTAX" type="DECIMAL" isNull="true"></ns2:column>
-    <ns2:column name="COMMENTS" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="TYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
-    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
-    <ns2:column name="_version" type="INTEGER" length="2" default="0"></ns2:column>
-    <ns2:column name="_starttime" type="TIMESTAMP"></ns2:column>
-    <ns2:column name="_endtime" type="TIMESTAMP"></ns2:column>
-    <ns2:column name="_optuserid" type="BIGINT" length="38" default="0"></ns2:column>
-    <ns2:mapping>
-      <systemVersion>0</systemVersion>
-      <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.Transaction"></ns2:businessEntity>
-      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="partyId" columnName="PARTYID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="invoiceId" columnName="INVOICEID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="amount" columnName="AMOUNT"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="plusTax" columnName="PLUSTAX"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="comments" columnName="COMMENTS"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_version" columnName="_version"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_starttime" columnName="_starttime"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_endtime" columnName="_endtime"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_optuserid" columnName="_optuserid"></ns2:fieldMapping>
-    </ns2:mapping>
-  </ns2:table>
-  <ns2:table>
-    <entityName>DOUBLEENTRY</entityName>
+    <entityName>ACCT_VOUCHER</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="RELATEDTRANSID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="ISLENDED" type="BIT" isNull="true"></ns2:column>
-    <ns2:column name="AMOUNT" type="DECIMAL" isNull="true"></ns2:column>
-    <ns2:column name="COMMENTS" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="TYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="SEQNUMBER" type="INTEGER" length="5" isNull="true"></ns2:column>
+    <ns2:column name="VOUCHERTYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="VOUCHERNUMBER" type="INTEGER" length="5" isNull="true"></ns2:column>
+    <ns2:column name="SUBVOUCHERS" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="MANAGER" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="ENTERED" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="PREPARED" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="AUDITOR" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="CASHIER" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="RECEIVER" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="SETTLEMETHOD" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="SETTLENUMBER" type="INTEGER" length="5" isNull="true"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="COMMENT" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.AccountVoucher"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="relatedTransId" columnName="RELATEDTRANSID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="seqNumber" columnName="SEQNUMBER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="voucherType" columnName="VOUCHERTYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="voucherNumber" columnName="VOUCHERNUMBER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="subVoucherNumber" columnName="SUBVOUCHERS"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="manager" columnName="MANAGER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="entered" columnName="ENTERED"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="prepared" columnName="PREPARED"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="auditor" columnName="AUDITOR"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="cashier" columnName="CASHIER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="receiver" columnName="RECEIVER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="settlementMethod" columnName="SETTLEMETHOD"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="settlementNumber" columnName="SETTLENUMBER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="comment" columnName="COMMENT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ACCT_VOUCHER_DOUBLEENTRY_JT" collectionElement="org.shaolin.vogerp.accounting.be.DoubleEntry" mappingType="One-to-Many" beFieldName="doubleEnties"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>ACCT_DOUBLEENTRY</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="GENLEDGER" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="SUBLEDGER" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="DEBITAMOUNT" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="CREDITAMOUNT" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="COMMENT" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
     <ns2:mapping>
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.DoubleEntry"></ns2:businessEntity>
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="relatedTransId" columnName="RELATEDTRANSID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="isLended" columnName="ISLENDED"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="amount" columnName="AMOUNT"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="comments" columnName="COMMENTS"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="generalLedger" columnName="GENLEDGER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="subLedger" columnName="SUBLEDGER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="debitAmount" columnName="DEBITAMOUNT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="creditAmount" columnName="CREDITAMOUNT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="comment" columnName="COMMENT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
   <ns2:table>
-    <entityName>BUDGET</entityName>
+    <entityName>ACCT_BUDGET</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="DATETYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
@@ -71,6 +88,9 @@
     <ns2:column name="STATE" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="COMMENTS" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
     <ns2:mapping>
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.Budget"></ns2:businessEntity>
@@ -87,12 +107,15 @@
     </ns2:mapping>
   </ns2:table>
   <ns2:table>
-    <entityName>BUDGETITEM</entityName>
+    <entityName>ACCT_BUDGETITEM</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="AMOUNT" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="REASON" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
     <ns2:mapping>
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.BudgetItem"></ns2:businessEntity>
@@ -103,7 +126,7 @@
     </ns2:mapping>
   </ns2:table>
   <ns2:table>
-    <entityName>INBALANCESHEET</entityName>
+    <entityName>ACCT_INBALANCESHEET</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="TRANSID" type="BIGINT" isNull="true"></ns2:column>
@@ -112,6 +135,9 @@
     <ns2:column name="_starttime" type="TIMESTAMP"></ns2:column>
     <ns2:column name="_endtime" type="TIMESTAMP"></ns2:column>
     <ns2:column name="_optuserid" type="BIGINT" length="38" default="0"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
     <ns2:mapping>
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.InBalanceSheet"></ns2:businessEntity>
@@ -125,7 +151,7 @@
     </ns2:mapping>
   </ns2:table>
   <ns2:table>
-    <entityName>PROFITSHEET</entityName>
+    <entityName>ACCT_PROFITSHEET</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="TRANSID" type="BIGINT" isNull="true"></ns2:column>
@@ -134,6 +160,9 @@
     <ns2:column name="_starttime" type="TIMESTAMP"></ns2:column>
     <ns2:column name="_endtime" type="TIMESTAMP"></ns2:column>
     <ns2:column name="_optuserid" type="BIGINT" length="38" default="0"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
     <ns2:mapping>
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.ProfitSheet"></ns2:businessEntity>
@@ -147,7 +176,7 @@
     </ns2:mapping>
   </ns2:table>
   <ns2:table>
-    <entityName>CASHFLOWSHEET</entityName>
+    <entityName>ACCT_CASHFLOWSHEET</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="TRANSID" type="BIGINT" isNull="true"></ns2:column>
@@ -156,6 +185,9 @@
     <ns2:column name="_starttime" type="TIMESTAMP"></ns2:column>
     <ns2:column name="_endtime" type="TIMESTAMP"></ns2:column>
     <ns2:column name="_optuserid" type="BIGINT" length="38" default="0"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
     <ns2:mapping>
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.CashFlowSheet"></ns2:businessEntity>
@@ -168,12 +200,14 @@
       <ns2:fieldMapping beFieldName="_optuserid" columnName="_optuserid"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
-  <ns2:query queryName="searchTransaction">
+  <ns2:joinTable name="ACCT_VOUCHER_DOUBLEENTRY_JT" srcTable="ACCT_VOUCHER" srcPKColumn="doubleEnties" tarTable="ACCT_DOUBLEENTRY" tarPKColumn="id"></ns2:joinTable>
+  
+  <ns2:query queryName="searchAccountVoucher">
     <ns2:searchResult name="outObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.accounting.be.Transaction"></type>
+      <type entityName="org.shaolin.vogerp.accounting.be.AccountVoucher"></type>
     </ns2:searchResult>
     <ns2:fromData name="inObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.accounting.be.Transaction"></type>
+      <type entityName="org.shaolin.vogerp.accounting.be.AccountVoucher"></type>
     </ns2:fromData>
     <ns2:searchResultMapping>
       <ns2:fieldMapping>
@@ -185,7 +219,7 @@
     </ns2:searchResultMapping>
     <ns2:searchConditionMapping name="Search">
       <ns2:searchConditionData name="scObject" category="BusinessEntity">
-        <type entityName="org.shaolin.vogerp.accounting.be.Transaction"></type>
+        <type entityName="org.shaolin.vogerp.accounting.be.AccountVoucher"></type>
       </ns2:searchConditionData>
     </ns2:searchConditionMapping>
   </ns2:query>

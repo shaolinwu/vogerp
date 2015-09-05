@@ -5,7 +5,7 @@
   <ns2:diagramPackage>org.shaolin.vogerp.accounting.diagram</ns2:diagramPackage>
   <ns2:daoPackage>org.shaolin.vogerp.accounting.dao</ns2:daoPackage>
   <ns2:table>
-    <entityName>INVOICE</entityName>
+    <entityName>ACCT_INVOICE</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="SERIALNUMBER" type="VARCHAR" isNull="true"></ns2:column>
@@ -23,6 +23,9 @@
     <ns2:column name="_starttime" type="TIMESTAMP"></ns2:column>
     <ns2:column name="_endtime" type="TIMESTAMP"></ns2:column>
     <ns2:column name="_optuserid" type="BIGINT" length="38" default="0"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
     <ns2:mapping>
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.Invoice"></ns2:businessEntity>
@@ -45,7 +48,7 @@
     </ns2:mapping>
   </ns2:table>
   <ns2:table>
-    <entityName>INVOICEITEM</entityName>
+    <entityName>ACCT_INVOICEITEM</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="INVOICEID" type="BIGINT" isNull="true"></ns2:column>
@@ -56,6 +59,9 @@
     <ns2:column name="ISADJUSTED" type="BIT" isNull="true"></ns2:column>
     <ns2:column name="STATEMENT" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
     <ns2:mapping>
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.InvoiceItem"></ns2:businessEntity>
@@ -71,7 +77,7 @@
     </ns2:mapping>
   </ns2:table>
   <ns2:table>
-    <entityName>INVOICEITEMWITHSHIPMENT</entityName>
+    <entityName>ACCT_INVOICEITEMWITHSHIPMENT</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="INVOICEID" type="BIGINT" isNull="true"></ns2:column>
@@ -80,6 +86,9 @@
     <ns2:column name="SHIPMENTITEMID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="AMOUNT" type="INTEGER" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
     <ns2:mapping>
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.InvoiceItemWithShipment"></ns2:businessEntity>
@@ -93,7 +102,7 @@
     </ns2:mapping>
   </ns2:table>
   <ns2:table>
-    <entityName>INVOICEITEMWITHORDER</entityName>
+    <entityName>ACCT_INVOICEITEMWITHORDER</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="INVOICEID" type="BIGINT" isNull="true"></ns2:column>
@@ -104,6 +113,9 @@
     <ns2:column name="ORDERAMOUNT" type="INTEGER" isNull="true"></ns2:column>
     <ns2:column name="ORDERUNITPRICET" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
     <ns2:mapping>
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.InvoiceItemWithOrder"></ns2:businessEntity>
@@ -119,7 +131,7 @@
     </ns2:mapping>
   </ns2:table>
   <ns2:table>
-    <entityName>INVOICEPAYMENT</entityName>
+    <entityName>ACCT_INVOICEPAYMENT</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="SERIALNUMBER" type="VARCHAR" isNull="true"></ns2:column>
@@ -127,6 +139,9 @@
     <ns2:column name="PAYAMOUNT" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="TYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
     <ns2:mapping>
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.InvoicePayment"></ns2:businessEntity>
