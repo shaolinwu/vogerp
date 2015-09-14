@@ -3,8 +3,6 @@ package org.shaolin.vogerp.commonmodel.internal;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
-import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.runtime.entity.EntityNotFoundException;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.javacc.exception.ParsingException;
@@ -33,53 +31,46 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
 	
 	private void init() {
 		// load dynamic ui widgets.
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-			UIDyanimcItemImpl condition = new UIDyanimcItemImpl();
-			condition.setEnabled(true);
-	        List<IUIDyanimcItem> all = ModularityModel.INSTANCE.searchDynamicItemEntities(condition, session, null, 0, -1);
-	        for (IUIDyanimcItem module: all) {
-	        	HTMLDynamicUIItem object = convert(module);
-	    		try {
-	    			UIFormObject uiCache = PageCacheManager.getUIFormObject(module.getUiEntityName());
-	    			uiCache.addDynamicItem(object);
-	    		} catch (EntityNotFoundException e) {
-	    			try {
-	    				UIPageObject uiCache = PageCacheManager.getUIPageObject(module.getUiEntityName());
-	    				uiCache.getUIForm().addDynamicItem(object);
-	    			} catch (Exception e1) {
-	    				Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
-	    			} 
-	    		} catch (ParsingException e) {
-	    			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
-	    		} catch (ClassNotFoundException e) {
-	    			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
-	    		}
-	        }
-	        
-	        // load dynamic ui links.
-	        UIDyanimcPageLinkImpl pageLink = new UIDyanimcPageLinkImpl();
-	        pageLink.setEnabled(true);
-	        List<IUIDyanimcPageLink> pageLinks = ModularityModel.INSTANCE.searchDynamicPageLink(pageLink, session, null, 0, -1);
-	        for (IUIDyanimcPageLink module: pageLinks) {
-	        	String linkInfo = module.getTarUIName() + ";" + module.getLinkComment();
-	        	try {
-		        	UIFormObject uiCache = PageCacheManager.getUIFormObject(module.getSrcUIName());
-		        	uiCache.addDynamicLink(module.getSrcUIPanel(), module.getSrcUIWidget(), linkInfo);
-	        	} catch (EntityNotFoundException e) {
-	        		try {
-	    				UIPageObject uiCache = PageCacheManager.getUIPageObject(module.getSrcUIName());
-			        	uiCache.getUIForm().addDynamicLink(module.getSrcUIPanel(), module.getSrcUIWidget(), linkInfo);
-	    			} catch (Exception e1) {
-	    				Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page links: " + e.getMessage(), e);
-	    			} 
-	    		} 
-	        }
-        } finally {
-            session.getTransaction().commit();
+		UIDyanimcItemImpl condition = new UIDyanimcItemImpl();
+		condition.setEnabled(true);
+        List<IUIDyanimcItem> all = ModularityModel.INSTANCE.searchDynamicItemEntities(condition, null, 0, -1);
+        for (IUIDyanimcItem module: all) {
+        	HTMLDynamicUIItem object = convert(module);
+    		try {
+    			UIFormObject uiCache = PageCacheManager.getUIFormObject(module.getUiEntityName());
+    			uiCache.addDynamicItem(object);
+    		} catch (EntityNotFoundException e) {
+    			try {
+    				UIPageObject uiCache = PageCacheManager.getUIPageObject(module.getUiEntityName());
+    				uiCache.getUIForm().addDynamicItem(object);
+    			} catch (Exception e1) {
+    				Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
+    			} 
+    		} catch (ParsingException e) {
+    			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
+    		} catch (ClassNotFoundException e) {
+    			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
+    		}
         }
         
+        // load dynamic ui links.
+        UIDyanimcPageLinkImpl pageLink = new UIDyanimcPageLinkImpl();
+        pageLink.setEnabled(true);
+        List<IUIDyanimcPageLink> pageLinks = ModularityModel.INSTANCE.searchDynamicPageLink(pageLink, null, 0, -1);
+        for (IUIDyanimcPageLink module: pageLinks) {
+        	String linkInfo = module.getTarUIName() + ";" + module.getLinkComment();
+        	try {
+	        	UIFormObject uiCache = PageCacheManager.getUIFormObject(module.getSrcUIName());
+	        	uiCache.addDynamicLink(module.getSrcUIPanel(), module.getSrcUIWidget(), linkInfo);
+        	} catch (EntityNotFoundException e) {
+        		try {
+    				UIPageObject uiCache = PageCacheManager.getUIPageObject(module.getSrcUIName());
+		        	uiCache.getUIForm().addDynamicLink(module.getSrcUIPanel(), module.getSrcUIWidget(), linkInfo);
+    			} catch (Exception e1) {
+    				Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page links: " + e.getMessage(), e);
+    			} 
+    		} 
+        }
 	}
 
 	private HTMLDynamicUIItem convert(IUIDyanimcItem module) {

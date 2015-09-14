@@ -1,20 +1,27 @@
 package org.shaolin.vogerp.order.dao;
 
+import java.util.List;
+
 import org.junit.Test;
+import org.shaolin.bmdp.persistence.HibernateUtil;
+import org.shaolin.bmdp.runtime.test.TestContext;
+import org.shaolin.vogerp.order.be.ISaleOrder;
+import org.shaolin.vogerp.order.be.SaleOrderImpl;
 
-import org.shaolin.vogerp.order.be.IOrderItem;
-import org.shaolin.vogerp.order.be.OrderItemImpl;
-import org.shaolin.vogerp.order.be.IOrderHandlingInfo;
-import org.shaolin.vogerp.order.be.OrderHandlingInfoImpl;
-import org.shaolin.vogerp.order.be.IDeliveryInfo;
-import org.shaolin.vogerp.order.be.DeliveryInfoImpl;
-
-public class OrderModelTest {
-
-    private OrderModel service = new OrderModel();
+public class OrderModelTest extends TestContext {
 
     @Test
     public void testsearchSaleOrder() {
+    	HibernateUtil.getSessionFactory();
+    	HibernateUtil.getConfiguration();
+    	OrderModel.INSTANCE.addResource("ORDER_SALEORDER.hbm.xml");
+    	OrderModel.INSTANCE.addResource("ORDER_ORDERITEM.hbm.xml");
+    	
+    	SaleOrderImpl scObject = new SaleOrderImpl();
+    	List<ISaleOrder> list = OrderModel.INSTANCE.searchSaleOrder(scObject, null, 0, -1);
+    	for (ISaleOrder order: list) {
+    		System.out.println("Order: " + order);
+    	}
     }
 
     @Test

@@ -16,11 +16,6 @@
             HashMap input = (HashMap)form.ui2Data();
 
             WarehouseImpl defaultUser = (WarehouseImpl)input.get("beObject");
-            String v = @page.getHidden("idUI").getValue();
-            if (v != null && v.length() > 0) {
-            	   Long objectId = Long.valueOf(v);
-            	   defaultUser.setId(objectId.longValue());
-            }
             if (defaultUser.getId() == 0) {
                 ProductModel.INSTANCE.create(defaultUser);
             } else {
@@ -233,15 +228,6 @@
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="idUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Number">
-        <ns2:expression>
-          <expressionString>$beObject.getId()</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
-    </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
       <ns2:UIComponent componentPath="parentIdUI" paramName="UIWidgetType"></ns2:UIComponent>

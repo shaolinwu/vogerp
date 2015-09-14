@@ -39,12 +39,12 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		try {
 	        ProductImpl criteria = new ProductImpl();
 			criteria.setParentId(0);
-			List[] types = CustProductModel.INSTANCE.getProductRootTypeGroup(session);
+			List[] types = CustProductModel.INSTANCE.getProductRootTypeGroup();
 			if (types[0].size() == 0) {
 				return;
 			}
 			
-			List all = ProductModel.INSTANCE.searchProductParent(criteria, session, null, 0, -1);
+			List all = ProductModel.INSTANCE.searchProductParent(criteria, null, 0, -1);
 			
 			java.util.Map dataModel = new java.util.HashMap();
 			// categoried by the types
@@ -63,7 +63,7 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 						continue;
 					}
 					
-					List priceItems = ProductModel.INSTANCE.searchProductPrice(mg, session, null, 0, -1);
+					List priceItems = ProductModel.INSTANCE.searchProductPrice(mg, null, 0, -1);
 					if (priceItems.size() == 0) {
 						continue;
 					}
@@ -93,12 +93,12 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		try {
 	        ProductImpl criteria = new ProductImpl();
 			criteria.setParentId(0);
-			List[] types = CustProductModel.INSTANCE.getProductRootTypeGroup(session);
+			List[] types = CustProductModel.INSTANCE.getProductRootTypeGroup();
 			if (types[0].size() == 0) {
 				return;
 			}
 			
-			List all = ProductModel.INSTANCE.searchProductParent(criteria, session, null, 0, -1);
+			List all = ProductModel.INSTANCE.searchProductParent(criteria, null, 0, -1);
 			
 			java.util.Map dataModel = new java.util.HashMap();
 			// categoried by the types
@@ -117,7 +117,7 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 						continue;
 					}
 					
-					List costItems = ProductModel.INSTANCE.searchProductCost(mg, session, null, 0, -1);
+					List costItems = ProductModel.INSTANCE.searchProductCost(mg, null, 0, -1);
 					if (costItems.size() == 0) {
 						continue;
 					}
@@ -165,16 +165,16 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 
 	@Override
 	public void startService() {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
+		Session session = HibernateUtil.getSession();
 		try {
 			reloadPriceTree(session);
 			reloadCostTree(session);
 		} catch(SQLGrammarException e) {
+			HibernateUtil.releaseSession(session, false);
 			LoggerFactory.getLogger(ProductServiceImpl.class).warn("Disable the product module due to " + e.getMessage());
 			return;
 		} finally {
-			session.getTransaction().commit();
+			HibernateUtil.releaseSession(session, true);
 		}
 		IAppServiceManager serviceManger = AppContext.get();
 		serviceManger.register(this);
@@ -192,13 +192,12 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 
 	@Override
 	public void reload() {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
+		Session session = HibernateUtil.getSession();
 		try {
 			reloadPriceTree(session);
 			reloadCostTree(session);
 		} finally {
-			session.getTransaction().commit();
+			HibernateUtil.releaseSession(session, true);
 		}
 	}
 

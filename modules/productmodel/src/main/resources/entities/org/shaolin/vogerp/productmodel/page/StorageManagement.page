@@ -68,9 +68,6 @@
                     import org.shaolin.vogerp.productmodel.dao.ProductModel;
                     {
                         Table productInfoTable = (Table)@page.getElement("storageItemTable");
-                        if (productInfoTable.getSelectedRow() == null) {
-                            return;
-                        }
                         StorageItemImpl defaultUser = new StorageItemImpl();
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
@@ -78,7 +75,7 @@
                         RefForm form = new RefForm("userForm", "org.shaolin.vogerp.productmodel.form.StorageItem", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Create Item", new TableCallBack("storageTable"));
+                        form.openInWindows("Create Item", new TableCallBack("storageItemTable"));
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -106,7 +103,7 @@
                         RefForm form = new RefForm("userForm", "org.shaolin.vogerp.productmodel.form.StorageItem", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Open Item", new TableCallBack("storageTable"));
+                        form.openInWindows("Open Item", new TableCallBack("storageItemTable"));
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>

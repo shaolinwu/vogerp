@@ -13,11 +13,6 @@ function org_shaolin_vogerp_productmodel_form_StorageItem(json)
         ui: elementList[prefix + "productIdUILabel"]
     });
 
-    var productIdUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "productIdUI"]
-    });
-
     var warehouseIdUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "warehouseIdUILabel"]
@@ -78,6 +73,8 @@ function org_shaolin_vogerp_productmodel_form_StorageItem(json)
         ui: elementList[prefix + "cancelbtn"]
     });
 
+    var productIdUI = new org_shaolin_vogerp_productmodel_form_ProductSelector({"prefix":prefix + "productIdUI."});
+
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
@@ -95,14 +92,12 @@ function org_shaolin_vogerp_productmodel_form_StorageItem(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,productIdUILabel,productIdUI,warehouseIdUILabel,warehouseIdUI,coordinateUILabel,coordinateUI,itemStatusUILabel,itemStatusUI,numberUILabel,numberUI,serialNumberUILabel,serialNumberUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,productIdUILabel,warehouseIdUILabel,warehouseIdUI,coordinateUILabel,coordinateUI,itemStatusUILabel,itemStatusUI,numberUILabel,numberUI,serialNumberUILabel,serialNumberUI,okbtn,cancelbtn,productIdUI,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
 
     Form.productIdUILabel=productIdUILabel;
-
-    Form.productIdUI=productIdUI;
 
     Form.warehouseIdUILabel=warehouseIdUILabel;
 
@@ -127,6 +122,8 @@ function org_shaolin_vogerp_productmodel_form_StorageItem(json)
     Form.okbtn=okbtn;
 
     Form.cancelbtn=cancelbtn;
+
+    Form.productIdUI=productIdUI;
 
     Form.fieldPanel=fieldPanel;
 

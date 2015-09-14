@@ -37,292 +37,102 @@ public class InvoiceModel extends BEEntityDaoObject {
 
     public List<org.shaolin.vogerp.accounting.be.IInvoice> searchInvoice(org.shaolin.vogerp.accounting.be.InvoiceImpl scObject,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoiceImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.InvoiceImpl.class, "inObject");
             if (orders == null) {
             } else {
                 this._addOrders(inObjectCriteria, orders);
             }
 
 
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.accounting.be.IInvoice> searchInvoice(org.shaolin.vogerp.accounting.be.InvoiceImpl scObject,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoiceImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
-            }
-
-
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
     }
 
     public long searchInvoiceCount(org.shaolin.vogerp.accounting.be.InvoiceImpl scObject) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoiceImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.InvoiceImpl.class, "inObject");
 
 
-            return this._count(inObjectCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchInvoiceCount(org.shaolin.vogerp.accounting.be.InvoiceImpl scObject, Session session) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoiceImpl.class, "inObject");
-
-
-            return this._count(inObjectCriteria);
-        } finally {
-        }
+        return this._count(inObjectCriteria);
     }
 
     public List<org.shaolin.vogerp.accounting.be.IInvoiceItem> searchInvoiceItem(org.shaolin.vogerp.accounting.be.InvoiceItemImpl scObject,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoiceItemImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.InvoiceItemImpl.class, "inObject");
             if (orders == null) {
             } else {
                 this._addOrders(inObjectCriteria, orders);
             }
 
 
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.accounting.be.IInvoiceItem> searchInvoiceItem(org.shaolin.vogerp.accounting.be.InvoiceItemImpl scObject,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoiceItemImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
-            }
-
-
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
     }
 
     public long searchInvoiceItemCount(org.shaolin.vogerp.accounting.be.InvoiceItemImpl scObject) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoiceItemImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.InvoiceItemImpl.class, "inObject");
 
 
-            return this._count(inObjectCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchInvoiceItemCount(org.shaolin.vogerp.accounting.be.InvoiceItemImpl scObject, Session session) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoiceItemImpl.class, "inObject");
-
-
-            return this._count(inObjectCriteria);
-        } finally {
-        }
+        return this._count(inObjectCriteria);
     }
 
     public List<org.shaolin.vogerp.accounting.be.IInvoiceItemWithShipment> searchInvoiceItemWithShipment(org.shaolin.vogerp.accounting.be.InvoiceItemWithShipmentImpl scObject,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoiceItemWithShipmentImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.InvoiceItemWithShipmentImpl.class, "inObject");
             if (orders == null) {
             } else {
                 this._addOrders(inObjectCriteria, orders);
             }
 
 
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.accounting.be.IInvoiceItemWithShipment> searchInvoiceItemWithShipment(org.shaolin.vogerp.accounting.be.InvoiceItemWithShipmentImpl scObject,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoiceItemWithShipmentImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
-            }
-
-
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
     }
 
     public long searchInvoiceItemWithShipmentCount(org.shaolin.vogerp.accounting.be.InvoiceItemWithShipmentImpl scObject) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoiceItemWithShipmentImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.InvoiceItemWithShipmentImpl.class, "inObject");
 
 
-            return this._count(inObjectCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchInvoiceItemWithShipmentCount(org.shaolin.vogerp.accounting.be.InvoiceItemWithShipmentImpl scObject, Session session) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoiceItemWithShipmentImpl.class, "inObject");
-
-
-            return this._count(inObjectCriteria);
-        } finally {
-        }
+        return this._count(inObjectCriteria);
     }
 
     public List<org.shaolin.vogerp.accounting.be.IInvoiceItemWithOrder> searchInvoiceItemWithOrder(org.shaolin.vogerp.accounting.be.InvoiceItemWithOrderImpl scObject,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoiceItemWithOrderImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.InvoiceItemWithOrderImpl.class, "inObject");
             if (orders == null) {
             } else {
                 this._addOrders(inObjectCriteria, orders);
             }
 
 
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.accounting.be.IInvoiceItemWithOrder> searchInvoiceItemWithOrder(org.shaolin.vogerp.accounting.be.InvoiceItemWithOrderImpl scObject,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoiceItemWithOrderImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
-            }
-
-
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
     }
 
     public long searchInvoiceItemWithOrderCount(org.shaolin.vogerp.accounting.be.InvoiceItemWithOrderImpl scObject) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoiceItemWithOrderImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.InvoiceItemWithOrderImpl.class, "inObject");
 
 
-            return this._count(inObjectCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchInvoiceItemWithOrderCount(org.shaolin.vogerp.accounting.be.InvoiceItemWithOrderImpl scObject, Session session) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoiceItemWithOrderImpl.class, "inObject");
-
-
-            return this._count(inObjectCriteria);
-        } finally {
-        }
+        return this._count(inObjectCriteria);
     }
 
     public List<org.shaolin.vogerp.accounting.be.IInvoicePayment> searchInvoicePayment(org.shaolin.vogerp.accounting.be.InvoicePaymentImpl scObject,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoicePaymentImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.InvoicePaymentImpl.class, "inObject");
             if (orders == null) {
             } else {
                 this._addOrders(inObjectCriteria, orders);
             }
 
 
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.accounting.be.IInvoicePayment> searchInvoicePayment(org.shaolin.vogerp.accounting.be.InvoicePaymentImpl scObject,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoicePaymentImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
-            }
-
-
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
     }
 
     public long searchInvoicePaymentCount(org.shaolin.vogerp.accounting.be.InvoicePaymentImpl scObject) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoicePaymentImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.InvoicePaymentImpl.class, "inObject");
 
 
-            return this._count(inObjectCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchInvoicePaymentCount(org.shaolin.vogerp.accounting.be.InvoicePaymentImpl scObject, Session session) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.accounting.be.InvoicePaymentImpl.class, "inObject");
-
-
-            return this._count(inObjectCriteria);
-        } finally {
-        }
+        return this._count(inObjectCriteria);
     }
 
 }

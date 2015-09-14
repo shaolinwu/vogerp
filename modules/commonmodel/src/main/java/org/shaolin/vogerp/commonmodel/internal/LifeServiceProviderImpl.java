@@ -2,6 +2,7 @@ package org.shaolin.vogerp.commonmodel.internal;
 
 import java.util.List;
 
+import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.ce.AbstractConstant;
 import org.shaolin.bmdp.runtime.ce.ConstantServiceImpl;
@@ -9,7 +10,6 @@ import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
 import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.uimaster.page.UIPermissionManager;
-import org.shaolin.vogerp.commonmodel.be.CEEntityInfoImpl;
 import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
 import org.shaolin.vogerp.commonmodel.be.ICEEntityInfo;
 import org.shaolin.vogerp.commonmodel.be.ICEExtension;
@@ -38,27 +38,31 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 			}
 		}
 		
-		UserServiceImpl userService = new UserServiceImpl();
-		userService.init();
-		serviceManger.register(userService);
-		
-		ModuleServiceImpl moduleService = new ModuleServiceImpl();
-		serviceManger.register(moduleService);
-		
-		PermissionServiceImpl permissionService = new PermissionServiceImpl(moduleService);
-		serviceManger.register(permissionService);
-		
-		UIPermissionManager uiPermiManager = new UIPermissionManager(permissionService);
-		serviceManger.register(uiPermiManager);
-		
-		DynamicUIServiceImpl dynamicUIService = new DynamicUIServiceImpl();
-		serviceManger.register(dynamicUIService);
-		
-		OrganizationServiceImpl orgService = new OrganizationServiceImpl();
-		serviceManger.register(orgService);
-		
-		ResourceManagerImpl resourceManager = new ResourceManagerImpl(orgService);
-		serviceManger.register(resourceManager);
+		try {
+			UserServiceImpl userService = new UserServiceImpl();
+			userService.init();
+			serviceManger.register(userService);
+			
+			ModuleServiceImpl moduleService = new ModuleServiceImpl();
+			serviceManger.register(moduleService);
+			
+			PermissionServiceImpl permissionService = new PermissionServiceImpl(moduleService);
+			serviceManger.register(permissionService);
+			
+			UIPermissionManager uiPermiManager = new UIPermissionManager(permissionService);
+			serviceManger.register(uiPermiManager);
+			
+			DynamicUIServiceImpl dynamicUIService = new DynamicUIServiceImpl();
+			serviceManger.register(dynamicUIService);
+			
+			OrganizationServiceImpl orgService = new OrganizationServiceImpl();
+			serviceManger.register(orgService);
+			
+			ResourceManagerImpl resourceManager = new ResourceManagerImpl(orgService);
+			serviceManger.register(resourceManager);
+		} finally {
+			HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
+		}
 	}
 	
 	@Override

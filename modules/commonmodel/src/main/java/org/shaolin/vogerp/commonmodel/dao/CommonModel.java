@@ -57,10 +57,7 @@ public class CommonModel extends BEEntityDaoObject {
 
     public List<org.shaolin.vogerp.commonmodel.be.IPersonalAccount> authenticateUserInfo(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl.class, "inFlow");
             if (orders == null) {
             } else {
                 this._addOrders(inFlowCriteria, orders);
@@ -70,67 +67,23 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.userName", scFlow.getUserName()));
             }
 
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.commonmodel.be.IPersonalAccount> authenticateUserInfo(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl.class, "inFlow");
-            if (orders == null) {
-            } else {
-                this._addOrders(inFlowCriteria, orders);
-            }
-
-            if (scFlow.getUserName() != null && scFlow.getUserName().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.userName", scFlow.getUserName()));
-            }
-
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inFlowCriteria);
+        return result;
     }
 
     public long authenticateUserInfoCount(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl.class, "inFlow");
 
             if (scFlow.getUserName() != null && scFlow.getUserName().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.userName", scFlow.getUserName()));
             }
 
-            return this._count(inFlowCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long authenticateUserInfoCount(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow, Session session) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl.class, "inFlow");
-
-            if (scFlow.getUserName() != null && scFlow.getUserName().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.userName", scFlow.getUserName()));
-            }
-
-            return this._count(inFlowCriteria);
-        } finally {
-        }
+        return this._count(inFlowCriteria);
     }
 
     public List<org.shaolin.vogerp.commonmodel.be.IPersonalAccount> searchUserAccount(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl.class, "inFlow");
             if (orders == null) {
             } else {
                 this._addOrders(inFlowCriteria, orders);
@@ -143,40 +96,12 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.info", scFlow.getInfo().getId()));
             }
 
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.commonmodel.be.IPersonalAccount> searchUserAccount(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl.class, "inFlow");
-            if (orders == null) {
-            } else {
-                this._addOrders(inFlowCriteria, orders);
-            }
-
-            if (scFlow.getUserName() != null && scFlow.getUserName().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.userName", scFlow.getUserName()));
-            }
-            if (scFlow.getInfo() != null && scFlow.getInfo().getId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.info", scFlow.getInfo().getId()));
-            }
-
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inFlowCriteria);
+        return result;
     }
 
     public long searchUserAccountCount(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl.class, "inFlow");
 
             if (scFlow.getUserName() != null && scFlow.getUserName().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.userName", scFlow.getUserName()));
@@ -185,34 +110,12 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.info", scFlow.getInfo().getId()));
             }
 
-            return this._count(inFlowCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchUserAccountCount(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow, Session session) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl.class, "inFlow");
-
-            if (scFlow.getUserName() != null && scFlow.getUserName().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.userName", scFlow.getUserName()));
-            }
-            if (scFlow.getInfo() != null && scFlow.getInfo().getId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.info", scFlow.getInfo().getId()));
-            }
-
-            return this._count(inFlowCriteria);
-        } finally {
-        }
+        return this._count(inFlowCriteria);
     }
 
     public List<org.shaolin.vogerp.commonmodel.be.IPersonalInfo> searchPersonInfo(org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl scFlow,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl.class, "inFlow");
             if (orders == null) {
                 // add default orders.
                 inFlowCriteria.addOrder(Order.desc("inFlow.lastName"));
@@ -239,54 +142,12 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.genderInt", scFlow.getGender().getIntValue()));
             }
 
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.commonmodel.be.IPersonalInfo> searchPersonInfo(org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl scFlow,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl.class, "inFlow");
-            if (orders == null) {
-                // add default orders.
-                inFlowCriteria.addOrder(Order.desc("inFlow.lastName"));
-            } else {
-                this._addOrders(inFlowCriteria, orders);
-            }
-
-            if (scFlow.getId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
-            }
-            if (scFlow.getFirstName() != null && scFlow.getFirstName().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.firstName", scFlow.getFirstName()));
-            }
-            if (scFlow.getLastName() != null && scFlow.getLastName().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.lastName", scFlow.getLastName()));
-            }
-            if (scFlow.getBirthdayStart() != null) {
-                inFlowCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inFlow.birthday", scFlow.getBirthdayStart()));
-            }
-            if (scFlow.getBirthdayEnd() != null) {
-                inFlowCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inFlow.birthday", scFlow.getBirthdayEnd()));
-            }
-            if (scFlow.getGender() != null && scFlow.getGender() != org.shaolin.vogerp.commonmodel.ce.Gender.NOT_SPECIFIED) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.genderInt", scFlow.getGender().getIntValue()));
-            }
-
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inFlowCriteria);
+        return result;
     }
 
     public long searchPersonInfoCount(org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl scFlow) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl.class, "inFlow");
 
             if (scFlow.getId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
@@ -307,104 +168,32 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.genderInt", scFlow.getGender().getIntValue()));
             }
 
-            return this._count(inFlowCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchPersonInfoCount(org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl scFlow, Session session) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl.class, "inFlow");
-
-            if (scFlow.getId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
-            }
-            if (scFlow.getFirstName() != null && scFlow.getFirstName().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.firstName", scFlow.getFirstName()));
-            }
-            if (scFlow.getLastName() != null && scFlow.getLastName().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.lastName", scFlow.getLastName()));
-            }
-            if (scFlow.getBirthdayStart() != null) {
-                inFlowCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inFlow.birthday", scFlow.getBirthdayStart()));
-            }
-            if (scFlow.getBirthdayEnd() != null) {
-                inFlowCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inFlow.birthday", scFlow.getBirthdayEnd()));
-            }
-            if (scFlow.getGender() != null && scFlow.getGender() != org.shaolin.vogerp.commonmodel.ce.Gender.NOT_SPECIFIED) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.genderInt", scFlow.getGender().getIntValue()));
-            }
-
-            return this._count(inFlowCriteria);
-        } finally {
-        }
+        return this._count(inFlowCriteria);
     }
 
     public List<org.shaolin.vogerp.commonmodel.be.IPartyRelationship> searchPartyRelationshipInfo(org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl scFlow,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl.class, "inFlow");
             if (orders == null) {
             } else {
                 this._addOrders(inFlowCriteria, orders);
             }
 
 
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.commonmodel.be.IPartyRelationship> searchPartyRelationshipInfo(org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl scFlow,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl.class, "inFlow");
-            if (orders == null) {
-            } else {
-                this._addOrders(inFlowCriteria, orders);
-            }
-
-
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inFlowCriteria);
+        return result;
     }
 
     public long searchPartyRelationshipInfoCount(org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl scFlow) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl.class, "inFlow");
 
 
-            return this._count(inFlowCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchPartyRelationshipInfoCount(org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl scFlow, Session session) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl.class, "inFlow");
-
-
-            return this._count(inFlowCriteria);
-        } finally {
-        }
+        return this._count(inFlowCriteria);
     }
 
     public List<org.shaolin.vogerp.commonmodel.be.IOrganization> searchRootOrganizationInfo(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
             if (orders == null) {
             } else {
                 this._addOrders(inFlowCriteria, orders);
@@ -417,40 +206,12 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.orgCode", scFlow.getOrgCode()));
             }
 
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.commonmodel.be.IOrganization> searchRootOrganizationInfo(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
-            if (orders == null) {
-            } else {
-                this._addOrders(inFlowCriteria, orders);
-            }
-
-            if (scFlow.getParentId() == 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getParentId()));
-            }
-            if (scFlow.getOrgCode() != null && scFlow.getOrgCode().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.orgCode", scFlow.getOrgCode()));
-            }
-
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inFlowCriteria);
+        return result;
     }
 
     public long searchRootOrganizationInfoCount(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
 
             if (scFlow.getParentId() == 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getParentId()));
@@ -459,34 +220,12 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.orgCode", scFlow.getOrgCode()));
             }
 
-            return this._count(inFlowCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchRootOrganizationInfoCount(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow, Session session) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
-
-            if (scFlow.getParentId() == 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getParentId()));
-            }
-            if (scFlow.getOrgCode() != null && scFlow.getOrgCode().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.orgCode", scFlow.getOrgCode()));
-            }
-
-            return this._count(inFlowCriteria);
-        } finally {
-        }
+        return this._count(inFlowCriteria);
     }
 
     public List<org.shaolin.vogerp.commonmodel.be.IOrganization> searchSubOrganizationInfo(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
             if (orders == null) {
             } else {
                 this._addOrders(inFlowCriteria, orders);
@@ -502,43 +241,12 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.orgCode", scFlow.getOrgCode()));
             }
 
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.commonmodel.be.IOrganization> searchSubOrganizationInfo(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
-            if (orders == null) {
-            } else {
-                this._addOrders(inFlowCriteria, orders);
-            }
-
-            if (scFlow.getId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
-            }
-            if (scFlow.getParentId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getParentId()));
-            }
-            if (scFlow.getOrgCode() != null && scFlow.getOrgCode().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.orgCode", scFlow.getOrgCode()));
-            }
-
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inFlowCriteria);
+        return result;
     }
 
     public long searchSubOrganizationInfoCount(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
 
             if (scFlow.getId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
@@ -550,37 +258,12 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.orgCode", scFlow.getOrgCode()));
             }
 
-            return this._count(inFlowCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchSubOrganizationInfoCount(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow, Session session) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
-
-            if (scFlow.getId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
-            }
-            if (scFlow.getParentId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getParentId()));
-            }
-            if (scFlow.getOrgCode() != null && scFlow.getOrgCode().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.orgCode", scFlow.getOrgCode()));
-            }
-
-            return this._count(inFlowCriteria);
-        } finally {
-        }
+        return this._count(inFlowCriteria);
     }
 
     public List<org.shaolin.vogerp.commonmodel.be.IOrganization> searchOrganization(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
             if (orders == null) {
             } else {
                 this._addOrders(inFlowCriteria, orders);
@@ -590,67 +273,23 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgCode", scFlow.getOrgCode()));
             }
 
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.commonmodel.be.IOrganization> searchOrganization(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
-            if (orders == null) {
-            } else {
-                this._addOrders(inFlowCriteria, orders);
-            }
-
-            if (scFlow.getOrgCode() != null && scFlow.getOrgCode().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgCode", scFlow.getOrgCode()));
-            }
-
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inFlowCriteria);
+        return result;
     }
 
     public long searchOrganizationCount(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
 
             if (scFlow.getOrgCode() != null && scFlow.getOrgCode().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgCode", scFlow.getOrgCode()));
             }
 
-            return this._count(inFlowCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchOrganizationCount(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow, Session session) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
-
-            if (scFlow.getOrgCode() != null && scFlow.getOrgCode().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgCode", scFlow.getOrgCode()));
-            }
-
-            return this._count(inFlowCriteria);
-        } finally {
-        }
+        return this._count(inFlowCriteria);
     }
 
     public List<org.shaolin.vogerp.commonmodel.be.ILegalOrganizationInfo> searchOrgaLegalInfo(org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl scFlow,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl.class, "inFlow");
             if (orders == null) {
             } else {
                 this._addOrders(inFlowCriteria, orders);
@@ -660,67 +299,23 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));
             }
 
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.commonmodel.be.ILegalOrganizationInfo> searchOrgaLegalInfo(org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl scFlow,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl.class, "inFlow");
-            if (orders == null) {
-            } else {
-                this._addOrders(inFlowCriteria, orders);
-            }
-
-            if (scFlow.getOrgId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));
-            }
-
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inFlowCriteria);
+        return result;
     }
 
     public long searchOrgaLegalInfoCount(org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl scFlow) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl.class, "inFlow");
 
             if (scFlow.getOrgId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));
             }
 
-            return this._count(inFlowCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchOrgaLegalInfoCount(org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl scFlow, Session session) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl.class, "inFlow");
-
-            if (scFlow.getOrgId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));
-            }
-
-            return this._count(inFlowCriteria);
-        } finally {
-        }
+        return this._count(inFlowCriteria);
     }
 
     public List<org.shaolin.vogerp.commonmodel.be.IModelPermission> searchModelPermission(org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl scFlow,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl.class, "inFlow");
             if (orders == null) {
             } else {
                 this._addOrders(inFlowCriteria, orders);
@@ -733,40 +328,12 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
             }
 
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.commonmodel.be.IModelPermission> searchModelPermission(org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl scFlow,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl.class, "inFlow");
-            if (orders == null) {
-            } else {
-                this._addOrders(inFlowCriteria, orders);
-            }
-
-            if (scFlow.getModuleId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.moduleId", scFlow.getModuleId()));
-            }
-            if (scFlow.getPartyType() != null && scFlow.getPartyType().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
-            }
-
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inFlowCriteria);
+        return result;
     }
 
     public long searchModelPermissionCount(org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl scFlow) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl.class, "inFlow");
 
             if (scFlow.getModuleId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.moduleId", scFlow.getModuleId()));
@@ -775,34 +342,12 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
             }
 
-            return this._count(inFlowCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchModelPermissionCount(org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl scFlow, Session session) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl.class, "inFlow");
-
-            if (scFlow.getModuleId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.moduleId", scFlow.getModuleId()));
-            }
-            if (scFlow.getPartyType() != null && scFlow.getPartyType().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
-            }
-
-            return this._count(inFlowCriteria);
-        } finally {
-        }
+        return this._count(inFlowCriteria);
     }
 
     public List<org.shaolin.vogerp.commonmodel.be.IUIWidgetPermission> searchUIWidgetPermission(org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl scFlow,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl.class, "inFlow");
             if (orders == null) {
             } else {
                 this._addOrders(inFlowCriteria, orders);
@@ -812,67 +357,23 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
             }
 
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.commonmodel.be.IUIWidgetPermission> searchUIWidgetPermission(org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl scFlow,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl.class, "inFlow");
-            if (orders == null) {
-            } else {
-                this._addOrders(inFlowCriteria, orders);
-            }
-
-            if (scFlow.getPartyType() != null && scFlow.getPartyType().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
-            }
-
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inFlowCriteria);
+        return result;
     }
 
     public long searchUIWidgetPermissionCount(org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl scFlow) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl.class, "inFlow");
 
             if (scFlow.getPartyType() != null && scFlow.getPartyType().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
             }
 
-            return this._count(inFlowCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchUIWidgetPermissionCount(org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl scFlow, Session session) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl.class, "inFlow");
-
-            if (scFlow.getPartyType() != null && scFlow.getPartyType().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
-            }
-
-            return this._count(inFlowCriteria);
-        } finally {
-        }
+        return this._count(inFlowCriteria);
     }
 
     public List<org.shaolin.vogerp.commonmodel.be.IBEPermission> searchBEPermission(org.shaolin.vogerp.commonmodel.be.BEPermissionImpl scFlow,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.BEPermissionImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.BEPermissionImpl.class, "inFlow");
             if (orders == null) {
             } else {
                 this._addOrders(inFlowCriteria, orders);
@@ -882,67 +383,23 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
             }
 
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.commonmodel.be.IBEPermission> searchBEPermission(org.shaolin.vogerp.commonmodel.be.BEPermissionImpl scFlow,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.BEPermissionImpl.class, "inFlow");
-            if (orders == null) {
-            } else {
-                this._addOrders(inFlowCriteria, orders);
-            }
-
-            if (scFlow.getPartyType() != null && scFlow.getPartyType().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
-            }
-
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inFlowCriteria);
+        return result;
     }
 
     public long searchBEPermissionCount(org.shaolin.vogerp.commonmodel.be.BEPermissionImpl scFlow) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.BEPermissionImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.BEPermissionImpl.class, "inFlow");
 
             if (scFlow.getPartyType() != null && scFlow.getPartyType().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
             }
 
-            return this._count(inFlowCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchBEPermissionCount(org.shaolin.vogerp.commonmodel.be.BEPermissionImpl scFlow, Session session) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.BEPermissionImpl.class, "inFlow");
-
-            if (scFlow.getPartyType() != null && scFlow.getPartyType().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
-            }
-
-            return this._count(inFlowCriteria);
-        } finally {
-        }
+        return this._count(inFlowCriteria);
     }
 
     public List<org.shaolin.vogerp.commonmodel.be.IOrganizationContract> searchContract(org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl scFlow,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl.class, "inFlow");
             if (orders == null) {
             } else {
                 this._addOrders(inFlowCriteria, orders);
@@ -952,59 +409,18 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.typeInt", scFlow.getType().getIntValue()));
             }
 
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.commonmodel.be.IOrganizationContract> searchContract(org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl scFlow,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl.class, "inFlow");
-            if (orders == null) {
-            } else {
-                this._addOrders(inFlowCriteria, orders);
-            }
-
-            if (scFlow.getType() != null && scFlow.getType() != org.shaolin.vogerp.commonmodel.ce.ContractType.NOT_SPECIFIED) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.typeInt", scFlow.getType().getIntValue()));
-            }
-
-            List result = this._list(offset, count, inFlowCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inFlowCriteria);
+        return result;
     }
 
     public long searchContractCount(org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl scFlow) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl.class, "inFlow");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl.class, "inFlow");
 
             if (scFlow.getType() != null && scFlow.getType() != org.shaolin.vogerp.commonmodel.ce.ContractType.NOT_SPECIFIED) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.typeInt", scFlow.getType().getIntValue()));
             }
 
-            return this._count(inFlowCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchContractCount(org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl scFlow, Session session) {
-        try {
-            Criteria inFlowCriteria = this._createCriteria(session, org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl.class, "inFlow");
-
-            if (scFlow.getType() != null && scFlow.getType() != org.shaolin.vogerp.commonmodel.ce.ContractType.NOT_SPECIFIED) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.typeInt", scFlow.getType().getIntValue()));
-            }
-
-            return this._count(inFlowCriteria);
-        } finally {
-        }
+        return this._count(inFlowCriteria);
     }
 
 }

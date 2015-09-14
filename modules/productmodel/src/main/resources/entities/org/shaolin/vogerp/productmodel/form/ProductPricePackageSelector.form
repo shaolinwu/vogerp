@@ -20,8 +20,8 @@
         	}
         	
         	RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            form.closeIfinWindows();
-            @page.removeForm(@page.getEntityUiid()); 
+         form.closeIfinWindows();
+         @page.removeForm(@page.getEntityUiid()); 
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>

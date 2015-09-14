@@ -16,11 +16,6 @@
             HashMap input = (HashMap)form.ui2Data();
 
             StorageItemImpl defaultUser = (StorageItemImpl)input.get("beObject");
-            String v = @page.getHidden("idUI").getValue();
-            if (v != null && v.length() > 0) {
-            	   Long objectId = Long.valueOf(v);
-            	   defaultUser.setId(objectId.longValue());
-            }
             if (defaultUser.getId() == 0) {
                 ProductModel.INSTANCE.create(defaultUser);
             } else {
@@ -76,8 +71,8 @@
           <ns2:key>org.shaolin.vogerp.productmodel.be.StorageItem.productId</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="productIdUI">
-        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="productIdUI">
+         <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductSelector" />
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="warehouseIdUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -245,44 +240,24 @@
     <ns2:DataEntity scope="InOut" name="displayItems1" category="JavaClass">
       <type entityName="java.util.List"></type>
     </ns2:DataEntity>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="idUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Number">
-        <ns2:expression>
-          <expressionString>$beObject.getId()</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
-    </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductSelector"></ns2:mappingRule>
       <ns2:UIComponent componentPath="productIdUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Value">
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="productId">
         <ns2:expression>
           <expressionString>$beObject.getProductId()</expressionString>
         </ns2:expression>
         <ns2:uiToDataExpression	name="">
            <ns2:expression>
-	          <expressionString>$beObject.setProductId(Long.valueOf(@Value).longValue())</expressionString>
+	          <expressionString>$beObject.setProductId(Long.valueOf(@productId).longValue())</expressionString>
 	       </ns2:expression>
         </ns2:uiToDataExpression>
       </ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values0" paramName="OptionValues"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems0" paramName="OptionDisplayValues"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
       <ns2:UIComponent componentPath="warehouseIdUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Value">
-        <ns2:expression>
-          <expressionString>$beObject.getWarehouseId()</expressionString>
-        </ns2:expression>
-        <ns2:uiToDataExpression	name="">
-           <ns2:expression>
-	          <expressionString>$beObject.setWarehouseId(Long.valueOf(@Value).longValue())</expressionString>
-	       </ns2:expression>
-        </ns2:uiToDataExpression>
-      </ns2:DataComponent>
+       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.warehouseId" paramName="LongValue"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values1" paramName="OptionValues"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems1" paramName="OptionDisplayValues"></ns2:DataComponent>
     </ns2:ComponentMapping>
@@ -324,7 +299,7 @@
 	  	  $values0 = pValues[0];
 	  	  $displayItems0 = pValues[1];
 	      
-	      pValues = CustProductModel.INSTANCE.getStorageItemWarehouseTypeGroup();
+	      pValues = CustProductModel.INSTANCE.getAllWarehouses();
 	      $values1 = pValues[0];
 	  	  $displayItems1 = pValues[1];
 	      

@@ -3,8 +3,6 @@ package org.shaolin.vogerp.commonmodel.internal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.cache.CacheManager;
 import org.shaolin.bmdp.runtime.cache.ICache;
@@ -44,32 +42,26 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 	synchronized void prepareUserPermissions(IConstantEntity partyType) {
 		String strValue = CEUtil.getValue(partyType);
 		if (!rolePermissions.containsKey(partyType)) {
-			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-	        session.beginTransaction();
-	        try {
-	        	List<IModelPermission> modelPermissions = new ArrayList<IModelPermission>();
-	        	CEHierarchyImpl condition = new CEHierarchyImpl();
-	        	condition.setCeName(partyType.getEntityName());
-				List<ICEHierarchy> hierarchy = ModularityModel.INSTANCE.searchCEHierarchy(condition, session, null, 0, 1);
-	        	if (hierarchy.size() > 0) {
-	        		// user's module role points to the parent item.
-		        	ModelPermissionImpl model = new ModelPermissionImpl();
-		        	model.setPartyType(hierarchy.get(0).getParentCeName() + "," + hierarchy.get(0).getParentCeItem());
-		        	modelPermissions = CommonModel.INSTANCE.searchModelPermission(model, session, null, 0, -1);
-	        	}
-	        	
-				BEPermissionImpl bePermission = new BEPermissionImpl();
-				bePermission.setPartyType(strValue);
-				List<IBEPermission> bePermissions = CommonModel.INSTANCE.searchBEPermission(bePermission, session, null, 0, -1);
-				
-				UIWidgetPermissionImpl uiwidget = new UIWidgetPermissionImpl();
-				uiwidget.setPartyType(strValue);
-				List<IUIWidgetPermission> uiwidgetPermissions = CommonModel.INSTANCE.searchUIWidgetPermission(uiwidget, session, null, 0, -1);
-				
-				rolePermissions.put(partyType, new SingleRolePermission(strValue, bePermissions, modelPermissions, uiwidgetPermissions));
-	        } finally {
-	            session.getTransaction().commit();
-	        }
+        	List<IModelPermission> modelPermissions = new ArrayList<IModelPermission>();
+        	CEHierarchyImpl condition = new CEHierarchyImpl();
+        	condition.setCeName(partyType.getEntityName());
+			List<ICEHierarchy> hierarchy = ModularityModel.INSTANCE.searchCEHierarchy(condition, null, 0, 1);
+        	if (hierarchy.size() > 0) {
+        		// user's module role points to the parent item.
+	        	ModelPermissionImpl model = new ModelPermissionImpl();
+	        	model.setPartyType(hierarchy.get(0).getParentCeName() + "," + hierarchy.get(0).getParentCeItem());
+	        	modelPermissions = CommonModel.INSTANCE.searchModelPermission(model, null, 0, -1);
+        	}
+        	
+			BEPermissionImpl bePermission = new BEPermissionImpl();
+			bePermission.setPartyType(strValue);
+			List<IBEPermission> bePermissions = CommonModel.INSTANCE.searchBEPermission(bePermission, null, 0, -1);
+			
+			UIWidgetPermissionImpl uiwidget = new UIWidgetPermissionImpl();
+			uiwidget.setPartyType(strValue);
+			List<IUIWidgetPermission> uiwidgetPermissions = CommonModel.INSTANCE.searchUIWidgetPermission(uiwidget, null, 0, -1);
+			
+			rolePermissions.put(partyType, new SingleRolePermission(strValue, bePermissions, modelPermissions, uiwidgetPermissions));
 		}
 	}
 	

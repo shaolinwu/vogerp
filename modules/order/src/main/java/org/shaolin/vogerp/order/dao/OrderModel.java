@@ -57,350 +57,122 @@ public class OrderModel extends BEEntityDaoObject {
 
     public List<org.shaolin.vogerp.order.be.ISaleOrder> searchSaleOrder(org.shaolin.vogerp.order.be.SaleOrderImpl scObject,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.SaleOrderImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.SaleOrderImpl.class, "inObject");
             if (orders == null) {
             } else {
                 this._addOrders(inObjectCriteria, orders);
             }
 
 
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.order.be.ISaleOrder> searchSaleOrder(org.shaolin.vogerp.order.be.SaleOrderImpl scObject,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.SaleOrderImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
-            }
-
-
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
     }
 
     public long searchSaleOrderCount(org.shaolin.vogerp.order.be.SaleOrderImpl scObject) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.SaleOrderImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.SaleOrderImpl.class, "inObject");
 
 
-            return this._count(inObjectCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchSaleOrderCount(org.shaolin.vogerp.order.be.SaleOrderImpl scObject, Session session) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.SaleOrderImpl.class, "inObject");
-
-
-            return this._count(inObjectCriteria);
-        } finally {
-        }
+        return this._count(inObjectCriteria);
     }
 
     public List<org.shaolin.vogerp.order.be.IPurchaseOrder> searchPurchaseOrder(org.shaolin.vogerp.order.be.PurchaseOrderImpl scObject,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.PurchaseOrderImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.PurchaseOrderImpl.class, "inObject");
             if (orders == null) {
             } else {
                 this._addOrders(inObjectCriteria, orders);
             }
 
 
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.order.be.IPurchaseOrder> searchPurchaseOrder(org.shaolin.vogerp.order.be.PurchaseOrderImpl scObject,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.PurchaseOrderImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
-            }
-
-
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
     }
 
     public long searchPurchaseOrderCount(org.shaolin.vogerp.order.be.PurchaseOrderImpl scObject) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.PurchaseOrderImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.PurchaseOrderImpl.class, "inObject");
 
 
-            return this._count(inObjectCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchPurchaseOrderCount(org.shaolin.vogerp.order.be.PurchaseOrderImpl scObject, Session session) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.PurchaseOrderImpl.class, "inObject");
-
-
-            return this._count(inObjectCriteria);
-        } finally {
-        }
+        return this._count(inObjectCriteria);
     }
 
     public List<org.shaolin.vogerp.order.be.IProductOrder> searchProductOrder(org.shaolin.vogerp.order.be.ProductOrderImpl scObject,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.ProductOrderImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.ProductOrderImpl.class, "inObject");
             if (orders == null) {
             } else {
                 this._addOrders(inObjectCriteria, orders);
             }
 
 
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.order.be.IProductOrder> searchProductOrder(org.shaolin.vogerp.order.be.ProductOrderImpl scObject,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.ProductOrderImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
-            }
-
-
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
     }
 
     public long searchProductOrderCount(org.shaolin.vogerp.order.be.ProductOrderImpl scObject) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.ProductOrderImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.ProductOrderImpl.class, "inObject");
 
 
-            return this._count(inObjectCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchProductOrderCount(org.shaolin.vogerp.order.be.ProductOrderImpl scObject, Session session) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.ProductOrderImpl.class, "inObject");
-
-
-            return this._count(inObjectCriteria);
-        } finally {
-        }
+        return this._count(inObjectCriteria);
     }
 
     public List<org.shaolin.vogerp.order.be.IOrderItem> searchOrderItem(org.shaolin.vogerp.order.be.OrderItemImpl scObject,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.OrderItemImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.OrderItemImpl.class, "inObject");
             if (orders == null) {
             } else {
                 this._addOrders(inObjectCriteria, orders);
             }
 
 
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.order.be.IOrderItem> searchOrderItem(org.shaolin.vogerp.order.be.OrderItemImpl scObject,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.OrderItemImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
-            }
-
-
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
     }
 
     public long searchOrderItemCount(org.shaolin.vogerp.order.be.OrderItemImpl scObject) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.OrderItemImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.OrderItemImpl.class, "inObject");
 
 
-            return this._count(inObjectCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchOrderItemCount(org.shaolin.vogerp.order.be.OrderItemImpl scObject, Session session) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.OrderItemImpl.class, "inObject");
-
-
-            return this._count(inObjectCriteria);
-        } finally {
-        }
+        return this._count(inObjectCriteria);
     }
 
     public List<org.shaolin.vogerp.order.be.IOrderHandlingInfo> searchOrderHandlingInfo(org.shaolin.vogerp.order.be.OrderHandlingInfoImpl scObject,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.OrderHandlingInfoImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.OrderHandlingInfoImpl.class, "inObject");
             if (orders == null) {
             } else {
                 this._addOrders(inObjectCriteria, orders);
             }
 
 
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.order.be.IOrderHandlingInfo> searchOrderHandlingInfo(org.shaolin.vogerp.order.be.OrderHandlingInfoImpl scObject,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.OrderHandlingInfoImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
-            }
-
-
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
     }
 
     public long searchOrderHandlingInfoCount(org.shaolin.vogerp.order.be.OrderHandlingInfoImpl scObject) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.OrderHandlingInfoImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.OrderHandlingInfoImpl.class, "inObject");
 
 
-            return this._count(inObjectCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchOrderHandlingInfoCount(org.shaolin.vogerp.order.be.OrderHandlingInfoImpl scObject, Session session) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.OrderHandlingInfoImpl.class, "inObject");
-
-
-            return this._count(inObjectCriteria);
-        } finally {
-        }
+        return this._count(inObjectCriteria);
     }
 
     public List<org.shaolin.vogerp.order.be.IDeliveryInfo> searchDeliveryInfo(org.shaolin.vogerp.order.be.DeliveryInfoImpl scObject,
            List<Order> orders, int offset, int count) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.DeliveryInfoImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.DeliveryInfoImpl.class, "inObject");
             if (orders == null) {
             } else {
                 this._addOrders(inObjectCriteria, orders);
             }
 
 
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<org.shaolin.vogerp.order.be.IDeliveryInfo> searchDeliveryInfo(org.shaolin.vogerp.order.be.DeliveryInfoImpl scObject,
-           Session session, List<Order> orders, int offset, int count) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.DeliveryInfoImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
-            }
-
-
-            List result = this._list(offset, count, inObjectCriteria);
-            return result;
-        } finally {
-        }
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
     }
 
     public long searchDeliveryInfoCount(org.shaolin.vogerp.order.be.DeliveryInfoImpl scObject) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.DeliveryInfoImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.DeliveryInfoImpl.class, "inObject");
 
 
-            return this._count(inObjectCriteria);
-        } finally {
-            session.getTransaction().commit();
-        }
-    }
-
-    public long searchDeliveryInfoCount(org.shaolin.vogerp.order.be.DeliveryInfoImpl scObject, Session session) {
-        try {
-            Criteria inObjectCriteria = this._createCriteria(session, org.shaolin.vogerp.order.be.DeliveryInfoImpl.class, "inObject");
-
-
-            return this._count(inObjectCriteria);
-        } finally {
-        }
+        return this._count(inObjectCriteria);
     }
 
 }
