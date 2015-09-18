@@ -56,32 +56,6 @@
             </bediagram:type>
         </bediagram:member>
 	</bediagram:beEntity>
-	<bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
-		<!-- the order tracker -->
-		<common:entityName>OrderHierarchy</common:entityName>
-		<bediagram:member pk="true">
-			<bediagram:name>id</bediagram:name>
-			<bediagram:type xsi:type="bediagram:LongType" />
-		</bediagram:member>
-		<bediagram:member>
-			<bediagram:name>parentId</bediagram:name>
-			<bediagram:type xsi:type="bediagram:LongType" />
-		</bediagram:member>
-		<bediagram:member>
-			<bediagram:name>orderId</bediagram:name>
-			<bediagram:type xsi:type="bediagram:LongType" />
-		</bediagram:member>
-		<bediagram:member>
-            <bediagram:name>type</bediagram:name>
-            <bediagram:type xsi:type="bediagram:CEObjRefType">
-                <bediagram:targetEntity entityName="OrderType" />
-            </bediagram:type>
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>createDate</bediagram:name>
-            <bediagram:type xsi:type="bediagram:DateTimeType" />
-        </bediagram:member>
-	</bediagram:beEntity>
 	<bediagram:beEntity needPersist="true" needTask="true" needUIEntity="true">
 		<common:entityName>SaleOrder</common:entityName>
 		<bediagram:parentObject xsi:type="bediagram:BEObjRefType">
@@ -134,8 +108,8 @@
 	<bediagram:beEntity needPersist="true" needTask="true" needUIEntity="true">
 		<common:entityName>PurchaseOrder</common:entityName>
 		<bediagram:parentObject xsi:type="bediagram:BEObjRefType">
-            <bediagram:targetEntity entityName="Order" />
-        </bediagram:parentObject>
+      <bediagram:targetEntity entityName="Order" />
+  </bediagram:parentObject>
 		<bediagram:member>
 			<!-- what kind of the party -->
 			<bediagram:name>supplierId</bediagram:name>
@@ -143,16 +117,42 @@
 		</bediagram:member>
 	</bediagram:beEntity>
 	<bediagram:beEntity needPersist="true" needTask="true" needUIEntity="true">
-		<common:entityName>ProductOrder</common:entityName>
-		<bediagram:parentObject xsi:type="bediagram:BEObjRefType">
-            <bediagram:targetEntity entityName="Order" />
-        </bediagram:parentObject>
-		<bediagram:member>
-			<!-- what kind of the party -->
-			<bediagram:name>supplierId</bediagram:name>
-			<bediagram:type xsi:type="bediagram:LongType" />
-		</bediagram:member>
-	</bediagram:beEntity>
+			<common:entityName>ProductOrder</common:entityName>
+			<bediagram:parentObject xsi:type="bediagram:BEObjRefType">
+				<bediagram:targetEntity entityName="Order" />
+			</bediagram:parentObject>
+			<bediagram:member>
+	   <bediagram:name>saleOrderId</bediagram:name>
+	   <bediagram:type xsi:type="bediagram:LongType" />
+	  </bediagram:member>
+ </bediagram:beEntity>
+ <!-- 入库单 -->
+ <bediagram:beEntity needPersist="true" needTask="true" needUIEntity="true">
+   <common:entityName>InStoreOrder</common:entityName>
+   <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
+    <bediagram:targetEntity entityName="Order" />
+   </bediagram:parentObject>
+   <bediagram:member>
+    <bediagram:name>productOrderId</bediagram:name>
+    <bediagram:type xsi:type="bediagram:LongType" />
+   </bediagram:member>
+   <bediagram:member>
+    <bediagram:name>purchaseOrderId</bediagram:name>
+    <bediagram:type xsi:type="bediagram:LongType" />
+   </bediagram:member>
+ </bediagram:beEntity>
+ <!-- 出库单 -->
+ <bediagram:beEntity needPersist="true" needTask="true" needUIEntity="true">
+   <common:entityName>OutStoreOrder</common:entityName>
+   <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
+    <bediagram:targetEntity entityName="Order" />
+   </bediagram:parentObject>
+   <bediagram:member>
+    <bediagram:name>saleOrderId</bediagram:name>
+    <bediagram:type xsi:type="bediagram:LongType" />
+   </bediagram:member>
+ </bediagram:beEntity>
+
 	<bediagram:beEntity needHistory="true" needPersist="true" needUIEntity="true" needUITableEditor="true">
 		<common:entityName>OrderItem</common:entityName>
 		<bediagram:member pk="true">

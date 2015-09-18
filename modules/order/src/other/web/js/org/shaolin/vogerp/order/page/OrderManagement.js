@@ -34,6 +34,39 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
         ,items: []
         ,subComponents: [prefix + "purchaseOrderInfoTable"]
     });
+    var productOrderInfoTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "productOrderInfoTable"]
+    });
+
+    var productOrderInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "productOrderInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "productOrderInfoTable"]
+    });
+    var inStoreOrderInfoTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "inStoreOrderInfoTable"]
+    });
+
+    var inStoreOrderInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "inStoreOrderInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "inStoreOrderInfoTable"]
+    });
+    var outStoreOrderInfoTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "outStoreOrderInfoTable"]
+    });
+
+    var outStoreOrderInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "outStoreOrderInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "outStoreOrderInfoTable"]
+    });
 
     var Form = new UIMaster.ui.panel
     ({
@@ -59,6 +92,18 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
     Form.openSaleOrderItem = org_shaolin_vogerp_order_page_OrderManagement_openSaleOrderItem;
 
     Form.openSaleOrderTracker = org_shaolin_vogerp_order_page_OrderManagement_openSaleOrderTracker;
+
+    Form.createProductOrder = org_shaolin_vogerp_order_page_OrderManagement_createProductOrder;
+
+    Form.openProductOrder = org_shaolin_vogerp_order_page_OrderManagement_openProductOrder;
+
+    Form.createInStoreOrder = org_shaolin_vogerp_order_page_OrderManagement_createInStoreOrder;
+
+    Form.openInStoreOrder = org_shaolin_vogerp_order_page_OrderManagement_openInStoreOrder;
+
+    Form.createOutStoreOrder = org_shaolin_vogerp_order_page_OrderManagement_createOutStoreOrder;
+
+    Form.openOutStoreOrder = org_shaolin_vogerp_order_page_OrderManagement_openOutStoreOrder;
 
     Form.initPageJs = org_shaolin_vogerp_order_page_OrderManagement_initPageJs;
 
@@ -118,6 +163,72 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_order_page_OrderManagement_openSaleOrderTracker */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_order_page_OrderManagement_createProductOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_page_OrderManagement_createProductOrder */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createProductOrder-20150916",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_order_page_OrderManagement_createProductOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_order_page_OrderManagement_openProductOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_page_OrderManagement_openProductOrder */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openProductOrder-20150916",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_order_page_OrderManagement_openProductOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_order_page_OrderManagement_createInStoreOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_page_OrderManagement_createInStoreOrder */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createInStoreOrder-20150916",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_order_page_OrderManagement_createInStoreOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_order_page_OrderManagement_openInStoreOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_page_OrderManagement_openInStoreOrder */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openInStoreOrder-20150916",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_order_page_OrderManagement_openInStoreOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_order_page_OrderManagement_createOutStoreOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_page_OrderManagement_createOutStoreOrder */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createOutStoreOrder-20150916",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_order_page_OrderManagement_createOutStoreOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_order_page_OrderManagement_openOutStoreOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_page_OrderManagement_openOutStoreOrder */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openOutStoreOrder-20150916",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_order_page_OrderManagement_openOutStoreOrder */
 
 
     function org_shaolin_vogerp_order_page_OrderManagement_initPageJs(){/* Gen_First:org_shaolin_vogerp_order_page_OrderManagement_initPageJs */

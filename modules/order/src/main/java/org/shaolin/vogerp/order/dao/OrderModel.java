@@ -63,6 +63,15 @@ public class OrderModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
+            if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getStartCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getStartCreateDate()));
+            }
+            if (scObject.getEndCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
+            }
 
         List result = this._list(offset, count, inObjectCriteria);
         return result;
@@ -71,6 +80,15 @@ public class OrderModel extends BEEntityDaoObject {
     public long searchSaleOrderCount(org.shaolin.vogerp.order.be.SaleOrderImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.SaleOrderImpl.class, "inObject");
 
+            if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getStartCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getStartCreateDate()));
+            }
+            if (scObject.getEndCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
+            }
 
         return this._count(inObjectCriteria);
     }
@@ -83,6 +101,15 @@ public class OrderModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
+            if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getStartCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getStartCreateDate()));
+            }
+            if (scObject.getEndCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
+            }
 
         List result = this._list(offset, count, inObjectCriteria);
         return result;
@@ -91,6 +118,15 @@ public class OrderModel extends BEEntityDaoObject {
     public long searchPurchaseOrderCount(org.shaolin.vogerp.order.be.PurchaseOrderImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.PurchaseOrderImpl.class, "inObject");
 
+            if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getStartCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getStartCreateDate()));
+            }
+            if (scObject.getEndCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
+            }
 
         return this._count(inObjectCriteria);
     }
@@ -103,6 +139,15 @@ public class OrderModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
+            if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getStartCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getStartCreateDate()));
+            }
+            if (scObject.getEndCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
+            }
 
         List result = this._list(offset, count, inObjectCriteria);
         return result;
@@ -111,6 +156,91 @@ public class OrderModel extends BEEntityDaoObject {
     public long searchProductOrderCount(org.shaolin.vogerp.order.be.ProductOrderImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.ProductOrderImpl.class, "inObject");
 
+            if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getStartCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getStartCreateDate()));
+            }
+            if (scObject.getEndCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
+            }
+
+        return this._count(inObjectCriteria);
+    }
+
+    public List<org.shaolin.vogerp.order.be.IInStoreOrder> searchInStoreOrder(org.shaolin.vogerp.order.be.InStoreOrderImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.InStoreOrderImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+            if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getStartCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getStartCreateDate()));
+            }
+            if (scObject.getEndCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
+            }
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long searchInStoreOrderCount(org.shaolin.vogerp.order.be.InStoreOrderImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.InStoreOrderImpl.class, "inObject");
+
+            if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getStartCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getStartCreateDate()));
+            }
+            if (scObject.getEndCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
+            }
+
+        return this._count(inObjectCriteria);
+    }
+
+    public List<org.shaolin.vogerp.order.be.IOutStoreOrder> searchOutStoreOrder(org.shaolin.vogerp.order.be.OutStoreOrderImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.OutStoreOrderImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+            if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getStartCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getStartCreateDate()));
+            }
+            if (scObject.getEndCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
+            }
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long searchOutStoreOrderCount(org.shaolin.vogerp.order.be.OutStoreOrderImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.OutStoreOrderImpl.class, "inObject");
+
+            if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getStartCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getStartCreateDate()));
+            }
+            if (scObject.getEndCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
+            }
 
         return this._count(inObjectCriteria);
     }

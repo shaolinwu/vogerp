@@ -1,6 +1,6 @@
 /* null */
 /* auto generated constructor */
-function org_shaolin_vogerp_order_form_ProductOrder(json)
+function org_shaolin_vogerp_order_form_InStoreOrder(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
     var idUI = new UIMaster.ui.hidden
@@ -48,16 +48,6 @@ function org_shaolin_vogerp_order_form_ProductOrder(json)
         ui: elementList[prefix + "createDateUI"]
     });
 
-    var statusUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "statusUILabel"]
-    });
-
-    var statusUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "statusUI"]
-    });
-
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
@@ -79,13 +69,13 @@ function org_shaolin_vogerp_order_form_ProductOrder(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "parentIdUILabel",prefix + "parentIdUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "createDateUILabel",prefix + "createDateUI",prefix + "statusUILabel",prefix + "statusUI"]
+        ,subComponents: [prefix + "idUI",prefix + "parentIdUILabel",prefix + "parentIdUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "createDateUILabel",prefix + "createDateUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,parentIdUILabel,parentIdUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,createDateUILabel,createDateUI,statusUILabel,statusUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,parentIdUILabel,parentIdUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,createDateUILabel,createDateUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -106,10 +96,6 @@ function org_shaolin_vogerp_order_form_ProductOrder(json)
 
     Form.createDateUI=createDateUI;
 
-    Form.statusUILabel=statusUILabel;
-
-    Form.statusUI=statusUI;
-
     Form.okbtn=okbtn;
 
     Form.cancelbtn=cancelbtn;
@@ -120,57 +106,57 @@ function org_shaolin_vogerp_order_form_ProductOrder(json)
 
     Form.user_constructor = function()
     {
-        /* Construct_FIRST:org_shaolin_vogerp_order_form_ProductOrder */
-        /* Construct_LAST:org_shaolin_vogerp_order_form_ProductOrder */
+        /* Construct_FIRST:org_shaolin_vogerp_order_form_InStoreOrder */
+        /* Construct_LAST:org_shaolin_vogerp_order_form_InStoreOrder */
     };
 
-    Form.Save = org_shaolin_vogerp_order_form_ProductOrder_Save;
+    Form.Save = org_shaolin_vogerp_order_form_InStoreOrder_Save;
 
-    Form.Cancel = org_shaolin_vogerp_order_form_ProductOrder_Cancel;
+    Form.Cancel = org_shaolin_vogerp_order_form_InStoreOrder_Cancel;
 
-    Form.invokeDynamicFunction = org_shaolin_vogerp_order_form_ProductOrder_invokeDynamicFunction;
+    Form.invokeDynamicFunction = org_shaolin_vogerp_order_form_InStoreOrder_invokeDynamicFunction;
 
-    Form.__entityName="org.shaolin.vogerp.order.form.ProductOrder";
+    Form.__entityName="org.shaolin.vogerp.order.form.InStoreOrder";
 
     Form.init();
     return Form;
 };
 
     /* EventHandler Functions */
-/* Other_Func_FIRST:org_shaolin_vogerp_order_form_ProductOrder */
-/* Other_Func_LAST:org_shaolin_vogerp_order_form_ProductOrder */
+/* Other_Func_FIRST:org_shaolin_vogerp_order_form_InStoreOrder */
+/* Other_Func_LAST:org_shaolin_vogerp_order_form_InStoreOrder */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_order_form_ProductOrder_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_ProductOrder_Save */
+    function org_shaolin_vogerp_order_form_InStoreOrder_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_InStoreOrder_Save */
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-960573218",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20150915-233517",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
-    }/* Gen_Last:org_shaolin_vogerp_order_form_ProductOrder_Save */
+    }/* Gen_Last:org_shaolin_vogerp_order_form_InStoreOrder_Save */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_order_form_ProductOrder_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_ProductOrder_Cancel */
+    function org_shaolin_vogerp_order_form_InStoreOrder_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_InStoreOrder_Cancel */
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-639841284",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20150915-233517",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
-    }/* Gen_Last:org_shaolin_vogerp_order_form_ProductOrder_Cancel */
+    }/* Gen_Last:org_shaolin_vogerp_order_form_InStoreOrder_Cancel */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_order_form_ProductOrder_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_ProductOrder_invokeDynamicFunction */
+    function org_shaolin_vogerp_order_form_InStoreOrder_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_InStoreOrder_invokeDynamicFunction */
 
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
-    }/* Gen_Last:org_shaolin_vogerp_order_form_ProductOrder_invokeDynamicFunction */
+    }/* Gen_Last:org_shaolin_vogerp_order_form_InStoreOrder_invokeDynamicFunction */
 
 
 
