@@ -149,7 +149,7 @@
 		           </ns2:layout>
 		           <ns2:component xsi:type="ns2:UITableType" UIID="employeeInfoTablel">
 		               <ns2:beElement>org.shaolin.vogerp.commonmodel.be.PersonalInfo</ns2:beElement>
-		               <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Multiple</ns2:selectMode>
+		               <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
 		               <ns2:defaultRowSize>10</ns2:defaultRowSize>
 		               <ns2:showActionBar>true</ns2:showActionBar>
 		               <ns2:showFilter>true</ns2:showFilter>

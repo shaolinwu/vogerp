@@ -30,6 +30,10 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 				break;
 			}
 		}
+		if (this.root == null) {
+			return;
+		}
+		
 		LegalOrganizationInfoImpl searchCondition1 = new LegalOrganizationInfoImpl();
 		searchCondition1.setOrgId(this.root.getId());
 		List list = CommonModel.INSTANCE.searchOrgaLegalInfo(searchCondition1, null, 0, 1);
@@ -48,6 +52,9 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 				this.root = item;
 				break;
 			}
+		}
+		if (this.root == null) {
+			return;
 		}
 		LegalOrganizationInfoImpl searchCondition1 = new LegalOrganizationInfoImpl();
 		searchCondition1.setOrgId(this.root.getId());
