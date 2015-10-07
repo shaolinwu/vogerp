@@ -109,6 +109,34 @@
                 </ns2:exp>
             </ns2:ops>
 		</ns2:eventHandler>
+		<ns2:eventHandler functionName="showMatrix">
+      <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showMatrix-45332">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.productmodel.be.WarehouseImpl;
+                    import org.shaolin.vogerp.productmodel.dao.ProductModel;
+                    {
+                        Table productInfoTable = (Table)@page.getElement("storageTable");
+                        if (productInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        WarehouseImpl defaultUser = (WarehouseImpl)productInfoTable.getSelectedRow();
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("userForm", "org.shaolin.vogerp.productmodel.form.WarehouseMatrix", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Warehouse Matrix", new TableCallBack("storageTable"));
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+  </ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 		    <ns2:UISkin xsi:type="ns2:UISkinType">
                 <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
@@ -226,8 +254,20 @@
 		                        <!-- can be default actions. -->
 		                        <ns2:defaultDeleteAction>deleteProduct</ns2:defaultDeleteAction>
 		                        <ns2:defaultEnableAction>enableProduct</ns2:defaultEnableAction>
-		                        <ns2:defaultDisableAction>disableProduct</ns2:defaultDisableAction>
+		                        <ns2:defaultDisableAction>disableProduct</ns2:defaultDisableAction> 
 		                    </ns2:defaultActions>
+		                    <ns2:actionGroup>
+                          <ns2:type>radio</ns2:type>
+                          <ns2:action>
+                           <!-- first we have the cost, then we generate the price from the cost. -->
+                              <ns2:uiid>showMatrix</ns2:uiid>
+                              <ns2:title xsi:type="ns2:StringPropertyType">
+                                  <ns2:value>Warehouse Matrix</ns2:value>
+                              </ns2:title>
+                              <ns2:icon>ui-icon-note</ns2:icon>
+                              <ns2:function>showMatrix</ns2:function>
+                          </ns2:action>
+                      </ns2:actionGroup>
 		                </ns2:component>
 		                <ns2:layoutConstraint>
 		                    <ns2:componentId>storageTable</ns2:componentId>

@@ -292,6 +292,11 @@
 			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
 		<bediagram:member>
+   <!-- 容器默认矩阵:x,y,z -->
+   <bediagram:name>coordinate</bediagram:name>
+   <bediagram:type xsi:type="bediagram:StringType" />
+  </bediagram:member>
+		<bediagram:member>
 			<!-- 存放地点 -->
 			<bediagram:name>location</bediagram:name>
 			<bediagram:type xsi:type="bediagram:StringType" />

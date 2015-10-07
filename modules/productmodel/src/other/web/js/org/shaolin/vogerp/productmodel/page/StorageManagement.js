@@ -60,6 +60,8 @@ function org_shaolin_vogerp_productmodel_page_StorageManagement(json)
 
     Form.openItem = org_shaolin_vogerp_productmodel_page_StorageManagement_openItem;
 
+    Form.showMatrix = org_shaolin_vogerp_productmodel_page_StorageManagement_showMatrix;
+
     Form.initPageJs = org_shaolin_vogerp_productmodel_page_StorageManagement_initPageJs;
 
     Form.finalizePageJs = org_shaolin_vogerp_productmodel_page_StorageManagement_finalizePageJs;
@@ -118,6 +120,17 @@ function org_shaolin_vogerp_productmodel_page_StorageManagement(json)
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_productmodel_page_StorageManagement_openItem */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_productmodel_page_StorageManagement_showMatrix(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_page_StorageManagement_showMatrix */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showMatrix-45332",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_productmodel_page_StorageManagement_showMatrix */
 
 
     function org_shaolin_vogerp_productmodel_page_StorageManagement_initPageJs(){/* Gen_First:org_shaolin_vogerp_productmodel_page_StorageManagement_initPageJs */
