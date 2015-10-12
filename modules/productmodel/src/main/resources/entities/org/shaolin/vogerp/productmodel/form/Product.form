@@ -242,7 +242,7 @@
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>photoUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIStyle="width:400px;" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIStyle="width:100%;" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>photoUILabel</ns2:componentId>
