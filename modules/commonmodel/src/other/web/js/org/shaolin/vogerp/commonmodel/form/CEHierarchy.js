@@ -13,21 +13,11 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchy(json)
         ui: elementList[prefix + "ceTree"]
     });
 
-    var okbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "okbtn"]
-    });
-
-    var cancelbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "cancelbtn"]
-    });
-
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
+        ,subComponents: []
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -40,16 +30,12 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchy(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [selectCENameUI,ceTree,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [selectCENameUI,ceTree,fieldPanel,actionPanel]
     });
 
     Form.selectCENameUI=selectCENameUI;
 
     Form.ceTree=ceTree;
-
-    Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
 
     Form.fieldPanel=fieldPanel;
 
@@ -63,13 +49,13 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchy(json)
 
     Form.createItem = org_shaolin_vogerp_commonmodel_form_CEHierarchy_createItem;
 
+    Form.openItem = org_shaolin_vogerp_commonmodel_form_CEHierarchy_openItem;
+
     Form.deleteItem = org_shaolin_vogerp_commonmodel_form_CEHierarchy_deleteItem;
 
-    Form.Save = org_shaolin_vogerp_commonmodel_form_CEHierarchy_Save;
+    Form.refreshItem = org_shaolin_vogerp_commonmodel_form_CEHierarchy_refreshItem;
 
-    Form.expandTreeNode = org_shaolin_vogerp_commonmodel_form_CEHierarchy_expandTreeNode;
-
-    Form.Cancel = org_shaolin_vogerp_commonmodel_form_CEHierarchy_Cancel;
+    Form.clickTreeNode = org_shaolin_vogerp_commonmodel_form_CEHierarchy_clickTreeNode;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_CEHierarchy_invokeDynamicFunction;
 
@@ -86,56 +72,104 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchy(json)
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_CEHierarchy_createItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchy_createItem */
 
+         {
+          var o = this;
+						    if (o.ceTree._selectedNodeName == null || o.ceTree._selectedNodeName == "") {
+						        return;
+						    }
+          new UIMaster.ui.dialog({
+              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
+              message:'????????: ' + this.ceTree._selectedNodeName,
+              messageType:UIMaster.ui.dialog.Information,
+              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+              title:'',
+              height:150,
+              width:300,
+              handler: function() {
+                 if (o.ceTree._selectedNodeName == null || o.ceTree._selectedNodeName == "") {
+                     return;
+                 }
+                 o.ceTree.sync();
+                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_20151104",UIMaster.getValue(eventsource),o.__entityName);
+              }
+          }).open();
+          return;
+         }
+         
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_tretrqew",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_20151104",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchy_createItem */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_CEHierarchy_deleteItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchy_deleteItem */
+    function org_shaolin_vogerp_commonmodel_form_CEHierarchy_openItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchy_openItem */
 
+			         {
+			            this.ceTree.sync();
+			         }
+			         
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"delete_fqw23423",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openItem_20151104",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchy_openItem */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_CEHierarchy_deleteItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchy_deleteItem */
+
+         {
+          var o = this;
+          if (o.ceTree._selectedNodeName == null || o.ceTree._selectedNodeName == "") {
+              return;
+          }
+          new UIMaster.ui.dialog({
+              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
+              message:'Are you sure delete this node?',
+              messageType:UIMaster.ui.dialog.Warning,
+              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+              title:'',
+              height:150,
+              width:300,
+              handler: function() {
+                 if (o.ceTree._selectedNodeName == null || o.ceTree._selectedNodeName == "") {
+							              return;
+							          }
+							          o.ceTree.sync();
+                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_2040990210",UIMaster.getValue(eventsource),o.__entityName);
+              }
+          }).open();
+          return;
+         }
+         
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_2040990210",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchy_deleteItem */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_CEHierarchy_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchy_Save */
+    function org_shaolin_vogerp_commonmodel_form_CEHierarchy_refreshItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchy_refreshItem */
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveItem_2040990210",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"refreshItem_20151108",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchy_Save */
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchy_refreshItem */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_CEHierarchy_expandTreeNode(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchy_expandTreeNode */
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"expandTreeNode_2040990210",UIMaster.getValue(eventsource),this.__entityName);
+    function org_shaolin_vogerp_commonmodel_form_CEHierarchy_clickTreeNode(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchy_clickTreeNode */
 
         var UIEntity = this;
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchy_expandTreeNode */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_CEHierarchy_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchy_Cancel */
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail1358686533",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchy_Cancel */
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchy_clickTreeNode */
 
 
     /* auto generated eventlistener function declaration */

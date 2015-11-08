@@ -19,7 +19,7 @@ import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
 import org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl;
 import org.shaolin.vogerp.commonmodel.be.ICEExtension;
-import org.shaolin.vogerp.commonmodel.be.ICEHierarchy;
+import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
 
 public class CEOperationUtil {
@@ -30,6 +30,14 @@ public class CEOperationUtil {
 				table.getAddItems().add(v);
 			} 
 		}
+	}
+	
+	public static IConstantEntity convertSingD2C(ICEExtension v) {
+		DynamicConstant record = new DynamicConstant(v.getCeName(), v.getId());
+		record.setDescription(v.getDescription());
+		record.setIntValue(v.getIntValue());
+		record.setValue(v.getStringValue());
+		return record;
 	}
 	
 	public static CEExtensionImpl convertSingD2C(IConstantEntity v) {
@@ -129,6 +137,18 @@ public class CEOperationUtil {
 		return null;
 	}
 	
+	public static void createHierarchy(String ceName, String parentCe, Integer parentIntValue) {
+		CEHierarchyImpl hierarchy = new CEHierarchyImpl();
+		hierarchy.setParentCeName(parentCe);
+		hierarchy.setParentCeItem(parentIntValue);
+		
+		if (ModularityModel.INSTANCE.searchCEHierarchyCount(hierarchy) == 0) {
+			hierarchy.setCeName(ceName);
+			hierarchy.setEnabled(true);
+			CommonModel.INSTANCE.create(hierarchy);
+		}
+	}
+	
 	public static List<IConstantEntity> query(IConstantEntity condition, int offset, int count) {
 		return IServerServiceManager.INSTANCE.getConstantService().getServerConstants(condition, offset, count);
 	}
@@ -146,23 +166,18 @@ public class CEOperationUtil {
 	}
 	
 	/**
-	 * FIXME: prevent the dead recursive.
-	 * 
 	 * @param result
 	 * @param parentNode
 	 * @param ce
 	 * @return
 	 */
-	public static ArrayList<TreeItem> getCEHierarchy(List<ICEHierarchy> hierarchy, ArrayList<TreeItem> result, TreeItem parentNode, IConstantEntity ce) {
-		if (hierarchy == null) {
-			CEHierarchyImpl condition = new CEHierarchyImpl();
-			condition.setParentCeItem(-1);
-			hierarchy = ModularityModel.INSTANCE.searchCEHierarchy(condition, null, 0, -1);
+	public static ArrayList<TreeItem> getCEHierarchy(Integer openLevels, ArrayList<TreeItem> result, TreeItem parentNode, IConstantEntity ce) {
+		if (openLevels == 0 || ce == null) {
+			return result;
 		}
-		
+
 		// ce node.
 		String nodeId = ce.getEntityName().replace('.', '_');
-		
 		if (parentNode == null) {
 			// create the root node for the first time.
 			TreeItem ceNode = new TreeItem();
@@ -184,31 +199,46 @@ public class CEOperationUtil {
 			ceItem.setText(item.getDisplayName());
 			parentNode.getChildren().add(ceItem);
 			
-			if (hierarchy.size() > 0 && hasChild(item.getEntityName(), item.getIntValue(), hierarchy)){
+			IConstantEntity kid = cs.getChildren(item);
+			if (kid != null){
 				ceItem.setHasChildren(true);
-				for (ICEHierarchy c : hierarchy) {
-					if (c.getParentCeName().equals(item.getEntityName()) 
-							&& c.getParentCeItem() == item.getIntValue()) {
-						getCEHierarchy(hierarchy, null, ceItem, 
-								cs.getConstantEntity(c.getCeName()));
-						break;
-					}
-				}
+				getCEHierarchy((openLevels - 1), null, ceItem, cs.getConstantEntity(kid.getEntityName()));
 			}
 		}
 		
 		return result;
 	}
 	
-	public static void getCEComboBox(String space, List<ICEHierarchy> hierarchy, 
-			ArrayList<String> values, ArrayList<String> displayItems, 
-			IConstantEntity ce) {
-		if (hierarchy == null) {
-			CEHierarchyImpl condition = new CEHierarchyImpl();
-			condition.setParentCeItem(-1);
-			hierarchy = ModularityModel.INSTANCE.searchCEHierarchy(condition, null, 0, -1);
+	public static ArrayList<TreeItem> getCEChildren(ArrayList<TreeItem> result, IConstantEntity ce) {
+		if (ce == null) {
+			return result;
+		}
+
+		// ce node.
+		String nodeId = ce.getEntityName().replace('.', '_');
+		IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
+		List<IConstantEntity> items = ce.getConstantList();
+		for (IConstantEntity item: items) {
+			if (item.getIntValue() == -1) {
+				continue;
+			}
+			TreeItem ceItem = new TreeItem();
+			ceItem.setId(nodeId + "_"+item.getIntValue());
+			ceItem.setText(item.getDisplayName());
+			
+			IConstantEntity kid = cs.getChildren(item);
+			if (kid != null){
+				ceItem.setHasChildren(true);
+			}
+			result.add(ceItem);
 		}
 		
+		return result;
+	}
+	
+	public static void getCEComboBox(String space, 
+			ArrayList<String> values, ArrayList<String> displayItems, 
+			IConstantEntity ce) {
 		// ce node.
 		String nodeId = ce.getI18nEntityName();
 		if (space.isEmpty()) { // root.
@@ -225,15 +255,9 @@ public class CEOperationUtil {
 			}
 			values.add(nodeId + "," + item.getIntValue());
 			displayItems.add(space + item.getDisplayName());
-			if (hierarchy.size() > 0 && hasChild(item.getEntityName(), item.getIntValue(), hierarchy)){
-				for (ICEHierarchy c : hierarchy) {
-					if (c.getParentCeName().equals(item.getEntityName()) 
-							&& c.getParentCeItem() == item.getIntValue()) {
-						getCEComboBox(space + "--", hierarchy, values, displayItems, 
-								cs.getConstantEntity(c.getCeName()));
-						break;
-					}
-				}
+			IConstantEntity kid = cs.getChildren(item);
+			if (kid != null){
+				getCEComboBox(space + "--", values, displayItems, cs.getConstantEntity(kid.getEntityName()));
 			}
 		}
 	}
@@ -247,15 +271,6 @@ public class CEOperationUtil {
 			values.add(ce.getEntityName() + "," + item.getIntValue());
 			displayItems.add(item.getDisplayName());
 		}
-	}
-	
-	private static boolean hasChild(String ceName, int intValue, List<ICEHierarchy> children) {
-		for (ICEHierarchy c : children) {
-			if (ceName.equals(c.getParentCeName()) && intValue == c.getParentCeItem()) {
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	public static List<IConstantEntity> toCElist(String value) {

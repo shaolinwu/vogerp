@@ -161,7 +161,7 @@
       	  if ($editable == null || $editable.booleanValue()) {
 	          ArrayList values = new ArrayList();
 	          ArrayList displayItems = new ArrayList();
-	          CEOperationUtil.getCEComboBox("", null, values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
+	          CEOperationUtil.getCEComboBox("", values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
 	      	  $values = values;
 	      	  $displayItems = displayItems;
 	      	  

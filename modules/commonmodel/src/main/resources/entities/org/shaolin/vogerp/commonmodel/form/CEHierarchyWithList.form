@@ -75,7 +75,7 @@
           if ($singleLevel.booleanValue()) {
           	CEOperationUtil.getCEComboBox(values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
           } else {
-          	CEOperationUtil.getCEComboBox("", null, values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
+          	CEOperationUtil.getCEComboBox("", values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
           }
       	  $optionValues = values;
       	  $displayItems = displayItems;

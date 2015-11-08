@@ -18,11 +18,9 @@
         <module>commonmodel</module>
 		<module>productmodel</module>
 		<module>order</module>
-		<!--
-        <module>accounting</module>
-		-->
 		<module>adminconsole</module>
 		<module>herewego</module>
+		<module>ecommercial</module>
 	</modules>
 	
     <reporting>

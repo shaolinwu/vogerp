@@ -100,6 +100,9 @@ public class ModularityModel extends BEEntityDaoObject {
             if (scFlow.getCeName() != null && scFlow.getCeName().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.ceName", scFlow.getCeName()));
             }
+            if (scFlow.getIntValue() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.intValue", scFlow.getIntValue()));
+            }
 
         List result = this._list(offset, count, inFlowCriteria);
         return result;
@@ -110,6 +113,9 @@ public class ModularityModel extends BEEntityDaoObject {
 
             if (scFlow.getCeName() != null && scFlow.getCeName().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.ceName", scFlow.getCeName()));
+            }
+            if (scFlow.getIntValue() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.intValue", scFlow.getIntValue()));
             }
 
         return this._count(inFlowCriteria);

@@ -283,6 +283,20 @@
                 </ns2:condition>
             </ns2:conditionValue>
         </ns2:fieldMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.intValue</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.intValue</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getIntValue() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
         <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
             <type entityName="org.shaolin.vogerp.commonmodel.be.CEExtension"/>
         </ns2:searchConditionData>

@@ -3,19 +3,19 @@
 function org_shaolin_vogerp_commonmodel_form_CEExtension(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var ceNameUI = new UIMaster.ui.label
+    var ceNameUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "ceNameUI"]
     });
 
-    var ceListUI = new UIMaster.ui.combobox
+    var parentCEUI = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "ceListUI"]
+        ui: elementList[prefix + "parentCEUI"]
     });
 
-    var ceItemsUI = new UIMaster.ui.combobox
+    var parentIntValueUI = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "ceItemsUI"]
+        ui: elementList[prefix + "parentIntValueUI"]
     });
 
     var constantItemTable = new UIMaster.ui.objectlist
@@ -45,7 +45,7 @@ function org_shaolin_vogerp_commonmodel_form_CEExtension(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "ceNameUI",prefix + "ceListUI",prefix + "ceItemsUI"]
+        ,subComponents: [prefix + "ceNameUI",prefix + "parentCEUI",prefix + "parentIntValueUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -58,14 +58,14 @@ function org_shaolin_vogerp_commonmodel_form_CEExtension(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [ceNameUI,ceListUI,ceItemsUI,constantItemTable,okbtn,cancelbtn,fieldPanel,attributePanel,actionPanel]
+        ,items: [ceNameUI,parentCEUI,parentIntValueUI,constantItemTable,okbtn,cancelbtn,fieldPanel,attributePanel,actionPanel]
     });
 
     Form.ceNameUI=ceNameUI;
 
-    Form.ceListUI=ceListUI;
+    Form.parentCEUI=parentCEUI;
 
-    Form.ceItemsUI=ceItemsUI;
+    Form.parentIntValueUI=parentIntValueUI;
 
     Form.constantItemTable=constantItemTable;
 

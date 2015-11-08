@@ -41,7 +41,7 @@
                  continue;
                 }
                 TreeItem gitem = new TreeItem();
-                gitem.setId("mg_" + mg.getId());
+                gitem.setId(""+mg.getId());
                 gitem.setText(mg.getName());
                 gitem.setIcon(mg.getSmallIcon());
                 gitem.setState(new org.shaolin.uimaster.page.ajax.TreeItem.State());
@@ -53,7 +53,7 @@
                    if (mg.getId() == ((ModuleGroupImpl)all.get(j)).getParentId()) {
                      ModuleGroupImpl m = (ModuleGroupImpl)all.get(j);
                      TreeItem item = new TreeItem();
-                     item.setId("mg_" + m.getId());
+                     item.setId(""+m.getId());
                      item.setText(m.getName());
                      item.setA_attr(new org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute(m.getAccessURL()));
                      item.setState(new org.shaolin.uimaster.page.ajax.TreeItem.State());

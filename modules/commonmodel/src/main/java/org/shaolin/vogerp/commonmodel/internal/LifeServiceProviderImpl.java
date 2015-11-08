@@ -6,13 +6,17 @@ import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.ce.AbstractConstant;
 import org.shaolin.bmdp.runtime.ce.ConstantServiceImpl;
+import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
+import org.shaolin.bmdp.runtime.spi.IConstantService.HierarchyAccessor;
 import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.uimaster.page.UIPermissionManager;
 import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
+import org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl;
 import org.shaolin.vogerp.commonmodel.be.ICEEntityInfo;
 import org.shaolin.vogerp.commonmodel.be.ICEExtension;
+import org.shaolin.vogerp.commonmodel.be.ICEHierarchy;
 import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
 import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
 
@@ -23,10 +27,30 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 		IAppServiceManager serviceManger = AppContext.get();
 		if (AppContext.isMasterNode()) {
 			try {
+				CEHierarchyImpl condition = new CEHierarchyImpl();
+				condition.setParentCeItem(-1);
+				List<ICEHierarchy> hierarchy = ModularityModel.INSTANCE.searchCEHierarchy(condition, null, 0, -1);
+				
 				List<ICEExtension> ceItems = ModularityModel.INSTANCE.searchCEExtension(
 						new CEExtensionImpl(), null, 0, -1);
 				((ConstantServiceImpl) IServerServiceManager.INSTANCE.getConstantService())
-						.importData(CEOperationUtil.convertC2D(ceItems));
+						.importData(CEOperationUtil.convertC2D(ceItems), hierarchy);
+				
+				((ConstantServiceImpl) IServerServiceManager.INSTANCE.getConstantService())
+						.setHierarchyAccessor(new HierarchyAccessor() {
+							@Override
+							public IConstantEntity getChild(List hierarchy, String ceName,
+									int intValue) {
+								for (Object i : hierarchy) {
+									ICEHierarchy c = (ICEHierarchy)i;
+									if (ceName.equals(c.getParentCeName()) && intValue == c.getParentCeItem()) {
+										return IServerServiceManager.INSTANCE.getConstantService().getConstantEntity(c.getCeName());
+									}
+								}
+								return null;
+							}
+						});
+				
 			} catch (Exception e) {
 				throw new IllegalStateException("Failed to parse CE items: " + e.getMessage(), e);
 			}

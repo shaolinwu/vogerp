@@ -408,7 +408,7 @@
 		            </ns2:refEntity>
                 </ns2:tab>
             </ns2:component>
-			<ns2:layoutConstraint>
+			         <ns2:layoutConstraint>
                 <ns2:componentId>functionsTab</ns2:componentId>
                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                     x="0" y="0" align="FULL"></ns2:constraint>

@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
-  <entityName>org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox</entityName>
+  <entityName>org.shaolin.vogerp.commonmodel.form.CEHierarchyWithRadioGroup</entityName>
   <systemVersion>0</systemVersion>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -12,10 +12,20 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
-      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="typeUI">
-        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+      <ns2:component xsi:type="ns2:UIRadioButtonGroupType" UIID="typeUI">
+        <ns2:Property name="horizontalLayout" >
+         <ns2:value xsi:type="ns2:BooleanPropertyType">
+            <value>true</value>
+         </ns2:value>
+        </ns2:Property>
+        <ns2:Property name="colCount" >
+         <ns2:value xsi:type="ns2:NumericPropertyType">
+            <type>int</type>
+            <value>8</value>
+         </ns2:value>
+        </ns2:Property>
       </ns2:component>
-	  <ns2:layoutConstraint>
+	     <ns2:layoutConstraint>
         <ns2:componentId>typeUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
@@ -39,7 +49,7 @@
     <ns2:DataEntity scope="InOut" name="displayItems" category="JavaClass">
       <type entityName="java.util.ArrayList"></type>
     </ns2:DataEntity>
-	   <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
       <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="value" paramName="Value"></ns2:DataComponent>
@@ -52,27 +62,27 @@
       import org.shaolin.bmdp.runtime.AppContext;
       import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
       {
-      	  if ($ceName == null) {
-      	      // get the default value logged in customer context.
-      	  	  $ceName = "";
-      	  }
-      	  
+         if ($ceName == null) {
+             // get the default value logged in customer context.
+            $ceName = "";
+         }
+         
           ArrayList values = new ArrayList();
           ArrayList displayItems = new ArrayList();
           CEOperationUtil.getCEComboBox("", values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
-      	  $values = values;
-      	  $displayItems = displayItems;
-      	  
-	      @odContext.executeAllMappings();
+         $values = values;
+         $displayItems = displayItems;
+         
+       @odContext.executeAllMappings();
       }   
     ]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString>
       {
-		@odContext.executeAllMappings();
-	  }
-	  </expressionString>
+  @odContext.executeAllMappings();
+   }
+   </expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>
 </ns2:UIEntity>
