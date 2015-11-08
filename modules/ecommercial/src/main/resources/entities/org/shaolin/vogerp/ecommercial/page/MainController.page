@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.ecommercial.page.MainController</entityName>
+	<systemVersion>0</systemVersion>
+	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>520</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="refreshBtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Save"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>Refresh</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="generateBtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Save"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>Re-generate Main Page</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:layoutConstraint>
+				    <ns2:componentId>refreshBtn</ns2:componentId>
+				    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+				     x="0" y="0" align="FULL"></ns2:constraint>
+			   </ns2:layoutConstraint>
+			   <ns2:layoutConstraint>
+        <ns2:componentId>generateBtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+         x="" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+   </ns2:component>
+   <ns2:component xsi:type="ns2:UIFrameType" UIID="main" chunkName="org.shaolin.vogerp.ecommercial.diagram.Main" nodeName="MainPage"/>
+   <ns2:layoutConstraint>
+    <ns2:componentId>actionPanel</ns2:componentId>
+    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+     x="0" y="0" align="FULL"></ns2:constraint>
+   </ns2:layoutConstraint>
+			<ns2:layoutConstraint>
+				<ns2:componentId>main</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="1" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+		</ns2:body>
+	</ns2:UIEntity>
+	<ns2:ODMapping>
+	</ns2:ODMapping>
+</ns2:UIPage>

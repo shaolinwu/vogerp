@@ -1,0 +1,106 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.productmodel.form.ProductTypeSelector</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="SelectProduct">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="SelectProduct_20250604847">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.List;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.productmodel.be.ProductImpl;
+        { 
+        	Tree tree = @page.getTree("productTree");
+        	ProductImpl product = (ProductImpl)tree.getSelectedObject();
+        	if (product == null) {
+        		//TODO: please select a product.
+        		return;
+        	}
+        	
+        	RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+         form.closeIfinWindows();
+         @page.removeForm(@page.getEntityUiid()); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="expandTreeNode">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="expandTreeNode_2040990210">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.List;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.uimaster.page.ajax.*;
+		      import org.shaolin.bmdp.runtime.ce.ConstantServiceImpl;
+        import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+        import org.shaolin.bmdp.runtime.ce.ConstantServiceImpl;
+        import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
+        { 
+        
+        
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:reconfigurableProperty functionName="SelectProduct" xsi:type="ns2:ReconfigurableFunctionType"/>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+	     <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="typeUI">
+         <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithRadioGroup" />
+      </ns2:component>
+	     <ns2:layoutConstraint>
+        <ns2:componentId>productTree</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="productId" category="JavaPrimitive">
+      <type entityName="java.lang.Long"></type>
+    </ns2:DataEntity>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+						<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+						<ns2:UIComponent componentPath="selectProductNodeUI" paramName="UIWidgetType"></ns2:UIComponent>
+						<ns2:DataComponent xsi:type="ns2:ComponentParamType"
+							componentPath="productId" paramName="StringData"></ns2:DataComponent>
+				</ns2:ComponentMapping>
+    <ns2:DataToUIMappingOperation>
+      <expressionString><![CDATA[
+      {
+	      @odContext.executeAllMappings();
+      }   
+    ]]></expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>
+      import org.shaolin.uimaster.page.AjaxContext;
+      import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.uimaster.page.ajax.*;
+      import org.shaolin.vogerp.productmodel.be.ProductImpl;
+      {
+		     @odContext.executeAllMappings();
+		     Tree tree = @page.getTree("productTree");
+		     if (tree.getSelectedObject() != null) {
+		        $productId = ((ProductImpl)tree.getSelectedObject()).getId();
+		     }
+	     }
+	     </expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

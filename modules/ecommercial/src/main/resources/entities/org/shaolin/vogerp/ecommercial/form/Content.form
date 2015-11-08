@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram"
+ xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page"
+ xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+ <entityName>org.shaolin.vogerp.ecommercial.form.Content</entityName>
+ <systemVersion>0</systemVersion>
+ <ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+  <ns2:layout xsi:type="ns2:TableLayoutType">
+   <ns2:rowHeightWeight>0</ns2:rowHeightWeight>
+   <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+  </ns2:layout>
+  <ns2:component xsi:type="ns2:UIPanelType" UIID="root">
+   <ns2:UISkin xsi:type="ns2:UISkinType">
+    <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
+   </ns2:UISkin>
+   <ns2:layout xsi:type="ns2:TableLayoutType">
+    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+   </ns2:layout>
+  </ns2:component>
+  <ns2:layoutConstraint>
+   <ns2:componentId>root</ns2:componentId>
+   <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+    x="0" y="0" align="FULL"></ns2:constraint>
+  </ns2:layoutConstraint>
+ </ns2:body>
+ <ns2:mapping>
+ </ns2:mapping>
+</ns2:UIEntity>

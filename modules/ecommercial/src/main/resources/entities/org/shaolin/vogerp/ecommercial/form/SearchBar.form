@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram"
+ xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page"
+ xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+ <entityName>org.shaolin.vogerp.ecommercial.form.SearchBar</entityName>
+ <systemVersion>0</systemVersion>
+ <ns2:eventHandler functionName="search">
+   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="search-201506102211">
+    <ns2:exp>
+     <expressionString><![CDATA[
+          import org.shaolin.uimaster.page.AjaxContext;
+          import org.shaolin.uimaster.page.ajax.*;
+          import org.shaolin.vogerp.commonmodel.IUserService;
+          import org.shaolin.bmdp.runtime.AppContext;
+          { 
+              System.out.println("Searching for :" + @page.getTextField("searchContext").getValue());
+          }
+          ]]></expressionString>
+    </ns2:exp>
+   </ns2:ops>
+  </ns2:eventHandler>
+ <ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+  <ns2:layout xsi:type="ns2:TableLayoutType">
+   <ns2:rowHeightWeight>0</ns2:rowHeightWeight>
+   <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+  </ns2:layout>
+  <ns2:component xsi:type="ns2:UIPanelType" UIID="root">
+   <ns2:UISkin xsi:type="ns2:UISkinType">
+     <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
+   </ns2:UISkin>
+   <ns2:layout xsi:type="ns2:TableLayoutType">
+     <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+     <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+     <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+     <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+   </ns2:layout>
+   <ns2:component xsi:type="ns2:UIImageType" UIID="vogerplogo">
+     <ns2:title xsi:type="ns2:StringPropertyType">
+      <ns2:value>Vogue ERP</ns2:value>
+     </ns2:title>
+     <ns2:src xsi:type="ns2:ImagePropertyType">
+      <ns2:location>/vogerp.jpg</ns2:location>
+     </ns2:src>
+    </ns2:component>
+   <ns2:component xsi:type="ns2:UITextFieldType" UIID="searchContext">
+     </ns2:component>
+     <ns2:component xsi:type="ns2:UIButtonType" UIID="searchButton">
+      <ns2:text xsi:type="ns2:StringPropertyType">
+       <ns2:value>Search</ns2:value>
+      </ns2:text>
+      <ns2:EventListener xsi:type="ns2:ClickListenerType">
+       <ns2:handler functionName="search" />
+      </ns2:EventListener>
+      <ns2:value xsi:type="ns2:StringPropertyType">
+       <ns2:value>Search</ns2:value>
+      </ns2:value>
+     </ns2:component>
+     <ns2:layoutConstraint>
+     <ns2:layoutConstraint>
+     <ns2:componentId>vogerplogo</ns2:componentId>
+     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+      x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+     <ns2:componentId>searchContext</ns2:componentId>
+     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+      x="1" y="0" align="FULL"></ns2:constraint>
+     </ns2:layoutConstraint>
+     <ns2:layoutConstraint>
+      <ns2:componentId>searchButton</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+       x="2" y="0" align="FULL"></ns2:constraint>
+     </ns2:layoutConstraint>
+  </ns2:component>
+  <ns2:layoutConstraint>
+   <ns2:componentId>root</ns2:componentId>
+   <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+    x="0" y="0" align="FULL"></ns2:constraint>
+  </ns2:layoutConstraint>
+ </ns2:body>
+ <ns2:mapping>
+ </ns2:mapping>
+</ns2:UIEntity>
