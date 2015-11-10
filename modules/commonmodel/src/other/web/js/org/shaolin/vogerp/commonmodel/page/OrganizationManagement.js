@@ -6,8 +6,11 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
+        ,items: ["organizationInfoPanel","organizationTypePanel","employeeInfoPanel",""]
     });
     var organizationInfoPanel = new org_shaolin_vogerp_commonmodel_form_OrganizationTreeEditor({"prefix":prefix + "organizationInfoPanel."});
+
+    var organizationTypePanel = new org_shaolin_vogerp_commonmodel_form_CEHierarchy({"prefix":prefix + "organizationTypePanel."});
 
     var employeeInfoTablel = new UIMaster.ui.objectlist
     ({

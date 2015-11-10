@@ -85,15 +85,27 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
 	}
 	
 	@Override
+	public void reloadAllItems() {
+		UIDyanimcItemImpl condition = new UIDyanimcItemImpl();
+		condition.setEnabled(true);
+        List<IUIDyanimcItem> all = ModularityModel.INSTANCE.searchDynamicItemEntities(condition, null, 0, -1);
+        reloadItem0(all);
+	}
+	
+	@Override
 	public void reloadItems(String uiformName) {
 		UIDyanimcItemImpl condition = new UIDyanimcItemImpl();
 		condition.setUiEntityName(uiformName);
 		condition.setEnabled(true);
         List<IUIDyanimcItem> all = ModularityModel.INSTANCE.searchDynamicItemEntities(condition, null, 0, -1);
-        for (IUIDyanimcItem module: all) {
+        reloadItem0(all);
+	}
+
+	private void reloadItem0(List<IUIDyanimcItem> all) {
+		for (IUIDyanimcItem module: all) {
         	HTMLDynamicUIItem object = convert(module);
         	try {
-        		UIFormObject uiCache = PageCacheManager.getUIFormObject(uiformName);
+        		UIFormObject uiCache = PageCacheManager.getUIFormObject(module.getUiEntityName());
         		uiCache.clearDynamicItems();
     			uiCache.addDynamicItem(object);
     		} catch (EntityNotFoundException e) {
@@ -109,7 +121,7 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
     		} catch (ClassNotFoundException e) {
     			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
     		}
-        }		
+        }
 	}
 	
 	public void reloadPageLinks() {

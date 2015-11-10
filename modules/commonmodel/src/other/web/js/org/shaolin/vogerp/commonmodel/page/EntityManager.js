@@ -26,6 +26,7 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
+        ,items: ["reloadPanel","ceentityPanel","dynamicUIPanel","dynamicPageLinkPanel",""]
     });
     var reloadPathText = new UIMaster.ui.textfield
     ({
@@ -53,7 +54,7 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
         ,items: []
         ,subComponents: [prefix + "reloadPathText",prefix + "reloadBtn",prefix + "reloadCECacheText",prefix + "reloadCECacheBtn"]
     });
-    var ceentityPanel = new org_shaolin_vogerp_commonmodel_form_CEExtensionManager({"prefix":prefix + "ceentityPanel."});
+    var ceentityPanel = new org_shaolin_vogerp_commonmodel_form_CEHierarchy({"prefix":prefix + "ceentityPanel."});
 
     var dynamicUIPanel = new org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager({"prefix":prefix + "dynamicUIPanel."});
 

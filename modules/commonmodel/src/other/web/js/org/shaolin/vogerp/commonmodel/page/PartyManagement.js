@@ -11,6 +11,7 @@ function org_shaolin_vogerp_commonmodel_page_PartyManagement(json)
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
+        ,items: ["personalInfoPanel","roleTypeForm","permissionForm",""]
     });
     var personalInfoTable = new UIMaster.ui.objectlist
     ({
@@ -23,7 +24,7 @@ function org_shaolin_vogerp_commonmodel_page_PartyManagement(json)
         ,items: []
         ,subComponents: [prefix + "personalInfoTable"]
     });
-    var roleTypeForm = new org_shaolin_vogerp_commonmodel_form_CEExtensionManager({"prefix":prefix + "roleTypeForm."});
+    var roleTypeForm = new org_shaolin_vogerp_commonmodel_form_CEHierarchy({"prefix":prefix + "roleTypeForm."});
 
     var permissionForm = new org_shaolin_vogerp_commonmodel_form_PermissionManager({"prefix":prefix + "permissionForm."});
 

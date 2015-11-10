@@ -11,6 +11,7 @@ function org_shaolin_vogerp_commonmodel_page_AccountManagement(json)
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
+        ,items: ["personalInfoPanel",""]
     });
     var personalInfoTable = new UIMaster.ui.objectlist
     ({

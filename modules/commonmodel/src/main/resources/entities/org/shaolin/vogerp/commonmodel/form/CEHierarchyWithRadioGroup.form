@@ -62,18 +62,18 @@
       import org.shaolin.bmdp.runtime.AppContext;
       import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
       {
-         if ($ceName == null) {
-             // get the default value logged in customer context.
-            $ceName = "";
-         }
-         
+          if ($ceName == null) {
+              //get the default value logged in customer context.
+              $ceName = "";
+          }
+          
           ArrayList values = new ArrayList();
           ArrayList displayItems = new ArrayList();
-          CEOperationUtil.getCEComboBox("", values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
-         $values = values;
-         $displayItems = displayItems;
+          CEOperationUtil.getCEItems(values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
+          $values = values;
+          $displayItems = displayItems;
          
-       @odContext.executeAllMappings();
+          @odContext.executeAllMappings();
       }   
     ]]></expressionString>
     </ns2:DataToUIMappingOperation>

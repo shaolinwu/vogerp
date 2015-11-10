@@ -49,9 +49,9 @@
           <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy"></ns2:mappingRule>
           <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
           <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
-         <ns2:expression>
-           <expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString>
-         </ns2:expression>
+          <ns2:expression>
+            <expressionString>$CEName</expressionString>
+          </ns2:expression>
        </ns2:DataComponent>
      </ns2:ComponentMapping>
 	    <ns2:DataToUIMappingOperation>

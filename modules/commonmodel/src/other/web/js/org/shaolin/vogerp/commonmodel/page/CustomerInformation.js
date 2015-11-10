@@ -6,6 +6,7 @@ function org_shaolin_vogerp_commonmodel_page_CustomerInformation(json)
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
+        ,items: ["personalInfoForm","personalAccountForm","contractForm","addressForm",""]
     });
     var personalInfoForm = new org_shaolin_vogerp_commonmodel_form_PersonalInfo({"prefix":prefix + "personalInfoForm."});
 

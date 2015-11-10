@@ -3,29 +3,6 @@
     <entityName>org.shaolin.vogerp.commonmodel.form.UIDynamicItemManager</entityName>
     <systemVersion>0</systemVersion>
     <ns2:eventHandler functionName="createItem">
-       <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-	        <ns2:expressionString><![CDATA[
-	        {
-	        	var o = this;
-	        	new UIMaster.ui.dialog({
-		            dialogType: UIMaster.ui.dialog.INPUT_DIALOG,
-		            message:'Please enter an uipage name:',
-		            messageType:UIMaster.ui.dialog.Information,
-		            title:'',
-		            height:150,
-		            width:300,
-		            handler: function() {
-						if (this.value == null || this.value == "") {
-							return;
-						}
-						o.CENameUI.setValue(this.value);
-						UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_43242342",UIMaster.getValue(eventsource),o.__entityName);
-		            }
-	        	}).open();
-	        	return;
-	        }
-	        ]]></ns2:expressionString>
-	    </ns2:ops>
        <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createItem_43242342">
             <ns2:exp>
                 <ns2:expressionString><![CDATA[
@@ -36,16 +13,10 @@
                 import org.shaolin.uimaster.page.ajax.*;
                 import org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl;
                 {
-                	String entityName = @page.getHidden("CENameUI").getValue();
-                	if (entityName == null || entityName.trim().isEmpty()) {
-                		System.out.println("entityName is null.");
-                		return;
-                	}
-                	HashMap input = new HashMap();
-                    input.put("list", new ArrayList());
-                    input.put("parentId", entityName);
+                	   HashMap input = new HashMap();
+                    input.put("beObject", new UIDyanimcItemImpl());
                     input.put("editable", new Boolean(true));
-                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.UIDyanimcItemTable", input);
+                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.UIDyanimcItem", input);
                     @page.addElement(form);
                     
                     form.openInWindows("Modify Item", new TableCallBack("uiDynamicInfoTable"), 690, 380);
@@ -71,10 +42,9 @@
                     
                     UIDyanimcItemImpl defaultUser = (UIDyanimcItemImpl)uiDynamicInfoTable.getSelectedRow();
                     HashMap input = new HashMap();
-                    input.put("list", new ArrayList());
-                    input.put("parentId", defaultUser.getUiEntityName());
+                    input.put("beObject", defaultUser);
                     input.put("editable", new Boolean(true));
-                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.UIDyanimcItemTable", input);
+                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.UIDyanimcItem", input);
                     @page.addElement(form);
                     
                     form.openInWindows("Modify Item", new TableCallBack("uiDynamicInfoTable"), 690, 380);
@@ -83,7 +53,70 @@
             </ns2:exp>
         </ns2:ops>
     </ns2:eventHandler>
-    <ns2:eventHandler functionName="deleteUser"></ns2:eventHandler>
+    <ns2:eventHandler functionName="deleteItem">
+         <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deleteItem_201511101829">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import java.util.ArrayList;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl;
+                import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+                {
+                    Table uiDynamicInfoTable = (Table)@page.getElement("uiDynamicInfoTable");
+                    if (uiDynamicInfoTable.getSelectedRow() == null) {
+                        return;
+                    }
+                    
+                    UIDyanimcItemImpl defaultUser = (UIDyanimcItemImpl)uiDynamicInfoTable.getSelectedRow();
+                    ModularityModel.INSTANCE.delete(defaultUser);
+                    
+                    uiDynamicInfoTable.refresh();
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
+    <ns2:eventHandler functionName="reload">
+         <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+				         <ns2:expressionString><![CDATA[
+				         {
+				          var o = this;
+				          new UIMaster.ui.dialog({
+				              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
+				              message:'Are you sure reload all dynamic ui configuration?',
+				              messageType:UIMaster.ui.dialog.Warning,
+				              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+				              title:'',
+				              height:150,
+				              width:300,
+				              handler: function() {
+				                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"reload_201511101829",UIMaster.getValue(eventsource),o.__entityName);
+				              }
+				          }).open();
+				          return;
+				         }
+				         ]]></ns2:expressionString>
+				     </ns2:ops>
+         <ns2:ops xsi:type="ns2:OpCallAjaxType" name="reload_201511101829">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import java.util.ArrayList;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl;
+                import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+                import org.shaolin.vogerp.commonmodel.IDynamicUIService;
+                {
+                    IDynamicUIService service = (IDynamicUIService)AppContext.get().getService(IDynamicUIService.class);
+                    service.reloadAllItems();
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
     <ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
         <ns2:layout xsi:type="ns2:TableLayoutType">
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -145,7 +178,19 @@
                 <ns2:defaultActions>
                     <ns2:defaultNewAction>createItem</ns2:defaultNewAction>
                     <ns2:defaultOpenAction>openItemDetail</ns2:defaultOpenAction>
+                    <ns2:defaultDeleteAction>deleteItem</ns2:defaultDeleteAction>
                 </ns2:defaultActions>
+                <ns2:actionGroup>
+                    <ns2:type>radio</ns2:type>
+                    <ns2:action>
+                        <ns2:uiid>reload</ns2:uiid>
+                        <ns2:title xsi:type="ns2:StringPropertyType">
+                            <ns2:value>Reload Changes</ns2:value>
+                        </ns2:title>
+                        <ns2:icon>ui-icon-note</ns2:icon>
+                        <ns2:function>reload</ns2:function>
+                    </ns2:action>
+                </ns2:actionGroup>
             </ns2:component>
             <ns2:layoutConstraint>
                 <ns2:componentId>uiDynamicInfoTable</ns2:componentId>

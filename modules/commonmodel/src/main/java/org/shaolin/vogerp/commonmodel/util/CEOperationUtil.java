@@ -236,6 +236,21 @@ public class CEOperationUtil {
 		return result;
 	}
 	
+	public static void getCEItems(ArrayList<String> values, ArrayList<String> displayItems, 
+			IConstantEntity ce) {
+		// ce node.
+		String nodeId = ce.getI18nEntityName();
+		
+		List<IConstantEntity> items = ce.getConstantList();
+		for (IConstantEntity item: items) {
+			if (item.getIntValue() == -1) {
+				continue;
+			}
+			values.add(nodeId + "," + item.getIntValue());
+			displayItems.add(item.getDisplayName());
+		}
+	}
+	
 	public static void getCEComboBox(String space, 
 			ArrayList<String> values, ArrayList<String> displayItems, 
 			IConstantEntity ce) {

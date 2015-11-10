@@ -37,9 +37,6 @@
   </ns2:body>
   <ns2:mapping>
     <systemVersion>0</systemVersion>
-    <ns2:DataEntity scope="InOut" name="singleLevel" category="JavaPrimitive">
-      <type entityName="java.lang.Boolean"></type>
-    </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="ceName" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
@@ -67,22 +64,18 @@
       {
       	  if ($ceName == null) {
       	      // get the default value logged in customer context.
-      	  	  $ceName = "";
+      	  	   $ceName = "";
       	  }
       	  
-          ArrayList values = new ArrayList();
-          ArrayList displayItems = new ArrayList();
-          if ($singleLevel.booleanValue()) {
-          	CEOperationUtil.getCEComboBox(values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
-          } else {
-          	CEOperationUtil.getCEComboBox("", values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
-          }
+         ArrayList values = new ArrayList();
+         ArrayList displayItems = new ArrayList();
+         CEOperationUtil.getCEItems(values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
       	  $optionValues = values;
       	  $displayItems = displayItems;
       	  if ($values == null) {
-      	  	 $values = new ArrayList();
+      	  	   $values = new ArrayList();
       	  }
-	      @odContext.executeAllMappings();
+	        @odContext.executeAllMappings();
       }   
     ]]></expressionString>
     </ns2:DataToUIMappingOperation>

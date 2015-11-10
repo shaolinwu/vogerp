@@ -395,8 +395,8 @@
                         <ns2:key>org.shaolin.vogerp.commonmodel.page.PartyConfiguration.roleTypeForm</ns2:key>
                     </ns2:title>
                     <ns2:refEntity UIID="roleTypeForm">
-		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEExtensionManager" />
-		            </ns2:refEntity>
+		                     <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy" />
+		                  </ns2:refEntity>
                 </ns2:tab>
                 <ns2:tab uiid="permissionForm">
                     <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
@@ -404,8 +404,8 @@
                         <ns2:key>org.shaolin.vogerp.commonmodel.page.PartyConfiguration.partyPermissionForm</ns2:key>
                     </ns2:title>
                     <ns2:refEntity UIID="permissionForm">
-		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.PermissionManager" />
-		            </ns2:refEntity>
+								               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.PermissionManager" />
+								            </ns2:refEntity>
                 </ns2:tab>
             </ns2:component>
 			         <ns2:layoutConstraint>
@@ -417,9 +417,9 @@
 	</ns2:UIEntity>
 	<ns2:ODMapping>
 	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-	      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEExtensionManager"></ns2:mappingRule>
+	      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy"></ns2:mappingRule>
 	      <ns2:UIComponent componentPath="roleTypeForm" paramName="UIWidgetType"></ns2:UIComponent>
-	      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEName">
+	      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
 	        <ns2:expression>
 	          <expressionString>"org.shaolin.vogerp.commonmodel.ce.PartyRoleType"</expressionString>
 	        </ns2:expression>

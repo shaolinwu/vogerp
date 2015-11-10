@@ -11,6 +11,7 @@ function org_shaolin_vogerp_commonmodel_page_CustomerManagement(json)
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
+        ,items: ["customerInfoPanel",""]
     });
     var customerInfoTable = new UIMaster.ui.objectlist
     ({
