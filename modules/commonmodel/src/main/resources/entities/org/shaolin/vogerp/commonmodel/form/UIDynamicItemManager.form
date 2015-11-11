@@ -104,6 +104,7 @@
                 <ns2:expressionString><![CDATA[
                 import java.util.HashMap;
                 import java.util.ArrayList;
+                import org.shaolin.bmdp.runtime.AppContext;
                 import org.shaolin.uimaster.page.AjaxContext;
                 import org.shaolin.uimaster.page.ajax.*;
                 import org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl;

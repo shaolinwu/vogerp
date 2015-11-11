@@ -11,6 +11,7 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
+        ,items: ["productInfoPanel","productTreePanel",""]
     });
     var productInfoTable = new UIMaster.ui.objectlist
     ({

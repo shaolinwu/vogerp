@@ -3,6 +3,26 @@
 function org_shaolin_vogerp_productmodel_form_Product(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var photoPathUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "photoPathUI"]
+    });
+
+    var photoUI = new UIMaster.ui.image
+    ({
+        ui: elementList[prefix + "photoUI"]
+    });
+
+    var photoUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "photoUILabel"]
+    });
+
+    var uploadFile = new UIMaster.ui.file
+    ({
+        ui: elementList[prefix + "uploadFile"]
+    });
+
     var idUI = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "idUI"]
@@ -63,26 +83,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         ui: elementList[prefix + "saleEndDateUI"]
     });
 
-    var photoUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "photoUILabel"]
-    });
-
-    var uploadFile = new UIMaster.ui.file
-    ({
-        ui: elementList[prefix + "uploadFile"]
-    });
-
-    var photoPathUI = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "photoPathUI"]
-    });
-
-    var photoUI = new UIMaster.ui.image
-    ({
-        ui: elementList[prefix + "photoUI"]
-    });
-
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
@@ -106,14 +106,22 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "interestedPartyTypeUILabel",prefix + "interestedPartyTypeUI",prefix + "onSaleDateUILabel",prefix + "onSaleDateUI",prefix + "saleEndDateUILabel",prefix + "saleEndDateUI",prefix + "photoUILabel",prefix + "uploadFile",prefix + "photoPathUI",prefix + "photoUI"]
+        ,subComponents: [prefix + "photoPathUI",prefix + "photoUI",prefix + "photoUILabel",prefix + "uploadFile",prefix + "idUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "interestedPartyTypeUILabel",prefix + "interestedPartyTypeUI",prefix + "onSaleDateUILabel",prefix + "onSaleDateUI",prefix + "saleEndDateUILabel",prefix + "saleEndDateUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,nameUILabel,nameUI,descriptionUILabel,descriptionUI,typeUILabel,interestedPartyTypeUILabel,interestedPartyTypeUI,onSaleDateUILabel,onSaleDateUI,saleEndDateUILabel,saleEndDateUI,photoUILabel,uploadFile,photoPathUI,photoUI,okbtn,cancelbtn,typeUI,fieldPanel,actionPanel]
+        ,items: [photoPathUI,photoUI,photoUILabel,uploadFile,idUI,nameUILabel,nameUI,descriptionUILabel,descriptionUI,typeUILabel,interestedPartyTypeUILabel,interestedPartyTypeUI,onSaleDateUILabel,onSaleDateUI,saleEndDateUILabel,saleEndDateUI,okbtn,cancelbtn,typeUI,fieldPanel,actionPanel]
     });
+
+    Form.photoPathUI=photoPathUI;
+
+    Form.photoUI=photoUI;
+
+    Form.photoUILabel=photoUILabel;
+
+    Form.uploadFile=uploadFile;
 
     Form.idUI=idUI;
 
@@ -138,14 +146,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     Form.saleEndDateUILabel=saleEndDateUILabel;
 
     Form.saleEndDateUI=saleEndDateUI;
-
-    Form.photoUILabel=photoUILabel;
-
-    Form.uploadFile=uploadFile;
-
-    Form.photoPathUI=photoPathUI;
-
-    Form.photoUI=photoUI;
 
     Form.okbtn=okbtn;
 

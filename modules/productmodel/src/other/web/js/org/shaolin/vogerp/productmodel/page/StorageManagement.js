@@ -11,6 +11,7 @@ function org_shaolin_vogerp_productmodel_page_StorageManagement(json)
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
+        ,items: ["storagePanel","storageItemPanel",""]
     });
     var storageTable = new UIMaster.ui.objectlist
     ({

@@ -23,7 +23,7 @@
                         RefForm form = new RefForm("productInfoForm", "org.shaolin.vogerp.productmodel.form.Product", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Create Product Information", new TableCallBack("productInfoTable"), 690, 500);
+                        form.openInWindows("Create Product Information", new TableCallBack("productInfoTable"), 750, 500);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -51,7 +51,7 @@
                         RefForm form = new RefForm("productInfoForm", "org.shaolin.vogerp.productmodel.form.Product", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Check Product Code Information", new TableCallBack("productInfoTable"), 690, 500);
+                        form.openInWindows("Product Information", new TableCallBack("productInfoTable"), 750, 500);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -87,7 +87,7 @@
                         RefForm form = new RefForm("productCodeForm", "org.shaolin.vogerp.productmodel.form.ProductCode", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Modify Product Information", new TableCallBack("productInfoTable"));
+                        form.openInWindows("Modify Product Code Information", new TableCallBack("productInfoTable"));
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -223,16 +223,16 @@
 	                   ProductImpl condition = new ProductImpl();
 	                   condition.setParentId(pid);
 	                   List subgroups = ProductModel.INSTANCE.searchProductInfo(condition, null, 0, -1);
-		               ArrayList result = new ArrayList();
+		                  ArrayList result = new ArrayList();
 	                   if (subgroups.size() > 0) {
-		                   for (int i=0;i<subgroups.size();i++) {
-		                       ProductImpl m = (ProductImpl)subgroups.get(i);
-		                       TreeItem item = new TreeItem();
-		                       item.setId("p_"+m.getId());
-				               item.setText(m.getName());
-		                       item.setHasChildren(true);
-		                       result.add(item);
-		                   }
+				                   for (int i=0;i<subgroups.size();i++) {
+				                       ProductImpl m = (ProductImpl)subgroups.get(i);
+				                       TreeItem item = new TreeItem();
+				                       item.setId("p_"+m.getId());
+						                     item.setText(m.getName());
+				                       item.setHasChildren(true);
+				                       result.add(item);
+				                   }
 	                   }
 		               return result;
 	               }
