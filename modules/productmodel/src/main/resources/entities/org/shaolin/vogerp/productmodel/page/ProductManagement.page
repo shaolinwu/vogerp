@@ -240,6 +240,42 @@
 	           </ns2:exp>
 	       </ns2:ops>
 	  </ns2:eventHandler>
+	  <ns2:eventHandler functionName="openProductOverview">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openProductOverview-20151117">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.List;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+                    import org.shaolin.vogerp.productmodel.be.ProductCostImpl;
+                    import org.shaolin.vogerp.productmodel.be.ProductImpl;
+                    import org.shaolin.vogerp.productmodel.dao.ProductModel;
+                    import org.shaolin.vogerp.productmodel.util.ProductUtil;
+                    {
+                        Table personalInfoTable = (Table)@page.getElement("productInfoTable");
+                        if (personalInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        ProductImpl defaultUser = (ProductImpl)personalInfoTable.getSelectedRow();
+                        List result = ProductModel.INSTANCE.searchProductPrice(defaultUser, null, 0, -1);
+                        if (result == null || result.size() == 0) {
+                            result = ProductUtil.convertCostToPrice(ProductModel.INSTANCE.searchProductCost(defaultUser, null, 0, -1));
+                        }
+                        HashMap input = new HashMap();
+                        input.put("list", result);
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(false));
+                        RefForm form = new RefForm("costForm", "org.shaolin.vogerp.productmodel.form.ProductDetailOverview", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Product Overview", new TableCallBack("productInfoTable"), 890, 580);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 		    <ns2:UISkin xsi:type="ns2:UISkinType">
                 <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
@@ -370,6 +406,7 @@
 		                            </ns2:expression>
 		                        </ns2:updateCondition>
 		                    </ns2:column>
+		                    <!-- 
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
 		                            <ns2:value>Interested Party</ns2:value>
@@ -387,6 +424,7 @@
 		                            </ns2:expression>
 		                        </ns2:updateCondition>
 		                    </ns2:column>
+		                     -->
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
 		                            <ns2:value>On SaleDate</ns2:value>
@@ -499,6 +537,18 @@
 		                            <ns2:function>openProductSupplier</ns2:function>
 		                        </ns2:action>
 		                    </ns2:actionGroup>
+		                    <ns2:actionGroup>
+                                <ns2:type>radio</ns2:type>
+                                <ns2:action>
+                                    <!-- first we have the cost, then we generate the price from the cost. -->
+                                    <ns2:uiid>openProductOverview</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>Product Overview</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>openProductOverview</ns2:function>
+                                </ns2:action>
+                             </ns2:actionGroup>
 		                </ns2:component>
 		                <ns2:layoutConstraint>
 		                    <ns2:componentId>productInfoTable</ns2:componentId>
@@ -507,17 +557,26 @@
 		                </ns2:layoutConstraint>
                     </ns2:panel>
                 </ns2:tab>
+                <ns2:tab uiid="productListPanel">
+                    <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+                        <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
+                        <ns2:key>org.shaolin.vogerp.productmodel.page.ProductManagement.productListPanel</ns2:key>
+                    </ns2:title>
+                    <ns2:refEntity UIID="productListPanel">
+                       <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductListOverview" />
+                    </ns2:refEntity>
+                </ns2:tab>
                 <ns2:tab uiid="productTreePanel">
                     <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
                         <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
                         <ns2:key>org.shaolin.vogerp.productmodel.page.ProductManagement.productTreePanel</ns2:key>
                     </ns2:title>
                     <ns2:refEntity UIID="productTreePanel">
-								               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy" />
-								            </ns2:refEntity>
+		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy" />
+		            </ns2:refEntity>
                 </ns2:tab>
             </ns2:component>
-			         <ns2:layoutConstraint>
+			<ns2:layoutConstraint>
                 <ns2:componentId>functionsTab</ns2:componentId>
                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                     x="0" y="0" align="FULL"></ns2:constraint>
@@ -528,12 +587,15 @@
 		 <ns2:DataEntity scope="InOut" name="ceName" category="JavaPrimitive">
 	      <ns2:type entityName="java.lang.String"></ns2:type>
 	      <!-- TODO: replaced by the customer industry!
-	      
 	      fill up an value for ceName by default, the ui engine has a bug here 
 	      that cannot pass a internal mapping value such as following simpleMapping0-->
 	      <ns2:default><expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString></ns2:default>
 	    </ns2:DataEntity>
-		   <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+          <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductListOverview"></ns2:mappingRule>
+          <ns2:UIComponent componentPath="productListPanel" paramName="UIWidgetType"></ns2:UIComponent>
+        </ns2:ComponentMapping>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
           <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy"></ns2:mappingRule>
           <ns2:UIComponent componentPath="productTreePanel" paramName="UIWidgetType"></ns2:UIComponent>
           <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
@@ -541,7 +603,7 @@
 	          <expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString>
 	        </ns2:expression>
 	      </ns2:DataComponent>
-     </ns2:ComponentMapping>
+        </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
 	</ns2:in>

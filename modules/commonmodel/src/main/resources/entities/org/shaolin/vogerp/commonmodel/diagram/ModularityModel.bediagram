@@ -93,6 +93,14 @@
 			<bediagram:name>icon</bediagram:name>
 			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
+		<bediagram:member>
+            <bediagram:name>bigIcon</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>link</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
 	</bediagram:beEntity>
 
 	<bediagram:beEntity needPersist="true" needUIEntity="false">

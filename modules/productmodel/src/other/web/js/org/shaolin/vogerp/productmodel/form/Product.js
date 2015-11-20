@@ -3,6 +3,11 @@
 function org_shaolin_vogerp_productmodel_form_Product(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var idUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "idUI"]
+    });
+
     var photoPathUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "photoPathUI"]
@@ -21,11 +26,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     var uploadFile = new UIMaster.ui.file
     ({
         ui: elementList[prefix + "uploadFile"]
-    });
-
-    var idUI = new UIMaster.ui.hidden
-    ({
-        ui: elementList[prefix + "idUI"]
     });
 
     var nameUILabel = new UIMaster.ui.label
@@ -53,16 +53,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         ui: elementList[prefix + "typeUILabel"]
     });
 
-    var interestedPartyTypeUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "interestedPartyTypeUILabel"]
-    });
-
-    var interestedPartyTypeUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "interestedPartyTypeUI"]
-    });
-
     var onSaleDateUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "onSaleDateUILabel"]
@@ -81,6 +71,16 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     var saleEndDateUI = new UIMaster.ui.calendar
     ({
         ui: elementList[prefix + "saleEndDateUI"]
+    });
+
+    var htmlDescLabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "htmlDescLabel"]
+    });
+
+    var htmlDescUI = new UIMaster.ui.textarea
+    ({
+        ui: elementList[prefix + "htmlDescUI"]
     });
 
     var okbtn = new UIMaster.ui.button
@@ -106,14 +106,16 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "photoPathUI",prefix + "photoUI",prefix + "photoUILabel",prefix + "uploadFile",prefix + "idUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "interestedPartyTypeUILabel",prefix + "interestedPartyTypeUI",prefix + "onSaleDateUILabel",prefix + "onSaleDateUI",prefix + "saleEndDateUILabel",prefix + "saleEndDateUI"]
+        ,subComponents: [prefix + "idUI",prefix + "photoPathUI",prefix + "photoUI",prefix + "photoUILabel",prefix + "uploadFile",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "onSaleDateUILabel",prefix + "onSaleDateUI",prefix + "saleEndDateUILabel",prefix + "saleEndDateUI",prefix + "htmlDescLabel",prefix + "htmlDescUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [photoPathUI,photoUI,photoUILabel,uploadFile,idUI,nameUILabel,nameUI,descriptionUILabel,descriptionUI,typeUILabel,interestedPartyTypeUILabel,interestedPartyTypeUI,onSaleDateUILabel,onSaleDateUI,saleEndDateUILabel,saleEndDateUI,okbtn,cancelbtn,typeUI,fieldPanel,actionPanel]
+        ,items: [idUI,photoPathUI,photoUI,photoUILabel,uploadFile,nameUILabel,nameUI,descriptionUILabel,descriptionUI,typeUILabel,onSaleDateUILabel,onSaleDateUI,saleEndDateUILabel,saleEndDateUI,htmlDescLabel,htmlDescUI,okbtn,cancelbtn,typeUI,fieldPanel,actionPanel]
     });
+
+    Form.idUI=idUI;
 
     Form.photoPathUI=photoPathUI;
 
@@ -122,8 +124,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     Form.photoUILabel=photoUILabel;
 
     Form.uploadFile=uploadFile;
-
-    Form.idUI=idUI;
 
     Form.nameUILabel=nameUILabel;
 
@@ -135,10 +135,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.typeUILabel=typeUILabel;
 
-    Form.interestedPartyTypeUILabel=interestedPartyTypeUILabel;
-
-    Form.interestedPartyTypeUI=interestedPartyTypeUI;
-
     Form.onSaleDateUILabel=onSaleDateUILabel;
 
     Form.onSaleDateUI=onSaleDateUI;
@@ -146,6 +142,10 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     Form.saleEndDateUILabel=saleEndDateUILabel;
 
     Form.saleEndDateUI=saleEndDateUI;
+
+    Form.htmlDescLabel=htmlDescLabel;
+
+    Form.htmlDescUI=htmlDescUI;
 
     Form.okbtn=okbtn;
 

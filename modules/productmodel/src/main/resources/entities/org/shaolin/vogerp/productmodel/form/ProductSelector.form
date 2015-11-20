@@ -81,49 +81,49 @@
 	              import org.shaolin.vogerp.productmodel.util.ProductUtil;
 	              import org.shaolin.vogerp.productmodel.be.ProductImpl;
 	              import org.shaolin.uimaster.page.ajax.TreeItem;
-               import org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute;
-													  import org.shaolin.uimaster.page.ajax.TreeConditions;
-													  import org.hibernate.Session;
-													  import org.shaolin.bmdp.persistence.HibernateUtil;
-													  import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
+                  import org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute;
+                  import org.shaolin.uimaster.page.ajax.TreeConditions;
+                  import org.hibernate.Session;
+                  import org.shaolin.bmdp.persistence.HibernateUtil;
+                  import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
 	              {
-	               ProductImpl criteria = new ProductImpl();
-																criteria.setParentId(0);
-																List[] types = CustProductModel.INSTANCE.getProductRootTypeGroup();
-																if (types[0].size() == 0) {
-																	   return;
-																}
-																
-																List all = ProductModel.INSTANCE.searchProductParent(criteria, null, 0, -1);
-																
-																java.util.Map dataModel = new java.util.HashMap();
-																// categoried by the types
-																ArrayList result = new ArrayList();
-																for (int i = 0; i < types[0].size(); i++) {
-																	String ptype = String.valueOf(types[0].get(i));
-																	TreeItem gitem = new TreeItem();
-																	gitem.setId("mg_" + types[0].get(i));
-																	gitem.setText("" + types[1].get(i));
-																	result.add(gitem);
-																	
-																	// list the nodes under the root node.
-																	for (int j = 0; j < all.size(); j++) {
-																				ProductImpl mg = (ProductImpl) all.get(j);
-																				if (!mg.getType().equals(ptype)) {
-																					   continue;
-																				}
-																				
-																				dataModel.put("pg_" + mg.getId(), mg);
-																				TreeItem pitem = new TreeItem();
-																				pitem.setId("pg_" + mg.getId());
-																				pitem.setText(ProductUtil.getProductSummary(mg));
-																				
-																				gitem.getChildren().add(pitem);
-																	}
-																	
-																}
-																result.add(dataModel);
-														    	return result;
+	                ProductImpl criteria = new ProductImpl();
+					criteria.setParentId(0);
+					List[] types = CustProductModel.INSTANCE.getProductRootTypeGroup();
+					if (types[0].size() == 0) {
+						   return;
+					}
+					
+					List all = ProductModel.INSTANCE.searchProductParent(criteria, null, 0, -1);
+					
+					java.util.Map dataModel = new java.util.HashMap();
+					// categoried by the types
+					ArrayList result = new ArrayList();
+					for (int i = 0; i < types[0].size(); i++) {
+						String ptype = String.valueOf(types[0].get(i));
+						TreeItem gitem = new TreeItem();
+						gitem.setId("mg_" + types[0].get(i));
+						gitem.setText("" + types[1].get(i));
+						result.add(gitem);
+						
+						// list the nodes under the root node.
+						for (int j = 0; j < all.size(); j++) {
+									ProductImpl mg = (ProductImpl) all.get(j);
+									if (!mg.getType().equals(ptype)) {
+										   continue;
+									}
+									
+									dataModel.put("pg_" + mg.getId(), mg);
+									TreeItem pitem = new TreeItem();
+									pitem.setId("pg_" + mg.getId());
+									pitem.setText(ProductUtil.getProductSummary(mg));
+									
+									gitem.getChildren().add(pitem);
+						}
+						
+					}
+					result.add(dataModel);
+			    	return result;
 	              }]]></ns2:expressionString>
 	          </ns2:expression>
 	      </ns2:initExpression>

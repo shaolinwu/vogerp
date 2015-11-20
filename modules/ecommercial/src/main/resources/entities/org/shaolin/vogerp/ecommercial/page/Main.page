@@ -10,21 +10,20 @@
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			</ns2:layout>
-			<ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="topBar">
-      <ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.TopBar" />
-   </ns2:component>
-   <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="searchBar">
-      <ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.SearchBar" />
-   </ns2:component>
-   <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="content">
-      <ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.Content" />
-   </ns2:component>
-   <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="bottomBar">
-      <ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.BottomBar" />
-   </ns2:component>
+			<ns2:component xsi:type="ns2:UIReferenceEntityType"
+				UIID="topBar">
+				<ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.TopBar" />
+			</ns2:component>
+			<ns2:component xsi:type="ns2:UIReferenceEntityType"
+				UIID="searchBar">
+				<ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.SearchBar" />
+			</ns2:component>
+			<ns2:component xsi:type="ns2:UIReferenceEntityType"
+				UIID="content">
+				<ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.Content" />
+			</ns2:component>
 			<ns2:layoutConstraint>
 				<ns2:componentId>topBar</ns2:componentId>
 				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
@@ -36,34 +35,28 @@
 					x="0" y="1" align="FULL"></ns2:constraint>
 			</ns2:layoutConstraint>
 			<ns2:layoutConstraint>
-    <ns2:componentId>content</ns2:componentId>
-    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-     x="0" y="2" align="FULL"></ns2:constraint>
-   </ns2:layoutConstraint>
-   <ns2:layoutConstraint>
-    <ns2:componentId>bottomBar</ns2:componentId>
-    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-     x="0" y="3" align="FULL"></ns2:constraint>
-   </ns2:layoutConstraint>
+				<ns2:componentId>content</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="2" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>
-		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-					<ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.TopBar"></ns2:mappingRule>
-					<ns2:UIComponent componentPath="topBar" paramName="UIWidgetType"></ns2:UIComponent>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
+			name="simpleMapping0">
+			<ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.TopBar"></ns2:mappingRule>
+			<ns2:UIComponent componentPath="topBar" paramName="UIWidgetType"></ns2:UIComponent>
 		</ns2:ComponentMapping>
-		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
-     <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.SearchBar"></ns2:mappingRule>
-     <ns2:UIComponent componentPath="searchBar" paramName="UIWidgetType"></ns2:UIComponent>
-  </ns2:ComponentMapping>
-  <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
-     <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.Content"></ns2:mappingRule>
-     <ns2:UIComponent componentPath="content" paramName="UIWidgetType"></ns2:UIComponent>
-  </ns2:ComponentMapping>
-  <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
-     <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.BottomBar"></ns2:mappingRule>
-     <ns2:UIComponent componentPath="bottomBar" paramName="UIWidgetType"></ns2:UIComponent>
-  </ns2:ComponentMapping>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
+			name="simpleMapping1">
+			<ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.SearchBar"></ns2:mappingRule>
+			<ns2:UIComponent componentPath="searchBar" paramName="UIWidgetType"></ns2:UIComponent>
+		</ns2:ComponentMapping>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
+			name="simpleMapping2">
+			<ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.Content"></ns2:mappingRule>
+			<ns2:UIComponent componentPath="content" paramName="UIWidgetType"></ns2:UIComponent>
+		</ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
 		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">

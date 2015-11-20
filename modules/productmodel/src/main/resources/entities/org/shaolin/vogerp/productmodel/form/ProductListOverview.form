@@ -1,0 +1,141 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.productmodel.form.ProductListOverview</entityName>
+	<systemVersion>0</systemVersion>
+	<ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+		<ns2:layout xsi:type="ns2:TableLayoutType">
+			<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+			<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+		</ns2:layout>
+		<ns2:component xsi:type="ns2:UIPanelType" UIID="productInfoPanel">
+            <ns2:layout xsi:type="ns2:TableLayoutType">
+                <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+            </ns2:layout>
+            <ns2:component xsi:type="ns2:UITableType" UIID="productInfoTable">
+                <ns2:beElement>org.shaolin.vogerp.productmodel.be.Product</ns2:beElement>
+                <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Normal</ns2:selectMode>
+                <ns2:defaultRowSize>20</ns2:defaultRowSize>
+                <ns2:showBigItem>true</ns2:showBigItem>
+                <ns2:showActionBar>true</ns2:showActionBar>
+                <ns2:showFilter>true</ns2:showFilter>
+                <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                    <ns2:expression xsi:type="ns2:ExpressionType">
+                        <ns2:expressionString><![CDATA[
+                        import java.util.List;
+                        import org.shaolin.uimaster.page.ajax.TableConditions;
+                        import org.shaolin.vogerp.productmodel.be.IProduct;
+                        import org.shaolin.vogerp.productmodel.be.ProductImpl;
+                        import org.shaolin.vogerp.productmodel.dao.ProductModel;
+                        {
+                              if ($tableCondition == null) {
+                                 $tableCondition = TableConditions.createCondition(new ProductImpl());
+                              }
+                              ProductImpl condition = (ProductImpl)$tableCondition.getCondition();
+                              return ProductModel.INSTANCE.searchProductInfo(condition,
+                                            $tableCondition.getOrders(),
+                                            $tableCondition.getOffset(), 
+                                            $tableCondition.getCount());
+                        }]]></ns2:expressionString>
+                    </ns2:expression>
+                </ns2:query>
+                <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
+                    <ns2:expression xsi:type="ns2:ExpressionType">
+                        <ns2:expressionString><![CDATA[
+                        import org.shaolin.uimaster.page.ajax.TableConditions;
+                        import org.shaolin.vogerp.productmodel.be.IProduct;
+                        import org.shaolin.vogerp.productmodel.be.ProductImpl;
+                        import org.shaolin.vogerp.productmodel.dao.ProductModel;
+                        {
+                             if ($tableCondition == null) {
+                                $tableCondition = TableConditions.createCondition(new ProductImpl());
+                             }
+                             ProductImpl condition = (ProductImpl)$tableCondition.getCondition();
+                             return ProductModel.INSTANCE.searchProductInfoCount(condition);
+                        }]]></ns2:expressionString>
+                    </ns2:expression>
+                </ns2:totalCount>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>Description</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.description</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                </ns2:column>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>HTML Item</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.id</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>HTMLItem</ns2:type></ns2:uiType>
+                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                        <ns2:expression xsi:type="ns2:ExpressionType">
+                            <ns2:expressionString><![CDATA[
+                            import java.util.HashMap;
+		                    import org.shaolin.uimaster.page.AjaxContext;
+		                    import org.shaolin.uimaster.page.AjaxActionHelper;
+		                    import org.shaolin.uimaster.page.ajax.*;
+		                    import org.shaolin.uimaster.page.ajax.json.IDataItem;
+		                    import org.shaolin.vogerp.productmodel.be.ProductImpl;
+		                    {
+		                        HashMap input = new HashMap();
+		                        input.put("beObject", $rowBE);
+		                        RefForm form = new RefForm("productBasicForm"+$rowBE.getId(), 
+		                          "org.shaolin.vogerp.productmodel.form.ProductBasicOverview", input);
+		                        StringBuffer sb = new StringBuffer();
+		                        sb.append(form.generateHTML());
+		                        sb.append("<script type=\"text/javascript\">$(document).ready(function(){");
+		                        sb.append("getElementListSingle(document.getElementById(\"productBasicForm");
+		                        sb.append($rowBE.getId());
+		                        sb.append(".Form\"));\n");
+		                        sb.append(form.generateJS());
+		                        sb.append("});</script>");
+		                        return sb.toString();
+		                    }]]></ns2:expressionString>
+                        </ns2:expression>
+                    </ns2:rowExpression>
+                    <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                        <ns2:expression xsi:type="ns2:ExpressionType">
+                            <ns2:expressionString><![CDATA[
+                            import org.shaolin.bmdp.runtime.AppContext;
+                            {
+                            }]]></ns2:expressionString>
+                        </ns2:expression>
+                    </ns2:updateCondition>
+                </ns2:column>
+                <ns2:defaultActions>
+                </ns2:defaultActions>
+            </ns2:component>
+            <ns2:layoutConstraint>
+                <ns2:componentId>productInfoTable</ns2:componentId>
+                <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                    x="0" y="0" align="FULL"></ns2:constraint>
+            </ns2:layoutConstraint>
+         </ns2:component>
+         <ns2:layoutConstraint>
+             <ns2:componentId>productInfoPanel</ns2:componentId>
+             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                 x="0" y="0" align="FULL"></ns2:constraint>
+         </ns2:layoutConstraint>
+	</ns2:body>
+	<ns2:mapping>
+		 <ns2:DataEntity scope="InOut" name="ceName" category="JavaPrimitive">
+	      <ns2:type entityName="java.lang.String"></ns2:type>
+	      <!-- TODO: replaced by the customer industry!
+	      
+	      fill up an value for ceName by default, the ui engine has a bug here 
+	      that cannot pass a internal mapping value such as following simpleMapping0-->
+	      <ns2:default><expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString></ns2:default>
+	    </ns2:DataEntity>
+	    <ns2:DataToUIMappingOperation>
+	      <expressionString>{
+	         @odContext.executeAllMappings();
+	      }</expressionString>
+	    </ns2:DataToUIMappingOperation>
+	    <ns2:UIToDataMappingOperation>
+	      <expressionString>{
+	         @odContext.executeAllMappings();
+	      }</expressionString>
+	    </ns2:UIToDataMappingOperation>
+	</ns2:mapping>
+</ns2:UIEntity>

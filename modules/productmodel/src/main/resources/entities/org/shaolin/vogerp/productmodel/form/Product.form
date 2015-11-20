@@ -17,6 +17,7 @@
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
+        import org.shaolin.bmdp.runtime.AppContext;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.productmodel.be.ProductImpl;
@@ -26,6 +27,8 @@
             HashMap input = (HashMap)form.ui2Data();
             ProductImpl defaultUser = (ProductImpl)input.get("beObject");
             if (defaultUser.getId() == 0) {
+                //TODO:
+                defaultUser.setHtmlDesc("/product/" + AppContext.get().getAppName() +"/" + defaultUser.getId() + "/desc.html");
                 ProductModel.INSTANCE.create(defaultUser);
             } else {
                 ProductModel.INSTANCE.update(defaultUser);
@@ -69,8 +72,8 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
-        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="idUI">
        <ns2:secure>true</ns2:secure>
@@ -107,7 +110,7 @@
         <ns2:storedPath xsi:type="ns2:ExpressionPropertyType">
          <ns2:expression>
            <expressionString>import org.shaolin.bmdp.runtime.AppContext;
-           { return "/images/product/" + AppContext.get().getAppName() +"/"+ $beObject.getId(); 
+           { return "/product/" + AppContext.get().getAppName() +"/"+ $beObject.getId() + "/images"; 
            }</expressionString>
          </ns2:expression>
         </ns2:storedPath>
@@ -142,6 +145,7 @@
       <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="typeUI">
          <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox" />
       </ns2:component>
+      <!-- 
       <ns2:component xsi:type="ns2:UILabelType" UIID="interestedPartyTypeUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -152,6 +156,7 @@
       <ns2:component xsi:type="ns2:UIComboBoxType" UIID="interestedPartyTypeUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
+       -->
       <ns2:component xsi:type="ns2:UILabelType" UIID="onSaleDateUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -171,6 +176,19 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UIDateType" UIID="saleEndDateUI">
       	<ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="htmlDescLabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.productmodel.be.Product.htmlDesc</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UITextAreaType" UIID="htmlDescUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:htmlSupport xsi:type="ns2:BooleanPropertyType">
+            <value>true</value>
+        </ns2:htmlSupport>
       </ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>photoPathUI</ns2:componentId>
@@ -212,6 +230,7 @@
         <ns2:componentId>typeUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
+      <!-- 
       <ns2:layoutConstraint>
         <ns2:componentId>interestedPartyTypeUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
@@ -220,20 +239,29 @@
         <ns2:componentId>interestedPartyTypeUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
+       -->
       <ns2:layoutConstraint>
         <ns2:componentId>onSaleDateUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>onSaleDateUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>saleEndDateUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="7" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>saleEndDateUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>htmlDescLabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="7" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>htmlDescUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="7" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
@@ -332,6 +360,7 @@
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
+    <!-- 
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping8">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
       <ns2:UIComponent componentPath="interestedPartyTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
@@ -342,10 +371,16 @@
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
+     -->
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping9">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="photoUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.photos" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping10">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="htmlDescUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.htmlDesc" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>{

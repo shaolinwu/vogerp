@@ -62,16 +62,16 @@
         <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
       </ns2:layout>
-						<ns2:dynamicUIFilter xsi:type="ns2:ExpressionPropertyType">
-							<ns2:expression>
-							  <expressionString>
-							  import org.shaolin.bmdp.runtime.AppContext;
-							  { 
-							  	return $product.getType(); 
-							  }
-							  </expressionString>
-							</ns2:expression>
-						</ns2:dynamicUIFilter>
+		<ns2:dynamicUIFilter xsi:type="ns2:ExpressionPropertyType">
+			<ns2:expression>
+			  <expressionString>
+			  import org.shaolin.bmdp.runtime.AppContext;
+			  { 
+			  	return $product.getType(); 
+			  }
+			  </expressionString>
+			</ns2:expression>
+		</ns2:dynamicUIFilter>
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="idUI">
         <ns2:secure>
           <ns2:value>true</ns2:value>

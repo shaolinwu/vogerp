@@ -11,6 +11,7 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
+        ,items: ["saleOrderInfoPanel","purcharseOrderInfoPanel","productOrderInfoPanel","inStoreOrderInfoPanel","outStoreOrderInfoPanel",""]
     });
     var saleOrderTable = new UIMaster.ui.objectlist
     ({

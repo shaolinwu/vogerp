@@ -12,6 +12,21 @@
 	   	       ]]></expression>
    	       </node>
         </node>
+        <node name="webConstant">
+            <node name="commoncss">
+                <node name="org.shaolin.vogerp.productmodel.page.ProductManagement">
+                    <item name="font-awesome" value="/css/jsgallery/font-awesome.min.css" />
+                    <item name="jgallery.min" value="/css/jsgallery/jgallery.min.css?v=1.5.0" />
+                </node>
+            </node>
+            <node name="commonjs">
+                <node name="org.shaolin.vogerp.productmodel.page.ProductManagement">
+                    <item name="jgallery" value="/js/controls/jsgallery/jgallery.min.js" />
+                    <item name="touchswipe" value="/js/controls/jsgallery/touchswipe.js" />
+                    <item name="tinycolor" value="/js/controls/jsgallery/tinycolor-0.9.16.min.js" />
+                </node>
+            </node>
+        </node>
     </node>
 </registry>
 

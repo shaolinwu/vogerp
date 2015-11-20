@@ -56,11 +56,11 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
-	     <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="typeUI">
+      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="typeUI">
          <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithRadioGroup" />
       </ns2:component>
-	     <ns2:layoutConstraint>
-        <ns2:componentId>productTree</ns2:componentId>
+	  <ns2:layoutConstraint>
+        <ns2:componentId>typeUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
@@ -75,11 +75,10 @@
       <type entityName="java.lang.Long"></type>
     </ns2:DataEntity>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-						<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-						<ns2:UIComponent componentPath="selectProductNodeUI" paramName="UIWidgetType"></ns2:UIComponent>
-						<ns2:DataComponent xsi:type="ns2:ComponentParamType"
-							componentPath="productId" paramName="StringData"></ns2:DataComponent>
-				</ns2:ComponentMapping>
+		<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+		<ns2:UIComponent componentPath="selectProductNodeUI" paramName="UIWidgetType"></ns2:UIComponent>
+		<ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="productId" paramName="StringData"></ns2:DataComponent>
+	</ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
       {
@@ -88,19 +87,15 @@
     ]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
-      <expressionString>
+      <expressionString><![CDATA[
       import org.shaolin.uimaster.page.AjaxContext;
       import org.shaolin.bmdp.runtime.AppContext;
       import org.shaolin.uimaster.page.ajax.*;
       import org.shaolin.vogerp.productmodel.be.ProductImpl;
       {
-		     @odContext.executeAllMappings();
-		     Tree tree = @page.getTree("productTree");
-		     if (tree.getSelectedObject() != null) {
-		        $productId = ((ProductImpl)tree.getSelectedObject()).getId();
-		     }
-	     }
-	     </expressionString>
+	     @odContext.executeAllMappings();
+      }
+	  ]]></expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>
 </ns2:UIEntity>

@@ -11,7 +11,7 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
-        ,items: ["productInfoPanel","productTreePanel",""]
+        ,items: ["productInfoPanel","productListPanel","productTreePanel",""]
     });
     var productInfoTable = new UIMaster.ui.objectlist
     ({
@@ -24,6 +24,8 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
         ,items: []
         ,subComponents: [prefix + "productInfoTable"]
     });
+    var productListPanel = new org_shaolin_vogerp_productmodel_form_ProductListOverview({"prefix":prefix + "productListPanel."});
+
     var productTreePanel = new org_shaolin_vogerp_commonmodel_form_CEHierarchy({"prefix":prefix + "productTreePanel."});
 
 
@@ -59,6 +61,8 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
     Form.openProductCost = org_shaolin_vogerp_productmodel_page_ProductManagement_openProductCost;
 
     Form.expandTreeNode = org_shaolin_vogerp_productmodel_page_ProductManagement_expandTreeNode;
+
+    Form.openProductOverview = org_shaolin_vogerp_productmodel_page_ProductManagement_openProductOverview;
 
     Form.initPageJs = org_shaolin_vogerp_productmodel_page_ProductManagement_initPageJs;
 
@@ -158,6 +162,17 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_productmodel_page_ProductManagement_expandTreeNode */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_productmodel_page_ProductManagement_openProductOverview(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_page_ProductManagement_openProductOverview */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openProductOverview-20151117",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_productmodel_page_ProductManagement_openProductOverview */
 
 
     function org_shaolin_vogerp_productmodel_page_ProductManagement_initPageJs(){/* Gen_First:org_shaolin_vogerp_productmodel_page_ProductManagement_initPageJs */
