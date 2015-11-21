@@ -130,7 +130,37 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfo(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.countryUILabel=countryUILabel;
+
+    Form.countryUI=countryUI;
+
+    Form.cityUILabel=cityUILabel;
+
+    Form.cityUI=cityUI;
+
+    Form.streetUILabel=streetUILabel;
+
+    Form.streetUI=streetUI;
+
+    Form.blockUILabel=blockUILabel;
+
+    Form.blockUI=blockUI;
+
+    Form.zipcodeUILabel=zipcodeUILabel;
+
+    Form.zipcodeUI=zipcodeUI;
+
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

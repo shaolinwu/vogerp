@@ -61,7 +61,19 @@ function org_shaolin_vogerp_commonmodel_form_ModelPermission(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.typeUILabel=typeUILabel;
+
+    Form.typeUI=typeUI;
+
+    Form.modulesUILabel=modulesUILabel;
+
+    Form.modulesUI=modulesUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

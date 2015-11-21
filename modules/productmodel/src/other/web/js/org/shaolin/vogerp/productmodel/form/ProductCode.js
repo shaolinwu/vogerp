@@ -3,11 +3,6 @@
 function org_shaolin_vogerp_productmodel_form_ProductCode(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var idUI = new UIMaster.ui.hidden
-    ({
-        ui: elementList[prefix + "idUI"]
-    });
-
     var productIdUI = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "productIdUI"]
@@ -33,37 +28,18 @@ function org_shaolin_vogerp_productmodel_form_ProductCode(json)
         ui: elementList[prefix + "typeUI"]
     });
 
-    var okbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "okbtn"]
-    });
-
-    var cancelbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "cancelbtn"]
-    });
-
-    var actionPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "actionPanel"]
-        ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
-    });
-
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "productIdUI",prefix + "codeUILabel",prefix + "codeUI",prefix + "typeUILabel",prefix + "typeUI"]
+        ,subComponents: [prefix + "productIdUI",prefix + "codeUILabel",prefix + "codeUI",prefix + "typeUILabel",prefix + "typeUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,productIdUI,codeUILabel,codeUI,typeUILabel,typeUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [productIdUI,codeUILabel,codeUI,typeUILabel,typeUI,fieldPanel]
     });
-
-    Form.idUI=idUI;
 
     Form.productIdUI=productIdUI;
 
@@ -75,13 +51,17 @@ function org_shaolin_vogerp_productmodel_form_ProductCode(json)
 
     Form.typeUI=typeUI;
 
-    Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
-
     Form.fieldPanel=fieldPanel;
 
-    Form.actionPanel=actionPanel;
+    Form.productIdUI=productIdUI;
+
+    Form.codeUILabel=codeUILabel;
+
+    Form.codeUI=codeUI;
+
+    Form.typeUILabel=typeUILabel;
+
+    Form.typeUI=typeUI;
 
     Form.user_constructor = function()
     {

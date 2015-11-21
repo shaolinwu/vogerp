@@ -32,6 +32,10 @@ function org_shaolin_vogerp_productmodel_form_ProductCharacteristic(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.productIdUI=productIdUI;
+
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_productmodel_form_ProductCharacteristic */

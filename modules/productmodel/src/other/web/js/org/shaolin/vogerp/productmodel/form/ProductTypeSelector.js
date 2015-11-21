@@ -22,6 +22,8 @@ function org_shaolin_vogerp_productmodel_form_ProductTypeSelector(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.typeUI=typeUI;
+
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_productmodel_form_ProductTypeSelector */

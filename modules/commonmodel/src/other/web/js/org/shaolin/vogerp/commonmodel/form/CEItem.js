@@ -123,7 +123,35 @@ function org_shaolin_vogerp_commonmodel_form_CEItem(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.ceNameUILabel=ceNameUILabel;
+
+    Form.ceNameUI=ceNameUI;
+
+    Form.i18nKeyUILabel=i18nKeyUILabel;
+
+    Form.i18nKeyUI=i18nKeyUI;
+
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
+    Form.intValueUILabel=intValueUILabel;
+
+    Form.intValueUI=intValueUI;
+
+    Form.strValueUILabel=strValueUILabel;
+
+    Form.strValueUI=strValueUI;
+
+    Form.iconUILabel=iconUILabel;
+
+    Form.iconUI=iconUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

@@ -29,6 +29,8 @@ function org_shaolin_vogerp_commonmodel_form_CEExtensionManager(json)
 
     Form.constantInfoPanel=constantInfoPanel;
 
+    Form.typeUI=typeUI;
+
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_commonmodel_form_CEExtensionManager */

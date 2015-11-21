@@ -33,6 +33,12 @@ function org_shaolin_vogerp_productmodel_form_ProductDetailOverview(json)
         ui: elementList[prefix + "orderActionUILabel"]
     });
 
+    var functionsTab = new UIMaster.ui.tab
+    ({
+        ui: elementList[prefix + "functionsTab"]
+        ,items: []
+        ,subComponents: [prefix + "detailPanel"]
+    });
     var nameUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "nameUILabel"]
@@ -58,15 +64,13 @@ function org_shaolin_vogerp_productmodel_form_ProductDetailOverview(json)
         ui: elementList[prefix + "typeUILabel"]
     });
 
-    var htmlDescUI = new UIMaster.ui.textarea
-    ({
-        ui: elementList[prefix + "htmlDescUI"]
-    });
+    var typeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "typeUI."});
 
-    var functionsTab = new UIMaster.ui.tab
+    var attrPanel = new UIMaster.ui.panel
     ({
-        ui: elementList[prefix + "functionsTab"]
-        ,items: ["detailPanel",""]
+        ui: elementList[prefix + "attrPanel"]
+        ,items: []
+        ,subComponents: [prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "typeUILabel",prefix + "typeUI"]
     });
     var htmlDescUI = new UIMaster.ui.textarea
     ({
@@ -85,20 +89,11 @@ function org_shaolin_vogerp_productmodel_form_ProductDetailOverview(json)
         ui: elementList[prefix + "cancelbtn"]
     });
 
-    var typeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "typeUI."});
-
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
         ,subComponents: [prefix + "cancelbtn"]
-    });
-
-    var attrPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "attrPanel"]
-        ,items: []
-        ,subComponents: [prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "typeUILabel",prefix + "typeUI"]
     });
 
     var orderActionPanel = new UIMaster.ui.panel
@@ -139,7 +134,7 @@ function org_shaolin_vogerp_productmodel_form_ProductDetailOverview(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [photoUI,pricePackageUILabel,pricePackageUI,amountUILabel,amountUI,orderActionUILabel,nameUILabel,nameUI,descriptionUILabel,descriptionUI,typeUILabel,htmlDescUI,functionsTab,cancelbtn,typeUI,fieldPanel,attributePanel,photoPanel,orderPanel,orderActionPanel,attrPanel,actionPanel]
+        ,items: [photoUI,pricePackageUILabel,pricePackageUI,amountUILabel,amountUI,orderActionUILabel,functionsTab,cancelbtn,fieldPanel,attributePanel,photoPanel,orderPanel,orderActionPanel,actionPanel]
     });
 
     Form.photoUI=photoUI;
@@ -154,6 +149,12 @@ function org_shaolin_vogerp_productmodel_form_ProductDetailOverview(json)
 
     Form.orderActionUILabel=orderActionUILabel;
 
+    Form.functionsTab=functionsTab;
+
+    Form.detailPanel=detailPanel;
+
+    Form.attrPanel=attrPanel;
+
     Form.nameUILabel=nameUILabel;
 
     Form.nameUI=nameUI;
@@ -164,13 +165,11 @@ function org_shaolin_vogerp_productmodel_form_ProductDetailOverview(json)
 
     Form.typeUILabel=typeUILabel;
 
+    Form.typeUI=typeUI;
+
     Form.htmlDescUI=htmlDescUI;
 
-    Form.functionsTab=functionsTab;
-
     Form.cancelbtn=cancelbtn;
-
-    Form.typeUI=typeUI;
 
     Form.fieldPanel=fieldPanel;
 
@@ -178,13 +177,85 @@ function org_shaolin_vogerp_productmodel_form_ProductDetailOverview(json)
 
     Form.photoPanel=photoPanel;
 
+    Form.photoUI=photoUI;
+
     Form.orderPanel=orderPanel;
+
+    Form.pricePackageUILabel=pricePackageUILabel;
+
+    Form.pricePackageUI=pricePackageUI;
+
+    Form.amountUILabel=amountUILabel;
+
+    Form.amountUI=amountUI;
+
+    Form.orderActionUILabel=orderActionUILabel;
 
     Form.orderActionPanel=orderActionPanel;
 
+    Form.functionsTab=functionsTab;
+
+    Form.detailPanel=detailPanel;
+
     Form.attrPanel=attrPanel;
 
+    Form.nameUILabel=nameUILabel;
+
+    Form.nameUI=nameUI;
+
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
+    Form.typeUILabel=typeUILabel;
+
+    Form.typeUI=typeUI;
+
+    Form.htmlDescUI=htmlDescUI;
+
+    Form.attributePanel=attributePanel;
+
+    Form.photoPanel=photoPanel;
+
+    Form.photoUI=photoUI;
+
+    Form.orderPanel=orderPanel;
+
+    Form.pricePackageUILabel=pricePackageUILabel;
+
+    Form.pricePackageUI=pricePackageUI;
+
+    Form.amountUILabel=amountUILabel;
+
+    Form.amountUI=amountUI;
+
+    Form.orderActionUILabel=orderActionUILabel;
+
+    Form.orderActionPanel=orderActionPanel;
+
+    Form.photoPanel=photoPanel;
+
+    Form.photoUI=photoUI;
+
+    Form.orderPanel=orderPanel;
+
+    Form.pricePackageUILabel=pricePackageUILabel;
+
+    Form.pricePackageUI=pricePackageUI;
+
+    Form.amountUILabel=amountUILabel;
+
+    Form.amountUI=amountUI;
+
+    Form.orderActionUILabel=orderActionUILabel;
+
+    Form.orderActionPanel=orderActionPanel;
+
+    Form.orderActionPanel=orderActionPanel;
+
     Form.actionPanel=actionPanel;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

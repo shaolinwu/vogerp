@@ -3,11 +3,6 @@
 function org_shaolin_vogerp_order_page_OrderManagement(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var saleOrderTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "saleOrderTable"]
-    });
-
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
@@ -73,10 +68,8 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [saleOrderTable,functionsTab]
+        ,items: [functionsTab]
     });
-
-    Form.saleOrderTable=saleOrderTable;
 
     Form.functionsTab=functionsTab;
 

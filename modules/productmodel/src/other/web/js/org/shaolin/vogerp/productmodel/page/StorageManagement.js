@@ -3,15 +3,11 @@
 function org_shaolin_vogerp_productmodel_page_StorageManagement(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var storageTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "storageTable"]
-    });
-
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
-        ,items: ["storagePanel","storageItemPanel",""]
+        ,items: []
+        ,subComponents: [prefix + "storagePanel",prefix + "storageItemPanel"]
     });
     var storageTable = new UIMaster.ui.objectlist
     ({
@@ -40,12 +36,18 @@ function org_shaolin_vogerp_productmodel_page_StorageManagement(json)
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [storageTable,functionsTab]
+        ,items: [functionsTab]
     });
+
+    Form.functionsTab=functionsTab;
+
+    Form.storagePanel=storagePanel;
 
     Form.storageTable=storageTable;
 
-    Form.functionsTab=functionsTab;
+    Form.storageItemPanel=storageItemPanel;
+
+    Form.storageItemTable=storageItemTable;
 
     Form.user_constructor = function()
     {

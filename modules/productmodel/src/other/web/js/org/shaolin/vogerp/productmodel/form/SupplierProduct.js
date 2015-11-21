@@ -130,7 +130,37 @@ function org_shaolin_vogerp_productmodel_form_SupplierProduct(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.orgIdUI=orgIdUI;
+
+    Form.productIdUI=productIdUI;
+
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
+    Form.feasibleStartDateUILabel=feasibleStartDateUILabel;
+
+    Form.feasibleStartDateUI=feasibleStartDateUI;
+
+    Form.standardDaysUILabel=standardDaysUILabel;
+
+    Form.standardDaysUI=standardDaysUI;
+
+    Form.priorityTypeUILabel=priorityTypeUILabel;
+
+    Form.priorityTypeUI=priorityTypeUI;
+
+    Form.levelTypeUILabel=levelTypeUILabel;
+
+    Form.levelTypeUI=levelTypeUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

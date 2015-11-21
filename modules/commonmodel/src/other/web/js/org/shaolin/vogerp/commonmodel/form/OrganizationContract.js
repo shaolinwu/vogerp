@@ -109,7 +109,31 @@ function org_shaolin_vogerp_commonmodel_form_OrganizationContract(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUILabel=idUILabel;
+
+    Form.idUI=idUI;
+
+    Form.orgIdUILabel=orgIdUILabel;
+
+    Form.orgIdUI=orgIdUI;
+
+    Form.typeUILabel=typeUILabel;
+
+    Form.typeUI=typeUI;
+
+    Form.termsUILabel=termsUILabel;
+
+    Form.termsUI=termsUI;
+
+    Form.expirationDateUILabel=expirationDateUILabel;
+
+    Form.expirationDateUI=expirationDateUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

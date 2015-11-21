@@ -172,7 +172,49 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.productIdUILabel=productIdUILabel;
+
+    Form.productIdUI=productIdUI;
+
+    Form.productUILabel=productUILabel;
+
+    Form.productUI=productUI;
+
+    Form.packagesUILabel=packagesUILabel;
+
+    Form.packagesUI=packagesUI;
+
+    Form.partyIdUILabel=partyIdUILabel;
+
+    Form.partyIdUI=partyIdUI;
+
+    Form.priceUILabel=priceUILabel;
+
+    Form.priceUI=priceUI;
+
+    Form.exceedAmountUILabel=exceedAmountUILabel;
+
+    Form.exceedAmountUI=exceedAmountUI;
+
+    Form.discountUILabel=discountUILabel;
+
+    Form.discountUI=discountUI;
+
+    Form.commentsUILabel=commentsUILabel;
+
+    Form.commentsUI=commentsUI;
+
+    Form.typeUILabel=typeUILabel;
+
+    Form.typeUI=typeUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

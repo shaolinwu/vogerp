@@ -127,7 +127,37 @@ function org_shaolin_vogerp_productmodel_form_StorageItem(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.productIdUILabel=productIdUILabel;
+
+    Form.productIdUI=productIdUI;
+
+    Form.warehouseIdUILabel=warehouseIdUILabel;
+
+    Form.warehouseIdUI=warehouseIdUI;
+
+    Form.coordinateUILabel=coordinateUILabel;
+
+    Form.coordinateUI=coordinateUI;
+
+    Form.itemStatusUILabel=itemStatusUILabel;
+
+    Form.itemStatusUI=itemStatusUI;
+
+    Form.numberUILabel=numberUILabel;
+
+    Form.numberUI=numberUI;
+
+    Form.serialNumberUILabel=serialNumberUILabel;
+
+    Form.serialNumberUI=serialNumberUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

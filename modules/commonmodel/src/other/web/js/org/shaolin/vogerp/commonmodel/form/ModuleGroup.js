@@ -134,7 +134,39 @@ function org_shaolin_vogerp_commonmodel_form_ModuleGroup(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.groupIdUI=groupIdUI;
+
+    Form.parentIdUI=parentIdUI;
+
+    Form.nameUILabel=nameUILabel;
+
+    Form.nameUI=nameUI;
+
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
+    Form.accessURLUILabel=accessURLUILabel;
+
+    Form.accessURLUI=accessURLUI;
+
+    Form.smallIconUILabel=smallIconUILabel;
+
+    Form.smallIconUI=smallIconUI;
+
+    Form.bigIconUILabel=bigIconUILabel;
+
+    Form.roleUILabel=roleUILabel;
+
+    Form.roleUI=roleUI;
+
+    Form.bigIconUI=bigIconUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

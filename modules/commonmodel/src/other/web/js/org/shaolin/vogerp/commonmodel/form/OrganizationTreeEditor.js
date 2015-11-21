@@ -42,6 +42,14 @@ function org_shaolin_vogerp_commonmodel_form_OrganizationTreeEditor(json)
 
     Form.treePanel=treePanel;
 
+    Form.organizationTree=organizationTree;
+
+    Form.detailPanel=detailPanel;
+
+    Form.treePanel=treePanel;
+
+    Form.organizationTree=organizationTree;
+
     Form.detailPanel=detailPanel;
 
     Form.user_constructor = function()

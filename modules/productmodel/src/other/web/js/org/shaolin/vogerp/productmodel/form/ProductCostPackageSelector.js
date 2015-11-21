@@ -32,6 +32,10 @@ function org_shaolin_vogerp_productmodel_form_ProductCostPackageSelector(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.selectProductNodeUI=selectProductNodeUI;
+
+    Form.productTree=productTree;
+
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_productmodel_form_ProductCostPackageSelector */

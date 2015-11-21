@@ -79,9 +79,29 @@ function org_shaolin_vogerp_productmodel_form_ProductCostTable(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.parentIdUI=parentIdUI;
+
+    Form.productCharacterUI=productCharacterUI;
+
+    Form.itemTable=itemTable;
+
     Form.statisticPanel=statisticPanel;
 
+    Form.priceUILabel=priceUILabel;
+
+    Form.priceUI=priceUI;
+
+    Form.statisticPanel=statisticPanel;
+
+    Form.priceUILabel=priceUILabel;
+
+    Form.priceUI=priceUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

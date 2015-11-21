@@ -24,6 +24,7 @@
                     <item name="jgallery" value="/js/controls/jsgallery/jgallery.min.js" />
                     <item name="touchswipe" value="/js/controls/jsgallery/touchswipe.js" />
                     <item name="tinycolor" value="/js/controls/jsgallery/tinycolor-0.9.16.min.js" />
+                    <item name="ckeditor" value="/js/controls/ckeditor/ckeditor.js" />
                 </node>
             </node>
         </node>

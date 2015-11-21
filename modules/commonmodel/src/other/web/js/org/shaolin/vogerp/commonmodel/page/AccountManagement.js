@@ -3,15 +3,11 @@
 function org_shaolin_vogerp_commonmodel_page_AccountManagement(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var personalInfoTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "personalInfoTable"]
-    });
-
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
-        ,items: ["personalInfoPanel",""]
+        ,items: []
+        ,subComponents: [prefix + "personalInfoPanel"]
     });
     var personalInfoTable = new UIMaster.ui.objectlist
     ({
@@ -29,12 +25,14 @@ function org_shaolin_vogerp_commonmodel_page_AccountManagement(json)
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [personalInfoTable,functionsTab]
+        ,items: [functionsTab]
     });
 
-    Form.personalInfoTable=personalInfoTable;
-
     Form.functionsTab=functionsTab;
+
+    Form.personalInfoPanel=personalInfoPanel;
+
+    Form.personalInfoTable=personalInfoTable;
 
     Form.user_constructor = function()
     {

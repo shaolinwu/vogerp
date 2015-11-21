@@ -25,6 +25,8 @@ function org_shaolin_vogerp_commonmodel_page_ModuleManagement(json)
 
     Form.topPanel=topPanel;
 
+    Form.groupFlow=groupFlow;
+
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_commonmodel_page_ModuleManagement */

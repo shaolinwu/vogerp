@@ -34,6 +34,10 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithParty(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.typeUI=typeUI;
+
+    Form.partyUI=partyUI;
+
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithParty */

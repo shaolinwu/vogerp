@@ -214,7 +214,61 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.orgIdUILabel=orgIdUILabel;
+
+    Form.orgIdUI=orgIdUI;
+
+    Form.legalPersonUILabel=legalPersonUILabel;
+
+    Form.legalPersonUI=legalPersonUI;
+
+    Form.tradeLicenseNumberUILabel=tradeLicenseNumberUILabel;
+
+    Form.tradeLicenseNumberUI=tradeLicenseNumberUI;
+
+    Form.busiLicenseNumberUILabel=busiLicenseNumberUILabel;
+
+    Form.busiLicenseNumberUI=busiLicenseNumberUI;
+
+    Form.busiLicenseDateUILabel=busiLicenseDateUILabel;
+
+    Form.busiLicenseDateUI=busiLicenseDateUI;
+
+    Form.taxRegistrationNumberUILabel=taxRegistrationNumberUILabel;
+
+    Form.taxRegistrationNumberUI=taxRegistrationNumberUI;
+
+    Form.taxRegistrationDateUILabel=taxRegistrationDateUILabel;
+
+    Form.taxRegistrationDateUI=taxRegistrationDateUI;
+
+    Form.localTaxRegistrationNumberUILabel=localTaxRegistrationNumberUILabel;
+
+    Form.localTaxRegistrationNumberUI=localTaxRegistrationNumberUI;
+
+    Form.localTaxRegistrationDateUILabel=localTaxRegistrationDateUILabel;
+
+    Form.localTaxRegistrationDateUI=localTaxRegistrationDateUI;
+
+    Form.enterpriseCodeUILabel=enterpriseCodeUILabel;
+
+    Form.enterpriseCodeUI=enterpriseCodeUI;
+
+    Form.bankAccountUILabel=bankAccountUILabel;
+
+    Form.bankAccountUI=bankAccountUI;
+
+    Form.bankTypeUILabel=bankTypeUILabel;
+
+    Form.bankTypeUI=bankTypeUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

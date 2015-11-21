@@ -67,7 +67,29 @@ function org_shaolin_vogerp_commonmodel_form_ListToListSelector(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.leftListUI=leftListUI;
+
     Form.middlePanel=middlePanel;
+
+    Form.moveToRightBtn=moveToRightBtn;
+
+    Form.moveAllToRightBtn=moveAllToRightBtn;
+
+    Form.moveToLeftBtn=moveToLeftBtn;
+
+    Form.moveAllToLeftBtn=moveAllToLeftBtn;
+
+    Form.rightListUI=rightListUI;
+
+    Form.middlePanel=middlePanel;
+
+    Form.moveToRightBtn=moveToRightBtn;
+
+    Form.moveAllToRightBtn=moveAllToRightBtn;
+
+    Form.moveToLeftBtn=moveToLeftBtn;
+
+    Form.moveAllToLeftBtn=moveAllToLeftBtn;
 
     Form.user_constructor = function()
     {

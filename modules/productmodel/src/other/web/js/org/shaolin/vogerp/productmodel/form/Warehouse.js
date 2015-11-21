@@ -130,7 +130,37 @@ function org_shaolin_vogerp_productmodel_form_Warehouse(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.parentIdUILabel=parentIdUILabel;
+
+    Form.parentIdUI=parentIdUI;
+
+    Form.nameUILabel=nameUILabel;
+
+    Form.nameUI=nameUI;
+
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
+    Form.photoPathUILabel=photoPathUILabel;
+
+    Form.photoPathUI=photoPathUI;
+
+    Form.locationUILabel=locationUILabel;
+
+    Form.locationUI=locationUI;
+
+    Form.containerTypeUILabel=containerTypeUILabel;
+
+    Form.containerTypeUI=containerTypeUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

@@ -3,15 +3,11 @@
 function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var productInfoTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "productInfoTable"]
-    });
-
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
-        ,items: ["productInfoPanel","productListPanel","productTreePanel",""]
+        ,items: []
+        ,subComponents: [prefix + "productInfoPanel",prefix + "productListPanel",prefix + "productTreePanel"]
     });
     var productInfoTable = new UIMaster.ui.objectlist
     ({
@@ -33,12 +29,18 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [productInfoTable,functionsTab]
+        ,items: [functionsTab]
     });
+
+    Form.functionsTab=functionsTab;
+
+    Form.productInfoPanel=productInfoPanel;
 
     Form.productInfoTable=productInfoTable;
 
-    Form.functionsTab=functionsTab;
+    Form.productListPanel=productListPanel;
+
+    Form.productTreePanel=productTreePanel;
 
     Form.user_constructor = function()
     {

@@ -116,7 +116,33 @@ function org_shaolin_vogerp_commonmodel_form_ContactInfo(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.telephoneUILabel=telephoneUILabel;
+
+    Form.telephoneUI=telephoneUI;
+
+    Form.mobileUILabel=mobileUILabel;
+
+    Form.mobileUI=mobileUI;
+
+    Form.emailUILabel=emailUILabel;
+
+    Form.emailUI=emailUI;
+
+    Form.homepageUILabel=homepageUILabel;
+
+    Form.homepageUI=homepageUI;
+
+    Form.remarkUILabel=remarkUILabel;
+
+    Form.remarkUI=remarkUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

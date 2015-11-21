@@ -130,7 +130,37 @@ function org_shaolin_vogerp_commonmodel_form_UIDyanimcItem(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.uiEntityNameUILabel=uiEntityNameUILabel;
+
+    Form.uiEntityNameUI=uiEntityNameUI;
+
+    Form.uipanelUILabel=uipanelUILabel;
+
+    Form.uipanelUI=uipanelUI;
+
+    Form.filterUILabel=filterUILabel;
+
+    Form.filterUI=filterUI;
+
+    Form.labelNameUILabel=labelNameUILabel;
+
+    Form.labelNameUI=labelNameUI;
+
+    Form.ceNameUILabel=ceNameUILabel;
+
+    Form.ceNameUI=ceNameUI;
+
+    Form.ceSelectModeUILabel=ceSelectModeUILabel;
+
+    Form.ceSelectModeUI=ceSelectModeUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

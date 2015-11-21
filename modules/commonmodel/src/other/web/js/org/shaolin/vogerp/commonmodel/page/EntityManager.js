@@ -3,30 +3,11 @@
 function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var reloadPathText = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "reloadPathText"]
-    });
-
-    var reloadBtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "reloadBtn"]
-    });
-
-    var reloadCECacheText = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "reloadCECacheText"]
-    });
-
-    var reloadCECacheBtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "reloadCECacheBtn"]
-    });
-
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
-        ,items: ["reloadPanel","ceentityPanel","dynamicUIPanel","dynamicPageLinkPanel",""]
+        ,items: []
+        ,subComponents: [prefix + "reloadPanel",prefix + "ceentityPanel",prefix + "dynamicUIPanel",prefix + "dynamicPageLinkPanel"]
     });
     var reloadPathText = new UIMaster.ui.textfield
     ({
@@ -65,8 +46,12 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [reloadPathText,reloadBtn,reloadCECacheText,reloadCECacheBtn,functionsTab]
+        ,items: [functionsTab]
     });
+
+    Form.functionsTab=functionsTab;
+
+    Form.reloadPanel=reloadPanel;
 
     Form.reloadPathText=reloadPathText;
 
@@ -76,7 +61,11 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
 
     Form.reloadCECacheBtn=reloadCECacheBtn;
 
-    Form.functionsTab=functionsTab;
+    Form.ceentityPanel=ceentityPanel;
+
+    Form.dynamicUIPanel=dynamicUIPanel;
+
+    Form.dynamicPageLinkPanel=dynamicPageLinkPanel;
 
     Form.user_constructor = function()
     {

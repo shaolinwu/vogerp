@@ -77,7 +77,27 @@ function org_shaolin_vogerp_commonmodel_form_CEExtension(json)
 
     Form.attributePanel=attributePanel;
 
+    Form.ceNameUI=ceNameUI;
+
+    Form.parentCEUI=parentCEUI;
+
+    Form.parentIntValueUI=parentIntValueUI;
+
+    Form.constantItemTable=constantItemTable;
+
+    Form.attributePanel=attributePanel;
+
+    Form.ceNameUI=ceNameUI;
+
+    Form.parentCEUI=parentCEUI;
+
+    Form.parentIntValueUI=parentIntValueUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

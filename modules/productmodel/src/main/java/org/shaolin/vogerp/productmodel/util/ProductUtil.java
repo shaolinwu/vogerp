@@ -1,6 +1,7 @@
 package org.shaolin.vogerp.productmodel.util;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.shaolin.bmdp.i18n.LocaleContext;
@@ -14,10 +15,15 @@ import org.shaolin.vogerp.productmodel.be.IProductPrice;
 import org.shaolin.vogerp.productmodel.be.ProductImpl;
 import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
 import org.shaolin.vogerp.productmodel.ce.PriceType;
+import org.shaolin.vogerp.productmodel.ce.ProductCodeType;
 import org.shaolin.vogerp.productmodel.dao.ProductModel;
 
 public class ProductUtil {
 
+	public static String genProductCode(ProductCodeType type) {
+		return "PSN-" + (new Date()).getTime();
+	}
+	
 	public static String getProductSummary(IProduct product) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(product.getName()).append("(").append(product.getSerialNumber()).append(")");

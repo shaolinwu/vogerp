@@ -6,7 +6,8 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
-        ,items: ["organizationInfoPanel","organizationTypePanel","employeeInfoPanel",""]
+        ,items: []
+        ,subComponents: [prefix + "organizationInfoPanel",prefix + "organizationTypePanel",prefix + "employeeInfoPanel"]
     });
     var organizationInfoPanel = new org_shaolin_vogerp_commonmodel_form_OrganizationTreeEditor({"prefix":prefix + "organizationInfoPanel."});
 
@@ -24,18 +25,22 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
         ,subComponents: [prefix + "employeeInfoTablel"]
     });
 
-    var organizationInfoPanel = new org_shaolin_vogerp_commonmodel_form_OrganizationTreeEditor({"prefix":prefix + "organizationInfoPanel."});
-
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [functionsTab,organizationInfoPanel]
+        ,items: [functionsTab]
     });
 
     Form.functionsTab=functionsTab;
 
     Form.organizationInfoPanel=organizationInfoPanel;
+
+    Form.organizationTypePanel=organizationTypePanel;
+
+    Form.employeeInfoPanel=employeeInfoPanel;
+
+    Form.employeeInfoTablel=employeeInfoTablel;
 
     Form.user_constructor = function()
     {

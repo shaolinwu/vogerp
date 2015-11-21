@@ -53,7 +53,15 @@ function org_shaolin_vogerp_productmodel_form_ProductPriceTable(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.productIdUI=productIdUI;
+
+    Form.itemTable=itemTable;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

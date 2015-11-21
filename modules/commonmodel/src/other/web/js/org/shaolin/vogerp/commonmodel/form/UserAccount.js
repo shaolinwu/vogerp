@@ -130,6 +130,36 @@ function org_shaolin_vogerp_commonmodel_form_UserAccount(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.userNameUILabel=userNameUILabel;
+
+    Form.userNameUI=userNameUI;
+
+    Form.localeUILabel=localeUILabel;
+
+    Form.localeUI=localeUI;
+
+    Form.attemptUILabel=attemptUILabel;
+
+    Form.attemptUI=attemptUI;
+
+    Form.isLockedUILabel=isLockedUILabel;
+
+    Form.isLockedUI=isLockedUI;
+
+    Form.lockedMomentUILabel=lockedMomentUILabel;
+
+    Form.lockedMomentUI=lockedMomentUI;
+
+    Form.expirationDateUILabel=expirationDateUILabel;
+
+    Form.expirationDateUI=expirationDateUI;
+
+    Form.lastLoginUILabel=lastLoginUILabel;
+
+    Form.lastLoginUI=lastLoginUI;
+
     Form.actionPanel=actionPanel;
 
     Form.user_constructor = function()

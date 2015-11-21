@@ -11,6 +11,7 @@ function org_shaolin_vogerp_accounting_page_VoucherManagement(json)
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
+        ,items: ["VoucherInfoPanel",""]
     });
     var voucherTable = new UIMaster.ui.objectlist
     ({

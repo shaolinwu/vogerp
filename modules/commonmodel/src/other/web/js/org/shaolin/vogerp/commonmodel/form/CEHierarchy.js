@@ -39,6 +39,10 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchy(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.selectCENameUI=selectCENameUI;
+
+    Form.ceTree=ceTree;
+
     Form.actionPanel=actionPanel;
 
     Form.user_constructor = function()

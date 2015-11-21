@@ -106,7 +106,31 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.parentIdUI=parentIdUI;
+
+    Form.orgCodeUILabel=orgCodeUILabel;
+
+    Form.orgCodeUI=orgCodeUI;
+
+    Form.nameUILabel=nameUILabel;
+
+    Form.nameUI=nameUI;
+
+    Form.typeUILabel=typeUILabel;
+
+    Form.typeUI=typeUI;
+
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

@@ -211,7 +211,61 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.firstNameUILabel=firstNameUILabel;
+
+    Form.firstNameUI=firstNameUI;
+
+    Form.lastNameUILabel=lastNameUILabel;
+
+    Form.lastNameUI=lastNameUI;
+
+    Form.typeUILabel=typeUILabel;
+
+    Form.typeUI=typeUI;
+
+    Form.genderUILabel=genderUILabel;
+
+    Form.genderUI=genderUI;
+
+    Form.marriedUILabel=marriedUILabel;
+
+    Form.marriedUI=marriedUI;
+
+    Form.identityCardIdUILabel=identityCardIdUILabel;
+
+    Form.identityCardIdUI=identityCardIdUI;
+
+    Form.discriptionUILabel=discriptionUILabel;
+
+    Form.discriptionUI=discriptionUI;
+
+    Form.birthdayUILabel=birthdayUILabel;
+
+    Form.birthdayUI=birthdayUI;
+
+    Form.languageUILabel=languageUILabel;
+
+    Form.languageUI=languageUI;
+
+    Form.educationUILabel=educationUILabel;
+
+    Form.educationUI=educationUI;
+
+    Form.majorUILabel=majorUILabel;
+
+    Form.majorUI=majorUI;
+
+    Form.commentUILabel=commentUILabel;
+
+    Form.commentUI=commentUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

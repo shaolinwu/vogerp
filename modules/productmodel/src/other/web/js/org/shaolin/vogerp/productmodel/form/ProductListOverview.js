@@ -25,6 +25,8 @@ function org_shaolin_vogerp_productmodel_form_ProductListOverview(json)
 
     Form.productInfoPanel=productInfoPanel;
 
+    Form.productInfoTable=productInfoTable;
+
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_productmodel_form_ProductListOverview */

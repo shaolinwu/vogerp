@@ -88,7 +88,25 @@ function org_shaolin_vogerp_commonmodel_form_PartyRelationship(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.typeUILabel=typeUILabel;
+
+    Form.typeUI=typeUI;
+
+    Form.srcPartyIdUILabel=srcPartyIdUILabel;
+
+    Form.srcPartyIdUI=srcPartyIdUI;
+
+    Form.tarPartyIdUILabel=tarPartyIdUILabel;
+
+    Form.tarPartyIdUI=tarPartyIdUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

@@ -144,7 +144,41 @@ function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLink(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.srcUINameUILabel=srcUINameUILabel;
+
+    Form.srcUINameUI=srcUINameUI;
+
+    Form.srcUIPanelUILabel=srcUIPanelUILabel;
+
+    Form.srcUIPanelUI=srcUIPanelUI;
+
+    Form.srcUIWidgetUILabel=srcUIWidgetUILabel;
+
+    Form.srcUIWidgetUI=srcUIWidgetUI;
+
+    Form.linkCommentUILabel=linkCommentUILabel;
+
+    Form.linkCommentUI=linkCommentUI;
+
+    Form.tarUINameUILabel=tarUINameUILabel;
+
+    Form.tarUINameUI=tarUINameUI;
+
+    Form.tarUITabUILabel=tarUITabUILabel;
+
+    Form.tarUITabUI=tarUITabUI;
+
+    Form.tarUIArchorUILabel=tarUIArchorUILabel;
+
+    Form.tarUIArchorUI=tarUIArchorUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

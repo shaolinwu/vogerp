@@ -3,31 +3,12 @@
 function org_shaolin_vogerp_productmodel_form_Product(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var idUI = new UIMaster.ui.hidden
+    var funcsPanel = new UIMaster.ui.prenextpanel
     ({
-        ui: elementList[prefix + "idUI"]
+        ui: elementList[prefix + "funcsPanel"]
+        ,items: []
+        ,subComponents: [prefix + "infoPanel0",prefix + "infoPanel3",prefix + "infoPanel1",prefix + "infoPanel2"]
     });
-
-    var photoPathUI = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "photoPathUI"]
-    });
-
-    var photoUI = new UIMaster.ui.image
-    ({
-        ui: elementList[prefix + "photoUI"]
-    });
-
-    var photoUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "photoUILabel"]
-    });
-
-    var uploadFile = new UIMaster.ui.file
-    ({
-        ui: elementList[prefix + "uploadFile"]
-    });
-
     var nameUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "nameUILabel"]
@@ -53,6 +34,8 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         ui: elementList[prefix + "typeUILabel"]
     });
 
+    var typeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "typeUI."});
+
     var onSaleDateUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "onSaleDateUILabel"]
@@ -73,6 +56,40 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         ui: elementList[prefix + "saleEndDateUI"]
     });
 
+    var infoPanel0 = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "infoPanel0"]
+        ,items: []
+        ,subComponents: [prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "onSaleDateUILabel",prefix + "onSaleDateUI",prefix + "saleEndDateUILabel",prefix + "saleEndDateUI"]
+    });
+    var infoPanel3 = new org_shaolin_vogerp_productmodel_form_ProductCode({"prefix":prefix + "infoPanel3."});
+
+    var photoPathUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "photoPathUI"]
+    });
+
+    var photoUI = new UIMaster.ui.image
+    ({
+        ui: elementList[prefix + "photoUI"]
+    });
+
+    var photoUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "photoUILabel"]
+    });
+
+    var uploadFile = new UIMaster.ui.file
+    ({
+        ui: elementList[prefix + "uploadFile"]
+    });
+
+    var infoPanel1 = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "infoPanel1"]
+        ,items: []
+        ,subComponents: [prefix + "photoPathUI",prefix + "photoUI",prefix + "photoUILabel",prefix + "uploadFile"]
+    });
     var htmlDescLabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "htmlDescLabel"]
@@ -83,47 +100,41 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         ui: elementList[prefix + "htmlDescUI"]
     });
 
+    var infoPanel2 = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "infoPanel2"]
+        ,items: []
+        ,subComponents: [prefix + "htmlDescLabel",prefix + "htmlDescUI"]
+    });
+
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
     });
 
-    var cancelbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "cancelbtn"]
-    });
-
-    var typeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "typeUI."});
-
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "okbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "photoPathUI",prefix + "photoUI",prefix + "photoUILabel",prefix + "uploadFile",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "onSaleDateUILabel",prefix + "onSaleDateUI",prefix + "saleEndDateUILabel",prefix + "saleEndDateUI",prefix + "htmlDescLabel",prefix + "htmlDescUI"]
+        ,subComponents: [prefix + "funcsPanel"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,photoPathUI,photoUI,photoUILabel,uploadFile,nameUILabel,nameUI,descriptionUILabel,descriptionUI,typeUILabel,onSaleDateUILabel,onSaleDateUI,saleEndDateUILabel,saleEndDateUI,htmlDescLabel,htmlDescUI,okbtn,cancelbtn,typeUI,fieldPanel,actionPanel]
+        ,items: [funcsPanel,okbtn,fieldPanel,actionPanel]
     });
 
-    Form.idUI=idUI;
+    Form.funcsPanel=funcsPanel;
 
-    Form.photoPathUI=photoPathUI;
-
-    Form.photoUI=photoUI;
-
-    Form.photoUILabel=photoUILabel;
-
-    Form.uploadFile=uploadFile;
+    Form.infoPanel0=infoPanel0;
 
     Form.nameUILabel=nameUILabel;
 
@@ -135,6 +146,8 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.typeUILabel=typeUILabel;
 
+    Form.typeUI=typeUI;
+
     Form.onSaleDateUILabel=onSaleDateUILabel;
 
     Form.onSaleDateUI=onSaleDateUI;
@@ -143,19 +156,73 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.saleEndDateUI=saleEndDateUI;
 
+    Form.infoPanel3=infoPanel3;
+
+    Form.infoPanel1=infoPanel1;
+
+    Form.photoPathUI=photoPathUI;
+
+    Form.photoUI=photoUI;
+
+    Form.photoUILabel=photoUILabel;
+
+    Form.uploadFile=uploadFile;
+
+    Form.infoPanel2=infoPanel2;
+
     Form.htmlDescLabel=htmlDescLabel;
 
     Form.htmlDescUI=htmlDescUI;
 
     Form.okbtn=okbtn;
 
-    Form.cancelbtn=cancelbtn;
+    Form.fieldPanel=fieldPanel;
+
+    Form.funcsPanel=funcsPanel;
+
+    Form.infoPanel0=infoPanel0;
+
+    Form.nameUILabel=nameUILabel;
+
+    Form.nameUI=nameUI;
+
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
+    Form.typeUILabel=typeUILabel;
 
     Form.typeUI=typeUI;
 
-    Form.fieldPanel=fieldPanel;
+    Form.onSaleDateUILabel=onSaleDateUILabel;
+
+    Form.onSaleDateUI=onSaleDateUI;
+
+    Form.saleEndDateUILabel=saleEndDateUILabel;
+
+    Form.saleEndDateUI=saleEndDateUI;
+
+    Form.infoPanel3=infoPanel3;
+
+    Form.infoPanel1=infoPanel1;
+
+    Form.photoPathUI=photoPathUI;
+
+    Form.photoUI=photoUI;
+
+    Form.photoUILabel=photoUILabel;
+
+    Form.uploadFile=uploadFile;
+
+    Form.infoPanel2=infoPanel2;
+
+    Form.htmlDescLabel=htmlDescLabel;
+
+    Form.htmlDescUI=htmlDescUI;
 
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
 
     Form.user_constructor = function()
     {

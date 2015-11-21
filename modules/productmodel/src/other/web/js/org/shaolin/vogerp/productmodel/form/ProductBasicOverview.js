@@ -39,6 +39,12 @@ function org_shaolin_vogerp_productmodel_form_ProductBasicOverview(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.photoUI=photoUI;
+
+    Form.priceUI=priceUI;
+
+    Form.descriptionUI=descriptionUI;
+
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_productmodel_form_ProductBasicOverview */

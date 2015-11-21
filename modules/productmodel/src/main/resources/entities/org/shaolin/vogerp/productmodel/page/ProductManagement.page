@@ -23,7 +23,7 @@
                         RefForm form = new RefForm("productInfoForm", "org.shaolin.vogerp.productmodel.form.Product", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Create Product Information", new TableCallBack("productInfoTable"), 750, 500);
+                        form.openInWindows("Create Product Information", new TableCallBack("productInfoTable"), 750, 600);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -51,7 +51,7 @@
                         RefForm form = new RefForm("productInfoForm", "org.shaolin.vogerp.productmodel.form.Product", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Product Information", new TableCallBack("productInfoTable"), 750, 500);
+                        form.openInWindows("Product Information", new TableCallBack("productInfoTable"), 750, 600);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -519,14 +519,6 @@
 		                            </ns2:title>
 		                            <ns2:icon>ui-icon-note</ns2:icon>
 		                            <ns2:function>openProductPrice</ns2:function>
-		                        </ns2:action>
-		                        <ns2:action>
-		                            <ns2:uiid>openProductCode</ns2:uiid>
-		                            <ns2:title xsi:type="ns2:StringPropertyType">
-		                                <ns2:value>Check Product Code</ns2:value>
-		                            </ns2:title>
-		                            <ns2:icon>ui-icon-note</ns2:icon>
-		                            <ns2:function>openProductCode</ns2:function>
 		                        </ns2:action>
 		                        <ns2:action>
 		                            <ns2:uiid>openProductSupplier</ns2:uiid>
