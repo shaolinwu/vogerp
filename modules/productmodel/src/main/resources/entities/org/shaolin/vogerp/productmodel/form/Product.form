@@ -22,7 +22,16 @@
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.productmodel.be.ProductImpl;
         import org.shaolin.vogerp.productmodel.dao.ProductModel;
-        {       
+        {      
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            HashMap input = (HashMap)form.ui2Data();
+            ProductImpl defaultUser = (ProductImpl)input.get("beObject");
+            if (defaultUser.getId() > 0) {
+                ProductModel.INSTANCE.update(defaultUser);
+            }
+            
+            form.closeIfinWindows(true);
+            @page.removeForm(@page.getEntityUiid()); 
         }
         ]]></expressionString>
       </ns2:exp>
@@ -87,8 +96,10 @@
 	                    HashMap input = (HashMap)form.ui2Data();
 	                    ProductImpl defaultUser = (ProductImpl)input.get("beObject");
 	                    if (defaultUser.getId() == 0) {
+	                        defaultUser.setSerialNumber(ProductUtil.genSerialNumber());
 	                        ProductModel.INSTANCE.create(defaultUser);
-		                    System.out.println("-------->Create a new Product: " + defaultUser.getId());
+	                        
+		                    System.out.println("-------->Create a new Product: " + defaultUser);
 	                        defaultUser.setHtmlDesc("/product/" + AppContext.get().getAppName() +"/" + defaultUser.getId() + "/desc.html");
 	                        defaultUser.setPhotos("/product/" + AppContext.get().getAppName() +"/" + defaultUser.getId() + "/images");
 	                        ProductModel.INSTANCE.update(defaultUser);
@@ -102,12 +113,17 @@
 		                    ProductModel.INSTANCE.create(pCode);
 	                    }
                     } else if (preNextPanel.getSelectedIndex() == 2) {
-                        
-                    } else if (preNextPanel.getSelectedIndex() == 3) {
-                        RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+                        RefForm form = (RefForm)@page.getElement("productInfoForm.infoPanel3"); 
+                        //form.setInputParameter("productCode", new ProductCodeImpl());
                         HashMap input = (HashMap)form.ui2Data();
-                        ProductImpl defaultUser = (ProductImpl)input.get("beObject");
-                    }
+                        ProductCodeImpl pcode = (ProductCodeImpl)input.get("productCode");
+                        if (pcode.getId() == 0) {
+                            ProductModel.INSTANCE.update(pcode);
+                            System.out.println("-------->Update a Product Code: " + pcode);
+                        }
+                    } else if (preNextPanel.getSelectedIndex() == 3) {
+                       
+                    } 
                  }]]></ns2:expressionString>
              </ns2:expression>
          </ns2:nextAction>
@@ -453,7 +469,7 @@
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping12">
       <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductCode"></ns2:mappingRule>
       <ns2:UIComponent componentPath="infoPanel3" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="productCode" paramName="beObject"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="productCode" paramName="productCode"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
@@ -465,14 +481,6 @@
        import org.shaolin.vogerp.productmodel.be.ProductCodeImpl;
        import org.shaolin.vogerp.productmodel.dao.ProductModel;
        {
-	        $productCode = new ProductCodeImpl();
-	        if ($beObject.getId() > 0) {
-		        $productCode.setProductId($beObject.getId());
-		        List result = ProductModel.INSTANCE.searchProductCode($beObject, null, 0, 1);
-		        if (result != null && result.size() > 0) {
-		            $productCode = (ProductCodeImpl)result.get(0);
-		        }
-	        }
 	        @odContext.executeAllMappings();
       }]]></expressionString>
     </ns2:DataToUIMappingOperation>

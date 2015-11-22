@@ -52,8 +52,6 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
 
     Form.openProductDetail = org_shaolin_vogerp_productmodel_page_ProductManagement_openProductDetail;
 
-    Form.openProductCode = org_shaolin_vogerp_productmodel_page_ProductManagement_openProductCode;
-
     Form.deleteProduct = org_shaolin_vogerp_productmodel_page_ProductManagement_deleteProduct;
 
     Form.openProductSupplier = org_shaolin_vogerp_productmodel_page_ProductManagement_openProductSupplier;
@@ -102,17 +100,6 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_productmodel_page_ProductManagement_openProductDetail */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_productmodel_page_ProductManagement_openProductCode(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_page_ProductManagement_openProductCode */
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openProductCode432432",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
-    }/* Gen_Last:org_shaolin_vogerp_productmodel_page_ProductManagement_openProductCode */
 
 
     /* auto generated eventlistener function declaration */

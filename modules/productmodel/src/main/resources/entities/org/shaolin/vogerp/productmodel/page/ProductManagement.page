@@ -14,11 +14,13 @@
                     import org.shaolin.uimaster.page.AjaxActionHelper;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.productmodel.be.ProductImpl;
+                    import org.shaolin.vogerp.productmodel.be.ProductCodeImpl;
                     {
                         ProductImpl defaultUser = new ProductImpl();
-                        
+                        ProductCodeImpl productCode = new ProductCodeImpl();
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
+                        input.put("productCode", productCode);
                         input.put("editable", new Boolean(true));
                         RefForm form = new RefForm("productInfoForm", "org.shaolin.vogerp.productmodel.form.Product", input);
                         @page.addElement(form);
@@ -33,36 +35,8 @@
 		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showproductInfoPanel543542">
                 <ns2:exp>
                     <ns2:expressionString><![CDATA[
-                    import java.util.HashMap;
-                    import org.shaolin.uimaster.page.AjaxContext;
-                    import org.shaolin.uimaster.page.ajax.*;
-                    import org.shaolin.vogerp.productmodel.be.ProductImpl;
-                    import org.shaolin.vogerp.productmodel.dao.ProductModel;
-                    {
-                        Table productInfoTable = (Table)@page.getElement("productInfoTable");
-                        if (productInfoTable.getSelectedRow() == null) {
-                            return;
-                        }
-                        ProductImpl defaultUser = (ProductImpl)productInfoTable.getSelectedRow();
-                        
-                        HashMap input = new HashMap();
-                        input.put("beObject", defaultUser);
-                        input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("productInfoForm", "org.shaolin.vogerp.productmodel.form.Product", input);
-                        @page.addElement(form);
-                        
-                        form.openInWindows("Product Information", new TableCallBack("productInfoTable"), 750, 600);
-                    }
-                    ]]></ns2:expressionString>
-                </ns2:exp>
-            </ns2:ops>
-		</ns2:eventHandler>
-		<ns2:eventHandler functionName="openProductCode">
-		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openProductCode432432">
-                <ns2:exp>
-                    <ns2:expressionString><![CDATA[
-                    import java.util.HashMap;
                     import java.util.List;
+                    import java.util.HashMap;
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.productmodel.be.ProductImpl;
@@ -74,20 +48,22 @@
                             return;
                         }
                         ProductImpl defaultUser = (ProductImpl)productInfoTable.getSelectedRow();
-                        ProductCodeImpl codeInfo = new ProductCodeImpl();
-                        codeInfo.setProductId(defaultUser.getId());
-                        List result = ProductModel.INSTANCE.searchProductCode(defaultUser, null, 0, 1);
-                        if (result != null && result.size() > 0) {
-                        	codeInfo = (ProductCodeImpl)result.get(0);
-                        }
-                        
+                        ProductCodeImpl productCode = new ProductCodeImpl();
+			            if (defaultUser.getId() > 0) {
+			                productCode.setProductId(defaultUser.getId());
+			                List result = ProductModel.INSTANCE.searchProductCode(defaultUser, null, 0, 1);
+			                if (result != null && result.size() > 0) {
+			                    productCode = (ProductCodeImpl)result.get(0);
+			                }
+			            }
                         HashMap input = new HashMap();
-                        input.put("beObject", codeInfo);
+                        input.put("beObject", defaultUser);
+                        input.put("productCode", productCode);
                         input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("productCodeForm", "org.shaolin.vogerp.productmodel.form.ProductCode", input);
+                        RefForm form = new RefForm("productInfoForm", "org.shaolin.vogerp.productmodel.form.Product", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Modify Product Code Information", new TableCallBack("productInfoTable"));
+                        form.openInWindows("Product Information", new TableCallBack("productInfoTable"), 750, 600);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -519,14 +495,6 @@
 		                            </ns2:title>
 		                            <ns2:icon>ui-icon-note</ns2:icon>
 		                            <ns2:function>openProductPrice</ns2:function>
-		                        </ns2:action>
-		                        <ns2:action>
-		                            <ns2:uiid>openProductSupplier</ns2:uiid>
-		                            <ns2:title xsi:type="ns2:StringPropertyType">
-		                                <ns2:value>Product Supplier</ns2:value>
-		                            </ns2:title>
-		                            <ns2:icon>ui-icon-note</ns2:icon>
-		                            <ns2:function>openProductSupplier</ns2:function>
 		                        </ns2:action>
 		                    </ns2:actionGroup>
 		                    <ns2:actionGroup>

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.shaolin.bmdp.i18n.LocaleContext;
+import org.shaolin.bmdp.utils.DateParser;
 import org.shaolin.uimaster.page.exception.FormatException;
 import org.shaolin.uimaster.page.od.formats.FormatUtil;
 import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
@@ -20,8 +21,15 @@ import org.shaolin.vogerp.productmodel.dao.ProductModel;
 
 public class ProductUtil {
 
+	public static String genSerialNumber() {
+		DateParser parse = new DateParser(new Date());
+		return "PSN-" + parse.getCNDateString() 
+				+ "-" + parse.format(parse.getHours(), 2) 
+				+ "" + parse.format(parse.getSeconds(), 2);
+	}
+
 	public static String genProductCode(ProductCodeType type) {
-		return "PSN-" + (new Date()).getTime();
+		return "PPC-" + (new Date()).getTime();
 	}
 	
 	public static String getProductSummary(IProduct product) {
