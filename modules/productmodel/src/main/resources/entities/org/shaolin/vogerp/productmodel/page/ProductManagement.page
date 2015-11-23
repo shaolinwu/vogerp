@@ -512,8 +512,7 @@
 		                </ns2:component>
 		                <ns2:layoutConstraint>
 		                    <ns2:componentId>productInfoTable</ns2:componentId>
-		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-		                        x="0" y="0" align="FULL"></ns2:constraint>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
 		                </ns2:layoutConstraint>
                     </ns2:panel>
                 </ns2:tab>

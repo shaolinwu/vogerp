@@ -340,16 +340,8 @@
              <ns2:panel UIID="infoPanel2">
                <ns2:layout xsi:type="ns2:TableLayoutType">
                  <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
                  <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
                </ns2:layout>
-               <ns2:component xsi:type="ns2:UILabelType" UIID="htmlDescLabel">
-				  <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-				  <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-				    <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-				    <ns2:key>org.shaolin.vogerp.productmodel.be.Product.htmlDesc</ns2:key>
-				  </ns2:text>
-				</ns2:component>
 				<ns2:component xsi:type="ns2:UITextAreaType" UIID="htmlDescUI">
 				  <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
 				  <ns2:htmlSupport xsi:type="ns2:BooleanPropertyType">
@@ -357,12 +349,8 @@
 				  </ns2:htmlSupport>
 				</ns2:component>
 				<ns2:layoutConstraint>
-				  <ns2:componentId>htmlDescLabel</ns2:componentId>
-				  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
-				</ns2:layoutConstraint>
-				<ns2:layoutConstraint>
 				  <ns2:componentId>htmlDescUI</ns2:componentId>
-				  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+				  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
 				</ns2:layoutConstraint>
              </ns2:panel>
          </ns2:tab>
@@ -497,9 +485,6 @@
       {
          $productCode = new ProductCodeImpl();
          @odContext.executeAllMappings();
-         PreNextPanel preNextPanel = (PreNextPanel)@page.getElement("funcsPanel"); 
-         if (preNextPanel.getSelectedIndex() == 1) {
-         }
       }]]></expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>

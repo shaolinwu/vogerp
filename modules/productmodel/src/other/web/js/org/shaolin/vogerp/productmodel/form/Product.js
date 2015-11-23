@@ -90,11 +90,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         ,items: []
         ,subComponents: [prefix + "photoPathUI",prefix + "photoUI",prefix + "photoUILabel",prefix + "uploadFile"]
     });
-    var htmlDescLabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "htmlDescLabel"]
-    });
-
     var htmlDescUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "htmlDescUI"]
@@ -104,7 +99,7 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     ({
         ui: elementList[prefix + "infoPanel2"]
         ,items: []
-        ,subComponents: [prefix + "htmlDescLabel",prefix + "htmlDescUI"]
+        ,subComponents: [prefix + "htmlDescUI"]
     });
 
     var okbtn = new UIMaster.ui.button
@@ -170,8 +165,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.infoPanel2=infoPanel2;
 
-    Form.htmlDescLabel=htmlDescLabel;
-
     Form.htmlDescUI=htmlDescUI;
 
     Form.okbtn=okbtn;
@@ -215,8 +208,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     Form.uploadFile=uploadFile;
 
     Form.infoPanel2=infoPanel2;
-
-    Form.htmlDescLabel=htmlDescLabel;
 
     Form.htmlDescUI=htmlDescUI;
 
