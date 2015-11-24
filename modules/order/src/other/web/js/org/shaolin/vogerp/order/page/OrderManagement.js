@@ -6,7 +6,8 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
-        ,items: ["saleOrderInfoPanel","purcharseOrderInfoPanel","productOrderInfoPanel","inStoreOrderInfoPanel","outStoreOrderInfoPanel",""]
+        ,items: []
+        ,subComponents: [prefix + "saleOrderInfoPanel",prefix + "purcharseOrderInfoPanel",prefix + "productOrderInfoPanel",prefix + "inStoreOrderInfoPanel",prefix + "outStoreOrderInfoPanel"]
     });
     var saleOrderTable = new UIMaster.ui.objectlist
     ({
@@ -72,6 +73,26 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
     });
 
     Form.functionsTab=functionsTab;
+
+    Form.saleOrderInfoPanel=saleOrderInfoPanel;
+
+    Form.saleOrderTable=saleOrderTable;
+
+    Form.purcharseOrderInfoPanel=purcharseOrderInfoPanel;
+
+    Form.purchaseOrderInfoTable=purchaseOrderInfoTable;
+
+    Form.productOrderInfoPanel=productOrderInfoPanel;
+
+    Form.productOrderInfoTable=productOrderInfoTable;
+
+    Form.inStoreOrderInfoPanel=inStoreOrderInfoPanel;
+
+    Form.inStoreOrderInfoTable=inStoreOrderInfoTable;
+
+    Form.outStoreOrderInfoPanel=outStoreOrderInfoPanel;
+
+    Form.outStoreOrderInfoTable=outStoreOrderInfoTable;
 
     Form.user_constructor = function()
     {

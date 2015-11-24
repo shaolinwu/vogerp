@@ -186,7 +186,53 @@ function org_shaolin_vogerp_accounting_form_Invoice(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.serialNumberUILabel=serialNumberUILabel;
+
+    Form.serialNumberUI=serialNumberUI;
+
+    Form.customerInfoUILabel=customerInfoUILabel;
+
+    Form.customerInfoUI=customerInfoUI;
+
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
+    Form.createDateUILabel=createDateUILabel;
+
+    Form.createDateUI=createDateUI;
+
+    Form.roleUILabel=roleUILabel;
+
+    Form.roleUI=roleUI;
+
+    Form.statusUILabel=statusUILabel;
+
+    Form.statusUI=statusUI;
+
+    Form.paymentPartyIdUILabel=paymentPartyIdUILabel;
+
+    Form.paymentPartyIdUI=paymentPartyIdUI;
+
+    Form.sourceUILabel=sourceUILabel;
+
+    Form.sourceUI=sourceUI;
+
+    Form.targetPartyIdUILabel=targetPartyIdUILabel;
+
+    Form.targetPartyIdUI=targetPartyIdUI;
+
+    Form.destinationUILabel=destinationUILabel;
+
+    Form.destinationUI=destinationUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

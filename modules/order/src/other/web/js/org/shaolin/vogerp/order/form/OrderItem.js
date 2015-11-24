@@ -144,7 +144,41 @@ function org_shaolin_vogerp_order_form_OrderItem(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.productIdUILabel=productIdUILabel;
+
+    Form.productIdUI=productIdUI;
+
+    Form.amountUILabel=amountUILabel;
+
+    Form.amountUI=amountUI;
+
+    Form.unitPriceUILabel=unitPriceUILabel;
+
+    Form.unitPriceUI=unitPriceUI;
+
+    Form.ajustPriceTypeUILabel=ajustPriceTypeUILabel;
+
+    Form.ajustPriceTypeUI=ajustPriceTypeUI;
+
+    Form.ajustPriceUILabel=ajustPriceUILabel;
+
+    Form.ajustPriceUI=ajustPriceUI;
+
+    Form.commentUILabel=commentUILabel;
+
+    Form.commentUI=commentUI;
+
+    Form.termsUILabel=termsUILabel;
+
+    Form.termsUI=termsUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

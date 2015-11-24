@@ -3,15 +3,11 @@
 function org_shaolin_vogerp_accounting_page_VoucherManagement(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var voucherTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "voucherTable"]
-    });
-
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
-        ,items: ["VoucherInfoPanel",""]
+        ,items: []
+        ,subComponents: [prefix + "VoucherInfoPanel"]
     });
     var voucherTable = new UIMaster.ui.objectlist
     ({
@@ -29,12 +25,14 @@ function org_shaolin_vogerp_accounting_page_VoucherManagement(json)
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [voucherTable,functionsTab]
+        ,items: [functionsTab]
     });
 
-    Form.voucherTable=voucherTable;
-
     Form.functionsTab=functionsTab;
+
+    Form.VoucherInfoPanel=VoucherInfoPanel;
+
+    Form.voucherTable=voucherTable;
 
     Form.user_constructor = function()
     {

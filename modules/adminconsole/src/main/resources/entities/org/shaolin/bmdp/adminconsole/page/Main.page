@@ -4,6 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.bmdp.adminconsole.page.Main</entityName>
 	<systemVersion>0</systemVersion>
+	<description>欢迎来到VogERP主页</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="Submit"></ns2:eventHandler>
 		<ns2:eventHandler functionName="logout">

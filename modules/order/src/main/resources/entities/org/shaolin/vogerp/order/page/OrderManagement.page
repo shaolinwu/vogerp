@@ -4,6 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.order.page.OrderManagement</entityName>
 	<systemVersion>0</systemVersion>
+	<description>订单管理</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="createSaleOrder">
 		   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showBlankorderInfoPanel3413">

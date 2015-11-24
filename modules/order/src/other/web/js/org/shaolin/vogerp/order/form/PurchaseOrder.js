@@ -232,7 +232,69 @@ function org_shaolin_vogerp_order_form_PurchaseOrder(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.parentIdUILabel=parentIdUILabel;
+
+    Form.parentIdUI=parentIdUI;
+
+    Form.serialNumberUILabel=serialNumberUILabel;
+
+    Form.serialNumberUI=serialNumberUI;
+
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
+    Form.createDateUILabel=createDateUILabel;
+
+    Form.createDateUI=createDateUI;
+
+    Form.startCreateDateUILabel=startCreateDateUILabel;
+
+    Form.startCreateDateUI=startCreateDateUI;
+
+    Form.endCreateDateUILabel=endCreateDateUILabel;
+
+    Form.endCreateDateUI=endCreateDateUI;
+
+    Form.discountUILabel=discountUILabel;
+
+    Form.discountUI=discountUI;
+
+    Form.statusUILabel=statusUILabel;
+
+    Form.statusUI=statusUI;
+
+    Form.itemsUILabel=itemsUILabel;
+
+    Form.itemsUI=itemsUI;
+
+    Form.customerIdUILabel=customerIdUILabel;
+
+    Form.customerIdUI=customerIdUI;
+
+    Form.customerUILabel=customerUILabel;
+
+    Form.customerUI=customerUI;
+
+    Form.deliveryInfoUILabel=deliveryInfoUILabel;
+
+    Form.deliveryInfoUI=deliveryInfoUI;
+
+    Form.purchasedOrderIdUILabel=purchasedOrderIdUILabel;
+
+    Form.purchasedOrderIdUI=purchasedOrderIdUI;
+
+    Form.supplierIdUILabel=supplierIdUILabel;
+
+    Form.supplierIdUI=supplierIdUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

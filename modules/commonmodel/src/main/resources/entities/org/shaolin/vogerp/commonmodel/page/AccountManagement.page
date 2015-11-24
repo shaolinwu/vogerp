@@ -4,6 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.commonmodel.page.AccountManagement</entityName>
 	<systemVersion>0</systemVersion>
+	<description>帐号管理</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="createAccount">
 		   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showBlankpersonalInfoPanel">

@@ -172,7 +172,49 @@ function org_shaolin_vogerp_accounting_form_Budget(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.dateTypeUILabel=dateTypeUILabel;
+
+    Form.dateTypeUI=dateTypeUI;
+
+    Form.startDateUILabel=startDateUILabel;
+
+    Form.startDateUI=startDateUI;
+
+    Form.endDateUILabel=endDateUILabel;
+
+    Form.endDateUI=endDateUI;
+
+    Form.partyTypeUILabel=partyTypeUILabel;
+
+    Form.partyTypeUI=partyTypeUI;
+
+    Form.isRollingUILabel=isRollingUILabel;
+
+    Form.isRollingUI=isRollingUI;
+
+    Form.typeUILabel=typeUILabel;
+
+    Form.typeUI=typeUI;
+
+    Form.stateUILabel=stateUILabel;
+
+    Form.stateUI=stateUI;
+
+    Form.itemsUILabel=itemsUILabel;
+
+    Form.itemsUI=itemsUI;
+
+    Form.commentsUILabel=commentsUILabel;
+
+    Form.commentsUI=commentsUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

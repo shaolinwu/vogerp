@@ -54,7 +54,15 @@ function org_shaolin_vogerp_accounting_form_BudgetItemTable(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.parentIdUI=parentIdUI;
+
+    Form.itemTable=itemTable;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

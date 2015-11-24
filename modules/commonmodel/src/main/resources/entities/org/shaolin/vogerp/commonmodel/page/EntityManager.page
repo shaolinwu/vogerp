@@ -4,6 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.commonmodel.page.EntityManager</entityName>
 	<systemVersion>0</systemVersion>
+	<description>系统组件管理</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="ReloadFunction">
 			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="openPage">

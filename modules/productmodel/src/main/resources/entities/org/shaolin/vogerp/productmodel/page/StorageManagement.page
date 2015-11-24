@@ -4,6 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.productmodel.page.StorageManagement</entityName>
 	<systemVersion>0</systemVersion>
+	<description>库存管理</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
         <ns2:eventHandler functionName="createWarehouse">
 		   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createWarehouse324324">

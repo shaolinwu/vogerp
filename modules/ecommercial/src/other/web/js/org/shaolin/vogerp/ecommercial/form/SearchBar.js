@@ -40,6 +40,12 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar(json)
 
     Form.root=root;
 
+    Form.vogerplogo=vogerplogo;
+
+    Form.searchContext=searchContext;
+
+    Form.searchButton=searchButton;
+
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_SearchBar */

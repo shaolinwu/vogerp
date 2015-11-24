@@ -60,7 +60,17 @@ function org_shaolin_vogerp_accounting_form_InBalanceSheet(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.transIdUILabel=transIdUILabel;
+
+    Form.transIdUI=transIdUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

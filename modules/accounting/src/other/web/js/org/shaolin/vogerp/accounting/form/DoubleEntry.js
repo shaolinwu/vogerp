@@ -116,7 +116,33 @@ function org_shaolin_vogerp_accounting_form_DoubleEntry(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.commentUILabel=commentUILabel;
+
+    Form.commentUI=commentUI;
+
+    Form.generalLedgerUILabel=generalLedgerUILabel;
+
+    Form.generalLedgerUI=generalLedgerUI;
+
+    Form.subLedgerUILabel=subLedgerUILabel;
+
+    Form.subLedgerUI=subLedgerUI;
+
+    Form.debitAmountUILabel=debitAmountUILabel;
+
+    Form.debitAmountUI=debitAmountUI;
+
+    Form.creditAmountUILabel=creditAmountUILabel;
+
+    Form.creditAmountUI=creditAmountUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

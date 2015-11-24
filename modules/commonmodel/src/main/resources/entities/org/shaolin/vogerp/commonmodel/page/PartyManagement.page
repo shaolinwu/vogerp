@@ -4,6 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.commonmodel.page.PartyManagement</entityName>
 	<systemVersion>0</systemVersion>
+	<description>当事人管理</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="createUser">
 		   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showBlankpersonalInfoPanel">

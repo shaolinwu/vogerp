@@ -37,6 +37,12 @@ function org_shaolin_vogerp_order_form_OrderItemTable(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.parentIdUI=parentIdUI;
+
+    Form.productTreeUI=productTreeUI;
+
+    Form.itemTable=itemTable;
+
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_order_form_OrderItemTable */

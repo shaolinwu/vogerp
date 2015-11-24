@@ -74,7 +74,21 @@ function org_shaolin_vogerp_accounting_form_BudgetItem(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.amountUILabel=amountUILabel;
+
+    Form.amountUI=amountUI;
+
+    Form.reasonUILabel=reasonUILabel;
+
+    Form.reasonUI=reasonUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

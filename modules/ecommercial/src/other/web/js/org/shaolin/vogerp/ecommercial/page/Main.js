@@ -9,12 +9,10 @@ function org_shaolin_vogerp_ecommercial_page_Main(json)
 
     var content = new org_shaolin_vogerp_ecommercial_form_Content({"prefix":prefix + "content."});
 
-    var bottomBar = new org_shaolin_vogerp_ecommercial_form_BottomBar({"prefix":prefix + "bottomBar."});
-
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [topBar,searchBar,content,bottomBar]
+        ,items: [topBar,searchBar,content]
     });
 
     Form.topBar=topBar;
@@ -22,8 +20,6 @@ function org_shaolin_vogerp_ecommercial_page_Main(json)
     Form.searchBar=searchBar;
 
     Form.content=content;
-
-    Form.bottomBar=bottomBar;
 
     Form.user_constructor = function()
     {

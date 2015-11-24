@@ -116,7 +116,33 @@ function org_shaolin_vogerp_order_form_ProductOrder(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.parentIdUILabel=parentIdUILabel;
+
+    Form.parentIdUI=parentIdUI;
+
+    Form.serialNumberUILabel=serialNumberUILabel;
+
+    Form.serialNumberUI=serialNumberUI;
+
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
+    Form.createDateUILabel=createDateUILabel;
+
+    Form.createDateUI=createDateUI;
+
+    Form.statusUILabel=statusUILabel;
+
+    Form.statusUI=statusUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

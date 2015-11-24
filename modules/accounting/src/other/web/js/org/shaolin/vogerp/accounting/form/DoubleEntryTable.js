@@ -54,7 +54,15 @@ function org_shaolin_vogerp_accounting_form_DoubleEntryTable(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.parentIdUI=parentIdUI;
+
+    Form.itemTable=itemTable;
+
     Form.totalPanel=totalPanel;
+
+    Form.totalAmountUILabel=totalAmountUILabel;
+
+    Form.totalAmountUI=totalAmountUI;
 
     Form.user_constructor = function()
     {

@@ -102,7 +102,29 @@ function org_shaolin_vogerp_accounting_form_InvoicePayment(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.serialNumberUILabel=serialNumberUILabel;
+
+    Form.serialNumberUI=serialNumberUI;
+
+    Form.invoiceIdUILabel=invoiceIdUILabel;
+
+    Form.invoiceIdUI=invoiceIdUI;
+
+    Form.payAmountUILabel=payAmountUILabel;
+
+    Form.payAmountUI=payAmountUI;
+
+    Form.typeUILabel=typeUILabel;
+
+    Form.typeUI=typeUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

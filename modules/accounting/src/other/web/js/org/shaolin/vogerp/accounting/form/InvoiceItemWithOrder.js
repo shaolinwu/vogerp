@@ -144,7 +144,41 @@ function org_shaolin_vogerp_accounting_form_InvoiceItemWithOrder(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.invoiceIdUILabel=invoiceIdUILabel;
+
+    Form.invoiceIdUI=invoiceIdUI;
+
+    Form.invoiceItemIdUILabel=invoiceItemIdUILabel;
+
+    Form.invoiceItemIdUI=invoiceItemIdUI;
+
+    Form.invoiceAmountUILabel=invoiceAmountUILabel;
+
+    Form.invoiceAmountUI=invoiceAmountUI;
+
+    Form.orderIdUILabel=orderIdUILabel;
+
+    Form.orderIdUI=orderIdUI;
+
+    Form.orderItemIdUILabel=orderItemIdUILabel;
+
+    Form.orderItemIdUI=orderItemIdUI;
+
+    Form.orderAmountUILabel=orderAmountUILabel;
+
+    Form.orderAmountUI=orderAmountUI;
+
+    Form.orderUnitPricetUILabel=orderUnitPricetUILabel;
+
+    Form.orderUnitPricetUI=orderUnitPricetUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

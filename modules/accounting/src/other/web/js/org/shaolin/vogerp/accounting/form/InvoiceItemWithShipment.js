@@ -116,7 +116,33 @@ function org_shaolin_vogerp_accounting_form_InvoiceItemWithShipment(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
+    Form.invoiceIdUILabel=invoiceIdUILabel;
+
+    Form.invoiceIdUI=invoiceIdUI;
+
+    Form.invoiceItemIdUILabel=invoiceItemIdUILabel;
+
+    Form.invoiceItemIdUI=invoiceItemIdUI;
+
+    Form.shipmentIdUILabel=shipmentIdUILabel;
+
+    Form.shipmentIdUI=shipmentIdUI;
+
+    Form.shipmentItemIdUILabel=shipmentItemIdUILabel;
+
+    Form.shipmentItemIdUI=shipmentItemIdUI;
+
+    Form.amountUILabel=amountUILabel;
+
+    Form.amountUI=amountUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

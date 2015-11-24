@@ -239,11 +239,69 @@ function org_shaolin_vogerp_accounting_form_AccountVoucher(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.createDateUILabel=createDateUILabel;
+
+    Form.createDateUI=createDateUI;
+
+    Form.voucherTypeUILabel=voucherTypeUILabel;
+
+    Form.voucherTypeUI=voucherTypeUI;
+
+    Form.voucherNumberUILabel=voucherNumberUILabel;
+
+    Form.voucherNumberUI=voucherNumberUI;
+
+    Form.subVoucherNumberUILabel=subVoucherNumberUILabel;
+
+    Form.subVoucherNumberUI=subVoucherNumberUI;
+
     Form.tablePanel=tablePanel;
+
+    Form.doubleEntiesUI=doubleEntiesUI;
 
     Form.bottomPanel=bottomPanel;
 
+    Form.commentUILabel=commentUILabel;
+
+    Form.commentUI=commentUI;
+
+    Form.managerUILabel=managerUILabel;
+
+    Form.managerUI=managerUI;
+
+    Form.enteredUILabel=enteredUILabel;
+
+    Form.enteredUI=enteredUI;
+
+    Form.preparedUILabel=preparedUILabel;
+
+    Form.preparedUI=preparedUI;
+
+    Form.auditorUILabel=auditorUILabel;
+
+    Form.auditorUI=auditorUI;
+
+    Form.cashierUILabel=cashierUILabel;
+
+    Form.cashierUI=cashierUI;
+
+    Form.receiverUILabel=receiverUILabel;
+
+    Form.receiverUI=receiverUI;
+
+    Form.settlementMethodUILabel=settlementMethodUILabel;
+
+    Form.settlementMethodUI=settlementMethodUI;
+
+    Form.settlementNumberUILabel=settlementNumberUILabel;
+
+    Form.settlementNumberUI=settlementNumberUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

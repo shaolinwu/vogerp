@@ -4,6 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.commonmodel.page.OrganizationManagement</entityName>
 	<systemVersion>0</systemVersion>
+	<description>组织管理</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="createOrg">
            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showBlankOrgInfoPanel">
