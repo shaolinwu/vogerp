@@ -134,20 +134,6 @@
       <ns2:component xsi:type="ns2:UIComboBoxType" UIID="stateUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="itemsUILabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_accounting_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.accounting.be.Budget.items</ns2:key>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UITableType" UIID="itemsUI">
-        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-        <ns2:defaultRowSize>0</ns2:defaultRowSize>
-        <ns2:showActionBar>false</ns2:showActionBar>
-        <ns2:showFilter>false</ns2:showFilter>
-        <ns2:editableCell>false</ns2:editableCell>
-      </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="commentsUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -213,14 +199,6 @@
       <ns2:layoutConstraint>
         <ns2:componentId>stateUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>itemsUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="7" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>itemsUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="7" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>commentsUILabel</ns2:componentId>

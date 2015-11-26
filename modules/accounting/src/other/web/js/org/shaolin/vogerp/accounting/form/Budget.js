@@ -78,16 +78,6 @@ function org_shaolin_vogerp_accounting_form_Budget(json)
         ui: elementList[prefix + "stateUI"]
     });
 
-    var itemsUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "itemsUILabel"]
-    });
-
-    var itemsUI = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "itemsUI"]
-    });
-
     var commentsUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "commentsUILabel"]
@@ -119,13 +109,13 @@ function org_shaolin_vogerp_accounting_form_Budget(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "dateTypeUILabel",prefix + "dateTypeUI",prefix + "startDateUILabel",prefix + "startDateUI",prefix + "endDateUILabel",prefix + "endDateUI",prefix + "partyTypeUILabel",prefix + "partyTypeUI",prefix + "isRollingUILabel",prefix + "isRollingUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "stateUILabel",prefix + "stateUI",prefix + "itemsUILabel",prefix + "itemsUI",prefix + "commentsUILabel",prefix + "commentsUI"]
+        ,subComponents: [prefix + "idUI",prefix + "dateTypeUILabel",prefix + "dateTypeUI",prefix + "startDateUILabel",prefix + "startDateUI",prefix + "endDateUILabel",prefix + "endDateUI",prefix + "partyTypeUILabel",prefix + "partyTypeUI",prefix + "isRollingUILabel",prefix + "isRollingUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "stateUILabel",prefix + "stateUI",prefix + "commentsUILabel",prefix + "commentsUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,dateTypeUILabel,dateTypeUI,startDateUILabel,startDateUI,endDateUILabel,endDateUI,partyTypeUILabel,partyTypeUI,isRollingUILabel,isRollingUI,typeUILabel,typeUI,stateUILabel,stateUI,itemsUILabel,itemsUI,commentsUILabel,commentsUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,dateTypeUILabel,dateTypeUI,startDateUILabel,startDateUI,endDateUILabel,endDateUI,partyTypeUILabel,partyTypeUI,isRollingUILabel,isRollingUI,typeUILabel,typeUI,stateUILabel,stateUI,commentsUILabel,commentsUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -157,10 +147,6 @@ function org_shaolin_vogerp_accounting_form_Budget(json)
     Form.stateUILabel=stateUILabel;
 
     Form.stateUI=stateUI;
-
-    Form.itemsUILabel=itemsUILabel;
-
-    Form.itemsUI=itemsUI;
 
     Form.commentsUILabel=commentsUILabel;
 
@@ -201,10 +187,6 @@ function org_shaolin_vogerp_accounting_form_Budget(json)
     Form.stateUILabel=stateUILabel;
 
     Form.stateUI=stateUI;
-
-    Form.itemsUILabel=itemsUILabel;
-
-    Form.itemsUI=itemsUI;
 
     Form.commentsUILabel=commentsUILabel;
 

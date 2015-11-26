@@ -55,7 +55,6 @@
             	List items = tableWidget.getAddItems();
             	for (int i=0;i<items.size();i++) {
             		BudgetItemImpl beObject = (BudgetItemImpl)items.get(i);
-                   	beObject.setParentId(parentId);
                     if (beObject.getId() == 0) {
                         System.out.println("create item: " + beObject);
                     } else {
@@ -67,7 +66,6 @@
             List items = tableWidget.getDeleteItems();
             for (int i=0;i<items.size();i++) {
             		BudgetItemImpl beObject = (BudgetItemImpl)items.get(i);
-                   	beObject.setParentId(parentId);
                     if (beObject.getId() > 0) {
                         System.out.println("delete item: " +beObject);
                     }
@@ -77,7 +75,6 @@
             	List items = tableWidget.getUpdateItems();
             	for (int i=0;i<items.size();i++) {
             		BudgetItemImpl beObject = (BudgetItemImpl)items.get(i);
-                   	beObject.setParentId(parentId);
                     if (beObject.getId() == 0) {
                         System.out.println("create item: " +beObject);
                     } else {
@@ -165,7 +162,7 @@
           </ns2:title>
           <ns2:beFieldId>rowBE.amount</ns2:beFieldId>
           <ns2:uiType>
-            <ns2:type>Text</ns2:type>
+            <ns2:type>Label</ns2:type>
           </ns2:uiType>
         </ns2:column>
         <ns2:column>
