@@ -3,26 +3,51 @@
 function org_shaolin_bmdp_adminconsole_page_CacheManager(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var functionsTab = new UIMaster.ui.tab
+    ({
+        ui: elementList[prefix + "functionsTab"]
+        ,items: []
+        ,subComponents: [prefix + "cacheListPanel",prefix + "lifeServicePanel"]
+    });
     var cacheInfoTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "cacheInfoTable"]
     });
 
-    var functionsTab = new UIMaster.ui.tab
+    var cacheListPanel = new UIMaster.ui.panel
     ({
-        ui: elementList[prefix + "functionsTab"]
+        ui: elementList[prefix + "cacheListPanel"]
+        ,items: []
+        ,subComponents: [prefix + "cacheInfoTable"]
+    });
+    var lifeServiceTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "lifeServiceTable"]
+    });
+
+    var lifeServicePanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "lifeServicePanel"]
+        ,items: []
+        ,subComponents: [prefix + "lifeServiceTable"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [cacheInfoTable,functionsTab]
+        ,items: [functionsTab]
     });
+
+    Form.functionsTab=functionsTab;
+
+    Form.cacheListPanel=cacheListPanel;
 
     Form.cacheInfoTable=cacheInfoTable;
 
-    Form.functionsTab=functionsTab;
+    Form.lifeServicePanel=lifeServicePanel;
+
+    Form.lifeServiceTable=lifeServiceTable;
 
     Form.user_constructor = function()
     {
@@ -31,6 +56,8 @@ function org_shaolin_bmdp_adminconsole_page_CacheManager(json)
     };
 
     Form.ReloadFunction = org_shaolin_bmdp_adminconsole_page_CacheManager_ReloadFunction;
+
+    Form.reloadLifecycleService = org_shaolin_bmdp_adminconsole_page_CacheManager_reloadLifecycleService;
 
     Form.initPageJs = org_shaolin_bmdp_adminconsole_page_CacheManager_initPageJs;
 
@@ -57,6 +84,17 @@ function org_shaolin_bmdp_adminconsole_page_CacheManager(json)
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_CacheManager_ReloadFunction */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_CacheManager_reloadLifecycleService(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_CacheManager_reloadLifecycleService */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"reloadLifecycleService-20151212-1049",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_CacheManager_reloadLifecycleService */
 
 
     function org_shaolin_bmdp_adminconsole_page_CacheManager_initPageJs(){/* Gen_First:org_shaolin_bmdp_adminconsole_page_CacheManager_initPageJs */

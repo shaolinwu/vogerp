@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram"
+	xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page"
+	xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+	<entityName>org.shaolin.bmdp.adminconsole.form.CurrentStatus</entityName>
+	<systemVersion>0</systemVersion>
+	<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+		<ns2:layout xsi:type="ns2:TableLayoutType">
+			<ns2:rowHeightWeight>0</ns2:rowHeightWeight>
+			<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+		</ns2:layout>
+		<ns2:component xsi:type="ns2:UIPanelType" UIID="TaskPanel">
+          <ns2:layout xsi:type="ns2:TableLayoutType">
+              <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+              <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+          </ns2:layout>
+           <ns2:component xsi:type="ns2:UITabPaneType" UIID="MainTab">
+               <ns2:ajaxLoad>false</ns2:ajaxLoad>
+               <ns2:tab uiid="tasksAnalysisPanel">
+                 <ns2:title xsi:type="ns2:StringPropertyType">
+                     <ns2:value>Current Tasks</ns2:value>
+                 </ns2:title>
+                 <ns2:panel UIID="tasksAnalysisPanel">
+                 <ns2:layout xsi:type="ns2:TableLayoutType">
+                     <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                     <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                     <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+                     <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+                 </ns2:layout>
+                 <ns2:component xsi:type="ns2:UIChartPieType" UIID="currentTasksPie">
+                     <ns2:Property name="width">
+                        <ns2:value xsi:type="ns2:NumericPropertyType">
+                           <value>400</value>
+                        </ns2:value>
+                     </ns2:Property>
+                     <ns2:Property name="height">
+                     <ns2:value xsi:type="ns2:NumericPropertyType">
+                        <value>400</value>
+                     </ns2:value>
+                  </ns2:Property>
+                  <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+                      <ns2:value>Current Tasks Distribution</ns2:value>
+                  </ns2:widgetLabel>
+                  <ns2:beElement>org.shaolin.bmdp.workflow.be.Task</ns2:beElement>
+                  <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                       <ns2:expression xsi:type="ns2:ExpressionType">
+                           <ns2:expressionString><![CDATA[
+                           import java.util.List;
+                           import java.util.HashMap;
+                           import org.shaolin.uimaster.page.ajax.TableConditions;
+                           import org.shaolin.bmdp.workflow.ce.TaskStatusType;
+                           import org.shaolin.bmdp.runtime.AppContext;
+                           import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                           {
+                               HashMap list = new HashMap();
+                               ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+                               list.put(TaskStatusType.INPROGRESS.getDisplayName(), new Integer(service.getTasks(TaskStatusType.INPROGRESS).size()));
+                               list.put(TaskStatusType.EXPIRED.getDisplayName(), new Integer(service.getTasks(TaskStatusType.EXPIRED).size()));
+                               
+                               return list;
+                           }]]></ns2:expressionString>
+                       </ns2:expression>
+                   </ns2:query>
+                  <ns2:dataset xsi:type="ns2:UITableColumnType">
+                       <ns2:title xsi:type="ns2:ExpressionPropertyType">
+                           <ns2:expression>
+                             <expressionString>{return org.shaolin.bmdp.workflow.ce.TaskStatusType.INPROGRESS.getDisplayName();}</expressionString>
+                           </ns2:expression>
+                       </ns2:title>
+                       <ns2:cssStype>'#46BFBD'</ns2:cssStype>
+                       <ns2:beFieldId>rowBE.status</ns2:beFieldId>
+                   </ns2:dataset>
+                   <ns2:dataset xsi:type="ns2:UITableColumnType">
+                       <ns2:title xsi:type="ns2:ExpressionPropertyType">
+                           <ns2:expression>
+                             <expressionString>{return org.shaolin.bmdp.workflow.ce.TaskStatusType.EXPIRED.getDisplayName();}</expressionString>
+                           </ns2:expression>
+                       </ns2:title>
+                       <ns2:cssStype>'#F7464A'</ns2:cssStype>
+                       <ns2:beFieldId>rowBE.status</ns2:beFieldId>
+                   </ns2:dataset>
+              </ns2:component>
+               <ns2:layoutConstraint>
+                   <ns2:componentId>currentTasksPie</ns2:componentId>
+                   <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                       x="0" y="0" align="FULL"></ns2:constraint>
+               </ns2:layoutConstraint>
+            </ns2:panel>
+            </ns2:tab>
+            <ns2:tab uiid="orderPanel">
+                 <ns2:title xsi:type="ns2:StringPropertyType">
+                     <ns2:value>Order Status</ns2:value>
+                 </ns2:title>
+                 <ns2:panel UIID="orderPanel">
+                    <ns2:layout xsi:type="ns2:TableLayoutType">
+		              <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+		              <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+		            </ns2:layout>
+                 </ns2:panel>
+            </ns2:tab>
+          </ns2:component>
+          <ns2:layoutConstraint>
+             <ns2:componentId>MainTab</ns2:componentId>
+             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+          </ns2:layoutConstraint>
+       </ns2:component>
+		<ns2:layoutConstraint>
+			<ns2:componentId>TaskPanel</ns2:componentId>
+			<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+				x="0" y="0" align="FULL"></ns2:constraint>
+		</ns2:layoutConstraint>
+	</ns2:body>
+	<ns2:mapping/>
+</ns2:UIEntity>

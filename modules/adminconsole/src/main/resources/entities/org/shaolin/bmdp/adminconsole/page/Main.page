@@ -34,7 +34,7 @@
         if (node && node.a_attr.href != window.location.href+"#") {
             //TODO the maximum tabs allowed to be opened.
             if (this.tabCounter >= 10) {
-               alert("请节约使用系统资源，关闭一些无需使用的页面，谢谢！");
+               alert("Please close some of unused tab pages. the maximum pages is 10.");
             }
             this.functionsTab.addFrameTab(node.text, node.a_attr.href);
             this.tabCounter = this.functionsTab.getTabLength();
@@ -261,7 +261,7 @@
 				<ns2:layout xsi:type="ns2:TableLayoutType">
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:columnWidthWeight>280</ns2:columnWidthWeight>
-					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+					<ns2:columnWidthWeight>400</ns2:columnWidthWeight>
 				</ns2:layout>
 				<ns2:component xsi:type="ns2:UIPanelType" UIID="treePanel">
 					<ns2:UISkin xsi:type="ns2:UISkinType">
@@ -292,10 +292,11 @@
 								import java.util.List;
 								import java.util.ArrayList;
 								import org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl;
-        import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
-        import org.shaolin.uimaster.page.ajax.TreeItem;
-        import org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute;
+						        import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+						        import org.shaolin.uimaster.page.ajax.TreeItem;
+						        import org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute;
 								import org.shaolin.uimaster.page.ajax.TreeConditions;
+								import org.shaolin.bmdp.runtime.AppContext;
 								{
 									      ModuleGroupImpl condition = new ModuleGroupImpl();
 							        List all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
@@ -306,7 +307,7 @@
 							        ModuleGroupImpl root = null;
 							        for (int i=0;i<all.size();i++) {
 							        	ModuleGroupImpl mg = (ModuleGroupImpl)all.get(i);
-							        	if ("uimaster".equals(mg.getName())) {
+							        	if (AppContext.get().getAppName().equals(mg.getName())) {
 							        		   root = mg;
 							        	    break;
 							        	}
@@ -322,18 +323,18 @@
 						                if (mg.getParentId() != root.getId()) {
 						                	continue;
 						                }
-                TreeItem gitem = new TreeItem();
-                gitem.setId("mg_" + mg.getId());
-                gitem.setText(mg.getName());
-                gitem.setIcon(mg.getSmallIcon());
-                gitem.setState(new org.shaolin.uimaster.page.ajax.TreeItem.State());
-								        gitem.setA_attr(new org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute(mg.getAccessURL()));
-                result.add(gitem);
-                
-                // find children
-                for (int j=0;j<all.size();j++) {
-                	  if (mg.getId() == ((ModuleGroupImpl)all.get(j)).getParentId()) {
-                		   ModuleGroupImpl m = (ModuleGroupImpl)all.get(j);
+					                TreeItem gitem = new TreeItem();
+					                gitem.setId("mg_" + mg.getId());
+					                gitem.setText(mg.getName());
+					                gitem.setIcon(mg.getSmallIcon());
+					                gitem.setState(new org.shaolin.uimaster.page.ajax.TreeItem.State());
+													        gitem.setA_attr(new org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute(mg.getAccessURL()));
+					                result.add(gitem);
+					                
+					                // find children
+					                for (int j=0;j<all.size();j++) {
+					                	  if (mg.getId() == ((ModuleGroupImpl)all.get(j)).getParentId()) {
+					                		   ModuleGroupImpl m = (ModuleGroupImpl)all.get(j);
 									            TreeItem item = new TreeItem();
 									            item.setId("mg_" + m.getId());
 									            item.setText(m.getName());
@@ -342,8 +343,8 @@
 									            item.setIcon(m.getSmallIcon());
 									            
 									            gitem.getChildren().add(item);
-                    }
-                 }
+					                    }
+					                 }
 							       }
 									return result;
 								}]]></ns2:expressionString>
@@ -370,24 +371,17 @@
 						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 					</ns2:layout>
 					<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
-						<ns2:tab uiid="MainTabPanel"> 
-							<ns2:title xsi:type="ns2:ResourceBundlePropertyType"> <ns2:bundle>org_shaolin_vogerp_adminconsole_i18n</ns2:bundle> 
-							<ns2:key>org.shaolin.bmdp.adminconsole.page.Main</ns2:key> 
-							</ns2:title> 
-							<ns2:panel UIID="MainTabPanel">
-	       <ns2:layout xsi:type="ns2:TableLayoutType">
-	           <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-	           <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-	       </ns2:layout>
-								<ns2:component xsi:type="ns2:UIPanelType" UIID="MainTab">
-									<ns2:layout xsi:type="ns2:TableLayoutType">
-										<ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
-										<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-									</ns2:layout>
-								</ns2:component>
-							</ns2:panel>
-							</ns2:tab> 
-							<!-- more tabs will be added by the tree dynamically. -->
+					    <ns2:ajaxLoad>true</ns2:ajaxLoad>
+					    <ns2:tab uiid="currentStatusPanel">
+		                    <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+		                        <ns2:bundle>org_shaolin_vogerp_adminconsole_i18n</ns2:bundle>
+		                        <ns2:key>org.shaolin.bmdp.adminconsole.page.Main</ns2:key>
+		                    </ns2:title>
+		                    <ns2:refEntity UIID="currentStatusPanel">
+		                       <ns2:referenceEntity entityName="org.shaolin.bmdp.adminconsole.form.CurrentStatus" />
+		                    </ns2:refEntity>
+		                </ns2:tab>
+						<!-- more tabs will be added by the tree dynamically. -->
 					</ns2:component>
 					<ns2:layoutConstraint>
 						<ns2:componentId>functionsTab</ns2:componentId>
@@ -430,8 +424,7 @@
 			scope="In">
 			<ns2:type entityName="org.shaolin.vogerp.commonmodel.be.PersonalAccount" />
 		</ns2:DataEntity>
-		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
-			name="simpleMapping0">
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
 			<ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.UserAccount"></ns2:mappingRule>
 			<ns2:UIComponent componentPath="userForm" paramName="UIWidgetType"></ns2:UIComponent>
 			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
@@ -443,6 +436,10 @@
 				</ns2:expression>
 			</ns2:DataComponent>
 		</ns2:ComponentMapping>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+          <ns2:mappingRule entityName="org.shaolin.bmdp.adminconsole.form.CurrentStatus"></ns2:mappingRule>
+          <ns2:UIComponent componentPath="currentStatusPanel" paramName="UIWidgetType"></ns2:UIComponent>
+        </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
 		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">

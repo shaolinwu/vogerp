@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bediagram:BEDiagram xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:bediagram="http://bmdp.shaolin.org/datamodel/BEDiagram"
+	xmlns:common="http://bmdp.shaolin.org/datamodel/Common">
+	<name>AdminModel</name>
+	<bePackage>org.shaolin.bmdp.adminconsole.be</bePackage>
+	<cePackage>org.shaolin.bmdp.adminconsole.ce</cePackage>
+	<diagramPackage>org.shaolin.bmdp.adminconsole.diagram</diagramPackage>
+	
+	<bediagram:beEntity>
+		<common:entityName>LifeServiceItem</common:entityName>
+		<bediagram:member>
+            <bediagram:name>className</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>operation</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+	</bediagram:beEntity>
+	
+</bediagram:BEDiagram>

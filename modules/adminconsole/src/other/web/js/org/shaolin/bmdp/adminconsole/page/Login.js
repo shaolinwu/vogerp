@@ -65,6 +65,14 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
 
     Form.loginPanel=loginPanel;
 
+    Form.errorInfo=errorInfo;
+
+    Form.userName=userName;
+
+    Form.password=password;
+
+    Form.loginBtn=loginBtn;
+
     Form.bottomPanel=bottomPanel;
 
     Form.user_constructor = function()

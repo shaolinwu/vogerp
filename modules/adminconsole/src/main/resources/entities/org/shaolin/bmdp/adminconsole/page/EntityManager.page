@@ -2,7 +2,7 @@
 <ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
 	xsi:schemaLocation="">
-	<entityName>org.shaolin.vogerp.commonmodel.page.EntityManager</entityName>
+	<entityName>org.shaolin.bmdp.adminconsole.page.EntityManager</entityName>
 	<systemVersion>0</systemVersion>
 	<description>系统组件管理</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
@@ -14,13 +14,11 @@
 					import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 					import java.io.File;
 					{
-					 @page.getButton("reloadBtn").setWidgetLabel("");
-					
 						String value = @page.getTextField("reloadPathText").getValue();
 						File path = new File(value);
 						IServerServiceManager.INSTANCE.getEntityManager().reloadDir(path);
 						
-						@page.getButton("reloadBtn").setWidgetLabel("Reloaded.");
+						@page.executeJavaScript("alert('reloaded!');");
 					}
 					]]></ns2:expressionString>
 				</ns2:exp>

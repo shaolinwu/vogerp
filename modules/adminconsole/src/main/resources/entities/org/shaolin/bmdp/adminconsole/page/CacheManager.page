@@ -19,6 +19,30 @@
 				</ns2:exp>
 			</ns2:ops>
 		</ns2:eventHandler>
+		<ns2:eventHandler functionName="reloadLifecycleService">
+           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="reloadLifecycleService-20151212-1049">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.List;
+                    import java.util.ArrayList;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.cache.CacheManager;
+                    import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+                    import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.bmdp.adminconsole.be.LifeServiceItemImpl;
+                    {
+                        Table customerInfoTable = (Table)@page.getElement("lifeServiceTable");
+                        if (customerInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        LifeServiceItemImpl item = (LifeServiceItemImpl)customerInfoTable.getSelectedRow();
+                        AppContext.get().reloadLifeCycleService(item.getClassName());
+                        @page.executeJavaScript("alert('reloaded!');");
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 		    <ns2:UISkin xsi:type="ns2:UISkinType">
                 <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
@@ -116,6 +140,103 @@
 		                        x="0" y="0" align="FULL"></ns2:constraint>
 		                </ns2:layoutConstraint>
 		            </ns2:panel>  
+                </ns2:tab>
+                <ns2:tab uiid="lifeServicePanel">
+                    <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+                        <ns2:bundle>org_shaolin_vogerp_adminconsole_i18n</ns2:bundle>
+                        <ns2:key>org.shaolin.bmdp.adminconsole.page.CacheManager.lifeServicePanel</ns2:key>
+                    </ns2:title>
+                    <ns2:panel UIID="lifeServicePanel">
+                        <ns2:layout xsi:type="ns2:TableLayoutType">
+                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+                        </ns2:layout>
+                        <ns2:component xsi:type="ns2:UITableType" UIID="lifeServiceTable">
+                            <ns2:beElement>org.shaolin.bmdp.adminconsole.be.LifeServiceItem</ns2:beElement>
+                            <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+                            <ns2:defaultRowSize>50</ns2:defaultRowSize>
+                            <ns2:showActionBar>true</ns2:showActionBar>
+                            <ns2:showFilter>true</ns2:showFilter>
+                            <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                                <ns2:expression xsi:type="ns2:ExpressionType">
+                                    <ns2:expressionString><![CDATA[
+                                    import java.util.List;
+                                    import java.util.ArrayList;
+                                    import org.shaolin.bmdp.runtime.cache.CacheManager;
+                                    import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+                                    import org.shaolin.bmdp.runtime.AppContext;
+                                    import org.shaolin.bmdp.adminconsole.be.LifeServiceItemImpl;
+                                    {
+                                        ArrayList result = new ArrayList();
+                                        List services = AppContext.get().getLifeCycleServiceList();
+                                        for (int i=0; i<services.size(); i++) {
+	                                        LifeServiceItemImpl item = new LifeServiceItemImpl();
+                                            item.setClassName((String)services.get(i));
+                                            item.setOperation("<button onclick=\"javascript:defaultname.reloadLifecycleService(defaultname.lifeServiceTable);\">Reload</button>");
+                                            result.add(item);
+                                        }
+                                        return result;
+                                    }]]></ns2:expressionString>
+                                </ns2:expression>
+                            </ns2:query>
+                            <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
+                                <ns2:expression xsi:type="ns2:ExpressionType">
+                                    <ns2:expressionString><![CDATA[
+                                    import org.shaolin.bmdp.runtime.cache.CacheManager;
+                                    import org.shaolin.bmdp.runtime.AppContext;
+                                    import org.shaolin.bmdp.adminconsole.be.LifeServiceItemImpl;
+                                    {
+                                         return AppContext.get().getLifeCycleServiceList().size();
+                                    }]]></ns2:expressionString>
+                                </ns2:expression>
+                            </ns2:totalCount>
+                            <ns2:rowFilter xsi:type="ns2:ExpressionPropertyType">
+                                <ns2:expression xsi:type="ns2:ExpressionType">
+                                    <ns2:expressionString><![CDATA[
+                                    {
+                                         return true;
+                                    }]]></ns2:expressionString>
+                                </ns2:expression>
+                            </ns2:rowFilter>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>Application Name</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.id</ns2:beFieldId>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.runtime.AppContext;
+                                        {
+                                            return AppContext.get().getAppName();
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:rowExpression>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>Service Name</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.className</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>Operations</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.operation</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>HTML</ns2:type></ns2:uiType>
+                            </ns2:column>
+                            <ns2:defaultActions>
+                            </ns2:defaultActions>
+                        </ns2:component>
+                        <ns2:layoutConstraint>
+                            <ns2:componentId>lifeServiceTable</ns2:componentId>
+                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                                x="0" y="0" align="FULL"></ns2:constraint>
+                        </ns2:layoutConstraint>
+                    </ns2:panel>  
                 </ns2:tab>
             </ns2:component>
             <ns2:layoutConstraint>

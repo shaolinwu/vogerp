@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<ns2:RDBDiagram xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/Page" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <name>AdminModel</name>
+  <systemVersion>0</systemVersion>
+  <ns2:diagramPackage>org.shaolin.bmdp.adminconsole.diagram</ns2:diagramPackage>
+  <ns2:daoPackage>org.shaolin.bmdp.adminconsole.dao</ns2:daoPackage>
+</ns2:RDBDiagram>

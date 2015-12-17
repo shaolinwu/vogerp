@@ -3,6 +3,12 @@
 function org_shaolin_bmdp_adminconsole_page_EntityManager(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var functionsTab = new UIMaster.ui.tab
+    ({
+        ui: elementList[prefix + "functionsTab"]
+        ,items: []
+        ,subComponents: [prefix + "reloadPanel",prefix + "ceentityPanel",prefix + "dynamicUIPanel",prefix + "dynamicPageLinkPanel"]
+    });
     var reloadPathText = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "reloadPathText"]
@@ -23,26 +29,29 @@ function org_shaolin_bmdp_adminconsole_page_EntityManager(json)
         ui: elementList[prefix + "reloadCECacheBtn"]
     });
 
-    var uploadFile = new UIMaster.ui.file
+    var reloadPanel = new UIMaster.ui.panel
     ({
-        ui: elementList[prefix + "uploadFile"]
+        ui: elementList[prefix + "reloadPanel"]
+        ,items: []
+        ,subComponents: [prefix + "reloadPathText",prefix + "reloadBtn",prefix + "reloadCECacheText",prefix + "reloadCECacheBtn"]
     });
-
-    var functionsTab = new UIMaster.ui.tab
-    ({
-        ui: elementList[prefix + "functionsTab"]
-    });
-
-    var ceentityPanel = new org_shaolin_vogerp_commonmodel_form_CEExtensionManager({"prefix":prefix + "ceentityPanel."});
+    var ceentityPanel = new org_shaolin_vogerp_commonmodel_form_CEHierarchy({"prefix":prefix + "ceentityPanel."});
 
     var dynamicUIPanel = new org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager({"prefix":prefix + "dynamicUIPanel."});
+
+    var dynamicPageLinkPanel = new org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable({"prefix":prefix + "dynamicPageLinkPanel."});
+
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [reloadPathText,reloadBtn,reloadCECacheText,reloadCECacheBtn,uploadFile,functionsTab,ceentityPanel,dynamicUIPanel]
+        ,items: [functionsTab]
     });
+
+    Form.functionsTab=functionsTab;
+
+    Form.reloadPanel=reloadPanel;
 
     Form.reloadPathText=reloadPathText;
 
@@ -52,13 +61,11 @@ function org_shaolin_bmdp_adminconsole_page_EntityManager(json)
 
     Form.reloadCECacheBtn=reloadCECacheBtn;
 
-    Form.uploadFile=uploadFile;
-
-    Form.functionsTab=functionsTab;
-
     Form.ceentityPanel=ceentityPanel;
 
     Form.dynamicUIPanel=dynamicUIPanel;
+
+    Form.dynamicPageLinkPanel=dynamicPageLinkPanel;
 
     Form.user_constructor = function()
     {
