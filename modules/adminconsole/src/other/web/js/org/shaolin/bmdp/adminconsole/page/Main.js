@@ -23,6 +23,11 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
         ui: elementList[prefix + "userIcon"]
     });
 
+    var userLogout = new UIMaster.ui.image
+    ({
+        ui: elementList[prefix + "userLogout"]
+    });
+
     var taskIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "taskIcon"]
@@ -31,11 +36,6 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var notificationIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "notificationIcon"]
-    });
-
-    var userLogout = new UIMaster.ui.image
-    ({
-        ui: elementList[prefix + "userLogout"]
     });
 
     var functionTree = new UIMaster.ui.webtree
@@ -52,7 +52,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var currentStatusPanel = new org_shaolin_bmdp_adminconsole_form_CurrentStatus({"prefix":prefix + "currentStatusPanel."});
 
 
-    var userForm = new org_shaolin_vogerp_commonmodel_form_UserAccount({"prefix":prefix + "userForm."});
+    var userFormContent = new org_shaolin_vogerp_commonmodel_form_UserAccount({"prefix":prefix + "userFormContent."});
 
     var pagePanel = new UIMaster.ui.panel
     ({
@@ -78,11 +78,19 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
         ,subComponents: [prefix + "treePanel",prefix + "pagePanel"]
     });
 
+    var userForm = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "userForm"]
+        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
+        ,items: []
+        ,subComponents: [prefix + "userFormContent",prefix + "userLogout"]
+    });
+
     var topRightPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "topRightPanel"]
         ,items: []
-        ,subComponents: [prefix + "userIcon",prefix + "userForm",prefix + "taskIcon",prefix + "notificationIcon",prefix + "userLogout"]
+        ,subComponents: [prefix + "userIcon",prefix + "userForm",prefix + "taskIcon",prefix + "notificationIcon"]
     });
 
     var topMiddlePanel = new UIMaster.ui.panel
@@ -103,7 +111,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [vogerplogo,searchContext,searchButton,userIcon,taskIcon,notificationIcon,userLogout,functionTree,functionsTab,userForm,topPanel,topMiddlePanel,topRightPanel,middlePanel,treePanel,pagePanel]
+        ,items: [vogerplogo,searchContext,searchButton,userIcon,userLogout,taskIcon,notificationIcon,functionTree,functionsTab,userFormContent,topPanel,topMiddlePanel,topRightPanel,userForm,middlePanel,treePanel,pagePanel]
     });
 
     Form.vogerplogo=vogerplogo;
@@ -114,11 +122,11 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
     Form.userIcon=userIcon;
 
+    Form.userLogout=userLogout;
+
     Form.taskIcon=taskIcon;
 
     Form.notificationIcon=notificationIcon;
-
-    Form.userLogout=userLogout;
 
     Form.functionTree=functionTree;
 
@@ -126,7 +134,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
     Form.currentStatusPanel=currentStatusPanel;
 
-    Form.userForm=userForm;
+    Form.userFormContent=userFormContent;
 
     Form.topPanel=topPanel;
 
@@ -144,11 +152,13 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
     Form.userForm=userForm;
 
+    Form.userFormContent=userFormContent;
+
+    Form.userLogout=userLogout;
+
     Form.taskIcon=taskIcon;
 
     Form.notificationIcon=notificationIcon;
-
-    Form.userLogout=userLogout;
 
     Form.topMiddlePanel=topMiddlePanel;
 
@@ -162,9 +172,17 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
     Form.userForm=userForm;
 
+    Form.userFormContent=userFormContent;
+
+    Form.userLogout=userLogout;
+
     Form.taskIcon=taskIcon;
 
     Form.notificationIcon=notificationIcon;
+
+    Form.userForm=userForm;
+
+    Form.userFormContent=userFormContent;
 
     Form.userLogout=userLogout;
 
@@ -247,10 +265,11 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 				    var tree = $(eventsource).jstree(true);
         var selectedId = tree.get_selected();
         var node = tree.get_node(selectedId);
-        if (node && node.a_attr.href != window.location.href+"#") {
+        if (node && node.a_attr.href != "#") {
             //TODO the maximum tabs allowed to be opened.
-            if (this.tabCounter >= 10) {
-               alert("Please close some of unused tab pages. the maximum pages is 10.");
+            if (this.tabCounter >= 11) {
+               //close the second one.
+               this.functionsTab.removeTab(1);
             }
             this.functionsTab.addFrameTab(node.text, node.a_attr.href);
             this.tabCounter = this.functionsTab.getTabLength();
@@ -300,9 +319,6 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 			  //$('#functionTree').on('select_node.jstree', function (e, data) {
 			    //alert(data.selected.length);
 			  //});
-			  var value = $("#topPanel").width();
-			  var self = $("#div-topPanel-1_0").width();
-			  $("#div-topPanel-1_0").css("margin-left", (value/2 - self/1.5) + "px");
 			}
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_initPageJs */
 

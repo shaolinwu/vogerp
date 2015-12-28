@@ -19,7 +19,7 @@
                <ns2:ajaxLoad>false</ns2:ajaxLoad>
                <ns2:tab uiid="tasksAnalysisPanel">
                  <ns2:title xsi:type="ns2:StringPropertyType">
-                     <ns2:value>Current Tasks</ns2:value>
+                     <ns2:value>当前任务</ns2:value>
                  </ns2:title>
                  <ns2:panel UIID="tasksAnalysisPanel">
                  <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -88,9 +88,20 @@
                </ns2:layoutConstraint>
             </ns2:panel>
             </ns2:tab>
+            <ns2:tab uiid="notiPanel">
+                 <ns2:title xsi:type="ns2:StringPropertyType">
+                     <ns2:value>系统通知</ns2:value>
+                 </ns2:title>
+                 <ns2:panel UIID="notiPanel">
+                    <ns2:layout xsi:type="ns2:TableLayoutType">
+                      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+                    </ns2:layout>
+                 </ns2:panel>
+            </ns2:tab>
             <ns2:tab uiid="orderPanel">
                  <ns2:title xsi:type="ns2:StringPropertyType">
-                     <ns2:value>Order Status</ns2:value>
+                     <ns2:value>订单状态</ns2:value>
                  </ns2:title>
                  <ns2:panel UIID="orderPanel">
                     <ns2:layout xsi:type="ns2:TableLayoutType">

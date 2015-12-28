@@ -4,14 +4,18 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.shaolin.bmdp.i18n.Localizer;
 import org.shaolin.bmdp.i18n.ResourceUtil;
+import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.uimaster.page.flow.WebflowConstants;
+import org.shaolin.vogerp.commonmodel.ICaptcherService;
 import org.shaolin.vogerp.commonmodel.IUserService;
+import org.shaolin.vogerp.commonmodel.be.ICaptcha;
 import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
 import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
 import org.shaolin.vogerp.commonmodel.dao.CommonModel;
@@ -33,6 +37,26 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 	}
 	
 	@Override
+	public String preLogin(HttpServletRequest request) {
+		ICaptcherService service = IServerServiceManager.INSTANCE.getService(ICaptcherService.class);
+		ICaptcha captcha = service.getItem(service.generateOne());
+		
+		HttpSession session = request.getSession(true);
+		session.setAttribute(WebflowConstants.USER_TOKEN, captcha.getAnswer());
+		return captcha.getQuestion();
+	}
+	
+	@Override
+	public boolean checkVerifiAnswer(String answer, HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		Object value = session.getAttribute(WebflowConstants.USER_TOKEN);
+		if (value == null) {
+			return false;
+		}
+		return value.toString().equalsIgnoreCase(answer);
+	}
+	
+	@Override
 	public String login(IPersonalAccount user, HttpServletRequest request) {
 		List<IPersonalAccount> result = CommonModel.INSTANCE.authenticateUserInfo((PersonalAccountImpl)user, null, 0, -1);
 		if (result.size() == 1) {
@@ -49,7 +73,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 				CommonModel.INSTANCE.update(matchedUser);
 			} else {
 				if(matchedUser.getIsLocked()){
-		        	return "user.login.passwordrules.accountlocked";
+		        	return USER_LOGIN_PASSWORDRULES_ACCOUNTLOCKED;
 		        }
 				
 				if (matchedUser.getAttempt() > 5)
@@ -57,29 +81,49 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 					matchedUser.setIsLocked(true);
 					matchedUser.setAttempt( matchedUser.getAttempt() + 1);
 					CommonModel.INSTANCE.update(matchedUser);
-					return "user.login.passwordrules.accountlocked";
+					return USER_LOGIN_PASSWORDRULES_ACCOUNTLOCKED;
 				}
 			}
 			try {
 				if (!PasswordVerifier.getPasswordHash(user.getPassword()).equals(matchedUser.getPassword())) {
 					matchedUser.setAttempt( matchedUser.getAttempt() + 1);
 					CommonModel.INSTANCE.update(matchedUser);
-					return "user.login.passwordrules.passwordincorrect";
+					return USER_LOGIN_PASSWORDRULES_PASSWORDINCORRECT;
 				}
 			} catch (NoSuchAlgorithmException e) {
-				return "user.login.passwordrules.algoerror";
+				return USER_LOGIN_PASSWORDRULES_PASSWORDINCORRECT;
 			}
 			
 			matchedUser.setLastLogin(new Date());
 			matchedUser.setAttempt(0);
 			matchedUser.setIsLocked(false);
 			
-			request.getSession(true).setAttribute(WebflowConstants.USER_SESSION_KEY, matchedUser);
-			request.getSession(true).setAttribute(WebflowConstants.USER_LOCALE_KEY, matchedUser.getLocale());
-			request.getSession(true).setAttribute(WebflowConstants.USER_ROLE_KEY, CEOperationUtil.toCElist(matchedUser.getInfo().getType()));
+			HttpSession session = request.getSession(true);
+			session.removeAttribute(WebflowConstants.USER_TOKEN);
+			session.setAttribute(WebflowConstants.USER_SESSION_KEY, matchedUser);
+			session.setAttribute(WebflowConstants.USER_LOCALE_KEY, matchedUser.getLocale());
+			session.setAttribute(WebflowConstants.USER_ROLE_KEY, CEOperationUtil.toCElist(matchedUser.getInfo().getType()));
+			
+			boolean hasCookie = false;
+			Cookie[] cookies = request.getCookies();
+			if (cookies != null) {
+				for (int i = 0, n = cookies.length; i < n; i++) {
+					Cookie cookie = cookies[i];
+					if (cookie.getName().equals(WebflowConstants.USER_LOCALE_KEY)) {
+						cookie.setValue(matchedUser.getLocale());
+						hasCookie = true;
+						break;
+					}
+				}
+			}
+			
+			if (!hasCookie) {
+				Cookie cookie1 = new Cookie(WebflowConstants.USER_LOCALE_KEY, matchedUser.getLocale());
+				//response.addCookie(cookie1);
+			}
 			return ""; // login successful!
 		} else {
-			return "user.login.passwordrules.userdoesnotexist";
+			return USER_LOGIN_PASSWORDRULES_PASSWORDINCORRECT;
 		}
 	}
 	

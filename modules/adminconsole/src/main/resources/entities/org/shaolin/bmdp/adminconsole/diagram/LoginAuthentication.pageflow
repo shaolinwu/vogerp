@@ -39,6 +39,12 @@
         <expressionString><![CDATA[new Integer(0)]]></expressionString>
       </default>
     </ns2:variables>
+     <ns2:variables name="verifyCode" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
     <ns2:out xsi:type="ns2:DisplayOutType" name="Submit">
       <ns2:next>
         <ns2:destNode>Authentication</ns2:destNode>
@@ -50,6 +56,11 @@
         <ns2:outDataMappingToNode name="password">
           <expression>
             <expressionString><![CDATA[$password]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="verifyCode">
+          <expression>
+            <expressionString><![CDATA[$verifyCode]]></expressionString>
           </expression>
         </ns2:outDataMappingToNode>
       </ns2:next>
@@ -75,6 +86,12 @@
         <expressionString><![CDATA[""]]></expressionString>
       </default>
     </ns2:variables>
+    <ns2:variables name="verifyCode" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
     <ns2:operation>
       <expressionString><![CDATA[
       import org.shaolin.bmdp.runtime.AppContext;
@@ -82,12 +99,15 @@
       import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
       {
       	IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
-      	
-      	PersonalAccountImpl loginAccount = new PersonalAccountImpl();
-      	loginAccount.setUserName($userName);
-      	loginAccount.setPassword($password);
-      	
-      	$errorCode = service.login(loginAccount, $getRequest());
+      	if (service.checkVerifiAnswer($verifyCode, $getRequest())) {
+      	    PersonalAccountImpl loginAccount = new PersonalAccountImpl();
+	        loginAccount.setUserName($userName);
+	        loginAccount.setPassword($password);
+	        
+	        $errorCode = service.login(loginAccount, $getRequest());
+      	} else {
+      	    $errorCode = IUserService.USER_LOGIN_PASSWORDRULES_VERICODEINCORRECT;
+      	}
       }]]></expressionString>
     </ns2:operation>
     <ns2:out xsi:type="ns2:ConditionalOutType" name="Fail">
@@ -109,6 +129,11 @@
         <ns2:outDataMappingToNode name="errorCode">
           <expression>
             <expressionString><![CDATA[$errorCode]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="verifyCode">
+          <expression>
+            <expressionString><![CDATA[""]]></expressionString>
           </expression>
         </ns2:outDataMappingToNode>
       </ns2:next>

@@ -484,7 +484,7 @@
 		                        	<!-- first we have the cost, then we generate the price from the cost. -->
 		                            <ns2:uiid>openProductCost</ns2:uiid>
 		                            <ns2:title xsi:type="ns2:StringPropertyType">
-		                                <ns2:value>Product Cost</ns2:value>
+		                                <ns2:value>成本</ns2:value>
 		                            </ns2:title>
 		                            <ns2:icon>ui-icon-note</ns2:icon>
 		                            <ns2:function>openProductCost</ns2:function>
@@ -492,19 +492,16 @@
 		                        <ns2:action>
 		                            <ns2:uiid>openProductPrice</ns2:uiid>
 		                            <ns2:title xsi:type="ns2:StringPropertyType">
-		                                <ns2:value>Product Price</ns2:value>
+		                                <ns2:value>售价</ns2:value>
 		                            </ns2:title>
 		                            <ns2:icon>ui-icon-note</ns2:icon>
 		                            <ns2:function>openProductPrice</ns2:function>
 		                        </ns2:action>
-		                    </ns2:actionGroup>
-		                    <ns2:actionGroup>
-                                <ns2:type>radio</ns2:type>
                                 <ns2:action>
                                     <!-- first we have the cost, then we generate the price from the cost. -->
                                     <ns2:uiid>openProductOverview</ns2:uiid>
                                     <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>Product Overview</ns2:value>
+                                        <ns2:value>预览</ns2:value>
                                     </ns2:title>
                                     <ns2:icon>ui-icon-note</ns2:icon>
                                     <ns2:function>openProductOverview</ns2:function>

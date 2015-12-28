@@ -12,11 +12,15 @@ import org.shaolin.bmdp.runtime.spi.IConstantService.HierarchyAccessor;
 import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.uimaster.page.UIPermissionManager;
+import org.shaolin.vogerp.commonmodel.ICaptcherService;
 import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
 import org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl;
+import org.shaolin.vogerp.commonmodel.be.CaptchaImpl;
 import org.shaolin.vogerp.commonmodel.be.ICEEntityInfo;
 import org.shaolin.vogerp.commonmodel.be.ICEExtension;
 import org.shaolin.vogerp.commonmodel.be.ICEHierarchy;
+import org.shaolin.vogerp.commonmodel.be.ICaptcha;
+import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
 import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
 
@@ -60,6 +64,27 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 						getConstantEntity(ceInfo.getCeName());
 				ce.setEntityInfo(ceInfo.getDescription(), ceInfo.getI18nKey(), ceInfo.getIcon());
 			}
+			
+			CaptchaImpl condition = new CaptchaImpl();
+			final List<ICaptcha> allCaptchas = CommonModel.INSTANCE.allCaptcha(condition, null, 0, -1);
+			ICaptcherService captcherSerivce = new ICaptcherService() {
+				@Override
+				public Class getServiceInterface() {
+					return ICaptcherService.class;
+				}
+				@Override
+				public int generateOne() {
+					return (int)(Math.random() * allCaptchas.size());
+				}
+				@Override
+				public ICaptcha getItem(int index) {
+					if (index == allCaptchas.size()) {
+						return allCaptchas.get(index - 1);
+					}
+					return allCaptchas.get(index);
+				}
+			};
+			IServerServiceManager.INSTANCE.register(captcherSerivce);
 		}
 		
 		try {

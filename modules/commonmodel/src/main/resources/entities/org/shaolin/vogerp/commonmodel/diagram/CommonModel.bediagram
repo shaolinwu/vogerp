@@ -7,6 +7,22 @@
 	<cePackage>org.shaolin.vogerp.commonmodel.ce</cePackage>
 	<diagramPackage>org.shaolin.vogerp.commonmodel.diagram</diagramPackage>
 
+     <bediagram:beEntity needPersist="true" needUIEntity="true">
+        <common:entityName>Captcha</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>question</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>answer</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+    </bediagram:beEntity>
+
 	<!-- 
 	        当事人： 与某事有着直接关联的人. 比例： 一个人（ CEO，部分经理，管理员， 销售人员， 会计师，库存管理员），一个组织（外企业，民企，政府，银行，部门）等 
                  简单的理解为当事人是本系统所有对象实体的抽象类。即面对对象的Object.

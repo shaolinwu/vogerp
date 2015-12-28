@@ -11,10 +11,10 @@ import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
 
 public class CommonModelTest {
 
-    private CommonModel service = new CommonModel();
 
     @Test
     public void testsearchCEExtension() {
+    	System.out.println("a: " + ((int)(Math.random()*5)));
     }
 
     @Test

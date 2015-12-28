@@ -3,6 +3,11 @@
 function org_shaolin_bmdp_adminconsole_page_Login(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var vogerplogo = new UIMaster.ui.image
+    ({
+        ui: elementList[prefix + "vogerplogo"]
+    });
+
     var errorInfo = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "errorInfo"]
@@ -18,15 +23,19 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         ui: elementList[prefix + "password"]
     });
 
-    var loginBtn = new UIMaster.ui.button
+    var veriCodeQuestion = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "loginBtn"]
+        ui: elementList[prefix + "veriCodeQuestion"]
+    });
+
+    var veriCode = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "veriCode"]
     });
 
     var bottomPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "bottomPanel"]
-        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
         ,subComponents: []
     });
@@ -36,22 +45,23 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         ui: elementList[prefix + "loginPanel"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
-        ,subComponents: [prefix + "errorInfo",prefix + "userName",prefix + "password",prefix + "loginBtn"]
+        ,subComponents: [prefix + "errorInfo",prefix + "userName",prefix + "password",prefix + "veriCodeQuestion",prefix + "veriCode"]
     });
 
     var topPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "topPanel"]
-        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
-        ,subComponents: []
+        ,subComponents: [prefix + "vogerplogo"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [errorInfo,userName,password,loginBtn,topPanel,loginPanel,bottomPanel]
+        ,items: [vogerplogo,errorInfo,userName,password,veriCodeQuestion,veriCode,topPanel,loginPanel,bottomPanel]
     });
+
+    Form.vogerplogo=vogerplogo;
 
     Form.errorInfo=errorInfo;
 
@@ -59,9 +69,13 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
 
     Form.password=password;
 
-    Form.loginBtn=loginBtn;
+    Form.veriCodeQuestion=veriCodeQuestion;
+
+    Form.veriCode=veriCode;
 
     Form.topPanel=topPanel;
+
+    Form.vogerplogo=vogerplogo;
 
     Form.loginPanel=loginPanel;
 
@@ -71,7 +85,9 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
 
     Form.password=password;
 
-    Form.loginBtn=loginBtn;
+    Form.veriCodeQuestion=veriCodeQuestion;
+
+    Form.veriCode=veriCode;
 
     Form.bottomPanel=bottomPanel;
 
@@ -80,6 +96,10 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         /* Construct_FIRST:org_shaolin_bmdp_adminconsole_page_Login */
         /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_Login */
     };
+
+    Form.genVerifiCode = org_shaolin_bmdp_adminconsole_page_Login_genVerifiCode;
+
+    Form.verifiCode = org_shaolin_bmdp_adminconsole_page_Login_verifiCode;
 
     Form.Login = org_shaolin_bmdp_adminconsole_page_Login_Login;
 
@@ -100,6 +120,28 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_bmdp_adminconsole_page_Login */
 /* Other_Func_LAST:org_shaolin_bmdp_adminconsole_page_Login */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Login_genVerifiCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_genVerifiCode */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"genVerifiCode-20151227-1839",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_genVerifiCode */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Login_verifiCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_verifiCode */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifiCode-20151227-1839",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_verifiCode */
+
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Login_Login(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_Login */

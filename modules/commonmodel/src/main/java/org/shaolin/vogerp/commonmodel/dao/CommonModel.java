@@ -55,6 +55,26 @@ public class CommonModel extends BEEntityDaoObject {
         return count(IPersonalAccount.class);
     }
 
+    public List<org.shaolin.vogerp.commonmodel.be.ICaptcha> allCaptcha(org.shaolin.vogerp.commonmodel.be.CaptchaImpl scFlow,
+           List<Order> orders, int offset, int count) {
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.CaptchaImpl.class, "inFlow");
+            if (orders == null) {
+            } else {
+                this._addOrders(inFlowCriteria, orders);
+            }
+
+
+        List result = this._list(offset, count, inFlowCriteria);
+        return result;
+    }
+
+    public long allCaptchaCount(org.shaolin.vogerp.commonmodel.be.CaptchaImpl scFlow) {
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.CaptchaImpl.class, "inFlow");
+
+
+        return this._count(inFlowCriteria);
+    }
+
     public List<org.shaolin.vogerp.commonmodel.be.IPersonalAccount> authenticateUserInfo(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow,
            List<Order> orders, int offset, int count) {
             Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl.class, "inFlow");

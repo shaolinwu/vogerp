@@ -7,7 +7,7 @@ function org_shaolin_bmdp_adminconsole_form_CurrentStatus(json)
     ({
         ui: elementList[prefix + "MainTab"]
         ,items: []
-        ,subComponents: [prefix + "tasksAnalysisPanel",prefix + "orderPanel"]
+        ,subComponents: [prefix + "tasksAnalysisPanel",prefix + "notiPanel",prefix + "orderPanel"]
     });
     var currentTasksPie = new UIMaster.ui.chart
     ({
@@ -19,6 +19,12 @@ function org_shaolin_bmdp_adminconsole_form_CurrentStatus(json)
         ui: elementList[prefix + "tasksAnalysisPanel"]
         ,items: []
         ,subComponents: [prefix + "currentTasksPie"]
+    });
+    var notiPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "notiPanel"]
+        ,items: []
+        ,subComponents: []
     });
     var orderPanel = new UIMaster.ui.panel
     ({
@@ -46,6 +52,8 @@ function org_shaolin_bmdp_adminconsole_form_CurrentStatus(json)
 
     Form.currentTasksPie=currentTasksPie;
 
+    Form.notiPanel=notiPanel;
+
     Form.orderPanel=orderPanel;
 
     Form.TaskPanel=TaskPanel;
@@ -55,6 +63,8 @@ function org_shaolin_bmdp_adminconsole_form_CurrentStatus(json)
     Form.tasksAnalysisPanel=tasksAnalysisPanel;
 
     Form.currentTasksPie=currentTasksPie;
+
+    Form.notiPanel=notiPanel;
 
     Form.orderPanel=orderPanel;
 
