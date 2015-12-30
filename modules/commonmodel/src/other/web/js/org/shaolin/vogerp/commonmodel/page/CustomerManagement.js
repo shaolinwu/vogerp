@@ -3,34 +3,17 @@
 function org_shaolin_vogerp_commonmodel_page_CustomerManagement(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var functionsTab = new UIMaster.ui.tab
-    ({
-        ui: elementList[prefix + "functionsTab"]
-        ,items: []
-        ,subComponents: [prefix + "customerInfoPanel"]
-    });
     var customerInfoTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "customerInfoTable"]
-    });
-
-    var customerInfoPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "customerInfoPanel"]
-        ,items: []
-        ,subComponents: [prefix + "customerInfoTable"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [functionsTab]
+        ,items: [customerInfoTable]
     });
-
-    Form.functionsTab=functionsTab;
-
-    Form.customerInfoPanel=customerInfoPanel;
 
     Form.customerInfoTable=customerInfoTable;
 

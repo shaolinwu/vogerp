@@ -12,6 +12,13 @@
 	   	       ]]></expression>
    	       </node>
         </node>
+        <node name="webConstant">
+            <node name="commonjs">
+                <node name="org.shaolin.vogerp.commonmodel.page.CustomerManagement">
+                    <item name="baidumap" value="http://api.map.baidu.com/api?v=2.0&amp;ak=kT8czcw0fydHdXiGPGBOckX1" />
+                </node>
+            </node>
+        </node>
     </node>
 </registry>
 
