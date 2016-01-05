@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.productmodel.page.ProductTempManagement</entityName>
+	<systemVersion>0</systemVersion>
+	<description>产品模板管理</description>
+	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<ns2:eventHandler functionName="createProduct">
+		   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showBlankproductInfoPanel3413">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
+                    import org.shaolin.vogerp.productmodel.be.ProductCodeImpl;
+                    {
+                        ProductTemplateImpl defaultUser = new ProductTemplateImpl();
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("productInfoForm", "org.shaolin.vogerp.productmodel.form.ProductTemplate", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Create Product Information", new TableCallBack("productInfoTable"), 750, 600);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="openProductDetail">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showproductInfoPanel543542">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.List;
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
+                    import org.shaolin.vogerp.productmodel.dao.ProductModel;
+                    {
+                        Table productInfoTable = (Table)@page.getElement("productInfoTable");
+                        if (productInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        ProductTemplateImpl defaultUser = (ProductTemplateImpl)productInfoTable.getSelectedRow();
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("productInfoForm", "org.shaolin.vogerp.productmodel.form.ProductTemplate", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Product Information", new TableCallBack("productInfoTable"), 750, 600);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="deleteProduct"></ns2:eventHandler>
+        <ns2:eventHandler functionName="expandTreeNode">
+	      <ns2:ops xsi:type="ns2:OpCallAjaxType" name="expandTreeNode3534543">
+	           <ns2:exp>
+	               <ns2:expressionString><![CDATA[
+	               import java.util.List;
+	               import java.util.ArrayList;
+	               import org.shaolin.vogerp.productmodel.be.ProductImpl;
+                   import org.shaolin.vogerp.productmodel.dao.ProductModel;
+	               import org.shaolin.uimaster.page.ajax.Tree;
+	               import org.shaolin.uimaster.page.ajax.TreeItem;
+	               import org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute;
+	               import org.shaolin.uimaster.page.ajax.TreeConditions;
+	               {
+	                   Tree tree = (Tree)@page.getElement("productTree");
+	                   if (tree.getSelectedItemId() == null || tree.getSelectedItemId().length() == 0) {
+	                      return;
+	                   }
+	                   
+	                   long pid = Long.valueOf(tree.getSelectedItemId().substring(2)).longValue();
+	                   ProductImpl condition = new ProductImpl();
+	                   condition.setParentId(pid);
+	                   List subgroups = ProductModel.INSTANCE.searchProductInfo(condition, null, 0, -1);
+		                  ArrayList result = new ArrayList();
+	                   if (subgroups.size() > 0) {
+				                   for (int i=0;i<subgroups.size();i++) {
+				                       ProductImpl m = (ProductImpl)subgroups.get(i);
+				                       TreeItem item = new TreeItem();
+				                       item.setId("p_"+m.getId());
+						                     item.setText(m.getName());
+				                       item.setHasChildren(true);
+				                       result.add(item);
+				                   }
+	                   }
+		               return result;
+	               }
+	               ]]></ns2:expressionString>
+	           </ns2:exp>
+	       </ns2:ops>
+	  </ns2:eventHandler>
+	  <ns2:eventHandler functionName="openProductOverview">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openProductOverview-20151117">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.List;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+                    import org.shaolin.vogerp.productmodel.be.ProductCostImpl;
+                    import org.shaolin.vogerp.productmodel.be.ProductImpl;
+                    import org.shaolin.vogerp.productmodel.dao.ProductModel;
+                    import org.shaolin.vogerp.productmodel.util.ProductUtil;
+                    {
+                        Table personalInfoTable = (Table)@page.getElement("productInfoTable");
+                        if (personalInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        ProductImpl defaultUser = (ProductImpl)personalInfoTable.getSelectedRow();
+                        List result = ProductModel.INSTANCE.searchProductPrice(defaultUser, null, 0, -1);
+                        if (result == null || result.size() == 0) {
+                            result = ProductUtil.convertCostToPrice(ProductModel.INSTANCE.searchProductCost(defaultUser, null, 0, -1));
+                        }
+                        HashMap input = new HashMap();
+                        input.put("list", result);
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(false));
+                        RefForm form = new RefForm("costForm", "org.shaolin.vogerp.productmodel.form.ProductDetailOverview", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Product Overview", new TableCallBack("productInfoTable"), 890, 580);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+		    <ns2:UISkin xsi:type="ns2:UISkinType">
+                <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
+                <ns2:param name="text">
+                    <ns2:value xsi:type="ns2:StringPropertyType">
+                        <ns2:value></ns2:value>
+                    </ns2:value>
+                </ns2:param>
+            </ns2:UISkin>
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
+			    <ns2:ajaxLoad>true</ns2:ajaxLoad>
+                <ns2:tab uiid="productInfoPanel">
+                    <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+                        <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
+                        <ns2:key>org.shaolin.vogerp.productmodel.page.ProductManagement.productInfoPanel</ns2:key>
+                    </ns2:title>
+                    <ns2:panel UIID="productInfoPanel">
+		                <ns2:layout xsi:type="ns2:TableLayoutType">
+		                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+		                    <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+		                </ns2:layout>
+		                <ns2:component xsi:type="ns2:UITableType" UIID="productInfoTable">
+		                    <ns2:beElement>org.shaolin.vogerp.productmodel.be.ProductTemplate</ns2:beElement>
+		                    <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+		                    <ns2:defaultRowSize>10</ns2:defaultRowSize>
+		                    <ns2:showActionBar>true</ns2:showActionBar>
+		                    <ns2:showFilter>true</ns2:showFilter>
+		                    <ns2:query xsi:type="ns2:ExpressionPropertyType">
+		                        <ns2:expression xsi:type="ns2:ExpressionType">
+		                            <ns2:expressionString><![CDATA[
+		                            import java.util.List;
+		                            import org.shaolin.uimaster.page.ajax.TableConditions;
+		                            import org.shaolin.vogerp.productmodel.be.IProduct;
+		                            import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
+		                            import org.shaolin.vogerp.productmodel.dao.ProductModel;
+		                            {
+		                                  if ($tableCondition == null) {
+		                                     $tableCondition = TableConditions.createCondition(new ProductTemplateImpl());
+		                                  }
+		                                  ProductTemplateImpl condition = (ProductTemplateImpl)$tableCondition.getCondition();
+		                                  return ProductModel.INSTANCE.searchProductTemplate(condition,
+		                                                $tableCondition.getOrders(),
+		                                                $tableCondition.getOffset(), 
+		                                                $tableCondition.getCount());
+		                            }]]></ns2:expressionString>
+		                        </ns2:expression>
+		                    </ns2:query>
+		                    <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
+		                        <ns2:expression xsi:type="ns2:ExpressionType">
+		                            <ns2:expressionString><![CDATA[
+		                            import org.shaolin.uimaster.page.ajax.TableConditions;
+		                            import org.shaolin.vogerp.productmodel.be.IProduct;
+		                            import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
+		                            import org.shaolin.vogerp.productmodel.dao.ProductModel;
+		                            {
+		                                 if ($tableCondition == null) {
+		                                    $tableCondition = TableConditions.createCondition(new ProductTemplateImpl());
+		                                 }
+		                                 ProductTemplateImpl condition = (ProductTemplateImpl)$tableCondition.getCondition();
+		                                 return ProductModel.INSTANCE.searchProductTemplateCount(condition);
+		                            }]]></ns2:expressionString>
+		                        </ns2:expression>
+		                    </ns2:totalCount>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Name</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.name</ns2:beFieldId>
+		                        <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+		                        	<ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.bmdp.runtime.AppContext;
+		                                {
+		                                	return $rowBE.getName();
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:rowExpression>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Description</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.description</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>Type</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.type</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
+		                        <ns2:comboxExpression xsi:type="ns2:ExpressionPropertyType">
+		                        	<ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.bmdp.runtime.AppContext;
+		                                import org.shaolin.vogerp.productmodel.dao.CustProductModel;
+		                                {
+		                                	return CustProductModel.INSTANCE.getProductTypeGroup();
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:comboxExpression>
+		                        <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+		                        	<ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.bmdp.runtime.AppContext;
+		                                {
+		                                	return org.shaolin.bmdp.runtime.ce.CEUtil.getValue($rowBE.getType());
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:rowExpression>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+		                            <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.bmdp.runtime.AppContext;
+		                                import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+		                                {
+		                                	if ("-1".equals($value)) {
+		                                		$rowBE.setType(null);
+		                                	} else {
+		                                    	$rowBE.setType($value);
+		                                    }
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:updateCondition>
+		                    </ns2:column>
+		                    <ns2:defaultActions>
+		                        <ns2:defaultNewAction>createProduct</ns2:defaultNewAction>
+		                        <ns2:defaultOpenAction>openProductDetail</ns2:defaultOpenAction>
+		                        <!-- can be default actions. -->
+		                        <ns2:defaultDeleteAction>deleteProduct</ns2:defaultDeleteAction>
+		                        <ns2:defaultEnableAction>enableProduct</ns2:defaultEnableAction>
+		                        <ns2:defaultDisableAction>disableProduct</ns2:defaultDisableAction>
+		                    </ns2:defaultActions>
+		                    <ns2:actionGroup>
+		                        <ns2:type>radio</ns2:type>
+                                <ns2:action>
+                                    <!-- first we have the cost, then we generate the price from the cost. -->
+                                    <ns2:uiid>openProductOverview</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>预览</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>openProductOverview</ns2:function>
+                                </ns2:action>
+                             </ns2:actionGroup>
+		                </ns2:component>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>productInfoTable</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+                    </ns2:panel>
+                </ns2:tab>
+                <ns2:tab uiid="productTreePanel">
+                    <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+                        <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
+                        <ns2:key>org.shaolin.vogerp.productmodel.page.ProductManagement.productTreePanel</ns2:key>
+                    </ns2:title>
+                    <ns2:refEntity UIID="productTreePanel">
+		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy" />
+		            </ns2:refEntity>
+                </ns2:tab>
+            </ns2:component>
+			<ns2:layoutConstraint>
+                <ns2:componentId>functionsTab</ns2:componentId>
+                <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                    x="0" y="0" align="FULL"></ns2:constraint>
+            </ns2:layoutConstraint>
+		</ns2:body>
+	</ns2:UIEntity>
+	<ns2:ODMapping>
+		 <ns2:DataEntity scope="InOut" name="ceName" category="JavaPrimitive">
+	      <ns2:type entityName="java.lang.String"></ns2:type>
+	      <!-- TODO: replaced by the customer industry!
+	      fill up an value for ceName by default, the ui engine has a bug here 
+	      that cannot pass a internal mapping value such as following simpleMapping0-->
+	      <ns2:default><expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString></ns2:default>
+	    </ns2:DataEntity>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy"></ns2:mappingRule>
+          <ns2:UIComponent componentPath="productTreePanel" paramName="UIWidgetType"></ns2:UIComponent>
+          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
+	        <ns2:expression>
+	          <expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString>
+	        </ns2:expression>
+	      </ns2:DataComponent>
+        </ns2:ComponentMapping>
+	</ns2:ODMapping>
+	<ns2:in>
+	</ns2:in>
+</ns2:UIPage>

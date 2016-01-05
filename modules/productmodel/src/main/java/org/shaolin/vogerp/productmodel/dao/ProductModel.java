@@ -45,6 +45,56 @@ public class ProductModel extends BEEntityDaoObject {
         return count(IStorageItem.class);
     }
 
+    public List<org.shaolin.vogerp.productmodel.be.IProductTemplate> searchProductTemplate(org.shaolin.vogerp.productmodel.be.ProductTemplateImpl scFlow,
+           List<Order> orders, int offset, int count) {
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.productmodel.be.ProductTemplateImpl.class, "inFlow");
+            if (orders == null) {
+            } else {
+                this._addOrders(inFlowCriteria, orders);
+            }
+
+            if (scFlow.getId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
+            }
+            if (scFlow.getParentId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getId()));
+            }
+            if (scFlow.getName() != null && scFlow.getName().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.name", scFlow.getName()));
+            }
+            if (scFlow.getDescription() != null && scFlow.getDescription().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.description", scFlow.getDescription()));
+            }
+            if (scFlow.getType() != null && scFlow.getType().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.type", scFlow.getType()));
+            }
+
+        List result = this._list(offset, count, inFlowCriteria);
+        return result;
+    }
+
+    public long searchProductTemplateCount(org.shaolin.vogerp.productmodel.be.ProductTemplateImpl scFlow) {
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.productmodel.be.ProductTemplateImpl.class, "inFlow");
+
+            if (scFlow.getId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
+            }
+            if (scFlow.getParentId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getId()));
+            }
+            if (scFlow.getName() != null && scFlow.getName().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.name", scFlow.getName()));
+            }
+            if (scFlow.getDescription() != null && scFlow.getDescription().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.description", scFlow.getDescription()));
+            }
+            if (scFlow.getType() != null && scFlow.getType().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.type", scFlow.getType()));
+            }
+
+        return this._count(inFlowCriteria);
+    }
+
     public List<org.shaolin.vogerp.productmodel.be.IProduct> searchProductInfo(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
            List<Order> orders, int offset, int count) {
             Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.productmodel.be.ProductImpl.class, "inFlow");

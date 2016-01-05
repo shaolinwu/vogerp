@@ -81,6 +81,7 @@
                  <ns2:expressionString><![CDATA[
                  import java.util.List;
                  import java.util.HashMap;
+                 import org.shaolin.bmdp.runtime.Registry;
                  import org.shaolin.bmdp.runtime.AppContext;
                  import org.shaolin.uimaster.page.AjaxContext;
                  import org.shaolin.uimaster.page.ajax.*;
@@ -99,12 +100,13 @@
 	                        defaultUser.setSerialNumber(ProductUtil.genSerialNumber());
 	                        ProductModel.INSTANCE.create(defaultUser);
 	                        
-		                    System.out.println("-------->Create a new Product: " + defaultUser);
 	                        defaultUser.setHtmlDesc("/product/" + AppContext.get().getAppName() +"/" + defaultUser.getId() + "/desc.html");
 	                        defaultUser.setPhotos("/product/" + AppContext.get().getAppName() +"/" + defaultUser.getId() + "/images");
 	                        ProductModel.INSTANCE.update(defaultUser);
 		                    AFile file = (AFile)@page.getElement("uploadFile");
-		                    file.setStoredPath(defaultUser.getHtmlDesc());
+		                    file.setStoredPath(defaultUser.getPhotos());
+                            TextArea htmlDescUI = (TextArea)@page.getElement("htmlDescUI");
+                            htmlDescUI.setValue(defaultUser.getHtmlDesc());
 		                    
 		                    ProductCodeImpl pCode = new ProductCodeImpl();
 		                    pCode.setProductId(defaultUser.getId());
@@ -119,7 +121,6 @@
                         ProductCodeImpl pcode = (ProductCodeImpl)input.get("productCode");
                         if (pcode.getId() == 0) {
                             ProductModel.INSTANCE.update(pcode);
-                            System.out.println("-------->Update a Product Code: " + pcode);
                         }
                     } else if (preNextPanel.getSelectedIndex() == 3) {
                        
@@ -142,6 +143,16 @@
                  <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
                  <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
                </ns2:layout>
+               <ns2:component xsi:type="ns2:UILabelType" UIID="typeUILabel">
+                 <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+                 <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+                   <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
+                   <ns2:key>org.shaolin.vogerp.productmodel.be.Product.type</ns2:key>
+                 </ns2:text>
+               </ns2:component>
+               <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="typeUI">
+                  <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox" />
+               </ns2:component>
                <ns2:component xsi:type="ns2:UILabelType" UIID="nameUILabel">
                  <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
                  <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -162,21 +173,11 @@
                    <ns2:key>org.shaolin.vogerp.productmodel.be.Product.description</ns2:key>
                  </ns2:text>
                </ns2:component>
-               <ns2:component xsi:type="ns2:UITextFieldType" UIID="descriptionUI">
+               <ns2:component xsi:type="ns2:UITextAreaType" UIID="descriptionUI">
                  <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
                  <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
 		            <ns2:value>false</ns2:value>
 		         </ns2:allowBlank>
-               </ns2:component>
-               <ns2:component xsi:type="ns2:UILabelType" UIID="typeUILabel">
-                 <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-                 <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-                   <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-                   <ns2:key>org.shaolin.vogerp.productmodel.be.Product.type</ns2:key>
-                 </ns2:text>
-               </ns2:component>
-               <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="typeUI">
-                  <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox" />
                </ns2:component>
                <ns2:component xsi:type="ns2:UILabelType" UIID="onSaleDateUILabel">
                  <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -205,27 +206,27 @@
                  </ns2:allowBlank>
                </ns2:component>
                <ns2:layoutConstraint>
-                 <ns2:componentId>nameUILabel</ns2:componentId>
+                 <ns2:componentId>typeUILabel</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
                <ns2:layoutConstraint>
-                 <ns2:componentId>nameUI</ns2:componentId>
+                 <ns2:componentId>typeUI</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
                <ns2:layoutConstraint>
-                 <ns2:componentId>descriptionUILabel</ns2:componentId>
+                 <ns2:componentId>nameUILabel</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
                <ns2:layoutConstraint>
-                 <ns2:componentId>descriptionUI</ns2:componentId>
+                 <ns2:componentId>nameUI</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
                <ns2:layoutConstraint>
-                 <ns2:componentId>typeUILabel</ns2:componentId>
+                 <ns2:componentId>descriptionUILabel</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
                <ns2:layoutConstraint>
-                 <ns2:componentId>typeUI</ns2:componentId>
+                 <ns2:componentId>descriptionUI</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
                <ns2:layoutConstraint>
@@ -308,8 +309,11 @@
 				  </ns2:isMultiple>
 				  <ns2:storedPath xsi:type="ns2:ExpressionPropertyType">
 				   <ns2:expression>
-				     <expressionString>import org.shaolin.bmdp.runtime.AppContext;
-				     { return "/product/" + AppContext.get().getAppName() +"/"+ $beObject.getId() + "/images"; 
+				     <expressionString>
+				     import org.shaolin.bmdp.runtime.Registry;
+				     import org.shaolin.bmdp.runtime.AppContext;
+				     import org.shaolin.uimaster.page.WebConfig;
+				     { return $beObject.getPhotos(); 
 				     }</expressionString>
 				   </ns2:expression>
 				  </ns2:storedPath>

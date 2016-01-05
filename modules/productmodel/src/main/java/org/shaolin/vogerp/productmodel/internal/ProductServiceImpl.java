@@ -3,7 +3,6 @@ package org.shaolin.vogerp.productmodel.internal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.exception.SQLGrammarException;
 import org.shaolin.bmdp.persistence.HibernateUtil;
@@ -12,13 +11,15 @@ import org.shaolin.bmdp.runtime.cache.CacheManager;
 import org.shaolin.bmdp.runtime.cache.ICache;
 import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
 import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
+import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
-import org.shaolin.uimaster.page.ajax.RefForm;
 import org.shaolin.uimaster.page.ajax.TreeItem;
 import org.shaolin.vogerp.productmodel.IProductService;
+import org.shaolin.vogerp.productmodel.be.IProductTemplate;
 import org.shaolin.vogerp.productmodel.be.ProductCostImpl;
 import org.shaolin.vogerp.productmodel.be.ProductImpl;
 import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
+import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
 import org.shaolin.vogerp.productmodel.dao.CustProductModel;
 import org.shaolin.vogerp.productmodel.dao.ProductModel;
 import org.shaolin.vogerp.productmodel.util.ProductUtil;
@@ -144,6 +145,19 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		
 	}
 	
+	public List<IProductTemplate> getProductTemplate(String productType) {
+		IAppServiceManager masterApp = IServerServiceManager.INSTANCE.getApplication(
+				IServerServiceManager.INSTANCE.getMasterNodeName());
+		IProductService pservce = masterApp.getService(IProductService.class);
+		return ((ProductServiceImpl)pservce).getProductTemplate0(productType);
+	}
+	
+	private List<IProductTemplate> getProductTemplate0(String productType) {
+		ProductTemplateImpl scFlow =  new ProductTemplateImpl();
+		scFlow.setType(productType);
+		return ProductModel.INSTANCE.searchProductTemplate(scFlow, null, 0, -1);
+	}
+	
 	@Override
 	public ArrayList getPriceTree() {
 		ArrayList tree = (ArrayList)cache.get("1");
@@ -165,6 +179,11 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 
 	@Override
 	public void startService() {
+		IAppServiceManager serviceManger = AppContext.get();
+		if (AppContext.isMasterNode()) {
+			
+		}
+		
 		Session session = HibernateUtil.getSession();
 		try {
 			reloadPriceTree(session);
@@ -176,7 +195,6 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		} finally {
 			HibernateUtil.releaseSession(session, true);
 		}
-		IAppServiceManager serviceManger = AppContext.get();
 		serviceManger.register(this);
 	}
 
