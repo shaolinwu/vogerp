@@ -307,6 +307,9 @@
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="disableRemove" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="openLevels" category="JavaPrimitive">
       <type entityName="java.lang.Integer"></type>
     </ns2:DataEntity>

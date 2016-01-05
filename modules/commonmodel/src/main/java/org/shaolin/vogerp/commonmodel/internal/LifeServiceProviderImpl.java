@@ -37,24 +37,22 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 				
 				List<ICEExtension> ceItems = ModularityModel.INSTANCE.searchCEExtension(
 						new CEExtensionImpl(), null, 0, -1);
-				((ConstantServiceImpl) IServerServiceManager.INSTANCE.getConstantService())
-						.importData(CEOperationUtil.convertC2D(ceItems), hierarchy);
-				
-				((ConstantServiceImpl) IServerServiceManager.INSTANCE.getConstantService())
-						.setHierarchyAccessor(new HierarchyAccessor() {
-							@Override
-							public IConstantEntity getChild(List hierarchy, String ceName,
-									int intValue) {
-								for (Object i : hierarchy) {
-									ICEHierarchy c = (ICEHierarchy)i;
-									if (ceName.equals(c.getParentCeName()) && intValue == c.getParentCeItem()) {
-										return IServerServiceManager.INSTANCE.getConstantService().getConstantEntity(c.getCeName());
-									}
-								}
-								return null;
+				ConstantServiceImpl constantService = (ConstantServiceImpl) IServerServiceManager.INSTANCE.getConstantService();
+				constantService.reloadData(CEOperationUtil.convertC2D(ceItems));
+				constantService.reloadHierarchy(hierarchy);
+				constantService.setHierarchyAccessor(new HierarchyAccessor() {
+					@Override
+					public IConstantEntity getChild(List hierarchy, String ceName,
+							int intValue) {
+						for (Object i : hierarchy) {
+							ICEHierarchy c = (ICEHierarchy)i;
+							if (ceName.equals(c.getParentCeName()) && intValue == c.getParentCeItem()) {
+								return IServerServiceManager.INSTANCE.getConstantService().getConstantEntity(c.getCeName());
 							}
-						});
-				
+						}
+						return null;
+					}
+				});
 			} catch (Exception e) {
 				throw new IllegalStateException("Failed to parse CE items: " + e.getMessage(), e);
 			}
@@ -116,7 +114,7 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 	
 	@Override
 	public void reload() {
-		
+		startService();
 	}
 
 	@Override

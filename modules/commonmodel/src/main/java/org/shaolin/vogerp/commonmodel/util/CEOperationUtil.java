@@ -239,7 +239,7 @@ public class CEOperationUtil {
 	public static void getCEItems(ArrayList<String> values, ArrayList<String> displayItems, 
 			IConstantEntity ce) {
 		// ce node.
-		String nodeId = ce.getI18nEntityName();
+		String nodeId = ce.getEntityName();
 		
 		List<IConstantEntity> items = ce.getConstantList();
 		for (IConstantEntity item: items) {
@@ -255,7 +255,7 @@ public class CEOperationUtil {
 			ArrayList<String> values, ArrayList<String> displayItems, 
 			IConstantEntity ce) {
 		// ce node.
-		String nodeId = ce.getI18nEntityName();
+		String nodeId = ce.getEntityName();
 		if (space.isEmpty()) { // root.
 			values.add(nodeId);
 			displayItems.add(ce.getDisplayName());

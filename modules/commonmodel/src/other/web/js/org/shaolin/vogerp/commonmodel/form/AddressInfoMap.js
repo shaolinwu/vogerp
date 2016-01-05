@@ -138,8 +138,8 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfoMap(json)
     function org_shaolin_vogerp_commonmodel_form_AddressInfoMap_Search(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_AddressInfoMap_Search */
 
         {
-           //TODO:
-           
+           var criteria = this.uiCountry.getValue() + this.uiCity.getValue() + this.uiStreet.getValue()
+           this.uiMap.search(criteria);
         }
         
         var UIEntity = this;
