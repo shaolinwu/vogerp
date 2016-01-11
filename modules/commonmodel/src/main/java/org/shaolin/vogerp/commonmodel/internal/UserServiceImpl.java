@@ -12,7 +12,10 @@ import org.shaolin.bmdp.i18n.Localizer;
 import org.shaolin.bmdp.i18n.ResourceUtil;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
+import org.shaolin.uimaster.page.MobilitySupport;
+import org.shaolin.uimaster.page.WebConfig;
 import org.shaolin.uimaster.page.flow.WebflowConstants;
+import org.shaolin.uimaster.page.security.UserContext;
 import org.shaolin.vogerp.commonmodel.ICaptcherService;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.ICaptcha;
@@ -103,6 +106,16 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 			session.setAttribute(WebflowConstants.USER_SESSION_KEY, matchedUser);
 			session.setAttribute(WebflowConstants.USER_LOCALE_KEY, matchedUser.getLocale());
 			session.setAttribute(WebflowConstants.USER_ROLE_KEY, CEOperationUtil.toCElist(matchedUser.getInfo().getType()));
+			if (matchedUser.getInfo().getOrganization() != null) {
+				session.setAttribute(ORG_TYPE, matchedUser.getInfo().getOrganization().getType());
+			}
+			Object currentUserContext = session.getAttribute(WebflowConstants.USER_SESSION_KEY);
+			String userLocale = WebConfig.getUserLocale(request);
+			List userRoles = (List)session.getAttribute(WebflowConstants.USER_ROLE_KEY);
+			String userAgent = request.getHeader("user-agent");
+			boolean isMobile = MobilitySupport.isMobileRequest(userAgent);
+			//add user-context thread bind
+            UserContext.registerCurrentUserContext(session, currentUserContext, userLocale, userRoles, isMobile);
 			
 			boolean hasCookie = false;
 			Cookie[] cookies = request.getCookies();
@@ -128,6 +141,11 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 	}
 	
 	@Override
+	public String getUserOrganizationType() {
+		return (String)UserContext.getUserData(IUserService.ORG_TYPE);
+	}
+	
+	@Override
 	public boolean checkUserOnline(HttpSession session) {
 		return session.getAttribute(WebflowConstants.USER_SESSION_KEY) != null;
 	}
@@ -136,6 +154,9 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 	public void logout(HttpSession session) {
 		session.removeAttribute(WebflowConstants.USER_SESSION_KEY);
 		session.removeAttribute(WebflowConstants.USER_LOCALE_KEY);
+		session.removeAttribute(WebflowConstants.USER_ROLE_KEY);
+		session.removeAttribute(IUserService.ORG_TYPE);
+		UserContext.unregister();
 	}
 	
 	public String getErrorInfo(String errorCode) {

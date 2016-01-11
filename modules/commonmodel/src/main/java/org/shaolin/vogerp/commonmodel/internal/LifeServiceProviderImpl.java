@@ -7,6 +7,7 @@ import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.ce.AbstractConstant;
 import org.shaolin.bmdp.runtime.ce.ConstantServiceImpl;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+import org.shaolin.bmdp.runtime.entity.EntityNotFoundException;
 import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
 import org.shaolin.bmdp.runtime.spi.IConstantService.HierarchyAccessor;
 import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
@@ -23,6 +24,7 @@ import org.shaolin.vogerp.commonmodel.be.ICaptcha;
 import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
 import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+import org.slf4j.LoggerFactory;
 
 public class LifeServiceProviderImpl implements ILifeCycleProvider {
 	
@@ -58,9 +60,13 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 			}
 			List<ICEEntityInfo> ceInfos = ModularityModel.INSTANCE.searchCEInfo(null, null, 0, -1);
 			for (ICEEntityInfo ceInfo : ceInfos) {
-				AbstractConstant ce = (AbstractConstant)IServerServiceManager.INSTANCE.getConstantService().
-						getConstantEntity(ceInfo.getCeName());
-				ce.setEntityInfo(ceInfo.getDescription(), ceInfo.getI18nKey(), ceInfo.getIcon());
+				try {
+					AbstractConstant ce = (AbstractConstant)IServerServiceManager.INSTANCE.getConstantService().
+							getConstantEntity(ceInfo.getCeName());
+					ce.setEntityInfo(ceInfo.getDescription(), ceInfo.getI18nKey(), ceInfo.getIcon());
+				} catch (EntityNotFoundException ex) {
+					LoggerFactory.getLogger(LifeServiceProviderImpl.class).info("Unable to find this constant: " + ex.getMessage());
+				}
 			}
 			
 			CaptchaImpl condition = new CaptchaImpl();

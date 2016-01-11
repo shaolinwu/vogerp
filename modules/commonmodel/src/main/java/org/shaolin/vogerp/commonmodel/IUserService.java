@@ -14,6 +14,8 @@ public interface IUserService {
 	
 	public static final String USER_LOGIN_PASSWORDRULES_VERICODEINCORRECT = "user.login.passwordrules.verifycodeincorrect";
 	
+	public static final String ORG_TYPE = "ORG_TYPE";
+	
 	public PasswordCheckResult checkPasswordPattern(String password);
 	
 	public String preLogin(HttpServletRequest request);
@@ -39,4 +41,11 @@ public interface IUserService {
 	public String getErrorInfo(String errorCode);
 	
 	void changePassword(IPersonalAccount user, String newPassword);
+	
+	/**
+	 * Get logined user organization type.
+	 * 
+	 * @return
+	 */
+	public String getUserOrganizationType();
 }

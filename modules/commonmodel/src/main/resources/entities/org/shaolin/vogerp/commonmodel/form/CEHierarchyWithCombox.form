@@ -2,6 +2,9 @@
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
   <entityName>org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox</entityName>
   <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="selectItem">
+  </ns2:eventHandler>
+  <ns2:reconfigurableProperty functionName="selectItem" xsi:type="ns2:ReconfigurableFunctionType"/>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -14,6 +17,9 @@
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIComboBoxType" UIID="typeUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
+          <ns2:handler functionName="selectItem"></ns2:handler>
+        </ns2:EventListener>
       </ns2:component>
 	  <ns2:layoutConstraint>
         <ns2:componentId>typeUI</ns2:componentId>

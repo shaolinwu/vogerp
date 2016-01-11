@@ -258,7 +258,7 @@ public class CEOperationUtil {
 		String nodeId = ce.getEntityName();
 		if (space.isEmpty()) { // root.
 			values.add(nodeId);
-			displayItems.add(ce.getDisplayName());
+			displayItems.add(ce.getI18nEntityName());
 			space = "--";
 		}
 		
