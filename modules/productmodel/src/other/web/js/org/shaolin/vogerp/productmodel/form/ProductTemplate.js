@@ -36,11 +36,21 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
         ui: elementList[prefix + "descriptionUI"]
     });
 
+    var estimatedPriceUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "estimatedPriceUILabel"]
+    });
+
+    var estimatedPriceUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "estimatedPriceUI"]
+    });
+
     var infoPanel0 = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "infoPanel0"]
         ,items: []
-        ,subComponents: [prefix + "typeUILabel",prefix + "typeUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI"]
+        ,subComponents: [prefix + "typeUILabel",prefix + "typeUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI"]
     });
     var photoPathUI = new UIMaster.ui.label
     ({
@@ -126,6 +136,10 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
 
     Form.descriptionUI=descriptionUI;
 
+    Form.estimatedPriceUILabel=estimatedPriceUILabel;
+
+    Form.estimatedPriceUI=estimatedPriceUI;
+
     Form.infoPanel1=infoPanel1;
 
     Form.photoPathUI=photoPathUI;
@@ -161,6 +175,10 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
+
+    Form.estimatedPriceUILabel=estimatedPriceUILabel;
+
+    Form.estimatedPriceUI=estimatedPriceUI;
 
     Form.infoPanel1=infoPanel1;
 

@@ -1,6 +1,5 @@
 package org.shaolin.vogerp.productmodel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.shaolin.vogerp.productmodel.be.IProductTemplate;
@@ -9,16 +8,30 @@ public interface IProductService {
 
 	public void reload();
 	
-	public ArrayList getPriceTree();
+	public List getPriceTree();
 	
-	public ArrayList getCostTree();
+	public List getCostTree();
 	
 	/**
-	 * Get product template from Master node.
+	 * Get product templates from Master node.
 	 * 
 	 * @param productType
 	 * @return
 	 */
-	public List<IProductTemplate> getProductTemplate(String productType);
+	public List<IProductTemplate> getProductTemplates(String productType);
 	
+	/**
+	 * Get product templates in ComboBox
+	 * 
+	 * @param productType
+	 * @return
+	 */
+	public List<List> getProductTemplateInComboBox(String productType);
+	
+	/**
+	 * Get the constant name of user product root.
+	 * 
+	 * @return
+	 */
+	public String getUserProductRoot();
 }

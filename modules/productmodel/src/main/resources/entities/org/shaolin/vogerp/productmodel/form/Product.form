@@ -37,6 +37,75 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
+  <ns2:eventHandler functionName="openProductTempSelector">
+      <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openProductTempSelector-201601091120">
+          <ns2:exp>
+              <ns2:expressionString><![CDATA[
+              import java.util.HashMap;
+              import java.util.List;
+              import org.shaolin.uimaster.page.AjaxContext;
+              import org.shaolin.uimaster.page.ajax.*;
+              import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+              import org.shaolin.vogerp.productmodel.be.ProductCostImpl;
+              import org.shaolin.vogerp.productmodel.be.ProductImpl;
+              import org.shaolin.vogerp.productmodel.dao.ProductModel;
+              import org.shaolin.vogerp.productmodel.util.ProductUtil;
+              {
+                  Table personalInfoTable = (Table)@page.getElement("productInfoTable");
+                  if (personalInfoTable.getSelectedRow() == null) {
+                      return;
+                  }
+                  Hidden templateIdUI = @page.getHidden("templateIdUI");
+                  HashMap input = new HashMap();
+                  input.put("selectPTempalteId", templateIdUI.getValue());
+                  input.put("editable", new Boolean(false));
+                  input.put(RefForm.RECONFIG_ORIGINAL, "Save");
+                  
+                  String prefix =  @page.getEntityUiid();
+	              int lastDot = @page.getEntityUiid().lastIndexOf('.');
+	              if (lastDot != -1) {
+	                  prefix = @page.getEntityUiid().substring(0, lastDot + 1);
+	              } else {
+	                  prefix = prefix + ".";
+	              }
+                  input.put(RefForm.RECONFIG_OVERRIDE, prefix + "SaveSelectedTemplate");
+                  RefForm form = new RefForm("costForm", "org.shaolin.vogerp.productmodel.form.ProductTemplateSelector", input);
+                  @page.addElement(form);
+                  
+                  form.openInWindows("Product Template Selector", null, 750, 600);
+              }
+              ]]></ns2:expressionString>
+          </ns2:exp>
+      </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="SaveSelectedTemplate">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="SaveSelectedTemplate-201504121132">
+      <ns2:exp>
+        <expressionString>
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.bmdp.runtime.ce.CEUtil;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid());
+            HashMap input = (HashMap)form.ui2Data();
+            String selectPTempalteId = (String)input.get("selectPTempalteId");
+            
+            String formId = "productInfoForm.";
+            // because this is a reconfigurable function, we have to get the right form id.
+            Hidden templateIdUI = @page.getHidden(formId + "templateIdUI");
+            templateIdUI.setValue(selectPTempalteId);
+            
+            Label typeUI = @page.getLabel(formId + "typeUI");
+            typeUI.setValue(CEUtil.getValue(selectPTempalteId));
+            
+            form.closeIfinWindows(true);
+            @page.removeForm(@page.getEntityUiid()); 
+        }
+        </expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
   <ns2:eventHandler functionName="Cancel">
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-201504121132">
       <ns2:exp>
@@ -139,10 +208,10 @@
                  <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
                  <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
                  <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
                  <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
                  <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
                </ns2:layout>
+               <ns2:component xsi:type="ns2:UIHiddenType" UIID="templateIdUI" />
                <ns2:component xsi:type="ns2:UILabelType" UIID="typeUILabel">
                  <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
                  <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -150,8 +219,13 @@
                    <ns2:key>org.shaolin.vogerp.productmodel.be.Product.type</ns2:key>
                  </ns2:text>
                </ns2:component>
-               <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="typeUI">
-                  <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox" />
+               <ns2:component xsi:type="ns2:UILabelType" UIID="typeUI">
+                 <ns2:text xsi:type="ns2:StringPropertyType">
+                    <ns2:value>请选择...</ns2:value>
+                 </ns2:text>
+                 <ns2:EventListener xsi:type="ns2:ClickListenerType">
+		           <ns2:handler functionName="openProductTempSelector"></ns2:handler>
+		         </ns2:EventListener>
                </ns2:component>
                <ns2:component xsi:type="ns2:UILabelType" UIID="nameUILabel">
                  <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -178,19 +252,6 @@
                  <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
 		            <ns2:value>false</ns2:value>
 		         </ns2:allowBlank>
-               </ns2:component>
-               <ns2:component xsi:type="ns2:UILabelType" UIID="onSaleDateUILabel">
-                 <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-                 <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-                   <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-                   <ns2:key>org.shaolin.vogerp.productmodel.be.Product.onSaleDate</ns2:key>
-                 </ns2:text>
-               </ns2:component>
-               <ns2:component xsi:type="ns2:UIDateType" UIID="onSaleDateUI">
-                 <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-                 <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
-                    <ns2:value>false</ns2:value>
-                 </ns2:allowBlank>
                </ns2:component>
                <ns2:component xsi:type="ns2:UILabelType" UIID="saleEndDateUILabel">
                  <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -230,20 +291,12 @@
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
                <ns2:layoutConstraint>
-                 <ns2:componentId>onSaleDateUILabel</ns2:componentId>
+                 <ns2:componentId>saleEndDateUILabel</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
                <ns2:layoutConstraint>
-                 <ns2:componentId>onSaleDateUI</ns2:componentId>
-                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-               </ns2:layoutConstraint>
-               <ns2:layoutConstraint>
-                 <ns2:componentId>saleEndDateUILabel</ns2:componentId>
-                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-               </ns2:layoutConstraint>
-               <ns2:layoutConstraint>
                  <ns2:componentId>saleEndDateUI</ns2:componentId>
-                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
             </ns2:panel>
          </ns2:tab>
@@ -367,11 +420,12 @@
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="Cancel"></ns2:handler>
+          <ns2:handler functionName="Save"></ns2:handler>
         </ns2:EventListener>
         <ns2:editable xsi:type="ns2:ExpressionPropertyType">
           <ns2:expression>
@@ -380,12 +434,25 @@
         </ns2:editable>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
           <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>OKbtn</ns2:key>
+          <ns2:key>Savebtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="closebtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Cancel"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>Closebtn</ns2:key>
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>okbtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>closebtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
@@ -411,17 +478,12 @@
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="nameUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.name" paramName="StringData"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.template.name" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithDate"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="onSaleDateUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.onSaleDate" paramName="Date"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="IsDateOnly">
-        <ns2:expression>
-          <expressionString>"true"</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="templateIdUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.templateId" paramName="Number"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithDate"></ns2:mappingRule>
@@ -437,16 +499,6 @@
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="descriptionUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.description" paramName="StringData"></ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping6">
-      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.type" paramName="value"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
-        <ns2:expression>
-          <expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping9">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>

@@ -206,7 +206,7 @@
 				                       ProductImpl m = (ProductImpl)subgroups.get(i);
 				                       TreeItem item = new TreeItem();
 				                       item.setId("p_"+m.getId());
-						                     item.setText(m.getName());
+						                     item.setText(m.getTemplate().getName());
 				                       item.setHasChildren(true);
 				                       result.add(item);
 				                   }
@@ -330,11 +330,11 @@
 		                                <ns2:expressionString><![CDATA[
 		                                import org.shaolin.bmdp.runtime.AppContext;
 		                                {
-		                                	return $rowBE.getName() + "(" + $rowBE.getSerialNumber() +")";
+		                                	return $rowBE.getTemplate().getName() + "(" + $rowBE.getSerialNumber() +")";
 		                                }]]></ns2:expressionString>
 		                            </ns2:expression>
 		                        </ns2:rowExpression>
-		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
 		                    </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
@@ -364,7 +364,7 @@
 		                                <ns2:expressionString><![CDATA[
 		                                import org.shaolin.bmdp.runtime.AppContext;
 		                                {
-		                                	return org.shaolin.bmdp.runtime.ce.CEUtil.getValue($rowBE.getType());
+		                                	return org.shaolin.bmdp.runtime.ce.CEUtil.getValue($rowBE.getTemplate().getType());
 		                                }]]></ns2:expressionString>
 		                            </ns2:expression>
 		                        </ns2:rowExpression>
@@ -373,64 +373,15 @@
 		                                <ns2:expressionString><![CDATA[
 		                                import org.shaolin.bmdp.runtime.AppContext;
 		                                import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+		                                import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
 		                                {
-		                                	if ("-1".equals($value)) {
-		                                		$rowBE.setType(null);
-		                                	} else {
-		                                    	$rowBE.setType($value);
+		                                    if ($rowBE.getTemplate() == null) {
+		                                        $rowBE.setTemplate(new ProductTemplateImpl());
 		                                    }
-		                                }]]></ns2:expressionString>
-		                            </ns2:expression>
-		                        </ns2:updateCondition>
-		                    </ns2:column>
-		                    <!-- 
-		                    <ns2:column xsi:type="ns2:UITableColumnType">
-		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Interested Party</ns2:value>
-		                        </ns2:title>
-		                        <ns2:beFieldId>rowBE.interestedPartyType</ns2:beFieldId>
-		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
-		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-		                            <ns2:expression xsi:type="ns2:ExpressionType">
-		                                <ns2:expressionString><![CDATA[
-		                                import org.shaolin.bmdp.runtime.AppContext;
-		                                import org.shaolin.vogerp.commonmodel.ce.PartyType;
-		                                {
-		                                    $rowBE.setInterestedPartyType((PartyType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.commonmodel.ce.PartyType").getByIntValue(Integer.valueOf($value).intValue()));
-		                                }]]></ns2:expressionString>
-		                            </ns2:expression>
-		                        </ns2:updateCondition>
-		                    </ns2:column>
-		                     -->
-		                    <ns2:column xsi:type="ns2:UITableColumnType">
-		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>On SaleDate</ns2:value>
-		                        </ns2:title>
-		                        <ns2:beFieldId>rowBE.onSaleDate</ns2:beFieldId>
-		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType">
-		                          <ns2:type>DateRange</ns2:type>
-		                          <ns2:startCondition>rowBE.onSaleDateStart</ns2:startCondition> 
-		                          <ns2:endCondition>rowBE.onSaleDateEnd</ns2:endCondition>
-		                        </ns2:uiType>
-		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-		                            <ns2:expression xsi:type="ns2:ExpressionType">
-		                                <ns2:expressionString><![CDATA[
-		                                import org.shaolin.uimaster.page.od.formats.FormatUtil;
-		                                import java.util.Date;
-		                                {
-		                                    if ($value == null || "".equals($value)) {
-		                                        if ("rowBE.onSaleDateStart".equals($filterId)) {
-		                                            $rowBE.setOnSaleDateStart(null);
-		                                        } else {
-		                                            $rowBE.setOnSaleDateEnd(null);
-		                                        }
-		                                    } else {
-		                                        Date d = (Date)FormatUtil.convertUIToData(FormatUtil.DATE, $value);
-		                                        if ("rowBE.onSaleDateStart".equals($filterId)) {
-		                                            $rowBE.setOnSaleDateStart(d);
-		                                        } else {
-		                                            $rowBE.setOnSaleDateEnd(d);
-		                                        }
+		                                	if ("-1".equals($value)) {
+		                                		$rowBE.getTemplate().setType(null);
+		                                	} else {
+		                                    	$rowBE.getTemplate().setType($value);
 		                                    }
 		                                }]]></ns2:expressionString>
 		                            </ns2:expression>
@@ -557,7 +508,13 @@
           <ns2:UIComponent componentPath="productTreePanel" paramName="UIWidgetType"></ns2:UIComponent>
           <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
 	        <ns2:expression>
-	          <expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString>
+	          <expressionString><![CDATA[
+	          import org.shaolin.vogerp.productmodel.IProductService;
+	          import org.shaolin.bmdp.runtime.AppContext;
+	          {
+	             IProductService productService = (IProductService)AppContext.get().getService(IProductService.class);
+	             return productService.getUserProductRoot();
+	          }]]></expressionString>
 	        </ns2:expression>
 	      </ns2:DataComponent>
         </ns2:ComponentMapping>

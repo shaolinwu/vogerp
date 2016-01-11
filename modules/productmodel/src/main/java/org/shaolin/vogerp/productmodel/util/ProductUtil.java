@@ -34,7 +34,7 @@ public class ProductUtil {
 	
 	public static String getProductSummary(IProduct product) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(product.getName()).append("(").append(product.getSerialNumber()).append(")");
+		sb.append(product.getTemplate().getName()).append("(").append(product.getSerialNumber()).append(")");
 		return sb.toString();
 	}
 	

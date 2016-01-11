@@ -67,7 +67,7 @@
 			  <expressionString>
 			  import org.shaolin.bmdp.runtime.AppContext;
 			  { 
-			  	return $product.getType(); 
+			  	return $product.getTemplate().getType(); 
 			  }
 			  </expressionString>
 			</ns2:expression>

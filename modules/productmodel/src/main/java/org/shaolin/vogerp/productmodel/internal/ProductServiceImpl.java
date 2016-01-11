@@ -9,11 +9,13 @@ import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.cache.CacheManager;
 import org.shaolin.bmdp.runtime.cache.ICache;
+import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
 import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.uimaster.page.ajax.TreeItem;
+import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.productmodel.IProductService;
 import org.shaolin.vogerp.productmodel.be.IProductTemplate;
 import org.shaolin.vogerp.productmodel.be.ProductCostImpl;
@@ -60,7 +62,7 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 				// list the nodes under the root node.
 				for (int j = 0; j < all.size(); j++) {
 					ProductImpl mg = (ProductImpl) all.get(j);
-					if (!mg.getType().equals(ptype)) {
+					if (!mg.getTemplate().getType().equals(ptype)) {
 						continue;
 					}
 					
@@ -114,7 +116,7 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 				// list the nodes under the root node.
 				for (int j = 0; j < all.size(); j++) {
 					ProductImpl mg = (ProductImpl) all.get(j);
-					if (!mg.getType().equals(ptype)) {
+					if (!mg.getTemplate().getType().equals(ptype)) {
 						continue;
 					}
 					
@@ -142,14 +144,35 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 			cache.put("21", dataModel);
 		} finally {
 		}
-		
 	}
 	
-	public List<IProductTemplate> getProductTemplate(String productType) {
+	public List getProductTemplateInComboBox(String productType) {
+		List<IProductTemplate> list = getProductTemplates(productType);
+		
+		ArrayList displays = new ArrayList();
+		ArrayList options = new ArrayList();
+		for (IProductTemplate temp : list) {
+			options.add(temp.getId() + "");
+			displays.add(temp.getName());
+		}
+		
+		ArrayList result = new ArrayList(2);
+		result.add(displays);
+		result.add(options);
+		return result;
+	}
+	
+	public List<IProductTemplate> getProductTemplates(String productType) {
 		IAppServiceManager masterApp = IServerServiceManager.INSTANCE.getApplication(
 				IServerServiceManager.INSTANCE.getMasterNodeName());
 		IProductService pservce = masterApp.getService(IProductService.class);
-		return ((ProductServiceImpl)pservce).getProductTemplate0(productType);
+		IAppServiceManager currentContext = AppContext.get();
+		try {
+			AppContext.register(masterApp);
+			return ((ProductServiceImpl)pservce).getProductTemplate0(productType);
+		} finally {
+			AppContext.register(currentContext);
+		}
 	}
 	
 	private List<IProductTemplate> getProductTemplate0(String productType) {
@@ -158,15 +181,28 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		return ProductModel.INSTANCE.searchProductTemplate(scFlow, null, 0, -1);
 	}
 	
+	public String getUserProductRoot() {
+		String orgType = AppContext.get().getService(IUserService.class).getUserOrganizationType();
+		if (orgType == null) {
+			throw new IllegalStateException("Unable to find the user product root!");
+		}
+		int i = orgType.indexOf(",") ;
+		if (i == -1) {
+			return AppContext.get().getConstantService().getConstantEntity(orgType).getEntityName();
+		}
+		IConstantEntity constant = AppContext.get().getConstantService().getConstantEntity(orgType.substring(0, i));
+		return constant.getByIntValue(Integer.valueOf(orgType.substring(i+1))).getEntityName();
+	}
+	
 	@Override
-	public ArrayList getPriceTree() {
+	public List getPriceTree() {
 		ArrayList tree = (ArrayList)cache.get("1");
 		tree.add(cache.get("11"));
 		return tree;
 	}
 	
 	@Override
-	public ArrayList getCostTree() {
+	public List getCostTree() {
 		ArrayList tree = (ArrayList)cache.get("2");
 		tree.add(cache.get("21"));
 		return tree;

@@ -11,9 +11,12 @@
     <ns2:column name="PARENTID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="NAME" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="ICON" type="VARCHAR" length="255" isNull="true"></ns2:column>
+    <ns2:column name="ESTIMATEDPRICE" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="PHOTOS" type="VARCHAR" length="255" isNull="true"></ns2:column>
     <ns2:column name="HTMLDESC" type="VARCHAR" length="255" isNull="true"></ns2:column>
     <ns2:column name="TYPE" type="VARCHAR" length="100" isNull="true"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
       <ns2:columnName>ID</ns2:columnName>
@@ -24,10 +27,13 @@
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="parentId" columnName="PARENTID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="name" columnName="NAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="icon" columnName="ICON"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="estimatedPrice" columnName="ESTIMATEDPRICE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="photos" columnName="PHOTOS"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="htmlDesc" columnName="HTMLDESC"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
@@ -36,15 +42,13 @@
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="PARENTID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="NAME" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="TEMPLATEID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="SERIALNUMBER" type="VARCHAR" length="50" isNull="true"></ns2:column>
-    <ns2:column name="ONSALEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="SALEENDDATE" type="DATETIME" isNull="true"></ns2:column>
-    <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="PHOTOS" type="VARCHAR" length="255" isNull="true"></ns2:column>
     <ns2:column name="HTMLDESC" type="VARCHAR" length="255" isNull="true"></ns2:column>
-    <ns2:column name="TYPE" type="VARCHAR" length="100" isNull="true"></ns2:column>
-    <ns2:column name="INTERESTEDPARTYTYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
       <ns2:columnName>ID</ns2:columnName>
@@ -54,16 +58,15 @@
       <ns2:businessEntity entityName="org.shaolin.vogerp.productmodel.be.Product"></ns2:businessEntity>
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="parentId" columnName="PARENTID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="name" columnName="NAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="templateId" columnName="TEMPLATEID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="serialNumber" columnName="SERIALNUMBER"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="onSaleDate" columnName="ONSALEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="saleEndDate" columnName="SALEENDDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="photos" columnName="PHOTOS"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="htmlDesc" columnName="HTMLDESC"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="interestedPartyType" columnName="INTERESTEDPARTYTYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="PROD_PRODUCT_MAPPING0" mappingType="One-to-One" beFieldName="template" columnName="TEMPLATEID"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
   <ns2:table>
@@ -394,20 +397,6 @@
         </ns2:conditionValue>
       </ns2:fieldMapping>
       <ns2:fieldMapping>
-        <ns2:toDataFieldPath>inFlow.name</ns2:toDataFieldPath>
-        <ns2:conditionValue>
-          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
-            <ns2:type>=</ns2:type>
-          </ns2:operator>
-          <ns2:value xsi:type="ns2:SimpleFieldValueType">
-            <ns2:valueFieldPath>scFlow.name</ns2:valueFieldPath>
-          </ns2:value>
-          <ns2:condition>
-            <expressionString><![CDATA[scFlow.getName() != null && scFlow.getName().length() > 0]]></expressionString>
-          </ns2:condition>
-        </ns2:conditionValue>
-      </ns2:fieldMapping>
-      <ns2:fieldMapping>
         <ns2:toDataFieldPath>inFlow.description</ns2:toDataFieldPath>
         <ns2:conditionValue>
           <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
@@ -418,62 +407,6 @@
           </ns2:value>
           <ns2:condition>
             <expressionString><![CDATA[scFlow.getDescription() != null && scFlow.getDescription().length() > 0]]></expressionString>
-          </ns2:condition>
-        </ns2:conditionValue>
-      </ns2:fieldMapping>
-      <ns2:fieldMapping>
-        <ns2:toDataFieldPath>inFlow.type</ns2:toDataFieldPath>
-        <ns2:conditionValue>
-          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
-            <ns2:type>=</ns2:type>
-          </ns2:operator>
-          <ns2:value xsi:type="ns2:SimpleFieldValueType">
-            <ns2:valueFieldPath>scFlow.type</ns2:valueFieldPath>
-          </ns2:value>
-          <ns2:condition>
-            <expressionString><![CDATA[scFlow.getType() != null && scFlow.getType().length() > 0]]></expressionString>
-          </ns2:condition>
-        </ns2:conditionValue>
-      </ns2:fieldMapping>
-      <ns2:fieldMapping>
-        <ns2:toDataFieldPath>inFlow.interestedPartyTypeInt</ns2:toDataFieldPath>
-        <ns2:conditionValue>
-          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
-            <ns2:type>=</ns2:type>
-          </ns2:operator>
-          <ns2:value xsi:type="ns2:SimpleFieldValueType">
-            <ns2:valueFieldPath>scFlow.getInterestedPartyType().getIntValue()</ns2:valueFieldPath>
-          </ns2:value>
-          <ns2:condition>
-            <expressionString><![CDATA[scFlow.getInterestedPartyType() != null && scFlow.getInterestedPartyType() != org.shaolin.vogerp.commonmodel.ce.PartyType.NOT_SPECIFIED]]></expressionString>
-          </ns2:condition>
-        </ns2:conditionValue>
-      </ns2:fieldMapping>
-      <ns2:fieldMapping>
-        <ns2:toDataFieldPath>inFlow.onSaleDate</ns2:toDataFieldPath>
-        <ns2:conditionValue>
-          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
-            <ns2:type><![CDATA[<=]]></ns2:type>
-          </ns2:operator>
-          <ns2:value xsi:type="ns2:SimpleFieldValueType">
-            <ns2:valueFieldPath>scFlow.onSaleDateStart</ns2:valueFieldPath>
-          </ns2:value>
-          <ns2:condition>
-            <expressionString>scFlow.getOnSaleDateStart() != null</expressionString>
-          </ns2:condition>
-        </ns2:conditionValue>
-      </ns2:fieldMapping>
-      <ns2:fieldMapping>
-        <ns2:toDataFieldPath>inFlow.onSaleDate</ns2:toDataFieldPath>
-        <ns2:conditionValue>
-          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
-            <ns2:type><![CDATA[<=]]></ns2:type>
-          </ns2:operator>
-          <ns2:value xsi:type="ns2:SimpleFieldValueType">
-            <ns2:valueFieldPath>scFlow.onSaleDateEnd</ns2:valueFieldPath>
-          </ns2:value>
-          <ns2:condition>
-            <expressionString>scFlow.getOnSaleDateEnd() != null</expressionString>
           </ns2:condition>
         </ns2:conditionValue>
       </ns2:fieldMapping>

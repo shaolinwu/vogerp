@@ -87,7 +87,7 @@
 				                       ProductImpl m = (ProductImpl)subgroups.get(i);
 				                       TreeItem item = new TreeItem();
 				                       item.setId("p_"+m.getId());
-						                     item.setText(m.getName());
+						                     item.setText(m.getTemplate().getName());
 				                       item.setHasChildren(true);
 				                       result.add(item);
 				                   }
@@ -203,7 +203,7 @@
 		                    </ns2:totalCount>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Name</ns2:value>
+		                            <ns2:value>名称</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.name</ns2:beFieldId>
 		                        <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
@@ -219,14 +219,21 @@
 		                    </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Description</ns2:value>
+		                            <ns2:value>描述</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.description</ns2:beFieldId>
 		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
 		                    </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>估价</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.estimatedPrice</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                            </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Type</ns2:value>
+		                            <ns2:value>产品类型</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.type</ns2:beFieldId>
 		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>

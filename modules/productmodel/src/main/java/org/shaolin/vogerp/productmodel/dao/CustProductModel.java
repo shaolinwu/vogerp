@@ -18,7 +18,7 @@ public class CustProductModel extends BEEntityDaoObject {
     }
     
     public List<ArrayList<String>>[] getProductTypeGroup() {
-    	String sql = "SELECT p.type, count(p.type) FROM prod_product p group by p.type;";
+    	String sql = "SELECT p.type, count(p.type) FROM PROD_PRODUCTTEMPLATE p group by p.type;";
     	Session session = HibernateUtil.getSession();
     	SQLQuery sqlQuery = session.createSQLQuery(sql);
     	List<Object[]> list = sqlQuery.list();
@@ -38,7 +38,7 @@ public class CustProductModel extends BEEntityDaoObject {
     }
     
     public List<ArrayList<String>>[] getProductRootTypeGroup() {
-    	String sql = "SELECT p.type, count(p.type) FROM prod_product p where p.parentid=0 group by p.type;";
+    	String sql = "SELECT p.type, count(p.type) FROM PROD_PRODUCTTEMPLATE p where p.parentid=0 group by p.type;";
     	Session session = HibernateUtil.getSession();
     	SQLQuery sqlQuery = session.createSQLQuery(sql);
     	List<Object[]> list = sqlQuery.list();

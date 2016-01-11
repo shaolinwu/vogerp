@@ -109,23 +109,8 @@ public class ProductModel extends BEEntityDaoObject {
             if (scFlow.getParentId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getId()));
             }
-            if (scFlow.getName() != null && scFlow.getName().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.name", scFlow.getName()));
-            }
             if (scFlow.getDescription() != null && scFlow.getDescription().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.description", scFlow.getDescription()));
-            }
-            if (scFlow.getType() != null && scFlow.getType().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.type", scFlow.getType()));
-            }
-            if (scFlow.getInterestedPartyType() != null && scFlow.getInterestedPartyType() != org.shaolin.vogerp.commonmodel.ce.PartyType.NOT_SPECIFIED) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.interestedPartyTypeInt", scFlow.getInterestedPartyType().getIntValue()));
-            }
-            if (scFlow.getOnSaleDateStart() != null) {
-                inFlowCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inFlow.onSaleDate", scFlow.getOnSaleDateStart()));
-            }
-            if (scFlow.getOnSaleDateEnd() != null) {
-                inFlowCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inFlow.onSaleDate", scFlow.getOnSaleDateEnd()));
             }
 
         List result = this._list(offset, count, inFlowCriteria);
@@ -141,23 +126,8 @@ public class ProductModel extends BEEntityDaoObject {
             if (scFlow.getParentId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getId()));
             }
-            if (scFlow.getName() != null && scFlow.getName().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.name", scFlow.getName()));
-            }
             if (scFlow.getDescription() != null && scFlow.getDescription().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.description", scFlow.getDescription()));
-            }
-            if (scFlow.getType() != null && scFlow.getType().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.type", scFlow.getType()));
-            }
-            if (scFlow.getInterestedPartyType() != null && scFlow.getInterestedPartyType() != org.shaolin.vogerp.commonmodel.ce.PartyType.NOT_SPECIFIED) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.interestedPartyTypeInt", scFlow.getInterestedPartyType().getIntValue()));
-            }
-            if (scFlow.getOnSaleDateStart() != null) {
-                inFlowCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inFlow.onSaleDate", scFlow.getOnSaleDateStart()));
-            }
-            if (scFlow.getOnSaleDateEnd() != null) {
-                inFlowCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inFlow.onSaleDate", scFlow.getOnSaleDateEnd()));
             }
 
         return this._count(inFlowCriteria);
