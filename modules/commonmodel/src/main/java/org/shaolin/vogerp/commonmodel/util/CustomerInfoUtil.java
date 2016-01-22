@@ -1,14 +1,22 @@
 package org.shaolin.vogerp.commonmodel.util;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
 import org.shaolin.vogerp.commonmodel.be.IContactInfo;
+import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 
 public class CustomerInfoUtil {
 
+	public static String getCustomerBasicInfo(IPersonalInfo customer) {
+		return customer.getFirstName() + customer.getLastName();
+	}
+	
+	public static String getCustomerEnterpriseBasicInfo(IPersonalInfo customer) {
+		return customer.getOrganization().getDescription();
+	}
+	
 	public static List<ArrayList<String>>[] getAddressInfo(List<IAddressInfo> list) {
     	if (list == null || list.isEmpty()) {
     		return new List[] {new ArrayList<String>(), new ArrayList<String>()};

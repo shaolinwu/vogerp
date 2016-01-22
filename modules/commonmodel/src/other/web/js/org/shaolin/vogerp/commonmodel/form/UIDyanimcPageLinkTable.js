@@ -67,6 +67,8 @@ function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable(json)
 
     Form.Save = org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_Save;
 
+    Form.reload = org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_reload;
+
     Form.Cancel = org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_Cancel;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_invokeDynamicFunction;
@@ -112,6 +114,34 @@ function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable(json)
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_Save */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_reload(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_reload */
+
+             {
+              var o = this;
+              new UIMaster.ui.dialog({
+                  dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
+                  message:'Are you sure reload all dynamic ui configuration?',
+                  messageType:UIMaster.ui.dialog.Warning,
+                  optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+                  title:'',
+                  height:150,
+                  width:300,
+                  handler: function() {
+                     UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"reload_201601171829",UIMaster.getValue(eventsource),o.__entityName);
+                  }
+              }).open();
+              return;
+             }
+             
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"reload_201601171829",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_reload */
 
 
     /* auto generated eventlistener function declaration */
