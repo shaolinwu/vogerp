@@ -104,7 +104,7 @@
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.productmodel.be.ProductCharacteristic"></ns2:businessEntity>
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="productId" columnName="PRODUCTID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="templateId" columnName="PRODUCTID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="ceValues" columnName="CEVALUES"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
@@ -518,7 +518,7 @@
         </ns2:conditionValue>
       </ns2:fieldMapping>
       <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
-        <type entityName="org.shaolin.vogerp.productmodel.be.Product"></type>
+        <type entityName="org.shaolin.vogerp.productmodel.be.ProductTemplate"></type>
       </ns2:searchConditionData>
     </ns2:searchConditionMapping>
   </ns2:query>

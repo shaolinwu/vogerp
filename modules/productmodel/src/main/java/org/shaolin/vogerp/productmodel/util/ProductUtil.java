@@ -13,8 +13,9 @@ import org.shaolin.vogerp.productmodel.be.IProduct;
 import org.shaolin.vogerp.productmodel.be.IProductCharacteristic;
 import org.shaolin.vogerp.productmodel.be.IProductCost;
 import org.shaolin.vogerp.productmodel.be.IProductPrice;
-import org.shaolin.vogerp.productmodel.be.ProductImpl;
+import org.shaolin.vogerp.productmodel.be.IProductTemplate;
 import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
+import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
 import org.shaolin.vogerp.productmodel.ce.PriceType;
 import org.shaolin.vogerp.productmodel.ce.ProductCodeType;
 import org.shaolin.vogerp.productmodel.dao.ProductModel;
@@ -38,8 +39,8 @@ public class ProductUtil {
 		return sb.toString();
 	}
 	
-	public static String getProductCharacter(IProduct product) {
-		List<IProductCharacteristic> character = ProductModel.INSTANCE.searchProductCharacteristic((ProductImpl)product, null, 0, 1);
+	public static String getProductCharacter(IProductTemplate product) {
+		List<IProductCharacteristic> character = ProductModel.INSTANCE.searchProductCharacteristic((ProductTemplateImpl)product, null, 0, 1);
 		if (character.size() > 0) {
 			return CEOperationUtil.toHTMLString(character.get(0).getCeValues());
 		}

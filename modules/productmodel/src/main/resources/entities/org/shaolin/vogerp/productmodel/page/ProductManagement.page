@@ -11,6 +11,7 @@
                 <ns2:exp>
                     <ns2:expressionString><![CDATA[
                     import java.util.HashMap;
+                    import java.util.ArrayList;
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.AjaxActionHelper;
                     import org.shaolin.uimaster.page.ajax.*;
@@ -21,6 +22,8 @@
                         ProductCodeImpl productCode = new ProductCodeImpl();
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
+                        input.put("costList", new ArrayList());
+                        input.put("priceList", new ArrayList());
                         input.put("productCode", productCode);
                         input.put("editable", new Boolean(true));
                         RefForm form = new RefForm("productInfoForm", "org.shaolin.vogerp.productmodel.form.Product", input);
@@ -43,6 +46,7 @@
                     import org.shaolin.vogerp.productmodel.be.ProductImpl;
                     import org.shaolin.vogerp.productmodel.be.ProductCodeImpl;
                     import org.shaolin.vogerp.productmodel.dao.ProductModel;
+                    import org.shaolin.vogerp.productmodel.util.ProductUtil;
                     {
                         Table productInfoTable = (Table)@page.getElement("productInfoTable");
                         if (productInfoTable.getSelectedRow() == null) {
@@ -57,8 +61,16 @@
 			                    productCode = (ProductCodeImpl)result.get(0);
 			                }
 			            }
+			            List costList = ProductModel.INSTANCE.searchProductCost(defaultUser, null, 0, -1);
+			            List priceList = ProductModel.INSTANCE.searchProductPrice(defaultUser, null, 0, -1);
+                        if ((priceList == null || priceList.size() == 0) && costList.size() > 0) {
+                            priceList = ProductUtil.convertCostToPrice(costList);
+                        }
+			            
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
+                        input.put("costList", costList);
+                        input.put("priceList", priceList);
                         input.put("productCode", productCode);
                         input.put("editable", new Boolean(true));
                         RefForm form = new RefForm("productInfoForm", "org.shaolin.vogerp.productmodel.form.Product", input);

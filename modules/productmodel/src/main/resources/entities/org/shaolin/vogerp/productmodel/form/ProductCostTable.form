@@ -304,7 +304,7 @@
         </ns2:EventListener>
         <ns2:editable xsi:type="ns2:ExpressionPropertyType">
           <ns2:expression>
-            <expressionString>{return $editable;}</expressionString>
+            <expressionString>{return $editable != null;}</expressionString>
           </ns2:expression>
         </ns2:editable>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -367,7 +367,7 @@
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductCharacteristic"></ns2:mappingRule>
       <ns2:UIComponent componentPath="productCharacterUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="product" paramName="product"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="product.template" paramName="product"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="character" paramName="beObject"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>

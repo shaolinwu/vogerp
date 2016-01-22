@@ -51,12 +51,10 @@
               import org.shaolin.vogerp.productmodel.dao.ProductModel;
               import org.shaolin.vogerp.productmodel.util.ProductUtil;
               {
-                  Table personalInfoTable = (Table)@page.getElement("productInfoTable");
-                  if (personalInfoTable.getSelectedRow() == null) {
-                      return;
-                  }
+                  Hidden productTypeUI = @page.getHidden("productTypeUI");
                   Hidden templateIdUI = @page.getHidden("templateIdUI");
                   HashMap input = new HashMap();
+                  input.put("selectProductType", productTypeUI.getValue());
                   input.put("selectPTempalteId", templateIdUI.getValue());
                   input.put("editable", new Boolean(false));
                   input.put(RefForm.RECONFIG_ORIGINAL, "Save");
@@ -69,7 +67,7 @@
 	                  prefix = prefix + ".";
 	              }
                   input.put(RefForm.RECONFIG_OVERRIDE, prefix + "SaveSelectedTemplate");
-                  RefForm form = new RefForm("costForm", "org.shaolin.vogerp.productmodel.form.ProductTemplateSelector", input);
+                  RefForm form = new RefForm("ptemplateForm", "org.shaolin.vogerp.productmodel.form.ProductTemplateSelector", input);
                   @page.addElement(form);
                   
                   form.openInWindows("Product Template Selector", null, 750, 600);
@@ -90,14 +88,18 @@
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid());
             HashMap input = (HashMap)form.ui2Data();
             String selectPTempalteId = (String)input.get("selectPTempalteId");
+            String selectProductType = (String)input.get("selectProductType");
             
             String formId = "productInfoForm.";
             // because this is a reconfigurable function, we have to get the right form id.
             Hidden templateIdUI = @page.getHidden(formId + "templateIdUI");
             templateIdUI.setValue(selectPTempalteId);
+            Hidden productTypeUI = @page.getHidden(formId + "productTypeUI");
+            productTypeUI.setValue(selectProductType);
+            AList plist = @page.getList("pTemplateListUI");
             
             Label typeUI = @page.getLabel(formId + "typeUI");
-            typeUI.setValue(CEUtil.getValue(selectPTempalteId));
+            typeUI.setValue(CEUtil.getValue(selectProductType) + " : " + plist.getSelectedDisplayValues().get(0));
             
             form.closeIfinWindows(true);
             @page.removeForm(@page.getEntityUiid()); 
@@ -140,8 +142,6 @@
                  import org.shaolin.vogerp.productmodel.be.ProductImpl;
                  import org.shaolin.vogerp.productmodel.dao.ProductModel;
                  {
-                    
-                 
                  }]]></ns2:expressionString>
              </ns2:expression>
          </ns2:previousAction>
@@ -176,20 +176,12 @@
 		                    file.setStoredPath(defaultUser.getPhotos());
                             TextArea htmlDescUI = (TextArea)@page.getElement("htmlDescUI");
                             htmlDescUI.setValue(defaultUser.getHtmlDesc());
-		                    
-		                    ProductCodeImpl pCode = new ProductCodeImpl();
-		                    pCode.setProductId(defaultUser.getId());
-		                    pCode.setType(ProductCodeType.SKUCODE);
-		                    pCode.setCode(ProductUtil.genProductCode(pCode.getType()));
-		                    ProductModel.INSTANCE.create(pCode);
 	                    }
-                    } else if (preNextPanel.getSelectedIndex() == 2) {
-                        RefForm form = (RefForm)@page.getElement("productInfoForm.infoPanel3"); 
-                        //form.setInputParameter("productCode", new ProductCodeImpl());
-                        HashMap input = (HashMap)form.ui2Data();
+	                    form = (RefForm)@page.getElement("productInfoForm.infoPanel3"); 
+                        input = (HashMap)form.ui2Data();
                         ProductCodeImpl pcode = (ProductCodeImpl)input.get("productCode");
                         if (pcode.getId() == 0) {
-                            ProductModel.INSTANCE.update(pcode);
+                            ProductModel.INSTANCE.create(pcode);
                         }
                     } else if (preNextPanel.getSelectedIndex() == 3) {
                        
@@ -211,6 +203,7 @@
                  <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
                  <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
                </ns2:layout>
+               <ns2:component xsi:type="ns2:UIHiddenType" UIID="productTypeUI" />
                <ns2:component xsi:type="ns2:UIHiddenType" UIID="templateIdUI" />
                <ns2:component xsi:type="ns2:UILabelType" UIID="typeUILabel">
                  <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -220,25 +213,13 @@
                  </ns2:text>
                </ns2:component>
                <ns2:component xsi:type="ns2:UILabelType" UIID="typeUI">
+		         <ns2:UIStyle>productInfoForm_typeUI_Label</ns2:UIStyle>
                  <ns2:text xsi:type="ns2:StringPropertyType">
                     <ns2:value>请选择...</ns2:value>
                  </ns2:text>
                  <ns2:EventListener xsi:type="ns2:ClickListenerType">
 		           <ns2:handler functionName="openProductTempSelector"></ns2:handler>
 		         </ns2:EventListener>
-               </ns2:component>
-               <ns2:component xsi:type="ns2:UILabelType" UIID="nameUILabel">
-                 <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-                 <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-                   <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-                   <ns2:key>org.shaolin.vogerp.productmodel.be.Product.name</ns2:key>
-                 </ns2:text>
-               </ns2:component>
-               <ns2:component xsi:type="ns2:UITextFieldType" UIID="nameUI">
-                 <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-                 <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
-		            <ns2:value>false</ns2:value>
-		        </ns2:allowBlank>
                </ns2:component>
                <ns2:component xsi:type="ns2:UILabelType" UIID="descriptionUILabel">
                  <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -266,6 +247,9 @@
                     <ns2:value>false</ns2:value>
                  </ns2:allowBlank>
                </ns2:component>
+               <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="infoPanel3">
+                  <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductCode" />
+               </ns2:component>
                <ns2:layoutConstraint>
                  <ns2:componentId>typeUILabel</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
@@ -275,141 +259,44 @@
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
                <ns2:layoutConstraint>
-                 <ns2:componentId>nameUILabel</ns2:componentId>
+                 <ns2:componentId>descriptionUILabel</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
                <ns2:layoutConstraint>
-                 <ns2:componentId>nameUI</ns2:componentId>
+                 <ns2:componentId>descriptionUI</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
                <ns2:layoutConstraint>
-                 <ns2:componentId>descriptionUILabel</ns2:componentId>
+                 <ns2:componentId>saleEndDateUILabel</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
                <ns2:layoutConstraint>
-                 <ns2:componentId>descriptionUI</ns2:componentId>
+                 <ns2:componentId>saleEndDateUI</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
                <ns2:layoutConstraint>
-                 <ns2:componentId>saleEndDateUILabel</ns2:componentId>
-                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-               </ns2:layoutConstraint>
-               <ns2:layoutConstraint>
-                 <ns2:componentId>saleEndDateUI</ns2:componentId>
-                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+                 <ns2:componentId>infoPanel3</ns2:componentId>
+                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
             </ns2:panel>
-         </ns2:tab>
-         <ns2:tab uiid="infoPanel3">
-             <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
-                 <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-                 <ns2:key>org.shaolin.vogerp.productmodel.form.Product.infoPanel3</ns2:key>
-             </ns2:title>
-             <ns2:refEntity UIID="infoPanel3">
-                <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductCode" />
-             </ns2:refEntity>
          </ns2:tab>
          <ns2:tab uiid="infoPanel1">
              <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
                  <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
                  <ns2:key>org.shaolin.vogerp.productmodel.form.Product.infoPanel1</ns2:key>
              </ns2:title>
-             <ns2:panel UIID="infoPanel1">
-               <ns2:layout xsi:type="ns2:TableLayoutType">
-                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                 <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-                 <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-               </ns2:layout>
-               <ns2:component xsi:type="ns2:UILabelType" UIID="photoPathUI">
-				  <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-				  <ns2:text xsi:type="ns2:StringPropertyType">
-				    <ns2:value> </ns2:value>
-				  </ns2:text>
-				</ns2:component>
-				<ns2:component xsi:type="ns2:UIImageType" UIID="photoUI">
-				  <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-				  <ns2:isGallery xsi:type="ns2:BooleanPropertyType">
-				      <ns2:value>true</ns2:value>
-				  </ns2:isGallery>
-				  <ns2:Property name="width">
-					    <ns2:value xsi:type="ns2:StringPropertyType">
-					        <value>400px</value>
-					    </ns2:value>
-					</ns2:Property>
-					<ns2:Property name="height">
-					    <ns2:value xsi:type="ns2:StringPropertyType">
-					        <value>320px</value>
-					    </ns2:value>
-					</ns2:Property>
-				</ns2:component>
-				<ns2:component xsi:type="ns2:UILabelType" UIID="photoUILabel">
-				  <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-				  <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-				    <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-				    <ns2:key>org.shaolin.vogerp.productmodel.be.ProductCharacteristic.photoPath</ns2:key>
-				  </ns2:text>
-				</ns2:component>
-				<ns2:component xsi:type="ns2:UIFileType" UIID="uploadFile">
-				  <ns2:text xsi:type="ns2:StringPropertyType">
-				   <ns2:value></ns2:value>
-				  </ns2:text>
-				  <ns2:suffix xsi:type="ns2:StringPropertyType">
-				   <ns2:value>*.jpg;*.jpeg;*.png;*.gif</ns2:value>
-				  </ns2:suffix>
-				  <ns2:isMultiple xsi:type="ns2:BooleanPropertyType">
-				   <ns2:value>true</ns2:value>
-				  </ns2:isMultiple>
-				  <ns2:storedPath xsi:type="ns2:ExpressionPropertyType">
-				   <ns2:expression>
-				     <expressionString>
-				     import org.shaolin.bmdp.runtime.Registry;
-				     import org.shaolin.bmdp.runtime.AppContext;
-				     import org.shaolin.uimaster.page.WebConfig;
-				     { return $beObject.getPhotos(); 
-				     }</expressionString>
-				   </ns2:expression>
-				  </ns2:storedPath>
-				</ns2:component>
-				<ns2:layoutConstraint>
-				  <ns2:componentId>photoPathUI</ns2:componentId>
-				  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-				</ns2:layoutConstraint>
-				<ns2:layoutConstraint>
-				  <ns2:componentId>photoUI</ns2:componentId>
-				  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIStyle="width:100%;" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-				</ns2:layoutConstraint>
-				<ns2:layoutConstraint>
-				  <ns2:componentId>photoUILabel</ns2:componentId>
-				  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-				</ns2:layoutConstraint>
-				<ns2:layoutConstraint>
-				  <ns2:componentId>uploadFile</ns2:componentId>
-				  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-				</ns2:layoutConstraint>
-             </ns2:panel>
+             <ns2:refEntity UIID="infoPanel1">
+                <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductCostTable" />
+             </ns2:refEntity>
          </ns2:tab>
          <ns2:tab uiid="infoPanel2">
              <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
                  <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
                  <ns2:key>org.shaolin.vogerp.productmodel.form.Product.infoPanel2</ns2:key>
              </ns2:title>
-             <ns2:panel UIID="infoPanel2">
-               <ns2:layout xsi:type="ns2:TableLayoutType">
-                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                 <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-               </ns2:layout>
-				<ns2:component xsi:type="ns2:UITextAreaType" UIID="htmlDescUI">
-				  <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-				  <ns2:htmlSupport xsi:type="ns2:BooleanPropertyType">
-				      <value>true</value>
-				  </ns2:htmlSupport>
-				</ns2:component>
-				<ns2:layoutConstraint>
-				  <ns2:componentId>htmlDescUI</ns2:componentId>
-				  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
-				</ns2:layoutConstraint>
-             </ns2:panel>
+             <ns2:refEntity UIID="infoPanel2">
+                <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductPriceTable" />
+             </ns2:refEntity>
          </ns2:tab>
       </ns2:component>
       <ns2:layoutConstraint>
@@ -469,23 +356,39 @@
     <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
       <type entityName="org.shaolin.vogerp.productmodel.be.Product"></type>
     </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="costList" category="JavaClass">
+      <type entityName="java.util.List"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="priceList" category="JavaClass">
+      <type entityName="java.util.List"></type>
+    </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="productCode" category="BusinessEntity">
       <type entityName="org.shaolin.vogerp.productmodel.be.ProductCode"></type>
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="nameUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.template.name" paramName="StringData"></ns2:DataComponent>
-    </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="productTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.template.type" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
+        <ns2:expression>
+          <expressionString>import org.shaolin.bmdp.runtime.ce.CEUtil;{
+          return CEUtil.getValue($beObject.getTemplate().getType()) + " : " + $beObject.getTemplate().getName();}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
       <ns2:UIComponent componentPath="templateIdUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.templateId" paramName="Number"></ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithDate"></ns2:mappingRule>
       <ns2:UIComponent componentPath="saleEndDateUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.saleEndDate" paramName="Date"></ns2:DataComponent>
@@ -500,20 +403,24 @@
       <ns2:UIComponent componentPath="descriptionUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.description" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping9">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="photoUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.photos" paramName="StringData"></ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping10">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="htmlDescUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.htmlDesc" paramName="StringData"></ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping12">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping8">
       <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductCode"></ns2:mappingRule>
       <ns2:UIComponent componentPath="infoPanel3" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="productCode" paramName="productCode"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping9">
+      <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductCostTable"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="infoPanel1" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject" paramName="product"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="costList" paramName="list"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.id" paramName="parentId"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping10">
+      <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductPriceTable"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="infoPanel2" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject" paramName="product"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="priceList" paramName="list"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.id" paramName="productId"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[

@@ -146,13 +146,14 @@
 			<bediagram:type xsi:type="bediagram:LongType" />
 		</bediagram:member>
 		<bediagram:member>
-			<bediagram:name>productId</bediagram:name>
+		    <!-- product template id -->
+			<bediagram:name>templateId</bediagram:name>
 			<bediagram:type xsi:type="bediagram:LongType" />
 		</bediagram:member>
 		<bediagram:member>
-			<bediagram:name>product</bediagram:name>
+			<bediagram:name>template</bediagram:name>
 			<bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="org.shaolin.vogerp.productmodel.be.Product" />
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.productmodel.be.ProductTemplate" />
             </bediagram:type>
 		</bediagram:member>
 		<bediagram:member>

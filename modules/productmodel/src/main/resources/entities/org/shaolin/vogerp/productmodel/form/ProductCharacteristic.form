@@ -10,21 +10,15 @@
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.productmodel.be.ProductCharacteristicImpl;
+        import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
         import org.shaolin.vogerp.productmodel.dao.ProductModel;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             HashMap input = (HashMap)form.ui2Data();
             ProductCharacteristicImpl defaultUser = (ProductCharacteristicImpl)input.get("beObject");
-            String v = @page.getHidden("idUI").getValue();
-            String pid = @page.getHidden("productIdUI").getValue();
-            if (v != null && v.length() > 0) {
-            	   Long objectId = Long.valueOf(v);
-            	   defaultUser.setId(objectId.longValue());
-            }
-            if (pid != null && pid.length() > 0) {
-            	   Long objectId = Long.valueOf(pid);
-            	   defaultUser.setProductId(objectId.longValue());
-            }
+            ProductTemplateImpl product = (ProductTemplateImpl)input.get("product");
+            defaultUser.setTemplateId(product.getId());
+            defaultUser.setTemplate(product);
             if (defaultUser.getId() == 0) {
                 ProductModel.INSTANCE.create(defaultUser);
             } else {
@@ -54,6 +48,7 @@
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel" dynamicUI="true">
@@ -67,31 +62,31 @@
 			  <expressionString>
 			  import org.shaolin.bmdp.runtime.AppContext;
 			  { 
-			  	return $product.getTemplate().getType(); 
+			  	return $product.getType(); 
 			  }
 			  </expressionString>
 			</ns2:expression>
 		</ns2:dynamicUIFilter>
-      <ns2:component xsi:type="ns2:UIHiddenType" UIID="idUI">
-        <ns2:secure>
-          <ns2:value>true</ns2:value>
-        </ns2:secure>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UIHiddenType" UIID="productIdUI">
-        <ns2:secure>
-          <ns2:value>true</ns2:value>
-        </ns2:secure>
-      </ns2:component>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel1" dynamicUI="true">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
     </ns2:component>
     <ns2:layoutConstraint>
       <ns2:componentId>fieldPanel</ns2:componentId>
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel1</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
   </ns2:body>
   <ns2:mapping>
     <systemVersion>0</systemVersion>
     <ns2:DataEntity scope="InOut" name="product" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.productmodel.be.Product"></type>
+      <type entityName="org.shaolin.vogerp.productmodel.be.ProductTemplate"></type>
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
       <type entityName="org.shaolin.vogerp.productmodel.be.ProductCharacteristic"></type>
@@ -99,20 +94,6 @@
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="idUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Number">
-        <ns2:expression>
-          <expressionString>$beObject.getId()</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="productIdUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.productId" paramName="Number"></ns2:DataComponent>
-    </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:DynamicUIMappingType" name="simpleMapping0">
       <ns2:UIComponent componentPath="fieldPanel" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.ceValues" paramName="jsonValue"></ns2:DataComponent>

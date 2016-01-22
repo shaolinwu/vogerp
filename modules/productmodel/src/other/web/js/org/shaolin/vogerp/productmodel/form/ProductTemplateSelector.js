@@ -3,14 +3,19 @@
 function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var selectProductNodeUI = new UIMaster.ui.hidden
+    var selectProductTypeUI = new UIMaster.ui.hidden
     ({
-        ui: elementList[prefix + "selectProductNodeUI"]
+        ui: elementList[prefix + "selectProductTypeUI"]
     });
 
-    var productListUI = new UIMaster.ui.list
+    var selectPTemplateIdUI = new UIMaster.ui.hidden
     ({
-        ui: elementList[prefix + "productListUI"]
+        ui: elementList[prefix + "selectPTemplateIdUI"]
+    });
+
+    var pTemplateListUI = new UIMaster.ui.list
+    ({
+        ui: elementList[prefix + "pTemplateListUI"]
     });
 
     var okbtn = new UIMaster.ui.button
@@ -44,7 +49,7 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
     ({
         ui: elementList[prefix + "firstPanel"]
         ,items: []
-        ,subComponents: [prefix + "selectProductNodeUI",prefix + "productTypeTree",prefix + "productListUI"]
+        ,subComponents: [prefix + "selectProductTypeUI",prefix + "selectPTemplateIdUI",prefix + "productTypeTree",prefix + "pTemplateListUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -57,12 +62,14 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [selectProductNodeUI,productListUI,okbtn,cancelbtn,productTypeTree,fieldPanel,firstPanel,secondPanel,actionPanel]
+        ,items: [selectProductTypeUI,selectPTemplateIdUI,pTemplateListUI,okbtn,cancelbtn,productTypeTree,fieldPanel,firstPanel,secondPanel,actionPanel]
     });
 
-    Form.selectProductNodeUI=selectProductNodeUI;
+    Form.selectProductTypeUI=selectProductTypeUI;
 
-    Form.productListUI=productListUI;
+    Form.selectPTemplateIdUI=selectPTemplateIdUI;
+
+    Form.pTemplateListUI=pTemplateListUI;
 
     Form.okbtn=okbtn;
 
@@ -74,21 +81,25 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
 
     Form.firstPanel=firstPanel;
 
-    Form.selectProductNodeUI=selectProductNodeUI;
+    Form.selectProductTypeUI=selectProductTypeUI;
+
+    Form.selectPTemplateIdUI=selectPTemplateIdUI;
 
     Form.productTypeTree=productTypeTree;
 
-    Form.productListUI=productListUI;
+    Form.pTemplateListUI=pTemplateListUI;
 
     Form.secondPanel=secondPanel;
 
     Form.firstPanel=firstPanel;
 
-    Form.selectProductNodeUI=selectProductNodeUI;
+    Form.selectProductTypeUI=selectProductTypeUI;
+
+    Form.selectPTemplateIdUI=selectPTemplateIdUI;
 
     Form.productTypeTree=productTypeTree;
 
-    Form.productListUI=productListUI;
+    Form.pTemplateListUI=pTemplateListUI;
 
     Form.secondPanel=secondPanel;
 
@@ -101,7 +112,17 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_productmodel_form_ProductTemplateSelector */
-        /* Construct_LAST:org_shaolin_vogerp_productmodel_form_ProductTemplateSelector */
+
+        
+        { 
+        var o = this;
+        window.setTimeout(function(){
+            // any ajax operation must be settle down as delay after invoking user constructor code.
+	        o.selectProductType(o.productTypeTree.typeUI);
+	        o.selectPTemplate(o.pTemplateListUI);
+        },500);
+        }
+            /* Construct_LAST:org_shaolin_vogerp_productmodel_form_ProductTemplateSelector */
     };
 
     Form.selectProductType = org_shaolin_vogerp_productmodel_form_ProductTemplateSelector_selectProductType;

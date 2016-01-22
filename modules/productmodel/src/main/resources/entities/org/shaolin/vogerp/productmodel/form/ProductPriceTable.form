@@ -309,7 +309,7 @@
         </ns2:EventListener>
         <ns2:editable xsi:type="ns2:ExpressionPropertyType">
           <ns2:expression>
-            <expressionString>{return $editable;}</expressionString>
+            <expressionString>{return $editable != null;}</expressionString>
           </ns2:expression>
         </ns2:editable>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">

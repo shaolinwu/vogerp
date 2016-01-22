@@ -110,7 +110,7 @@
          <ns2:tab uiid="infoPanel0">
              <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
                  <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-                 <ns2:key>org.shaolin.vogerp.productmodel.form.Product.infoPanel0</ns2:key>
+                 <ns2:key>org.shaolin.vogerp.productmodel.form.ProductTemplate.infoPanel0</ns2:key>
              </ns2:title>
              <ns2:panel UIID="infoPanel0">
                <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -195,10 +195,19 @@
               </ns2:layoutConstraint>
             </ns2:panel>
          </ns2:tab>
+         <ns2:tab uiid="infoPanel3">
+             <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+                 <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
+                 <ns2:key>org.shaolin.vogerp.productmodel.form.ProductTemplate.infoPanel3</ns2:key>
+             </ns2:title>
+             <ns2:refEntity UIID="infoPanel3">
+                <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductCharacteristic" />
+             </ns2:refEntity>
+         </ns2:tab>
          <ns2:tab uiid="infoPanel1">
              <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
                  <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-                 <ns2:key>org.shaolin.vogerp.productmodel.form.Product.infoPanel1</ns2:key>
+                 <ns2:key>org.shaolin.vogerp.productmodel.form.ProductTemplate.infoPanel1</ns2:key>
              </ns2:title>
              <ns2:panel UIID="infoPanel1">
                <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -278,7 +287,7 @@
          <ns2:tab uiid="infoPanel2">
              <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
                  <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-                 <ns2:key>org.shaolin.vogerp.productmodel.form.Product.infoPanel2</ns2:key>
+                 <ns2:key>org.shaolin.vogerp.productmodel.form.ProductTemplate.infoPanel2</ns2:key>
              </ns2:title>
              <ns2:panel UIID="infoPanel2">
                <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -355,6 +364,12 @@
     <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
       <type entityName="org.shaolin.vogerp.productmodel.be.ProductTemplate"></type>
     </ns2:DataEntity>
+    <ns2:DataEntity scope="Internal" name="character" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.productmodel.be.ProductCharacteristic"></type>
+      <default>
+        <expressionString>new org.shaolin.vogerp.productmodel.be.ProductCharacteristicImpl()</expressionString>
+      </default>
+    </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
@@ -392,6 +407,12 @@
           <expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping8">
+      <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductCharacteristic"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="infoPanel3" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject" paramName="product"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="character" paramName="beObject"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>{

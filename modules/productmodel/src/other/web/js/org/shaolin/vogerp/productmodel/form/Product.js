@@ -7,8 +7,13 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     ({
         ui: elementList[prefix + "funcsPanel"]
         ,items: []
-        ,subComponents: [prefix + "infoPanel0",prefix + "infoPanel3",prefix + "infoPanel1",prefix + "infoPanel2"]
+        ,subComponents: [prefix + "infoPanel0",prefix + "infoPanel1",prefix + "infoPanel2"]
     });
+    var productTypeUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "productTypeUI"]
+    });
+
     var templateIdUI = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "templateIdUI"]
@@ -22,16 +27,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     var typeUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "typeUI"]
-    });
-
-    var nameUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "nameUILabel"]
-    });
-
-    var nameUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "nameUI"]
     });
 
     var descriptionUILabel = new UIMaster.ui.label
@@ -54,51 +49,18 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         ui: elementList[prefix + "saleEndDateUI"]
     });
 
+    var infoPanel3 = new org_shaolin_vogerp_productmodel_form_ProductCode({"prefix":prefix + "infoPanel3."});
+
     var infoPanel0 = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "infoPanel0"]
         ,items: []
-        ,subComponents: [prefix + "templateIdUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "saleEndDateUILabel",prefix + "saleEndDateUI"]
+        ,subComponents: [prefix + "productTypeUI",prefix + "templateIdUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "saleEndDateUILabel",prefix + "saleEndDateUI",prefix + "infoPanel3"]
     });
-    var infoPanel3 = new org_shaolin_vogerp_productmodel_form_ProductCode({"prefix":prefix + "infoPanel3."});
+    var infoPanel1 = new org_shaolin_vogerp_productmodel_form_ProductCostTable({"prefix":prefix + "infoPanel1."});
 
-    var photoPathUI = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "photoPathUI"]
-    });
+    var infoPanel2 = new org_shaolin_vogerp_productmodel_form_ProductPriceTable({"prefix":prefix + "infoPanel2."});
 
-    var photoUI = new UIMaster.ui.image
-    ({
-        ui: elementList[prefix + "photoUI"]
-    });
-
-    var photoUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "photoUILabel"]
-    });
-
-    var uploadFile = new UIMaster.ui.file
-    ({
-        ui: elementList[prefix + "uploadFile"]
-    });
-
-    var infoPanel1 = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "infoPanel1"]
-        ,items: []
-        ,subComponents: [prefix + "photoPathUI",prefix + "photoUI",prefix + "photoUILabel",prefix + "uploadFile"]
-    });
-    var htmlDescUI = new UIMaster.ui.textarea
-    ({
-        ui: elementList[prefix + "htmlDescUI"]
-    });
-
-    var infoPanel2 = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "infoPanel2"]
-        ,items: []
-        ,subComponents: [prefix + "htmlDescUI"]
-    });
 
     var okbtn = new UIMaster.ui.button
     ({
@@ -134,15 +96,13 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.infoPanel0=infoPanel0;
 
+    Form.productTypeUI=productTypeUI;
+
     Form.templateIdUI=templateIdUI;
 
     Form.typeUILabel=typeUILabel;
 
     Form.typeUI=typeUI;
-
-    Form.nameUILabel=nameUILabel;
-
-    Form.nameUI=nameUI;
 
     Form.descriptionUILabel=descriptionUILabel;
 
@@ -156,17 +116,7 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.infoPanel1=infoPanel1;
 
-    Form.photoPathUI=photoPathUI;
-
-    Form.photoUI=photoUI;
-
-    Form.photoUILabel=photoUILabel;
-
-    Form.uploadFile=uploadFile;
-
     Form.infoPanel2=infoPanel2;
-
-    Form.htmlDescUI=htmlDescUI;
 
     Form.okbtn=okbtn;
 
@@ -178,15 +128,13 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.infoPanel0=infoPanel0;
 
+    Form.productTypeUI=productTypeUI;
+
     Form.templateIdUI=templateIdUI;
 
     Form.typeUILabel=typeUILabel;
 
     Form.typeUI=typeUI;
-
-    Form.nameUILabel=nameUILabel;
-
-    Form.nameUI=nameUI;
 
     Form.descriptionUILabel=descriptionUILabel;
 
@@ -200,17 +148,7 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.infoPanel1=infoPanel1;
 
-    Form.photoPathUI=photoPathUI;
-
-    Form.photoUI=photoUI;
-
-    Form.photoUILabel=photoUILabel;
-
-    Form.uploadFile=uploadFile;
-
     Form.infoPanel2=infoPanel2;
-
-    Form.htmlDescUI=htmlDescUI;
 
     Form.actionPanel=actionPanel;
 

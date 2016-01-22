@@ -185,7 +185,7 @@ public class ProductModel extends BEEntityDaoObject {
         return this._count(inFlowCriteria);
     }
 
-    public List<org.shaolin.vogerp.productmodel.be.IProductCharacteristic> searchProductCharacteristic(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
+    public List<org.shaolin.vogerp.productmodel.be.IProductCharacteristic> searchProductCharacteristic(org.shaolin.vogerp.productmodel.be.ProductTemplateImpl scFlow,
            List<Order> orders, int offset, int count) {
             Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.productmodel.be.ProductCharacteristicImpl.class, "inFlow");
             if (orders == null) {
@@ -201,7 +201,7 @@ public class ProductModel extends BEEntityDaoObject {
         return result;
     }
 
-    public long searchProductCharacteristicCount(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow) {
+    public long searchProductCharacteristicCount(org.shaolin.vogerp.productmodel.be.ProductTemplateImpl scFlow) {
             Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.productmodel.be.ProductCharacteristicImpl.class, "inFlow");
 
             if (scFlow.getId() > 0) {

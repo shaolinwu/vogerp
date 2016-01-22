@@ -3,38 +3,29 @@
 function org_shaolin_vogerp_productmodel_form_ProductCharacteristic(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var idUI = new UIMaster.ui.hidden
+    var fieldPanel1 = new UIMaster.ui.panel
     ({
-        ui: elementList[prefix + "idUI"]
-    });
-
-    var productIdUI = new UIMaster.ui.hidden
-    ({
-        ui: elementList[prefix + "productIdUI"]
+        ui: elementList[prefix + "fieldPanel1"]
+        ,items: []
+        ,subComponents: []
     });
 
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "productIdUI"]
+        ,subComponents: []
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,productIdUI,fieldPanel]
+        ,items: [fieldPanel,fieldPanel1]
     });
-
-    Form.idUI=idUI;
-
-    Form.productIdUI=productIdUI;
 
     Form.fieldPanel=fieldPanel;
 
-    Form.idUI=idUI;
-
-    Form.productIdUI=productIdUI;
+    Form.fieldPanel1=fieldPanel1;
 
     Form.user_constructor = function()
     {

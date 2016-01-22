@@ -107,8 +107,7 @@
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
-                    import org.shaolin.vogerp.productmodel.be.ProductCostImpl;
-                    import org.shaolin.vogerp.productmodel.be.ProductImpl;
+                    import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
                     import org.shaolin.vogerp.productmodel.dao.ProductModel;
                     import org.shaolin.vogerp.productmodel.util.ProductUtil;
                     {
@@ -116,16 +115,11 @@
                         if (personalInfoTable.getSelectedRow() == null) {
                             return;
                         }
-                        ProductImpl defaultUser = (ProductImpl)personalInfoTable.getSelectedRow();
-                        List result = ProductModel.INSTANCE.searchProductPrice(defaultUser, null, 0, -1);
-                        if (result == null || result.size() == 0) {
-                            result = ProductUtil.convertCostToPrice(ProductModel.INSTANCE.searchProductCost(defaultUser, null, 0, -1));
-                        }
+                        ProductTemplateImpl defaultUser = (ProductTemplateImpl)personalInfoTable.getSelectedRow();
                         HashMap input = new HashMap();
-                        input.put("list", result);
                         input.put("beObject", defaultUser);
                         input.put("editable", new Boolean(false));
-                        RefForm form = new RefForm("costForm", "org.shaolin.vogerp.productmodel.form.ProductDetailOverview", input);
+                        RefForm form = new RefForm("costForm", "org.shaolin.vogerp.productmodel.form.ProdTempDetailOverview", input);
                         @page.addElement(form);
                         
                         form.openInWindows("Product Overview", new TableCallBack("productInfoTable"), 890, 580);
