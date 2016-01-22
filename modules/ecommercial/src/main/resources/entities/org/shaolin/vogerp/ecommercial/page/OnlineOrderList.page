@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.ecommercial.page.OnlineOrderList</entityName>
+	<systemVersion>0</systemVersion>
+	<description>抢单管理</description>
+	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<ns2:eventHandler functionName="openGoldenOrder">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showorderInfoPanel543542">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                    {
+                        Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GoldenOrder", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Open Golden Order", new TableCallBack("goldenOrderTable"), 690, 500);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
+        <ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+		   <ns2:UISkin xsi:type="ns2:UISkinType">
+		     <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
+		     <ns2:param name="text">
+		         <ns2:value xsi:type="ns2:StringPropertyType">
+		             <ns2:value></ns2:value>
+		         </ns2:value>
+		     </ns2:param>
+		   </ns2:UISkin>
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+			</ns2:layout>
+            <ns2:component xsi:type="ns2:UIPanelType" UIID="goldenOrderInfoPanel">
+                <ns2:layout xsi:type="ns2:TableLayoutType">
+                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                    <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+                </ns2:layout>
+                <ns2:component xsi:type="ns2:UITableType" UIID="goldenOrderTable">
+                    <ns2:beElement>org.shaolin.vogerp.ecommercial.be.GoldenOrder</ns2:beElement>
+                    <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+                    <ns2:defaultRowSize>10</ns2:defaultRowSize>
+                    <ns2:showActionBar>true</ns2:showActionBar>
+                    <ns2:showFilter>true</ns2:showFilter>
+                    <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                        <ns2:expression xsi:type="ns2:ExpressionType">
+                            <ns2:expressionString><![CDATA[
+                            import java.util.List;
+                            import org.shaolin.uimaster.page.ajax.TableConditions;
+                            import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                            import org.shaolin.bmdp.runtime.AppContext;
+							import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
+							import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+                            {
+                                  if ($tableCondition == null) {
+                                     $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
+                                  }
+                                  // switch to uimaster node.
+                                  IAppServiceManager masterApp = (IAppServiceManager)IServerServiceManager.INSTANCE.getApplication(
+                                                              IServerServiceManager.INSTANCE.getMasterNodeName());
+						          IAppServiceManager currentContext = AppContext.get();
+						          try {
+						              AppContext.register(masterApp);
+	                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
+	                                  return OrderModel.INSTANCE.searchGoldenOrder(condition,
+                                                $tableCondition.getOrders(),
+                                                $tableCondition.getOffset(), 
+                                                $tableCondition.getCount());
+                                  } finally {
+						              AppContext.register(currentContext);
+						          }
+                            }]]></ns2:expressionString>
+                        </ns2:expression>
+                    </ns2:query>
+                    <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
+                        <ns2:expression xsi:type="ns2:ExpressionType">
+                            <ns2:expressionString><![CDATA[
+                            import java.util.List;
+                            import org.shaolin.uimaster.page.ajax.TableConditions;
+                            import org.shaolin.vogerp.order.be.ISaleOrder;
+                            import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                            import org.shaolin.bmdp.runtime.AppContext;
+                            import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
+                            import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+                            {
+                                  if ($tableCondition == null) {
+                                     $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
+                                  }
+                                  // switch to uimaster node.
+                                  IAppServiceManager masterApp = (IAppServiceManager)IServerServiceManager.INSTANCE.getApplication(
+                                                        IServerServiceManager.INSTANCE.getMasterNodeName());
+                                  IAppServiceManager currentContext = AppContext.get();
+                                  try {
+                                      AppContext.register(masterApp);
+	                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
+	                                  return OrderModel.INSTANCE.searchGoldenOrderCount(condition);
+                                  } finally {
+                                      AppContext.register(currentContext);
+                                  }
+                            }]]></ns2:expressionString>
+                        </ns2:expression>
+                    </ns2:totalCount>
+                    <ns2:column xsi:type="ns2:UITableColumnType">
+	                    <ns2:title xsi:type="ns2:StringPropertyType">
+	                        <ns2:value>抢购单</ns2:value>
+	                    </ns2:title>
+	                    <ns2:beFieldId>rowBE.id</ns2:beFieldId>
+	                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>HTMLItem</ns2:type></ns2:uiType>
+	                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+	                        <ns2:expression xsi:type="ns2:ExpressionType">
+	                            <ns2:expressionString><![CDATA[
+	                            import java.util.HashMap;
+	                            import org.shaolin.uimaster.page.AjaxContext;
+	                            import org.shaolin.uimaster.page.AjaxActionHelper;
+	                            import org.shaolin.uimaster.page.ajax.*;
+	                            import org.shaolin.uimaster.page.ajax.json.IDataItem;
+	                            import org.shaolin.vogerp.productmodel.be.ProductImpl;
+	                            {
+	                                HashMap input = new HashMap();
+	                                input.put("beObject", $rowBE);
+	                                RefForm form = new RefForm("gOrderForm"+$rowBE.getId(), 
+	                                  "org.shaolin.vogerp.ecommercial.form.GoldenOrderOverView", input);
+	                                StringBuffer sb = new StringBuffer();
+	                                sb.append(form.generateHTML());
+	                                sb.append("<script type=\"text/javascript\">$(document).ready(function(){");
+	                                sb.append("getElementListSingle(document.getElementById(\"productBasicForm");
+	                                sb.append($rowBE.getId());
+	                                sb.append(".Form\"));\n");
+	                                sb.append(form.generateJS());
+	                                sb.append("});</script>");
+	                                return sb.toString();
+	                            }]]></ns2:expressionString>
+	                        </ns2:expression>
+	                    </ns2:rowExpression>
+	                    <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+	                        <ns2:expression xsi:type="ns2:ExpressionType">
+	                            <ns2:expressionString><![CDATA[
+	                            import org.shaolin.bmdp.runtime.AppContext;
+	                            {
+	                            }]]></ns2:expressionString>
+	                        </ns2:expression>
+	                    </ns2:updateCondition>
+	                </ns2:column>
+                    <ns2:column xsi:type="ns2:UITableColumnType">
+                        <ns2:title xsi:type="ns2:StringPropertyType">
+                            <ns2:value>超时时间</ns2:value>
+                        </ns2:title>
+                        <ns2:beFieldId>rowBE.expiredDate</ns2:beFieldId>
+                        <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                          <ns2:type>HTML</ns2:type>
+                        </ns2:uiType>
+                        <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                           <ns2:expression xsi:type="ns2:ExpressionType">
+                                <ns2:expressionString><![CDATA[
+                                import java.lang.StringBuffer;
+                                import org.shaolin.bmdp.utils.DateUtil;
+                                import org.shaolin.bmdp.runtime.AppContext;
+                                {
+                                    long v = DateUtil.calCountDown($rowBE.getExpiredDate());
+                                    StringBuffer sb = new StringBuffer();
+                                    sb.append("<div id=\"expiredTimeUI").append(index).append("\" class=\"uimastet_countdown\" value=\"");
+                                    sb.append(v);
+                                    sb.append("\"></div>");
+                                    sb.append("<script type=\"text/javascript\">");
+                                    sb.append("$(\"#expiredTimeUI").append(index).append("\").redCountdown({preset: \"flat-colors-fat\", end: ($.now() + ").append(v).append(")});");
+                                    sb.append("</script>");
+                                    return sb.toString();
+                                }]]></ns2:expressionString>
+                            </ns2:expression>
+                        </ns2:rowExpression>
+                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                            <ns2:expression xsi:type="ns2:ExpressionType">
+                                <ns2:expressionString><![CDATA[
+                                import org.shaolin.bmdp.workflow.ce.TaskStatusType;
+                                import org.shaolin.bmdp.runtime.AppContext;
+                                {
+                                }]]></ns2:expressionString>
+                            </ns2:expression>
+                        </ns2:updateCondition>
+                    </ns2:column>
+                    <ns2:column xsi:type="ns2:UITableColumnType">
+                        <ns2:title xsi:type="ns2:StringPropertyType">
+                            <ns2:value>操作</ns2:value>
+                        </ns2:title>
+                        <ns2:beFieldId>rowBE.takenCustomerId</ns2:beFieldId>
+                        <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                          <ns2:type>HTML</ns2:type>
+                        </ns2:uiType>
+                        <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                           <ns2:expression xsi:type="ns2:ExpressionType">
+                                <ns2:expressionString><![CDATA[
+                                import java.lang.StringBuffer;
+                                import org.shaolin.bmdp.utils.DateUtil;
+                                import org.shaolin.bmdp.runtime.AppContext;
+                                {
+                                    StringBuffer sb = new StringBuffer();
+                                    sb.append("<button>抢购</button>");
+                                    return sb.toString();
+                                }]]></ns2:expressionString>
+                            </ns2:expression>
+                        </ns2:rowExpression>
+                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                            <ns2:expression xsi:type="ns2:ExpressionType">
+                                <ns2:expressionString><![CDATA[
+                                import org.shaolin.bmdp.workflow.ce.TaskStatusType;
+                                import org.shaolin.bmdp.runtime.AppContext;
+                                {
+                                }]]></ns2:expressionString>
+                            </ns2:expression>
+                        </ns2:updateCondition>
+                    </ns2:column>
+                    <ns2:defaultActions>
+                    </ns2:defaultActions>
+                </ns2:component>
+                <ns2:layoutConstraint>
+                    <ns2:componentId>goldenOrderTable</ns2:componentId>
+                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                        x="0" y="0" align="FULL"></ns2:constraint>
+                </ns2:layoutConstraint>
+            </ns2:component>
+	      <ns2:layoutConstraint>
+             <ns2:componentId>goldenOrderInfoPanel</ns2:componentId>
+             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                 x="0" y="0" align="FULL"></ns2:constraint>
+         </ns2:layoutConstraint>
+		</ns2:body>
+	</ns2:UIEntity>
+	<ns2:ODMapping>
+	</ns2:ODMapping>
+	<ns2:in>
+	</ns2:in>
+</ns2:UIPage>

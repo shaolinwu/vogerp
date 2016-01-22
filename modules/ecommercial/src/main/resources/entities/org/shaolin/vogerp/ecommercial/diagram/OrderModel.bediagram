@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bediagram:BEDiagram xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:bediagram="http://bmdp.shaolin.org/datamodel/BEDiagram"
+	xmlns:common="http://bmdp.shaolin.org/datamodel/Common">
+	<name>OrderModel</name>
+	<bePackage>org.shaolin.vogerp.ecommercial.be</bePackage>
+	<cePackage>org.shaolin.vogerp.ecommercial.ce</cePackage>
+	<diagramPackage>org.shaolin.vogerp.ecommercial.diagram</diagramPackage>
+	
+	<!-- an purchase order defined on our e-commercial site.
+	     all customers are able to see this order in the competition mode.
+	     so, we name it as the golden order.
+	-->
+	<bediagram:beEntity needPersist="true" needTask="true" needUIEntity="true">
+		<common:entityName>GoldenOrder</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>serialNumber</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>description</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+            <bediagram:name>estimatedPrice</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>endPrice</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+		<bediagram:member>
+		    <!-- the order published by the customer. -->
+            <bediagram:name>publishedCustomerId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>publishedCustomer</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>purchaseOrderId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- the golden order is taken by the customer. -->
+            <bediagram:name>takenCustomerId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>takenCustomer</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>saleOrderId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+		<bediagram:member>
+            <bediagram:name>createDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>startCreateDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>endCreateDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>expiredDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>status</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="OrderStatusType" />
+            </bediagram:type>
+        </bediagram:member>
+	</bediagram:beEntity>
+	
+	<bediagram:beEntity needPersist="true" needTask="true" needUIEntity="true">
+        <common:entityName>GoldenOrderHistory</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>serialNumber</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>description</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- the order published by the customer. -->
+            <bediagram:name>publishedCustomerId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>publishedCustomer</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>purchaseOrderId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- the golden order is taken by the customer. -->
+            <bediagram:name>takenCustomerId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>takenCustomer</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>saleOrderId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>createDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>startCreateDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>endCreateDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>expiredDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>status</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="OrderStatusType" />
+            </bediagram:type>
+        </bediagram:member>
+    </bediagram:beEntity>
+	
+	<bediagram:ceEntity>
+        <common:entityName>OrderStatusType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>Published</bediagram:value>
+            <bediagram:intValue>0</bediagram:intValue>
+            <bediagram:description>Published</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Taken</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>Taken Order</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Cancelled</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>Cancelled</bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
+</bediagram:BEDiagram>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:WebService xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.commonmodel.page.AjaxService
+	</entityName>
+	<systemVersion>0</systemVersion>
+	<ns2:service name="loginECommerialSite">
+        <ns2:filter>
+            <expressionString><![CDATA[
+            {
+               //check
+            }
+            ]]></expressionString>
+        </ns2:filter>
+        <ns2:exp>
+            <expressionString><![CDATA[
+            import java.util.List;
+            import java.util.ArrayList;
+            import org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl;
+            import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+            import org.shaolin.uimaster.page.ajax.TreeItem;
+            import org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute;
+            import org.shaolin.uimaster.page.ajax.TreeConditions;
+            {
+               
+            }
+            ]]></expressionString>
+        </ns2:exp>
+    </ns2:service>
+	<ns2:service name="publishGoldenOrder">
+	    <ns2:filter>
+		    <expressionString><![CDATA[
+		    {
+		       //check
+		    }
+		    ]]></expressionString>
+        </ns2:filter>
+		<ns2:exp>
+			<expressionString><![CDATA[
+	        import java.util.List;
+	        import java.util.ArrayList;
+	        import org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl;
+	        import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+	        import org.shaolin.uimaster.page.ajax.TreeItem;
+	        import org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute;
+	        import org.shaolin.uimaster.page.ajax.TreeConditions;
+	        {
+	           
+	        }
+            ]]></expressionString>
+		</ns2:exp>
+	</ns2:service>
+	<ns2:service name="getOnlineGoldenOrderList">
+        <ns2:filter>
+            <expressionString><![CDATA[
+            {
+               //check
+            }
+            ]]></expressionString>
+        </ns2:filter>
+        <ns2:exp>
+            <expressionString><![CDATA[
+            import java.util.List;
+            import java.util.ArrayList;
+            import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+            {
+               
+               
+            }
+            ]]></expressionString>
+        </ns2:exp>
+    </ns2:service>
+	<ns2:service name="receiveGoldenOrderNotification">
+        <ns2:filter>
+            <expressionString><![CDATA[
+            {
+               //check
+            }
+            ]]></expressionString>
+        </ns2:filter>
+        <ns2:exp>
+            <expressionString><![CDATA[
+            import java.util.List;
+            import java.util.ArrayList;
+            import org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl;
+            import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+            import org.shaolin.uimaster.page.ajax.TreeItem;
+            import org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute;
+            import org.shaolin.uimaster.page.ajax.TreeConditions;
+            {
+               
+               
+            }
+            ]]></expressionString>
+        </ns2:exp>
+    </ns2:service>
+</ns2:WebService>
