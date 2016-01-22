@@ -104,6 +104,10 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
 
     Form.openSaleOrder = org_shaolin_vogerp_order_page_OrderManagement_openSaleOrder;
 
+    Form.createPurchaseOrder = org_shaolin_vogerp_order_page_OrderManagement_createPurchaseOrder;
+
+    Form.openPurchaseOrder = org_shaolin_vogerp_order_page_OrderManagement_openPurchaseOrder;
+
     Form.openSaleOrderItem = org_shaolin_vogerp_order_page_OrderManagement_openSaleOrderItem;
 
     Form.openSaleOrderTracker = org_shaolin_vogerp_order_page_OrderManagement_openSaleOrderTracker;
@@ -141,7 +145,7 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showBlankorderInfoPanel3413",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createSaleOrder-20150918-3542",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_order_page_OrderManagement_createSaleOrder */
@@ -152,10 +156,32 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showorderInfoPanel543542",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openSaleOrder-20150918-3542",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_order_page_OrderManagement_openSaleOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_order_page_OrderManagement_createPurchaseOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_page_OrderManagement_createPurchaseOrder */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createPurchaseOrder-20160107-2301",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_order_page_OrderManagement_createPurchaseOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_order_page_OrderManagement_openPurchaseOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_page_OrderManagement_openPurchaseOrder */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openPurchaseOrder-20160107-2301",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_order_page_OrderManagement_openPurchaseOrder */
 
 
     /* auto generated eventlistener function declaration */

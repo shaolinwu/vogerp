@@ -13,22 +13,18 @@
 			<type entityName="org.shaolin.vogerp.commonmodel.IUserService"></type>
 		</ns2:service>
 	</ns2:conf>
-	<ns2:flow name="Mission0" eventConsumer="SaleOrder">
+	<ns2:flow name="GeneralSaleOrderFlow" eventConsumer="SaleOrder">
 		<ns2:conf>
-		 <!-- 
-			<ns2:param name="saleOrder" category="BusinessEntity">
-				<type entityName="org.shaolin.vogerp.order.be.SaleOrder"></type>
-			</ns2:param>
-			 -->
+			<!-- <ns2:param name="saleOrder" category="BusinessEntity"> <type entityName="org.shaolin.vogerp.order.be.SaleOrder"></type> 
+				</ns2:param> -->
 		</ns2:conf>
 		<ns2:start-node name="init">
 			<ns2:process>
-			 <ns2:var name="saleOrder" category="BusinessEntity" scope="InOut">
-     <type entityName="org.shaolin.vogerp.order.be.SaleOrder"></type>
-    </ns2:var>
+				<ns2:var name="saleOrder" category="BusinessEntity" scope="InOut">
+					<type entityName="org.shaolin.vogerp.order.be.SaleOrder"></type>
+				</ns2:var>
 				<ns2:expression>
 					<expressionString>{
-						System.out.println("initial the workflow session on start node with init data: " + $saleOrder);
 						@flowContext.save($saleOrder);//assign task id to sales order.
 						}
 					</expressionString>
@@ -36,32 +32,34 @@
 			</ns2:process>
 			<ns2:dest name="createdOrder"></ns2:dest>
 		</ns2:start-node>
-		<ns2:mission-node name="createdOrder" expiredDays="0" expiredHours="1" autoTrigger="true">
+		<ns2:mission-node name="createdOrder" expiredDays="0"
+			expiredHours="1" autoTrigger="true">
 			<ns2:description>建立销售订单</ns2:description>
-			<ns2:uiAction actionPage="org.shaolin.vogerp.order.form.SaleOrder" actionName="ApproveOrder" actionText="批准生产">
-					<ns2:expression>
-								<expressionString><![CDATA[
+			<ns2:uiAction actionPage="org.shaolin.vogerp.order.form.SaleOrder"
+				actionName="ApproveOrder" actionText="批准生产">
+				<ns2:expression>
+					<expressionString><![CDATA[
 								import java.util.HashMap;
 								import org.shaolin.uimaster.page.AjaxContext;
-				    import org.shaolin.uimaster.page.ajax.*;
+				                import org.shaolin.uimaster.page.ajax.*;
 								{
-									    System.out.println("workflow action!!!");
-									    RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-									    HashMap values = (HashMap)form.ui2Data();
-									    form.closeIfinWindows(true);
-				         @page.removeForm(@page.getEntityUiid()); 
-				         HashMap result = new HashMap();
-				         result.put("saleOrder", values.get("beObject"));
-				         return result;
-									}
-								]]></expressionString>
-					</ns2:expression>
+								    System.out.println("workflow action!!!");
+								    RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+								    HashMap values = (HashMap)form.ui2Data();
+								    form.closeIfinWindows(true);
+							         @page.removeForm(@page.getEntityUiid()); 
+							         HashMap result = new HashMap();
+							         result.put("saleOrder", values.get("beObject"));
+							         return result;
+							    }
+					]]></expressionString>
+				</ns2:expression>
 			</ns2:uiAction>
 			<ns2:participant partyType="GenericOrganizationType.Director,0" />
 			<ns2:process>
-			 <ns2:var name="saleOrder" category="BusinessEntity" scope="InOut">
-	    <type entityName="org.shaolin.vogerp.order.be.SaleOrder"></type>
-	   </ns2:var>
+				<ns2:var name="saleOrder" category="BusinessEntity" scope="InOut">
+					<type entityName="org.shaolin.vogerp.order.be.SaleOrder"></type>
+				</ns2:var>
 				<ns2:expression>
 					<expressionString><![CDATA[
 					 import java.util.List;
@@ -92,32 +90,33 @@
 			<ns2:dest name="onProduction"></ns2:dest>
 		</ns2:mission-node>
 		<ns2:mission-node name="onProduction" expiredDays="2" expiredHours="0" autoTrigger="false">
-   <ns2:description>生产中</ns2:description>
-   <ns2:uiAction actionPage="org.shaolin.vogerp.order.form.ProductOrder" actionName="processOrder" actionText="生产完成">
-     <ns2:expression>
-        <expressionString><![CDATA[
-        import java.util.HashMap;
-        import org.shaolin.uimaster.page.AjaxContext;
-        import org.shaolin.uimaster.page.ajax.*;
-        {
-             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-             HashMap values = (HashMap)form.ui2Data();
-             form.closeIfinWindows(true);
-             @page.removeForm(@page.getEntityUiid()); 
-             HashMap result = new HashMap();
-             result.put("productOrder", values.get("beObject"));
-             return result;
-         }
+			<ns2:description>生产中</ns2:description>
+			<ns2:uiAction actionPage="org.shaolin.vogerp.order.form.ProductOrder"
+				actionName="processOrder" actionText="生产完成">
+				<ns2:expression>
+					<expressionString><![CDATA[
+	        import java.util.HashMap;
+	        import org.shaolin.uimaster.page.AjaxContext;
+	        import org.shaolin.uimaster.page.ajax.*;
+	        {
+	             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+	             HashMap values = (HashMap)form.ui2Data();
+	             form.closeIfinWindows(true);
+	             @page.removeForm(@page.getEntityUiid()); 
+	             HashMap result = new HashMap();
+	             result.put("productOrder", values.get("beObject"));
+	             return result;
+            }
         ]]></expressionString>
-     </ns2:expression>
-   </ns2:uiAction>
-   <ns2:participant partyType="GenericOrganizationType.Director,0" />
-   <ns2:process>
-    <ns2:var name="productOrder" category="BusinessEntity" scope="InOut">
-     <type entityName="org.shaolin.vogerp.order.be.ProductOrder"></type>
-    </ns2:var>
-    <ns2:expression>
-     <expressionString><![CDATA[
+				</ns2:expression>
+			</ns2:uiAction>
+			<ns2:participant partyType="GenericOrganizationType.Director,0" />
+			<ns2:process>
+				<ns2:var name="productOrder" category="BusinessEntity" scope="InOut">
+					<type entityName="org.shaolin.vogerp.order.be.ProductOrder"></type>
+				</ns2:var>
+				<ns2:expression>
+					<expressionString><![CDATA[
       import java.util.List;
       import java.util.ArrayList;
       import org.shaolin.vogerp.order.be.*;
@@ -142,15 +141,17 @@
          @flowContext.save(inStoreOrder);
       }
      ]]></expressionString>
-    </ns2:expression>
-   </ns2:process>
-   <ns2:dest name="addIntoStorage"></ns2:dest>
-  </ns2:mission-node>
-  <ns2:mission-node name="addIntoStorage" expiredDays="2" expiredHours="0" autoTrigger="false">
-   <ns2:description>生产完成，等待入库</ns2:description>
-   <ns2:uiAction actionPage="org.shaolin.vogerp.order.form.InStoreOrder" actionName="AddIntoStorage" actionText="入库">
-     <ns2:expression>
-        <expressionString><![CDATA[
+				</ns2:expression>
+			</ns2:process>
+			<ns2:dest name="addIntoStorage"></ns2:dest>
+		</ns2:mission-node>
+		<ns2:mission-node name="addIntoStorage" expiredDays="2"
+			expiredHours="0" autoTrigger="false">
+			<ns2:description>生产完成，等待入库</ns2:description>
+			<ns2:uiAction actionPage="org.shaolin.vogerp.order.form.InStoreOrder"
+				actionName="AddIntoStorage" actionText="入库">
+				<ns2:expression>
+					<expressionString><![CDATA[
         import java.util.HashMap;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
@@ -164,15 +165,16 @@
              return result;
          }
         ]]></expressionString>
-     </ns2:expression>
-   </ns2:uiAction>
-   <ns2:participant partyType="GenericOrganizationType.Director,0" />
-   <ns2:process>
-    <ns2:var name="inStoreOrder" category="BusinessEntity" scope="InOut">
-     <type entityName="org.shaolin.vogerp.order.be.InStoreOrder"></type>
-    </ns2:var>
-    <ns2:expression>
-     <expressionString><![CDATA[
+				</ns2:expression>
+			</ns2:uiAction>
+			<ns2:participant partyType="GenericOrganizationType.Director,0" />
+			<ns2:process>
+				<ns2:var name="inStoreOrder" category="BusinessEntity"
+					scope="InOut">
+					<type entityName="org.shaolin.vogerp.order.be.InStoreOrder"></type>
+				</ns2:var>
+				<ns2:expression>
+					<expressionString><![CDATA[
       import java.util.List;
       import java.util.ArrayList;
       import org.shaolin.vogerp.order.be.*;
@@ -196,16 +198,18 @@
          @flowContext.save(outStoreOrder);
       }
      ]]></expressionString>
-    </ns2:expression>
-   </ns2:process>
-   <ns2:dest name="deliveryOrder"></ns2:dest>
-  </ns2:mission-node>
+				</ns2:expression>
+			</ns2:process>
+			<ns2:dest name="deliveryOrder"></ns2:dest>
+		</ns2:mission-node>
 		<!-- the actionName must be unique as well as the node name does! -->
-		<ns2:mission-node name="deliveryOrder" expiredDays="2" expiredHours="0" autoTrigger="false">
-   <ns2:description>发送订单</ns2:description>
-   <ns2:uiAction actionPage="org.shaolin.vogerp.order.form.OutStoreOrder" actionName="DeliveryOrder" actionText="寄出">
-     <ns2:expression>
-        <expressionString><![CDATA[
+		<ns2:mission-node name="deliveryOrder" expiredDays="2"
+			expiredHours="0" autoTrigger="false">
+			<ns2:description>发送订单</ns2:description>
+			<ns2:uiAction actionPage="org.shaolin.vogerp.order.form.OutStoreOrder"
+				actionName="DeliveryOrder" actionText="寄出">
+				<ns2:expression>
+					<expressionString><![CDATA[
         import java.util.HashMap;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
@@ -219,22 +223,23 @@
              return result;
          }
         ]]></expressionString>
-     </ns2:expression>
-   </ns2:uiAction>
-   <ns2:participant partyType="GenericOrganizationType.Director,0" />
-   <ns2:process>
-    <ns2:var name="deliveryOrder" category="BusinessEntity" scope="InOut">
-     <type entityName="org.shaolin.vogerp.order.be.OutStoreOrder"></type>
-    </ns2:var>
-    <ns2:expression>
-     <expressionString>{
-      System.out.println("delivered the sale order: " + $deliveryOrder);
-      }
-     </expressionString>
-    </ns2:expression>
-   </ns2:process>
-   <ns2:dest name="endNode"></ns2:dest>
-  </ns2:mission-node>
+				</ns2:expression>
+			</ns2:uiAction>
+			<ns2:participant partyType="GenericOrganizationType.Director,0" />
+			<ns2:process>
+				<ns2:var name="deliveryOrder" category="BusinessEntity"
+					scope="InOut">
+					<type entityName="org.shaolin.vogerp.order.be.OutStoreOrder"></type>
+				</ns2:var>
+				<ns2:expression>
+					<expressionString>{
+						System.out.println("delivered the sale order: " + $deliveryOrder);
+						}
+					</expressionString>
+				</ns2:expression>
+			</ns2:process>
+			<ns2:dest name="endNode"></ns2:dest>
+		</ns2:mission-node>
 		<ns2:end-node name="endNode"></ns2:end-node>
 	</ns2:flow>
 </ns2:Workflow>

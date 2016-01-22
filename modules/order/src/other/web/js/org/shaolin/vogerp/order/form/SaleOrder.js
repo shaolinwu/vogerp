@@ -73,16 +73,6 @@ function org_shaolin_vogerp_order_form_SaleOrder(json)
         ui: elementList[prefix + "deliveryDateUI"]
     });
 
-    var createDateUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "createDateUILabel"]
-    });
-
-    var createDateUI = new UIMaster.ui.calendar
-    ({
-        ui: elementList[prefix + "createDateUI"]
-    });
-
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
@@ -115,13 +105,13 @@ function org_shaolin_vogerp_order_form_SaleOrder(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "discountUILabel",prefix + "discountUI",prefix + "statusUILabel",prefix + "statusUI",prefix + "itemsUILabel",prefix + "itemsUI",prefix + "customerTreeUILabel",prefix + "customerTreeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "deliveryDateUILabel",prefix + "deliveryDateUI",prefix + "createDateUILabel",prefix + "createDateUI"]
+        ,subComponents: [prefix + "idUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "discountUILabel",prefix + "discountUI",prefix + "statusUILabel",prefix + "statusUI",prefix + "itemsUILabel",prefix + "itemsUI",prefix + "customerTreeUILabel",prefix + "customerTreeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "deliveryDateUILabel",prefix + "deliveryDateUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,serialNumberUILabel,serialNumberUI,discountUILabel,discountUI,statusUILabel,statusUI,itemsUILabel,itemsUI,customerTreeUILabel,descriptionUILabel,descriptionUI,deliveryDateUILabel,deliveryDateUI,createDateUILabel,createDateUI,okbtn,cancelbtn,customerTreeUI,orderItemTable,fieldPanel,orderItemInfo,actionPanel]
+        ,items: [idUI,serialNumberUILabel,serialNumberUI,discountUILabel,discountUI,statusUILabel,statusUI,itemsUILabel,itemsUI,customerTreeUILabel,descriptionUILabel,descriptionUI,deliveryDateUILabel,deliveryDateUI,okbtn,cancelbtn,customerTreeUI,orderItemTable,fieldPanel,orderItemInfo,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -151,10 +141,6 @@ function org_shaolin_vogerp_order_form_SaleOrder(json)
     Form.deliveryDateUILabel=deliveryDateUILabel;
 
     Form.deliveryDateUI=deliveryDateUI;
-
-    Form.createDateUILabel=createDateUILabel;
-
-    Form.createDateUI=createDateUI;
 
     Form.okbtn=okbtn;
 
@@ -195,10 +181,6 @@ function org_shaolin_vogerp_order_form_SaleOrder(json)
     Form.deliveryDateUILabel=deliveryDateUILabel;
 
     Form.deliveryDateUI=deliveryDateUI;
-
-    Form.createDateUILabel=createDateUILabel;
-
-    Form.createDateUI=createDateUI;
 
     Form.orderItemInfo=orderItemInfo;
 

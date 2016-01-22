@@ -3,79 +3,14 @@
 function org_shaolin_vogerp_order_form_PurchaseOrder(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var idUI = new UIMaster.ui.hidden
-    ({
-        ui: elementList[prefix + "idUI"]
-    });
-
-    var parentIdUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "parentIdUILabel"]
-    });
-
-    var parentIdUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "parentIdUI"]
-    });
-
-    var serialNumberUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "serialNumberUILabel"]
-    });
-
-    var serialNumberUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "serialNumberUI"]
-    });
-
     var descriptionUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "descriptionUILabel"]
     });
 
-    var descriptionUI = new UIMaster.ui.textfield
+    var descriptionUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "descriptionUI"]
-    });
-
-    var createDateUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "createDateUILabel"]
-    });
-
-    var createDateUI = new UIMaster.ui.calendar
-    ({
-        ui: elementList[prefix + "createDateUI"]
-    });
-
-    var startCreateDateUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "startCreateDateUILabel"]
-    });
-
-    var startCreateDateUI = new UIMaster.ui.calendar
-    ({
-        ui: elementList[prefix + "startCreateDateUI"]
-    });
-
-    var endCreateDateUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "endCreateDateUILabel"]
-    });
-
-    var endCreateDateUI = new UIMaster.ui.calendar
-    ({
-        ui: elementList[prefix + "endCreateDateUI"]
-    });
-
-    var discountUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "discountUILabel"]
-    });
-
-    var discountUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "discountUI"]
     });
 
     var statusUILabel = new UIMaster.ui.label
@@ -88,54 +23,14 @@ function org_shaolin_vogerp_order_form_PurchaseOrder(json)
         ui: elementList[prefix + "statusUI"]
     });
 
-    var itemsUILabel = new UIMaster.ui.label
+    var deliveryDateUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "itemsUILabel"]
+        ui: elementList[prefix + "deliveryDateUILabel"]
     });
 
-    var itemsUI = new UIMaster.ui.label
+    var deliveryDateUI = new UIMaster.ui.calendar
     ({
-        ui: elementList[prefix + "itemsUI"]
-    });
-
-    var customerIdUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "customerIdUILabel"]
-    });
-
-    var customerIdUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "customerIdUI"]
-    });
-
-    var customerUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "customerUILabel"]
-    });
-
-    var deliveryInfoUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "deliveryInfoUILabel"]
-    });
-
-    var purchasedOrderIdUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "purchasedOrderIdUILabel"]
-    });
-
-    var purchasedOrderIdUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "purchasedOrderIdUI"]
-    });
-
-    var supplierIdUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "supplierIdUILabel"]
-    });
-
-    var supplierIdUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "supplierIdUI"]
+        ui: elementList[prefix + "deliveryDateUI"]
     });
 
     var okbtn = new UIMaster.ui.button
@@ -148,147 +43,70 @@ function org_shaolin_vogerp_order_form_PurchaseOrder(json)
         ui: elementList[prefix + "cancelbtn"]
     });
 
-// refered ui form[customerUI] is null.// refered ui form[deliveryInfoUI] is null.    var actionPanel = new UIMaster.ui.panel
+    var orderItemTable = new org_shaolin_vogerp_order_form_PurchaseItemTable({"prefix":prefix + "orderItemTable."});
+
+    var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
         ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
     });
 
+    var orderItemInfo = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "orderItemInfo"]
+        ,items: []
+        ,subComponents: [prefix + "orderItemTable"]
+    });
+
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "parentIdUILabel",prefix + "parentIdUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "createDateUILabel",prefix + "createDateUI",prefix + "startCreateDateUILabel",prefix + "startCreateDateUI",prefix + "endCreateDateUILabel",prefix + "endCreateDateUI",prefix + "discountUILabel",prefix + "discountUI",prefix + "statusUILabel",prefix + "statusUI",prefix + "itemsUILabel",prefix + "itemsUI",prefix + "customerIdUILabel",prefix + "customerIdUI",prefix + "customerUILabel",prefix + "customerUI",prefix + "deliveryInfoUILabel",prefix + "deliveryInfoUI",prefix + "purchasedOrderIdUILabel",prefix + "purchasedOrderIdUI",prefix + "supplierIdUILabel",prefix + "supplierIdUI"]
+        ,subComponents: [prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "statusUILabel",prefix + "statusUI",prefix + "deliveryDateUILabel",prefix + "deliveryDateUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,parentIdUILabel,parentIdUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,createDateUILabel,createDateUI,startCreateDateUILabel,startCreateDateUI,endCreateDateUILabel,endCreateDateUI,discountUILabel,discountUI,statusUILabel,statusUI,itemsUILabel,itemsUI,customerIdUILabel,customerIdUI,customerUILabel,deliveryInfoUILabel,purchasedOrderIdUILabel,purchasedOrderIdUI,supplierIdUILabel,supplierIdUI,okbtn,cancelbtn,customerUI,deliveryInfoUI,fieldPanel,actionPanel]
+        ,items: [descriptionUILabel,descriptionUI,statusUILabel,statusUI,deliveryDateUILabel,deliveryDateUI,okbtn,cancelbtn,orderItemTable,fieldPanel,orderItemInfo,actionPanel]
     });
-
-    Form.idUI=idUI;
-
-    Form.parentIdUILabel=parentIdUILabel;
-
-    Form.parentIdUI=parentIdUI;
-
-    Form.serialNumberUILabel=serialNumberUILabel;
-
-    Form.serialNumberUI=serialNumberUI;
 
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
 
-    Form.createDateUILabel=createDateUILabel;
-
-    Form.createDateUI=createDateUI;
-
-    Form.startCreateDateUILabel=startCreateDateUILabel;
-
-    Form.startCreateDateUI=startCreateDateUI;
-
-    Form.endCreateDateUILabel=endCreateDateUILabel;
-
-    Form.endCreateDateUI=endCreateDateUI;
-
-    Form.discountUILabel=discountUILabel;
-
-    Form.discountUI=discountUI;
-
     Form.statusUILabel=statusUILabel;
 
     Form.statusUI=statusUI;
 
-    Form.itemsUILabel=itemsUILabel;
+    Form.deliveryDateUILabel=deliveryDateUILabel;
 
-    Form.itemsUI=itemsUI;
-
-    Form.customerIdUILabel=customerIdUILabel;
-
-    Form.customerIdUI=customerIdUI;
-
-    Form.customerUILabel=customerUILabel;
-
-    Form.deliveryInfoUILabel=deliveryInfoUILabel;
-
-    Form.purchasedOrderIdUILabel=purchasedOrderIdUILabel;
-
-    Form.purchasedOrderIdUI=purchasedOrderIdUI;
-
-    Form.supplierIdUILabel=supplierIdUILabel;
-
-    Form.supplierIdUI=supplierIdUI;
+    Form.deliveryDateUI=deliveryDateUI;
 
     Form.okbtn=okbtn;
 
     Form.cancelbtn=cancelbtn;
 
-    Form.customerUI=customerUI;
-
-    Form.deliveryInfoUI=deliveryInfoUI;
+    Form.orderItemTable=orderItemTable;
 
     Form.fieldPanel=fieldPanel;
-
-    Form.idUI=idUI;
-
-    Form.parentIdUILabel=parentIdUILabel;
-
-    Form.parentIdUI=parentIdUI;
-
-    Form.serialNumberUILabel=serialNumberUILabel;
-
-    Form.serialNumberUI=serialNumberUI;
 
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
 
-    Form.createDateUILabel=createDateUILabel;
-
-    Form.createDateUI=createDateUI;
-
-    Form.startCreateDateUILabel=startCreateDateUILabel;
-
-    Form.startCreateDateUI=startCreateDateUI;
-
-    Form.endCreateDateUILabel=endCreateDateUILabel;
-
-    Form.endCreateDateUI=endCreateDateUI;
-
-    Form.discountUILabel=discountUILabel;
-
-    Form.discountUI=discountUI;
-
     Form.statusUILabel=statusUILabel;
 
     Form.statusUI=statusUI;
 
-    Form.itemsUILabel=itemsUILabel;
+    Form.deliveryDateUILabel=deliveryDateUILabel;
 
-    Form.itemsUI=itemsUI;
+    Form.deliveryDateUI=deliveryDateUI;
 
-    Form.customerIdUILabel=customerIdUILabel;
+    Form.orderItemInfo=orderItemInfo;
 
-    Form.customerIdUI=customerIdUI;
-
-    Form.customerUILabel=customerUILabel;
-
-    Form.customerUI=customerUI;
-
-    Form.deliveryInfoUILabel=deliveryInfoUILabel;
-
-    Form.deliveryInfoUI=deliveryInfoUI;
-
-    Form.purchasedOrderIdUILabel=purchasedOrderIdUILabel;
-
-    Form.purchasedOrderIdUI=purchasedOrderIdUI;
-
-    Form.supplierIdUILabel=supplierIdUILabel;
-
-    Form.supplierIdUI=supplierIdUI;
+    Form.orderItemTable=orderItemTable;
 
     Form.actionPanel=actionPanel;
 
@@ -321,6 +139,17 @@ function org_shaolin_vogerp_order_form_PurchaseOrder(json)
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_order_form_PurchaseOrder_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_PurchaseOrder_Save */
 
+        {   
+            var constraint_result = this.Form.validate();
+            if (constraint_result != true && constraint_result != null) {
+                return false;
+            }
+        }
+        
+        {
+            this.orderItemTable.itemTable.syncBodyDataToServer();
+        }
+        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail1091751003",UIMaster.getValue(eventsource),this.__entityName);

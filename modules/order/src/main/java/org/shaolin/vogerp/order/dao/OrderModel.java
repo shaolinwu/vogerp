@@ -15,10 +15,6 @@ import org.shaolin.bmdp.persistence.BEEntityDaoObject;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.persistence.query.operator.Operator;
 
-import org.shaolin.vogerp.order.be.IOrderItem;
-import org.shaolin.vogerp.order.be.OrderItemImpl;
-import org.shaolin.vogerp.order.be.IOrderHandlingInfo;
-import org.shaolin.vogerp.order.be.OrderHandlingInfoImpl;
 import org.shaolin.vogerp.order.be.IDeliveryInfo;
 import org.shaolin.vogerp.order.be.DeliveryInfoImpl;
 /**
@@ -29,22 +25,6 @@ public class OrderModel extends BEEntityDaoObject {
     public static final OrderModel INSTANCE = new OrderModel();
 
     private OrderModel() {
-    }
-
-    public List<IOrderItem> listIOrderItems(int offset, int count) {
-        return list(offset, count, IOrderItem.class, OrderItemImpl.class);
-    }
-
-    public long listIOrderItemCount() {
-        return count(IOrderItem.class);
-    }
-
-    public List<IOrderHandlingInfo> listIOrderHandlingInfos(int offset, int count) {
-        return list(offset, count, IOrderHandlingInfo.class, OrderHandlingInfoImpl.class);
-    }
-
-    public long listIOrderHandlingInfoCount() {
-        return count(IOrderHandlingInfo.class);
     }
 
     public List<IDeliveryInfo> listIDeliveryInfos(int offset, int count) {
@@ -260,26 +240,6 @@ public class OrderModel extends BEEntityDaoObject {
 
     public long searchOrderItemCount(org.shaolin.vogerp.order.be.OrderItemImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.OrderItemImpl.class, "inObject");
-
-
-        return this._count(inObjectCriteria);
-    }
-
-    public List<org.shaolin.vogerp.order.be.IOrderHandlingInfo> searchOrderHandlingInfo(org.shaolin.vogerp.order.be.OrderHandlingInfoImpl scObject,
-           List<Order> orders, int offset, int count) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.OrderHandlingInfoImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
-            }
-
-
-        List result = this._list(offset, count, inObjectCriteria);
-        return result;
-    }
-
-    public long searchOrderHandlingInfoCount(org.shaolin.vogerp.order.be.OrderHandlingInfoImpl scObject) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.OrderHandlingInfoImpl.class, "inObject");
 
 
         return this._count(inObjectCriteria);
