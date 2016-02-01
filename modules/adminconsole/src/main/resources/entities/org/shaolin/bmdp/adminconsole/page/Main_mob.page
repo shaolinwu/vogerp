@@ -4,7 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.bmdp.adminconsole.page.Main_mob</entityName>
 	<systemVersion>0</systemVersion>
-	<description>欢迎来到VogERP主页</description>
+	<description>欢迎来到Vogue E-Service主页</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="Submit"></ns2:eventHandler>
 		<ns2:eventHandler functionName="logout">
@@ -300,7 +300,7 @@
                          </ns2:EventListener>
                     </ns2:component>
 				    <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="userFormContent">
-				        <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.UserAccount"></ns2:referenceEntity>
+				        <ns2:referenceEntity entityName="org.shaolin.bmdp.adminconsole.form.UserAccount"></ns2:referenceEntity>
 				    </ns2:component>
 				    <ns2:component xsi:type="ns2:UIImageType" UIID="userLogout">
                         <ns2:title xsi:type="ns2:StringPropertyType">
@@ -362,11 +362,11 @@
 			<ns2:type entityName="org.shaolin.uimaster.page.ajax.TreeConditions" />
 			<ns2:default><ns2:expressionString><![CDATA[org.shaolin.uimaster.page.ajax.TreeConditions.createCondition()]]></ns2:expressionString></ns2:default>
 		</ns2:DataEntity>
-		<ns2:DataEntity category="BusinessEntity" name="userAccount" scope="In">
-            <ns2:type entityName="org.shaolin.vogerp.commonmodel.be.PersonalAccount" />
+		<ns2:DataEntity category="JavaClass" name="userAccount" scope="In">
+            <ns2:type entityName="org.shaolin.bmdp.runtime.security.UserContext" />
         </ns2:DataEntity>
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-	      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.UserAccount"></ns2:mappingRule>
+	      <ns2:mappingRule entityName="org.shaolin.bmdp.adminconsole.form.UserAccount"></ns2:mappingRule>
 	      <ns2:UIComponent componentPath="userFormContent" paramName="UIWidgetType"></ns2:UIComponent>
 	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="userAccount" paramName="beObject"></ns2:DataComponent>
 	      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
@@ -387,8 +387,9 @@
 		    import org.shaolin.vogerp.commonmodel.IUserService;
 		    import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
 		    import org.shaolin.uimaster.page.flow.WebflowConstants;
+		    import org.shaolin.bmdp.runtime.security.UserContext;
 			{
-			  $userAccount = (PersonalAccountImpl)@odContext.getRequest().getSession().getAttribute(WebflowConstants.USER_SESSION_KEY);
+			  $userAccount = (UserContext)@odContext.getRequest().getSession().getAttribute(WebflowConstants.USER_SESSION_KEY);
 			  @odContext.executeAllMappings();
 			}]]></ns2:expressionString>
 		</ns2:serverOperation>

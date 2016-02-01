@@ -5,6 +5,82 @@
   <ns2:globalVariable name="gStr" category="JavaClass">
     <type entityName="java.lang.String"></type>
   </ns2:globalVariable>
+  <ns2:webNode xsi:type="ns2:PageNodeType" name="Registration">
+    <ns2:variables name="registerInfo" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.commonmodel.be.RegisterInfoImpl"></type>
+      <default>
+        <expressionString><![CDATA[new org.shaolin.vogerp.commonmodel.be.RegisterInfoImpl();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:sourceEntity entityName="org.shaolin.bmdp.adminconsole.page.Registration"></ns2:sourceEntity>
+    <ns2:out xsi:type="ns2:DisplayOutType" name="Register">
+      <ns2:next>
+        <ns2:destNode>register</ns2:destNode>
+        <ns2:outDataMappingToNode name="registerInfo">
+          <expression>
+            <expressionString><![CDATA[$registerInfo]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+      </ns2:next>
+    </ns2:out>
+  </ns2:webNode>
+  <ns2:webNode xsi:type="ns2:LogicNodeType" name="register">
+    <ns2:variables name="registerInfo" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.commonmodel.be.RegisterInfoImpl"></type>
+    </ns2:variables>
+    <ns2:variables name="errorCode" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:operation>
+      <expressionString><![CDATA[
+      import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.vogerp.commonmodel.IUserService;
+      import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
+      {
+        IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
+        if (service.register($registerInfo)) {
+            PersonalAccountImpl loginAccount = new PersonalAccountImpl();
+            loginAccount.setUserName($registerInfo.getEmail());
+            loginAccount.setPassword($registerInfo.getPassword());
+            
+            $errorCode = service.login(loginAccount, $getRequest());
+        } else {
+            $errorCode = IUserService.USER_REGISTER_FAIL;
+        }
+      }]]></expressionString>
+    </ns2:operation>
+    <ns2:out xsi:type="ns2:ConditionalOutType" name="Fail">
+      <ns2:conditionExpression>
+        <expressionString><![CDATA[{return !$errorCode.isEmpty();}]]></expressionString>
+      </ns2:conditionExpression>
+      <ns2:next>
+        <ns2:destNode>Registration</ns2:destNode>
+        <ns2:outDataMappingToNode name="registerInfo">
+          <expression>
+            <expressionString><![CDATA[$registerInfo]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="errorCode">
+          <expression>
+            <expressionString><![CDATA[$errorCode]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+      </ns2:next>
+    </ns2:out>
+    <ns2:out xsi:type="ns2:ConditionalOutType" name="Success">
+      <ns2:conditionExpression>
+        <expressionString><![CDATA[{return $errorCode.isEmpty();}]]></expressionString>
+      </ns2:conditionExpression>
+      <ns2:next>
+        <ns2:destNode>SecureRedirectNode</ns2:destNode>
+      </ns2:next>
+    </ns2:out>
+  </ns2:webNode>
+  
+  
   <ns2:webNode xsi:type="ns2:StartNodeType" name="Start">
     <ns2:variables name="str" category="JavaClass">
       <type entityName="java.lang.String"></type>

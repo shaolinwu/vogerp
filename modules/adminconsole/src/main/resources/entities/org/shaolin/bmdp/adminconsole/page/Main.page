@@ -4,7 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.bmdp.adminconsole.page.Main</entityName>
 	<systemVersion>0</systemVersion>
-	<description>欢迎来到VogERP主页</description>
+	<description>欢迎来到Vogue E-Service主页</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="Submit"></ns2:eventHandler>
 		<ns2:eventHandler functionName="logout">
@@ -50,8 +50,8 @@
 				<ns2:expressionString><![CDATA[
       {
           var value = $("#topPanel").width();
-								  var self = $("#div-topRightPanel-1_0").width();
-								  $("#div-topRightPanel-1_0").css("left", (value - self + 5) + "px");
+          var self = $("#div-topRightPanel-1_0").width();
+          $("#div-topRightPanel-1_0").css("left", (value - self + 5) + "px");
           if ($("#div-topRightPanel-1_0").css("display") == "none") {
               $("#div-topRightPanel-1_0").slideDown();
           } else {
@@ -61,6 +61,22 @@
       ]]></ns2:expressionString>
 			</ns2:ops>
 		</ns2:eventHandler>
+		<ns2:eventHandler functionName="showNotification">
+            <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+                <ns2:expressionString><![CDATA[
+      {
+          var value = $("#topPanel").width();
+          var self = $("#div-topRightPanel-4_0").width();
+          $("#div-topRightPanel-4_0").css("left", (value - self + 5) + "px");
+          if ($("#div-topRightPanel-4_0").css("display") == "none") {
+              $("#div-topRightPanel-4_0").slideDown();
+          } else {
+              $("#div-topRightPanel-4_0").slideUp();
+          }
+      }
+      ]]></ns2:expressionString>
+            </ns2:ops>
+        </ns2:eventHandler>
 		<ns2:eventHandler functionName="search">
 			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="search-201506102211">
 				<ns2:exp>
@@ -137,6 +153,7 @@
 						<ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
 						<ns2:columnWidthWeight>60</ns2:columnWidthWeight>
 						<ns2:columnWidthWeight>60</ns2:columnWidthWeight>
+						<ns2:columnWidthWeight>250</ns2:columnWidthWeight>
 					</ns2:layout>
 					<ns2:component xsi:type="ns2:UIImageType" UIID="userIcon">
 						<ns2:Property name="text" >
@@ -164,7 +181,7 @@
 	                        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
 	                    </ns2:layout>
 	                    <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="userFormContent">
-	                        <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.UserAccount"></ns2:referenceEntity>
+	                        <ns2:referenceEntity entityName="org.shaolin.bmdp.adminconsole.form.UserAccount"></ns2:referenceEntity>
 	                    </ns2:component>
 	                    <ns2:component xsi:type="ns2:UIImageType" UIID="userLogout">
 	                        <ns2:title xsi:type="ns2:StringPropertyType">
@@ -214,12 +231,29 @@
 							<ns2:location>admin/tree/manager.png</ns2:location>
 						</ns2:src>
 						<ns2:EventListener xsi:type="ns2:ClickListenerType">
-							<ns2:handler functionName="showNotiInfo" />
+							<ns2:handler functionName="showNotification" />
 						</ns2:EventListener>
 						<ns2:showWords xsi:type="ns2:BooleanPropertyType">
 							<ns2:value>true</ns2:value>
 						</ns2:showWords>
 					</ns2:component>
+					<ns2:component xsi:type="ns2:UIPanelType" UIID="notificationForm">
+                        <ns2:UISkin xsi:type="ns2:UISkinType">
+                            <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
+                        </ns2:UISkin>
+                        <ns2:layout xsi:type="ns2:TableLayoutType">
+                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                            <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+                        </ns2:layout>
+                        <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="notificationFormContent">
+                            <ns2:referenceEntity entityName="org.shaolin.bmdp.workflow.form.NotificationBoard"></ns2:referenceEntity>
+                        </ns2:component>
+                        <ns2:layoutConstraint>
+                            <ns2:componentId>notificationFormContent</ns2:componentId>
+                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                                x="0" y="0" align="FULL"></ns2:constraint>
+                        </ns2:layoutConstraint>
+                    </ns2:component>
 					<ns2:layoutConstraint>
 						<ns2:componentId>userIcon</ns2:componentId>
 						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
@@ -240,6 +274,11 @@
 						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 							x="3" y="0" align="FULL"></ns2:constraint>
 					</ns2:layoutConstraint>
+					<ns2:layoutConstraint>
+                        <ns2:componentId>notificationForm</ns2:componentId>
+                        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                            x="4" y="0" align="FULL"></ns2:constraint>
+                    </ns2:layoutConstraint>
 				</ns2:component>
 				<ns2:layoutConstraint>
 					<ns2:componentId>vogerplogo</ns2:componentId>
@@ -311,7 +350,7 @@
 								import org.shaolin.uimaster.page.ajax.TreeConditions;
 								import org.shaolin.bmdp.runtime.AppContext;
 								{
-									      ModuleGroupImpl condition = new ModuleGroupImpl();
+									ModuleGroupImpl condition = new ModuleGroupImpl();
 							        List all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
 							        if (all.size() == 0) {
 							            throw new Exception("AdminConsoleTree data is not initialized!");
@@ -433,12 +472,12 @@
 				<ns2:expressionString><![CDATA[org.shaolin.uimaster.page.ajax.TreeConditions.createCondition()]]></ns2:expressionString>
 			</ns2:default>
 		</ns2:DataEntity>
-		<ns2:DataEntity category="BusinessEntity" name="userAccount"
+		<ns2:DataEntity category="JavaClass" name="userAccount"
 			scope="In">
-			<ns2:type entityName="org.shaolin.vogerp.commonmodel.be.PersonalAccount" />
+			<ns2:type entityName="org.shaolin.bmdp.runtime.security.UserContext" />
 		</ns2:DataEntity>
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-			<ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.UserAccount"></ns2:mappingRule>
+			<ns2:mappingRule entityName="org.shaolin.bmdp.adminconsole.form.UserAccount"></ns2:mappingRule>
 			<ns2:UIComponent componentPath="userFormContent" paramName="UIWidgetType"></ns2:UIComponent>
 			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
 				componentPath="userAccount" paramName="beObject"></ns2:DataComponent>
@@ -453,6 +492,10 @@
           <ns2:mappingRule entityName="org.shaolin.bmdp.adminconsole.form.CurrentStatus"></ns2:mappingRule>
           <ns2:UIComponent componentPath="currentStatusPanel" paramName="UIWidgetType"></ns2:UIComponent>
         </ns2:ComponentMapping>
+        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+          <ns2:mappingRule entityName="org.shaolin.bmdp.workflow.form.NotificationBoard"></ns2:mappingRule>
+          <ns2:UIComponent componentPath="notificationFormContent" paramName="UIWidgetType"></ns2:UIComponent>
+        </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
 		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">
@@ -461,8 +504,9 @@
 		    import org.shaolin.vogerp.commonmodel.IUserService;
 		    import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
 		    import org.shaolin.uimaster.page.flow.WebflowConstants;
+		    import org.shaolin.bmdp.runtime.security.UserContext;
 			{
-			  $userAccount = (PersonalAccountImpl)@odContext.getRequest().getSession().getAttribute(WebflowConstants.USER_SESSION_KEY);
+			  $userAccount = (UserContext)@odContext.getRequest().getSession().getAttribute(WebflowConstants.USER_SESSION_KEY);
 			  @odContext.executeAllMappings();
 			}]]></ns2:expressionString>
 		</ns2:serverOperation>

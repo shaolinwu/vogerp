@@ -42,7 +42,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         ui: elementList[prefix + "userLogout"]
     });
 
-    var userFormContent = new org_shaolin_vogerp_commonmodel_form_UserAccount({"prefix":prefix + "userFormContent."});
+    var userFormContent = new org_shaolin_bmdp_adminconsole_form_UserAccount({"prefix":prefix + "userFormContent."});
 
     var userForm = new UIMaster.ui.panel
     ({

@@ -4,4 +4,5 @@
   <systemVersion>0</systemVersion>
   <ns2:diagramPackage>org.shaolin.bmdp.adminconsole.diagram</ns2:diagramPackage>
   <ns2:daoPackage>org.shaolin.bmdp.adminconsole.dao</ns2:daoPackage>
+  
 </ns2:RDBDiagram>

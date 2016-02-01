@@ -60,9 +60,8 @@ public class UserAccessFilter implements Filter {
 		} else {
 			if (userService.checkUserOnline(((HttpServletRequest)request).getSession())) {
 				((HttpServletResponse)response).sendRedirect(request.getServletContext().getContextPath() + mainPageURL);
-			} else {
-				((HttpServletResponse)response).sendRedirect(request.getServletContext().getContextPath() + loginURL);
-			}
+			} 
+			chain.doFilter(request, response);
 		}
 	}
 

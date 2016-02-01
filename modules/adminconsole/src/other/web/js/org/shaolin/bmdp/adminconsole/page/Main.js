@@ -52,7 +52,9 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var currentStatusPanel = new org_shaolin_bmdp_adminconsole_form_CurrentStatus({"prefix":prefix + "currentStatusPanel."});
 
 
-    var userFormContent = new org_shaolin_vogerp_commonmodel_form_UserAccount({"prefix":prefix + "userFormContent."});
+    var userFormContent = new org_shaolin_bmdp_adminconsole_form_UserAccount({"prefix":prefix + "userFormContent."});
+
+    var notificationFormContent = new org_shaolin_bmdp_workflow_form_NotificationBoard({"prefix":prefix + "notificationFormContent."});
 
     var pagePanel = new UIMaster.ui.panel
     ({
@@ -78,6 +80,14 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
         ,subComponents: [prefix + "treePanel",prefix + "pagePanel"]
     });
 
+    var notificationForm = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "notificationForm"]
+        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
+        ,items: []
+        ,subComponents: [prefix + "notificationFormContent"]
+    });
+
     var userForm = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "userForm"]
@@ -90,7 +100,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     ({
         ui: elementList[prefix + "topRightPanel"]
         ,items: []
-        ,subComponents: [prefix + "userIcon",prefix + "userForm",prefix + "taskIcon",prefix + "notificationIcon"]
+        ,subComponents: [prefix + "userIcon",prefix + "userForm",prefix + "taskIcon",prefix + "notificationIcon",prefix + "notificationForm"]
     });
 
     var topMiddlePanel = new UIMaster.ui.panel
@@ -111,7 +121,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [vogerplogo,searchContext,searchButton,userIcon,userLogout,taskIcon,notificationIcon,functionTree,functionsTab,userFormContent,topPanel,topMiddlePanel,topRightPanel,userForm,middlePanel,treePanel,pagePanel]
+        ,items: [vogerplogo,searchContext,searchButton,userIcon,userLogout,taskIcon,notificationIcon,functionTree,functionsTab,userFormContent,notificationFormContent,topPanel,topMiddlePanel,topRightPanel,userForm,notificationForm,middlePanel,treePanel,pagePanel]
     });
 
     Form.vogerplogo=vogerplogo;
@@ -135,6 +145,8 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     Form.currentStatusPanel=currentStatusPanel;
 
     Form.userFormContent=userFormContent;
+
+    Form.notificationFormContent=notificationFormContent;
 
     Form.topPanel=topPanel;
 
@@ -160,6 +172,10 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
     Form.notificationIcon=notificationIcon;
 
+    Form.notificationForm=notificationForm;
+
+    Form.notificationFormContent=notificationFormContent;
+
     Form.topMiddlePanel=topMiddlePanel;
 
     Form.searchContext=searchContext;
@@ -180,11 +196,19 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
     Form.notificationIcon=notificationIcon;
 
+    Form.notificationForm=notificationForm;
+
+    Form.notificationFormContent=notificationFormContent;
+
     Form.userForm=userForm;
 
     Form.userFormContent=userFormContent;
 
     Form.userLogout=userLogout;
+
+    Form.notificationForm=notificationForm;
+
+    Form.notificationFormContent=notificationFormContent;
 
     Form.middlePanel=middlePanel;
 
@@ -221,6 +245,8 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     Form.clickTreeNode = org_shaolin_bmdp_adminconsole_page_Main_clickTreeNode;
 
     Form.showUserInfo = org_shaolin_bmdp_adminconsole_page_Main_showUserInfo;
+
+    Form.showNotification = org_shaolin_bmdp_adminconsole_page_Main_showNotification;
 
     Form.search = org_shaolin_bmdp_adminconsole_page_Main_search;
 
@@ -286,8 +312,8 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
       {
           var value = $("#topPanel").width();
-								  var self = $("#div-topRightPanel-1_0").width();
-								  $("#div-topRightPanel-1_0").css("left", (value - self + 5) + "px");
+          var self = $("#div-topRightPanel-1_0").width();
+          $("#div-topRightPanel-1_0").css("left", (value - self + 5) + "px");
           if ($("#div-topRightPanel-1_0").css("display") == "none") {
               $("#div-topRightPanel-1_0").slideDown();
           } else {
@@ -297,6 +323,24 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
       
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_showUserInfo */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Main_showNotification(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_showNotification */
+
+      {
+          var value = $("#topPanel").width();
+          var self = $("#div-topRightPanel-4_0").width();
+          $("#div-topRightPanel-4_0").css("left", (value - self + 5) + "px");
+          if ($("#div-topRightPanel-4_0").css("display") == "none") {
+              $("#div-topRightPanel-4_0").slideDown();
+          } else {
+              $("#div-topRightPanel-4_0").slideUp();
+          }
+      }
+      
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_showNotification */
 
 
     /* auto generated eventlistener function declaration */
