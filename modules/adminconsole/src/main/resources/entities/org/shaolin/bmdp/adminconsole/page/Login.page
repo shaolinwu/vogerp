@@ -25,6 +25,16 @@
             </ns2:ops>
         </ns2:eventHandler>
         <ns2:eventHandler functionName="verifiCode">
+            <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+		        <ns2:expressionString><![CDATA[
+		        {   
+		            var constraint_result = this.Form.validate();
+		            if (constraint_result != true && constraint_result != null) {
+		                return false;
+		            }
+		        }
+		        ]]></ns2:expressionString>
+		    </ns2:ops>
             <ns2:ops xsi:type="ns2:OpCallAjaxType" name="verifiCode-20151227-1839">
                 <ns2:exp>
                     <expressionString><![CDATA[

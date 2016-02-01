@@ -135,6 +135,13 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Login_verifiCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_verifiCode */
 
+		        {   
+		            var constraint_result = this.Form.validate();
+		            if (constraint_result != true && constraint_result != null) {
+		                return false;
+		            }
+		        }
+		        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifiCode-20151227-1839",UIMaster.getValue(eventsource),this.__entityName);

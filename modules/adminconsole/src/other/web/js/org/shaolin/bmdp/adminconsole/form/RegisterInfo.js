@@ -31,7 +31,54 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
     var passwordUI = new UIMaster.ui.passwordfield
     ({
         ui: elementList[prefix + "passwordUI"]
+        ,validators:[
+        {
+            func: function() {
+                
+                    {
+                        if (this.value.length > 0) {
+                            return !/[?~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
+                        }
+                        return true;
+                    }
+                    
+            }
+            ,msg: "Please input only alphabets and digits."
+        }
+]    });
+
+    var password1UILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "password1UILabel"]
     });
+
+    var password1UI = new UIMaster.ui.passwordfield
+    ({
+        ui: elementList[prefix + "password1UI"]
+        ,validators:[
+        {
+            func: function() {
+                
+                    {
+                        if (this.value.length > 0) {
+                            return !/[?~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
+                        }
+                        return true;
+                    }
+            }
+            ,msg: "Please input only alphabets and digits."
+        }
+,
+        {
+            func: function() {
+                
+                    { 
+                    return this.value == passwordUI.value;
+                    }
+            }
+            ,msg: "The password is not matched!"
+        }
+]    });
 
     var orgNameUILabel = new UIMaster.ui.label
     ({
@@ -46,11 +93,6 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
     var orgTypeUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "orgTypeUILabel"]
-    });
-
-    var orgTypeUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "orgTypeUI"]
     });
 
     var phoneNumberUILabel = new UIMaster.ui.label
@@ -73,17 +115,19 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
         ui: elementList[prefix + "addressUI"]
     });
 
+    var orgTypeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "orgTypeUI."});
+
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "emailUILabel",prefix + "emailUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "passwordUILabel",prefix + "passwordUI",prefix + "orgNameUILabel",prefix + "orgNameUI",prefix + "orgTypeUILabel",prefix + "orgTypeUI",prefix + "phoneNumberUILabel",prefix + "phoneNumberUI",prefix + "addressUILabel",prefix + "addressUI"]
+        ,subComponents: [prefix + "emailUILabel",prefix + "emailUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "passwordUILabel",prefix + "passwordUI",prefix + "password1UILabel",prefix + "password1UI",prefix + "orgNameUILabel",prefix + "orgNameUI",prefix + "orgTypeUILabel",prefix + "orgTypeUI",prefix + "phoneNumberUILabel",prefix + "phoneNumberUI",prefix + "addressUILabel",prefix + "addressUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [emailUILabel,emailUI,nameUILabel,nameUI,passwordUILabel,passwordUI,orgNameUILabel,orgNameUI,orgTypeUILabel,orgTypeUI,phoneNumberUILabel,phoneNumberUI,addressUILabel,addressUI,fieldPanel]
+        ,items: [emailUILabel,emailUI,nameUILabel,nameUI,passwordUILabel,passwordUI,password1UILabel,password1UI,orgNameUILabel,orgNameUI,orgTypeUILabel,phoneNumberUILabel,phoneNumberUI,addressUILabel,addressUI,orgTypeUI,fieldPanel]
     });
 
     Form.emailUILabel=emailUILabel;
@@ -98,13 +142,15 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
 
     Form.passwordUI=passwordUI;
 
+    Form.password1UILabel=password1UILabel;
+
+    Form.password1UI=password1UI;
+
     Form.orgNameUILabel=orgNameUILabel;
 
     Form.orgNameUI=orgNameUI;
 
     Form.orgTypeUILabel=orgTypeUILabel;
-
-    Form.orgTypeUI=orgTypeUI;
 
     Form.phoneNumberUILabel=phoneNumberUILabel;
 
@@ -113,6 +159,8 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
     Form.addressUILabel=addressUILabel;
 
     Form.addressUI=addressUI;
+
+    Form.orgTypeUI=orgTypeUI;
 
     Form.fieldPanel=fieldPanel;
 
@@ -127,6 +175,10 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
     Form.passwordUILabel=passwordUILabel;
 
     Form.passwordUI=passwordUI;
+
+    Form.password1UILabel=password1UILabel;
+
+    Form.password1UI=password1UI;
 
     Form.orgNameUILabel=orgNameUILabel;
 

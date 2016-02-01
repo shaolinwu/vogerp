@@ -8,14 +8,24 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
         ui: elementList[prefix + "vogerplogo"]
     });
 
-    var errorInfo = new UIMaster.ui.hidden
+    var errorInfo = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "errorInfo"]
+    });
+
+    var veriCodeQuestionUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "veriCodeQuestionUILabel"]
     });
 
     var veriCodeQuestion = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "veriCodeQuestion"]
+    });
+
+    var veriCodeUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "veriCodeUILabel"]
     });
 
     var veriCode = new UIMaster.ui.textfield
@@ -32,12 +42,19 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
         ,subComponents: []
     });
 
+    var verifyCodePanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "verifyCodePanel"]
+        ,items: []
+        ,subComponents: [prefix + "veriCodeQuestionUILabel",prefix + "veriCodeQuestion",prefix + "veriCodeUILabel",prefix + "veriCode"]
+    });
+
     var loginPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "loginPanel"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
-        ,subComponents: [prefix + "errorInfo",prefix + "registerInfo",prefix + "veriCodeQuestion",prefix + "veriCode"]
+        ,subComponents: [prefix + "errorInfo",prefix + "registerInfo",prefix + "verifyCodePanel"]
     });
 
     var topPanel = new UIMaster.ui.panel
@@ -50,14 +67,18 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [vogerplogo,errorInfo,veriCodeQuestion,veriCode,registerInfo,topPanel,loginPanel,bottomPanel]
+        ,items: [vogerplogo,errorInfo,veriCodeQuestionUILabel,veriCodeQuestion,veriCodeUILabel,veriCode,registerInfo,topPanel,loginPanel,verifyCodePanel,bottomPanel]
     });
 
     Form.vogerplogo=vogerplogo;
 
     Form.errorInfo=errorInfo;
 
+    Form.veriCodeQuestionUILabel=veriCodeQuestionUILabel;
+
     Form.veriCodeQuestion=veriCodeQuestion;
+
+    Form.veriCodeUILabel=veriCodeUILabel;
 
     Form.veriCode=veriCode;
 
@@ -73,7 +94,23 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
     Form.registerInfo=registerInfo;
 
+    Form.verifyCodePanel=verifyCodePanel;
+
+    Form.veriCodeQuestionUILabel=veriCodeQuestionUILabel;
+
     Form.veriCodeQuestion=veriCodeQuestion;
+
+    Form.veriCodeUILabel=veriCodeUILabel;
+
+    Form.veriCode=veriCode;
+
+    Form.verifyCodePanel=verifyCodePanel;
+
+    Form.veriCodeQuestionUILabel=veriCodeQuestionUILabel;
+
+    Form.veriCodeQuestion=veriCodeQuestion;
+
+    Form.veriCodeUILabel=veriCodeUILabel;
 
     Form.veriCode=veriCode;
 
@@ -123,6 +160,13 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Registration_verifiCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Registration_verifiCode */
 
+		        {   
+		            var constraint_result = this.Form.validate();
+		            if (constraint_result != true && constraint_result != null) {
+		                return false;
+		            }
+		        }
+		        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifiCode-20151227-1839",UIMaster.getValue(eventsource),this.__entityName);

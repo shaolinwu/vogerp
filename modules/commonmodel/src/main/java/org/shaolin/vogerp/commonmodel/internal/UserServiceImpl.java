@@ -80,6 +80,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 		userInfo.setOrgCode(org.getOrgCode());
 		userInfo.setOrgId(org.getId());
 		userInfo.setFirstName(registerInfo.getName());
+		userInfo.setLastName("");
 		userInfo.setType("GenericOrganizationType.Director,0");
 		userInfo.setBirthday(new Date());
 		userInfo.setEmpLevel(EmployeeLevel.SENIOR);
@@ -192,7 +193,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 				DateParser parse = new DateParser(matchedUser.getLastLogin());
 				userContext.setLastLoginDate(parse.getCNDateString() 
 						+ "-" + parse.format(parse.getHours(), 2) 
-						+ "" + parse.format(parse.getSeconds(), 2) );
+						+ ":" + parse.format(parse.getSeconds(), 2) );
 			}
 			OrganizationImpl organization = matchedUser.getInfo().getOrganization();
 			userContext.setOrgId(organization.getId());

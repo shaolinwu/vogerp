@@ -45,7 +45,10 @@
     <ns2:DataEntity scope="InOut" name="displayItems" category="JavaClass">
       <type entityName="java.util.ArrayList"></type>
     </ns2:DataEntity>
-	   <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+    <ns2:DataEntity scope="InOut" name="singleLevel" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
+	<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
       <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="value" paramName="Value"></ns2:DataComponent>
@@ -65,7 +68,11 @@
       	  
           ArrayList values = new ArrayList();
           ArrayList displayItems = new ArrayList();
-          CEOperationUtil.getCEComboBox("", values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
+          if ($singleLevel != null && $singleLevel.booleanValue()) {
+            CEOperationUtil.getCEComboBox(values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
+          } else {
+            CEOperationUtil.getCEComboBox("", values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
+          }
       	  $values = values;
       	  $displayItems = displayItems;
       	  

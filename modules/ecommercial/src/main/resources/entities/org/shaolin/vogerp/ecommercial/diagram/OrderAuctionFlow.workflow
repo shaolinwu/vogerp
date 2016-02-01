@@ -13,7 +13,7 @@
 			<type entityName="org.shaolin.vogerp.commonmodel.IUserService"></type>
 		</ns2:service>
 	</ns2:conf>
-	<ns2:flow name="Mission0" eventConsumer="GoldenOrder">
+	<ns2:flow name="Mission0" eventConsumer="OrderAuction">
 		<ns2:conf>
 		 <!-- 
 			<ns2:param name="saleOrder" category="BusinessEntity">
