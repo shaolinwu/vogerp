@@ -19,9 +19,6 @@
             import java.util.ArrayList;
             import org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl;
             import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
-            import org.shaolin.uimaster.page.ajax.TreeItem;
-            import org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute;
-            import org.shaolin.uimaster.page.ajax.TreeConditions;
             {
                
             }
@@ -42,9 +39,6 @@
 	        import java.util.ArrayList;
 	        import org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl;
 	        import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
-	        import org.shaolin.uimaster.page.ajax.TreeItem;
-	        import org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute;
-	        import org.shaolin.uimaster.page.ajax.TreeConditions;
 	        {
 	           
 	        }

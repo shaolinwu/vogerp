@@ -3,6 +3,10 @@ package org.shaolin.vogerp.commonmodel.internal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.shaolin.bmdp.runtime.AppContext;
+import org.shaolin.bmdp.runtime.cache.CacheManager;
+import org.shaolin.bmdp.runtime.cache.ICache;
+import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.vogerp.commonmodel.IOrganizationService;
 import org.shaolin.vogerp.commonmodel.be.ILegalOrganizationInfo;
@@ -15,98 +19,97 @@ import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 
 public class OrganizationServiceImpl implements IOrganizationService, IServiceProvider {
 
-	private final List<IOrganization> allItems;
-	
-	private IOrganization root;
-	
-	private ILegalOrganizationInfo legalInfo;
+	private static ICache<Long, List> employeeseCache;
 	
 	public OrganizationServiceImpl() {
-		OrganizationImpl searchCriteria = new OrganizationImpl();
-		this.allItems = CommonModel.INSTANCE.searchSubOrganizationInfo(searchCriteria, null, 0, -1);
-		for (IOrganization item : allItems) {
-			if (item.getParentId() == 0) {
-				this.root = item;
-				break;
-			}
-		}
-		if (this.root == null) {
-			return;
-		}
-		
-		LegalOrganizationInfoImpl searchCondition1 = new LegalOrganizationInfoImpl();
-		searchCondition1.setOrgId(this.root.getId());
-		List list = CommonModel.INSTANCE.searchOrgaLegalInfo(searchCondition1, null, 0, 1);
-		if (list.size() > 0) {
-			this.legalInfo = (ILegalOrganizationInfo)list.get(0);
-		}
+		employeeseCache = CacheManager.getInstance().getCache(AppContext.get().getAppName() + "_employeese_cache", Long.class, 
+				List.class);
 	}
 	
 	public void reload() {
-		this.allItems.clear();
+	}
+	
+	@Override
+	public List[] getAllOrganizations() {
+		OrganizationImpl scFlow = new OrganizationImpl();
+		scFlow.setEnabled(true);
+		scFlow.setParentId(1);
+		List<IOrganization> list = CommonModel.INSTANCE.searchSubOrganizationInfo(scFlow, null, 0, -1);
 		
-		OrganizationImpl searchCriteria = new OrganizationImpl();
-		this.allItems.addAll(CommonModel.INSTANCE.searchSubOrganizationInfo(searchCriteria, null, 0, -1));
-		for (IOrganization item : allItems) {
-			if (item.getParentId() == 0) {
-				this.root = item;
-				break;
-			}
+		List[] result = new List[2];
+		List<String> nameList = new ArrayList<String>();
+		List<String> nameListDisplay = new ArrayList<String>();
+		nameList.add("uimaster");
+		nameListDisplay.add("Vogue E-Service");
+		for (IOrganization org : list) {
+			nameList.add(org.getOrgCode());
+			nameListDisplay.add(org.getName());
 		}
-		if (this.root == null) {
-			return;
-		}
-		LegalOrganizationInfoImpl searchCondition1 = new LegalOrganizationInfoImpl();
-		searchCondition1.setOrgId(this.root.getId());
-		List list = CommonModel.INSTANCE.searchOrgaLegalInfo(searchCondition1, null, 0, 1);
-		if (list.size() > 0) {
-			this.legalInfo = (ILegalOrganizationInfo)list.get(0);
-		}
+		result[0] = nameList;
+		result[1] = nameListDisplay;
+		return result;
 	}
 	
 	@Override
 	public IOrganization getOrganizationInfo() {
-		return this.root;
+		Object orgId = UserContext.getUserData(UserContext.CURRENT_USER_ORGID, true);
+		OrganizationImpl scFlow = new OrganizationImpl();
+		scFlow.setId((Long)orgId);
+		List<IOrganization> list = CommonModel.INSTANCE.searchOrganization(scFlow, null, 0, -1);
+		return list.get(0);
 	}
-
+	
 	@Override
 	public ILegalOrganizationInfo getLegalInfo() {
-		return this.legalInfo;
+		Object orgId = UserContext.getUserData(UserContext.CURRENT_USER_ORGID, true);
+		LegalOrganizationInfoImpl scFlow = new LegalOrganizationInfoImpl();
+		scFlow.setOrgId((Long)orgId);
+		List<ILegalOrganizationInfo> list = CommonModel.INSTANCE.searchOrgaLegalInfo(scFlow, null, 0, -1);
+		return list.get(0);
 	}
 
 	@Override
-	public List<IOrganization> getSubOrganization(String orgCode) {
-		List<IOrganization> subList = new ArrayList<IOrganization>();
-		for (IOrganization org: this.allItems) {
-			if (org.getOrgCode().equals(orgCode)) {
-				subList.add(org);
-			}
-		}
-		return subList;
+	public ILegalOrganizationInfo getLegalInfo(long orgId) {
+		LegalOrganizationInfoImpl scFlow = new LegalOrganizationInfoImpl();
+		scFlow.setOrgId(orgId);
+		List<ILegalOrganizationInfo> list = CommonModel.INSTANCE.searchOrgaLegalInfo(scFlow, null, 0, -1);
+		return list.get(0);
 	}
 
 	@Override
-	public List<IPersonalInfo> getEmployeese(String orgCode) {
-		PersonalInfoImpl condition = new PersonalInfoImpl();
-		condition.setOrgCode(orgCode);
-		return CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, -1);
+	public List<IOrganization> getSubOrganization(long orgId) {
+		OrganizationImpl scFlow = new OrganizationImpl();
+		scFlow.setParentId(orgId);
+		return CommonModel.INSTANCE.searchSubOrganizationInfo(scFlow, null, 0, -1);
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	@Override
-	public IPersonalInfo getEmployee(int id) {
-		PersonalInfoImpl condition = new PersonalInfoImpl();
-		condition.setId(id);
-		List<IPersonalInfo> list = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, -1);
-		if (list != null && list.size() > 0) {
-			return list.get(0);
+	public List<IPersonalInfo> getEmployeese(long orgId) {
+		if (employeeseCache.containsKey(orgId)) {
+			return employeeseCache.get(orgId);
 		}
-		return null;
+		
+		PersonalInfoImpl condition = new PersonalInfoImpl();
+		condition.setOrgId(orgId);
+		List<IPersonalInfo> result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, -1);
+		employeeseCache.put(orgId, result);
+		return result;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<IPersonalInfo> getEmployeese() {
+		Object orgId = UserContext.getUserData(UserContext.CURRENT_USER_ORGID, true);
+		if (employeeseCache.containsKey((Long)orgId)) {
+			return employeeseCache.get((Long)orgId);
+		}
+		
 		PersonalInfoImpl condition = new PersonalInfoImpl();
-		return CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, -1);
+		condition.setOrgId((Long)orgId);
+		List<IPersonalInfo> result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, -1);
+		employeeseCache.put((Long)orgId, result);
+		return result;
 	}
 		
 	@Override

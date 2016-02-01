@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
+import org.shaolin.vogerp.commonmodel.be.IRegisterInfo;
 import org.shaolin.vogerp.commonmodel.internal.PasswordCheckResult;
 
 public interface IUserService {
@@ -14,7 +15,9 @@ public interface IUserService {
 	
 	public static final String USER_LOGIN_PASSWORDRULES_VERICODEINCORRECT = "user.login.passwordrules.verifycodeincorrect";
 	
-	public static final String ORG_TYPE = "ORG_TYPE";
+	public static final String USER_REGISTER_FAIL = "user.register.fail";
+	
+	public boolean register(IRegisterInfo info);
 	
 	public PasswordCheckResult checkPasswordPattern(String password);
 	
@@ -42,10 +45,18 @@ public interface IUserService {
 	
 	void changePassword(IPersonalAccount user, String newPassword);
 	
+	public IPersonalAccount getPersonalAccount(long userId);
+	
 	/**
 	 * Get logined user organization type.
 	 * 
 	 * @return
 	 */
 	public String getUserOrganizationType();
+	
+	/**
+	 * Get logined user Id.
+	 * @return
+	 */
+	public long getUserId();
 }

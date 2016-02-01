@@ -8,16 +8,39 @@ import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 
 public interface IOrganizationService {
 
+	public List[] getAllOrganizations();
+	
+	/**
+	 * Get organization information of current login user.
+	 * 
+	 * @return
+	 */
 	public IOrganization getOrganizationInfo();
 	
+	/**
+	 * Get organization illegal information of current login user.
+	 * 
+	 * @return
+	 */
 	public ILegalOrganizationInfo getLegalInfo();
 	
-	public List<IOrganization> getSubOrganization(String orgCode);
+	/**
+	 * Specify an organization id.
+	 * 
+	 * @param orgId
+	 * @return
+	 */
+	public ILegalOrganizationInfo getLegalInfo(long orgId);
 	
-	public List<IPersonalInfo> getEmployeese(String orgCode);
+	public List<IOrganization> getSubOrganization(long orgId);
 	
-	public IPersonalInfo getEmployee(int id);
+	public List<IPersonalInfo> getEmployeese(long orgId);
 	
+	/**
+	 * Get all employeese of current organization.
+	 * 
+	 * @return
+	 */
 	public List<IPersonalInfo> getEmployeese();
 	
 	public List<String> getOrganizationRoles();

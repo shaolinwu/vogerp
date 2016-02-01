@@ -10,6 +10,7 @@ import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.bmdp.runtime.security.IPermissionService;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
+import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.be.BEPermissionImpl;
 import org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl;
 import org.shaolin.vogerp.commonmodel.be.IBEPermission;
@@ -26,9 +27,9 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 
 	private final ICache<IConstantEntity, SingleRolePermission> rolePermissions;
 	
-	private final ModuleServiceImpl moduleService;
+	private final IModuleService moduleService;
 	
-	public PermissionServiceImpl(ModuleServiceImpl moduleService) {
+	public PermissionServiceImpl(IModuleService moduleService) {
 		this.moduleService = moduleService;
 		this.rolePermissions = CacheManager.getInstance().getCache(AppContext.get().getAppName() 
 				+ "_rolepermission_cache", IConstantEntity.class, SingleRolePermission.class);

@@ -3,6 +3,11 @@
 function org_shaolin_vogerp_ecommercial_page_OnlineOrderList(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var defaultAction = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "defaultAction"]
+    });
+
     var goldenOrderTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "goldenOrderTable"]
@@ -19,8 +24,10 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList(json)
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [goldenOrderTable,goldenOrderInfoPanel]
+        ,items: [defaultAction,goldenOrderTable,goldenOrderInfoPanel]
     });
+
+    Form.defaultAction=defaultAction;
 
     Form.goldenOrderTable=goldenOrderTable;
 
@@ -34,7 +41,7 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList(json)
         /* Construct_LAST:org_shaolin_vogerp_ecommercial_page_OnlineOrderList */
     };
 
-    Form.openGoldenOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openGoldenOrder;
+    Form.takeGoldenOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_takeGoldenOrder;
 
     Form.initPageJs = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_initPageJs;
 
@@ -53,14 +60,14 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList(json)
 /* Other_Func_LAST:org_shaolin_vogerp_ecommercial_page_OnlineOrderList */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openGoldenOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openGoldenOrder */
+    function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_takeGoldenOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_takeGoldenOrder */
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showorderInfoPanel543542",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"takeGoldenOrder-20160124-1333",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openGoldenOrder */
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_takeGoldenOrder */
 
 
     function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_initPageJs(){/* Gen_First:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_initPageJs */

@@ -44,6 +44,8 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
     Form.openGoldenOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_openGoldenOrder;
 
+    Form.adjustEstimatedPrice = org_shaolin_vogerp_ecommercial_page_OrderManagement_adjustEstimatedPrice;
+
     Form.initPageJs = org_shaolin_vogerp_ecommercial_page_OrderManagement_initPageJs;
 
     Form.finalizePageJs = org_shaolin_vogerp_ecommercial_page_OrderManagement_finalizePageJs;
@@ -65,7 +67,7 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showBlankorderInfoPanel3413",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createGoldenOrder-2016-0124-1351",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_createGoldenOrder */
@@ -76,10 +78,21 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showorderInfoPanel543542",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openGoldenOrder-2016-0124-1351",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_openGoldenOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_adjustEstimatedPrice(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_adjustEstimatedPrice */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"adjustEstimatedPrice-2016-0124-1351",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_adjustEstimatedPrice */
 
 
     function org_shaolin_vogerp_ecommercial_page_OrderManagement_initPageJs(){/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_initPageJs */

@@ -2,9 +2,6 @@
 <ns2:WebChunk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/Page" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
   <entityName>org.shaolin.vogerp.commonmodel.diagram.ModularityModel</entityName>
   <systemVersion>0</systemVersion>
-  <ns2:webNode xsi:type="ns2:PageNodeType" name="EntityManager">
-    <ns2:sourceEntity entityName="org.shaolin.vogerp.commonmodel.page.EntityManager"></ns2:sourceEntity>
-  </ns2:webNode>
   <ns2:webNode xsi:type="ns2:PageNodeType" name="ModuleManager">
     <ns2:sourceEntity entityName="org.shaolin.vogerp.commonmodel.page.ModuleManagement"></ns2:sourceEntity>
   </ns2:webNode>

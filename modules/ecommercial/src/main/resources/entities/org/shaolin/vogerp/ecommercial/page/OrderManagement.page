@@ -7,7 +7,7 @@
 	<description>抢单管理</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="createGoldenOrder">
-		   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showBlankorderInfoPanel3413">
+		   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createGoldenOrder-2016-0124-1351">
                 <ns2:exp>
                     <ns2:expressionString><![CDATA[
                     import java.util.HashMap;
@@ -30,7 +30,7 @@
             </ns2:ops>
 		</ns2:eventHandler>
 		<ns2:eventHandler functionName="openGoldenOrder">
-		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showorderInfoPanel543542">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openGoldenOrder-2016-0124-1351">
                 <ns2:exp>
                     <ns2:expressionString><![CDATA[
                     import java.util.HashMap;
@@ -56,6 +56,33 @@
                 </ns2:exp>
             </ns2:ops>
 		</ns2:eventHandler>
+		<ns2:eventHandler functionName="adjustEstimatedPrice">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="adjustEstimatedPrice-2016-0124-1351">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                    {
+                        Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GoldenOrder", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Open Golden Order", new TableCallBack("goldenOrderTable"), 690, 500);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
         <ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 		   <ns2:UISkin xsi:type="ns2:UISkinType">
 		     <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
@@ -99,6 +126,7 @@
 		                                     $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
 		                                  }
 		                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
+		                                  //condition.setPublishedCustomerId();
 		                                  return OrderModel.INSTANCE.searchGoldenOrder(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 
@@ -259,6 +287,18 @@
 		                        <ns2:defaultOpenAction>openGoldenOrder</ns2:defaultOpenAction>
 		                        <ns2:defaultDisableAction>disableProduct</ns2:defaultDisableAction>
 		                    </ns2:defaultActions>
+		                    <ns2:actionGroup>
+                                <ns2:type>radio</ns2:type>
+                                <ns2:action>
+                                    <!-- first we have the cost, then we generate the price from the cost. -->
+                                    <ns2:uiid>adjustEstimatedPrice</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>估价调整</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>adjustEstimatedPrice</ns2:function>
+                                </ns2:action>
+                             </ns2:actionGroup>
 		                </ns2:component>
 		                <ns2:layoutConstraint>
 		                    <ns2:componentId>goldenOrderTable</ns2:componentId>

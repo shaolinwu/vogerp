@@ -19,8 +19,6 @@ import org.shaolin.vogerp.commonmodel.be.IPartyRelationship;
 import org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl;
 import org.shaolin.vogerp.commonmodel.be.IPartyEvent;
 import org.shaolin.vogerp.commonmodel.be.PartyEventImpl;
-import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
-import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
 /**
  * This code is generated automatically, any change will be replaced after rebuild.
  */
@@ -47,14 +45,6 @@ public class CommonModel extends BEEntityDaoObject {
         return count(IPartyEvent.class);
     }
 
-    public List<IPersonalAccount> listIPersonalAccounts(int offset, int count) {
-        return list(offset, count, IPersonalAccount.class, PersonalAccountImpl.class);
-    }
-
-    public long listIPersonalAccountCount() {
-        return count(IPersonalAccount.class);
-    }
-
     public List<org.shaolin.vogerp.commonmodel.be.ICaptcha> allCaptcha(org.shaolin.vogerp.commonmodel.be.CaptchaImpl scFlow,
            List<Order> orders, int offset, int count) {
             Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.CaptchaImpl.class, "inFlow");
@@ -64,6 +54,8 @@ public class CommonModel extends BEEntityDaoObject {
             }
 
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
@@ -71,6 +63,8 @@ public class CommonModel extends BEEntityDaoObject {
     public long allCaptchaCount(org.shaolin.vogerp.commonmodel.be.CaptchaImpl scFlow) {
             Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.CaptchaImpl.class, "inFlow");
 
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         return this._count(inFlowCriteria);
     }
@@ -87,6 +81,8 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.userName", scFlow.getUserName()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
@@ -97,6 +93,8 @@ public class CommonModel extends BEEntityDaoObject {
             if (scFlow.getUserName() != null && scFlow.getUserName().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.userName", scFlow.getUserName()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         return this._count(inFlowCriteria);
     }
@@ -113,8 +111,10 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.userName", scFlow.getUserName()));
             }
             if (scFlow.getInfo() != null && scFlow.getInfo().getId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.info", scFlow.getInfo().getId()));
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.personalId", scFlow.getInfo().getId()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         List result = this._list(offset, count, inFlowCriteria);
         return result;
@@ -127,8 +127,10 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.userName", scFlow.getUserName()));
             }
             if (scFlow.getInfo() != null && scFlow.getInfo().getId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.info", scFlow.getInfo().getId()));
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.personalId", scFlow.getInfo().getId()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         return this._count(inFlowCriteria);
     }
@@ -146,6 +148,9 @@ public class CommonModel extends BEEntityDaoObject {
             if (scFlow.getId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
             }
+            if (scFlow.getOrgId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));
+            }
             if (scFlow.getFirstName() != null && scFlow.getFirstName().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.firstName", scFlow.getFirstName()));
             }
@@ -161,6 +166,8 @@ public class CommonModel extends BEEntityDaoObject {
             if (scFlow.getGender() != null && scFlow.getGender() != org.shaolin.vogerp.commonmodel.ce.Gender.NOT_SPECIFIED) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.genderInt", scFlow.getGender().getIntValue()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         List result = this._list(offset, count, inFlowCriteria);
         return result;
@@ -172,6 +179,9 @@ public class CommonModel extends BEEntityDaoObject {
             if (scFlow.getId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
             }
+            if (scFlow.getOrgId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));
+            }
             if (scFlow.getFirstName() != null && scFlow.getFirstName().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.firstName", scFlow.getFirstName()));
             }
@@ -187,6 +197,8 @@ public class CommonModel extends BEEntityDaoObject {
             if (scFlow.getGender() != null && scFlow.getGender() != org.shaolin.vogerp.commonmodel.ce.Gender.NOT_SPECIFIED) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.genderInt", scFlow.getGender().getIntValue()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         return this._count(inFlowCriteria);
     }
@@ -200,6 +212,8 @@ public class CommonModel extends BEEntityDaoObject {
             }
 
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
@@ -207,6 +221,8 @@ public class CommonModel extends BEEntityDaoObject {
     public long searchPartyRelationshipInfoCount(org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl scFlow) {
             Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl.class, "inFlow");
 
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         return this._count(inFlowCriteria);
     }
@@ -226,6 +242,8 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.orgCode", scFlow.getOrgCode()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
@@ -239,6 +257,8 @@ public class CommonModel extends BEEntityDaoObject {
             if (scFlow.getOrgCode() != null && scFlow.getOrgCode().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.orgCode", scFlow.getOrgCode()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         return this._count(inFlowCriteria);
     }
@@ -261,6 +281,8 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.orgCode", scFlow.getOrgCode()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
@@ -278,6 +300,8 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.orgCode", scFlow.getOrgCode()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         return this._count(inFlowCriteria);
     }
 
@@ -289,9 +313,14 @@ public class CommonModel extends BEEntityDaoObject {
                 this._addOrders(inFlowCriteria, orders);
             }
 
+            if (scFlow.getId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
+            }
             if (scFlow.getOrgCode() != null && scFlow.getOrgCode().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgCode", scFlow.getOrgCode()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         List result = this._list(offset, count, inFlowCriteria);
         return result;
@@ -300,9 +329,14 @@ public class CommonModel extends BEEntityDaoObject {
     public long searchOrganizationCount(org.shaolin.vogerp.commonmodel.be.OrganizationImpl scFlow) {
             Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.OrganizationImpl.class, "inFlow");
 
+            if (scFlow.getId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
+            }
             if (scFlow.getOrgCode() != null && scFlow.getOrgCode().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgCode", scFlow.getOrgCode()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         return this._count(inFlowCriteria);
     }
@@ -319,6 +353,8 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
@@ -329,6 +365,8 @@ public class CommonModel extends BEEntityDaoObject {
             if (scFlow.getOrgId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         return this._count(inFlowCriteria);
     }
@@ -348,6 +386,8 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
@@ -361,6 +401,8 @@ public class CommonModel extends BEEntityDaoObject {
             if (scFlow.getPartyType() != null && scFlow.getPartyType().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         return this._count(inFlowCriteria);
     }
@@ -377,6 +419,8 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
@@ -387,6 +431,8 @@ public class CommonModel extends BEEntityDaoObject {
             if (scFlow.getPartyType() != null && scFlow.getPartyType().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         return this._count(inFlowCriteria);
     }
@@ -403,6 +449,8 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
@@ -413,6 +461,8 @@ public class CommonModel extends BEEntityDaoObject {
             if (scFlow.getPartyType() != null && scFlow.getPartyType().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.partyType", scFlow.getPartyType()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         return this._count(inFlowCriteria);
     }
@@ -429,6 +479,8 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.typeInt", scFlow.getType().getIntValue()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
@@ -440,7 +492,33 @@ public class CommonModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.typeInt", scFlow.getType().getIntValue()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         return this._count(inFlowCriteria);
+    }
+
+    public List<org.shaolin.vogerp.commonmodel.be.IRegisterInfo> searchRegisterInfo(org.shaolin.vogerp.commonmodel.be.RegisterInfoImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.RegisterInfoImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long searchRegisterInfoCount(org.shaolin.vogerp.commonmodel.be.RegisterInfoImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.RegisterInfoImpl.class, "inObject");
+
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
     }
 
 }

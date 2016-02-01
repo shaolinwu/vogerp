@@ -6,8 +6,8 @@
 	<systemVersion>0</systemVersion>
 	<description>抢单管理</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
-		<ns2:eventHandler functionName="openGoldenOrder">
-		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showorderInfoPanel543542">
+		<ns2:eventHandler functionName="takeGoldenOrder">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="takeGoldenOrder-20160124-1333">
                 <ns2:exp>
                     <ns2:expressionString><![CDATA[
                     import java.util.HashMap;
@@ -24,10 +24,10 @@
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
                         input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GoldenOrder", input);
+                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GOOfferPrice", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Open Golden Order", new TableCallBack("goldenOrderTable"), 690, 500);
+                        form.openInWindows("Offer Price", new TableCallBack("goldenOrderTable"), 400, 300);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -46,6 +46,8 @@
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			</ns2:layout>
+			<ns2:component xsi:type="ns2:UIHiddenType" UIID="defaultAction">
+            </ns2:component>
             <ns2:component xsi:type="ns2:UIPanelType" UIID="goldenOrderInfoPanel">
                 <ns2:layout xsi:type="ns2:TableLayoutType">
                     <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -53,7 +55,7 @@
                 </ns2:layout>
                 <ns2:component xsi:type="ns2:UITableType" UIID="goldenOrderTable">
                     <ns2:beElement>org.shaolin.vogerp.ecommercial.be.GoldenOrder</ns2:beElement>
-                    <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+                    <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Normal</ns2:selectMode>
                     <ns2:defaultRowSize>10</ns2:defaultRowSize>
                     <ns2:showActionBar>true</ns2:showActionBar>
                     <ns2:showFilter>true</ns2:showFilter>
@@ -139,7 +141,7 @@
 	                                  "org.shaolin.vogerp.ecommercial.form.GoldenOrderOverView", input);
 	                                StringBuffer sb = new StringBuffer();
 	                                sb.append(form.generateHTML());
-	                                sb.append("<script type=\"text/javascript\">$(document).ready(function(){");
+	                                sb.append("<script type=\"text/javascript\">UIMaster.pageInitFunctions.push(function(){");
 	                                sb.append("getElementListSingle(document.getElementById(\"productBasicForm");
 	                                sb.append($rowBE.getId());
 	                                sb.append(".Form\"));\n");
@@ -174,12 +176,15 @@
                                 import org.shaolin.bmdp.runtime.AppContext;
                                 {
                                     long v = DateUtil.calCountDown($rowBE.getExpiredDate());
+                                    if (v > 0) {
+                                       v = v/1000;
+                                    }
                                     StringBuffer sb = new StringBuffer();
                                     sb.append("<div id=\"expiredTimeUI").append(index).append("\" class=\"uimastet_countdown\" value=\"");
                                     sb.append(v);
                                     sb.append("\"></div>");
                                     sb.append("<script type=\"text/javascript\">");
-                                    sb.append("$(\"#expiredTimeUI").append(index).append("\").redCountdown({preset: \"flat-colors-fat\", end: ($.now() + ").append(v).append(")});");
+                                    sb.append("UIMaster.pageInitFunctions.push(function(){$(\"#expiredTimeUI").append(index).append("\").redCountdown({preset: \"flat-colors-fat\", labelsOptions: {lang: {days: \"天\", hours: \"时\", minutes: \"分\", seconds: \"秒\"}}, end: ($.now() + ").append(v).append(")}); });");
                                     sb.append("</script>");
                                     return sb.toString();
                                 }]]></ns2:expressionString>
@@ -211,7 +216,7 @@
                                 import org.shaolin.bmdp.runtime.AppContext;
                                 {
                                     StringBuffer sb = new StringBuffer();
-                                    sb.append("<button>抢购</button>");
+                                    sb.append("<button onclick=\"javascript:defaultname.takeGoldenOrder(defaultname.defaultAction);\" class=\"ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only\">抢购</button>");
                                     return sb.toString();
                                 }]]></ns2:expressionString>
                             </ns2:expression>

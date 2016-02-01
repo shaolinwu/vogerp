@@ -1,6 +1,7 @@
 package org.shaolin.vogerp.commonmodel.internal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -9,21 +10,26 @@ import org.shaolin.bmdp.datamodel.common.TargetEntityType;
 import org.shaolin.bmdp.datamodel.pagediagram.PageNodeType;
 import org.shaolin.bmdp.datamodel.pagediagram.WebChunk;
 import org.shaolin.bmdp.runtime.AppContext;
+import org.shaolin.bmdp.runtime.be.IPersistentEntity;
 import org.shaolin.bmdp.runtime.cache.CacheManager;
 import org.shaolin.bmdp.runtime.cache.ICache;
+import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.javacc.exception.ParsingException;
 import org.shaolin.uimaster.page.cache.UIFlowCacheManager;
+import org.shaolin.uimaster.page.flow.ApplicationInitializer;
+import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.be.IModuleGroup;
 import org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl;
 import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
 
-public class ModuleServiceImpl implements IServiceProvider {
+public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 
 	private final ICache<String, Long> moduleLinks;
 	
 	private final ICache<Long, IModuleGroup> modules;
 	
+	private boolean initialized = false;
 	
 	public ModuleServiceImpl() {
 		modules = CacheManager.getInstance().getCache(AppContext.get().getAppName() 
@@ -33,10 +39,26 @@ public class ModuleServiceImpl implements IServiceProvider {
 		init();
 	}
 	
+	private void createApps(List<IModuleGroup> all) {
+		// build application context.
+        for (IModuleGroup module: all) {
+        	if (module.getParentId() == 0 && !module.getName().equals(IServerServiceManager.INSTANCE.getMasterNodeName())) {
+        		ApplicationInitializer appInitizlier = new ApplicationInitializer(module.getName());
+        		appInitizlier.start();
+        	}
+        }
+	}
+	
 	private void init() {
 		ModuleGroupImpl condition = new ModuleGroupImpl();
 		condition.setEnabled(true);
         List<IModuleGroup> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
+        if (!this.initialized) {
+        	createApps(all);
+        	this.initialized = true;
+        }
+        
+        // build links
         for (IModuleGroup module: all) {
         	String accessURL = module.getAccessURL();
         	if (accessURL != null && !"#".equals(accessURL)) {
@@ -58,12 +80,14 @@ public class ModuleServiceImpl implements IServiceProvider {
 		}
 	}
 	
+	@Override
 	public void reload() {
 		moduleLinks.clear();
 		modules.clear();
 		init();
 	}
 	
+	@Override
 	public long getModuleId(String chunkName, String nodeName) {
 		String path = chunkName + "." + nodeName;
 		if (moduleLinks.containsKey(path)) {
@@ -72,6 +96,7 @@ public class ModuleServiceImpl implements IServiceProvider {
 		return -1;
 	}
 	
+	@Override
 	public ArrayList[] getModuleListInOptions() {
 		ArrayList<String> optionsValues = new ArrayList<String>();
 		ArrayList<String> displayItems = new ArrayList<String>();
@@ -85,8 +110,100 @@ public class ModuleServiceImpl implements IServiceProvider {
 	}
 	
 	@Override
+	public synchronized void newAppModules(String appName, String reference) {
+		if (appName == null || appName.trim().length() == 0) {
+			throw new IllegalArgumentException("Application must not be null!");
+		}
+		if (reference == null || reference.trim().length() == 0) {
+			throw new IllegalArgumentException("Application's reference must not be null!");
+		}
+		if (getModule(appName) != null) {
+			throw new IllegalArgumentException("Application has already existed!");
+		}
+		
+		List<IModuleGroup> refModules = getModuleGroupTree(reference);
+		
+		ModuleGroupImpl newGroup = new ModuleGroupImpl();
+		newGroup.setName(appName);
+		newGroup.setAccessURL("#");
+		newGroup.setDescription("Customer Org Code: " + appName);
+		ModularityModel.INSTANCE.create(newGroup);
+		
+		List<IPersistentEntity> newSubNodes = new ArrayList<IPersistentEntity>();
+		for (IModuleGroup node : refModules) {
+			ModuleGroupImpl item = new ModuleGroupImpl();
+			item.setParentId(newGroup.getId());
+			item.setName(node.getName());
+			item.setAccessURL(node.getAccessURL());
+			item.setDescription(node.getDescription());
+			item.setBigIcon(node.getBigIcon());
+			item.setSmallIcon(node.getSmallIcon());
+			newSubNodes.add(item);
+		}
+		ModularityModel.INSTANCE.batchInsert(newSubNodes);
+		
+		ApplicationInitializer appInitizlier = new ApplicationInitializer(appName);
+		appInitizlier.start();
+	}
+	
+	@Override
+	public IModuleGroup getModule(String name) {
+		ModuleGroupImpl condition = new ModuleGroupImpl();
+		condition.setName(name);
+		condition.setEnabled(true);
+        List<IModuleGroup> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
+        return all.size() > 0 ? all.get(0) : null;
+	}
+	
+	@Override
+	public IModuleGroup getModule(long id) {
+		ModuleGroupImpl condition = new ModuleGroupImpl();
+		condition.setId(id);
+		condition.setEnabled(true);
+        List<IModuleGroup> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
+        return all.size() > 0 ? all.get(0) : null;
+	}
+	
+	@Override
+	public List<IModuleGroup> getModuleGroupTree(String appName) {
+		ModuleGroupImpl condition = new ModuleGroupImpl();
+		condition.setEnabled(true);
+        List<IModuleGroup> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
+        
+        ModuleGroupImpl root = null;
+		for (int i = 0; i < all.size(); i++) {
+			ModuleGroupImpl mg = (ModuleGroupImpl) all.get(i);
+			if (appName.equals(mg.getName())) {
+				root = mg;
+				break;
+			}
+		}
+        if (root == null) {
+        	return Collections.emptyList();
+        }
+        
+		ArrayList<IModuleGroup> result = new ArrayList<IModuleGroup>();
+		for (int i = 0; i < all.size(); i++) {
+			ModuleGroupImpl mg = (ModuleGroupImpl) all.get(i);
+			if (mg.getParentId() != root.getId()) {
+				continue;
+			}
+			result.add(mg);
+
+			// find children
+			for (int j = 0; j < all.size(); j++) {
+				if (mg.getId() == ((ModuleGroupImpl) all.get(j)).getParentId()) {
+					ModuleGroupImpl m = (ModuleGroupImpl) all.get(j);
+					result.add(m);
+				}
+			}
+		}
+		return result;
+	}
+	
+	@Override
 	public Class<?> getServiceInterface() {
-		return ModuleServiceImpl.class;
+		return IModuleService.class;
 	}
 	
 	void updateWebFlowLinks() throws ParsingException {

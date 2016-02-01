@@ -3,6 +3,28 @@
 function org_shaolin_vogerp_commonmodel_page_ModuleManagement(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var functionsTab = new UIMaster.ui.tab
+    ({
+        ui: elementList[prefix + "functionsTab"]
+        ,items: []
+        ,subComponents: [prefix + "moduleInfoPanel",prefix + "topPanel"]
+    });
+    var allOrgsUI = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "allOrgsUI"]
+    });
+
+    var moduleInfoTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "moduleInfoTable"]
+    });
+
+    var moduleInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "moduleInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "allOrgsUI",prefix + "moduleInfoTable"]
+    });
     var groupFlow = new UIMaster.ui.flow
     ({
         ui: elementList[prefix + "groupFlow"]
@@ -18,10 +40,17 @@ function org_shaolin_vogerp_commonmodel_page_ModuleManagement(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [groupFlow,topPanel]
+        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
+        ,items: [functionsTab]
     });
 
-    Form.groupFlow=groupFlow;
+    Form.functionsTab=functionsTab;
+
+    Form.moduleInfoPanel=moduleInfoPanel;
+
+    Form.allOrgsUI=allOrgsUI;
+
+    Form.moduleInfoTable=moduleInfoTable;
 
     Form.topPanel=topPanel;
 
@@ -33,9 +62,17 @@ function org_shaolin_vogerp_commonmodel_page_ModuleManagement(json)
         /* Construct_LAST:org_shaolin_vogerp_commonmodel_page_ModuleManagement */
     };
 
+    Form.selectOrg = org_shaolin_vogerp_commonmodel_page_ModuleManagement_selectOrg;
+
     Form.newModuleGroup = org_shaolin_vogerp_commonmodel_page_ModuleManagement_newModuleGroup;
 
+    Form.newModuleGroup1 = org_shaolin_vogerp_commonmodel_page_ModuleManagement_newModuleGroup1;
+
     Form.openModuleDetail = org_shaolin_vogerp_commonmodel_page_ModuleManagement_openModuleDetail;
+
+    Form.openModuleDetail1 = org_shaolin_vogerp_commonmodel_page_ModuleManagement_openModuleDetail1;
+
+    Form.deleteModule1 = org_shaolin_vogerp_commonmodel_page_ModuleManagement_deleteModule1;
 
     Form.deleteModuleGroup = org_shaolin_vogerp_commonmodel_page_ModuleManagement_deleteModuleGroup;
 
@@ -60,6 +97,17 @@ function org_shaolin_vogerp_commonmodel_page_ModuleManagement(json)
 /* Other_Func_LAST:org_shaolin_vogerp_commonmodel_page_ModuleManagement */
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_page_ModuleManagement_selectOrg(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_ModuleManagement_selectOrg */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectOrg-201508111433",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_ModuleManagement_selectOrg */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_ModuleManagement_newModuleGroup(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_ModuleManagement_newModuleGroup */
 
         // cal ajax function. 
@@ -68,6 +116,17 @@ function org_shaolin_vogerp_commonmodel_page_ModuleManagement(json)
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_ModuleManagement_newModuleGroup */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_page_ModuleManagement_newModuleGroup1(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_ModuleManagement_newModuleGroup1 */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"newModuleGroup1-35433",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_ModuleManagement_newModuleGroup1 */
 
 
     /* auto generated eventlistener function declaration */
@@ -89,15 +148,39 @@ function org_shaolin_vogerp_commonmodel_page_ModuleManagement(json)
 
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_page_ModuleManagement_openModuleDetail1(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_ModuleManagement_openModuleDetail1 */
+
+                
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openModuleDetail1-543543",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_ModuleManagement_openModuleDetail1 */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_page_ModuleManagement_deleteModule1(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_ModuleManagement_deleteModule1 */
+
+                
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteModule1-201511-2224",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_ModuleManagement_deleteModule1 */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_ModuleManagement_deleteModuleGroup(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_ModuleManagement_deleteModuleGroup */
 
-		        {   
-		            var constraint_result = this.groupFlow.checkSelection();
-		            if (constraint_result != true && constraint_result != null) {
-		                return false;
-		            }
-		        }
-		        
+                {   
+                    var constraint_result = this.groupFlow.checkSelection();
+                    if (constraint_result != true && constraint_result != null) {
+                        return false;
+                    }
+                }
+                
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteModule23423",UIMaster.getValue(eventsource),this.__entityName);

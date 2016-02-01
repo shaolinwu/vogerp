@@ -17,11 +17,8 @@ public class ResourceManagerImpl implements IResourceManager {
 
 	private final OrganizationServiceImpl orgService;
 	
-	private final List<IPersonalInfo> allResources;
-	
 	public ResourceManagerImpl(OrganizationServiceImpl orgService) {
 		this.orgService = orgService;
-		this.allResources = this.orgService.getEmployeese();
 	}
 	
 	@Override
@@ -37,7 +34,7 @@ public class ResourceManagerImpl implements IResourceManager {
 		if (task.getPartyType() == null || task.getPartyType().isEmpty()) {
 			throw new IllegalArgumentException("Please specify the party type for this task: " + task.getSubject());
 		}
-		List<IPersonalInfo> freeResources = getFreeResource(task.getPartyType());
+		List<IPersonalInfo> freeResources = getFreeResource(task.getOrgId(), task.getPartyType());
 		if (freeResources == null || freeResources.isEmpty()) {
 			throw new IllegalStateException("Please assign the party type for a resource or an employee: " + task.getPartyType());
 		}
@@ -75,7 +72,8 @@ public class ResourceManagerImpl implements IResourceManager {
 		}
 	}
 	
-	public Object getResource(long partyId) {
+	public Object getResource(long orgId, long partyId) {
+		List<IPersonalInfo> allResources = this.orgService.getEmployeese(orgId);
 		for (IPersonalInfo employee : allResources) {
 			if (employee.getId() == partyId) {
 				return employee.getEmpId() + "(" + employee.getLastName() + " "
@@ -85,7 +83,8 @@ public class ResourceManagerImpl implements IResourceManager {
 		return null;
 	}
 	
-	public List<IPersonalInfo> getFreeResource(String partType) {
+	public List<IPersonalInfo> getFreeResource(long orgId, String partType) {
+		List<IPersonalInfo> allResources = this.orgService.getEmployeese(orgId);
 		List<IPersonalInfo> availableResources = new ArrayList<IPersonalInfo>();
 		for (IPersonalInfo employee : allResources) {
 			if (employee.getType().equals(partType)) {

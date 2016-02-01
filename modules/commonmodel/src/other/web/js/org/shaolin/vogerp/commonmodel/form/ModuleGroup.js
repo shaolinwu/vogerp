@@ -3,14 +3,14 @@
 function org_shaolin_vogerp_commonmodel_form_ModuleGroup(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var groupIdUI = new UIMaster.ui.hidden
-    ({
-        ui: elementList[prefix + "groupIdUI"]
-    });
-
     var parentIdUI = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "parentIdUI"]
+    });
+
+    var selectFromAnotherUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "selectFromAnotherUILabel"]
     });
 
     var nameUILabel = new UIMaster.ui.label
@@ -58,14 +58,14 @@ function org_shaolin_vogerp_commonmodel_form_ModuleGroup(json)
         ui: elementList[prefix + "bigIconUILabel"]
     });
 
-    var roleUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "roleUILabel"]
-    });
-
     var bigIconUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "bigIconUI"]
+    });
+
+    var roleUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "roleUILabel"]
     });
 
     var okbtn = new UIMaster.ui.button
@@ -91,18 +91,18 @@ function org_shaolin_vogerp_commonmodel_form_ModuleGroup(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "groupIdUI",prefix + "parentIdUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "accessURLUILabel",prefix + "accessURLUI",prefix + "smallIconUILabel",prefix + "smallIconUI",prefix + "bigIconUILabel",prefix + "roleUILabel",prefix + "roleUI",prefix + "bigIconUI"]
+        ,subComponents: [prefix + "parentIdUI",prefix + "selectFromAnotherUILabel",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "accessURLUILabel",prefix + "accessURLUI",prefix + "smallIconUILabel",prefix + "smallIconUI",prefix + "bigIconUILabel",prefix + "bigIconUI",prefix + "roleUILabel",prefix + "roleUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [groupIdUI,parentIdUI,nameUILabel,nameUI,descriptionUILabel,descriptionUI,accessURLUILabel,accessURLUI,smallIconUILabel,smallIconUI,bigIconUILabel,roleUILabel,bigIconUI,okbtn,cancelbtn,roleUI,fieldPanel,actionPanel]
+        ,items: [parentIdUI,selectFromAnotherUILabel,nameUILabel,nameUI,descriptionUILabel,descriptionUI,accessURLUILabel,accessURLUI,smallIconUILabel,smallIconUI,bigIconUILabel,bigIconUI,roleUILabel,okbtn,cancelbtn,roleUI,fieldPanel,actionPanel]
     });
 
-    Form.groupIdUI=groupIdUI;
-
     Form.parentIdUI=parentIdUI;
+
+    Form.selectFromAnotherUILabel=selectFromAnotherUILabel;
 
     Form.nameUILabel=nameUILabel;
 
@@ -122,9 +122,9 @@ function org_shaolin_vogerp_commonmodel_form_ModuleGroup(json)
 
     Form.bigIconUILabel=bigIconUILabel;
 
-    Form.roleUILabel=roleUILabel;
-
     Form.bigIconUI=bigIconUI;
+
+    Form.roleUILabel=roleUILabel;
 
     Form.okbtn=okbtn;
 
@@ -134,9 +134,9 @@ function org_shaolin_vogerp_commonmodel_form_ModuleGroup(json)
 
     Form.fieldPanel=fieldPanel;
 
-    Form.groupIdUI=groupIdUI;
-
     Form.parentIdUI=parentIdUI;
+
+    Form.selectFromAnotherUILabel=selectFromAnotherUILabel;
 
     Form.nameUILabel=nameUILabel;
 
@@ -156,11 +156,11 @@ function org_shaolin_vogerp_commonmodel_form_ModuleGroup(json)
 
     Form.bigIconUILabel=bigIconUILabel;
 
+    Form.bigIconUI=bigIconUI;
+
     Form.roleUILabel=roleUILabel;
 
     Form.roleUI=roleUI;
-
-    Form.bigIconUI=bigIconUI;
 
     Form.actionPanel=actionPanel;
 
@@ -173,6 +173,10 @@ function org_shaolin_vogerp_commonmodel_form_ModuleGroup(json)
         /* Construct_FIRST:org_shaolin_vogerp_commonmodel_form_ModuleGroup */
         /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_ModuleGroup */
     };
+
+    Form.selectFromAnother = org_shaolin_vogerp_commonmodel_form_ModuleGroup_selectFromAnother;
+
+    Form.SaveSelectedModule = org_shaolin_vogerp_commonmodel_form_ModuleGroup_SaveSelectedModule;
 
     Form.Save = org_shaolin_vogerp_commonmodel_form_ModuleGroup_Save;
 
@@ -191,6 +195,29 @@ function org_shaolin_vogerp_commonmodel_form_ModuleGroup(json)
 /* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_ModuleGroup */
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_ModuleGroup_selectFromAnother(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ModuleGroup_selectFromAnother */
+
+        
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectFromAnother-2134807383",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ModuleGroup_selectFromAnother */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_ModuleGroup_SaveSelectedModule(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ModuleGroup_SaveSelectedModule */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"SaveSelectedModule-201601311342",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ModuleGroup_SaveSelectedModule */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_ModuleGroup_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ModuleGroup_Save */
 
         {   
@@ -202,7 +229,7 @@ function org_shaolin_vogerp_commonmodel_form_ModuleGroup(json)
         
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail2134807383",UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-2134807383",UIMaster.getValue(eventsource),this.__entityName);
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ModuleGroup_Save */

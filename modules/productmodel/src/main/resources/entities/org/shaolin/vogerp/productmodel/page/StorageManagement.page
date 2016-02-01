@@ -177,11 +177,13 @@
 		                            import org.shaolin.vogerp.productmodel.be.IWarehouse;
 		                            import org.shaolin.vogerp.productmodel.be.WarehouseImpl;
 		                            import org.shaolin.vogerp.productmodel.dao.ProductModel;
+		                            import org.shaolin.bmdp.runtime.security.UserContext;
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new WarehouseImpl());
 		                                  }
 		                                  WarehouseImpl condition = (WarehouseImpl)$tableCondition.getCondition();
+		                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
 		                                  return ProductModel.INSTANCE.searchWarehouse(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 
@@ -195,11 +197,13 @@
 		                            import org.shaolin.uimaster.page.ajax.TableConditions;
 		                            import org.shaolin.vogerp.productmodel.be.WarehouseImpl;
 		                            import org.shaolin.vogerp.productmodel.dao.ProductModel;
+		                            import org.shaolin.bmdp.runtime.security.UserContext;
 		                            {
 		                                 if ($tableCondition == null) {
 		                                    $tableCondition = TableConditions.createCondition(new WarehouseImpl());
 		                                 }
 		                                 WarehouseImpl condition = (WarehouseImpl)$tableCondition.getCondition();
+		                                 condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
 		                                 return ProductModel.INSTANCE.searchWarehouseCount(condition);
 		                            }]]></ns2:expressionString>
 		                        </ns2:expression>
@@ -301,11 +305,13 @@
 		                            import org.shaolin.vogerp.productmodel.be.IStorageItem;
 		                            import org.shaolin.vogerp.productmodel.be.StorageItemImpl;
 		                            import org.shaolin.vogerp.productmodel.dao.ProductModel;
+		                            import org.shaolin.bmdp.runtime.security.UserContext;
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new StorageItemImpl());
 		                                  }
 		                                  StorageItemImpl condition = (StorageItemImpl)$tableCondition.getCondition();
+		                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
 		                                  return ProductModel.INSTANCE.searchStorageItems(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 
@@ -319,11 +325,13 @@
 		                            import org.shaolin.uimaster.page.ajax.TableConditions;
 		                            import org.shaolin.vogerp.productmodel.be.StorageItemImpl;
 		                            import org.shaolin.vogerp.productmodel.dao.ProductModel;
+		                            import org.shaolin.bmdp.runtime.security.UserContext;
 		                            {
 		                                 if ($tableCondition == null) {
 		                                    $tableCondition = TableConditions.createCondition(new StorageItemImpl());
 		                                 }
 		                                 StorageItemImpl condition = (StorageItemImpl)$tableCondition.getCondition();
+		                                 condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
 		                                 return ProductModel.INSTANCE.searchStorageItemsCount(condition);
 		                            }]]></ns2:expressionString>
 		                        </ns2:expression>

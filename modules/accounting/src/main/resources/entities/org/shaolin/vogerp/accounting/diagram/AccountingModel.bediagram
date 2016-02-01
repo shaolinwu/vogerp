@@ -117,10 +117,6 @@
    <bediagram:name>settlementNumber</bediagram:name>
    <bediagram:type xsi:type="bediagram:LongType" />
   </bediagram:member> 
-		<bediagram:member>
-    <bediagram:name>createDate</bediagram:name>
-    <bediagram:type xsi:type="bediagram:DateTimeType" />
-   </bediagram:member>
    <bediagram:member>
     <bediagram:name>startCreateDate</bediagram:name>
     <bediagram:type xsi:type="bediagram:DateTimeType" />

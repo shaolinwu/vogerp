@@ -38,7 +38,7 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 				Object.class);
 	}
 	
-	private void reloadPriceTree(Session session) {
+	private void reloadPriceTree() {
 		try {
 	        ProductImpl criteria = new ProductImpl();
 			criteria.setParentId(0);
@@ -92,7 +92,7 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		}
 	}
 	
-	private void reloadCostTree(Session session) {
+	private void reloadCostTree() {
 		try {
 	        ProductImpl criteria = new ProductImpl();
 			criteria.setParentId(0);
@@ -220,17 +220,15 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 			
 		}
 		
-		Session session = HibernateUtil.getSession();
 		try {
-			reloadPriceTree(session);
-			reloadCostTree(session);
+			reloadPriceTree();
+			reloadCostTree();
+			HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
 		} catch(SQLGrammarException e) {
-			HibernateUtil.releaseSession(session, false);
+			HibernateUtil.releaseSession(HibernateUtil.getSession(), false);
 			LoggerFactory.getLogger(ProductServiceImpl.class).warn("Disable the product module due to " + e.getMessage());
 			return;
-		} finally {
-			HibernateUtil.releaseSession(session, true);
-		}
+		} 
 		serviceManger.register(this);
 	}
 
@@ -246,12 +244,13 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 
 	@Override
 	public void reload() {
-		Session session = HibernateUtil.getSession();
 		try {
-			reloadPriceTree(session);
-			reloadCostTree(session);
-		} finally {
-			HibernateUtil.releaseSession(session, true);
+			reloadPriceTree();
+			reloadCostTree();
+			
+			HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
+		} catch(SQLGrammarException e) {
+			HibernateUtil.releaseSession(HibernateUtil.getSession(), false);
 		}
 	}
 

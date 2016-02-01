@@ -159,6 +159,7 @@
                  import org.shaolin.vogerp.productmodel.ce.ProductCodeType;
                  import org.shaolin.vogerp.productmodel.dao.ProductModel;
                  import org.shaolin.vogerp.productmodel.util.ProductUtil;
+                 import org.shaolin.bmdp.runtime.security.UserContext;
                  {
                     PreNextPanel preNextPanel = (PreNextPanel)@page.getElement("funcsPanel"); 
                     if (preNextPanel.getSelectedIndex() == 1) {
@@ -167,6 +168,7 @@
 	                    ProductImpl defaultUser = (ProductImpl)input.get("beObject");
 	                    if (defaultUser.getId() == 0) {
 	                        defaultUser.setSerialNumber(ProductUtil.genSerialNumber());
+	                        defaultUser.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
 	                        ProductModel.INSTANCE.create(defaultUser);
 	                        
 	                        defaultUser.setHtmlDesc("/product/" + AppContext.get().getAppName() +"/" + defaultUser.getId() + "/desc.html");

@@ -1,27 +1,24 @@
 <?xml version="1.0" ?>
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
-  <entityName>org.shaolin.vogerp.productmodel.form.Warehouse</entityName>
+  <entityName>org.shaolin.vogerp.commonmodel.form.RegisterInfo</entityName>
   <systemVersion>0</systemVersion>
   <ns2:eventHandler functionName="Save">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveDetail767028713">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveDetail-20160131-211838">
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
-        import org.shaolin.vogerp.productmodel.be.WarehouseImpl;
-        import org.shaolin.vogerp.productmodel.dao.ProductModel;
-        import org.shaolin.bmdp.runtime.security.UserContext;
+        import org.shaolin.vogerp.commonmodel.be.RegisterInfoImpl;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            HashMap input = (HashMap)form.ui2Data();
+            HashMap out = (HashMap)form.ui2Data();
 
-            WarehouseImpl defaultUser = (WarehouseImpl)input.get("beObject");
+            RegisterInfoImpl defaultUser = (RegisterInfoImpl)out.get("beObject");
             if (defaultUser.getId() == 0) {
-                defaultUser.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-                ProductModel.INSTANCE.create(defaultUser);
+                System.out.println("created object: " + defaultUser);
             } else {
-                ProductModel.INSTANCE.update(defaultUser);
+                System.out.println("updated object: " + defaultUser);
             }
 
             form.closeIfinWindows();
@@ -31,7 +28,7 @@
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="Cancel">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail1781808440">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20160131-211838">
       <ns2:exp>
         <expressionString><![CDATA[
         import org.shaolin.uimaster.page.AjaxContext;
@@ -48,7 +45,7 @@
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-      <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+      <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -58,80 +55,97 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
-        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
-      <ns2:component xsi:type="ns2:UIHiddenType" UIID="idUI">
-        <ns2:secure>
-          <ns2:value>true</ns2:value>
-        </ns2:secure>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="parentIdUILabel">
+      <ns2:component xsi:type="ns2:UILabelType" UIID="idUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.productmodel.be.Warehouse.parentId</ns2:key>
+          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.commonmodel.be.RegisterInfo.id</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="parentIdUI">
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="idUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="nameUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.productmodel.be.Warehouse.name</ns2:key>
+          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.commonmodel.be.RegisterInfo.name</ns2:key>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="nameUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="descriptionUILabel">
+      <ns2:component xsi:type="ns2:UILabelType" UIID="passwordUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.productmodel.be.Warehouse.description</ns2:key>
+          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.commonmodel.be.RegisterInfo.password</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="descriptionUI">
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="passwordUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="photoPathUILabel">
+      <ns2:component xsi:type="ns2:UILabelType" UIID="orgNameUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.productmodel.be.Warehouse.photoPath</ns2:key>
+          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.commonmodel.be.RegisterInfo.orgName</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="photoPathUI">
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="orgNameUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="locationUILabel">
+      <ns2:component xsi:type="ns2:UILabelType" UIID="orgTypeUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.productmodel.be.Warehouse.location</ns2:key>
+          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.commonmodel.be.RegisterInfo.orgType</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="locationUI">
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="orgTypeUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="containerTypeUILabel">
+      <ns2:component xsi:type="ns2:UILabelType" UIID="phoneNumberUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.productmodel.be.Warehouse.containerType</ns2:key>
+          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.commonmodel.be.RegisterInfo.phoneNumber</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="containerTypeUI">
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="phoneNumberUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="emailUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.commonmodel.be.RegisterInfo.email</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="emailUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="addressUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.commonmodel.be.RegisterInfo.address</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="addressUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>parentIdUILabel</ns2:componentId>
+        <ns2:componentId>idUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>parentIdUI</ns2:componentId>
+        <ns2:componentId>idUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
@@ -143,43 +157,59 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>descriptionUILabel</ns2:componentId>
+        <ns2:componentId>passwordUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>descriptionUI</ns2:componentId>
+        <ns2:componentId>passwordUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>photoPathUILabel</ns2:componentId>
+        <ns2:componentId>orgNameUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>photoPathUI</ns2:componentId>
+        <ns2:componentId>orgNameUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>locationUILabel</ns2:componentId>
+        <ns2:componentId>orgTypeUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>locationUI</ns2:componentId>
+        <ns2:componentId>orgTypeUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>containerTypeUILabel</ns2:componentId>
+        <ns2:componentId>phoneNumberUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>containerTypeUI</ns2:componentId>
+        <ns2:componentId>phoneNumberUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>emailUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>emailUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>addressUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="7" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>addressUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="7" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
-        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
@@ -225,45 +255,50 @@
   <ns2:mapping>
     <systemVersion>0</systemVersion>
     <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.productmodel.be.Warehouse"></type>
+      <type entityName="org.shaolin.vogerp.commonmodel.be.RegisterInfo"></type>
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="parentIdUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.parentId" paramName="Number"></ns2:DataComponent>
+      <ns2:UIComponent componentPath="idUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.id" paramName="Number"></ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="nameUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.name" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="passwordUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.password" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="descriptionUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.description" paramName="StringData"></ns2:DataComponent>
+      <ns2:UIComponent componentPath="orgNameUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.orgName" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="photoPathUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.photoPath" paramName="StringData"></ns2:DataComponent>
+      <ns2:UIComponent componentPath="orgTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.orgType" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="locationUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.location" paramName="StringData"></ns2:DataComponent>
+      <ns2:UIComponent componentPath="phoneNumberUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.phoneNumber" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping6">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="containerTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.containerType" paramName="CEValue"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
-        <ns2:expression>
-          <expressionString>"org.shaolin.vogerp.productmodel.ce.StorageContainerType"</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="emailUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.email" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping7">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="addressUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.address" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>{

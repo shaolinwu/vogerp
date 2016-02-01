@@ -43,6 +43,8 @@ public class ModularityModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getParentId()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
@@ -60,10 +62,12 @@ public class ModularityModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getParentId()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         return this._count(inFlowCriteria);
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.ICEEntityInfo> searchCEInfo(java.lang.String ceName,
+    public List<org.shaolin.vogerp.commonmodel.be.ICEEntityInfo> searchCEInfo(org.shaolin.vogerp.commonmodel.be.CEEntityInfoImpl scObject,
            List<Order> orders, int offset, int count) {
             Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.CEEntityInfoImpl.class, "inFlow");
             if (orders == null) {
@@ -71,20 +75,24 @@ public class ModularityModel extends BEEntityDaoObject {
                 this._addOrders(inFlowCriteria, orders);
             }
 
-            if (ceName != null && ceName.length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.ceName", ceName));
+            if (scObject.getCeName() != null && scObject.getCeName().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.ceName", scObject.getCeName()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scObject.isEnabled()));
 
         List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
 
-    public long searchCEInfoCount(java.lang.String ceName) {
+    public long searchCEInfoCount(org.shaolin.vogerp.commonmodel.be.CEEntityInfoImpl scObject) {
             Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.CEEntityInfoImpl.class, "inFlow");
 
-            if (ceName != null && ceName.length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.ceName", ceName));
+            if (scObject.getCeName() != null && scObject.getCeName().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.ceName", scObject.getCeName()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scObject.isEnabled()));
 
         return this._count(inFlowCriteria);
     }
@@ -104,6 +112,8 @@ public class ModularityModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.intValue", scFlow.getIntValue()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
@@ -117,6 +127,8 @@ public class ModularityModel extends BEEntityDaoObject {
             if (scFlow.getIntValue() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.intValue", scFlow.getIntValue()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         return this._count(inFlowCriteria);
     }
@@ -139,6 +151,8 @@ public class ModularityModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentCeItem", scFlow.getParentCeItem()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
@@ -156,6 +170,8 @@ public class ModularityModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentCeItem", scFlow.getParentCeItem()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         return this._count(inFlowCriteria);
     }
 
@@ -171,6 +187,8 @@ public class ModularityModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.uiEntityName", scFlow.getUiEntityName()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
@@ -181,6 +199,8 @@ public class ModularityModel extends BEEntityDaoObject {
             if (scFlow.getUiEntityName() != null && scFlow.getUiEntityName().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.uiEntityName", scFlow.getUiEntityName()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         return this._count(inFlowCriteria);
     }
@@ -197,6 +217,8 @@ public class ModularityModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.uiEntityName", scFlow.getUiEntityName()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
@@ -207,6 +229,8 @@ public class ModularityModel extends BEEntityDaoObject {
             if (scFlow.getUiEntityName() != null && scFlow.getUiEntityName().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.uiEntityName", scFlow.getUiEntityName()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         return this._count(inFlowCriteria);
     }
@@ -223,6 +247,8 @@ public class ModularityModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
             }
 
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
         List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
@@ -233,6 +259,8 @@ public class ModularityModel extends BEEntityDaoObject {
             if (scFlow.getId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
             }
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
         return this._count(inFlowCriteria);
     }

@@ -200,13 +200,16 @@
 		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">
 			<ns2:expressionString><![CDATA[
 			import org.shaolin.bmdp.runtime.AppContext;
+			import org.shaolin.bmdp.runtime.security.UserContext;
 		    import org.shaolin.vogerp.commonmodel.IUserService;
 		    import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
 		    import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
 		    import org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl;
 		    import org.shaolin.uimaster.page.flow.WebflowConstants;
 			{
-			  $personalAccount = (PersonalAccountImpl)@odContext.getRequest().getSession().getAttribute(WebflowConstants.USER_SESSION_KEY);
+			  UserContext userContext = (UserContext)@odContext.getRequest().getSession().getAttribute(WebflowConstants.USER_SESSION_KEY);
+			  IUserService moduleService = (IUserService)AppContext.get().getService(IUserService.class);
+			  $personalAccount = (PersonalAccountImpl)moduleService.getPersonalAccount(userContext.getUserId());
 			  $personalInfo = $personalAccount.getInfo();
 			  //$contract = new OrganizationContractImpl();
 			  

@@ -14,6 +14,8 @@ import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.uimaster.page.UIPermissionManager;
 import org.shaolin.vogerp.commonmodel.ICaptcherService;
+import org.shaolin.vogerp.commonmodel.IModuleService;
+import org.shaolin.vogerp.commonmodel.be.CEEntityInfoImpl;
 import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
 import org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl;
 import org.shaolin.vogerp.commonmodel.be.CaptchaImpl;
@@ -58,7 +60,7 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 			} catch (Exception e) {
 				throw new IllegalStateException("Failed to parse CE items: " + e.getMessage(), e);
 			}
-			List<ICEEntityInfo> ceInfos = ModularityModel.INSTANCE.searchCEInfo(null, null, 0, -1);
+			List<ICEEntityInfo> ceInfos = ModularityModel.INSTANCE.searchCEInfo(new CEEntityInfoImpl(), null, 0, -1);
 			for (ICEEntityInfo ceInfo : ceInfos) {
 				try {
 					AbstractConstant ce = (AbstractConstant)IServerServiceManager.INSTANCE.getConstantService().
@@ -89,6 +91,9 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 				}
 			};
 			IServerServiceManager.INSTANCE.register(captcherSerivce);
+			
+			ModuleServiceImpl moduleService = new ModuleServiceImpl();
+			serviceManger.register(moduleService);
 		}
 		
 		try {
@@ -96,10 +101,7 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 			userService.init();
 			serviceManger.register(userService);
 			
-			ModuleServiceImpl moduleService = new ModuleServiceImpl();
-			serviceManger.register(moduleService);
-			
-			PermissionServiceImpl permissionService = new PermissionServiceImpl(moduleService);
+			PermissionServiceImpl permissionService = new PermissionServiceImpl(serviceManger.getService(IModuleService.class));
 			serviceManger.register(permissionService);
 			
 			UIPermissionManager uiPermiManager = new UIPermissionManager(permissionService);

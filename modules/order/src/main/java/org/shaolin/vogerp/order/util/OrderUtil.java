@@ -10,14 +10,16 @@ public class OrderUtil {
 		DateParser parse = new DateParser(new Date());
 		return "SOSN-" + parse.getCNDateString() 
 				+ "-" + parse.format(parse.getHours(), 2) 
-				+ "" + parse.format(parse.getSeconds(), 2);
+				+ "" + parse.format(parse.getSeconds(), 2)
+				+ "-" + parse.getMilliSeconds();
 	}
 	
 	public static String genPurchaseOrderSerialNumber() {
 		DateParser parse = new DateParser(new Date());
 		return "PCOSN-" + parse.getCNDateString() 
 				+ "-" + parse.format(parse.getHours(), 2) 
-				+ "" + parse.format(parse.getSeconds(), 2);
+				+ "" + parse.format(parse.getSeconds(), 2)
+				+ "-" + parse.getMilliSeconds();
 	}
 
 }

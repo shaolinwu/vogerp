@@ -245,15 +245,15 @@
                     <ns2:type>=</ns2:type>
                 </ns2:operator>
                 <ns2:value xsi:type="ns2:SimpleFieldValueType">
-                    <ns2:valueFieldPath>ceName</ns2:valueFieldPath>
+                    <ns2:valueFieldPath>scObject.ceName</ns2:valueFieldPath>
                 </ns2:value>
                 <ns2:condition>
-                    <expressionString><![CDATA[ceName != null && ceName.length() > 0]]></expressionString>
+                    <expressionString><![CDATA[scObject.getCeName() != null && scObject.getCeName().length() > 0]]></expressionString>
                 </ns2:condition>
             </ns2:conditionValue>
         </ns2:fieldMapping>
-        <ns2:searchConditionData name="ceName" category="JavaPrimitive" searchable="false">
-            <type entityName="java.lang.String"/>
+        <ns2:searchConditionData name="scObject" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.CEEntityInfo"/>
         </ns2:searchConditionData>
     </ns2:searchConditionMapping>
   </ns2:query>

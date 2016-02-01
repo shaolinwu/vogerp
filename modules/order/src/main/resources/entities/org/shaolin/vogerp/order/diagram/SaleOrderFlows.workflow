@@ -39,19 +39,19 @@
 				actionName="ApproveOrder" actionText="批准生产">
 				<ns2:expression>
 					<expressionString><![CDATA[
-								import java.util.HashMap;
-								import org.shaolin.uimaster.page.AjaxContext;
-				                import org.shaolin.uimaster.page.ajax.*;
-								{
-								    System.out.println("workflow action!!!");
-								    RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-								    HashMap values = (HashMap)form.ui2Data();
-								    form.closeIfinWindows(true);
-							         @page.removeForm(@page.getEntityUiid()); 
-							         HashMap result = new HashMap();
-							         result.put("saleOrder", values.get("beObject"));
-							         return result;
-							    }
+					import java.util.HashMap;
+					import org.shaolin.uimaster.page.AjaxContext;
+	                import org.shaolin.uimaster.page.ajax.*;
+					{
+					    System.out.println("workflow action!!!");
+					    RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+					    HashMap values = (HashMap)form.ui2Data();
+					    form.closeIfinWindows(true);
+				         @page.removeForm(@page.getEntityUiid()); 
+				         HashMap result = new HashMap();
+				         result.put("saleOrder", values.get("beObject"));
+				         return result;
+				    }
 					]]></expressionString>
 				</ns2:expression>
 			</ns2:uiAction>

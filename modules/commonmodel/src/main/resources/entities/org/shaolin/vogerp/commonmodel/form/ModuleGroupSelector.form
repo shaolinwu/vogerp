@@ -1,0 +1,184 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.commonmodel.form.ModuleGroupSelector</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="selectOrgItem">
+     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectOrgItem-201601311310">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.List;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.vogerp.commonmodel.IModuleService;
+        import org.shaolin.vogerp.commonmodel.be.IModuleGroup;
+        { 
+            AList moduleList = @page.getList("moduleListUI");
+            moduleList.clearValues();
+            moduleList.removeAllOptions();
+            
+            IModuleService moduleService = (IModuleService)AppContext.get().getService(IModuleService.class);
+            List nodes = moduleService.getModuleGroupTree(@page.getList("orgListUI").getValue());
+            for (int i=0;i<nodes.size();i++) {
+                 IModuleGroup module = (IModuleGroup)nodes.get(i);
+                 moduleList.addOption(module.getDescription(), String.valueOf(module.getId()));
+            }
+        }
+        ]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Cancel">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cance-201601311310">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            form.closeIfinWindows(true);
+            @page.removeForm(@page.getEntityUiid()); 
+        }
+        ]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:reconfigurableProperty functionName="Save" xsi:type="ns2:ReconfigurableFunctionType"/>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIListType" UIID="orgListUI">
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+          <ns2:value>All Organizations</ns2:value>
+        </ns2:widgetLabel>
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:size xsi:type="ns2:ExpressionPropertyType">
+          <ns2:expression>
+            <expressionString>{return 8;}</expressionString>
+          </ns2:expression>
+        </ns2:size>
+        <ns2:multiple xsi:type="ns2:ExpressionPropertyType">
+          <ns2:expression>
+            <expressionString>{return false;}</expressionString>
+          </ns2:expression>
+        </ns2:multiple>
+        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
+          <ns2:handler functionName="selectOrgItem"></ns2:handler>
+        </ns2:EventListener>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIListType" UIID="moduleListUI">
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+          <ns2:value>All Modules</ns2:value>
+        </ns2:widgetLabel>
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:size xsi:type="ns2:ExpressionPropertyType">
+          <ns2:expression>
+            <expressionString>{return 8;}</expressionString>
+          </ns2:expression>
+        </ns2:size>
+        <ns2:multiple xsi:type="ns2:ExpressionPropertyType">
+          <ns2:expression>
+            <expressionString>{return false;}</expressionString>
+          </ns2:expression>
+        </ns2:multiple>
+      </ns2:component>
+	  <ns2:layoutConstraint>
+        <ns2:componentId>orgListUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>moduleListUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Save"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>OKbtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Cancel"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>Cancelbtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>okbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="optionValues" category="JavaClass">
+      <type entityName="java.util.List"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="displayItems" category="JavaClass">
+      <type entityName="java.util.List"></type>
+    </ns2:DataEntity>
+	<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIMultipleChoice"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="orgListUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="optionValues" paramName="OptionValues"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:DataToUIMappingOperation>
+      <expressionString><![CDATA[
+      import java.util.ArrayList;
+      import java.util.List;
+      import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+      import org.shaolin.vogerp.commonmodel.IOrganizationService;
+      {
+      	  IOrganizationService moduleService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
+          List[] result = moduleService.getAllOrganizations();
+          $optionValues = result[0];
+          $displayItems = result[1];
+      	  
+	      @odContext.executeAllMappings();
+      }   
+    ]]></expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>
+      {
+		@odContext.executeAllMappings();
+	  }
+	  </expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

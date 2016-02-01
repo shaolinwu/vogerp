@@ -43,6 +43,9 @@ public class OrderModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
             }
@@ -52,6 +55,8 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         List result = this._list(offset, count, inObjectCriteria);
         return result;
@@ -60,6 +65,9 @@ public class OrderModel extends BEEntityDaoObject {
     public long searchSaleOrderCount(org.shaolin.vogerp.order.be.SaleOrderImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.SaleOrderImpl.class, "inObject");
 
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
             }
@@ -69,6 +77,8 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         return this._count(inObjectCriteria);
     }
@@ -81,6 +91,9 @@ public class OrderModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
             }
@@ -90,6 +103,8 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         List result = this._list(offset, count, inObjectCriteria);
         return result;
@@ -98,6 +113,9 @@ public class OrderModel extends BEEntityDaoObject {
     public long searchPurchaseOrderCount(org.shaolin.vogerp.order.be.PurchaseOrderImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.PurchaseOrderImpl.class, "inObject");
 
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
             }
@@ -107,6 +125,8 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         return this._count(inObjectCriteria);
     }
@@ -119,6 +139,9 @@ public class OrderModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
             }
@@ -128,6 +151,8 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         List result = this._list(offset, count, inObjectCriteria);
         return result;
@@ -136,6 +161,9 @@ public class OrderModel extends BEEntityDaoObject {
     public long searchProductOrderCount(org.shaolin.vogerp.order.be.ProductOrderImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.ProductOrderImpl.class, "inObject");
 
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
             }
@@ -145,6 +173,8 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         return this._count(inObjectCriteria);
     }
@@ -157,6 +187,9 @@ public class OrderModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
             }
@@ -166,6 +199,8 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         List result = this._list(offset, count, inObjectCriteria);
         return result;
@@ -174,6 +209,9 @@ public class OrderModel extends BEEntityDaoObject {
     public long searchInStoreOrderCount(org.shaolin.vogerp.order.be.InStoreOrderImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.InStoreOrderImpl.class, "inObject");
 
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
             }
@@ -183,6 +221,8 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         return this._count(inObjectCriteria);
     }
@@ -195,6 +235,9 @@ public class OrderModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
             }
@@ -204,6 +247,8 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         List result = this._list(offset, count, inObjectCriteria);
         return result;
@@ -212,6 +257,9 @@ public class OrderModel extends BEEntityDaoObject {
     public long searchOutStoreOrderCount(org.shaolin.vogerp.order.be.OutStoreOrderImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.OutStoreOrderImpl.class, "inObject");
 
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
             }
@@ -221,6 +269,8 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         return this._count(inObjectCriteria);
     }
@@ -234,6 +284,8 @@ public class OrderModel extends BEEntityDaoObject {
             }
 
 
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
         List result = this._list(offset, count, inObjectCriteria);
         return result;
     }
@@ -241,6 +293,8 @@ public class OrderModel extends BEEntityDaoObject {
     public long searchOrderItemCount(org.shaolin.vogerp.order.be.OrderItemImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.OrderItemImpl.class, "inObject");
 
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         return this._count(inObjectCriteria);
     }
@@ -254,6 +308,8 @@ public class OrderModel extends BEEntityDaoObject {
             }
 
 
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
         List result = this._list(offset, count, inObjectCriteria);
         return result;
     }
@@ -261,6 +317,8 @@ public class OrderModel extends BEEntityDaoObject {
     public long searchDeliveryInfoCount(org.shaolin.vogerp.order.be.DeliveryInfoImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.DeliveryInfoImpl.class, "inObject");
 
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         return this._count(inObjectCriteria);
     }

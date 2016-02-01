@@ -33,6 +33,12 @@ public class OrderModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
+            if (scObject.getPublishedCustomerId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.publishedCustomerId", scObject.getPublishedCustomerId()));
+            }
+            if (scObject.getTakenCustomerId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.takenCustomerId", scObject.getTakenCustomerId()));
+            }
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
             }
@@ -42,6 +48,8 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         List result = this._list(offset, count, inObjectCriteria);
         return result;
@@ -50,6 +58,12 @@ public class OrderModel extends BEEntityDaoObject {
     public long searchGoldenOrderCount(org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl.class, "inObject");
 
+            if (scObject.getPublishedCustomerId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.publishedCustomerId", scObject.getPublishedCustomerId()));
+            }
+            if (scObject.getTakenCustomerId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.takenCustomerId", scObject.getTakenCustomerId()));
+            }
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
             }
@@ -59,6 +73,8 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         return this._count(inObjectCriteria);
     }
@@ -71,6 +87,12 @@ public class OrderModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
+            if (scObject.getPublishedCustomerId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.publishedCustomerId", scObject.getPublishedCustomerId()));
+            }
+            if (scObject.getTakenCustomerId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.takenCustomerId", scObject.getTakenCustomerId()));
+            }
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
             }
@@ -80,6 +102,8 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         List result = this._list(offset, count, inObjectCriteria);
         return result;
@@ -88,6 +112,12 @@ public class OrderModel extends BEEntityDaoObject {
     public long searchGoldenOrderHistoryCount(org.shaolin.vogerp.ecommercial.be.GoldenOrderHistoryImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.ecommercial.be.GoldenOrderHistoryImpl.class, "inObject");
 
+            if (scObject.getPublishedCustomerId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.publishedCustomerId", scObject.getPublishedCustomerId()));
+            }
+            if (scObject.getTakenCustomerId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.takenCustomerId", scObject.getTakenCustomerId()));
+            }
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
             }
@@ -97,6 +127,8 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         return this._count(inObjectCriteria);
     }

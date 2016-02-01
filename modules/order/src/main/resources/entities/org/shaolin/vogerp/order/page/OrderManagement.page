@@ -374,11 +374,13 @@
 		                            import org.shaolin.vogerp.order.be.ISaleOrder;
 		                            import org.shaolin.vogerp.order.be.SaleOrderImpl;
 		                            import org.shaolin.vogerp.order.dao.OrderModel;
+		                            import org.shaolin.bmdp.runtime.security.UserContext;
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new SaleOrderImpl());
 		                                  }
 		                                  SaleOrderImpl condition = (SaleOrderImpl)$tableCondition.getCondition();
+		                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
 		                                  return OrderModel.INSTANCE.searchSaleOrder(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 
@@ -394,11 +396,13 @@
 		                            import org.shaolin.vogerp.order.be.ISaleOrder;
 		                            import org.shaolin.vogerp.order.be.SaleOrderImpl;
 		                            import org.shaolin.vogerp.order.dao.OrderModel;
+		                            import org.shaolin.bmdp.runtime.security.UserContext;
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new SaleOrderImpl());
 		                                  }
 		                                  SaleOrderImpl condition = (SaleOrderImpl)$tableCondition.getCondition();
+		                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
 		                                  return OrderModel.INSTANCE.searchSaleOrderCount(condition);
 		                            }]]></ns2:expressionString>
 		                        </ns2:expression>
@@ -546,11 +550,13 @@
 		                            import org.shaolin.uimaster.page.ajax.TableConditions;
 		                            import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
 		                            import org.shaolin.vogerp.order.dao.OrderModel;
+		                            import org.shaolin.bmdp.runtime.security.UserContext;
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new PurchaseOrderImpl());
 		                                  }
 		                                  PurchaseOrderImpl condition = (PurchaseOrderImpl)$tableCondition.getCondition();
+		                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
 		                                  return OrderModel.INSTANCE.searchPurchaseOrder(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 
@@ -565,11 +571,13 @@
 		                            import org.shaolin.uimaster.page.ajax.TableConditions;
 		                            import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
 		                            import org.shaolin.vogerp.order.dao.OrderModel;
+		                            import org.shaolin.bmdp.runtime.security.UserContext;
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new PurchaseOrderImpl());
 		                                  }
 		                                  PurchaseOrderImpl condition = (PurchaseOrderImpl)$tableCondition.getCondition();
+		                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
 		                                  return OrderModel.INSTANCE.searchPurchaseOrderCount(condition);
 		                            }]]></ns2:expressionString>
 		                        </ns2:expression>
@@ -688,11 +696,13 @@
                               import org.shaolin.uimaster.page.ajax.TableConditions;
                               import org.shaolin.vogerp.order.be.ProductOrderImpl;
                               import org.shaolin.vogerp.order.dao.OrderModel;
+                              import org.shaolin.bmdp.runtime.security.UserContext;
                               {
                                     if ($tableCondition == null) {
                                        $tableCondition = TableConditions.createCondition(new ProductOrderImpl());
                                     }
                                     ProductOrderImpl condition = (ProductOrderImpl)$tableCondition.getCondition();
+                                    condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
                                     return OrderModel.INSTANCE.searchProductOrder(condition,
                                                   $tableCondition.getOrders(),
                                                   $tableCondition.getOffset(), 
@@ -707,11 +717,13 @@
                               import org.shaolin.uimaster.page.ajax.TableConditions;
                               import org.shaolin.vogerp.order.be.ProductOrderImpl;
                               import org.shaolin.vogerp.order.dao.OrderModel;
+                              import org.shaolin.bmdp.runtime.security.UserContext;
                               {
                                     if ($tableCondition == null) {
                                        $tableCondition = TableConditions.createCondition(new ProductOrderImpl());
                                     }
                                     ProductOrderImpl condition = (ProductOrderImpl)$tableCondition.getCondition();
+                                    condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
                                     return OrderModel.INSTANCE.searchProductOrderCount(condition);
                               }]]></ns2:expressionString>
                           </ns2:expression>
@@ -816,11 +828,13 @@
                               import org.shaolin.uimaster.page.ajax.TableConditions;
                               import org.shaolin.vogerp.order.be.InStoreOrderImpl;
                               import org.shaolin.vogerp.order.dao.OrderModel;
+                              import org.shaolin.bmdp.runtime.security.UserContext;
                               {
                                     if ($tableCondition == null) {
                                        $tableCondition = TableConditions.createCondition(new InStoreOrderImpl());
                                     }
                                     InStoreOrderImpl condition = (InStoreOrderImpl)$tableCondition.getCondition();
+                                    condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
                                     return OrderModel.INSTANCE.searchInStoreOrder(condition,
                                                   $tableCondition.getOrders(),
                                                   $tableCondition.getOffset(), 
@@ -835,11 +849,13 @@
                               import org.shaolin.uimaster.page.ajax.TableConditions;
                               import org.shaolin.vogerp.order.be.InStoreOrderImpl;
                               import org.shaolin.vogerp.order.dao.OrderModel;
+                              import org.shaolin.bmdp.runtime.security.UserContext;
                               {
                                     if ($tableCondition == null) {
                                        $tableCondition = TableConditions.createCondition(new InStoreOrderImpl());
                                     }
                                     InStoreOrderImpl condition = (InStoreOrderImpl)$tableCondition.getCondition();
+                                    condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
                                     return OrderModel.INSTANCE.searchInStoreOrderCount(condition);
                               }]]></ns2:expressionString>
                           </ns2:expression>
@@ -944,11 +960,13 @@
                               import org.shaolin.uimaster.page.ajax.TableConditions;
                               import org.shaolin.vogerp.order.be.OutStoreOrderImpl;
                               import org.shaolin.vogerp.order.dao.OrderModel;
+                              import org.shaolin.bmdp.runtime.security.UserContext;
                               {
                                     if ($tableCondition == null) {
                                        $tableCondition = TableConditions.createCondition(new OutStoreOrderImpl());
                                     }
                                     OutStoreOrderImpl condition = (OutStoreOrderImpl)$tableCondition.getCondition();
+                                    condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
                                     return OrderModel.INSTANCE.searchOutStoreOrder(condition,
                                                   $tableCondition.getOrders(),
                                                   $tableCondition.getOffset(), 
@@ -963,11 +981,13 @@
                               import org.shaolin.uimaster.page.ajax.TableConditions;
                               import org.shaolin.vogerp.order.be.OutStoreOrderImpl;
                               import org.shaolin.vogerp.order.dao.OrderModel;
+                              import org.shaolin.bmdp.runtime.security.UserContext;
                               {
                                     if ($tableCondition == null) {
                                        $tableCondition = TableConditions.createCondition(new OutStoreOrderImpl());
                                     }
                                     OutStoreOrderImpl condition = (OutStoreOrderImpl)$tableCondition.getCondition();
+                                    condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
                                     return OrderModel.INSTANCE.searchOutStoreOrderCount(condition);
                               }]]></ns2:expressionString>
                           </ns2:expression>
