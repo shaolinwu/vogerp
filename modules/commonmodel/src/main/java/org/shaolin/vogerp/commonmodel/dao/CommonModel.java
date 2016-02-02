@@ -467,36 +467,6 @@ public class CommonModel extends BEEntityDaoObject {
         return this._count(inFlowCriteria);
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.IOrganizationContract> searchContract(org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl scFlow,
-           List<Order> orders, int offset, int count) {
-            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl.class, "inFlow");
-            if (orders == null) {
-            } else {
-                this._addOrders(inFlowCriteria, orders);
-            }
-
-            if (scFlow.getType() != null && scFlow.getType() != org.shaolin.vogerp.commonmodel.ce.ContractType.NOT_SPECIFIED) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.typeInt", scFlow.getType().getIntValue()));
-            }
-
-        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
-
-        List result = this._list(offset, count, inFlowCriteria);
-        return result;
-    }
-
-    public long searchContractCount(org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl scFlow) {
-            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl.class, "inFlow");
-
-            if (scFlow.getType() != null && scFlow.getType() != org.shaolin.vogerp.commonmodel.ce.ContractType.NOT_SPECIFIED) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.typeInt", scFlow.getType().getIntValue()));
-            }
-
-        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
-
-        return this._count(inFlowCriteria);
-    }
-
     public List<org.shaolin.vogerp.commonmodel.be.IRegisterInfo> searchRegisterInfo(org.shaolin.vogerp.commonmodel.be.RegisterInfoImpl scObject,
            List<Order> orders, int offset, int count) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.RegisterInfoImpl.class, "inObject");

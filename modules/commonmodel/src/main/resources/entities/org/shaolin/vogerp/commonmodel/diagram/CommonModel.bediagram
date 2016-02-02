@@ -201,7 +201,7 @@
         </bediagram:member>
 	</bediagram:beEntity>
 
-	<bediagram:beEntity needOrgId="true" needPersist="true" needUIEntity="true">
+	<bediagram:beEntity needOrgId="true" needUIEntity="true">
         <common:entityName>OrganizationContract</common:entityName>
         <bediagram:member>
             <bediagram:name>id</bediagram:name>
