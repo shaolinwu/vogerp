@@ -112,6 +112,8 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
 
     Form.openSaleOrderTracker = org_shaolin_vogerp_order_page_OrderManagement_openSaleOrderTracker;
 
+    Form.openPurchaseOrderTracker = org_shaolin_vogerp_order_page_OrderManagement_openPurchaseOrderTracker;
+
     Form.createProductOrder = org_shaolin_vogerp_order_page_OrderManagement_createProductOrder;
 
     Form.openProductOrder = org_shaolin_vogerp_order_page_OrderManagement_openProductOrder;
@@ -204,6 +206,17 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
 
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_order_page_OrderManagement_openSaleOrderTracker */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_order_page_OrderManagement_openPurchaseOrderTracker(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_page_OrderManagement_openPurchaseOrderTracker */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openPurchaseOrderTracker-20150614",UIMaster.getValue(eventsource),this.__entityName);
+
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_order_page_OrderManagement_openPurchaseOrderTracker */
 
 
     /* auto generated eventlistener function declaration */

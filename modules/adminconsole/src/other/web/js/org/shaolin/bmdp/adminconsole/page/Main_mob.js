@@ -13,23 +13,9 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         ui: elementList[prefix + "userIcon"]
     });
 
-    var functionsTab = new UIMaster.ui.tab
+    var matrixUI = new UIMaster.ui.matrix
     ({
-        ui: elementList[prefix + "functionsTab"]
-        ,items: []
-        ,subComponents: [prefix + "currentStatusPanel"]
-    });
-    var currentStatusPanel = new org_shaolin_bmdp_adminconsole_form_CurrentStatus({"prefix":prefix + "currentStatusPanel."});
-
-
-    var collapseLabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "collapseLabel"]
-    });
-
-    var functionTree = new UIMaster.ui.webtree
-    ({
-        ui: elementList[prefix + "functionTree"]
+        ui: elementList[prefix + "matrixUI"]
     });
 
     var collapseLabel1 = new UIMaster.ui.label
@@ -52,19 +38,11 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         ,subComponents: [prefix + "collapseLabel1",prefix + "userFormContent",prefix + "userLogout"]
     });
 
-    var treePanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "treePanel"]
-        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: []
-        ,subComponents: [prefix + "collapseLabel",prefix + "functionTree"]
-    });
-
     var bottomPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "bottomPanel"]
         ,items: []
-        ,subComponents: [prefix + "treePanel",prefix + "userForm"]
+        ,subComponents: [prefix + "userForm"]
     });
 
     var pagePanel = new UIMaster.ui.panel
@@ -72,7 +50,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         ui: elementList[prefix + "pagePanel"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
-        ,subComponents: [prefix + "functionsTab"]
+        ,subComponents: [prefix + "matrixUI"]
     });
 
     var middlePanel = new UIMaster.ui.panel
@@ -93,20 +71,14 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [vogerplogo,userIcon,functionsTab,collapseLabel,functionTree,collapseLabel1,userLogout,userFormContent,topPanel,middlePanel,pagePanel,bottomPanel,treePanel,userForm]
+        ,items: [vogerplogo,userIcon,matrixUI,collapseLabel1,userLogout,userFormContent,topPanel,middlePanel,pagePanel,bottomPanel,userForm]
     });
 
     Form.vogerplogo=vogerplogo;
 
     Form.userIcon=userIcon;
 
-    Form.functionsTab=functionsTab;
-
-    Form.currentStatusPanel=currentStatusPanel;
-
-    Form.collapseLabel=collapseLabel;
-
-    Form.functionTree=functionTree;
+    Form.matrixUI=matrixUI;
 
     Form.collapseLabel1=collapseLabel1;
 
@@ -124,23 +96,13 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
     Form.pagePanel=pagePanel;
 
-    Form.functionsTab=functionsTab;
-
-    Form.currentStatusPanel=currentStatusPanel;
+    Form.matrixUI=matrixUI;
 
     Form.pagePanel=pagePanel;
 
-    Form.functionsTab=functionsTab;
-
-    Form.currentStatusPanel=currentStatusPanel;
+    Form.matrixUI=matrixUI;
 
     Form.bottomPanel=bottomPanel;
-
-    Form.treePanel=treePanel;
-
-    Form.collapseLabel=collapseLabel;
-
-    Form.functionTree=functionTree;
 
     Form.userForm=userForm;
 
@@ -149,12 +111,6 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     Form.userFormContent=userFormContent;
 
     Form.userLogout=userLogout;
-
-    Form.treePanel=treePanel;
-
-    Form.collapseLabel=collapseLabel;
-
-    Form.functionTree=functionTree;
 
     Form.userForm=userForm;
 
@@ -174,7 +130,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
     Form.logout = org_shaolin_bmdp_adminconsole_page_Main_mob_logout;
 
-    Form.clickTreeNode = org_shaolin_bmdp_adminconsole_page_Main_mob_clickTreeNode;
+    Form.clickFunctionNode = org_shaolin_bmdp_adminconsole_page_Main_mob_clickFunctionNode;
 
     Form.showUserInfo = org_shaolin_bmdp_adminconsole_page_Main_mob_showUserInfo;
 
@@ -198,49 +154,39 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Main_mob_Submit(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_mob_Submit */
-
+        var o = this;
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_Submit */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Main_mob_logout(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_mob_logout */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"logout-945221342",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"logout-945221342",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_logout */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_bmdp_adminconsole_page_Main_mob_clickTreeNode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_mob_clickTreeNode */
+    function org_shaolin_bmdp_adminconsole_page_Main_mob_clickFunctionNode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_mob_clickFunctionNode */
+        var o = this;
+        var UIEntity = this;
 
 				{
-				    var tree = $(eventsource).jstree(true);
-                    var selectedId = tree.get_selected();
-                    var node = tree.get_node(selectedId);
-                    if (node && node.a_attr.href != "#") {
-                        //TODO the maximum tabs allowed to be opened.
-                        if (this.tabCounter >= 4) {
-                           //close the second one.
-                           this.functionsTab.removeTab(1);
-                        }
-                        var menuCell = "#div-bottomPanel-0_1";
-                        $(menuCell).hide('slide', {direction: 'left'}, 500);
-	                    this.functionsTab.addFrameTab(node.text, node.a_attr.href);
-                        this.tabCounter = this.functionsTab.getTabLength();
-                        sideBar("middlePanel", "treePanel", "pagePanel");
-                    }
+				    var link = eventsource;
+				    var name = event;
+				    showMobileFrame(link, name);
 				}
-				
-        var UIEntity = this;
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_clickTreeNode */
+				    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_clickFunctionNode */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Main_mob_showUserInfo(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_mob_showUserInfo */
+        var o = this;
+        var UIEntity = this;
 
                 {
                     var userInfoCell = "#div-bottomPanel-0_0";
@@ -253,13 +199,13 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
                         $(userInfoCell).hide('slide', {direction: 'left'}, 500);
                     }
                 }
-                
-        var UIEntity = this;
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_showUserInfo */
+                    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_showUserInfo */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Main_mob_showStartMenu(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_mob_showStartMenu */
+        var o = this;
+        var UIEntity = this;
 
                 {
                     var menuCell = "#div-bottomPanel-0_1";
@@ -272,9 +218,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
                         $(menuCell).hide('slide', {direction: 'left'}, 500);
                     }
                 }
-                
-        var UIEntity = this;
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_showStartMenu */
+                    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_showStartMenu */
 
 
     function org_shaolin_bmdp_adminconsole_page_Main_mob_initPageJs(){/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_mob_initPageJs */
@@ -282,10 +226,6 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         var UIEntity = this;
 
 			{
-			  this.tabCounter = this.functionsTab.getTabLength(); // performance counter
-			  //$('#functionTree').on('select_node.jstree', function (e, data) {
-			    //alert(data.selected.length);
-			  //});
 			}
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_initPageJs */
 

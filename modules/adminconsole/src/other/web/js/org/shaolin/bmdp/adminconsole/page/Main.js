@@ -268,24 +268,26 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Main_Submit(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_Submit */
-
+        var o = this;
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_Submit */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Main_logout(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_logout */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"logout-945221342",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"logout-945221342",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_logout */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Main_clickTreeNode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_clickTreeNode */
+        var o = this;
+        var UIEntity = this;
 
 				{
 				    var tree = $(eventsource).jstree(true);
@@ -302,55 +304,53 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
             sideBar("middlePanel", "treePanel", "pagePanel");
         }
 				}
-				
-        var UIEntity = this;
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_clickTreeNode */
+				    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_clickTreeNode */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Main_showUserInfo(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_showUserInfo */
+        var o = this;
+        var UIEntity = this;
 
       {
           var value = $("#topPanel").width();
           var self = $("#div-topRightPanel-1_0").width();
           $("#div-topRightPanel-1_0").css("left", (value - self + 5) + "px");
           if ($("#div-topRightPanel-1_0").css("display") == "none") {
-              $("#div-topRightPanel-1_0").slideDown();
+              $("#div-topRightPanel-1_0").slideDown("fast");
           } else {
-              $("#div-topRightPanel-1_0").slideUp();
+              $("#div-topRightPanel-1_0").slideUp("fast");
           }
       }
-      
-        var UIEntity = this;
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_showUserInfo */
+          }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_showUserInfo */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Main_showNotification(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_showNotification */
+        var o = this;
+        var UIEntity = this;
 
       {
           var value = $("#topPanel").width();
           var self = $("#div-topRightPanel-4_0").width();
           $("#div-topRightPanel-4_0").css("left", (value - self + 5) + "px");
           if ($("#div-topRightPanel-4_0").css("display") == "none") {
-              $("#div-topRightPanel-4_0").slideDown();
+              $("#div-topRightPanel-4_0").slideDown("fast");
           } else {
-              $("#div-topRightPanel-4_0").slideUp();
+              $("#div-topRightPanel-4_0").slideUp("fast");
           }
       }
-      
-        var UIEntity = this;
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_showNotification */
+          }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_showNotification */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Main_search(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_search */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"search-201506102211",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"search-201506102211",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_search */
 
 

@@ -83,15 +83,6 @@
 		                            }]]></ns2:expressionString>
 		                        </ns2:expression>
 		                    </ns2:query>
-		                    <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
-		                        <ns2:expression xsi:type="ns2:ExpressionType">
-		                            <ns2:expressionString><![CDATA[
-		                            import org.shaolin.bmdp.runtime.cache.CacheManager;
-		                            {
-		                                 return org.shaolin.bmdp.runtime.cache.CacheManager.getInstance().getCacheSize();
-		                            }]]></ns2:expressionString>
-		                        </ns2:expression>
-		                    </ns2:totalCount>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
 		                            <ns2:value>Cache Name</ns2:value>
@@ -179,17 +170,6 @@
                                     }]]></ns2:expressionString>
                                 </ns2:expression>
                             </ns2:query>
-                            <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
-                                <ns2:expression xsi:type="ns2:ExpressionType">
-                                    <ns2:expressionString><![CDATA[
-                                    import org.shaolin.bmdp.runtime.cache.CacheManager;
-                                    import org.shaolin.bmdp.runtime.AppContext;
-                                    import org.shaolin.bmdp.adminconsole.be.LifeServiceItemImpl;
-                                    {
-                                         return AppContext.get().getLifeCycleServiceList().size();
-                                    }]]></ns2:expressionString>
-                                </ns2:expression>
-                            </ns2:totalCount>
                             <ns2:rowFilter xsi:type="ns2:ExpressionPropertyType">
                                 <ns2:expression xsi:type="ns2:ExpressionType">
                                     <ns2:expressionString><![CDATA[

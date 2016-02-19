@@ -310,6 +310,11 @@
 			<bediagram:description>Created</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
+            <bediagram:value>Processing</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>Processing</bediagram:description>
+        </bediagram:constantValue>
+		<bediagram:constantValue>
 			<bediagram:value>Delivered</bediagram:value>
 			<bediagram:intValue>1</bediagram:intValue>
 			<bediagram:description>Delivered</bediagram:description>

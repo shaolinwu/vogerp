@@ -77,23 +77,23 @@ function org_shaolin_bmdp_adminconsole_page_CacheManager(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_CacheManager_ReloadFunction(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_CacheManager_ReloadFunction */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openPage",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openPage",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_CacheManager_ReloadFunction */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_CacheManager_reloadLifecycleService(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_CacheManager_reloadLifecycleService */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"reloadLifecycleService-20151212-1049",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"reloadLifecycleService-20151212-1049",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_CacheManager_reloadLifecycleService */
 
 

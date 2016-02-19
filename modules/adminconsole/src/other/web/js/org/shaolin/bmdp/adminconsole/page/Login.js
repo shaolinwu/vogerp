@@ -123,17 +123,19 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Login_genVerifiCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_genVerifiCode */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"genVerifiCode-20151227-1839",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"genVerifiCode-20151227-1839",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_genVerifiCode */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Login_verifiCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_verifiCode */
+        var o = this;
+        var UIEntity = this;
 
 		        {   
 		            var constraint_result = this.Form.validate();
@@ -144,18 +146,16 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
 		        
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifiCode-20151227-1839",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifiCode-20151227-1839",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_verifiCode */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Login_Login(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_Login */
-
+        var o = this;
         var UIEntity = this;
 
-        this.Submit_OutFunctionName(eventsource);
+        o.Submit_OutFunctionName(eventsource);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_Login */
 
 

@@ -148,17 +148,19 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Registration_genVerifiCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Registration_genVerifiCode */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"genVerifiCode-20151227-1839",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"genVerifiCode-20151227-1839",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Registration_genVerifiCode */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Registration_verifiCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Registration_verifiCode */
+        var o = this;
+        var UIEntity = this;
 
 		        {   
 		            var constraint_result = this.Form.validate();
@@ -169,18 +171,16 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 		        
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifiCode-20151227-1839",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifiCode-20151227-1839",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Registration_verifiCode */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Registration_Register(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Registration_Register */
-
+        var o = this;
         var UIEntity = this;
 
-        this.Register_OutFunctionName(eventsource);
+        o.Register_OutFunctionName(eventsource);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Registration_Register */
 
 

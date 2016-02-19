@@ -77,6 +77,8 @@ function org_shaolin_bmdp_adminconsole_form_Login(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_form_Login_Login(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_form_Login_Login */
+        var o = this;
+        var UIEntity = this;
 
         {   
             var constraint_result = this.Form.validate();
@@ -85,19 +87,23 @@ function org_shaolin_bmdp_adminconsole_form_Login(json)
             }
             this.Form.submit();
         }
-        
-        var UIEntity = this;
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_form_Login_Login */
+            }/* Gen_Last:org_shaolin_bmdp_adminconsole_form_Login_Login */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_form_Login_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_form_Login_invokeDynamicFunction */
+        var o = this;
+        var UIEntity = this;
+
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'????',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),o.__entityName);
 
-        var UIEntity = this;
+        
+        }
+        }).open();
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_form_Login_invokeDynamicFunction */
 
 

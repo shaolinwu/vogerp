@@ -167,6 +167,38 @@
           </ns2:exp>
       </ns2:ops>
   </ns2:eventHandler>
+  <ns2:eventHandler functionName="openPurchaseOrderTracker">
+      <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openPurchaseOrderTracker-20150614">
+          <ns2:exp>
+              <ns2:expressionString><![CDATA[
+              import java.util.HashMap;
+              import org.shaolin.uimaster.page.AjaxContext;
+              import org.shaolin.uimaster.page.ajax.*;
+              import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
+              import org.shaolin.vogerp.order.dao.OrderModel;
+              import org.shaolin.vogerp.order.dao.CustOrderModel;
+              import org.shaolin.bmdp.runtime.AppContext;
+              import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+              {
+                  Table personalInfoTable = (Table)@page.getElement("purchaseOrderInfoTable");
+                  if (personalInfoTable.getSelectedRow() == null) {
+                      return;
+                  }
+                  PurchaseOrderImpl defaultUser = (PurchaseOrderImpl)personalInfoTable.getSelectedRow();
+                  ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+                  
+                  HashMap input = new HashMap();
+                  input.put("sessionId", service.getSessionId(defaultUser.getTaskId()));
+                  input.put("editable", new Boolean(true));
+                  RefForm form = new RefForm("saleOrder", "org.shaolin.bmdp.workflow.form.SessionTracker", input);
+                  @page.addElement(form);
+                  
+                  form.openInWindows("Order Tracker", null, 690, 380);
+              }
+              ]]></ns2:expressionString>
+          </ns2:exp>
+      </ns2:ops>
+  </ns2:eventHandler>
   <ns2:eventHandler functionName="createProductOrder">
       <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createProductOrder-20150916">
           <ns2:exp>
@@ -378,6 +410,7 @@
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new SaleOrderImpl());
+		                                     $tableCondition.setCount(10);
 		                                  }
 		                                  SaleOrderImpl condition = (SaleOrderImpl)$tableCondition.getCondition();
 		                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
@@ -388,25 +421,6 @@
 		                            }]]></ns2:expressionString>
 		                        </ns2:expression>
 		                    </ns2:query>
-		                    <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
-		                        <ns2:expression xsi:type="ns2:ExpressionType">
-		                            <ns2:expressionString><![CDATA[
-		                            import java.util.List;
-		                            import org.shaolin.uimaster.page.ajax.TableConditions;
-		                            import org.shaolin.vogerp.order.be.ISaleOrder;
-		                            import org.shaolin.vogerp.order.be.SaleOrderImpl;
-		                            import org.shaolin.vogerp.order.dao.OrderModel;
-		                            import org.shaolin.bmdp.runtime.security.UserContext;
-		                            {
-		                                  if ($tableCondition == null) {
-		                                     $tableCondition = TableConditions.createCondition(new SaleOrderImpl());
-		                                  }
-		                                  SaleOrderImpl condition = (SaleOrderImpl)$tableCondition.getCondition();
-		                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-		                                  return OrderModel.INSTANCE.searchSaleOrderCount(condition);
-		                            }]]></ns2:expressionString>
-		                        </ns2:expression>
-		                    </ns2:totalCount>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
 		                            <ns2:value>Serial Number</ns2:value>
@@ -554,6 +568,7 @@
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new PurchaseOrderImpl());
+		                                     $tableCondition.setCount(10);
 		                                  }
 		                                  PurchaseOrderImpl condition = (PurchaseOrderImpl)$tableCondition.getCondition();
 		                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
@@ -564,24 +579,6 @@
 		                            }]]></ns2:expressionString>
 		                        </ns2:expression>
 		                    </ns2:query>
-		                    <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
-		                        <ns2:expression xsi:type="ns2:ExpressionType">
-		                            <ns2:expressionString><![CDATA[
-		                            import java.util.List;
-		                            import org.shaolin.uimaster.page.ajax.TableConditions;
-		                            import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
-		                            import org.shaolin.vogerp.order.dao.OrderModel;
-		                            import org.shaolin.bmdp.runtime.security.UserContext;
-		                            {
-		                                  if ($tableCondition == null) {
-		                                     $tableCondition = TableConditions.createCondition(new PurchaseOrderImpl());
-		                                  }
-		                                  PurchaseOrderImpl condition = (PurchaseOrderImpl)$tableCondition.getCondition();
-		                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-		                                  return OrderModel.INSTANCE.searchPurchaseOrderCount(condition);
-		                            }]]></ns2:expressionString>
-		                        </ns2:expression>
-		                    </ns2:totalCount>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
 		                            <ns2:value>Serial Number</ns2:value>
@@ -664,6 +661,14 @@
 		                            <ns2:icon>ui-icon-note</ns2:icon>
 		                            <ns2:function>openPurchaseOrderItem</ns2:function>
 		                        </ns2:action>
+		                        <ns2:action>
+                                    <ns2:uiid>openPurchaseOrderTracker</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>Order Tracker</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>openPurchaseOrderTracker</ns2:function>
+                                </ns2:action>
 		                    </ns2:actionGroup>
 		                </ns2:component>
 		                <ns2:layoutConstraint>
@@ -700,6 +705,7 @@
                               {
                                     if ($tableCondition == null) {
                                        $tableCondition = TableConditions.createCondition(new ProductOrderImpl());
+                                       $tableCondition.setCount(10);
                                     }
                                     ProductOrderImpl condition = (ProductOrderImpl)$tableCondition.getCondition();
                                     condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
@@ -710,24 +716,6 @@
                               }]]></ns2:expressionString>
                           </ns2:expression>
                       </ns2:query>
-                      <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
-                          <ns2:expression xsi:type="ns2:ExpressionType">
-                              <ns2:expressionString><![CDATA[
-                              import java.util.List;
-                              import org.shaolin.uimaster.page.ajax.TableConditions;
-                              import org.shaolin.vogerp.order.be.ProductOrderImpl;
-                              import org.shaolin.vogerp.order.dao.OrderModel;
-                              import org.shaolin.bmdp.runtime.security.UserContext;
-                              {
-                                    if ($tableCondition == null) {
-                                       $tableCondition = TableConditions.createCondition(new ProductOrderImpl());
-                                    }
-                                    ProductOrderImpl condition = (ProductOrderImpl)$tableCondition.getCondition();
-                                    condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-                                    return OrderModel.INSTANCE.searchProductOrderCount(condition);
-                              }]]></ns2:expressionString>
-                          </ns2:expression>
-                      </ns2:totalCount>
                       <ns2:column xsi:type="ns2:UITableColumnType">
                           <ns2:title xsi:type="ns2:StringPropertyType">
                               <ns2:value>Serial Number</ns2:value>
@@ -832,6 +820,7 @@
                               {
                                     if ($tableCondition == null) {
                                        $tableCondition = TableConditions.createCondition(new InStoreOrderImpl());
+                                       $tableCondition.setCount(10);
                                     }
                                     InStoreOrderImpl condition = (InStoreOrderImpl)$tableCondition.getCondition();
                                     condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
@@ -842,24 +831,6 @@
                               }]]></ns2:expressionString>
                           </ns2:expression>
                       </ns2:query>
-                      <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
-                          <ns2:expression xsi:type="ns2:ExpressionType">
-                              <ns2:expressionString><![CDATA[
-                              import java.util.List;
-                              import org.shaolin.uimaster.page.ajax.TableConditions;
-                              import org.shaolin.vogerp.order.be.InStoreOrderImpl;
-                              import org.shaolin.vogerp.order.dao.OrderModel;
-                              import org.shaolin.bmdp.runtime.security.UserContext;
-                              {
-                                    if ($tableCondition == null) {
-                                       $tableCondition = TableConditions.createCondition(new InStoreOrderImpl());
-                                    }
-                                    InStoreOrderImpl condition = (InStoreOrderImpl)$tableCondition.getCondition();
-                                    condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-                                    return OrderModel.INSTANCE.searchInStoreOrderCount(condition);
-                              }]]></ns2:expressionString>
-                          </ns2:expression>
-                      </ns2:totalCount>
                       <ns2:column xsi:type="ns2:UITableColumnType">
                           <ns2:title xsi:type="ns2:StringPropertyType">
                               <ns2:value>Serial Number</ns2:value>
@@ -964,6 +935,7 @@
                               {
                                     if ($tableCondition == null) {
                                        $tableCondition = TableConditions.createCondition(new OutStoreOrderImpl());
+                                       $tableCondition.setCount(10);
                                     }
                                     OutStoreOrderImpl condition = (OutStoreOrderImpl)$tableCondition.getCondition();
                                     condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
@@ -974,24 +946,6 @@
                               }]]></ns2:expressionString>
                           </ns2:expression>
                       </ns2:query>
-                      <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
-                          <ns2:expression xsi:type="ns2:ExpressionType">
-                              <ns2:expressionString><![CDATA[
-                              import java.util.List;
-                              import org.shaolin.uimaster.page.ajax.TableConditions;
-                              import org.shaolin.vogerp.order.be.OutStoreOrderImpl;
-                              import org.shaolin.vogerp.order.dao.OrderModel;
-                              import org.shaolin.bmdp.runtime.security.UserContext;
-                              {
-                                    if ($tableCondition == null) {
-                                       $tableCondition = TableConditions.createCondition(new OutStoreOrderImpl());
-                                    }
-                                    OutStoreOrderImpl condition = (OutStoreOrderImpl)$tableCondition.getCondition();
-                                    condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-                                    return OrderModel.INSTANCE.searchOutStoreOrderCount(condition);
-                              }]]></ns2:expressionString>
-                          </ns2:expression>
-                      </ns2:totalCount>
                       <ns2:column xsi:type="ns2:UITableColumnType">
                           <ns2:title xsi:type="ns2:StringPropertyType">
                               <ns2:value>Serial Number</ns2:value>

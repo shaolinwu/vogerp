@@ -1,6 +1,7 @@
 #div-Form-0_0 {margin-bottom: 15px;}
 #div-Form-0_2 {margin-top: 15px;}
 #topPanel img{height: 40px;}
+#div-topPanel-0_0 {border: 1px solid #77d5f7;}
 #div-topPanel-1_0 {float: right; margin-right: 10px;} 
 #div-topPanel-1_0 img {width: 25px;height: 25px;}
 #pagePanel {overflow: hidden;}
@@ -9,3 +10,33 @@
 #div-treePanel-0_1 {border-top: 1px solid #8DB9DB;}
 #div-userForm-0_2 {width: 100%; border-top: 1px solid #8DB9DB;}
 #div-userForm-0_2 img{float: right; margin-right: 10px; cursor: pointer;}
+.uimaster_matrix_col{
+	width: 96%;
+    text-align: center;
+    height: 30px;
+    border: 1px solid #77d5f7;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    display: inline-block;
+    padding: .5em .4em .5em .4em;
+    cursor: pointer;
+    margin-right: 5px;
+}
+.ui-dialog .ui-dialog-content {
+    position: relative;
+    border: 0;
+    background: none;
+    overflow: auto;
+    padding: 0;
+    padding-top: 5px;
+}
+.ui-dialog {
+    overflow: hidden;
+    position: absolute;
+    padding: 0;
+    top: 0;
+    left: 0;
+    outline: 0;
+}

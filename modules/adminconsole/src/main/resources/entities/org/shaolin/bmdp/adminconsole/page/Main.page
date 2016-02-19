@@ -53,9 +53,9 @@
           var self = $("#div-topRightPanel-1_0").width();
           $("#div-topRightPanel-1_0").css("left", (value - self + 5) + "px");
           if ($("#div-topRightPanel-1_0").css("display") == "none") {
-              $("#div-topRightPanel-1_0").slideDown();
+              $("#div-topRightPanel-1_0").slideDown("fast");
           } else {
-              $("#div-topRightPanel-1_0").slideUp();
+              $("#div-topRightPanel-1_0").slideUp("fast");
           }
       }
       ]]></ns2:expressionString>
@@ -69,9 +69,9 @@
           var self = $("#div-topRightPanel-4_0").width();
           $("#div-topRightPanel-4_0").css("left", (value - self + 5) + "px");
           if ($("#div-topRightPanel-4_0").css("display") == "none") {
-              $("#div-topRightPanel-4_0").slideDown();
+              $("#div-topRightPanel-4_0").slideDown("fast");
           } else {
-              $("#div-topRightPanel-4_0").slideUp();
+              $("#div-topRightPanel-4_0").slideUp("fast");
           }
       }
       ]]></ns2:expressionString>

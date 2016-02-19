@@ -128,24 +128,26 @@ function org_shaolin_bmdp_adminconsole_page_Main0(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Main0_Submit(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main0_Submit */
-
+        var o = this;
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main0_Submit */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Main0_logout(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main0_logout */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"logout-945221342",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"logout-945221342",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main0_logout */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Main0_showUserInfo(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main0_showUserInfo */
+        var o = this;
+        var UIEntity = this;
 
       {
           var value = $("#topPanel").width();
@@ -157,19 +159,17 @@ function org_shaolin_bmdp_adminconsole_page_Main0(json)
               $("#div-topRightPanel-1_0").slideUp();
           }
       }
-      
-        var UIEntity = this;
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main0_showUserInfo */
+          }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main0_showUserInfo */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Main0_search(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main0_search */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"search-201506102211",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"search-201506102211",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main0_search */
 
 
