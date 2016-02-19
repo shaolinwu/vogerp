@@ -183,34 +183,40 @@ function org_shaolin_vogerp_productmodel_form_StorageItem(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_productmodel_form_StorageItem_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_StorageItem_Save */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-742555938",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-742555938",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_StorageItem_Save */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_productmodel_form_StorageItem_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_StorageItem_Cancel */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail1018486543",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail1018486543",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_StorageItem_Cancel */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_productmodel_form_StorageItem_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_StorageItem_invokeDynamicFunction */
+        var o = this;
+        var UIEntity = this;
+
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'????',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),o.__entityName);
 
-        var UIEntity = this;
+        
+        }
+        }).open();
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_StorageItem_invokeDynamicFunction */
 
 

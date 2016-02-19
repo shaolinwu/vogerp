@@ -131,28 +131,30 @@ function org_shaolin_vogerp_productmodel_form_ProductCostTable(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_productmodel_form_ProductCostTable_createItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductCostTable_createItem */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_2000691788",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_2000691788",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductCostTable_createItem */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_productmodel_form_ProductCostTable_deleteItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductCostTable_deleteItem */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_-370544464",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_-370544464",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductCostTable_deleteItem */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_productmodel_form_ProductCostTable_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductCostTable_Save */
+        var o = this;
+        var UIEntity = this;
 
         {
             this.itemTable.syncBodyDataToServer();
@@ -160,31 +162,35 @@ function org_shaolin_vogerp_productmodel_form_ProductCostTable(json)
         
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveItem_-928911727",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveItem_-928911727",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductCostTable_Save */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_productmodel_form_ProductCostTable_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductCostTable_Cancel */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail40036941",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail40036941",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductCostTable_Cancel */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_productmodel_form_ProductCostTable_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductCostTable_invokeDynamicFunction */
+        var o = this;
+        var UIEntity = this;
+
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'????',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),o.__entityName);
 
-        var UIEntity = this;
+        
+        }
+        }).open();
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductCostTable_invokeDynamicFunction */
 
 

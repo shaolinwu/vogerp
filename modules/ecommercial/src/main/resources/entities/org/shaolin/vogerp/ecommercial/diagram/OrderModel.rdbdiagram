@@ -126,6 +126,20 @@
     </ns2:searchResultMapping>
     <ns2:searchConditionMapping name="Search">
       <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.id</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.id</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getId() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
         <ns2:toDataFieldPath>inObject.publishedCustomerId</ns2:toDataFieldPath>
         <ns2:conditionValue>
           <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">

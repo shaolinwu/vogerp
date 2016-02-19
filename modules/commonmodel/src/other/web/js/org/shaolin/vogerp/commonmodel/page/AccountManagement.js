@@ -62,23 +62,23 @@ function org_shaolin_vogerp_commonmodel_page_AccountManagement(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_AccountManagement_createAccount(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_AccountManagement_createAccount */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showBlankpersonalInfoPanel",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showBlankpersonalInfoPanel",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_AccountManagement_createAccount */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_AccountManagement_openAccount(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_AccountManagement_openAccount */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showpersonalInfoPanel",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showpersonalInfoPanel",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_AccountManagement_openAccount */
 
 

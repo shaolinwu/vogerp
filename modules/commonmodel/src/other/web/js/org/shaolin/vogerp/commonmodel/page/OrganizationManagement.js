@@ -76,52 +76,52 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_OrganizationManagement_createOrg(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_createOrg */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showBlankOrgInfoPanel",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showBlankOrgInfoPanel",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_createOrg */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_OrganizationManagement_openOrgDetail(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_openOrgDetail */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showOrgInfoPanel",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showOrgInfoPanel",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_openOrgDetail */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_OrganizationManagement_openOrgTreeDetail(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_openOrgTreeDetail */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showOrgTreeInfoPanel",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showOrgTreeInfoPanel",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_openOrgTreeDetail */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_OrganizationManagement_deleteOrg(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_deleteOrg */
-
+        var o = this;
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_deleteOrg */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_OrganizationManagement_assignRoles(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_assignRoles */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"assignRoles-2015-08140714",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"assignRoles-2015-08140714",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_assignRoles */
 
 

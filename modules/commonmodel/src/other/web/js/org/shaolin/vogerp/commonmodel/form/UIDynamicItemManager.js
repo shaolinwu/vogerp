@@ -62,39 +62,41 @@ function org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager_createItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager_createItem */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_43242342",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_43242342",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager_createItem */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager_openItemDetail(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager_openItemDetail */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showconstantInfoPanel",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showconstantInfoPanel",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager_openItemDetail */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager_deleteItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager_deleteItem */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_201511101829",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_201511101829",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager_deleteItem */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager_reload(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager_reload */
+        var o = this;
+        var UIEntity = this;
 
 				         {
 				          var o = this;
@@ -115,20 +117,24 @@ function org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager(json)
 				         
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"reload_201511101829",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"reload_201511101829",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager_reload */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager_invokeDynamicFunction */
+        var o = this;
+        var UIEntity = this;
+
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'????',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),o.__entityName);
 
-        var UIEntity = this;
+        
+        }
+        }).open();
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager_invokeDynamicFunction */
 
 

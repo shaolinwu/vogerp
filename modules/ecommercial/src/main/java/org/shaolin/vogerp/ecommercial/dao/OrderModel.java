@@ -33,6 +33,9 @@ public class OrderModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
+            if (scObject.getId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.id", scObject.getId()));
+            }
             if (scObject.getPublishedCustomerId() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.publishedCustomerId", scObject.getPublishedCustomerId()));
             }
@@ -58,6 +61,9 @@ public class OrderModel extends BEEntityDaoObject {
     public long searchGoldenOrderCount(org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl.class, "inObject");
 
+            if (scObject.getId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.id", scObject.getId()));
+            }
             if (scObject.getPublishedCustomerId() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.publishedCustomerId", scObject.getPublishedCustomerId()));
             }

@@ -83,56 +83,56 @@ function org_shaolin_vogerp_productmodel_page_StorageManagement(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_productmodel_page_StorageManagement_createWarehouse(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_page_StorageManagement_createWarehouse */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createWarehouse324324",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createWarehouse324324",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_page_StorageManagement_createWarehouse */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_productmodel_page_StorageManagement_openWarehouse(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_page_StorageManagement_openWarehouse */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openWarehouse45332",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openWarehouse45332",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_page_StorageManagement_openWarehouse */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_productmodel_page_StorageManagement_createItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_page_StorageManagement_createItem */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem-45332",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem-45332",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_page_StorageManagement_createItem */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_productmodel_page_StorageManagement_openItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_page_StorageManagement_openItem */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openItem-45332",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openItem-45332",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_page_StorageManagement_openItem */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_productmodel_page_StorageManagement_showMatrix(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_page_StorageManagement_showMatrix */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showMatrix-45332",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showMatrix-45332",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_page_StorageManagement_showMatrix */
 
 

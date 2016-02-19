@@ -85,39 +85,41 @@ function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_createItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_createItem */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_-136152444",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_-136152444",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_createItem */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_deleteItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_deleteItem */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_209729176",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_209729176",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_deleteItem */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_Save */
+        var o = this;
+        var UIEntity = this;
 {this.itemTable.syncBodyDataToServer();}
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveItem-20150713-125459",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveItem-20150713-125459",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_Save */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_reload(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_reload */
+        var o = this;
+        var UIEntity = this;
 
              {
               var o = this;
@@ -138,31 +140,35 @@ function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable(json)
              
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"reload_201601171829",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"reload_201601171829",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_reload */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_Cancel */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-884197646",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-884197646",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_Cancel */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_invokeDynamicFunction */
+        var o = this;
+        var UIEntity = this;
+
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'????',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),o.__entityName);
 
-        var UIEntity = this;
+        
+        }
+        }).open();
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_invokeDynamicFunction */
 
 

@@ -181,6 +181,7 @@
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new WarehouseImpl());
+		                                     $tableCondition.setCount(10);
 		                                  }
 		                                  WarehouseImpl condition = (WarehouseImpl)$tableCondition.getCondition();
 		                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
@@ -191,23 +192,6 @@
 		                            }]]></ns2:expressionString>
 		                        </ns2:expression>
 		                    </ns2:query>
-		                    <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
-		                        <ns2:expression xsi:type="ns2:ExpressionType">
-		                            <ns2:expressionString><![CDATA[
-		                            import org.shaolin.uimaster.page.ajax.TableConditions;
-		                            import org.shaolin.vogerp.productmodel.be.WarehouseImpl;
-		                            import org.shaolin.vogerp.productmodel.dao.ProductModel;
-		                            import org.shaolin.bmdp.runtime.security.UserContext;
-		                            {
-		                                 if ($tableCondition == null) {
-		                                    $tableCondition = TableConditions.createCondition(new WarehouseImpl());
-		                                 }
-		                                 WarehouseImpl condition = (WarehouseImpl)$tableCondition.getCondition();
-		                                 condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-		                                 return ProductModel.INSTANCE.searchWarehouseCount(condition);
-		                            }]]></ns2:expressionString>
-		                        </ns2:expression>
-		                    </ns2:totalCount>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
 		                            <ns2:value>Name</ns2:value>
@@ -309,6 +293,7 @@
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new StorageItemImpl());
+		                                     $tableCondition.setCount(10);
 		                                  }
 		                                  StorageItemImpl condition = (StorageItemImpl)$tableCondition.getCondition();
 		                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
@@ -319,23 +304,6 @@
 		                            }]]></ns2:expressionString>
 		                        </ns2:expression>
 		                    </ns2:query>
-		                    <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
-		                        <ns2:expression xsi:type="ns2:ExpressionType">
-		                            <ns2:expressionString><![CDATA[
-		                            import org.shaolin.uimaster.page.ajax.TableConditions;
-		                            import org.shaolin.vogerp.productmodel.be.StorageItemImpl;
-		                            import org.shaolin.vogerp.productmodel.dao.ProductModel;
-		                            import org.shaolin.bmdp.runtime.security.UserContext;
-		                            {
-		                                 if ($tableCondition == null) {
-		                                    $tableCondition = TableConditions.createCondition(new StorageItemImpl());
-		                                 }
-		                                 StorageItemImpl condition = (StorageItemImpl)$tableCondition.getCondition();
-		                                 condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-		                                 return ProductModel.INSTANCE.searchStorageItemsCount(condition);
-		                            }]]></ns2:expressionString>
-		                        </ns2:expression>
-		                    </ns2:totalCount>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
 		                            <ns2:value>Warehouse</ns2:value>

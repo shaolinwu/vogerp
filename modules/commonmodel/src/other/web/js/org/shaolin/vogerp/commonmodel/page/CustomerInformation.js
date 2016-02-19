@@ -67,41 +67,41 @@ function org_shaolin_vogerp_commonmodel_page_CustomerInformation(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_CustomerInformation_createUser(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_CustomerInformation_createUser */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showBlankpersonalInfoPanel",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showBlankpersonalInfoPanel",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_CustomerInformation_createUser */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_CustomerInformation_openUserDetail(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_CustomerInformation_openUserDetail */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showpersonalInfoPanel",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showpersonalInfoPanel",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_CustomerInformation_openUserDetail */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_CustomerInformation_deleteUser(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_CustomerInformation_deleteUser */
-
+        var o = this;
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_CustomerInformation_deleteUser */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_CustomerInformation_createOrg(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_CustomerInformation_createOrg */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showBlankOrgInfoPanel",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showBlankOrgInfoPanel",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_CustomerInformation_createOrg */
 
 

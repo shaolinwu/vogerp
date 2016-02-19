@@ -174,6 +174,7 @@
 		                       {
 		                             if ($tableCondition == null) {
 		                                $tableCondition = TableConditions.createCondition(new PersonalInfoImpl());
+		                                $tableCondition.setCount(10);
 		                             }
 		                             PersonalInfoImpl condition = (PersonalInfoImpl)$tableCondition.getCondition();
 		                             return CommonModel.INSTANCE.searchPersonInfo(condition,
@@ -183,22 +184,6 @@
 		                       }]]></ns2:expressionString>
 		                   </ns2:expression>
 		               </ns2:query>
-		               <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
-		                   <ns2:expression xsi:type="ns2:ExpressionType">
-		                       <ns2:expressionString><![CDATA[
-		                       import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
-		                       import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
-		                       import org.shaolin.uimaster.page.ajax.TableConditions;
-		                       import org.shaolin.vogerp.commonmodel.dao.CommonModel;
-		                       {
-		                            if ($tableCondition == null) {
-		                               $tableCondition = TableConditions.createCondition(new PersonalInfoImpl());
-		                            }
-		                            PersonalInfoImpl condition = (PersonalInfoImpl)$tableCondition.getCondition();
-		                            return CommonModel.INSTANCE.searchPersonInfoCount(condition);
-		                       }]]></ns2:expressionString>
-		                   </ns2:expression>
-		               </ns2:totalCount>
 		               <ns2:column xsi:type="ns2:UITableColumnType">
 		                   <ns2:title xsi:type="ns2:StringPropertyType">
 		                       <ns2:value>Employee Id</ns2:value>

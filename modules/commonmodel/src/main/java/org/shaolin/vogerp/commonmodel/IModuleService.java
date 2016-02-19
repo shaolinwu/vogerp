@@ -3,6 +3,7 @@ package org.shaolin.vogerp.commonmodel;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.shaolin.uimaster.page.widgets.HTMLMatrixType.DataMode;
 import org.shaolin.vogerp.commonmodel.be.IModuleGroup;
 
 /**
@@ -27,4 +28,5 @@ public interface IModuleService {
 
 	public ArrayList[] getModuleListInOptions();
 
+	public List<List<DataMode>> getModulesInMatrix(String appName, int columns);
 }

@@ -82,77 +82,77 @@ function org_shaolin_vogerp_commonmodel_page_PartyManagement(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_PartyManagement_createUser(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_PartyManagement_createUser */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showBlankpersonalInfoPanel",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showBlankpersonalInfoPanel",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_PartyManagement_createUser */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_PartyManagement_openUserDetail(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_PartyManagement_openUserDetail */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showpersonalInfoPanel",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showpersonalInfoPanel",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_PartyManagement_openUserDetail */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_PartyManagement_deleteUser(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_PartyManagement_deleteUser */
-
+        var o = this;
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_PartyManagement_deleteUser */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_PartyManagement_deleteOrg(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_PartyManagement_deleteOrg */
-
+        var o = this;
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_PartyManagement_deleteOrg */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_PartyManagement_createPartyRelation(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_PartyManagement_createPartyRelation */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showBlankPartyInfoPanel",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showBlankPartyInfoPanel",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_PartyManagement_createPartyRelation */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_PartyManagement_openPartyRelationDetail(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_PartyManagement_openPartyRelationDetail */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showPartyInfoPanel",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showPartyInfoPanel",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_PartyManagement_openPartyRelationDetail */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_PartyManagement_deletePartyRelation(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_PartyManagement_deletePartyRelation */
-
+        var o = this;
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_PartyManagement_deletePartyRelation */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_PartyManagement_openPersonalAccount(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_PartyManagement_openPersonalAccount */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openPersonalAccount234324",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openPersonalAccount234324",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_PartyManagement_openPersonalAccount */
 
 

@@ -2,10 +2,10 @@
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
   <entityName>org.shaolin.vogerp.ecommercial.form.GOOfferPrice</entityName>
   <systemVersion>0</systemVersion>
-  <ns2:eventHandler functionName="offerPrice">
+  <ns2:eventHandler functionName="offerPrice" needAlert="true">
     <ns2:ops xsi:type="ns2:OpExecuteScriptType">
         <ns2:expressionString><![CDATA[
-        {   
+        {
             var constraint_result = this.Form.validate();
             if (constraint_result != true && constraint_result != null) {
                 return false;
@@ -28,25 +28,29 @@
         import org.shaolin.vogerp.commonmodel.IUserService; 
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            HashMap out = (HashMap)form.ui2Data();
-
-            GoldenOrderImpl order = (GoldenOrderImpl)out.get("beObject");
-            GOOfferPriceImpl offerPrice = new GOOfferPriceImpl();
-            
-            IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
-            offerPrice.setTakenCustomerId(service.getUserId());
-            offerPrice.setPrice(Double.valueOf(@page.getTextField("priceUI").getValue()));
-            offerPrice.setCreateDate(new Date());
-            
-            if (order.getOfferPrices() == null) {
-                order.setOfferPrices(new ArrayList());
-            }
-            order.getOfferPrices().add(offerPrice);
-
-            OrderModel.INSTANCE.update(order);
-            
             form.closeIfinWindows();
             @page.removeForm(@page.getEntityUiid()); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="refreshPrice">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="refreshPrice-20160211-201444">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.List;
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.ecommercial.be.IGoldenOrder;
+        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+        {
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            HashMap out = (HashMap)form.ui2Data();
+            IGoldenOrder gorder = (IGoldenOrder)out.get("beObject");
+            Label priceUI = @page.getLabel("currPriceUI");
+            priceUI.setValue(String.valueOf(OrderUtil.getLowestOfferPrice(gorder, true)));
+            
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -69,10 +73,12 @@
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-      <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -88,6 +94,22 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="currPriceUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler></ns2:handler>
+        </ns2:EventListener>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="lastPriceUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.ecommercial.be.GOOfferPrice.lastPriceUI</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="lastPriceUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="refreshPrice"></ns2:handler>
+        </ns2:EventListener>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="priceUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -109,10 +131,16 @@
             <value>^(([1-9]\d{0,9})|0)(\.\d{1,2})?$</value>
         </ns2:regex>
       </ns2:component>
-       <ns2:component xsi:type="ns2:UILabelType" UIID="priceDescriptionUILabel">
+      <ns2:component xsi:type="ns2:UILabelType" UIID="priceDescriptionUILabel">
         <ns2:UIStyle></ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
             <ns2:value>出价必须小于当前价，一天只能出价三次！</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="resultUILabel">
+        <ns2:UIStyle></ns2:UIStyle>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+            <ns2:value></ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
@@ -124,16 +152,28 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>priceUILabel</ns2:componentId>
+        <ns2:componentId>lastPriceUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>priceUI</ns2:componentId>
+        <ns2:componentId>lastPriceUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
+        <ns2:componentId>priceUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>priceUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
         <ns2:componentId>priceDescriptionUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>resultUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
@@ -164,7 +204,7 @@
         </ns2:EventListener>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
           <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>Cancelbtn</ns2:key>
+          <ns2:key>Closebtn</ns2:key>
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
@@ -200,10 +240,39 @@
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithCurrency"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="lastPriceUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Currency">
+        <ns2:expression>
+          <expressionString><![CDATA[
+          import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+          {
+            if ($beObject.getEndPrice() > 0) {
+               return $beObject.getEndPrice()-1;
+            } if ($beObject.getOfferPrices() != null && $beObject.getOfferPrices().size() > 0) {
+               return OrderUtil.getLowestOfferPrice($beObject);
+            } else { 
+               return $beObject.getEstimatedPrice();
+            } 
+          }]]></expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithCurrency"></ns2:mappingRule>
       <ns2:UIComponent componentPath="priceUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Currency">
         <ns2:expression>
-          <expressionString>{if ($beObject.getEndPrice() > 0) {return $beObject.getEndPrice()-1;} else { return $beObject.getEstimatedPrice() -1;} }</expressionString>
+          <expressionString><![CDATA[
+          import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+          {
+            if ($beObject.getEndPrice() > 0) {
+               return $beObject.getEndPrice()-1;
+            } if ($beObject.getOfferPrices() != null && $beObject.getOfferPrices().size() > 0) {
+               return OrderUtil.getLowestOfferPrice($beObject) - 1;
+            } else { 
+               return $beObject.getEstimatedPrice() - 1;
+            } 
+          }]]></expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>

@@ -88,11 +88,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
         ui: elementList[prefix + "expiredDateUI"]
     });
 
-    var okbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "okbtn"]
-    });
-
     var cancelbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "cancelbtn"]
@@ -102,7 +97,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "cancelbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -115,7 +110,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,publishedCustomerIdUILabel,publishedCustomerIdUI,purchaseOrderIdUILabel,purchaseOrderIdUI,takenCustomerIdUILabel,takenCustomerIdUI,saleOrderIdUILabel,saleOrderIdUI,createDateUILabel,createDateUI,expiredDateUILabel,expiredDateUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,publishedCustomerIdUILabel,publishedCustomerIdUI,purchaseOrderIdUILabel,purchaseOrderIdUI,takenCustomerIdUILabel,takenCustomerIdUI,saleOrderIdUILabel,saleOrderIdUI,createDateUILabel,createDateUI,expiredDateUILabel,expiredDateUI,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -151,8 +146,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
     Form.expiredDateUILabel=expiredDateUILabel;
 
     Form.expiredDateUI=expiredDateUI;
-
-    Form.okbtn=okbtn;
 
     Form.cancelbtn=cancelbtn;
 
@@ -194,8 +187,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
 
     Form.actionPanel=actionPanel;
 
-    Form.okbtn=okbtn;
-
     Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
@@ -222,34 +213,40 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_form_GoldenOrder_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrder_Save */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20160106-214008",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20160106-214008",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrder_Save */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_form_GoldenOrder_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrder_Cancel */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160106-214008",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160106-214008",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrder_Cancel */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_form_GoldenOrder_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrder_invokeDynamicFunction */
+        var o = this;
+        var UIEntity = this;
+
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'????',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),o.__entityName);
 
-        var UIEntity = this;
+        
+        }
+        }).open();
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrder_invokeDynamicFunction */
 
 

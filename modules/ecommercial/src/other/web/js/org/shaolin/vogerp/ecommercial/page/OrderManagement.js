@@ -44,7 +44,7 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
     Form.openGoldenOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_openGoldenOrder;
 
-    Form.adjustEstimatedPrice = org_shaolin_vogerp_ecommercial_page_OrderManagement_adjustEstimatedPrice;
+    Form.openGOrderTracker = org_shaolin_vogerp_ecommercial_page_OrderManagement_openGOrderTracker;
 
     Form.initPageJs = org_shaolin_vogerp_ecommercial_page_OrderManagement_initPageJs;
 
@@ -64,35 +64,35 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_page_OrderManagement_createGoldenOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_createGoldenOrder */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createGoldenOrder-2016-0124-1351",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createGoldenOrder-2016-0124-1351",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_createGoldenOrder */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_page_OrderManagement_openGoldenOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_openGoldenOrder */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openGoldenOrder-2016-0124-1351",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openGoldenOrder-2016-0124-1351",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_openGoldenOrder */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_page_OrderManagement_adjustEstimatedPrice(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_adjustEstimatedPrice */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_openGOrderTracker(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_openGOrderTracker */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"adjustEstimatedPrice-2016-0124-1351",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_adjustEstimatedPrice */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openGOrderTracker-20150614",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_openGOrderTracker */
 
 
     function org_shaolin_vogerp_ecommercial_page_OrderManagement_initPageJs(){/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_initPageJs */

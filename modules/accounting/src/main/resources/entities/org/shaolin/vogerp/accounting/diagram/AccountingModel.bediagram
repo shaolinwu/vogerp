@@ -25,7 +25,7 @@
  Accounting Voucher/Accounting Document/Transaction
   -->
 	
-	<bediagram:beEntity needPersist="true" needTask="true" needUIEntity="true">
+	<bediagram:beEntity needOrgId="true" needPersist="true" needTask="true" needUIEntity="true">
 	 <common:entityName>AccountVoucher</common:entityName>
 		<bediagram:member pk="true">
 			<bediagram:name>id</bediagram:name>

@@ -33,6 +33,21 @@
                 </ns2:exp>
             </ns2:ops>
 		</ns2:eventHandler>
+		<ns2:eventHandler functionName="publishOrder">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="publishOrder-20160124-1333">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                    {
+                        @page.executeJavaScript("javascript:alert('link to the purchase order.');");
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
         <ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 		   <ns2:UISkin xsi:type="ns2:UISkinType">
 		     <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
@@ -72,6 +87,7 @@
                             {
                                   if ($tableCondition == null) {
                                      $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
+                                     $tableCondition.setCount(10);
                                   }
                                   // switch to uimaster node.
                                   IAppServiceManager masterApp = (IAppServiceManager)IServerServiceManager.INSTANCE.getApplication(
@@ -90,35 +106,6 @@
                             }]]></ns2:expressionString>
                         </ns2:expression>
                     </ns2:query>
-                    <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
-                        <ns2:expression xsi:type="ns2:ExpressionType">
-                            <ns2:expressionString><![CDATA[
-                            import java.util.List;
-                            import org.shaolin.uimaster.page.ajax.TableConditions;
-                            import org.shaolin.vogerp.order.be.ISaleOrder;
-                            import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
-                            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
-                            import org.shaolin.bmdp.runtime.AppContext;
-                            import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
-                            import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
-                            {
-                                  if ($tableCondition == null) {
-                                     $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
-                                  }
-                                  // switch to uimaster node.
-                                  IAppServiceManager masterApp = (IAppServiceManager)IServerServiceManager.INSTANCE.getApplication(
-                                                        IServerServiceManager.INSTANCE.getMasterNodeName());
-                                  IAppServiceManager currentContext = AppContext.get();
-                                  try {
-                                      AppContext.register(masterApp);
-	                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
-	                                  return OrderModel.INSTANCE.searchGoldenOrderCount(condition);
-                                  } finally {
-                                      AppContext.register(currentContext);
-                                  }
-                            }]]></ns2:expressionString>
-                        </ns2:expression>
-                    </ns2:totalCount>
                     <ns2:column xsi:type="ns2:UITableColumnType">
 	                    <ns2:title xsi:type="ns2:StringPropertyType">
 	                        <ns2:value>抢购单</ns2:value>
@@ -214,7 +201,11 @@
                                 import java.lang.StringBuffer;
                                 import org.shaolin.bmdp.utils.DateUtil;
                                 import org.shaolin.bmdp.runtime.AppContext;
+                                import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                                 {
+                                    if ($rowBE.getStatus() != OrderStatusType.PUBLISHED) {
+                                       return $rowBE.getStatus().getDisplayName();
+                                    }
                                     StringBuffer sb = new StringBuffer();
                                     sb.append("<button onclick=\"javascript:defaultname.takeGoldenOrder(defaultname.defaultAction);\" class=\"ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only\">抢购</button>");
                                     return sb.toString();
@@ -233,6 +224,17 @@
                     </ns2:column>
                     <ns2:defaultActions>
                     </ns2:defaultActions>
+                    <ns2:actionGroup>
+                        <ns2:type>radio</ns2:type>
+                        <ns2:action>
+                            <ns2:uiid>publishOrder</ns2:uiid>
+                            <ns2:title xsi:type="ns2:StringPropertyType">
+                                <ns2:value>发单</ns2:value>
+                            </ns2:title>
+                            <ns2:icon>ui-icon-note</ns2:icon>
+                            <ns2:function>publishOrder</ns2:function>
+                        </ns2:action>
+                     </ns2:actionGroup>
                 </ns2:component>
                 <ns2:layoutConstraint>
                     <ns2:componentId>goldenOrderTable</ns2:componentId>

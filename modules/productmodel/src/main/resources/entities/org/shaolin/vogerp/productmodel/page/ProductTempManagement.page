@@ -170,6 +170,7 @@
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new ProductTemplateImpl());
+		                                     $tableCondition.setCount(10);
 		                                  }
 		                                  ProductTemplateImpl condition = (ProductTemplateImpl)$tableCondition.getCondition();
 		                                  return ProductModel.INSTANCE.searchProductTemplate(condition,
@@ -179,22 +180,6 @@
 		                            }]]></ns2:expressionString>
 		                        </ns2:expression>
 		                    </ns2:query>
-		                    <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
-		                        <ns2:expression xsi:type="ns2:ExpressionType">
-		                            <ns2:expressionString><![CDATA[
-		                            import org.shaolin.uimaster.page.ajax.TableConditions;
-		                            import org.shaolin.vogerp.productmodel.be.IProduct;
-		                            import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
-		                            import org.shaolin.vogerp.productmodel.dao.ProductModel;
-		                            {
-		                                 if ($tableCondition == null) {
-		                                    $tableCondition = TableConditions.createCondition(new ProductTemplateImpl());
-		                                 }
-		                                 ProductTemplateImpl condition = (ProductTemplateImpl)$tableCondition.getCondition();
-		                                 return ProductModel.INSTANCE.searchProductTemplateCount(condition);
-		                            }]]></ns2:expressionString>
-		                        </ns2:expression>
-		                    </ns2:totalCount>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
 		                            <ns2:value>名称</ns2:value>

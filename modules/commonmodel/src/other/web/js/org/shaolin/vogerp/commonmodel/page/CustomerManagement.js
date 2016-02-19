@@ -49,45 +49,45 @@ function org_shaolin_vogerp_commonmodel_page_CustomerManagement(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_CustomerManagement_createCustomer(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_CustomerManagement_createCustomer */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createCustomer-201507132249",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createCustomer-201507132249",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_CustomerManagement_createCustomer */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_CustomerManagement_openCustomerDetail(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_CustomerManagement_openCustomerDetail */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openCustomerDetail-201507132246",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openCustomerDetail-201507132246",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_CustomerManagement_openCustomerDetail */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_CustomerManagement_openAddresses(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_CustomerManagement_openAddresses */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openAddresses-201507132240",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openAddresses-201507132240",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_CustomerManagement_openAddresses */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_CustomerManagement_openContacts(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_CustomerManagement_openContacts */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openContacts-201507132240",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openContacts-201507132240",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_CustomerManagement_openContacts */
 
 

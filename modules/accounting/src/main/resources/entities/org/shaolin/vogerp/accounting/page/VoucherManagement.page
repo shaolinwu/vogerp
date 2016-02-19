@@ -100,6 +100,7 @@
              {
                 if ($tableCondition == null) {
                    $tableCondition = TableConditions.createCondition(new AccountVoucherImpl());
+                   $tableCondition.setCount(10);
                 }
                 AccountVoucherImpl condition = (AccountVoucherImpl)$tableCondition.getCondition();
                 return AccountingModel.INSTANCE.searchAccountVoucher(condition,
@@ -109,22 +110,6 @@
              }]]></ns2:expressionString>
 								</ns2:expression>
 							</ns2:query>
-							<ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
-								<ns2:expression xsi:type="ns2:ExpressionType">
-									<ns2:expressionString><![CDATA[
-            import java.util.List;
-            import org.shaolin.uimaster.page.ajax.TableConditions;
-            import org.shaolin.vogerp.accounting.be.AccountVoucherImpl;
-            import org.shaolin.vogerp.accounting.dao.AccountingModel;
-            {
-               if ($tableCondition == null) {
-                  $tableCondition = TableConditions.createCondition(new AccountVoucherImpl());
-               }
-               AccountVoucherImpl condition = (AccountVoucherImpl)$tableCondition.getCondition();
-               return AccountingModel.INSTANCE.searchAccountVoucherCount(condition);
-            }]]></ns2:expressionString>
-								</ns2:expression>
-							</ns2:totalCount>
 							<ns2:column xsi:type="ns2:UITableColumnType">
 								<ns2:title xsi:type="ns2:StringPropertyType">
 									<ns2:value>序号</ns2:value>

@@ -18,6 +18,7 @@ import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.javacc.exception.ParsingException;
 import org.shaolin.uimaster.page.cache.UIFlowCacheManager;
 import org.shaolin.uimaster.page.flow.ApplicationInitializer;
+import org.shaolin.uimaster.page.widgets.HTMLMatrixType.DataMode;
 import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.be.IModuleGroup;
 import org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl;
@@ -60,7 +61,7 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
         
         // build links
         for (IModuleGroup module: all) {
-        	String accessURL = module.getAccessURL();
+        	String accessURL = escapeTNR(module.getAccessURL());
         	if (accessURL != null && !"#".equals(accessURL)) {
             	int chunkNameIndex = accessURL.indexOf("_chunkname=");
             	int _nodenameIndex = accessURL.indexOf("_nodename=");
@@ -134,7 +135,7 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 			ModuleGroupImpl item = new ModuleGroupImpl();
 			item.setParentId(newGroup.getId());
 			item.setName(node.getName());
-			item.setAccessURL(node.getAccessURL());
+			item.setAccessURL(escapeTNR(node.getAccessURL()));
 			item.setDescription(node.getDescription());
 			item.setBigIcon(node.getBigIcon());
 			item.setSmallIcon(node.getSmallIcon());
@@ -202,6 +203,32 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	}
 	
 	@Override
+	public List<List<DataMode>> getModulesInMatrix(String appName, int columns) {
+		List<List<DataMode>> result = new ArrayList<List<DataMode>>();
+		List<IModuleGroup> modules = getModuleGroupTree(appName);
+		int total = modules.size()/columns;
+		if (modules.size()%columns > 0) {
+			total += 1;
+		}
+		while (--total >= 0) {
+			ArrayList<DataMode> row = new ArrayList<DataMode>(columns);
+			result.add(row);
+		}
+		for (int i = 0; i < modules.size(); i++) {
+			IModuleGroup m = modules.get(i);
+			if ("#".equals(m.getAccessURL())) {
+				continue;
+			}
+			DataMode item = new DataMode();
+			item.name = m.getName();
+			item.css = m.getSmallIcon();
+			item.link = escapeTNR(m.getAccessURL());
+			result.get(i/columns).add(item);
+		}
+		return result;
+	}
+	
+	@Override
 	public Class<?> getServiceInterface() {
 		return IModuleService.class;
 	}
@@ -236,7 +263,7 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
             }
             modules.put(mg.getId(), mg);
             // webflow.do?_chunkname=org.shaolin.bmdp.adminconsole.diagram.MainFunctions&_nodename=ModuleManager&_framename=moduleManager&_framePrefix=
-            String accessURL = mg.getAccessURL();
+            String accessURL = escapeTNR(mg.getAccessURL());
 			if (accessURL != null && !"#".equals(accessURL)) {
             	int chunkNameIndex = accessURL.indexOf("_chunkname=");
             	int _nodenameIndex = accessURL.indexOf("_nodename=");
@@ -292,5 +319,33 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 		UIFlowCacheManager.getInstance().removeAppChunk(webFlowEntity);
 		UIFlowCacheManager.getInstance().addChunk(chunk, AppContext.get().getAppName());
 	}
+	
+	private static String escapeTNR(String line)
+    {
+        if (line == null)
+        {
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0, n = line.length(); i < n; i++)
+        {
+            char c = line.charAt(i);
+            switch (c)
+            {
+                case '\t':
+                    sb.append("");
+                    break;
+                case '\n':
+                    sb.append("");
+                    break;
+                case '\r':
+                    sb.append("");
+                    break;
+                default:
+                    sb.append(c);
+            }
+        }
+        return new String(sb);
+    }
 
 }
