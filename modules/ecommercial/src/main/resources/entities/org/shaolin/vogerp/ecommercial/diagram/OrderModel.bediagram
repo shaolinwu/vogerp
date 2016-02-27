@@ -11,7 +11,7 @@
 	     all customers are able to see this order in the competition mode.
 	     so, we name it as the golden order.
 	-->
-	<bediagram:beEntity needPersist="true" needTask="true" needUIEntity="true">
+	<bediagram:beEntity needPersist="true" needOrgId="true" needTask="true" needUIEntity="true">
 		<common:entityName>GoldenOrder</common:entityName>
 		<bediagram:member pk="true">
 			<bediagram:name>id</bediagram:name>
@@ -91,7 +91,7 @@
         </bediagram:member>
 	</bediagram:beEntity>
 	
-	<bediagram:beEntity needPersist="true" needTask="true" needUIEntity="true">
+	<bediagram:beEntity needPersist="true" needOrgId="true" needTask="true" needUIEntity="true">
         <common:entityName>GoldenOrderHistory</common:entityName>
         <bediagram:member pk="true">
             <bediagram:name>id</bediagram:name>

@@ -124,13 +124,20 @@
 		                            import org.shaolin.uimaster.page.ajax.TableConditions;
 		                            import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
 		                            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+		                            import org.shaolin.bmdp.runtime.AppContext; 
+                                    import org.shaolin.vogerp.commonmodel.IUserService; 
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
 		                                     $tableCondition.setCount(10);
+		                                     $tableCondition.addOrder("statusInt", true);
+                                             $tableCondition.addOrder("createDate", false);
 		                                  }
 		                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
-		                                  //condition.setPublishedCustomerId();
+		                                  if (!AppContext.isMasterNode()) {
+			                                  IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+			                                  condition.setPublishedCustomerId(service.getUserId());
+		                                  }
 		                                  return OrderModel.INSTANCE.searchGoldenOrder(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 

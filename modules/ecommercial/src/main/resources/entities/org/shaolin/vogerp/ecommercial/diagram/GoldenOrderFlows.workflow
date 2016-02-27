@@ -113,9 +113,8 @@
             </ns2:process>
             <ns2:dest name="goToGoldenOrder"></ns2:dest>
         </ns2:mission-node>
-        <ns2:mission-node name="goToGoldenOrder" expiredDays="0" expiredHours="0" autoTrigger="true">
+        <ns2:node name="goToGoldenOrder">
             <ns2:description>通知客户有新的抢购订单</ns2:description>
-            <ns2:participant partyType="GenericOrganizationType.Director,0" />
             <ns2:process>
                 <ns2:var name="goldenOrder" category="BusinessEntity" scope="In">
                     <type entityName="org.shaolin.vogerp.ecommercial.be.GoldenOrder"></type>
@@ -146,7 +145,7 @@
                          message.setPartyId($goldenOrder.getPublishedCustomerId());
 					     message.setSubject(subject + "发布新的抢购订单！！！");
 				         message.setDescription(description);
-					     message.setCreateTime(new Date());
+					     message.setCreateDate(new Date());
                          
                          ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
                          service.addNotification(message, true);
@@ -154,7 +153,7 @@
                      ]]></expressionString>
                 </ns2:expression>
             </ns2:process>
-        </ns2:mission-node>
+        </ns2:node>
         
         <ns2:mission-node name="offerPrice" expiredDays="0" expiredHours="0" autoTrigger="false" multipleInvoke="true">
             <ns2:description>抢购订单竟价</ns2:description>
@@ -263,21 +262,131 @@
                     import org.shaolin.bmdp.utils.DateUtil;
                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                     import org.shaolin.vogerp.order.be.IPurchaseOrder;
+                    import org.shaolin.vogerp.order.be.ISaleOrder;
+                    import org.shaolin.vogerp.order.be.SaleOrderImpl;
                     import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
                     import org.shaolin.vogerp.ecommercial.be.GOOfferPriceImpl;
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.vogerp.commonmodel.IUserService;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                    import org.shaolin.bmdp.workflow.be.NotificationImpl;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.order.be.IPurchaseOrder;
+                    import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
+                    import org.shaolin.vogerp.order.be.PurchaseItemImpl;
+                    import org.shaolin.vogerp.commonmodel.IOrganizationService;
                     {
-                         $gorder.setEndPrice(OrderUtil.getLowestOfferPrice($gorder));
+                         $gorder.setEndPrice(OrderUtil.getLowestOfferPrice($gorder, true));
+                         $gorder.setTakenCustomerId(OrderUtil.getLowestOfferPriceCustId($gorder));
                          $gorder.setStatus(OrderStatusType.TAKEN);
-                         OrderModel.INSTANCE.update($gorder);
+                         OrderModel.INSTANCE.update($gorder, true);//must commit.
+                         
+                         PurchaseOrderImpl purchaseOrder = new PurchaseOrderImpl();
+                         purchaseOrder.setId($gorder.getPurchaseOrderId());
+                         List result = org.shaolin.vogerp.order.dao.OrderModel.INSTANCE.searchPurchaseOrder(purchaseOrder, null, 0, 1);
+                         purchaseOrder = (PurchaseOrderImpl)result.get(0);
+                         
+                         IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class); 
+                         SaleOrderImpl saleOrder = new SaleOrderImpl();
+                         saleOrder.setOrgId(orgService.getOrgIdByPartyId($gorder.getTakenCustomerId()));
+                         saleOrder.setDescription("客户要求: " + purchaseOrder.getDescription());
+                         saleOrder.setCustomerId($gorder.getPublishedCustomerId());
+                         saleOrder.setPurchasedOrderId(purchaseOrder.getId());
+                         saleOrder.setDeliveryDate(purchaseOrder.getDeliveryDate());
+                         saleOrder.setSerialNumber(org.shaolin.vogerp.order.util.OrderUtil.genSaleOrderSerialNumber());
+                         saleOrder.setStatus(org.shaolin.vogerp.order.ce.OrderStatusType.CREATED);
+                         
+                         ArrayList saleOrderItems = new ArrayList();
+                         List purchaseItems = purchaseOrder.getItems();
+                         for (int i=0; i<purchaseItems.size(); i++) {
+                             PurchaseItemImpl pItem = (PurchaseItemImpl)purchaseItems.get(i);
+	                         OrderItemImpl item = new OrderItemImpl();
+	                         //item.setProductId(pItem.);
+	                         //item.setPriceId(pItem.);
+	                         item.setAmount(pItem.getAmount());
+	                         item.setUnitPrice(pItem.getUnitPrice());
+	                         item.setComment(pItem.getComment());
+	                         saleOrderItems.add(item);
+                         }
+                         saleOrder.setItems(saleOrderItems);
+                         @flowContext.save(saleOrder);
+                         
+                         String description = $gorder.getDescription();
+                         NotificationImpl message = new NotificationImpl();
+                         message.setPartyId($gorder.getTakenCustomerId());
+                         message.setSubject("恭喜您成功抢购订单！等待预付款中。订单信息： " + description);
+                         message.setDescription(description);
+                         message.setCreateDate(new Date());
+                         
+                         ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+                         service.addNotification(message, true);
                     }
                      ]]></expressionString>
                 </ns2:expression>
             </ns2:process>
-            <ns2:dest name="endNode"></ns2:dest>
+            <ns2:dest name="makePaymentToCustomer"></ns2:dest>
+        </ns2:mission-node>
+        <ns2:mission-node name="makePaymentToCustomer" expiredDays="0" expiredHours="1" autoTrigger="false">
+            <ns2:description>支付预付款项</ns2:description>
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.GoldenOrder"
+                actionName="prepaid" actionText="支付预付款项">
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.Date;
+                    import java.util.ArrayList;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.be.GOOfferPriceImpl;
+                    import org.shaolin.vogerp.ecommercial.dao.*;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.vogerp.commonmodel.IUserService; 
+                    { 
+                        RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+                        HashMap out = (HashMap)form.ui2Data();
+                        
+                        form.closeIfinWindows();
+                        @page.removeForm(@page.getEntityUiid()); 
+                        
+                        HashMap result = new HashMap();
+                        result.put("gorder", out.get("beObject"));
+                        return result;
+                    }
+                    ]]></expressionString>
+                </ns2:expression>
+            </ns2:uiAction>
+            <ns2:participant partyType="GenericOrganizationType.Director,0" />
+            <ns2:process>
+                <ns2:var name="gorder" category="BusinessEntity" scope="InOut">
+                    <type entityName="org.shaolin.vogerp.ecommercial.be.GoldenOrder"></type>
+                </ns2:var>
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                    import java.util.List;
+                    import java.util.ArrayList;
+                    import java.util.Date;
+                    import java.util.HashMap;
+                    import org.shaolin.bmdp.utils.DateUtil;
+                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+                    import org.shaolin.vogerp.order.be.IPurchaseOrder;
+                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.be.GOOfferPriceImpl;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.vogerp.commonmodel.IUserService;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                    import org.shaolin.bmdp.workflow.be.NotificationImpl;
+                    {
+                    }
+                     ]]></expressionString>
+                </ns2:expression>
+            </ns2:process>
         </ns2:mission-node>
         
         <ns2:mission-node name="cancelGOrder" expiredDays="0" expiredHours="0" autoTrigger="false">
@@ -333,6 +442,8 @@
                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                     {
+                         // TODO: check condition before cancelling the order.
+                         
                          $gorder.setStatus(OrderStatusType.CANCELLED);
                          OrderModel.INSTANCE.update($gorder);
                          
@@ -341,7 +452,7 @@
 	                         message.setPartyId($gorder.getTakenCustomerId());
 	                         message.setSubject($gorder.getSerialNumber() + "抢购单取消");
 	                         message.setDescription($gorder.getDescription());
-	                         message.setCreateTime(new Date());
+	                         message.setCreateDate(new Date());
 	                         
 	                         ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
 	                         service.addNotification(message, true);

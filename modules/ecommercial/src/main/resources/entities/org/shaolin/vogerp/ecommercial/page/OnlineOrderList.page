@@ -88,6 +88,8 @@
                                   if ($tableCondition == null) {
                                      $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
                                      $tableCondition.setCount(10);
+                                     $tableCondition.addOrder("statusInt", true);
+                                     $tableCondition.addOrder("createDate", false);
                                   }
                                   // switch to uimaster node.
                                   IAppServiceManager masterApp = (IAppServiceManager)IServerServiceManager.INSTANCE.getApplication(

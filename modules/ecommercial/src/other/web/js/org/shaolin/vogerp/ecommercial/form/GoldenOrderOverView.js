@@ -48,17 +48,27 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView(json)
         ui: elementList[prefix + "publishedCustomerIdUI"]
     });
 
+    var createDateUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "createDateUILabel"]
+    });
+
+    var createDateUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "createDateUI"]
+    });
+
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI"]
+        ,subComponents: [prefix + "idUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "createDateUILabel",prefix + "createDateUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,estimatedPriceUILabel,estimatedPriceUI,publishedCustomerIdUILabel,publishedCustomerIdUI,fieldPanel]
+        ,items: [idUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,estimatedPriceUILabel,estimatedPriceUI,publishedCustomerIdUILabel,publishedCustomerIdUI,createDateUILabel,createDateUI,fieldPanel]
     });
 
     Form.idUI=idUI;
@@ -78,6 +88,10 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView(json)
     Form.publishedCustomerIdUILabel=publishedCustomerIdUILabel;
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
+
+    Form.createDateUILabel=createDateUILabel;
+
+    Form.createDateUI=createDateUI;
 
     Form.fieldPanel=fieldPanel;
 
@@ -98,6 +112,10 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView(json)
     Form.publishedCustomerIdUILabel=publishedCustomerIdUILabel;
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
+
+    Form.createDateUILabel=createDateUILabel;
+
+    Form.createDateUI=createDateUI;
 
     Form.user_constructor = function()
     {
