@@ -18,6 +18,22 @@ public interface IOrganizationService {
 	public IOrganization getOrganizationInfo();
 	
 	/**
+	 * Get organization information by the party id.
+	 * 
+	 * @param partyId
+	 * @return
+	 */
+	public IOrganization getOrganizationByPartyId(long partyId);
+	
+	/**
+	 * Get organization id by the party id.
+	 * 
+	 * @param partyId
+	 * @return
+	 */
+	public long getOrgIdByPartyId(long partyId);
+	
+	/**
 	 * Get organization illegal information of current login user.
 	 * 
 	 * @return

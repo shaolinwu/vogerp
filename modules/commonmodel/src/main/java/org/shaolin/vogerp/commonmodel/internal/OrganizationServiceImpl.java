@@ -50,6 +50,27 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 		return result;
 	}
 	
+
+	@Override
+	public long getOrgIdByPartyId(long partyId) {
+		PersonalInfoImpl condition = new PersonalInfoImpl();
+		condition.setId(partyId);
+		List<IPersonalInfo> result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, 1);
+		return result.get(0).getOrgId();
+	}
+	
+	@Override
+	public IOrganization getOrganizationByPartyId(long partyId) {
+		PersonalInfoImpl condition = new PersonalInfoImpl();
+		condition.setId(partyId);
+		List<IPersonalInfo> result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, 1);
+		
+		OrganizationImpl scFlow = new OrganizationImpl();
+		scFlow.setId(result.get(0).getOrgId());
+		List<IOrganization> list = CommonModel.INSTANCE.searchOrganization(scFlow, null, 0, -1);
+		return list.get(0);
+	}
+	
 	@Override
 	public IOrganization getOrganizationInfo() {
 		Object orgId = UserContext.getUserData(UserContext.CURRENT_USER_ORGID, true);

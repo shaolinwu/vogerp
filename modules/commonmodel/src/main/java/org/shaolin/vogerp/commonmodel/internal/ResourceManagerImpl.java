@@ -29,7 +29,6 @@ public class ResourceManagerImpl implements IResourceManager {
 	@Override
 	public void assignOnwer(ITask task) {
 		ICoordinatorService coordinator = AppContext.get().getService(ICoordinatorService.class);
-		coordinator.getAllTaskOnwers();
 		
 		if (task.getPartyType() == null || task.getPartyType().isEmpty()) {
 			throw new IllegalArgumentException("Please specify the party type for this task: " + task.getSubject());

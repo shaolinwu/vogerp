@@ -151,6 +151,7 @@
                                  PersonalInfoImpl condition = new PersonalInfoImpl();
                                  $tableCondition = TableConditions.createCondition(condition);
                                  $tableCondition.setCount(10);
+                                 $tableCondition.addOrder("createDate", false);
                               }
                               PersonalInfoImpl condition = (PersonalInfoImpl)$tableCondition.getCondition();
                               condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));

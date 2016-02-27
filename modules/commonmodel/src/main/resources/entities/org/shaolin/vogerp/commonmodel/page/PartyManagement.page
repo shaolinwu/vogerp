@@ -197,6 +197,7 @@
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new PersonalInfoImpl());
 		                                     $tableCondition.setCount(10);
+		                                     $tableCondition.addOrder("createDate", false);
 		                                  }
 		                                  PersonalInfoImpl condition = (PersonalInfoImpl)$tableCondition.getCondition();
 		                                  return CommonModel.INSTANCE.searchPersonInfo(condition,
