@@ -9,9 +9,6 @@
 	<description>销售订单流程</description>
 	<ns2:conf>
 		<ns2:bootable>true</ns2:bootable>
-		<ns2:service name="userService" category="JavaClass">
-			<type entityName="org.shaolin.vogerp.commonmodel.IUserService"></type>
-		</ns2:service>
 	</ns2:conf>
 	<ns2:flow name="GeneralSaleOrderFlow" eventConsumer="SaleOrder">
 		<ns2:conf>
@@ -77,7 +74,7 @@
 						       IOrderItem oitem = (IOrderItem)pItems.get(i);
 						       
 						       OrderItemImpl pitem = new OrderItemImpl();
-						       pitem.setProductId(oitem.getProductId());
+						       pitem.setPriceId(oitem.getPriceId());
 						       pitem.setAmount(oitem.getAmount());
 						       items.add(pitem);
 						   }
@@ -133,7 +130,7 @@
              IOrderItem oitem = (IOrderItem)pItems.get(i);
              
              OrderItemImpl pitem = new OrderItemImpl();
-             pitem.setProductId(oitem.getProductId());
+             pitem.setPriceId(oitem.getPriceId());
              pitem.setAmount(oitem.getAmount());
              items.add(pitem);
          }
@@ -190,7 +187,7 @@
              IOrderItem oitem = (IOrderItem)pItems.get(i);
              
              OrderItemImpl pitem = new OrderItemImpl();
-             pitem.setProductId(oitem.getProductId());
+             pitem.setPriceId(oitem.getPriceId());
              pitem.setAmount(oitem.getAmount());
              items.add(pitem);
          }

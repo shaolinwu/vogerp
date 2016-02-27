@@ -58,16 +58,6 @@ function org_shaolin_vogerp_order_form_PurchaseItem(json)
         ui: elementList[prefix + "commentUI"]
     });
 
-    var termsUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "termsUILabel"]
-    });
-
-    var termsUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "termsUI"]
-    });
-
     var tproductIdUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "tproductIdUILabel"]
@@ -99,13 +89,13 @@ function org_shaolin_vogerp_order_form_PurchaseItem(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "amountUILabel",prefix + "amountUI",prefix + "unitPriceUILabel",prefix + "unitPriceUI",prefix + "ajustPriceTypeUILabel",prefix + "ajustPriceTypeUI",prefix + "ajustPriceUILabel",prefix + "ajustPriceUI",prefix + "commentUILabel",prefix + "commentUI",prefix + "termsUILabel",prefix + "termsUI",prefix + "tproductIdUILabel",prefix + "tproductIdUI"]
+        ,subComponents: [prefix + "idUI",prefix + "amountUILabel",prefix + "amountUI",prefix + "unitPriceUILabel",prefix + "unitPriceUI",prefix + "ajustPriceTypeUILabel",prefix + "ajustPriceTypeUI",prefix + "ajustPriceUILabel",prefix + "ajustPriceUI",prefix + "commentUILabel",prefix + "commentUI",prefix + "tproductIdUILabel",prefix + "tproductIdUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,amountUILabel,amountUI,unitPriceUILabel,unitPriceUI,ajustPriceTypeUILabel,ajustPriceTypeUI,ajustPriceUILabel,ajustPriceUI,commentUILabel,commentUI,termsUILabel,termsUI,tproductIdUILabel,tproductIdUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,amountUILabel,amountUI,unitPriceUILabel,unitPriceUI,ajustPriceTypeUILabel,ajustPriceTypeUI,ajustPriceUILabel,ajustPriceUI,commentUILabel,commentUI,tproductIdUILabel,tproductIdUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -129,10 +119,6 @@ function org_shaolin_vogerp_order_form_PurchaseItem(json)
     Form.commentUILabel=commentUILabel;
 
     Form.commentUI=commentUI;
-
-    Form.termsUILabel=termsUILabel;
-
-    Form.termsUI=termsUI;
 
     Form.tproductIdUILabel=tproductIdUILabel;
 
@@ -165,10 +151,6 @@ function org_shaolin_vogerp_order_form_PurchaseItem(json)
     Form.commentUILabel=commentUILabel;
 
     Form.commentUI=commentUI;
-
-    Form.termsUILabel=termsUILabel;
-
-    Form.termsUI=termsUI;
 
     Form.tproductIdUILabel=tproductIdUILabel;
 
@@ -204,34 +186,40 @@ function org_shaolin_vogerp_order_form_PurchaseItem(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_order_form_PurchaseItem_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_PurchaseItem_Save */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20160112-232035",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20160112-232035",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_order_form_PurchaseItem_Save */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_order_form_PurchaseItem_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_PurchaseItem_Cancel */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160112-232035",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160112-232035",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_order_form_PurchaseItem_Cancel */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_order_form_PurchaseItem_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_PurchaseItem_invokeDynamicFunction */
+        var o = this;
+        var UIEntity = this;
+
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Continue?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),o.__entityName);
 
-        var UIEntity = this;
+        
+        }
+        }).open();
     }/* Gen_Last:org_shaolin_vogerp_order_form_PurchaseItem_invokeDynamicFunction */
 
 

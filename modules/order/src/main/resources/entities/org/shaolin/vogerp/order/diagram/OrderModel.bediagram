@@ -47,7 +47,7 @@
             <bediagram:name>items</bediagram:name>
             <bediagram:type xsi:type="bediagram:BEListType">
                 <bediagram:elementType xsi:type="bediagram:BEObjRefType">
-                    <bediagram:targetEntity entityName="OrderItem" />
+                    <bediagram:targetEntity entityName="AbstractOrderItem" />
                 </bediagram:elementType>
             </bediagram:type>
         </bediagram:member>
@@ -182,7 +182,7 @@
             </bediagram:type>
         </bediagram:member>
         <bediagram:member>
-            <!-- support -,+ operator -->
+            <!-- support -,+ operator for the estimated price of the purcharse order  -->
             <bediagram:name>ajustPrice</bediagram:name>
             <bediagram:type xsi:type="bediagram:DoubleType" />
         </bediagram:member>
@@ -190,28 +190,13 @@
             <bediagram:name>comment</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>terms</bediagram:name>
-            <bediagram:type xsi:type="bediagram:CEObjRefType">
-                <bediagram:targetEntity entityName="OrderTermsType" />
-            </bediagram:type>
-        </bediagram:member>
     </bediagram:beEntity>
+    <!-- Order item can be most of order such as Sale order, product order, Instore order and etc. -->
 	<bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
         <common:entityName>OrderItem</common:entityName>
         <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
             <bediagram:targetEntity entityName="AbstractOrderItem" />
         </bediagram:parentObject>
-        <bediagram:member>
-            <bediagram:name>productId</bediagram:name>
-            <bediagram:type xsi:type="bediagram:LongType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>product</bediagram:name>
-            <bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="org.shaolin.vogerp.productmodel.be.Product" />
-            </bediagram:type>
-        </bediagram:member>
         <bediagram:member>
             <bediagram:name>priceId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
@@ -229,13 +214,13 @@
             <bediagram:targetEntity entityName="AbstractOrderItem" />
         </bediagram:parentObject>
         <bediagram:member>
-            <bediagram:name>tproductId</bediagram:name>
+            <bediagram:name>priceId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
-            <bediagram:name>template</bediagram:name>
+            <bediagram:name>pricePackage</bediagram:name>
             <bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="org.shaolin.vogerp.productmodel.be.ProductTemplate" />
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.productmodel.be.ProductPrice" />
             </bediagram:type>
         </bediagram:member>
     </bediagram:beEntity>
@@ -316,7 +301,7 @@
         </bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Delivered</bediagram:value>
-			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:intValue>2</bediagram:intValue>
 			<bediagram:description>Delivered</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>

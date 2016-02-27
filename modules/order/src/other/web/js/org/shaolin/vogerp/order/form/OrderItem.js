@@ -68,16 +68,6 @@ function org_shaolin_vogerp_order_form_OrderItem(json)
         ui: elementList[prefix + "commentUI"]
     });
 
-    var termsUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "termsUILabel"]
-    });
-
-    var termsUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "termsUI"]
-    });
-
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
@@ -99,13 +89,13 @@ function org_shaolin_vogerp_order_form_OrderItem(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "productIdUILabel",prefix + "productIdUI",prefix + "amountUILabel",prefix + "amountUI",prefix + "unitPriceUILabel",prefix + "unitPriceUI",prefix + "ajustPriceTypeUILabel",prefix + "ajustPriceTypeUI",prefix + "ajustPriceUILabel",prefix + "ajustPriceUI",prefix + "commentUILabel",prefix + "commentUI",prefix + "termsUILabel",prefix + "termsUI"]
+        ,subComponents: [prefix + "idUI",prefix + "productIdUILabel",prefix + "productIdUI",prefix + "amountUILabel",prefix + "amountUI",prefix + "unitPriceUILabel",prefix + "unitPriceUI",prefix + "ajustPriceTypeUILabel",prefix + "ajustPriceTypeUI",prefix + "ajustPriceUILabel",prefix + "ajustPriceUI",prefix + "commentUILabel",prefix + "commentUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,productIdUILabel,productIdUI,amountUILabel,amountUI,unitPriceUILabel,unitPriceUI,ajustPriceTypeUILabel,ajustPriceTypeUI,ajustPriceUILabel,ajustPriceUI,commentUILabel,commentUI,termsUILabel,termsUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,productIdUILabel,productIdUI,amountUILabel,amountUI,unitPriceUILabel,unitPriceUI,ajustPriceTypeUILabel,ajustPriceTypeUI,ajustPriceUILabel,ajustPriceUI,commentUILabel,commentUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -133,10 +123,6 @@ function org_shaolin_vogerp_order_form_OrderItem(json)
     Form.commentUILabel=commentUILabel;
 
     Form.commentUI=commentUI;
-
-    Form.termsUILabel=termsUILabel;
-
-    Form.termsUI=termsUI;
 
     Form.okbtn=okbtn;
 
@@ -170,10 +156,6 @@ function org_shaolin_vogerp_order_form_OrderItem(json)
 
     Form.commentUI=commentUI;
 
-    Form.termsUILabel=termsUILabel;
-
-    Form.termsUI=termsUI;
-
     Form.actionPanel=actionPanel;
 
     Form.okbtn=okbtn;
@@ -204,34 +186,40 @@ function org_shaolin_vogerp_order_form_OrderItem(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_order_form_OrderItem_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_OrderItem_Save */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail1087017690",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail1087017690",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_order_form_OrderItem_Save */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_order_form_OrderItem_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_OrderItem_Cancel */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-781675249",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-781675249",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_order_form_OrderItem_Cancel */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_order_form_OrderItem_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_OrderItem_invokeDynamicFunction */
+        var o = this;
+        var UIEntity = this;
+
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Continue?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),o.__entityName);
 
-        var UIEntity = this;
+        
+        }
+        }).open();
     }/* Gen_Last:org_shaolin_vogerp_order_form_OrderItem_invokeDynamicFunction */
 
 

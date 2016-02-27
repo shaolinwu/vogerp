@@ -177,7 +177,7 @@
                 import org.shaolin.vogerp.productmodel.util.ProductUtil;
                 {
                     String onclick = "javascript:defaultname.saleOrder.orderItemTable.openProductTempSelector(defaultname.saleOrder.orderItemTable.productTypeUI,event);";
-                	return "<span onclick='"+onclick+"'>" + ($rowBE.getTemplate() != null? $rowBE.getTemplate().getName() : "请选择...") + "</span>";
+                	return "<span onclick='"+onclick+"'>请选择...</span>";
                 }]]></ns2:expressionString>
             </ns2:expression>
           </ns2:rowExpression>

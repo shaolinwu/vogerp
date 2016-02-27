@@ -45,8 +45,6 @@
         		return;
         	}
             OrderItemImpl item = new OrderItemImpl();
-            item.setProductId(price.getProductId());
-            item.setProduct(price.getProduct());
             item.setPricePackage(price);
             Table tableWidget = (Table)@page.getElement("itemTable");
             tableWidget.addRow(item);
@@ -145,7 +143,7 @@
                 import org.shaolin.bmdp.runtime.AppContext;
                 import org.shaolin.vogerp.productmodel.util.ProductUtil;
                 {
-                	return ProductUtil.getProductSummary($rowBE.getProduct()) + "--" + ProductUtil.getPricePackage($rowBE.getPricePackage());
+                	return ProductUtil.getProductSummary($rowBE.getPricePackage().getProduct()) + "--" + ProductUtil.getPricePackage($rowBE.getPricePackage());
                 }]]></ns2:expressionString>
             </ns2:expression>
           </ns2:rowExpression>
