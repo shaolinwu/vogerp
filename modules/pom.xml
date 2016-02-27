@@ -21,6 +21,7 @@
 		<module>accounting</module>
 		<module>adminconsole</module>
 		<module>ecommercial</module>
+		<module>coupon</module>
 	</modules>
 	
     <reporting>
