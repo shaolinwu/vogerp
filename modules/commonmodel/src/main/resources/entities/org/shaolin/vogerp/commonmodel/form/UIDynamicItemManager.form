@@ -2,19 +2,49 @@
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
     <entityName>org.shaolin.vogerp.commonmodel.form.UIDynamicItemManager</entityName>
     <systemVersion>0</systemVersion>
+    <ns2:eventHandler functionName="selectEntity">
+        <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectEntity-20160228-2322">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import java.util.List;
+                import java.util.ArrayList;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl;
+                import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+                {
+                    Table uiDynamicInfoTable = (Table)@page.getElement("uiDynamicInfoTable");
+                    uiDynamicInfoTable.clear();
+                    ComboBox entityTypes = @page.getComboBox("entityTypes");
+                    String type = entityTypes.getOptionName(entityTypes.getValue());
+                    
+                    UIDyanimcItemImpl condition = (UIDyanimcItemImpl)uiDynamicInfoTable.getConditions().getCondition();
+                    condition.setUiEntityName(type);
+                    uiDynamicInfoTable.refresh();
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
     <ns2:eventHandler functionName="createItem">
        <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createItem_43242342">
             <ns2:exp>
                 <ns2:expressionString><![CDATA[
                 import java.util.HashMap;
                 import java.util.ArrayList;
+                import org.shaolin.uimaster.page.ajax.*;
                 import org.shaolin.uimaster.page.AjaxContext;
                 import org.shaolin.uimaster.page.AjaxActionHelper;
-                import org.shaolin.uimaster.page.ajax.*;
                 import org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl;
                 {
-                	   HashMap input = new HashMap();
-                    input.put("beObject", new UIDyanimcItemImpl());
+                    ComboBox entityTypes = @page.getComboBox("entityTypes");
+                    String type = entityTypes.getOptionName(entityTypes.getValue());
+                    UIDyanimcItemImpl newItem = new UIDyanimcItemImpl();
+                    newItem.setUiEntityName(type);
+                    
+                	HashMap input = new HashMap();
+                    input.put("beObject", newItem);
                     input.put("editable", new Boolean(true));
                     RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.UIDyanimcItem", input);
                     @page.addElement(form);
@@ -80,25 +110,25 @@
     </ns2:eventHandler>
     <ns2:eventHandler functionName="reload">
          <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-				         <ns2:expressionString><![CDATA[
-				         {
-				          var o = this;
-				          new UIMaster.ui.dialog({
-				              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
-				              message:'Are you sure reload all dynamic ui configuration?',
-				              messageType:UIMaster.ui.dialog.Warning,
-				              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
-				              title:'',
-				              height:150,
-				              width:300,
-				              handler: function() {
-				                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"reload_201511101829",UIMaster.getValue(eventsource),o.__entityName);
-				              }
-				          }).open();
-				          return;
-				         }
-				         ]]></ns2:expressionString>
-				     </ns2:ops>
+	         <ns2:expressionString><![CDATA[
+	         {
+	          var o = this;
+	          new UIMaster.ui.dialog({
+	              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
+	              message:'Are you sure reload all dynamic ui configuration?',
+	              messageType:UIMaster.ui.dialog.Warning,
+	              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+	              title:'',
+	              height:150,
+	              width:300,
+	              handler: function() {
+	                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"reload_201511101829",UIMaster.getValue(eventsource),o.__entityName);
+	              }
+	          }).open();
+	          return;
+	         }
+	         ]]></ns2:expressionString>
+	     </ns2:ops>
          <ns2:ops xsi:type="ns2:OpCallAjaxType" name="reload_201511101829">
             <ns2:exp>
                 <ns2:expressionString><![CDATA[
@@ -127,12 +157,21 @@
         <ns2:component xsi:type="ns2:UIPanelType" UIID="constantInfoPanel">
             <ns2:layout xsi:type="ns2:TableLayoutType">
                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
                 <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
             </ns2:layout>
+            <ns2:component xsi:type="ns2:UIComboBoxType" UIID="entityTypes">
+		        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+		          <ns2:value>页面动态属性</ns2:value>
+		        </ns2:widgetLabel>
+		        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
+		          <ns2:handler functionName="selectEntity"></ns2:handler>
+		        </ns2:EventListener>
+		    </ns2:component>
             <ns2:component xsi:type="ns2:UITableType" UIID="uiDynamicInfoTable">
                 <ns2:beElement>org.shaolin.vogerp.commonmodel.be.UIDyanimcItem</ns2:beElement>
                 <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Multiple</ns2:selectMode>
-                <ns2:defaultRowSize>10</ns2:defaultRowSize>
+                <ns2:defaultRowSize>20</ns2:defaultRowSize>
                 <ns2:showActionBar>true</ns2:showActionBar>
                 <ns2:showFilter>true</ns2:showFilter>
                 <ns2:query xsi:type="ns2:ExpressionPropertyType">
@@ -145,6 +184,7 @@
                         {
                               if ($tableCondition == null) {
                                  $tableCondition = TableConditions.createCondition(new UIDyanimcItemImpl());
+                                 $tableCondition.setCount(20);
                               }
                               UIDyanimcItemImpl condition = (UIDyanimcItemImpl)$tableCondition.getCondition();
                               return ModularityModel.INSTANCE.searchDynamicItemEntities(condition,
@@ -154,32 +194,38 @@
                         }]]></ns2:expressionString>
                     </ns2:expression>
                 </ns2:query>
-                <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
-                    <ns2:expression xsi:type="ns2:ExpressionType">
-                        <ns2:expressionString><![CDATA[
-                        import org.shaolin.uimaster.page.ajax.TableConditions;
-                        import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
-                        import org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl;
-                        {
-                             if ($tableCondition == null) {
-                                $tableCondition = TableConditions.createCondition(new UIDyanimcItemImpl());
-                             }
-                             UIDyanimcItemImpl condition = (UIDyanimcItemImpl)$tableCondition.getCondition();
-                             return ModularityModel.INSTANCE.searchDynamicItemEntitiesCount(condition);
-                        }]]></ns2:expressionString>
-                    </ns2:expression>
-                </ns2:totalCount>
                 <ns2:column xsi:type="ns2:UITableColumnType">
                     <ns2:title xsi:type="ns2:StringPropertyType">
-                        <ns2:value>UIEntity Name</ns2:value>
+                        <ns2:value>页面显示面板</ns2:value>
                     </ns2:title>
-                    <ns2:beFieldId>rowBE.uiEntityName</ns2:beFieldId>
-                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                    <ns2:beFieldId>rowBE.uipanel</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                </ns2:column>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>属性名称</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.labelName</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                </ns2:column>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>绑定常量</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.ceName</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                </ns2:column>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>属性过滤表达式</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.filter</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
                 </ns2:column>
                 <ns2:defaultActions>
                     <ns2:defaultNewAction>createItem</ns2:defaultNewAction>
                     <ns2:defaultOpenAction>openItemDetail</ns2:defaultOpenAction>
-                    <ns2:defaultDeleteAction>deleteItem</ns2:defaultDeleteAction>
+                    <ns2:defaultDisableAction>deleteItem</ns2:defaultDisableAction>
                 </ns2:defaultActions>
                 <ns2:actionGroup>
                     <ns2:type>radio</ns2:type>
@@ -194,9 +240,14 @@
                 </ns2:actionGroup>
             </ns2:component>
             <ns2:layoutConstraint>
-                <ns2:componentId>uiDynamicInfoTable</ns2:componentId>
+                <ns2:componentId>entityTypes</ns2:componentId>
                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                     x="0" y="0" align="FULL"></ns2:constraint>
+            </ns2:layoutConstraint>
+            <ns2:layoutConstraint>
+                <ns2:componentId>uiDynamicInfoTable</ns2:componentId>
+                <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                    x="0" y="1" align="FULL"></ns2:constraint>
             </ns2:layoutConstraint>
         </ns2:component>
         <ns2:layoutConstraint>
@@ -213,10 +264,33 @@
 	    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
 	      <type entityName="java.lang.Boolean"></type>
 	    </ns2:DataEntity>
+	    <ns2:DataEntity scope="InOut" name="value" category="JavaClass">
+          <type entityName="java.lang.String"></type>
+        </ns2:DataEntity>
+	    <ns2:DataEntity scope="InOut" name="values0" category="JavaClass">
+	      <type entityName="java.util.List"></type>
+	    </ns2:DataEntity>
+	    <ns2:DataEntity scope="InOut" name="displayItems0" category="JavaClass">
+	      <type entityName="java.util.List"></type>
+	    </ns2:DataEntity>
+	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+	      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+	      <ns2:UIComponent componentPath="entityTypes" paramName="UIWidgetType"></ns2:UIComponent>
+	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="value" paramName="Value"></ns2:DataComponent>
+	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values0" paramName="OptionValues"></ns2:DataComponent>
+	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems0" paramName="OptionDisplayValues"></ns2:DataComponent>
+	    </ns2:ComponentMapping>
 	    <ns2:DataToUIMappingOperation>
 	      <expressionString><![CDATA[
+	      import java.util.List;
 	      import org.shaolin.uimaster.page.ajax.TableConditions;
+	      import org.shaolin.bmdp.runtime.AppContext;
+	      import org.shaolin.vogerp.commonmodel.IDynamicUIService;
 	      {
+	        IDynamicUIService service = (IDynamicUIService)AppContext.get().getService(IDynamicUIService.class);
+	        List[] results = service.getAllEntities();
+	        $values0 = results[0];
+	        $displayItems0 = results[1];
 			@odContext.executeAllMappings();
 		  }
 	      ]]></expressionString>

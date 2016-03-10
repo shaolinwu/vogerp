@@ -56,6 +56,16 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 						}
 						return null;
 					}
+					@Override
+					public boolean hasParent(List hierarchy, String ceName){
+						for (Object i : hierarchy) {
+							ICEHierarchy c = (ICEHierarchy)i;
+							if (ceName.equals(c.getCeName())) {
+								return true;
+							}
+						}
+						return false;
+					}
 				});
 			} catch (Exception e) {
 				throw new IllegalStateException("Failed to parse CE items: " + e.getMessage(), e);

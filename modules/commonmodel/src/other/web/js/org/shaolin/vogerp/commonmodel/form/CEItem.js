@@ -63,6 +63,16 @@ function org_shaolin_vogerp_commonmodel_form_CEItem(json)
         ui: elementList[prefix + "iconUI"]
     });
 
+    var bigIconUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "bigIconUILabel"]
+    });
+
+    var bigIconUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "bigIconUI"]
+    });
+
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
@@ -84,13 +94,13 @@ function org_shaolin_vogerp_commonmodel_form_CEItem(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "ceNameUILabel",prefix + "ceNameUI",prefix + "i18nKeyUILabel",prefix + "i18nKeyUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "intValueUILabel",prefix + "intValueUI",prefix + "strValueUILabel",prefix + "strValueUI",prefix + "iconUILabel",prefix + "iconUI"]
+        ,subComponents: [prefix + "ceNameUILabel",prefix + "ceNameUI",prefix + "i18nKeyUILabel",prefix + "i18nKeyUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "intValueUILabel",prefix + "intValueUI",prefix + "strValueUILabel",prefix + "strValueUI",prefix + "iconUILabel",prefix + "iconUI",prefix + "bigIconUILabel",prefix + "bigIconUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [ceNameUILabel,ceNameUI,i18nKeyUILabel,i18nKeyUI,descriptionUILabel,descriptionUI,intValueUILabel,intValueUI,strValueUILabel,strValueUI,iconUILabel,iconUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [ceNameUILabel,ceNameUI,i18nKeyUILabel,i18nKeyUI,descriptionUILabel,descriptionUI,intValueUILabel,intValueUI,strValueUILabel,strValueUI,iconUILabel,iconUI,bigIconUILabel,bigIconUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.ceNameUILabel=ceNameUILabel;
@@ -116,6 +126,10 @@ function org_shaolin_vogerp_commonmodel_form_CEItem(json)
     Form.iconUILabel=iconUILabel;
 
     Form.iconUI=iconUI;
+
+    Form.bigIconUILabel=bigIconUILabel;
+
+    Form.bigIconUI=bigIconUI;
 
     Form.okbtn=okbtn;
 
@@ -147,6 +161,10 @@ function org_shaolin_vogerp_commonmodel_form_CEItem(json)
 
     Form.iconUI=iconUI;
 
+    Form.bigIconUILabel=bigIconUILabel;
+
+    Form.bigIconUI=bigIconUI;
+
     Form.actionPanel=actionPanel;
 
     Form.okbtn=okbtn;
@@ -160,6 +178,8 @@ function org_shaolin_vogerp_commonmodel_form_CEItem(json)
     };
 
     Form.Save = org_shaolin_vogerp_commonmodel_form_CEItem_Save;
+
+    Form.selectImage = org_shaolin_vogerp_commonmodel_form_CEItem_selectImage;
 
     Form.Cancel = org_shaolin_vogerp_commonmodel_form_CEItem_Cancel;
 
@@ -184,6 +204,17 @@ function org_shaolin_vogerp_commonmodel_form_CEItem(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail1988586262",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEItem_Save */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_CEItem_selectImage(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEItem_selectImage */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectImage-1317628417",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEItem_selectImage */
 
 
     /* auto generated eventlistener function declaration */

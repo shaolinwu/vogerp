@@ -116,6 +116,12 @@ public class CEOperationUtil {
 					record.setI18nKey(v.getI18nKey());
 				}
 			}
+			if (v.getIcon() != null && v.getIcon().length() > 0) {
+				record.setIcon(v.getIcon());
+			}
+			if (v.getBigIcon() != null && v.getBigIcon().length() > 0) {
+				record.setBigIcon(v.getBigIcon());
+			}
 			
 			if (ceMap.containsKey(record.getEntityName())) {
 				ceMap.get(record.getEntityName()).addConstant(record);
@@ -183,6 +189,7 @@ public class CEOperationUtil {
 			TreeItem ceNode = new TreeItem();
 			ceNode.setId(nodeId);
 			ceNode.setText(ce.getI18nEntityName());
+			ceNode.setIcon(ce.getIcon());
 			ceNode.setHasChildren(true);
 			parentNode = ceNode;
 			result.add(ceNode);
@@ -197,6 +204,7 @@ public class CEOperationUtil {
 			TreeItem ceItem = new TreeItem();
 			ceItem.setId(nodeId + "_"+item.getIntValue());
 			ceItem.setText(item.getDisplayName());
+			ceItem.setIcon(item.getIcon());
 			parentNode.getChildren().add(ceItem);
 			
 			IConstantEntity kid = cs.getChildren(item);
@@ -225,6 +233,7 @@ public class CEOperationUtil {
 			TreeItem ceItem = new TreeItem();
 			ceItem.setId(nodeId + "_"+item.getIntValue());
 			ceItem.setText(item.getDisplayName());
+			ceItem.setIcon(item.getIcon());
 			
 			IConstantEntity kid = cs.getChildren(item);
 			if (kid != null){

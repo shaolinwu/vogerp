@@ -35,7 +35,7 @@ function org_shaolin_bmdp_adminconsole_page_EntityManager(json)
         ,items: []
         ,subComponents: [prefix + "reloadPathText",prefix + "reloadBtn",prefix + "reloadCECacheText",prefix + "reloadCECacheBtn"]
     });
-    var ceentityPanel = new org_shaolin_vogerp_commonmodel_form_CEHierarchy({"prefix":prefix + "ceentityPanel."});
+    var ceentityPanel = new org_shaolin_vogerp_commonmodel_form_CEExtensionManager({"prefix":prefix + "ceentityPanel."});
 
     var dynamicUIPanel = new org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager({"prefix":prefix + "dynamicUIPanel."});
 

@@ -1,0 +1,275 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.commonmodel.form.ImageViewer</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="addAblum">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <expressionString><![CDATA[
+        { 
+            this.photoUI.createAlbum();
+        
+        }]]></expressionString>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Save">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="Save-20151227-172647">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            String selectedImage = @page.getImage("photoUI").getSelectedImage();
+            TextField callBackUI = (TextField)@page.getElementByAbsoluteId(@page.getHidden("callbackUIIDUI").getValue());
+            callBackUI.setValue(selectedImage);
+            
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            form.closeIfinWindows(true);
+            @page.removeForm(@page.getEntityUiid()); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="movePicToAlbum">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="movePicToAlbum-20151227-172647">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            //@page.getImage("photoUI").getSelectedImage(); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="refresh">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="refresh-20151227-172647">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            @page.getImage("photoUI").refresh(); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Cancel">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20151227-172647">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            form.closeIfinWindows(true);
+            @page.removeForm(@page.getEntityUiid()); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIHiddenType" UIID="callbackUIIDUI">
+      <ns2:secure>
+        <ns2:value>true</ns2:value>
+      </ns2:secure>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIPanelType" UIID="photoPanel">
+          <ns2:layout xsi:type="ns2:TableLayoutType">
+            <ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
+            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+          </ns2:layout>
+          <ns2:component xsi:type="ns2:UIImageType" UIID="photoUI">
+            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+            <ns2:isGallery xsi:type="ns2:BooleanPropertyType">
+                <ns2:value>true</ns2:value>
+            </ns2:isGallery>
+            <ns2:Property name="width">
+               <ns2:value xsi:type="ns2:StringPropertyType">
+                   <value>580px</value>
+               </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="height">
+               <ns2:value xsi:type="ns2:StringPropertyType">
+                   <value>400px</value>
+               </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="value">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString>
+			           import org.shaolin.bmdp.runtime.AppContext;
+			           import org.shaolin.bmdp.runtime.Registry;
+			           import org.shaolin.uimaster.page.WebConfig;
+			           { 
+			               return "/images"; 
+			           }</expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+            </ns2:Property>
+            <ns2:selectedImageExpr xsi:type="ns2:ExpressionPropertyType">
+                 <ns2:expression xsi:type="ns2:ExpressionType">
+                   <expressionString>
+                   import org.shaolin.bmdp.runtime.AppContext;
+                   import org.shaolin.bmdp.runtime.Registry;
+                   import org.shaolin.uimaster.page.WebConfig;
+                   { 
+                       @page.getFile("uploadFile").setStoredPath($selectedImage);
+                   }</expressionString>
+                 </ns2:expression>
+            </ns2:selectedImageExpr>
+          </ns2:component>
+          <ns2:layoutConstraint>
+            <ns2:componentId>photoUI</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+          </ns2:layoutConstraint>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIFileType" UIID="uploadFile">
+	        <ns2:text xsi:type="ns2:StringPropertyType">
+	         <ns2:value></ns2:value>
+	        </ns2:text>
+	        <ns2:suffix xsi:type="ns2:StringPropertyType">
+	         <ns2:value>*.jpg;*.jpeg;*.png;*.gif</ns2:value>
+	        </ns2:suffix>
+	        <ns2:isMultiple xsi:type="ns2:BooleanPropertyType">
+	         <ns2:value>true</ns2:value>
+	        </ns2:isMultiple>
+	        <ns2:storedPath xsi:type="ns2:ExpressionPropertyType">
+	         <ns2:expression>
+	           <expressionString>
+	           import org.shaolin.bmdp.runtime.AppContext;
+	           import org.shaolin.bmdp.runtime.Registry;
+	           import org.shaolin.uimaster.page.WebConfig;
+	           { 
+	               return WebConfig.getResourcePath() + "/images"; 
+	           }</expressionString>
+	         </ns2:expression>
+	        </ns2:storedPath>
+      </ns2:component>
+      <ns2:layoutConstraint>
+          <ns2:componentId>photoPanel</ns2:componentId>
+          <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIStyle="width:100%;"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+          <ns2:componentId>uploadFile</ns2:componentId>
+          <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIStyle="width:100%;"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="refreshbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="refresh"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>刷新</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="addAblumbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="addAblum"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>添加新目录</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="movePicToAlbumbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="movePicToAlbum"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>复制到目录...</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Save"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>确认</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Cancel"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>Cancelbtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>addAblumbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>movePicToAlbumbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>refreshbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="2" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>okbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="3" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="4" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="callbackUIID" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="selectedImage" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="callbackUIIDUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="callbackUIID" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:DataToUIMappingOperation>
+      <expressionString>{
+@odContext.executeAllMappings();
+}</expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>{
+@odContext.executeAllMappings();
+}</expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

@@ -24,6 +24,7 @@ import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.ICaptcha;
 import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
+import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 import org.shaolin.vogerp.commonmodel.be.IRegisterInfo;
 import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
 import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
@@ -187,6 +188,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 			UserContext userContext = new UserContext();
 			userContext.setUserId(matchedUser.getInfo().getId());
 			userContext.setUserAccount(matchedUser.getUserName());
+			userContext.setUserName(matchedUser.getInfo().getFirstName() + matchedUser.getInfo().getLastName());
 			userContext.setUserLocale(matchedUser.getLocale());
 			userContext.setUserRoles(CEOperationUtil.toCElist(matchedUser.getInfo().getType()));
 			if (matchedUser.getLastLogin() != null) {
@@ -200,6 +202,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 			userContext.setOrgCode(organization.getOrgCode());
 			userContext.setOrgType(organization.getType());
 			userContext.setOrgName(organization.getName());
+			userContext.setIsAdmin("uimaster".equals(organization.getOrgCode()));
 			
 			session.setAttribute(WebflowConstants.USER_SESSION_KEY, userContext);
 			session.setAttribute(WebflowConstants.USER_LOCALE_KEY, matchedUser.getLocale());
@@ -271,6 +274,15 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 		account.setInfo(userInfo);
 		List<IPersonalAccount> result = CommonModel.INSTANCE.searchUserAccount(account, null, 0, 1);
 		return result.get(0);
+	}
+	
+	@Override
+	public String getUserName(long userId) {
+		PersonalInfoImpl userInfo = new PersonalInfoImpl();
+		userInfo.setId(userId);
+		List<IPersonalInfo> result = CommonModel.INSTANCE.searchPersonInfo(userInfo, null, 0, 1);
+		IPersonalInfo iPersonalInfo = result.get(0);
+		return iPersonalInfo.getFirstName() + iPersonalInfo.getLastName()+"("+iPersonalInfo.getOrganization().getName()+")";
 	}
 	
 	@Override

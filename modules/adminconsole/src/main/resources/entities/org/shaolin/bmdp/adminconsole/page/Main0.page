@@ -219,6 +219,9 @@
 		<ns2:DataEntity category="BusinessEntity" name="userAccount" scope="In">
 			<ns2:type entityName="org.shaolin.vogerp.commonmodel.be.PersonalAccount" />
 		</ns2:DataEntity>
+		<ns2:DataEntity scope="InOut" name="notificator" category="BusinessEntity">
+            <type entityName="org.shaolin.bmdp.workflow.be.Notification"></type>
+        </ns2:DataEntity>
 		<!-- 
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
 			name="simpleMapping0">

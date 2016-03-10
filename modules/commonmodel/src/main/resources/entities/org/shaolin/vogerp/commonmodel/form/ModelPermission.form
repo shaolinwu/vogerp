@@ -193,10 +193,10 @@
       import java.util.List;
       import org.shaolin.bmdp.runtime.AppContext;
       import org.shaolin.vogerp.commonmodel.internal.ModuleServiceImpl;
-      import org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl;
+      import org.shaolin.vogerp.commonmodel.be.*;
       import org.shaolin.vogerp.commonmodel.dao.CommonModel;
       {
-      		 ModuleServiceImpl service = (ModuleServiceImpl) AppContext.get().getService(ModuleServiceImpl.class);
+         ModuleServiceImpl service = (ModuleServiceImpl) AppContext.get().getService(ModuleServiceImpl.class);
          ArrayList[] options = service.getModuleListInOptions();
          $moduleIdList = options[0];
          $moduleNameList = options[1];
@@ -208,9 +208,8 @@
             ModelPermissionImpl item = (ModelPermissionImpl)all.get(i);
             $selectedModelList.add(item.getModuleId() + "");
          }
-         System.out.println("Data to UI: " + $selectedModelList);
-									@odContext.executeAllMappings();
-						}
+         @odContext.executeAllMappings();
+      }
    ]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>

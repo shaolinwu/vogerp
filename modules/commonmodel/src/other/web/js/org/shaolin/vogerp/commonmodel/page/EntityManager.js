@@ -35,7 +35,7 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
         ,items: []
         ,subComponents: [prefix + "reloadPathText",prefix + "reloadBtn",prefix + "reloadCECacheText",prefix + "reloadCECacheBtn"]
     });
-    var ceentityPanel = new org_shaolin_vogerp_commonmodel_form_CEHierarchy({"prefix":prefix + "ceentityPanel."});
+    var ceentityPanel = new org_shaolin_vogerp_commonmodel_form_CEExtensionManager({"prefix":prefix + "ceentityPanel."});
 
     var dynamicUIPanel = new org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager({"prefix":prefix + "dynamicUIPanel."});
 
@@ -93,12 +93,12 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_EntityManager_ReloadFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_EntityManager_ReloadFunction */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openPage",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openPage",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_EntityManager_ReloadFunction */
 
 

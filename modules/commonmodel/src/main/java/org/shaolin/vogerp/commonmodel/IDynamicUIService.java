@@ -1,5 +1,7 @@
 package org.shaolin.vogerp.commonmodel;
 
+import java.util.List;
+
 
 public interface IDynamicUIService {
 
@@ -21,4 +23,11 @@ public interface IDynamicUIService {
 	 * 
 	 */
 	public void reloadPageLinks();
+	
+	/**
+	 * Get all defined entities.
+	 * 
+	 * @return values, display values
+	 */
+	public List[] getAllEntities();
 }

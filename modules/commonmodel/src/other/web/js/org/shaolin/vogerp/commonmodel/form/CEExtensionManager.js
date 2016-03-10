@@ -8,6 +8,11 @@ function org_shaolin_vogerp_commonmodel_form_CEExtensionManager(json)
         ui: elementList[prefix + "CENameUI"]
     });
 
+    var entityTypes = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "entityTypes"]
+    });
+
     var typeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchy({"prefix":prefix + "typeUI."});
 
     var constantInfoPanel = new UIMaster.ui.panel
@@ -20,10 +25,12 @@ function org_shaolin_vogerp_commonmodel_form_CEExtensionManager(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [CENameUI,typeUI,constantInfoPanel]
+        ,items: [CENameUI,entityTypes,typeUI,constantInfoPanel]
     });
 
     Form.CENameUI=CENameUI;
+
+    Form.entityTypes=entityTypes;
 
     Form.typeUI=typeUI;
 
@@ -36,6 +43,8 @@ function org_shaolin_vogerp_commonmodel_form_CEExtensionManager(json)
         /* Construct_FIRST:org_shaolin_vogerp_commonmodel_form_CEExtensionManager */
         /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_CEExtensionManager */
     };
+
+    Form.selectEntity = org_shaolin_vogerp_commonmodel_form_CEExtensionManager_selectEntity;
 
     Form.deleteUser = org_shaolin_vogerp_commonmodel_form_CEExtensionManager_deleteUser;
 
@@ -50,6 +59,17 @@ function org_shaolin_vogerp_commonmodel_form_CEExtensionManager(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_commonmodel_form_CEExtensionManager */
 /* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_CEExtensionManager */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_CEExtensionManager_selectEntity(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEExtensionManager_selectEntity */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectEntity-20160228-2322",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEExtensionManager_selectEntity */
+
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_CEExtensionManager_deleteUser(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEExtensionManager_deleteUser */

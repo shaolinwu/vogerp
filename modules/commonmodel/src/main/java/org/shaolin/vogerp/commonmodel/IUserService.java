@@ -47,6 +47,8 @@ public interface IUserService {
 	
 	public IPersonalAccount getPersonalAccount(long userId);
 	
+	public String getUserName(long userId);
+	
 	/**
 	 * Get logined user organization type.
 	 * 

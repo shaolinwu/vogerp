@@ -144,6 +144,7 @@
     <ns2:column name="SRCUIWidget" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="LinkComment" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="TARUIName" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="TARUIPanel" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
       <ns2:columnName>ID</ns2:columnName>
@@ -156,6 +157,7 @@
       <ns2:fieldMapping beFieldName="srcUIPanel" columnName="SRCUIPanel"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="srcUIWidget" columnName="SRCUIwidget"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="tarUIName" columnName="TARUIName"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="tarUITab" columnName="TARUIPanel"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="linkComment" columnName="LinkComment"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
@@ -370,6 +372,29 @@
             <type entityName="org.shaolin.vogerp.commonmodel.be.CEHierarchy"/>
         </ns2:searchConditionData>
     </ns2:searchConditionMapping>
+  </ns2:query>
+  
+  <ns2:query queryName="searchDynamicEntities">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.UIDyanimcItem" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.UIDyanimcItem"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.UIDyanimcItem"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+    <ns2:distinct>uiEntityName</ns2:distinct>
   </ns2:query>
   
   <ns2:query queryName="searchDynamicItemEntities">

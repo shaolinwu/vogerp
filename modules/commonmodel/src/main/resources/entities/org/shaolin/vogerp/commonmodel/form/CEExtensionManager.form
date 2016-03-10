@@ -2,14 +2,46 @@
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
     <entityName>org.shaolin.vogerp.commonmodel.form.CEExtensionManager</entityName>
     <systemVersion>0</systemVersion>
+    <ns2:eventHandler functionName="selectEntity">
+        <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectEntity-20160228-2322">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import java.util.List;
+                import java.util.ArrayList;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl;
+                import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+                {
+                    ComboBox entityTypes = @page.getComboBox("entityTypes");
+                    String type = entityTypes.getOptionName(entityTypes.getValue());
+                    
+                    Tree tree = @page.getTree("typeUI.ceTree");
+                    tree.getConditions().setSelectedId(type);
+                    tree.refresh();
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
     <ns2:eventHandler functionName="deleteUser"></ns2:eventHandler>
     <ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
         <ns2:layout xsi:type="ns2:TableLayoutType">
+            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
         </ns2:layout>
         <ns2:component xsi:type="ns2:UIHiddenType" UIID="CENameUI">
         <!-- unsecure for creating new constant. -->
+        </ns2:component>
+        <ns2:component xsi:type="ns2:UIComboBoxType" UIID="entityTypes">
+            <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+              <ns2:value>根常量</ns2:value>
+            </ns2:widgetLabel>
+            <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
+              <ns2:handler functionName="selectEntity"></ns2:handler>
+            </ns2:EventListener>
         </ns2:component>
         <ns2:component xsi:type="ns2:UIPanelType" UIID="constantInfoPanel">
             <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -17,8 +49,8 @@
                 <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
             </ns2:layout>
             <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="typeUI">
-						         <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy" />
-						      </ns2:component>
+                <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy" />
+            </ns2:component>
             <ns2:layoutConstraint>
                 <ns2:componentId>typeUI</ns2:componentId>
                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
@@ -26,9 +58,14 @@
             </ns2:layoutConstraint>
         </ns2:component>
         <ns2:layoutConstraint>
-            <ns2:componentId>constantInfoPanel</ns2:componentId>
+            <ns2:componentId>entityTypes</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                 x="0" y="0" align="FULL"></ns2:constraint>
+        </ns2:layoutConstraint>
+        <ns2:layoutConstraint>
+            <ns2:componentId>constantInfoPanel</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                x="0" y="1" align="FULL"></ns2:constraint>
         </ns2:layoutConstraint>
     </ns2:body>
     <ns2:mapping>
@@ -45,22 +82,46 @@
 	    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
 	      <type entityName="java.lang.Boolean"></type>
 	    </ns2:DataEntity>
+	    <ns2:DataEntity scope="InOut" name="value" category="JavaClass">
+          <type entityName="java.lang.String"></type>
+        </ns2:DataEntity>
+        <ns2:DataEntity scope="InOut" name="values0" category="JavaClass">
+          <type entityName="java.util.List"></type>
+        </ns2:DataEntity>
+        <ns2:DataEntity scope="InOut" name="displayItems0" category="JavaClass">
+          <type entityName="java.util.List"></type>
+        </ns2:DataEntity>
 	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy"></ns2:mappingRule>
-          <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
-          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
-          <ns2:expression>
-            <expressionString>$CEName</expressionString>
-          </ns2:expression>
-       </ns2:DataComponent>
-     </ns2:ComponentMapping>
+	          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy"></ns2:mappingRule>
+	          <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
+	          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
+	          <ns2:expression>
+	            <expressionString>$CEName</expressionString>
+	          </ns2:expression>
+	       </ns2:DataComponent>
+	     </ns2:ComponentMapping>
+	     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+          <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+          <ns2:UIComponent componentPath="entityTypes" paramName="UIWidgetType"></ns2:UIComponent>
+          <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="value" paramName="Value"></ns2:DataComponent>
+          <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values0" paramName="OptionValues"></ns2:DataComponent>
+          <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems0" paramName="OptionDisplayValues"></ns2:DataComponent>
+        </ns2:ComponentMapping>
 	    <ns2:DataToUIMappingOperation>
 	      <expressionString><![CDATA[
+	      import java.util.List;
+	      import java.util.ArrayList;
 	      import org.shaolin.uimaster.page.ajax.TableConditions;
-       import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
+	      import org.shaolin.bmdp.runtime.AppContext;
+          import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
+          import org.shaolin.bmdp.runtime.spi.IConstantService;
 	      {
-			       @odContext.executeAllMappings();
-		     }
+	          IConstantService service = AppContext.get().getConstantService();
+              List[] results = service.getRootCEList();
+              $values0 = results[0];
+              $displayItems0 = results[1];
+			  @odContext.executeAllMappings();
+		  }
 	      ]]></expressionString>
 	    </ns2:DataToUIMappingOperation>
 	    <ns2:UIToDataMappingOperation>

@@ -3,6 +3,11 @@
 function org_shaolin_bmdp_adminconsole_page_Main(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var tempSentPartyIdUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "tempSentPartyIdUI"]
+    });
+
     var vogerplogo = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "vogerplogo"]
@@ -38,6 +43,11 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
         ui: elementList[prefix + "notificationIcon"]
     });
 
+    var helpIcon = new UIMaster.ui.image
+    ({
+        ui: elementList[prefix + "helpIcon"]
+    });
+
     var functionTree = new UIMaster.ui.webtree
     ({
         ui: elementList[prefix + "functionTree"]
@@ -52,9 +62,22 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var currentStatusPanel = new org_shaolin_bmdp_adminconsole_form_CurrentStatus({"prefix":prefix + "currentStatusPanel."});
 
 
+    var bottomPanelInfo = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "bottomPanelInfo"]
+    });
+
     var userFormContent = new org_shaolin_bmdp_adminconsole_form_UserAccount({"prefix":prefix + "userFormContent."});
 
     var notificationFormContent = new org_shaolin_bmdp_workflow_form_NotificationBoard({"prefix":prefix + "notificationFormContent."});
+
+    var bottomPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "bottomPanel"]
+        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
+        ,items: []
+        ,subComponents: [prefix + "bottomPanelInfo"]
+    });
 
     var pagePanel = new UIMaster.ui.panel
     ({
@@ -100,7 +123,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     ({
         ui: elementList[prefix + "topRightPanel"]
         ,items: []
-        ,subComponents: [prefix + "userIcon",prefix + "userForm",prefix + "taskIcon",prefix + "notificationIcon",prefix + "notificationForm"]
+        ,subComponents: [prefix + "userIcon",prefix + "userForm",prefix + "taskIcon",prefix + "notificationIcon",prefix + "helpIcon",prefix + "notificationForm"]
     });
 
     var topMiddlePanel = new UIMaster.ui.panel
@@ -121,8 +144,10 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [vogerplogo,searchContext,searchButton,userIcon,userLogout,taskIcon,notificationIcon,functionTree,functionsTab,userFormContent,notificationFormContent,topPanel,topMiddlePanel,topRightPanel,userForm,notificationForm,middlePanel,treePanel,pagePanel]
+        ,items: [tempSentPartyIdUI,vogerplogo,searchContext,searchButton,userIcon,userLogout,taskIcon,notificationIcon,helpIcon,functionTree,functionsTab,bottomPanelInfo,userFormContent,notificationFormContent,topPanel,topMiddlePanel,topRightPanel,userForm,notificationForm,middlePanel,treePanel,pagePanel,bottomPanel]
     });
+
+    Form.tempSentPartyIdUI=tempSentPartyIdUI;
 
     Form.vogerplogo=vogerplogo;
 
@@ -138,11 +163,15 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
     Form.notificationIcon=notificationIcon;
 
+    Form.helpIcon=helpIcon;
+
     Form.functionTree=functionTree;
 
     Form.functionsTab=functionsTab;
 
     Form.currentStatusPanel=currentStatusPanel;
+
+    Form.bottomPanelInfo=bottomPanelInfo;
 
     Form.userFormContent=userFormContent;
 
@@ -172,6 +201,8 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
     Form.notificationIcon=notificationIcon;
 
+    Form.helpIcon=helpIcon;
+
     Form.notificationForm=notificationForm;
 
     Form.notificationFormContent=notificationFormContent;
@@ -195,6 +226,8 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     Form.taskIcon=taskIcon;
 
     Form.notificationIcon=notificationIcon;
+
+    Form.helpIcon=helpIcon;
 
     Form.notificationForm=notificationForm;
 
@@ -232,6 +265,10 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
     Form.currentStatusPanel=currentStatusPanel;
 
+    Form.bottomPanel=bottomPanel;
+
+    Form.bottomPanelInfo=bottomPanelInfo;
+
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_bmdp_adminconsole_page_Main */
@@ -249,6 +286,8 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     Form.showNotification = org_shaolin_bmdp_adminconsole_page_Main_showNotification;
 
     Form.search = org_shaolin_bmdp_adminconsole_page_Main_search;
+
+    Form.showHelp = org_shaolin_bmdp_adminconsole_page_Main_showHelp;
 
     Form.initPageJs = org_shaolin_bmdp_adminconsole_page_Main_initPageJs;
 
@@ -299,7 +338,11 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
                //close the second one.
                this.functionsTab.removeTab(1);
             }
-            this.functionsTab.addFrameTab(node.text, node.a_attr.href);
+            if (this.functionTree.clickUiPanel && this.functionTree.clickUiPanel != null && this.functionTree.clickUiPanel != "") {
+               this.functionsTab.addFrameTab(node.text, node.a_attr.href+"&_clickRemembered="+this.functionTree.clickUiPanel);
+            } else {
+               this.functionsTab.addFrameTab(node.text, node.a_attr.href);
+            }
             this.tabCounter = this.functionsTab.getTabLength();
             sideBar("middlePanel", "treePanel", "pagePanel");
         }
@@ -352,6 +395,27 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"search-201506102211",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_search */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Main_showHelp(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_showHelp */
+        var o = this;
+        var UIEntity = this;
+
+		      {
+		        var toPartyId = parseInt(event);
+		        if (!isNaN(toPartyId)) {
+		           this.tempSentPartyIdUI.setValue(toPartyId);
+		        }
+		        if ($("#div-topRightPanel-4_0").css("display") == "block") {
+		            $("#div-topRightPanel-4_0").slideUp("fast");
+		        }
+		      }
+		      
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showHelp-201506102211",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_showHelp */
 
 
     function org_shaolin_bmdp_adminconsole_page_Main_initPageJs(){/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_initPageJs */

@@ -81,8 +81,8 @@
             }
             
             //reload this constant.
-												IAppServiceManager serviceManger =  AppContext.get();
-												((ConstantServiceImpl)serviceManger.getConstantService()).reloadData(CEOperationUtil.convertC2D(tableWidget.getListData())[0]);
+            IAppServiceManager serviceManger =  AppContext.get();
+            ((ConstantServiceImpl)serviceManger.getConstantService()).reloadData(CEOperationUtil.convertC2D(tableWidget.getListData())[0]);
             
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             form.closeIfinWindows();

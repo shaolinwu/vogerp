@@ -104,17 +104,21 @@
                     if (entityName == null || entityName.trim().isEmpty()) {
                         return;
                     }
-                    String format = entityName.replace('_', '.');
-                    entityName = format.substring(0, format.lastIndexOf("."));
-                    int parentIntValue = Integer.parseInt(format.substring(format.lastIndexOf(".") + 1));
-                    IConstantEntity c = AppContext.get().getConstantService().getConstantItem(entityName, parentIntValue);
-                    HashMap input = new HashMap();
-                    input.put("beObject", CEOperationUtil.convertSingD2C(c));
-                    input.put("editable", new Boolean(true));
-                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.CEItem", input);
-                    @page.addElement(form);
-                    
-                    form.openInWindows("Open Item", null, 500, 300);
+                    if (entityName.indexOf('_') != -1) {
+	                    String format = entityName.replace('_', '.');
+	                    entityName = format.substring(0, format.lastIndexOf("."));
+	                    try {
+		                    int parentIntValue = Integer.parseInt(format.substring(format.lastIndexOf(".") + 1));
+		                    IConstantEntity c = AppContext.get().getConstantService().getConstantItem(entityName, parentIntValue);
+		                    HashMap input = new HashMap();
+		                    input.put("beObject", CEOperationUtil.convertSingD2C(c));
+		                    input.put("editable", new Boolean(true));
+		                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.CEItem", input);
+		                    @page.addElement(form);
+		                    
+		                    form.openInWindows("Open Item", null, 500, 300);
+	                    } catch (Exception e) {}
+                    }
                 }
                 ]]></ns2:expressionString>
             </ns2:exp>
@@ -206,17 +210,62 @@
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="selectCENameUI">
           <ns2:secure>true</ns2:secure>
       </ns2:component>
-				  <ns2:component xsi:type="ns2:UIWebTreeType" UIID="ceTree">
-				      <ns2:title xsi:type="ns2:StringPropertyType">
-				          <ns2:value>Constant Hierarchy</ns2:value>
-				      </ns2:title>
-				      <ns2:opened>true</ns2:opened>
-				      <ns2:nodeIcon>/images/nodeicon.jpg</ns2:nodeIcon>
-				      <ns2:itemIcon>/images/itemicon.jpg</ns2:itemIcon>
-				      <ns2:selectMode>Multiple</ns2:selectMode>
-				      <ns2:selectNodeEvent>clickTreeNode</ns2:selectNodeEvent>
-				      <ns2:deleteNodeEvent>moveNode</ns2:deleteNodeEvent>
-				      <ns2:action>
+	  <ns2:component xsi:type="ns2:UIWebTreeType" UIID="ceTree">
+	      <ns2:title xsi:type="ns2:StringPropertyType">
+	          <ns2:value>Constant Hierarchy</ns2:value>
+	      </ns2:title>
+	      <ns2:opened>true</ns2:opened>
+	      <ns2:nodeIcon>/images/nodeicon.jpg</ns2:nodeIcon>
+	      <ns2:itemIcon>/images/itemicon.jpg</ns2:itemIcon>
+	      <ns2:selectMode>Multiple</ns2:selectMode>
+	      <ns2:selectNodeEvent>clickTreeNode</ns2:selectNodeEvent>
+	      <ns2:deleteNodeEvent>moveNode</ns2:deleteNodeEvent>
+	      <ns2:initExpression xsi:type="ns2:ExpressionPropertyType">
+              <ns2:expression xsi:type="ns2:ExpressionType">
+                  <ns2:expressionString><![CDATA[
+                  import java.util.ArrayList;
+                  import org.shaolin.bmdp.runtime.AppContext;
+                  import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+                  {
+                      ArrayList result = new ArrayList();
+                      CEOperationUtil.getCEHierarchy($openLevels, result, null, AppContext.get().getConstantService().getConstantEntity($ceName));
+                      return result;
+                  }]]></ns2:expressionString>
+              </ns2:expression>
+          </ns2:initExpression>
+          <ns2:expandExpression xsi:type="ns2:ExpressionPropertyType">
+              <ns2:expression xsi:type="ns2:ExpressionType">
+                  <ns2:expressionString><![CDATA[
+                  import java.util.ArrayList;
+                  import org.shaolin.bmdp.runtime.AppContext;
+                  import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+                  import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+                  {
+                      if ($selectedNode.indexOf('_') != -1) {
+	                      String format = $selectedNode.replace('_', '.');
+	                      String parentCe = format.substring(0, format.lastIndexOf("."));
+	                      int parentIntValue = 0;
+	                      try {
+	                          parentIntValue = Integer.parseInt(format.substring(format.lastIndexOf(".") + 1));
+	                          IConstantEntity kid = AppContext.get().getConstantService().getChildren(parentCe, parentIntValue);
+		                      ArrayList result = new ArrayList();
+		                      CEOperationUtil.getCEChildren(result, kid);
+		                      return result;
+	                      } catch (Exception e) {
+	                          //parent reload
+	                          return new ArrayList();
+	                      }
+                      } else {
+                          // reload entire tree.
+                          ArrayList result = new ArrayList();
+                          CEOperationUtil.getCEHierarchy(2, result, null, AppContext.get().getConstantService().getConstantEntity($selectedNode));
+                          return result;
+                      }
+                  }
+                  ]]></ns2:expressionString>
+              </ns2:expression>
+          </ns2:expandExpression>
+	      <ns2:action>
               <ns2:uiid>openItem</ns2:uiid>
               <ns2:title xsi:type="ns2:StringPropertyType">
                   <ns2:value>Open</ns2:value>
@@ -224,7 +273,7 @@
               <ns2:icon>ui-icon-note</ns2:icon>
               <ns2:function>openItem</ns2:function>
           </ns2:action>
-				      <ns2:action>
+	      <ns2:action>
               <ns2:uiid>createItem</ns2:uiid>
               <ns2:title xsi:type="ns2:StringPropertyType">
                   <ns2:value>Add</ns2:value>
@@ -248,40 +297,7 @@
               <ns2:icon>ui-icon-note</ns2:icon>
               <ns2:function>refreshItem</ns2:function>
           </ns2:action>
-				      <ns2:initExpression xsi:type="ns2:ExpressionPropertyType">
-				          <ns2:expression xsi:type="ns2:ExpressionType">
-				              <ns2:expressionString><![CDATA[
-				              import java.util.ArrayList;
-				              import org.shaolin.bmdp.runtime.AppContext;
-				              import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
-				              {
-				              	   ArrayList result = new ArrayList();
-				                  CEOperationUtil.getCEHierarchy($openLevels, result, null, AppContext.get().getConstantService().getConstantEntity($ceName));
-				                  return result;
-				              }]]></ns2:expressionString>
-				          </ns2:expression>
-				      </ns2:initExpression>
-				      <ns2:expandExpression xsi:type="ns2:ExpressionPropertyType">
-              <ns2:expression xsi:type="ns2:ExpressionType">
-                  <ns2:expressionString><![CDATA[
-                  import java.util.ArrayList;
-                  import org.shaolin.bmdp.runtime.AppContext;
-                  import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
-                  import org.shaolin.bmdp.runtime.ce.IConstantEntity;
-                  {
-                      String format = $selectedNode.replace('_', '.');
-                      String parentCe = format.substring(0, format.lastIndexOf("."));
-                      int parentIntValue = Integer.parseInt(format.substring(format.lastIndexOf(".") + 1));
-                      IConstantEntity kid = AppContext.get().getConstantService().getChildren(parentCe, parentIntValue);
-                      
-                      ArrayList result = new ArrayList();
-                      CEOperationUtil.getCEChildren(result, kid);
-                      return result;
-                  }
-                  ]]></ns2:expressionString>
-              </ns2:expression>
-          </ns2:expandExpression>
-				  </ns2:component>
+		  </ns2:component>
 	     <ns2:layoutConstraint>
 	        <ns2:componentId>ceTree</ns2:componentId>
 	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
