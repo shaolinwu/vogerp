@@ -93,6 +93,10 @@
                         <goals>
                             <goal>validate-entity</goal>
                         </goals>
+                        <configuration>
+                            <systemEntityPath>C:\uimaster\uimaster\modules\workflow\src\main\resources\entities;C:\uimaster\apps\vogerp\modules\commonmodel\src\main\resources\entities</systemEntityPath>
+                            <genUIComponents>true</genUIComponents>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
