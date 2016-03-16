@@ -139,6 +139,16 @@
 		             <ns2:htmlSupport xsi:type="ns2:BooleanPropertyType">
 		                 <value>true</value>
 		             </ns2:htmlSupport>
+		             <ns2:Property name="hiddenToolbar" >
+			            <ns2:value xsi:type="ns2:BooleanPropertyType">
+			                <value>true</value>
+			            </ns2:value>
+			        </ns2:Property>
+			        <ns2:Property name="persistable" >
+			            <ns2:value xsi:type="ns2:BooleanPropertyType">
+			                <value>false</value>
+			            </ns2:value>
+			        </ns2:Property>
 		             <ns2:Property name="viewMode">
 		                 <ns2:value xsi:type="ns2:BooleanPropertyType">
 		                     <value>true</value>

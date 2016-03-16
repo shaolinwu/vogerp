@@ -7,7 +7,7 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
     ({
         ui: elementList[prefix + "funcsPanel"]
         ,items: []
-        ,subComponents: [prefix + "infoPanel0",prefix + "infoPanel3",prefix + "infoPanel1",prefix + "infoPanel2"]
+        ,subComponents: [prefix + "infoPanel0",prefix + "infoPanel1",prefix + "infoPanel2"]
     });
     var typeUILabel = new UIMaster.ui.label
     ({
@@ -52,8 +52,6 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
         ,items: []
         ,subComponents: [prefix + "typeUILabel",prefix + "typeUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI"]
     });
-    var infoPanel3 = new org_shaolin_vogerp_productmodel_form_ProductCharacteristic({"prefix":prefix + "infoPanel3."});
-
     var photoPathUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "photoPathUI"]
@@ -142,8 +140,6 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
 
     Form.estimatedPriceUI=estimatedPriceUI;
 
-    Form.infoPanel3=infoPanel3;
-
     Form.infoPanel1=infoPanel1;
 
     Form.photoPathUI=photoPathUI;
@@ -183,8 +179,6 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
     Form.estimatedPriceUILabel=estimatedPriceUILabel;
 
     Form.estimatedPriceUI=estimatedPriceUI;
-
-    Form.infoPanel3=infoPanel3;
 
     Form.infoPanel1=infoPanel1;
 
@@ -262,7 +256,7 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
         var o = this;
         var UIEntity = this;
 
-        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'????',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Continue?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 

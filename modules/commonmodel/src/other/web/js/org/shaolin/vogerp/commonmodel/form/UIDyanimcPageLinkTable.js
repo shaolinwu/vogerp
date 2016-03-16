@@ -14,16 +14,11 @@ function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable(json)
         ui: elementList[prefix + "okbtn"]
     });
 
-    var cancelbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "cancelbtn"]
-    });
-
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "okbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -36,14 +31,12 @@ function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [itemTable,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [itemTable,okbtn,fieldPanel,actionPanel]
     });
 
     Form.itemTable=itemTable;
 
     Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
 
     Form.fieldPanel=fieldPanel;
 
@@ -52,8 +45,6 @@ function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable(json)
     Form.actionPanel=actionPanel;
 
     Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

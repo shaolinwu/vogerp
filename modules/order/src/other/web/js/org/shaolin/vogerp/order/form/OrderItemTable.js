@@ -14,32 +14,26 @@ function org_shaolin_vogerp_order_form_OrderItemTable(json)
         ,editable: true
     });
 
-    var productTreeUI = new org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector({"prefix":prefix + "productTreeUI."});
-
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "parentIdUI",prefix + "productTreeUI",prefix + "itemTable"]
+        ,subComponents: [prefix + "parentIdUI",prefix + "itemTable"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentIdUI,itemTable,productTreeUI,fieldPanel]
+        ,items: [parentIdUI,itemTable,fieldPanel]
     });
 
     Form.parentIdUI=parentIdUI;
 
     Form.itemTable=itemTable;
 
-    Form.productTreeUI=productTreeUI;
-
     Form.fieldPanel=fieldPanel;
 
     Form.parentIdUI=parentIdUI;
-
-    Form.productTreeUI=productTreeUI;
 
     Form.itemTable=itemTable;
 
@@ -49,9 +43,9 @@ function org_shaolin_vogerp_order_form_OrderItemTable(json)
         /* Construct_LAST:org_shaolin_vogerp_order_form_OrderItemTable */
     };
 
-    Form.selectedProduct = org_shaolin_vogerp_order_form_OrderItemTable_selectedProduct;
+    Form.openProductPriceSelector = org_shaolin_vogerp_order_form_OrderItemTable_openProductPriceSelector;
 
-    Form.selectedProduct0 = org_shaolin_vogerp_order_form_OrderItemTable_selectedProduct0;
+    Form.selectedProduct = org_shaolin_vogerp_order_form_OrderItemTable_selectedProduct;
 
     Form.deleteItem = org_shaolin_vogerp_order_form_OrderItemTable_deleteItem;
 
@@ -68,42 +62,25 @@ function org_shaolin_vogerp_order_form_OrderItemTable(json)
 /* Other_Func_LAST:org_shaolin_vogerp_order_form_OrderItemTable */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_order_form_OrderItemTable_selectedProduct(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_OrderItemTable_selectedProduct */
+    function org_shaolin_vogerp_order_form_OrderItemTable_openProductPriceSelector(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_OrderItemTable_openProductPriceSelector */
         var o = this;
         var UIEntity = this;
 
-		{
-		var othis = this;
-		$(othis.productTreeUI.Form).css("display","block");
-		$(othis.productTreeUI.Form).dialog({
-            	title: "Product Price Tree",
-            	height: 280,
-                width: 500,
-                modal: true,
-                show: {
-                  effect: "blind",
-                  duration: 500
-                },
-                close: function() {
-                },
-                buttons: [{text:"Ok", click:function(){
-                			$(othis.productTreeUI.Form).dialog("close");
-                            UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedProduct0_49169030",UIMaster.getValue(eventsource),othis.__entityName);
-                		 }}]
-            });
-		}
-		    }/* Gen_Last:org_shaolin_vogerp_order_form_OrderItemTable_selectedProduct */
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openProductPriceSelector-201601091120",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_order_form_OrderItemTable_openProductPriceSelector */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_order_form_OrderItemTable_selectedProduct0(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_OrderItemTable_selectedProduct0 */
+    function org_shaolin_vogerp_order_form_OrderItemTable_selectedProduct(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_OrderItemTable_selectedProduct */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedProduct0_49169030",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_order_form_OrderItemTable_selectedProduct0 */
+    }/* Gen_Last:org_shaolin_vogerp_order_form_OrderItemTable_selectedProduct */
 
 
     /* auto generated eventlistener function declaration */

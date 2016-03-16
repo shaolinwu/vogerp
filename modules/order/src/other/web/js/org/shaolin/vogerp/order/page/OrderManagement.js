@@ -7,18 +7,7 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "saleOrderInfoPanel",prefix + "purcharseOrderInfoPanel",prefix + "productOrderInfoPanel",prefix + "inStoreOrderInfoPanel",prefix + "outStoreOrderInfoPanel"]
-    });
-    var saleOrderTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "saleOrderTable"]
-    });
-
-    var saleOrderInfoPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "saleOrderInfoPanel"]
-        ,items: []
-        ,subComponents: [prefix + "saleOrderTable"]
+        ,subComponents: [prefix + "purcharseOrderInfoPanel",prefix + "productOrderInfoPanel",prefix + "saleOrderInfoPanel",prefix + "inStoreOrderInfoPanel",prefix + "outStoreOrderInfoPanel"]
     });
     var purchaseOrderInfoTable = new UIMaster.ui.objectlist
     ({
@@ -41,6 +30,17 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
         ui: elementList[prefix + "productOrderInfoPanel"]
         ,items: []
         ,subComponents: [prefix + "productOrderInfoTable"]
+    });
+    var saleOrderTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "saleOrderTable"]
+    });
+
+    var saleOrderInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "saleOrderInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "saleOrderTable"]
     });
     var inStoreOrderInfoTable = new UIMaster.ui.objectlist
     ({
@@ -74,10 +74,6 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
 
     Form.functionsTab=functionsTab;
 
-    Form.saleOrderInfoPanel=saleOrderInfoPanel;
-
-    Form.saleOrderTable=saleOrderTable;
-
     Form.purcharseOrderInfoPanel=purcharseOrderInfoPanel;
 
     Form.purchaseOrderInfoTable=purchaseOrderInfoTable;
@@ -85,6 +81,10 @@ function org_shaolin_vogerp_order_page_OrderManagement(json)
     Form.productOrderInfoPanel=productOrderInfoPanel;
 
     Form.productOrderInfoTable=productOrderInfoTable;
+
+    Form.saleOrderInfoPanel=saleOrderInfoPanel;
+
+    Form.saleOrderTable=saleOrderTable;
 
     Form.inStoreOrderInfoPanel=inStoreOrderInfoPanel;
 

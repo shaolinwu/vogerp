@@ -102,8 +102,7 @@
                             TextArea htmlDescUI = (TextArea)@page.getElement("htmlDescUI");
                             htmlDescUI.setValue(defaultUser.getHtmlDesc());
                         }
-                    } else if (preNextPanel.getSelectedIndex() == 2) {
-                    } 
+                    }
                  }]]></ns2:expressionString>
              </ns2:expression>
          </ns2:nextAction>
@@ -140,6 +139,9 @@
 		      </ns2:component>
 		      <ns2:component xsi:type="ns2:UITextFieldType" UIID="nameUI">
 		        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+		        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+                   <ns2:value>false</ns2:value>
+                </ns2:allowBlank>
 		      </ns2:component>
 		      <ns2:component xsi:type="ns2:UILabelType" UIID="descriptionUILabel">
 		        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -150,6 +152,9 @@
 		      </ns2:component>
 		      <ns2:component xsi:type="ns2:UITextAreaType" UIID="descriptionUI">
 		        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+		        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+                   <ns2:value>false</ns2:value>
+                </ns2:allowBlank>
 		      </ns2:component>
 		      <ns2:component xsi:type="ns2:UILabelType" UIID="estimatedPriceUILabel">
 		        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -160,6 +165,9 @@
 		      </ns2:component>
 		      <ns2:component xsi:type="ns2:UITextFieldType" UIID="estimatedPriceUI">
 		        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+		        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+                   <ns2:value>false</ns2:value>
+                </ns2:allowBlank>
 		      </ns2:component>
 		      <ns2:layoutConstraint>
 		        <ns2:componentId>typeUILabel</ns2:componentId>
@@ -194,15 +202,6 @@
                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
               </ns2:layoutConstraint>
             </ns2:panel>
-         </ns2:tab>
-         <ns2:tab uiid="infoPanel3">
-             <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
-                 <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-                 <ns2:key>org.shaolin.vogerp.productmodel.form.ProductTemplate.infoPanel3</ns2:key>
-             </ns2:title>
-             <ns2:refEntity UIID="infoPanel3">
-                <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductCharacteristic" />
-             </ns2:refEntity>
          </ns2:tab>
          <ns2:tab uiid="infoPanel1">
              <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
@@ -407,12 +406,6 @@
           <expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping8">
-      <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductCharacteristic"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="infoPanel3" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject" paramName="product"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="character" paramName="beObject"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>{

@@ -2,33 +2,34 @@
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
   <entityName>org.shaolin.vogerp.order.form.OrderItemTable</entityName>
   <systemVersion>0</systemVersion>
-  <ns2:eventHandler functionName="selectedProduct">
-    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-		<ns2:expressionString><![CDATA[
-		{
-		var othis = this;
-		$(othis.productTreeUI.Form).css("display","block");
-		$(othis.productTreeUI.Form).dialog({
-            	title: "Product Price Tree",
-            	height: 280,
-                width: 500,
-                modal: true,
-                show: {
-                  effect: "blind",
-                  duration: 500
-                },
-                close: function() {
-                },
-                buttons: [{text:"Ok", click:function(){
-                			$(othis.productTreeUI.Form).dialog("close");
-                            UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedProduct0_49169030",UIMaster.getValue(eventsource),othis.__entityName);
-                		 }}]
-            });
-		}
-		]]></ns2:expressionString>
-	</ns2:ops>
+  <ns2:eventHandler functionName="openProductPriceSelector">
+      <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openProductPriceSelector-201601091120">
+          <ns2:exp>
+              <ns2:expressionString><![CDATA[
+              import java.util.HashMap;
+              import java.util.List;
+              import org.shaolin.uimaster.page.AjaxContext;
+              import org.shaolin.uimaster.page.ajax.*;
+              import org.shaolin.vogerp.productmodel.util.ProductUtil;
+              {
+                  Hidden productTypeUI = @page.getHidden("productTypeUI");
+                  HashMap input = new HashMap();
+                  input.put("productId", productTypeUI.getValue());
+                  input.put("editable", new Boolean(false));
+                  input.put(RefForm.RECONFIG_ORIGINAL, "SelectProduct");
+                  
+                  String prefix =  @page.getEntityUiid();
+                  input.put(RefForm.RECONFIG_OVERRIDE, prefix + ".selectedProduct");
+                  RefForm form = new RefForm("ptemplateForm", "org.shaolin.vogerp.productmodel.form.ProductPricePackageSelector", input);
+                  @page.addElement(form);
+                  
+                  form.openInWindows("产品价格包选择", null, 690, 500);
+              }
+              ]]></ns2:expressionString>
+          </ns2:exp>
+      </ns2:ops>
   </ns2:eventHandler>
-  <ns2:eventHandler functionName="selectedProduct0">
+  <ns2:eventHandler functionName="selectedProduct">
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectedProduct0_49169030">
       <ns2:exp>
         <expressionString><![CDATA[
@@ -38,16 +39,27 @@
         import org.shaolin.vogerp.order.be.OrderItemImpl;
         import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
         { 
-            Tree tree = @page.getTree("productTreeUI.productTree");
+            Tree tree = @page.getTree("productTree");
         	ProductPriceImpl price = (ProductPriceImpl)tree.getSelectedObject();
         	if (price == null) {
         		//TODO: please select a product.
         		return;
         	}
-            OrderItemImpl item = new OrderItemImpl();
+        	
+        	// because this is a reconfigurable function, we have to get the right form id.
+            String formId = "saleOrder.orderItemTable.";
+            Table tableWidget = (Table)@page.getElement(formId + "itemTable");
+            if (tableWidget.getSelectedRow() == null) {
+                return;
+            }
+            
+            OrderItemImpl item = (OrderItemImpl)tableWidget.getSelectedRow();
             item.setPricePackage(price);
-            Table tableWidget = (Table)@page.getElement("itemTable");
-            tableWidget.addRow(item);
+            tableWidget.refresh();
+            
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid());
+            form.closeIfinWindows(true);
+            @page.removeForm(@page.getEntityUiid()); 
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -85,14 +97,7 @@
           <ns2:value>true</ns2:value>
         </ns2:secure>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="productTreeUI">
-         <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductPricePackageSelector" />
-         <!-- 
-         <ns2:reconfiguration originFunctionName="SelectProduct" overrideFunctionName="selectedProduct" xsi:type="ns2:FunctionReconfigurationType" />
-          -->
-      </ns2:component>
       <ns2:component xsi:type="ns2:UITableType" UIID="itemTable">
-        <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
         <ns2:editable xsi:type="ns2:BooleanPropertyType">
           <ns2:value>true</ns2:value>
         </ns2:editable>
@@ -138,15 +143,24 @@
             <ns2:type>Label</ns2:type>
           </ns2:uiType>
           <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-          	<ns2:expression xsi:type="ns2:ExpressionType">
+            <ns2:expression xsi:type="ns2:ExpressionType">
                 <ns2:expressionString><![CDATA[
                 import org.shaolin.bmdp.runtime.AppContext;
                 import org.shaolin.vogerp.productmodel.util.ProductUtil;
                 {
-                	return ProductUtil.getProductSummary($rowBE.getPricePackage().getProduct()) + "--" + ProductUtil.getPricePackage($rowBE.getPricePackage());
+                    String onclick = "javascript:defaultname.saleOrder.orderItemTable.openProductPriceSelector(defaultname.saleOrder.orderItemTable.productTypeUI,event);";
+                    return "<span onclick='"+onclick+"'>请选择...</span>";
                 }]]></ns2:expressionString>
             </ns2:expression>
           </ns2:rowExpression>
+          <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+             <ns2:expression xsi:type="ns2:ExpressionType">
+                 <ns2:expressionString><![CDATA[
+                 import org.shaolin.bmdp.runtime.AppContext;
+                 {
+                 }]]></ns2:expressionString>
+             </ns2:expression>
+          </ns2:updateCondition>
         </ns2:column>
         <ns2:column>
           <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
@@ -271,12 +285,8 @@
         </ns2:defaultActions>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>productTreeUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
         <ns2:componentId>itemTable</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
@@ -292,10 +302,6 @@
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
-      <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductPricePackageSelector"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="productTreeUI" paramName="UIWidgetType"></ns2:UIComponent>
-    </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>{
 @odContext.executeAllMappings();

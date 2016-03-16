@@ -54,6 +54,8 @@ function org_shaolin_vogerp_productmodel_page_ProductTempManagement(json)
 
     Form.openProductOverview = org_shaolin_vogerp_productmodel_page_ProductTempManagement_openProductOverview;
 
+    Form.openAttributes = org_shaolin_vogerp_productmodel_page_ProductTempManagement_openAttributes;
+
     Form.initPageJs = org_shaolin_vogerp_productmodel_page_ProductTempManagement_initPageJs;
 
     Form.finalizePageJs = org_shaolin_vogerp_productmodel_page_ProductTempManagement_finalizePageJs;
@@ -119,6 +121,17 @@ function org_shaolin_vogerp_productmodel_page_ProductTempManagement(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openProductOverview-20151117",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_page_ProductTempManagement_openProductOverview */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_productmodel_page_ProductTempManagement_openAttributes(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_page_ProductTempManagement_openAttributes */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openAttributes-20151117",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_productmodel_page_ProductTempManagement_openAttributes */
 
 
     function org_shaolin_vogerp_productmodel_page_ProductTempManagement_initPageJs(){/* Gen_First:org_shaolin_vogerp_productmodel_page_ProductTempManagement_initPageJs */

@@ -10,8 +10,6 @@ public interface IProductService {
 	
 	public List getPriceTree();
 	
-	public List getCostTree();
-	
 	/**
 	 * Get product templates from Master node.
 	 * 

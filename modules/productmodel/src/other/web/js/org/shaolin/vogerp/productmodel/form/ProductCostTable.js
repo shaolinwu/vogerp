@@ -29,19 +29,7 @@ function org_shaolin_vogerp_productmodel_form_ProductCostTable(json)
         ui: elementList[prefix + "okbtn"]
     });
 
-    var cancelbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "cancelbtn"]
-    });
-
     var productCharacterUI = new org_shaolin_vogerp_productmodel_form_ProductCharacteristic({"prefix":prefix + "productCharacterUI."});
-
-    var actionPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "actionPanel"]
-        ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
-    });
 
     var statisticPanel = new UIMaster.ui.panel
     ({
@@ -54,13 +42,13 @@ function org_shaolin_vogerp_productmodel_form_ProductCostTable(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "parentIdUI",prefix + "productCharacterUI",prefix + "itemTable",prefix + "statisticPanel"]
+        ,subComponents: [prefix + "parentIdUI",prefix + "productCharacterUI",prefix + "itemTable",prefix + "statisticPanel",prefix + "okbtn"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentIdUI,itemTable,priceUILabel,priceUI,okbtn,cancelbtn,productCharacterUI,fieldPanel,statisticPanel,actionPanel]
+        ,items: [parentIdUI,itemTable,priceUILabel,priceUI,okbtn,productCharacterUI,fieldPanel,statisticPanel]
     });
 
     Form.parentIdUI=parentIdUI;
@@ -72,8 +60,6 @@ function org_shaolin_vogerp_productmodel_form_ProductCostTable(json)
     Form.priceUI=priceUI;
 
     Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
 
     Form.productCharacterUI=productCharacterUI;
 
@@ -91,17 +77,13 @@ function org_shaolin_vogerp_productmodel_form_ProductCostTable(json)
 
     Form.priceUI=priceUI;
 
+    Form.okbtn=okbtn;
+
     Form.statisticPanel=statisticPanel;
 
     Form.priceUILabel=priceUILabel;
 
     Form.priceUI=priceUI;
-
-    Form.actionPanel=actionPanel;
-
-    Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {
@@ -182,7 +164,7 @@ function org_shaolin_vogerp_productmodel_form_ProductCostTable(json)
         var o = this;
         var UIEntity = this;
 
-        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'????',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Continue?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 

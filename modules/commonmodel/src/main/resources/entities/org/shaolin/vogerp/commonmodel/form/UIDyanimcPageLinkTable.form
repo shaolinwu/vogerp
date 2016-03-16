@@ -147,9 +147,14 @@
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UITableType" UIID="itemTable">
+        <ns2:defaultRowSize>20</ns2:defaultRowSize>
+        <ns2:showActionBar>true</ns2:showActionBar>
+        <ns2:showFilter>false</ns2:showFilter>
+        <ns2:editableCell>true</ns2:editableCell>
         <ns2:editable xsi:type="ns2:BooleanPropertyType">
-          <ns2:value>true</ns2:value>
+           <ns2:value>true</ns2:value>
         </ns2:editable>
+        <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Normal</ns2:selectMode>
         <ns2:beElement>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink</ns2:beElement>
         <ns2:initQuery>
           <ns2:expression>
@@ -178,10 +183,6 @@
         }]]></expressionString>
           </ns2:expression>
         </ns2:totalCount>
-        <ns2:defaultRowSize>20</ns2:defaultRowSize>
-        <ns2:showActionBar>true</ns2:showActionBar>
-        <ns2:showFilter>false</ns2:showFilter>
-        <ns2:editableCell>true</ns2:editableCell>
         <ns2:column>
           <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
             <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
@@ -293,22 +294,9 @@
           <ns2:key>OKbtn</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
-        <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="Cancel"></ns2:handler>
-        </ns2:EventListener>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>Cancelbtn</ns2:key>
-        </ns2:text>
-      </ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>okbtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>cancelbtn</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>

@@ -7,7 +7,7 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     ({
         ui: elementList[prefix + "funcsPanel"]
         ,items: []
-        ,subComponents: [prefix + "infoPanel0",prefix + "infoPanel1",prefix + "infoPanel2"]
+        ,subComponents: [prefix + "infoPanel0",prefix + "infoPanel2"]
     });
     var productTypeUI = new UIMaster.ui.hidden
     ({
@@ -17,6 +17,16 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     var templateIdUI = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "templateIdUI"]
+    });
+
+    var serialNumberUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "serialNumberUILabel"]
+    });
+
+    var serialNumberUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "serialNumberUI"]
     });
 
     var typeUILabel = new UIMaster.ui.label
@@ -49,16 +59,12 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         ui: elementList[prefix + "saleEndDateUI"]
     });
 
-    var infoPanel3 = new org_shaolin_vogerp_productmodel_form_ProductCode({"prefix":prefix + "infoPanel3."});
-
     var infoPanel0 = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "infoPanel0"]
         ,items: []
-        ,subComponents: [prefix + "productTypeUI",prefix + "templateIdUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "saleEndDateUILabel",prefix + "saleEndDateUI",prefix + "infoPanel3"]
+        ,subComponents: [prefix + "productTypeUI",prefix + "templateIdUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "saleEndDateUILabel",prefix + "saleEndDateUI"]
     });
-    var infoPanel1 = new org_shaolin_vogerp_productmodel_form_ProductCostTable({"prefix":prefix + "infoPanel1."});
-
     var infoPanel2 = new org_shaolin_vogerp_productmodel_form_ProductPriceTable({"prefix":prefix + "infoPanel2."});
 
 
@@ -100,6 +106,10 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.templateIdUI=templateIdUI;
 
+    Form.serialNumberUILabel=serialNumberUILabel;
+
+    Form.serialNumberUI=serialNumberUI;
+
     Form.typeUILabel=typeUILabel;
 
     Form.typeUI=typeUI;
@@ -111,10 +121,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     Form.saleEndDateUILabel=saleEndDateUILabel;
 
     Form.saleEndDateUI=saleEndDateUI;
-
-    Form.infoPanel3=infoPanel3;
-
-    Form.infoPanel1=infoPanel1;
 
     Form.infoPanel2=infoPanel2;
 
@@ -132,6 +138,10 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.templateIdUI=templateIdUI;
 
+    Form.serialNumberUILabel=serialNumberUILabel;
+
+    Form.serialNumberUI=serialNumberUI;
+
     Form.typeUILabel=typeUILabel;
 
     Form.typeUI=typeUI;
@@ -143,10 +153,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     Form.saleEndDateUILabel=saleEndDateUILabel;
 
     Form.saleEndDateUI=saleEndDateUI;
-
-    Form.infoPanel3=infoPanel3;
-
-    Form.infoPanel1=infoPanel1;
 
     Form.infoPanel2=infoPanel2;
 
@@ -192,6 +198,7 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
             if (constraint_result != true && constraint_result != null) {
                 return false;
             }
+            this.infoPanel2.itemTable.syncBodyDataToServer();
         }
         
         // cal ajax function. 
@@ -238,7 +245,7 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         var o = this;
         var UIEntity = this;
 
-        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'????',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Continue?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 

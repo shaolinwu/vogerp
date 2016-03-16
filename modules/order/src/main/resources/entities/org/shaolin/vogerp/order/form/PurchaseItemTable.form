@@ -35,8 +35,8 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
-  <ns2:eventHandler functionName="openProductTempSelector">
-      <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openProductTempSelector-201601091120">
+  <ns2:eventHandler functionName="openProductPriceSelector">
+      <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openProductPriceSelector-201601091120">
           <ns2:exp>
               <ns2:expressionString><![CDATA[
               import java.util.HashMap;
@@ -46,19 +46,17 @@
               import org.shaolin.vogerp.productmodel.util.ProductUtil;
               {
                   Hidden productTypeUI = @page.getHidden("productTypeUI");
-                  Hidden templateIdUI = @page.getHidden("templateIdUI");
                   HashMap input = new HashMap();
-                  input.put("selectProductType", productTypeUI.getValue());
-                  input.put("selectPTempalteId", templateIdUI.getValue());
+                  input.put("productId", productTypeUI.getValue());
                   input.put("editable", new Boolean(false));
-                  input.put(RefForm.RECONFIG_ORIGINAL, "Save");
+                  input.put(RefForm.RECONFIG_ORIGINAL, "SelectProduct");
                   
                   String prefix =  @page.getEntityUiid();
                   input.put(RefForm.RECONFIG_OVERRIDE, prefix + ".SaveSelectedTemplate");
-                  RefForm form = new RefForm("ptemplateForm", "org.shaolin.vogerp.productmodel.form.ProductTemplateSelector", input);
+                  RefForm form = new RefForm("ptemplateForm", "org.shaolin.vogerp.productmodel.form.ProductPricePackageSelector", input);
                   @page.addElement(form);
                   
-                  form.openInWindows("Product Template Selector", null, 750, 600);
+                  form.openInWindows("产品价格包选择", null, 690, 500);
               }
               ]]></ns2:expressionString>
           </ns2:exp>
@@ -73,33 +71,29 @@
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.bmdp.runtime.ce.CEUtil;
         import org.shaolin.vogerp.order.be.PurchaseItemImpl;
-        import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
+        import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
+        import org.shaolin.vogerp.productmodel.IProductService;
         { 
-            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid());
-            HashMap input = (HashMap)form.ui2Data();
-            String selectPTempalteId = (String)input.get("selectPTempalteId");
-            String selectProductType = (String)input.get("selectProductType");
+            Tree tree = @page.getTree("productTree");
+            ProductPriceImpl prices = (ProductPriceImpl)tree.getSelectedObject();
+            if (prices == null) {
+                //TODO: please select a product.
+                return;
+            }
             
-            String formId = "saleOrder.orderItemTable.";
             // because this is a reconfigurable function, we have to get the right form id.
-            Hidden templateIdUI = @page.getHidden(formId + "templateIdUI");
-            templateIdUI.setValue(selectPTempalteId);
-            Hidden productTypeUI = @page.getHidden(formId + "productTypeUI");
-            productTypeUI.setValue(selectProductType);
-            AList plist = @page.getList("pTemplateListUI");
-            String selectedTempName = (String)plist.getSelectedDisplayValues().get(0);
-            String selectedProduct = CEUtil.getValue(selectProductType) + " : " + selectedTempName;
-            
+            String formId = "saleOrder.orderItemTable.";
             Table tableWidget = (Table)@page.getElement(formId + "itemTable");
             if (tableWidget.getSelectedRow() == null) {
                 return;
             }
-            PurchaseItemImpl selectedRow = (PurchaseItemImpl)tableWidget.getSelectedRow();
-            selectedRow.setTemplate(new ProductTemplateImpl());
-            selectedRow.getTemplate().setId(Long.valueOf(selectPTempalteId));
-            selectedRow.getTemplate().setName(selectedTempName);
-            tableWidget.updateFilter(selectedRow, "rowBE.product", selectPTempalteId);
             
+            PurchaseItemImpl selectedRow = (PurchaseItemImpl)tableWidget.getSelectedRow();
+            selectedRow.setPricePackage(prices);
+            selectedRow.setPriceId(prices.getId());
+            tableWidget.refresh();
+            
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid());
             form.closeIfinWindows(true);
             @page.removeForm(@page.getEntityUiid()); 
         }
@@ -123,9 +117,7 @@
         </ns2:secure>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="productTypeUI" />
-      <ns2:component xsi:type="ns2:UIHiddenType" UIID="templateIdUI" />
       <ns2:component xsi:type="ns2:UITableType" UIID="itemTable">
-        <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
         <ns2:editable xsi:type="ns2:BooleanPropertyType">
           <ns2:value>true</ns2:value>
         </ns2:editable>
@@ -176,7 +168,7 @@
                 import org.shaolin.bmdp.runtime.AppContext;
                 import org.shaolin.vogerp.productmodel.util.ProductUtil;
                 {
-                    String onclick = "javascript:defaultname.saleOrder.orderItemTable.openProductTempSelector(defaultname.saleOrder.orderItemTable.productTypeUI,event);";
+                    String onclick = "javascript:defaultname.saleOrder.orderItemTable.openProductPriceSelector(defaultname.saleOrder.orderItemTable.productTypeUI,event);";
                 	return "<span onclick='"+onclick+"'>请选择...</span>";
                 }]]></ns2:expressionString>
             </ns2:expression>
@@ -186,7 +178,6 @@
                  <ns2:expressionString><![CDATA[
                  import org.shaolin.bmdp.runtime.AppContext;
                  {
-                    try{ $rowBE.setTproductId(Long.valueOf($value)); }catch(java.lang.NumberFormatException e){}
                  }]]></ns2:expressionString>
              </ns2:expression>
           </ns2:updateCondition>

@@ -68,6 +68,7 @@
       <ns2:fieldMapping beFieldName="htmlDesc" columnName="HTMLDESC"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="PROD_PRODUCT_PRICEITEM_JT" collectionElement="org.shaolin.vogerp.productmodel.be.ProductPrice" mappingType="One-to-Many" beFieldName="priceList"></ns2:fieldMapping>
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="PROD_PRODUCT_MAPPING0" mappingType="One-to-One" beFieldName="template" columnName="TEMPLATEID"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
@@ -96,7 +97,7 @@
     <entityName>PROD_PRODUCTCHARAC</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="PRODUCTID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="TPRODUCTID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="CEVALUES" type="VARCHAR" length="512" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
@@ -106,7 +107,7 @@
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.productmodel.be.ProductCharacteristic"></ns2:businessEntity>
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="templateId" columnName="PRODUCTID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="templateId" columnName="TPRODUCTID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="ceValues" columnName="CEVALUES"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
@@ -115,14 +116,12 @@
     <entityName>PROD_PRODUCTPRICE</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="PRODUCTID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="PARTYID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="PACKAGE" type="VARCHAR" length="255" isNull="true"></ns2:column>
+    <ns2:column name="COST" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="PRICE" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="EXCEEDAMOUNT" type="INTEGER" isNull="true"></ns2:column>
 	<ns2:column name="DISCOUNT" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="COMMENTS" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="TYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
       <ns2:columnName>ID</ns2:columnName>
@@ -131,39 +130,12 @@
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.productmodel.be.ProductPrice"></ns2:businessEntity>
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="productId" columnName="PRODUCTID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="partyId" columnName="PARTYID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="cost" columnName="COST"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="price" columnName="PRICE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="packages" columnName="PACKAGE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="exceedAmount" columnName="EXCEEDAMOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="discount" columnName="DISCOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="comments" columnName="COMMENTS"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
-    </ns2:mapping>
-  </ns2:table>
-  <ns2:table>
-    <entityName>PROD_PRODUCTPCOST</entityName>
-    <systemVersion>0</systemVersion>
-    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="PRODUCTID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="PACKAGE" type="VARCHAR" length="255" isNull="true"></ns2:column>
-    <ns2:column name="PRICE" type="DECIMAL" isNull="true"></ns2:column>
-    <ns2:column name="COMMENTS" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="TYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
-    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
-    <ns2:primaryKey>
-      <ns2:columnName>ID</ns2:columnName>
-    </ns2:primaryKey>
-    <ns2:mapping>
-      <systemVersion>0</systemVersion>
-      <ns2:businessEntity entityName="org.shaolin.vogerp.productmodel.be.ProductCost"></ns2:businessEntity>
-      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="productId" columnName="PRODUCTID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="packages" columnName="PACKAGE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="price" columnName="PRICE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="comments" columnName="COMMENTS"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
@@ -206,6 +178,7 @@
     <ns2:column name="CONTAINERTYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="LOCATION" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="PHOTOPATH" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
       <ns2:columnName>ID</ns2:columnName>
@@ -222,6 +195,7 @@
       <ns2:fieldMapping beFieldName="location" columnName="LOCATION"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="photoPath" columnName="PHOTOPATH"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="coordinate" columnName="COORDINATION"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
@@ -236,6 +210,7 @@
     <ns2:column name="ITEMSTATUS" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="NUMBER" type="INTEGER" isNull="true"></ns2:column>
     <ns2:column name="SERIALNUMBER" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="_version" type="INTEGER" length="2" default="0"></ns2:column>
     <ns2:column name="_starttime" type="TIMESTAMP"></ns2:column>
@@ -257,6 +232,7 @@
       <ns2:fieldMapping beFieldName="itemStatus" columnName="ITEMSTATUS"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="number" columnName="NUMBER"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="serialNumber" columnName="SERIALNUMBER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_version" columnName="_version"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_starttime" columnName="_starttime"></ns2:fieldMapping>
@@ -264,6 +240,7 @@
       <ns2:fieldMapping beFieldName="_optuserid" columnName="_optuserid"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
+  <ns2:joinTable name="PROD_PRODUCT_PRICEITEM_JT" srcTable="PROD_PRODUCT" srcPKColumn="priceList" tarTable="PROD_PRODUCTPRICE" tarPKColumn="id"></ns2:joinTable>
   
   <ns2:query queryName="searchProductTemplate">
     <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
@@ -452,6 +429,20 @@
       </ns2:fieldMapping>
     </ns2:searchResultMapping>
     <ns2:searchConditionMapping name="Search">
+      <ns2:fieldMapping>
+         <ns2:toDataFieldPath>inFlow.orgId</ns2:toDataFieldPath>
+         <ns2:conditionValue>
+             <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                 <ns2:type>=</ns2:type>
+             </ns2:operator>
+             <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                 <ns2:valueFieldPath>scFlow.orgId</ns2:valueFieldPath>
+             </ns2:value>
+             <ns2:condition>
+                 <expressionString><![CDATA[scFlow.getOrgId() > 0]]></expressionString>
+             </ns2:condition>
+         </ns2:conditionValue>
+      </ns2:fieldMapping>
       <ns2:fieldMapping>
         <ns2:toDataFieldPath>inFlow.parentId</ns2:toDataFieldPath>
         <ns2:conditionValue>
@@ -873,39 +864,4 @@
     </ns2:searchConditionMapping>
   </ns2:query>
   
-  <ns2:query queryName="searchProductCost">
-    <ns2:searchResult name="outObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.productmodel.be.ProductCost"></type>
-    </ns2:searchResult>
-    <ns2:fromData name="inObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.productmodel.be.ProductCost"></type>
-    </ns2:fromData>
-    <ns2:searchResultMapping>
-      <ns2:fieldMapping>
-        <ns2:toDataFieldPath>outObject</ns2:toDataFieldPath>
-        <ns2:value xsi:type="ns2:SimpleFieldValueType">
-          <ns2:valueFieldPath>inObject</ns2:valueFieldPath>
-        </ns2:value>
-      </ns2:fieldMapping>
-    </ns2:searchResultMapping>
-    <ns2:searchConditionMapping name="Search">
-      <ns2:fieldMapping>
-        <ns2:toDataFieldPath>inObject.productId</ns2:toDataFieldPath>
-        <ns2:conditionValue>
-          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
-            <ns2:type>=</ns2:type>
-          </ns2:operator>
-          <ns2:value xsi:type="ns2:SimpleFieldValueType">
-            <ns2:valueFieldPath>scObject.id</ns2:valueFieldPath>
-          </ns2:value>
-          <ns2:condition>
-            <expressionString><![CDATA[scObject.getId() > 0]]></expressionString>
-          </ns2:condition>
-        </ns2:conditionValue>
-      </ns2:fieldMapping>
-      <ns2:searchConditionData name="scObject" category="BusinessEntity">
-        <type entityName="org.shaolin.vogerp.productmodel.be.Product"></type>
-      </ns2:searchConditionData>
-    </ns2:searchConditionMapping>
-  </ns2:query>
 </ns2:RDBDiagram>

@@ -128,6 +128,40 @@
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
+        <ns2:eventHandler functionName="openAttributes">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openAttributes-20151117">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.List;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+                    import org.shaolin.vogerp.productmodel.be.*;
+                    import org.shaolin.vogerp.productmodel.dao.ProductModel;
+                    import org.shaolin.vogerp.productmodel.util.ProductUtil;
+                    {
+                        Table personalInfoTable = (Table)@page.getElement("productInfoTable");
+                        if (personalInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        ProductTemplateImpl tproduct = (ProductTemplateImpl)personalInfoTable.getSelectedRow();
+                        ProductCharacteristicImpl charac = new ProductCharacteristicImpl();
+			            charac.setTemplateId(tproduct.getId());
+			            charac.setTemplate(tproduct);
+                        HashMap input = new HashMap();
+                        input.put("beObject", charac);
+                        input.put("pType", tproduct.getType());
+                        input.put("editable", new Boolean(false));
+                        RefForm form = new RefForm("pCharacForm", "org.shaolin.vogerp.productmodel.form.ProductCharacteristic", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("属于配制", null, 750, 550);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 		    <ns2:UISkin xsi:type="ns2:UISkinType">
                 <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
@@ -171,6 +205,7 @@
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new ProductTemplateImpl());
 		                                     $tableCondition.setCount(10);
+		                                     $tableCondition.addOrder("createDate", false);
 		                                  }
 		                                  ProductTemplateImpl condition = (ProductTemplateImpl)$tableCondition.getCondition();
 		                                  return ProductModel.INSTANCE.searchProductTemplate(condition,
@@ -260,6 +295,15 @@
 		                    </ns2:defaultActions>
 		                    <ns2:actionGroup>
 		                        <ns2:type>radio</ns2:type>
+		                        <ns2:action>
+                                    <!-- first we have the cost, then we generate the price from the cost. -->
+                                    <ns2:uiid>openAttributes</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>属性配制</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>openAttributes</ns2:function>
+                                </ns2:action>
                                 <ns2:action>
                                     <!-- first we have the cost, then we generate the price from the cost. -->
                                     <ns2:uiid>openProductOverview</ns2:uiid>

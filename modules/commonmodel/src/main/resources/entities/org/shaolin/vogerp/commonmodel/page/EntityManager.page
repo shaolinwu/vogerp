@@ -11,16 +11,20 @@
 				<ns2:exp>
 					<ns2:expressionString><![CDATA[
 					import org.shaolin.uimaster.page.AjaxContext;
+					import org.shaolin.bmdp.runtime.AppContext;
 					import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+					import org.shaolin.vogerp.commonmodel.IDynamicUIService;
 					import java.io.File;
 					{
-					 @page.getButton("reloadBtn").setWidgetLabel("");
+					    @page.getButton("reloadBtn").setWidgetLabel("");
 					
-						String value = @page.getTextField("reloadPathText").getValue();
-						File path = new File(value);
-						IServerServiceManager.INSTANCE.getEntityManager().reloadDir(path);
+                        String value = @page.getTextArea("reloadPathText").getValue();
+                        File path = new File(value);
+                        IServerServiceManager.INSTANCE.getEntityManager().reloadDir(path);
+						IDynamicUIService service = (IDynamicUIService)AppContext.get().getService(IDynamicUIService.class);
+						service.reloadAllItems();
 						
-						@page.getButton("reloadBtn").setWidgetLabel("Reloaded.");
+                        @page.getButton("reloadBtn").setWidgetLabel("Reloaded.");
 					}
 					]]></ns2:expressionString>
 				</ns2:exp>
@@ -54,7 +58,8 @@
 		                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 		                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 		                </ns2:layout>
-		                <ns2:component xsi:type="ns2:UITextFieldType" UIID="reloadPathText">
+		                <ns2:component xsi:type="ns2:UITextAreaType" UIID="reloadPathText">
+		                    <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
 		                    <ns2:title xsi:type="ns2:StringPropertyType">
 		                        <ns2:value>Reload Page Components</ns2:value>
 		                    </ns2:title>
@@ -76,7 +81,8 @@
 		                        <ns2:handler functionName="ReloadFunction" />
 		                    </ns2:EventListener>
 		                </ns2:component>
-		                <ns2:component xsi:type="ns2:UITextFieldType" UIID="reloadCECacheText">
+		                <ns2:component xsi:type="ns2:UITextAreaType" UIID="reloadCECacheText">
+		                    <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
 		                    <ns2:title xsi:type="ns2:StringPropertyType">
 		                        <ns2:value>Reload CE Cache</ns2:value>
 		                    </ns2:title>

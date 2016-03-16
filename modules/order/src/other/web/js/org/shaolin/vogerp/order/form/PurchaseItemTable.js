@@ -13,11 +13,6 @@ function org_shaolin_vogerp_order_form_PurchaseItemTable(json)
         ui: elementList[prefix + "productTypeUI"]
     });
 
-    var templateIdUI = new UIMaster.ui.hidden
-    ({
-        ui: elementList[prefix + "templateIdUI"]
-    });
-
     var itemTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "itemTable"]
@@ -28,20 +23,18 @@ function org_shaolin_vogerp_order_form_PurchaseItemTable(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "parentIdUI",prefix + "productTypeUI",prefix + "templateIdUI",prefix + "itemTable"]
+        ,subComponents: [prefix + "parentIdUI",prefix + "productTypeUI",prefix + "itemTable"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentIdUI,productTypeUI,templateIdUI,itemTable,fieldPanel]
+        ,items: [parentIdUI,productTypeUI,itemTable,fieldPanel]
     });
 
     Form.parentIdUI=parentIdUI;
 
     Form.productTypeUI=productTypeUI;
-
-    Form.templateIdUI=templateIdUI;
 
     Form.itemTable=itemTable;
 
@@ -50,8 +43,6 @@ function org_shaolin_vogerp_order_form_PurchaseItemTable(json)
     Form.parentIdUI=parentIdUI;
 
     Form.productTypeUI=productTypeUI;
-
-    Form.templateIdUI=templateIdUI;
 
     Form.itemTable=itemTable;
 
@@ -65,7 +56,7 @@ function org_shaolin_vogerp_order_form_PurchaseItemTable(json)
 
     Form.deleteItem = org_shaolin_vogerp_order_form_PurchaseItemTable_deleteItem;
 
-    Form.openProductTempSelector = org_shaolin_vogerp_order_form_PurchaseItemTable_openProductTempSelector;
+    Form.openProductPriceSelector = org_shaolin_vogerp_order_form_PurchaseItemTable_openProductPriceSelector;
 
     Form.SaveSelectedTemplate = org_shaolin_vogerp_order_form_PurchaseItemTable_SaveSelectedTemplate;
 
@@ -104,14 +95,14 @@ function org_shaolin_vogerp_order_form_PurchaseItemTable(json)
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_order_form_PurchaseItemTable_openProductTempSelector(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_PurchaseItemTable_openProductTempSelector */
+    function org_shaolin_vogerp_order_form_PurchaseItemTable_openProductPriceSelector(eventsource,event) {/* Gen_First:org_shaolin_vogerp_order_form_PurchaseItemTable_openProductPriceSelector */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openProductTempSelector-201601091120",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_order_form_PurchaseItemTable_openProductTempSelector */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openProductPriceSelector-201601091120",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_order_form_PurchaseItemTable_openProductPriceSelector */
 
 
     /* auto generated eventlistener function declaration */

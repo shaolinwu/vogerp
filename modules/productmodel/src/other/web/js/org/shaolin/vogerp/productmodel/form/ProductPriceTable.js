@@ -3,65 +3,29 @@
 function org_shaolin_vogerp_productmodel_form_ProductPriceTable(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var productIdUI = new UIMaster.ui.hidden
-    ({
-        ui: elementList[prefix + "productIdUI"]
-    });
-
     var itemTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "itemTable"]
-    });
-
-    var okbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "okbtn"]
-    });
-
-    var cancelbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "cancelbtn"]
-    });
-
-    var actionPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "actionPanel"]
-        ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "productIdUI",prefix + "itemTable"]
+        ,subComponents: [prefix + "itemTable"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [productIdUI,itemTable,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [itemTable,fieldPanel]
     });
 
-    Form.productIdUI=productIdUI;
-
     Form.itemTable=itemTable;
-
-    Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
 
     Form.fieldPanel=fieldPanel;
 
-    Form.productIdUI=productIdUI;
-
     Form.itemTable=itemTable;
-
-    Form.actionPanel=actionPanel;
-
-    Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {
@@ -70,6 +34,8 @@ function org_shaolin_vogerp_productmodel_form_ProductPriceTable(json)
     };
 
     Form.createItem = org_shaolin_vogerp_productmodel_form_ProductPriceTable_createItem;
+
+    Form.createItem0 = org_shaolin_vogerp_productmodel_form_ProductPriceTable_createItem0;
 
     Form.deleteItem = org_shaolin_vogerp_productmodel_form_ProductPriceTable_deleteItem;
 
@@ -96,8 +62,19 @@ function org_shaolin_vogerp_productmodel_form_ProductPriceTable(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem-7vq3r4f7",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem-201603142210",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductPriceTable_createItem */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_productmodel_form_ProductPriceTable_createItem0(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductPriceTable_createItem0 */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem0-201603142211",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductPriceTable_createItem0 */
 
 
     /* auto generated eventlistener function declaration */
@@ -142,7 +119,7 @@ function org_shaolin_vogerp_productmodel_form_ProductPriceTable(json)
         var o = this;
         var UIEntity = this;
 
-        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'????',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Continue?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 

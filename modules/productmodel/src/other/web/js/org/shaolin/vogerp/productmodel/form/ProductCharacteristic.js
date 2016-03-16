@@ -3,6 +3,23 @@
 function org_shaolin_vogerp_productmodel_form_ProductCharacteristic(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var savebtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "savebtn"]
+    });
+
+    var closebtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "closebtn"]
+    });
+
+    var actionPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "actionPanel"]
+        ,items: []
+        ,subComponents: [prefix + "savebtn",prefix + "closebtn"]
+    });
+
     var fieldPanel1 = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel1"]
@@ -20,12 +37,22 @@ function org_shaolin_vogerp_productmodel_form_ProductCharacteristic(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [fieldPanel,fieldPanel1]
+        ,items: [savebtn,closebtn,fieldPanel,fieldPanel1,actionPanel]
     });
+
+    Form.savebtn=savebtn;
+
+    Form.closebtn=closebtn;
 
     Form.fieldPanel=fieldPanel;
 
     Form.fieldPanel1=fieldPanel1;
+
+    Form.actionPanel=actionPanel;
+
+    Form.savebtn=savebtn;
+
+    Form.closebtn=closebtn;
 
     Form.user_constructor = function()
     {
@@ -33,7 +60,7 @@ function org_shaolin_vogerp_productmodel_form_ProductCharacteristic(json)
         /* Construct_LAST:org_shaolin_vogerp_productmodel_form_ProductCharacteristic */
     };
 
-    Form.Save = org_shaolin_vogerp_productmodel_form_ProductCharacteristic_Save;
+    Form.Selected = org_shaolin_vogerp_productmodel_form_ProductCharacteristic_Selected;
 
     Form.Cancel = org_shaolin_vogerp_productmodel_form_ProductCharacteristic_Cancel;
 
@@ -50,14 +77,14 @@ function org_shaolin_vogerp_productmodel_form_ProductCharacteristic(json)
 /* Other_Func_LAST:org_shaolin_vogerp_productmodel_form_ProductCharacteristic */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_productmodel_form_ProductCharacteristic_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductCharacteristic_Save */
+    function org_shaolin_vogerp_productmodel_form_ProductCharacteristic_Selected(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductCharacteristic_Selected */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail1050829457",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductCharacteristic_Save */
+    }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductCharacteristic_Selected */
 
 
     /* auto generated eventlistener function declaration */
@@ -76,7 +103,7 @@ function org_shaolin_vogerp_productmodel_form_ProductCharacteristic(json)
         var o = this;
         var UIEntity = this;
 
-        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'????',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Continue?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 

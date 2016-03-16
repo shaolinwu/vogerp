@@ -126,7 +126,26 @@
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="codeUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="productCode.code" paramName="StringData"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
+        <ns2:expression>
+          <expressionString><![CDATA[{
+          if ($productCode.getCode() != null && $productCode.getCode().length() > 0) {
+             return $productCode.getCode();
+          } else {
+             return org.shaolin.vogerp.productmodel.util.ProductUtil.genProductCode();
+          }
+          }]]></expressionString>
+        </ns2:expression>
+        <ns2:uiToDataExpression>
+           <ns2:expression>
+             <expressionString><![CDATA[
+             {
+               $productCode.setCode(@StringData);
+             }
+             ]]></expressionString>
+           </ns2:expression>
+        </ns2:uiToDataExpression>
+      </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>

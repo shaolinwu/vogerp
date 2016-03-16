@@ -11,6 +11,8 @@ import org.hibernate.criterion.Restrictions;
 
 import org.hibernate.criterion.Order;
 
+import org.hibernate.criterion.Projections;
+
 import org.shaolin.bmdp.persistence.BEEntityDaoObject;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.persistence.query.operator.Operator;
@@ -155,6 +157,9 @@ public class ProductModel extends BEEntityDaoObject {
                 this._addOrders(inFlowCriteria, orders);
             }
 
+            if (scFlow.getOrgId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));
+            }
             if (scFlow.getParentId() > -1) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getId()));
             }
@@ -168,6 +173,9 @@ public class ProductModel extends BEEntityDaoObject {
     public long searchProductParentCount(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow) {
             Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.productmodel.be.ProductImpl.class, "inFlow");
 
+            if (scFlow.getOrgId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));
+            }
             if (scFlow.getParentId() > -1) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getId()));
             }
@@ -443,36 +451,6 @@ public class ProductModel extends BEEntityDaoObject {
 
     public long searchProductPriceCount(org.shaolin.vogerp.productmodel.be.ProductImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.productmodel.be.ProductPriceImpl.class, "inObject");
-
-            if (scObject.getId() > 0) {
-                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.productId", scObject.getId()));
-            }
-
-        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
-
-        return this._count(inObjectCriteria);
-    }
-
-    public List<org.shaolin.vogerp.productmodel.be.IProductCost> searchProductCost(org.shaolin.vogerp.productmodel.be.ProductImpl scObject,
-           List<Order> orders, int offset, int count) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.productmodel.be.ProductCostImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
-            }
-
-            if (scObject.getId() > 0) {
-                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.productId", scObject.getId()));
-            }
-
-        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
-
-        List result = this._list(offset, count, inObjectCriteria);
-        return result;
-    }
-
-    public long searchProductCostCount(org.shaolin.vogerp.productmodel.be.ProductImpl scObject) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.productmodel.be.ProductCostImpl.class, "inObject");
 
             if (scObject.getId() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.productId", scObject.getId()));

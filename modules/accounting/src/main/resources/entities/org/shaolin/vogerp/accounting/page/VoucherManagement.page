@@ -101,6 +101,7 @@
                 if ($tableCondition == null) {
                    $tableCondition = TableConditions.createCondition(new AccountVoucherImpl());
                    $tableCondition.setCount(10);
+                   $tableCondition.addOrder("createDate", false);
                 }
                 AccountVoucherImpl condition = (AccountVoucherImpl)$tableCondition.getCondition();
                 return AccountingModel.INSTANCE.searchAccountVoucher(condition,
