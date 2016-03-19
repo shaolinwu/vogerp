@@ -250,7 +250,11 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 	
 	@Override
 	public boolean checkUserOnline(HttpSession session) {
-		return session.getAttribute(WebflowConstants.USER_SESSION_KEY) != null;
+		if (session.getAttribute(WebflowConstants.USER_SESSION_KEY) == null) {
+			return false;
+		}
+		UserContext context = (UserContext)session.getAttribute(WebflowConstants.USER_SESSION_KEY);
+		return  context.getUserId() > 0;
 	}
 	
 	@Override

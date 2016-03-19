@@ -44,16 +44,21 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 		String strValue = CEUtil.getValue(partyType);
 		if (!rolePermissions.containsKey(partyType)) {
         	List<IModelPermission> modelPermissions = new ArrayList<IModelPermission>();
-        	CEHierarchyImpl condition = new CEHierarchyImpl();
-        	condition.setCeName(partyType.getEntityName());
-			List<ICEHierarchy> hierarchy = ModularityModel.INSTANCE.searchCEHierarchy(condition, null, 0, 1);
-        	if (hierarchy.size() > 0) {
-        		// user's module role points to the parent item.
-	        	ModelPermissionImpl model = new ModelPermissionImpl();
-	        	model.setPartyType(hierarchy.get(0).getParentCeName() + "," + hierarchy.get(0).getParentCeItem());
+        	if (PermissionType.NOT_SPECIFIED == partyType) {
+        		ModelPermissionImpl model = new ModelPermissionImpl();
+	        	model.setPartyType(strValue);
 	        	modelPermissions = CommonModel.INSTANCE.searchModelPermission(model, null, 0, -1);
+        	} else {
+	        	CEHierarchyImpl condition = new CEHierarchyImpl();
+	        	condition.setCeName(partyType.getEntityName());
+				List<ICEHierarchy> hierarchy = ModularityModel.INSTANCE.searchCEHierarchy(condition, null, 0, 1);
+	        	if (hierarchy.size() > 0) {
+	        		// user's module role points to the parent item.
+		        	ModelPermissionImpl model = new ModelPermissionImpl();
+		        	model.setPartyType(hierarchy.get(0).getParentCeName() + "," + hierarchy.get(0).getParentCeItem());
+		        	modelPermissions = CommonModel.INSTANCE.searchModelPermission(model, null, 0, -1);
+	        	}
         	}
-        	
 			BEPermissionImpl bePermission = new BEPermissionImpl();
 			bePermission.setPartyType(strValue);
 			List<IBEPermission> bePermissions = CommonModel.INSTANCE.searchBEPermission(bePermission, null, 0, -1);
@@ -100,6 +105,10 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 	@Override
 	public int checkModule(String chunkName, String nodeName, List<IConstantEntity> roles) {
 		if (roles == null) {
+			int matched = checkModule(chunkName, nodeName, PermissionType.NOT_SPECIFIED);//empty rule
+			if (matched != PermissionType.NOT_SPECIFIED.getIntValue()) {
+				return matched;
+			}
 			return PermissionType.NOT_SPECIFIED.getIntValue();
 		}
 		

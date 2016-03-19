@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.shaolin.bmdp.datamodel.common.TargetEntityType;
 import org.shaolin.bmdp.datamodel.pagediagram.PageNodeType;
 import org.shaolin.bmdp.datamodel.pagediagram.WebChunk;
@@ -21,11 +20,16 @@ import org.shaolin.uimaster.page.flow.ApplicationInitializer;
 import org.shaolin.uimaster.page.widgets.HTMLMatrixType.DataMode;
 import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.be.IModuleGroup;
+import org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl;
 import org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl;
 import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+	
 	private final ICache<String, Long> moduleLinks;
 	
 	private final ICache<Long, IModuleGroup> modules;
@@ -68,8 +72,13 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
             	int _framenameIndex = accessURL.indexOf("_framename=");
             	if (chunkNameIndex != -1) {
 	            	String path = accessURL.substring(chunkNameIndex + "_chunkname=".length(), _nodenameIndex - 1);
-	            	path += "." + accessURL.substring(_nodenameIndex + "_nodename=".length(), _framenameIndex -1);
+	            	String node = accessURL.substring(_nodenameIndex + "_nodename=".length(), _framenameIndex -1);
+	            	if (node.indexOf('&') != -1) {
+	            		node = node.substring(0, node.indexOf('&'));
+	            	}
+	            	path = path + "." + node;
 	            	moduleLinks.put(path, module.getId());
+	            	logger.info("Read module link: {}", path);
             	}
         	}
         }
@@ -77,7 +86,7 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
         try {
 			updateWebFlowLinks(all);
 		} catch (ParsingException e) {
-			Logger.getLogger(ModuleServiceImpl.class).error("Failed to sync all modules links: " + e.getMessage(), e);
+			logger.error("Failed to sync all modules links: " + e.getMessage(), e);
 		}
 	}
 	
@@ -142,6 +151,16 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 			newSubNodes.add(item);
 		}
 		ModularityModel.INSTANCE.batchInsert(newSubNodes);
+		
+		List<IPersistentEntity> modulePermissions = new ArrayList<IPersistentEntity>();
+		for (IPersistentEntity node : newSubNodes) {
+			ModuleGroupImpl m = (ModuleGroupImpl)node;
+			ModelPermissionImpl permission = new ModelPermissionImpl();
+			permission.setModuleId(m.getId());
+			permission.setPartyType("org.shaolin.vogerp.commonmodel.ce.GenericOrganizationType,0");
+			modulePermissions.add(permission);
+		}
+		ModularityModel.INSTANCE.batchInsert(modulePermissions);
 		
 		ApplicationInitializer appInitizlier = new ApplicationInitializer(appName);
 		appInitizlier.start();
