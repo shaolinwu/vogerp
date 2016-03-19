@@ -1,0 +1,512 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram"
+	xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page"
+	xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.coupon.form.LotteryForm</entityName>
+	<systemVersion>0</systemVersion>
+
+	<!-- 后台获取所有奖项图标 -->
+	<ns2:eventHandler functionName="loadCouponImageUrl">
+		<ns2:ops xsi:type="ns2:OpCallAjaxType" name="loadCouponImageUrl-20160112-232035">
+			<ns2:exp>
+				<expressionString><![CDATA[
+        import org.shaolin.vogerp.coupon.dao.CouponModel;
+        import org.shaolin.vogerp.coupon.be.CouponTypeImpl;
+        import org.shaolin.bmdp.runtime.security.UserContext;
+        import java.util.List;
+        {
+        	//获取所有奖项图标路径
+        	CouponTypeImpl condition = new CouponTypeImpl();
+        	condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+        	List couponTypes = CouponModel.INSTANCE.searchCouponType(condition, null, 0, 0);
+        	String imageUrls = "";
+        	if (null != couponTypes) {
+        		for (int i = 0; i < couponTypes.size(); i++) {
+        			CouponTypeImpl couponType = (CouponTypeImpl)(couponTypes.get(i));
+        			imageUrls += couponType.getIcon() + ",";
+        		}
+        	}
+        	
+        	if (imageUrls.length() > 0) {
+        		imageUrls = imageUrls.substring(0, imageUrls.length() - 1);
+        	}
+        	
+        	return imageUrls;
+        }]]></expressionString>
+			</ns2:exp>
+		</ns2:ops>
+	</ns2:eventHandler>
+
+	<!-- 滚动抽奖框 -->
+	<ns2:eventHandler functionName="rollCoupon">
+		<ns2:ops xsi:type="ns2:OpCallAjaxType" name="rollCoupon-20160112-232035">
+			<ns2:exp>
+				<expressionString><![CDATA[
+			import org.shaolin.uimaster.page.ajax.*;
+			import org.shaolin.vogerp.coupon.util.CouponUtil;
+			import org.shaolin.vogerp.coupon.dao.CouponModel;
+				import org.shaolin.vogerp.coupon.be.CouponTypeImpl;
+				import org.shaolin.bmdp.runtime.security.UserContext;
+				import java.util.List;
+				import java.util.Random;
+			{
+				System.out.println("=========genLuckyCouponType==============");
+				//中奖的图标url
+				String luckyImageUrl = "";
+                	// 后台生成中奖的奖项图标Url
+                	CouponTypeImpl condition = new CouponTypeImpl();
+                	condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+                	List couponTypes = CouponModel.INSTANCE.searchCouponType(condition, null, 0, 0);
+                	if (null != couponTypes) {
+                		//计算所有奖项总数量
+                		int allTotalNum = 0;
+                		for (int k = 0; k < couponTypes.size(); k++) {
+                			CouponTypeImpl couponType = (CouponTypeImpl)couponTypes.get(k);
+                			allTotalNum += couponType.getTotalNum();
+                		}
+                		
+                		String[] numArr = new String[allTotalNum];
+                		int index = 0;
+                		for (int i = 0; i < couponTypes.size(); i++) {
+                			CouponTypeImpl couponType = (CouponTypeImpl)couponTypes.get(i);
+                			//奖项图标不为空(谢谢惠顾不设置图标,排除此类奖项),且剩余数量大于1
+                			if (null != couponType.getIcon() && couponType.getRestNum() > 1) {
+                				Integer totalNum = couponType.getTotalNum();
+                				for (int j = 0; j < totalNum; j++) {
+                					numArr[j + index] = couponType.getIcon();
+                				}
+                				index += totalNum;
+                			}
+                		}
+                		for (int m = index; m < allTotalNum; m++) {
+                			numArr[m] = "";
+                		}
+                		
+                		//随机从数组中抽一项,表示中奖的图标
+                		Random ran = new Random();
+                		int luckyIndex = ran.nextInt(allTotalNum);
+                		System.out.println(numArr[luckyIndex]);
+                		luckyImageUrl =numArr[luckyIndex];
+                	}
+                	
+				//查询所有奖项，剩余数量>1，图标不为空
+				@page.executeJavaScript("defaultname.lotteryForm.roll('" + luckyImageUrl + "')");
+			}
+		       ]]></expressionString>
+			</ns2:exp>
+		</ns2:ops>
+	</ns2:eventHandler>
+	<!-- 前台验证订单号是否有效 -->
+	<ns2:eventHandler functionName="verifyOrderNum">
+		<ns2:ops xsi:type="ns2:OpExecuteScriptType">
+			<expressionString><![CDATA[
+				{
+					var orderNum = $("#div-lotteryForm-lotteryStartPanel-0_0 input").val();
+					var reg = new RegExp("^[0-9]+$");
+		        	if (!reg.test(orderNum.trim())) {
+		        		$("#div-lotteryForm-lotteryStartPanel-0_0 input").val("");
+		        		$("#div-lotteryForm-lotteryStartPanel-0_0 input").attr("placeholder", "请输入订单号后4位");
+		        	}
+				}]]></expressionString>
+		</ns2:ops>
+	</ns2:eventHandler>
+	<!-- 后台验证订单号是否有效 -->
+	<ns2:eventHandler functionName="veriOrderNumBack">
+		<ns2:ops xsi:type="ns2:OpCallAjaxType" name="veriOrderNumBack-20160112-232035">
+			<ns2:exp>
+				<expressionString><![CDATA[
+				import org.shaolin.uimaster.page.ajax.*;
+				import org.shaolin.vogerp.coupon.be.CouponOperationImpl;
+				import org.shaolin.vogerp.coupon.dao.CouponModel;
+				import org.shaolin.bmdp.runtime.security.UserContext;
+				import org.shaolin.vogerp.coupon.util.CouponUtil;
+                { 
+                	System.out.println("=========veriOrderNumBack==============");
+                	String orderNum = @page.getTextField("orderNumText").getValue();
+                	if (null == orderNum || !orderNum.matches("[0-9]{4}")) {
+                		//TODO 返回验证失败信息
+                		System.out.println("验证失败");
+                		return false;
+                	}
+                	
+                	//查询订单是否有抽奖记录
+                	CouponOperationImpl condition = new CouponOperationImpl();
+                	condition.setOrderNum(orderNum);
+                	condition.setType(CouponUtil.OPERATION_TYPE_LOTTERY);
+                	condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+                	long couponOperCount =  CouponModel.INSTANCE.searchOperationByOrderNumCount(condition);
+                	System.out.println("订单" + orderNum + "抽奖次数 " + couponOperCount);
+                	if (couponOperCount > 0) {
+                		//TODO  返回该订单已抽过奖，订单无效
+                		System.out.println("该订单已抽过奖");
+                		return false;
+                	}
+                	
+                	return true;
+                }
+                ]]></expressionString>
+			</ns2:exp>
+		</ns2:ops>
+	</ns2:eventHandler>
+	
+	<!-- 后台查询奖池数量 -->
+	<ns2:eventHandler functionName="loadJackpot">
+		<ns2:ops xsi:type="ns2:OpCallAjaxType" name="loadJackpot-20160112-232035">
+			<ns2:exp>
+				<expressionString><![CDATA[
+                { 
+                	System.out.println("=========loadJackpot==============");
+                	//后台查询奖池数量
+                }
+                ]]></expressionString>
+			</ns2:exp>
+		</ns2:ops>
+	</ns2:eventHandler>
+	<!-- 后台生成优惠券 -->
+	<ns2:eventHandler functionName="genCoupon">
+		<ns2:ops xsi:type="ns2:OpCallAjaxType" name="genCoupon-20160112-232035">
+			<ns2:exp>
+				<expressionString><![CDATA[
+				import org.shaolin.vogerp.coupon.dao.CouponModel;
+				import org.shaolin.vogerp.coupon.be.*;
+				import org.shaolin.uimaster.page.ajax.*;
+				import java.util.List;
+				import java.util.HashMap;
+				import org.shaolin.bmdp.runtime.security.UserContext;
+				import java.util.Date;
+				import org.shaolin.vogerp.coupon.util.CouponUtil;
+                { 
+                	System.out.println("=========genCoupon==============");
+                	//后台生成优惠券
+                	TextField orderNumText = @page.getTextField("orderNumText");
+                	Hidden luckyImageUrlText = @page.getHidden("luckyImageUrlText");
+                	System.out.println("luckyImageUrl = " + luckyImageUrlText.getValue());
+                	
+                	HashMap input = new HashMap();//界面转换参数
+                	String entityName = "";//页面entityname
+                	String formName = "";
+                	if (null == luckyImageUrlText.getValue() || "".equals(luckyImageUrlText.getValue())) {
+                		//TODO未中奖 生成谢谢惠顾
+                		System.out.println("未中奖");
+                		entityName = "org.shaolin.vogerp.coupon.form.Thanks";
+                		formName = "thanksForm";
+                		
+                		RefForm form = new RefForm(formName, entityName, input);
+				        @page.addElement(form);
+				        form.openInWindows("Show Coupon", null);
+				        return ;
+                	}
+                	
+                	String couponIcon = luckyImageUrlText.getValue();
+                	CouponTypeImpl condition = new CouponTypeImpl();
+                	condition.setIcon(couponIcon);
+                	condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+                	System.out.println(condition.getIcon() + "    " + condition.getOrgId());
+                	List couponTypes = CouponModel.INSTANCE.searchCouponType(condition, null, 0, 0);
+                	
+                	if (null != couponTypes && couponTypes.size() > 0) {
+                		CouponTypeImpl couponType = (CouponTypeImpl)(couponTypes.get(0));
+                		//判断不是即时优惠券且该奖项下的优惠产品大于等于2时给出选择界面
+                		DiscountProductImpl condition1 = new DiscountProductImpl();
+                		condition1.setCouponTypeId(couponType.getId());
+                		condition1.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+                		List discountProducts = CouponModel.INSTANCE.searchDiscountProduct(condition1, null, 0, 0);
+                		if (null != discountProducts && discountProducts.size() > 0) {
+                			input.put("couponType", couponType);
+                		
+                			if (!couponType.getIsImmediate() && discountProducts.size() >= 2) {
+                				//中奖 招牌立减 提供界面选择
+                				System.out.println("中奖 " + couponType.getName());
+                				entityName = "org.shaolin.vogerp.coupon.form.ChoiceDiscountProduct";
+                				formName = "choiceDiscountForm";
+			                    
+	                			input.put("discountProducts", discountProducts);
+	                			
+                			} else {
+                				//生成优惠券和抽奖记录,且该奖项下优惠券剩余数量减1
+                				System.out.println("中奖 " + couponType.getName());
+                				entityName = "org.shaolin.vogerp.coupon.form.CouponInfo";
+                				formName = "couponForm";
+                				
+                				CouponImpl coupon = (CouponImpl)CouponUtil.genCoupon((DiscountProductImpl)discountProducts.get(0));
+                				coupon.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+                				CouponModel.INSTANCE.create(coupon);
+                				
+                				input.put("coupon", coupon);
+                				input.put("discountProduct", (DiscountProductImpl)discountProducts.get(0));
+                				input.put("orderNum", orderNumText.getValue());
+                				
+                				CouponOperationImpl couponOperation = new CouponOperationImpl();
+                				couponOperation.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+                				couponOperation.setOrderNum(orderNumText.getValue());
+                				couponOperation.setSerialNumber(coupon.getSerialNumber());
+                				couponOperation.setType(CouponUtil.OPERATION_TYPE_LOTTERY);
+                				couponOperation.setCreateDate(new Date());
+                				CouponModel.INSTANCE.create(couponOperation);
+                				
+                				couponType.setRestNum(couponType.getRestNum() - 1);
+                				CouponModel.INSTANCE.update(couponType);
+                			}
+                		} else {
+                			//未中奖 生成谢谢惠顾
+                			System.out.println("奖项下没有产品");
+                			entityName = "org.shaolin.vogerp.coupon.form.Thanks";
+                		}
+                	} else {
+                		//未中奖 生成谢谢惠顾
+                		System.out.println("未中奖");
+                		entityName = "org.shaolin.vogerp.coupon.form.Thanks";
+                	}
+                	
+                	RefForm form = new RefForm(formName, entityName, input);
+			        @page.addElement(form);
+			        form.openInWindows("Show Coupon", null);
+                }
+                ]]></expressionString>
+			</ns2:exp>
+		</ns2:ops>
+	</ns2:eventHandler>
+
+	<ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+		<ns2:layout xsi:type="ns2:TableLayoutType">
+			<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+			<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+			<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+			<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+		</ns2:layout>
+
+		<ns2:component xsi:type="ns2:UIPanelType" UIID="lotteryStartPanel">
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+				<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UIHiddenType" UIID="luckyImageUrlText" />
+			<ns2:component xsi:type="ns2:UITextFieldType" UIID="orderNumText">
+				<ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+					<ns2:value>false</ns2:value>
+				</ns2:allowBlank>
+				<ns2:allowBlankText xsi:type="ns2:StringPropertyType">
+					<ns2:value>订单无效</ns2:value>
+				</ns2:allowBlankText>
+				<ns2:maxLength xsi:type="ns2:NumericPropertyType">
+					<type>int</type>
+					<value>4</value>
+				</ns2:maxLength>
+				<ns2:EventListener xsi:type="ns2:KeyUpListenerType">
+					<ns2:handler functionName="verifyOrderNum" />
+				</ns2:EventListener>
+			</ns2:component>
+			<ns2:component xsi:type="ns2:UIImageType" UIID="startLotyImage">
+				<ns2:title xsi:type="ns2:StringPropertyType">
+					<ns2:value>Start Lottery</ns2:value>
+				</ns2:title>
+				<ns2:src xsi:type="ns2:ImagePropertyType">
+					<ns2:location>/coupon/front/startLottery.png</ns2:location>
+				</ns2:src>
+				<ns2:EventListener xsi:type="ns2:ClickListenerType">
+					<ns2:handler functionName="rollCoupon" />
+				</ns2:EventListener>
+			</ns2:component>
+			<ns2:layoutConstraint>
+				<ns2:componentId>orderNumText</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="0" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+			<ns2:layoutConstraint>
+				<ns2:componentId>startLotyImage</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="1" y="0" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+		</ns2:component>
+		<ns2:component xsi:type="ns2:UIPanelType" UIID="couponPanel">
+			
+		</ns2:component>
+		<ns2:component xsi:type="ns2:UIPanelType" UIID="restCouponPanel">
+		</ns2:component>
+		<ns2:layoutConstraint>
+			<ns2:componentId>lotteryStartPanel</ns2:componentId>
+			<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+				x="0" y="0" align="FULL"></ns2:constraint>
+		</ns2:layoutConstraint>
+		<ns2:layoutConstraint>
+			<ns2:componentId>couponPanel</ns2:componentId>
+			<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+				x="0" y="0" align="FULL"></ns2:constraint>
+		</ns2:layoutConstraint>
+		<ns2:layoutConstraint>
+			<ns2:componentId>restCouponPanel</ns2:componentId>
+			<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+				x="0" y="0" align="FULL"></ns2:constraint>
+		</ns2:layoutConstraint>
+		<ns2:constructorCode><![CDATA[
+		{
+			var windowHeight = $(window).height();
+			this.roll = function(luckyImageUrl){
+				//TODO 假设后台生成的图标url
+		        			alert(luckyImageUrl);
+		        			//计算每列的滚动百分比
+		        			var rollTopArr = new Array();
+		        			var cellTop = 32;
+		        			
+		        			$("#div-lotteryForm-hidden input[name='lotteryForm.luckyImageUrlText']").val(luckyImageUrl);
+		        			
+		        			var couponPanel = document.getElementById("lotteryForm.couponPanel");
+							var $couponPan = $(couponPanel);
+							var lotteryImageDivs = $couponPan.children(".lotteryForm_couponImage");
+		        			if (null != lotteryImageDivs) {
+		        				var row = lotteryImageDivs.length / 3;
+		        				if (null != luckyImageUrl && "" != luckyImageUrl) {
+		        					//中奖滚动设置
+		        					for (var m = 0; m < 3; m++) {
+										for (var n = 0; n < row - 1; n++) {
+											var divid = "#lotteryForm_" + m + "-" + n;
+											var imageUrl = $(divid + " img").attr("src");
+											if (imageUrl == luckyImageUrl) {
+												var n1 = n == 0 ? row - 1 : n;
+												rollTopArr[m] = (n1 - 1) * cellTop;
+												break ;
+											}
+										}
+										if (null == rollTopArr[m]) {
+											rollTopArr[m] = (row - 3) * cellTop;
+											$("#lotteryForm_" + m + "-" + (row - 2) + " img").attr("src", luckyImageUrl);
+										}
+									}
+		        				} else {
+		        					//未中奖滚动设置
+		        					var i1 = Math.floor(Math.random() * (row - 1)) + 1;
+									var i2 = Math.floor(Math.random() * (row - 1)) + 1;
+									rollTopArr[0] = (i1 - 1) * cellTop;
+									rollTopArr[1] = (i2 - 1) * cellTop;
+									var imageUrl1 = $("#lotteryForm_0-" + i1 + " img").attr("src");
+									var imageUrl2 = $("#lotteryForm_1-" + i2 + " img").attr("src");
+									if (imageUrl2 != imageUrl1) {
+										var i3 = Math.floor(Math.random() * (row - 1)) + 1;
+										rollTopArr[2] = (i3 - 1) * cellTop;
+									} else {
+										for (var k = 3; k < row; k++) {
+											if ($("#lotteryForm_2-" + k + " img").attr("src") != imageUrl1) {
+												rollTopArr[2] = (k - 1) * cellTop;
+												break ;
+											}
+										}
+										//如果第3列取到的全部是和第1列颜色相同，则取最后一个div，并修改该div的颜色为其它颜色
+										if (null == rollTopArr[2]) {
+											var i3 = row - 1;
+											rollTopArr[2] = (i3 - 1) * cellTop;
+											for (var j = 0; j < lorrertImageDivs.length; j++) {
+												var otherImageUrl = $(lorrertImageDivs[j]).attr("src");
+												if (otherImageUrl != imageUrl1) {
+													$("#lotteryForm_2-" + (row - 1) + " img").attr("src", otherImageUrl);
+													break ;
+												}
+											}
+										}
+									}
+		        				}
+		        				
+		        				//滚动奖项图标
+		        				for (var m = 0; m < 3; m++) {
+									var needRollDivIds = "";
+									for (var n = 0; n < row; n++) {
+										if (null == needRollDivIds || "" == needRollDivIds) {
+											needRollDivIds = "#lotteryForm_" + m + "-" + n;
+										} else {
+											needRollDivIds = needRollDivIds + "," +"#lotteryForm_" + m + "-" + n;
+										}
+									}
+									var rollTime = 2000;
+									var t1 = ((row - 2) * cellTop);
+									var count = rollTopArr[m] / cellTop + 1;
+									var cellTime = parseInt(rollTime / (count + row - 2));
+									$(needRollDivIds).delay(m * rollTime).animate({"top" : "-" + t1 + "%"}, cellTime * (row - 2)).animate({"top" : 97 - 2 * cellTop + "%"}, 0).animate({"top" : "-" + rollTopArr[m] + "%"}, cellTime * count);
+								}
+								var tt = 600;
+								var advertTopHeight = $(window).height() - $couponPan.height() * 0.42 - $("#div-leftPanel-0_4").height();
+								$("#div-leftPanel-0_1, #div-leftPanel-0_1 img").height(advertTopHeight + "px").slideDown(tt * 2);
+								var rollHeight = advertTopHeight - $couponPan.height() * 0.28 - $couponPan.offset().top;
+								$couponPan.animate({"top" : "" + rollHeight + "px"}, tt);
+								var advertBottomHeight = $(window).height() - advertTopHeight - $couponPan.height() * 0.40;
+								$("#div-leftPanel-0_4, #div-leftPanel-0_4 img").height(advertBottomHeight + "px").slideDown(tt * 2);
+								$("#div-leftPanel-0_5").css("left", $couponPan.offset().left + "px");
+								$("#div-leftPanel-0_6").css("right", $couponPan.offset().right + "px");
+		        				$("#div-leftPanel-0_5,#div-leftPanel-0_6").height($couponPan.height() + "px").delay(tt * 2).css({"display" : "block", "top" : advertTopHeight + "px"});
+		        				
+		        			}
+		        			
+		        			//抽奖框滚动结束，调用后台生成优惠券
+		        			var othis = this;
+							var eventsource = $couponPan;
+							var delayTime = 12000;
+							setTimeout(function(){
+		        				UIMaster.triggerServerEvent("lotteryForm.couponPanel","genCoupon-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
+		        			}, delayTime);
+		        			
+			};
+			//$("#leftPanel").height(windowHeight + "px");
+			var startLotteryHeight = $("#div-lotteryForm-lotteryStartPanel-1_0 img").height();
+			$("#div-lotteryForm-lotteryStartPanel-0_0 input").height((startLotteryHeight - 6) + "px");
+			var restCoupon = document.getElementById("lotteryForm.restCouponPanel");
+			var $rCoupon = $(restCoupon)
+			$rCoupon.height(($rCoupon.width() * 0.32) + "px");
+			
+			var couponPanel = document.getElementById("lotteryForm.couponPanel");
+			var $couponPan = $(couponPanel);
+			$couponPan.height(($couponPan.width() * 0.84) + "px");
+			
+			$("#div-lotteryForm-lotteryStartPanel-0_0 input").attr("placeholder", "请输入订单号后4位");
+			$("#div-lotteryForm-lotteryStartPanel-1_0 img").height($("#div-lotteryForm-lotteryStartPanel-0_0").height() + "px");
+			
+			var othis = this;
+			var eventsource = $couponPan;
+			//TODO ajax请求获取所有奖项图片url
+			var url = UIMaster.triggerServerEvent("lotteryForm.couponPanel","loadCouponImageUrl-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
+			//alert(url);
+			
+			//假设ajax请求返回该字符串，需要修改
+			var imageUrls = "/uimaster/images/coupon/front/50off.png,/uimaster/images/coupon/front/sign.png,/uimaster/images/coupon/front/newProduct.png,/uimaster/images/coupon/front/cashDeduction.png";
+			
+			var imageUrlArr = imageUrls.split(",");
+			var size = imageUrlArr.length;
+			//生成(size + 2)行3列的奖项图标,最后一行和第一行相同
+			for (var m = 0; m < size + 2; m++) {
+				for (var n = 0; n < 3; n++) {
+					//随机取一张图片
+					var index = Math.floor(Math.random() * size);
+					var imageUrl = imageUrlArr[index];
+					if (m == size + 1) {
+						imageUrl = $("#lotteryForm_" + n + "-0 img").attr("src");
+					}
+					$couponPan.append("<div id=\"lotteryForm_" + n + "-" + m + "\" class=\"lotteryForm_couponImage\"><img src=\"" + imageUrl + "\" /></div>");
+				}
+			}
+			
+			var lotyForm = document.getElementById("lotteryForm.Form");
+			var lotyFormHeight = $("#div-lotteryForm-Form-0_0").height();
+			$(lotyForm).height(lotyFormHeight + "px");
+			$("#lotteryPanel,#div-lotteryPanel-0_0,#div-leftPanel-0_2").height(lotyFormHeight + "px");
+			
+			//查询并设置奖池数量
+			var eventsource1 = $rCoupon;
+			UIMaster.triggerServerEvent("lotteryForm.restCouponPanel","loadJackpot-20160112-232035",UIMaster.getValue(eventsource1),othis.__entityName);
+			
+			//TODO 假设返回奖池数量
+			var jackpotRes = "/uimaster/images/coupon/front/50off.png:5,/uimaster/images/coupon/front/sign.png:300,/uimaster/images/coupon/front/newProduct.png:12,/uimaster/images/coupon/front/cashDeduction.png:95";
+			var couponJackpots = jackpotRes.split(",");
+			if (null != couponJackpots) {
+				for (var a = 0; a < couponJackpots.length; a++) {
+					var couponJackpot = couponJackpots[a].split(":");
+					var widthNum = parseInt(100 / couponJackpots.length);
+					$rCoupon.append("<div id=\"div_lotteryForm-restCouponPanel-" + (a * 2) + "_0\" class=\"couponJackpotImageDiv\" style=\"width:" + widthNum * 0.65 + "%\"><img src=\"" + couponJackpot[0] + "\" /></div>");
+					$rCoupon.append("<div id=\"div_lotteryForm-restCouponPanel-" + (a * 2 + 1) + "_0\" class=\"couponJackpotTextDiv\" style=\"width:" + widthNum * 0.35 + "%\"><span>x" + couponJackpot[1] + "</span>");
+				}
+			}
+		}
+		]]></ns2:constructorCode>
+	</ns2:body>
+	<ns2:mapping>
+
+	</ns2:mapping>
+</ns2:UIEntity>

@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.coupon.page.DiscountValidation</entityName>
+	<systemVersion>0</systemVersion>
+	<description>优惠验证</description>
+
+	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<!-- 优惠验证逻辑 -->
+		<ns2:eventHandler functionName="CouponValidateFunction">
+			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="CouponValidateFunction">
+				<ns2:exp>
+					<ns2:expressionString><![CDATA[
+					import org.shaolin.uimaster.page.AjaxContext;
+					import org.shaolin.vogerp.coupon.be.CouponImpl;
+					import org.shaolin.vogerp.coupon.dao.CouponModel;
+					import java.util.List;
+					import java.util.Date;
+					import java.util.HashMap;
+					import org.shaolin.uimaster.page.ajax.RefForm;
+					import org.shaolin.vogerp.coupon.ce.StatusType;
+					import org.shaolin.bmdp.runtime.security.UserContext;
+					{
+						String couponNumber = @page.getTextField("couponNumberText").getValue();
+						//验证优惠券是否在有效期内
+						//根据券号查询是否存在该优惠券且在有效期内
+						CouponImpl condition = new CouponImpl();
+						condition.setSerialNumber(couponNumber);
+						condition.setExpiredDate(new Date());
+						condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+						List coupons = CouponModel.INSTANCE.searchEffectedCoupon(condition, null, 0, 0);
+						
+						if (null == coupons || coupons.size() == 0) {
+							@page.executeJavaScript("alert('优惠券号 " + couponNumber + "不存在或已过期')");
+						} else {
+							CouponImpl coupon = (CouponImpl)coupons.get(0);
+							//已发出或已兑换状态
+							if (StatusType.SENDOUT.equals(coupon.getStatus()) || StatusType.EXCHANGED.equals(coupon.getStatus())) {
+								//显示优惠券信息 
+			                    HashMap input = new HashMap();
+			                    input.put("beObject", coupon);
+			                    input.put("editable", new Boolean(true));
+			                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.coupon.form.Coupon", input);
+			                    @page.addElement(form);
+			                    
+			                    form.openInWindows("Show Coupon Information", null);
+							} else {
+								@page.executeJavaScript("alert('优惠券号 " + couponNumber + "不存在或已过期')");
+							}
+						}
+					}
+					]]></ns2:expressionString>
+				</ns2:exp>
+			</ns2:ops>
+		</ns2:eventHandler>
+		
+		<!-- 即刻优惠兑换 -->
+		<ns2:eventHandler functionName="ImmediateExchangeFunction">
+			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="ImmediateExchangeFunction">
+				<ns2:exp>
+					<ns2:expressionString><![CDATA[
+					import org.shaolin.uimaster.page.AjaxContext;
+					import org.shaolin.vogerp.coupon.be.CouponOperationImpl;
+					import org.shaolin.vogerp.coupon.dao.CouponModel;
+					import org.shaolin.vogerp.coupon.util.CouponUtil;
+					import java.util.List;
+					import org.shaolin.vogerp.coupon.be.CouponImpl;
+					import java.util.HashMap;
+					import org.shaolin.uimaster.page.ajax.RefForm;
+					import org.shaolin.bmdp.runtime.security.UserContext;
+					import org.shaolin.vogerp.coupon.ce.StatusType;
+					{
+						String orderNum = @page.getTextField("orderNumText").getValue();
+						//兑换订单下的即时优惠券，生成兑换记录
+						CouponOperationImpl couponOperation = new CouponOperationImpl();
+						couponOperation.setOrderNum(orderNum);
+						couponOperation.setType(CouponUtil.OPERATION_TYPE_LOTTERY);
+						couponOperation.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+						//查询该订单的抽奖记录
+						List couponOperations = CouponModel.INSTANCE.searchOperationByOrderNum(couponOperation, null, 0, 0);
+						
+						if (null == couponOperations || couponOperations.size() == 0) {
+							@page.executeJavaScript("alert('订单号 " + orderNum + "没有抽奖记录')");
+						} else {
+							CouponOperationImpl couponOper = (CouponOperationImpl)couponOperations.get(0);
+							if (null != couponOper.getSerialNumber() && couponOper.getSerialNumber().length() > 0) {
+								//生成兑奖记录
+								CouponOperationImpl exchangeOper = new CouponOperationImpl();
+								exchangeOper.setOrderNum(orderNum);
+								exchangeOper.setSerialNumber(couponOper.getSerialNumber());
+								exchangeOper.setType(CouponUtil.OPERATION_TYPE_EXCHANGE);
+								exchangeOper.setOperateDate(new java.util.Date());
+								exchangeOper.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+								CouponModel.INSTANCE.create(exchangeOper);
+							
+								//查询出中奖的优惠券
+								CouponImpl condition = new CouponImpl();
+								condition.setSerialNumber(couponOper.getSerialNumber());
+								condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+								List coupons = CouponModel.INSTANCE.searchEffectedCoupon(condition, null, 0, 0);
+								System.out.println("订单号" + orderNum + "兑换优惠券" + couponOper.getSerialNumber());
+								
+								//更新优惠券状态为已兑换
+								CouponImpl exchangeCoupon = (CouponImpl)coupons.get(0);
+								exchangeCoupon.setStatus(StatusType.EXCHANGED);
+								CouponModel.INSTANCE.update(exchangeCoupon);
+								
+								HashMap input = new HashMap();
+			                    input.put("beObject", exchangeCoupon);
+			                    input.put("editable", new Boolean(true));
+								RefForm form = new RefForm("couponForm", "org.shaolin.vogerp.coupon.form.Coupon", input);
+			                    @page.addElement(form);
+			                    
+			                    form.openInWindows("Show Coupon Information", null);
+							} else {
+								@page.executeJavaScript("alert('订单号 " + orderNum + "没有中奖')");
+							}
+						}
+						
+					}
+					]]></ns2:expressionString> 
+				</ns2:exp>
+			</ns2:ops>
+		</ns2:eventHandler>
+		
+		<!-- 单号重置 -->
+		<ns2:eventHandler functionName="ResetOrderCouponFunction">
+			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="ResetOrderCouponFunction">
+				<ns2:exp>
+					<ns2:expressionString><![CDATA[
+					import org.shaolin.uimaster.page.AjaxContext;
+					import org.shaolin.vogerp.coupon.be.CouponOperationImpl;
+					import org.shaolin.vogerp.coupon.dao.CouponModel;
+					import java.util.List;
+					{
+						String orderNum = @page.getTextField("orderNum1Text").getValue();
+						CouponOperationImpl couponOperation = new CouponOperationImpl();
+						couponOperation.setOrderNum(orderNum);
+						List couponOperations = CouponModel.INSTANCE.searchOperationByOrderNum(couponOperation, null, 0, 0);
+						if (null != couponOperations && couponOperations.size() > 0) {
+							for (int i = 0; i < couponOperations.size(); i++ ) {
+								CouponModel.INSTANCE.delete((CouponOperationImpl)(couponOperations.get(i)));
+							}
+							
+							@page.executeJavaScript("alert('订单号 " + orderNum + "重置成功')");
+						} else {
+							@page.executeJavaScript("alert('订单号 " + orderNum + "没有抽奖记录，无需重置')");
+						}
+					}
+					]]></ns2:expressionString>
+				</ns2:exp>
+			</ns2:ops>
+		</ns2:eventHandler>
+		
+		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+			<ns2:UISkin xsi:type="ns2:UISkinType">
+				<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel
+				</ns2:skinName>
+				<ns2:param name="text">
+					<ns2:value xsi:type="ns2:StringPropertyType">
+						<ns2:value></ns2:value>
+					</ns2:value>
+				</ns2:param>
+			</ns2:UISkin>
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
+				<ns2:ajaxLoad>false</ns2:ajaxLoad>
+				<!-- 优惠验证Panel -->
+				<ns2:tab uiid="couponValidationPanel">
+					<ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+						<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+						<ns2:key>org.shaolin.vogerp.coupon.page.DiscountValidation.couponValidationPanel</ns2:key>
+					</ns2:title>
+					<ns2:panel UIID="couponValidationPanel">
+						<ns2:layout xsi:type="ns2:TableLayoutType">
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+						</ns2:layout>
+						<ns2:component xsi:type="ns2:UITextFieldType" UIID="couponNumberText">
+		                    <ns2:title xsi:type="ns2:StringPropertyType">
+		                        <ns2:value>Coupon Number</ns2:value>
+		                    </ns2:title>
+		                    <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+		                        <ns2:value>优惠券号</ns2:value>
+		                    </ns2:widgetLabel>
+		                    <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+		                        <ns2:value>false</ns2:value>
+		                    </ns2:allowBlank>
+		                    <ns2:allowBlankText xsi:type="ns2:StringPropertyType">
+		                        <ns2:value>The coupon number must not be null.</ns2:value>
+		                    </ns2:allowBlankText>
+		                </ns2:component>
+		                <ns2:component xsi:type="ns2:UIButtonType" UIID="validateBtn">
+		                    <ns2:text xsi:type="ns2:StringPropertyType">
+		                        <ns2:value>验证</ns2:value>
+		                    </ns2:text>
+		                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
+		                        <ns2:handler functionName="CouponValidateFunction" />
+		                    </ns2:EventListener>
+		                </ns2:component>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>couponNumberText</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="0" y="0" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>validateBtn</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="0" y="1" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+					</ns2:panel>
+				</ns2:tab>
+				<!-- 即刻优惠兑换Panel -->
+				<ns2:tab uiid="immediateCouponPanel">
+					<ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+						<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+						<ns2:key>org.shaolin.vogerp.coupon.page.DiscountValidation.immediateCouponPanel</ns2:key>
+					</ns2:title>
+					<ns2:panel UIID="immediateCouponPanel">
+						<ns2:layout xsi:type="ns2:TableLayoutType">
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+						</ns2:layout>
+						<ns2:component xsi:type="ns2:UITextFieldType" UIID="orderNumText">
+		                    <ns2:title xsi:type="ns2:StringPropertyType">
+		                        <ns2:value>Order Number</ns2:value>
+		                    </ns2:title>
+		                    <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+		                        <ns2:value>订单号</ns2:value>
+		                    </ns2:widgetLabel>
+		                    <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+		                        <ns2:value>false</ns2:value>
+		                    </ns2:allowBlank>
+		                    <ns2:allowBlankText xsi:type="ns2:StringPropertyType">
+		                        <ns2:value>The order number must not be null.</ns2:value>
+		                    </ns2:allowBlankText>
+		                </ns2:component>
+		                <ns2:component xsi:type="ns2:UIButtonType" UIID="exchangeBtn">
+		                    <ns2:text xsi:type="ns2:StringPropertyType">
+		                        <ns2:value>兑换</ns2:value>
+		                    </ns2:text>
+		                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
+		                        <ns2:handler functionName="ImmediateExchangeFunction" />
+		                    </ns2:EventListener>
+		                </ns2:component>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>orderNumText</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="0" y="0" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>exchangeBtn</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="0" y="1" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+					</ns2:panel>
+				</ns2:tab>
+				<!-- 单号重置Panel -->
+				<ns2:tab uiid="resetOrderNumPanel">
+					<ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+						<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+						<ns2:key>org.shaolin.vogerp.coupon.page.DiscountValidation.resetOrderNumPanel</ns2:key>
+					</ns2:title>
+					<ns2:panel UIID="resetOrderNumPanel">
+						<ns2:layout xsi:type="ns2:TableLayoutType">
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+						</ns2:layout>
+						<ns2:component xsi:type="ns2:UITextFieldType" UIID="orderNum1Text">
+		                    <ns2:title xsi:type="ns2:StringPropertyType">
+		                        <ns2:value>Order Number</ns2:value>
+		                    </ns2:title>
+		                    <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+		                        <ns2:value>订单号</ns2:value>
+		                    </ns2:widgetLabel>
+		                    <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+		                        <ns2:value>false</ns2:value>
+		                    </ns2:allowBlank>
+		                    <ns2:allowBlankText xsi:type="ns2:StringPropertyType">
+		                        <ns2:value>The order number must not be null.</ns2:value>
+		                    </ns2:allowBlankText>
+		                </ns2:component>
+		                <ns2:component xsi:type="ns2:UIButtonType" UIID="resetBtn">
+		                    <ns2:text xsi:type="ns2:StringPropertyType">
+		                        <ns2:value>重置</ns2:value>
+		                    </ns2:text>
+		                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
+		                        <ns2:handler functionName="ResetOrderCouponFunction" />
+		                    </ns2:EventListener>
+		                </ns2:component>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>orderNum1Text</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="0" y="0" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>resetBtn</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="0" y="1" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+					</ns2:panel>
+				</ns2:tab>
+			</ns2:component>
+			<ns2:layoutConstraint>
+				<ns2:componentId>functionsTab</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="0" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+		</ns2:body>
+	</ns2:UIEntity>
+	<ns2:ODMapping>
+	</ns2:ODMapping>
+	<ns2:in>
+	</ns2:in>
+</ns2:UIPage>
+ 

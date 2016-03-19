@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.coupon.page.MarketingStatistic</entityName>
+	<systemVersion>0</systemVersion>
+	<description>营销统计</description>
+
+	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+			<ns2:UISkin xsi:type="ns2:UISkinType">
+				<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel
+				</ns2:skinName>
+				<ns2:param name="text">
+					<ns2:value xsi:type="ns2:StringPropertyType">
+						<ns2:value></ns2:value>
+					</ns2:value>
+				</ns2:param>
+			</ns2:UISkin>
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			
+			
+		</ns2:body>
+	</ns2:UIEntity>
+	<ns2:ODMapping>
+	</ns2:ODMapping>
+	<ns2:in>
+	</ns2:in>
+</ns2:UIPage>
+ 

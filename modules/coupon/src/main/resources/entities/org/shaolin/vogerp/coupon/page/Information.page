@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.coupon.page.Information</entityName>
+	<systemVersion>0</systemVersion>
+	<description>我的信息</description>
+
+	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+			<ns2:UISkin xsi:type="ns2:UISkinType">
+				<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel
+				</ns2:skinName>
+				<ns2:param name="text">
+					<ns2:value xsi:type="ns2:StringPropertyType">
+						<ns2:value></ns2:value>
+					</ns2:value>
+				</ns2:param>
+			</ns2:UISkin>
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
+				<ns2:ajaxLoad>true</ns2:ajaxLoad>
+				<ns2:tab uiid="merchantInfoPanel">
+					<ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+						<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+						<ns2:key>org.shaolin.vogerp.coupon.page.Information.merchantInfoPanel</ns2:key>
+					</ns2:title>
+					<ns2:panel UIID="merchantInfoPanel">
+						<ns2:layout xsi:type="ns2:TableLayoutType">
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+						</ns2:layout>
+						<ns2:component xsi:type="ns2:UIImageType" UIID="mechantImage">
+							<ns2:title xsi:type="ns2:StringPropertyType">
+								<ns2:value>mechantInfo</ns2:value>
+							</ns2:title>
+							<ns2:src xsi:type="ns2:ImagePropertyType">
+								<ns2:location>/coupon/information/u15.jpg</ns2:location>
+							</ns2:src>
+						</ns2:component>
+						<ns2:component xsi:type="ns2:UILabelType" UIID="mechantInfoLabel">
+							<ns2:text xsi:type="ns2:StringPropertyType">
+								<ns2:value>上海仁和餐饮管理发展有限公司</ns2:value>
+							</ns2:text>
+						</ns2:component>
+						<ns2:layoutConstraint>
+							<ns2:componentId>mechantImage</ns2:componentId>
+							<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+								x="0" y="0" align="FULL"></ns2:constraint>
+						</ns2:layoutConstraint>
+						<ns2:layoutConstraint>
+							<ns2:componentId>mechantInfoLabel</ns2:componentId>
+							<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+								x="0" y="1" align="FULL"></ns2:constraint>
+						</ns2:layoutConstraint>
+					</ns2:panel>
+				</ns2:tab>
+				<ns2:tab uiid="ContractInfoPanel">
+					<ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+						<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+						<ns2:key>org.shaolin.vogerp.coupon.page.Information.ContractInfoPanel</ns2:key>
+					</ns2:title>
+					<ns2:panel UIID="ContractInfoPanel">
+						<ns2:layout xsi:type="ns2:TableLayoutType">
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+						</ns2:layout>
+						
+					</ns2:panel>
+				</ns2:tab>
+				<ns2:tab uiid="aboutPictoPanel">
+					<ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+						<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+						<ns2:key>org.shaolin.vogerp.coupon.page.Information.aboutPictoPanel</ns2:key>
+					</ns2:title>
+					<ns2:panel UIID="aboutPictoPanel">
+						<ns2:layout xsi:type="ns2:TableLayoutType">
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+						</ns2:layout>
+						<ns2:component xsi:type="ns2:UILabelType" UIID="pictoInfo1Label">
+							<ns2:text xsi:type="ns2:StringPropertyType">
+								<ns2:value>上海彼可托文化发展有限公司</ns2:value>
+							</ns2:text>
+						</ns2:component>
+						<ns2:component xsi:type="ns2:UILabelType" UIID="pictoInfo2Label">
+							<ns2:text xsi:type="ns2:StringPropertyType">
+								<ns2:value>地址: 上海市普陀区金沙江路1006号第2幢585室</ns2:value>
+							</ns2:text>
+						</ns2:component>
+						<ns2:component xsi:type="ns2:UILabelType" UIID="pictoInfo3Label">
+							<ns2:text xsi:type="ns2:StringPropertyType">
+								<ns2:value>电话: 86-21-58201591</ns2:value>
+							</ns2:text>
+						</ns2:component>
+						<ns2:component xsi:type="ns2:UILabelType" UIID="pictoContact1Label">
+							<ns2:text xsi:type="ns2:StringPropertyType">
+								<ns2:value>广告投放及业务咨询</ns2:value>
+							</ns2:text>
+						</ns2:component>
+						<ns2:component xsi:type="ns2:UILabelType" UIID="pictoContact2Label">
+							<ns2:text xsi:type="ns2:StringPropertyType">
+								<ns2:value>联系人 魏经理</ns2:value>
+							</ns2:text>
+						</ns2:component>
+						<ns2:component xsi:type="ns2:UILabelType" UIID="pictoContact3Label">
+							<ns2:text xsi:type="ns2:StringPropertyType">
+								<ns2:value>手机：13564302089</ns2:value>
+							</ns2:text>
+						</ns2:component>
+						<ns2:component xsi:type="ns2:UIImageType" UIID="pictoInfoImage">
+							<ns2:title xsi:type="ns2:StringPropertyType">
+								<ns2:value>mechantInfo</ns2:value>
+							</ns2:title>
+							<ns2:src xsi:type="ns2:ImagePropertyType">
+								<ns2:location>/coupon/information/u14.png</ns2:location>
+							</ns2:src>
+						</ns2:component>
+						<ns2:layoutConstraint>
+							<ns2:componentId>pictoInfo1Label</ns2:componentId>
+							<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+								x="0" y="0" align="FULL"></ns2:constraint>
+						</ns2:layoutConstraint>
+						<ns2:layoutConstraint>
+							<ns2:componentId>pictoInfo2Label</ns2:componentId>
+							<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+								x="0" y="1" align="FULL"></ns2:constraint>
+						</ns2:layoutConstraint>
+						<ns2:layoutConstraint>
+							<ns2:componentId>pictoInfo3Label</ns2:componentId>
+							<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+								x="0" y="2" align="FULL"></ns2:constraint>
+						</ns2:layoutConstraint>
+						<ns2:layoutConstraint>
+							<ns2:componentId>pictoContact1Label</ns2:componentId>
+							<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+								x="0" y="3" align="FULL"></ns2:constraint>
+						</ns2:layoutConstraint>
+						<ns2:layoutConstraint>
+							<ns2:componentId>pictoContact2Label</ns2:componentId>
+							<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+								x="0" y="4" align="FULL"></ns2:constraint>
+						</ns2:layoutConstraint>
+						<ns2:layoutConstraint>
+							<ns2:componentId>pictoContact3Label</ns2:componentId>
+							<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+								x="0" y="5" align="FULL"></ns2:constraint>
+						</ns2:layoutConstraint>
+						<ns2:layoutConstraint>
+							<ns2:componentId>pictoInfoImage</ns2:componentId>
+							<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+								x="0" y="6" align="FULL"></ns2:constraint>
+						</ns2:layoutConstraint>
+					</ns2:panel>
+				</ns2:tab>
+			</ns2:component>
+			<ns2:layoutConstraint>
+				<ns2:componentId>functionsTab</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="0" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+		</ns2:body>
+	</ns2:UIEntity>
+	<ns2:ODMapping>
+	</ns2:ODMapping>
+	<ns2:in>
+	</ns2:in>
+</ns2:UIPage>
+ 

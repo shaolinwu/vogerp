@@ -18,16 +18,6 @@ function org_shaolin_vogerp_coupon_form_Coupon(json)
         ui: elementList[prefix + "nameUI"]
     });
 
-    var descriptionUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "descriptionUILabel"]
-    });
-
-    var descriptionUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "descriptionUI"]
-    });
-
     var serialNumberUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "serialNumberUILabel"]
@@ -38,44 +28,29 @@ function org_shaolin_vogerp_coupon_form_Coupon(json)
         ui: elementList[prefix + "serialNumberUI"]
     });
 
-    var countUILabel = new UIMaster.ui.label
+    var discountProductUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "countUILabel"]
+        ui: elementList[prefix + "discountProductUILabel"]
     });
 
-    var countUI = new UIMaster.ui.textfield
+    var expiredDateUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "countUI"]
+        ui: elementList[prefix + "expiredDateUILabel"]
     });
 
-    var availableCountUILabel = new UIMaster.ui.label
+    var expiredDateUI = new UIMaster.ui.calendar
     ({
-        ui: elementList[prefix + "availableCountUILabel"]
+        ui: elementList[prefix + "expiredDateUI"]
     });
 
-    var availableCountUI = new UIMaster.ui.textfield
+    var qrCodeUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "availableCountUI"]
+        ui: elementList[prefix + "qrCodeUILabel"]
     });
 
-    var iconUILabel = new UIMaster.ui.label
+    var qrCodeUI = new UIMaster.ui.textfield
     ({
-        ui: elementList[prefix + "iconUILabel"]
-    });
-
-    var iconUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "iconUI"]
-    });
-
-    var typeUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "typeUILabel"]
-    });
-
-    var typeUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "typeUI"]
+        ui: elementList[prefix + "qrCodeUI"]
     });
 
     var statusUILabel = new UIMaster.ui.label
@@ -88,34 +63,19 @@ function org_shaolin_vogerp_coupon_form_Coupon(json)
         ui: elementList[prefix + "statusUI"]
     });
 
-    var okbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "okbtn"]
-    });
-
-    var cancelbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "cancelbtn"]
-    });
-
-    var actionPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "actionPanel"]
-        ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
-    });
+    var discountProductUI = new org_shaolin_vogerp_coupon_form_DiscountProductWithCoupon({"prefix":prefix + "discountProductUI."});
 
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "countUILabel",prefix + "countUI",prefix + "availableCountUILabel",prefix + "availableCountUI",prefix + "iconUILabel",prefix + "iconUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "statusUILabel",prefix + "statusUI"]
+        ,subComponents: [prefix + "idUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "discountProductUILabel",prefix + "discountProductUI",prefix + "expiredDateUILabel",prefix + "expiredDateUI",prefix + "qrCodeUILabel",prefix + "qrCodeUI",prefix + "statusUILabel",prefix + "statusUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,nameUILabel,nameUI,descriptionUILabel,descriptionUI,serialNumberUILabel,serialNumberUI,countUILabel,countUI,availableCountUILabel,availableCountUI,iconUILabel,iconUI,typeUILabel,typeUI,statusUILabel,statusUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,nameUILabel,nameUI,serialNumberUILabel,serialNumberUI,discountProductUILabel,expiredDateUILabel,expiredDateUI,qrCodeUILabel,qrCodeUI,statusUILabel,statusUI,discountProductUI,fieldPanel]
     });
 
     Form.idUI=idUI;
@@ -124,37 +84,25 @@ function org_shaolin_vogerp_coupon_form_Coupon(json)
 
     Form.nameUI=nameUI;
 
-    Form.descriptionUILabel=descriptionUILabel;
-
-    Form.descriptionUI=descriptionUI;
-
     Form.serialNumberUILabel=serialNumberUILabel;
 
     Form.serialNumberUI=serialNumberUI;
 
-    Form.countUILabel=countUILabel;
+    Form.discountProductUILabel=discountProductUILabel;
 
-    Form.countUI=countUI;
+    Form.expiredDateUILabel=expiredDateUILabel;
 
-    Form.availableCountUILabel=availableCountUILabel;
+    Form.expiredDateUI=expiredDateUI;
 
-    Form.availableCountUI=availableCountUI;
+    Form.qrCodeUILabel=qrCodeUILabel;
 
-    Form.iconUILabel=iconUILabel;
-
-    Form.iconUI=iconUI;
-
-    Form.typeUILabel=typeUILabel;
-
-    Form.typeUI=typeUI;
+    Form.qrCodeUI=qrCodeUI;
 
     Form.statusUILabel=statusUILabel;
 
     Form.statusUI=statusUI;
 
-    Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
+    Form.discountProductUI=discountProductUI;
 
     Form.fieldPanel=fieldPanel;
 
@@ -164,49 +112,31 @@ function org_shaolin_vogerp_coupon_form_Coupon(json)
 
     Form.nameUI=nameUI;
 
-    Form.descriptionUILabel=descriptionUILabel;
-
-    Form.descriptionUI=descriptionUI;
-
     Form.serialNumberUILabel=serialNumberUILabel;
 
     Form.serialNumberUI=serialNumberUI;
 
-    Form.countUILabel=countUILabel;
+    Form.discountProductUILabel=discountProductUILabel;
 
-    Form.countUI=countUI;
+    Form.discountProductUI=discountProductUI;
 
-    Form.availableCountUILabel=availableCountUILabel;
+    Form.expiredDateUILabel=expiredDateUILabel;
 
-    Form.availableCountUI=availableCountUI;
+    Form.expiredDateUI=expiredDateUI;
 
-    Form.iconUILabel=iconUILabel;
+    Form.qrCodeUILabel=qrCodeUILabel;
 
-    Form.iconUI=iconUI;
-
-    Form.typeUILabel=typeUILabel;
-
-    Form.typeUI=typeUI;
+    Form.qrCodeUI=qrCodeUI;
 
     Form.statusUILabel=statusUILabel;
 
     Form.statusUI=statusUI;
-
-    Form.actionPanel=actionPanel;
-
-    Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_coupon_form_Coupon */
         /* Construct_LAST:org_shaolin_vogerp_coupon_form_Coupon */
     };
-
-    Form.Save = org_shaolin_vogerp_coupon_form_Coupon_Save;
-
-    Form.Cancel = org_shaolin_vogerp_coupon_form_Coupon_Cancel;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_coupon_form_Coupon_invokeDynamicFunction;
 
@@ -219,28 +149,6 @@ function org_shaolin_vogerp_coupon_form_Coupon(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_coupon_form_Coupon */
 /* Other_Func_LAST:org_shaolin_vogerp_coupon_form_Coupon */
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_coupon_form_Coupon_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_form_Coupon_Save */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20160227-110021",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_coupon_form_Coupon_Save */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_coupon_form_Coupon_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_form_Coupon_Cancel */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160227-110021",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_coupon_form_Coupon_Cancel */
-
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_coupon_form_Coupon_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_form_Coupon_invokeDynamicFunction */

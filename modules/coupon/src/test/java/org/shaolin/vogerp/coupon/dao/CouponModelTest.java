@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class CouponModelTest {
 
-    private CouponModel service = new CouponModel();
+    //private CouponModel service = new CouponModel();
 
     @Test
     public void testsearchCoupon() {

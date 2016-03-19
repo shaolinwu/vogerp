@@ -7,6 +7,132 @@
 	<cePackage>org.shaolin.vogerp.coupon.ce</cePackage>
 	<diagramPackage>org.shaolin.vogerp.coupon.diagram</diagramPackage>
 	
+	<!-- 优惠券类型(奖项) -->
+	<bediagram:beEntity needOrgId="true" needPersist="true" needUIEntity="true">
+		<common:entityName>CouponType</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+	        <bediagram:name>name</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 一共有多少张 -->
+		<bediagram:member>
+	        <bediagram:name>totalNum</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:IntType" />
+	    </bediagram:member>
+	    <!-- 剩余多少张，每抽一次奖，减一 -->
+	    <bediagram:member>
+	        <bediagram:name>restNum</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:IntType" />
+	    </bediagram:member>
+	    <!-- 图标地址 -->
+		<bediagram:member>
+	        <bediagram:name>icon</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 优惠产品列表(多个以”,”分隔) -->
+		<!-- <bediagram:member>
+	        <bediagram:name>discountProductIds</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member> -->
+	    <!-- 优势信息 -->
+	    <bediagram:member>
+	    	<bediagram:name>superiorityMessage</bediagram:name>
+	    	<bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 限制信息 -->
+	    <bediagram:member>
+	    	<bediagram:name>limitMessage</bediagram:name>
+	    	<bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 重置间隔 -->
+	    <bediagram:member>
+			<bediagram:name>resetInterval</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<!-- 是否为即刻优惠券类型 -->
+		<bediagram:member>
+			<bediagram:name>isImmediate</bediagram:name>
+			<bediagram:type xsi:type="bediagram:BooleanType" />
+		</bediagram:member>
+	    <bediagram:member>
+	        <bediagram:name>startCreateDate</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:DateTimeType" />
+	    </bediagram:member>
+	    <bediagram:member>
+	        <bediagram:name>endCreateDate</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:DateTimeType" />
+	    </bediagram:member>
+	</bediagram:beEntity>
+	
+	<!-- 优惠产品 -->
+	<bediagram:beEntity needOrgId="true" needPersist="true" needUIEntity="true">
+	    <common:entityName>DiscountProduct</common:entityName>
+	    <bediagram:member pk="true">
+	        <bediagram:name>id</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:LongType" />
+	    </bediagram:member>
+	    <!-- 名称 -->
+	    <bediagram:member>
+	        <bediagram:name>name</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 图标地址 -->
+	    <bediagram:member>
+	        <bediagram:name>icon</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 优惠券类型id -->
+		<bediagram:member>
+			<bediagram:name>couponTypeId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- what kind of the party, the contact info from the party and etc. -->
+			<bediagram:name>couponType</bediagram:name>
+			<bediagram:type xsi:type="bediagram:BEObjRefType">
+		        <bediagram:targetEntity entityName="org.shaolin.vogerp.coupon.be.CouponType" />
+		    </bediagram:type>
+		</bediagram:member>
+	    <!-- 优惠力度 -->
+	    <bediagram:member>
+	    	<bediagram:name>discount</bediagram:name>
+	    	<bediagram:type xsi:type="bediagram:IntType" />
+	    </bediagram:member>
+	    <!-- 是否可以被分享 -->
+		<bediagram:member>
+			<bediagram:name>isShared</bediagram:name>
+			<bediagram:type xsi:type="bediagram:BooleanType" />
+		</bediagram:member>
+		<!-- 优势信息 -->
+	    <bediagram:member>
+	    	<bediagram:name>superiorityMessage</bediagram:name>
+	    	<bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 限制信息 -->
+	    <bediagram:member>
+	    	<bediagram:name>limitMessage</bediagram:name>
+	    	<bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 有效期时间，单位为天 -->
+	    <bediagram:member>
+	    	<bediagram:name>validity</bediagram:name>
+	    	<bediagram:type xsi:type="bediagram:IntType" />
+	    </bediagram:member>
+	    <bediagram:member>
+	        <bediagram:name>startCreateDate</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:DateTimeType" />
+	    </bediagram:member>
+	    <bediagram:member>
+	        <bediagram:name>endCreateDate</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:DateTimeType" />
+	    </bediagram:member>
+	</bediagram:beEntity>
+	
+	<!-- 3.优惠券(中奖后由后台生成) -->
 	<bediagram:beEntity needOrgId="true" needPersist="true" needUIEntity="true">
 		<common:entityName>Coupon</common:entityName>
 		<bediagram:member pk="true">
@@ -17,29 +143,40 @@
             <bediagram:name>name</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
-		<bediagram:member>
-			<bediagram:name>description</bediagram:name>
-			<bediagram:type xsi:type="bediagram:StringType" />
-		</bediagram:member>
 		<!-- 序列号代表前缀 , 每张生成的券再加上计数后缀 1，2，3，4，5，。。。-->
 		<bediagram:member>
 			<bediagram:name>serialNumber</bediagram:name>
 			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
-        <!-- 一共有多少张 -->
+		<!-- 优惠产品id -->
 		<bediagram:member>
-            <bediagram:name>count</bediagram:name>
-            <bediagram:type xsi:type="bediagram:IntType" />
-        </bediagram:member>
-        <!-- 剩余多少张，每抽一次奖，减一 -->
-        <bediagram:member>
-            <bediagram:name>availableCount</bediagram:name>
-            <bediagram:type xsi:type="bediagram:IntType" />
-        </bediagram:member>
+			<bediagram:name>discountProductId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
 		<bediagram:member>
-            <bediagram:name>icon</bediagram:name>
-            <bediagram:type xsi:type="bediagram:StringType" />
+			<!-- what kind of the party, the contact info from the party and etc. -->
+			<bediagram:name>discountProduct</bediagram:name>
+			<bediagram:type xsi:type="bediagram:BEObjRefType">
+		        <bediagram:targetEntity entityName="org.shaolin.vogerp.coupon.be.DiscountProduct" />
+		    </bediagram:type>
+		</bediagram:member>
+		<!-- 券失效时间 -->
+		<bediagram:member>
+            <bediagram:name>expiredDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
         </bediagram:member>
+		<!-- 二维码 -->
+		<bediagram:member>
+	        <bediagram:name>qrCode</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 状态 1-创建 2-已发出 3-已兑换 -->
+	    <bediagram:member>
+	        <bediagram:name>status</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:CEObjRefType">
+	            <bediagram:targetEntity entityName="StatusType" />
+	        </bediagram:type>
+	    </bediagram:member>
         <bediagram:member>
             <bediagram:name>startCreateDate</bediagram:name>
             <bediagram:type xsi:type="bediagram:DateTimeType" />
@@ -48,79 +185,55 @@
             <bediagram:name>endCreateDate</bediagram:name>
             <bediagram:type xsi:type="bediagram:DateTimeType" />
         </bediagram:member>
-        <!-- 
-		<bediagram:member>
-            <bediagram:name>expiredDate</bediagram:name>
-            <bediagram:type xsi:type="bediagram:DateTimeType" />
-        </bediagram:member>
-         -->
-		<bediagram:member>
-            <bediagram:name>type</bediagram:name>
-            <bediagram:type xsi:type="bediagram:StringType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>status</bediagram:name>
-            <bediagram:type xsi:type="bediagram:CEObjRefType">
-                <bediagram:targetEntity entityName="StatusType" />
-            </bediagram:type>
-        </bediagram:member>
 	</bediagram:beEntity>
 	
-	<!-- 券兑换 -->
+	<!-- 优惠券抽奖兑换操作记录 -->
 	<bediagram:beEntity needOrgId="true" needPersist="true" needUIEntity="true">
-        <common:entityName>CouponConfirmation</common:entityName>
+        <common:entityName>CouponOperation</common:entityName>
         <bediagram:member pk="true">
             <bediagram:name>id</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
+        <!-- 订单号 -->
         <bediagram:member>
-            <bediagram:name>couponId</bediagram:name>
-            <bediagram:type xsi:type="bediagram:LongType" />
-        </bediagram:member>
+	        <bediagram:name>orderNum</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 优惠券码 -->
+	    <bediagram:member>
+	        <bediagram:name>serialNumber</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 操作类型 1-抽奖  2-兑换 -->
+	    <bediagram:member>
+	        <bediagram:name>type</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+        <!-- 操作时间 -->
         <bediagram:member>
-            <bediagram:name>serialNumber</bediagram:name>
-            <bediagram:type xsi:type="bediagram:StringType" />
+        	<bediagram:name>operateDate</bediagram:name>
+        	<bediagram:type xsi:type="bediagram:DateTimeType" />
         </bediagram:member>
     </bediagram:beEntity>
     
-    <!-- 券概率 -->
-    <bediagram:beEntity needPersist="true">
-        <common:entityName>CouponProbability</common:entityName>
-        <bediagram:member pk="true">
-            <bediagram:name>id</bediagram:name>
-            <bediagram:type xsi:type="bediagram:LongType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>type</bediagram:name>
-            <bediagram:type xsi:type="bediagram:StringType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>probability</bediagram:name>
-            <bediagram:type xsi:type="bediagram:IntType" />
-        </bediagram:member>
-    </bediagram:beEntity>
-	
+    <!-- 状态 1-创建 2-已发出 3-已兑换 -->
 	<bediagram:ceEntity>
 		<common:entityName>StatusType</common:entityName>
 		<bediagram:constantValue>
 			<bediagram:value>Created</bediagram:value>
-			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:intValue>1</bediagram:intValue>
 			<bediagram:description>Created</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
-            <bediagram:value>Cancelled</bediagram:value>
-            <bediagram:intValue>1</bediagram:intValue>
-            <bediagram:description>Cancelled</bediagram:description>
+            <bediagram:value>SendOut</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>SendOut</bediagram:description>
         </bediagram:constantValue>
 		<bediagram:constantValue>
-			<bediagram:value>Delivered</bediagram:value>
-			<bediagram:intValue>2</bediagram:intValue>
-			<bediagram:description>Delivered</bediagram:description>
+			<bediagram:value>Exchanged</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>Exchanged</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>
-	
-	<bediagram:ceEntity>
-        <common:entityName>CouponType</common:entityName>
-    </bediagram:ceEntity>
 	
 </bediagram:BEDiagram>

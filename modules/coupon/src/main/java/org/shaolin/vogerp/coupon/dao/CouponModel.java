@@ -25,9 +25,9 @@ public class CouponModel extends BEEntityDaoObject {
     private CouponModel() {
     }
 
-    public List<org.shaolin.vogerp.coupon.be.ICoupon> searchCoupon(org.shaolin.vogerp.coupon.be.CouponImpl scObject,
+    public List<org.shaolin.vogerp.coupon.be.ICouponType> searchCouponType(org.shaolin.vogerp.coupon.be.CouponTypeImpl scObject,
            List<Order> orders, int offset, int count) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponTypeImpl.class, "inObject");
             if (orders == null) {
             } else {
                 this._addOrders(inObjectCriteria, orders);
@@ -36,6 +36,75 @@ public class CouponModel extends BEEntityDaoObject {
             if (scObject.getOrgId() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
             }
+            if (scObject.getIcon() != null && scObject.getIcon().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.icon", scObject.getIcon()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long searchCouponTypeCount(org.shaolin.vogerp.coupon.be.CouponTypeImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponTypeImpl.class, "inObject");
+
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
+            if (scObject.getIcon() != null && scObject.getIcon().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.icon", scObject.getIcon()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
+    }
+
+    public List<org.shaolin.vogerp.coupon.be.IDiscountProduct> searchDiscountProduct(org.shaolin.vogerp.coupon.be.DiscountProductImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.DiscountProductImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
+            if (scObject.getCouponTypeId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.couponTypeId", scObject.getCouponTypeId()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long searchDiscountProductCount(org.shaolin.vogerp.coupon.be.DiscountProductImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.DiscountProductImpl.class, "inObject");
+
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
+            if (scObject.getCouponTypeId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.couponTypeId", scObject.getCouponTypeId()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
+    }
+
+    public List<org.shaolin.vogerp.coupon.be.ICoupon> searchCoupon(org.shaolin.vogerp.coupon.be.CouponImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -46,25 +115,52 @@ public class CouponModel extends BEEntityDaoObject {
     public long searchCouponCount(org.shaolin.vogerp.coupon.be.CouponImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponImpl.class, "inObject");
 
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
+    }
+
+    public List<org.shaolin.vogerp.coupon.be.ICouponOperation> searchCouponOperation(org.shaolin.vogerp.coupon.be.CouponOperationImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponOperationImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long searchCouponOperationCount(org.shaolin.vogerp.coupon.be.CouponOperationImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponOperationImpl.class, "inObject");
+
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
+    }
+
+    public List<org.shaolin.vogerp.coupon.be.ICoupon> searchEffectedCoupon(org.shaolin.vogerp.coupon.be.CouponImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
             if (scObject.getOrgId() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
             }
-
-        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
-
-        return this._count(inObjectCriteria);
-    }
-
-    public List<org.shaolin.vogerp.coupon.be.ICouponConfirmation> searchCouponConfirmation(org.shaolin.vogerp.coupon.be.CouponConfirmationImpl scObject,
-           List<Order> orders, int offset, int count) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponConfirmationImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
+            if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
             }
-
-            if (scObject.getCouponId() > 0) {
-                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.couponId", scObject.getCouponId()));
+            if (scObject.getExpiredDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.expiredDate", scObject.getExpiredDate()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
@@ -73,11 +169,17 @@ public class CouponModel extends BEEntityDaoObject {
         return result;
     }
 
-    public long searchCouponConfirmationCount(org.shaolin.vogerp.coupon.be.CouponConfirmationImpl scObject) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponConfirmationImpl.class, "inObject");
+    public long searchEffectedCouponCount(org.shaolin.vogerp.coupon.be.CouponImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponImpl.class, "inObject");
 
-            if (scObject.getCouponId() > 0) {
-                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.couponId", scObject.getCouponId()));
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
+            if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getExpiredDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.expiredDate", scObject.getExpiredDate()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
@@ -85,14 +187,20 @@ public class CouponModel extends BEEntityDaoObject {
         return this._count(inObjectCriteria);
     }
 
-    public List<org.shaolin.vogerp.coupon.be.ICouponProbability> searchCouponProbability(org.shaolin.vogerp.coupon.be.CouponProbabilityImpl scObject,
+    public List<org.shaolin.vogerp.coupon.be.ICouponOperation> searchOperationByOrderNum(org.shaolin.vogerp.coupon.be.CouponOperationImpl scObject,
            List<Order> orders, int offset, int count) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponProbabilityImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponOperationImpl.class, "inObject");
             if (orders == null) {
             } else {
                 this._addOrders(inObjectCriteria, orders);
             }
 
+            if (scObject.getOrderNum() != null && scObject.getOrderNum().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orderNum", scObject.getOrderNum()));
+            }
+            if (scObject.getType() != null && scObject.getType().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.type", scObject.getType()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -100,9 +208,15 @@ public class CouponModel extends BEEntityDaoObject {
         return result;
     }
 
-    public long searchCouponProbabilityCount(org.shaolin.vogerp.coupon.be.CouponProbabilityImpl scObject) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponProbabilityImpl.class, "inObject");
+    public long searchOperationByOrderNumCount(org.shaolin.vogerp.coupon.be.CouponOperationImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponOperationImpl.class, "inObject");
 
+            if (scObject.getOrderNum() != null && scObject.getOrderNum().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orderNum", scObject.getOrderNum()));
+            }
+            if (scObject.getType() != null && scObject.getType().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.type", scObject.getType()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 

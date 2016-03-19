@@ -1,0 +1,152 @@
+	.js
+/* null */
+/* auto generated constructor */
+function org_shaolin_vogerp_coupon_page_CouponManagement
+	(json)
+{
+    var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var functionsTab = new UIMaster.ui.tab
+    ({
+        ui: elementList[prefix + "functionsTab"]
+        ,items: []
+        ,subComponents: [prefix + "couponTypePanel",prefix + "discountProductPanel"]
+    });
+    var couponTypeTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "couponTypeTable"]
+    });
+
+    var couponTypePanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "couponTypePanel"]
+        ,items: []
+        ,subComponents: [prefix + "couponTypeTable"]
+    });
+    var discountProductTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "discountProductTable"]
+    });
+
+    var discountProductPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "discountProductPanel"]
+        ,items: []
+        ,subComponents: [prefix + "discountProductTable"]
+    });
+
+    var Form = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "Form"]
+        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
+        ,items: [functionsTab]
+    });
+
+    Form.functionsTab=functionsTab;
+
+    Form.couponTypePanel=couponTypePanel;
+
+    Form.couponTypeTable=couponTypeTable;
+
+    Form.discountProductPanel=discountProductPanel;
+
+    Form.discountProductTable=discountProductTable;
+
+    Form.user_constructor = function()
+    {
+        /* Construct_FIRST:org_shaolin_vogerp_coupon_page_CouponManagement
+	 */
+        /* Construct_LAST:org_shaolin_vogerp_coupon_page_CouponManagement
+	 */
+    };
+
+    Form.openCouponType = org_shaolin_vogerp_coupon_page_CouponManagement
+	_openCouponType;
+
+    Form.createDiscountProduct = org_shaolin_vogerp_coupon_page_CouponManagement
+	_createDiscountProduct;
+
+    Form.openDiscountProduct = org_shaolin_vogerp_coupon_page_CouponManagement
+	_openDiscountProduct;
+
+    Form.initPageJs = org_shaolin_vogerp_coupon_page_CouponManagement
+	_initPageJs;
+
+    Form.finalizePageJs = org_shaolin_vogerp_coupon_page_CouponManagement
+	_finalizePageJs;
+
+    Form.__AJAXSubmit = false;
+    
+    Form.__entityName="org.shaolin.vogerp.coupon.page.CouponManagement
+	";
+
+    Form.init();
+    return Form;
+};
+
+    /* EventHandler Functions */
+/* Other_Func_FIRST:org_shaolin_vogerp_coupon_page_CouponManagement
+	 */
+/* Other_Func_LAST:org_shaolin_vogerp_coupon_page_CouponManagement
+	 */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_page_CouponManagement
+	_openCouponType(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_page_CouponManagement
+	_openCouponType */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openCouponType-20160302-3542",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponManagement
+	_openCouponType */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_page_CouponManagement
+	_createDiscountProduct(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_page_CouponManagement
+	_createDiscountProduct */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createDiscountProduct-20160302-3542",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponManagement
+	_createDiscountProduct */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_page_CouponManagement
+	_openDiscountProduct(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_page_CouponManagement
+	_openDiscountProduct */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openDiscountProduct-20160302-3542",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponManagement
+	_openDiscountProduct */
+
+
+    function org_shaolin_vogerp_coupon_page_CouponManagement
+	_initPageJs(){/* Gen_First:org_shaolin_vogerp_coupon_page_CouponManagement
+	_initPageJs */
+        var constraint_result = true;
+        var UIEntity = this;
+
+    }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponManagement
+	_initPageJs */
+
+
+    function org_shaolin_vogerp_coupon_page_CouponManagement
+	_finalizePageJs(){/* Gen_First:org_shaolin_vogerp_coupon_page_CouponManagement
+	_finalizePageJs */
+
+    }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponManagement
+	_finalizePageJs */
+
+
+

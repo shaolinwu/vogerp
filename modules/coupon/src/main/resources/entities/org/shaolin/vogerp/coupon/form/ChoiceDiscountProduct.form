@@ -1,0 +1,141 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram"
+	xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page"
+	xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.coupon.form.ChoiceDiscountProduct</entityName>
+	<systemVersion>0</systemVersion>
+
+	<ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+		<ns2:layout xsi:type="ns2:TableLayoutType">
+			<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+			<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+			<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+		</ns2:layout>
+		<ns2:component xsi:type="ns2:UIImageType" UIID="logoImage">
+			<ns2:src xsi:type="ns2:ImagePropertyType">
+				<ns2:location>/coupon/front/LOGO.png</ns2:location>
+			</ns2:src>
+		</ns2:component>
+		<ns2:component xsi:type="ns2:UIPanelType" UIID="ProductPanel">
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UIPanelType" UIID="topTextPanel">
+				<ns2:layout xsi:type="ns2:TableLayoutType">
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+				</ns2:layout>
+				<ns2:component xsi:type="ns2:UIImageType" UIID="topImage">
+					<ns2:src xsi:type="ns2:ImagePropertyType">
+						<ns2:location>/coupon/front/msgBox.png</ns2:location>
+					</ns2:src>
+				</ns2:component>
+				<ns2:component xsi:type="ns2:UIImageType" UIID="topSignImage">
+					<ns2:src xsi:type="ns2:ImagePropertyType">
+						<ns2:location>/coupon/front/signCoupon.png</ns2:location>
+					</ns2:src>
+				</ns2:component>
+				<ns2:layoutConstraint>
+					<ns2:componentId>topImage</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="0" y="0" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+				<ns2:layoutConstraint>
+					<ns2:componentId>topSignImage</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="0" y="1" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+			</ns2:component>
+			<ns2:component xsi:type="ns2:UIPanelType" UIID="ChoiceDiscountPanel">
+				<ns2:layout xsi:type="ns2:TableLayoutType">
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+				</ns2:layout>
+				<ns2:component xsi:type="ns2:UITableType" UIID="choiceDiscountTable">
+                    <ns2:beElement>org.shaolin.vogerp.coupon.be.DiscountProduct</ns2:beElement>
+                    <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Normal</ns2:selectMode>
+                    <ns2:defaultRowSize>10</ns2:defaultRowSize>
+                    <ns2:showActionBar>false</ns2:showActionBar>
+                    <ns2:showFilter>false</ns2:showFilter>
+                    <ns2:query xsi:type="ns2:ExpressionPropertyType">
+	                        <ns2:expression xsi:type="ns2:ExpressionType">
+	                            <ns2:expressionString><![CDATA[
+	                            {
+	                            	return $discountProducts;
+	                            }
+	                            ]]></ns2:expressionString>
+                        </ns2:expression>
+                    </ns2:query>
+					<ns2:column xsi:type="ns2:UITableColumnType">
+	                    <ns2:title xsi:type="ns2:StringPropertyType">
+	                        <ns2:value>优惠产品图标</ns2:value>
+	                    </ns2:title>
+	                    <ns2:beFieldId>rowBE.icon</ns2:beFieldId>
+	                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>HTML</ns2:type></ns2:uiType>
+	                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+	                        <ns2:expression xsi:type="ns2:ExpressionType">
+	                            <ns2:expressionString><![CDATA[
+	                            	{
+	                            		return "<img src=\"" + $rowBE.getIcon() + "\" />";
+	                            	}
+	                            ]]></ns2:expressionString>
+	                        </ns2:expression>
+	                    </ns2:rowExpression>
+	                </ns2:column>
+				</ns2:component>
+				<ns2:layoutConstraint>
+					<ns2:componentId>choiceDiscountTable</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="0" y="0" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+			</ns2:component>
+			<ns2:component xsi:type="ns2:UIImageType" UIID="advertImage">
+				<ns2:src xsi:type="ns2:ImagePropertyType">
+					<ns2:location>/coupon/front/advert_bottom.png</ns2:location>
+				</ns2:src>
+			</ns2:component>
+			<ns2:layoutConstraint>
+				<ns2:componentId>topTextPanel</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="0" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+			<ns2:layoutConstraint>
+				<ns2:componentId>ChoiceDiscountPanel</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="1" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+			<ns2:layoutConstraint>
+				<ns2:componentId>advertImage</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="2" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+		</ns2:component>
+		<ns2:layoutConstraint>
+			<ns2:componentId>logoImage</ns2:componentId>
+			<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+				x="0" y="0" align="FULL"></ns2:constraint>
+		</ns2:layoutConstraint>
+		<ns2:layoutConstraint>
+			<ns2:componentId>ProductPanel</ns2:componentId>
+			<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+				x="0" y="1" align="FULL"></ns2:constraint>
+		</ns2:layoutConstraint>
+	</ns2:body>
+	<ns2:mapping>
+		<systemVersion>0</systemVersion>
+	    <ns2:DataEntity scope="InOut" name="couponType" category="BusinessEntity">
+	    	<type entityName="org.shaolin.vogerp.coupon.be.CouponType"></type>
+	    </ns2:DataEntity>
+	    <ns2:DataEntity scope="InOut" name="discountProducts" category="JavaClass">
+	    	<type entityName="java.util.List"></type>
+	    </ns2:DataEntity>
+	    <ns2:DataEntity scope="InOut" name="orderNum" category="JavaClass">
+	    	<type entityName="java.lang.String"></type>
+	    </ns2:DataEntity>
+	</ns2:mapping>
+</ns2:UIEntity>

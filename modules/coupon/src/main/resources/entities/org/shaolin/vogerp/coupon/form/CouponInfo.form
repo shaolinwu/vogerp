@@ -1,0 +1,322 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram"
+	xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page"
+	xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.coupon.form.CouponInfo</entityName>
+	<systemVersion>0</systemVersion>
+
+	<ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+		<ns2:layout xsi:type="ns2:TableLayoutType">
+			<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+			<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+			<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+		</ns2:layout>
+		<ns2:component xsi:type="ns2:UIImageType" UIID="logoImage">
+			<ns2:src xsi:type="ns2:ImagePropertyType">
+				<ns2:location>/coupon/front/LOGO.png</ns2:location>
+			</ns2:src>
+		</ns2:component>
+		<ns2:component xsi:type="ns2:UIPanelType" UIID="couponPanel">
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UIPanelType" UIID="serialNumPanel">
+				<ns2:layout xsi:type="ns2:TableLayoutType">
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+				</ns2:layout>
+				<ns2:component xsi:type="ns2:UILabelType" UIID="serialLabeText">
+					<ns2:text xsi:type="ns2:StringPropertyType">
+						<ns2:value><![CDATA[优惠码：]]></ns2:value>
+					</ns2:text>
+				</ns2:component>
+				<ns2:component xsi:type="ns2:UILabelType" UIID="serialNumText">
+				</ns2:component>
+				<ns2:component xsi:type="ns2:UILabelType" UIID="orderLabelText">
+					<ns2:text xsi:type="ns2:StringPropertyType">
+						<ns2:value><![CDATA[单号：]]></ns2:value>
+					</ns2:text>
+				</ns2:component>
+				<ns2:component xsi:type="ns2:UILabelType" UIID="orderNumText">
+				</ns2:component>
+				<ns2:layoutConstraint>
+					<ns2:componentId>serialLabeText</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="0" y="0" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+				<ns2:layoutConstraint>
+					<ns2:componentId>serialNumText</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="1" y="0" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+				<ns2:layoutConstraint>
+					<ns2:componentId>orderLabelText</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="2" y="0" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+				<ns2:layoutConstraint>
+					<ns2:componentId>orderNumText</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="3" y="0" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+			</ns2:component>
+			<ns2:component xsi:type="ns2:UIPanelType" UIID="couponImagePanel">
+				<ns2:layout xsi:type="ns2:TableLayoutType">
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+				</ns2:layout>
+				<ns2:component xsi:type="ns2:UIImageType" UIID="couponImage">
+					<ns2:src xsi:type="ns2:ImagePropertyType">
+						<ns2:location>/coupon/front/50off.png</ns2:location>
+					</ns2:src>
+				</ns2:component>
+				<ns2:component xsi:type="ns2:UIPanelType" UIID="couponImageRightPanel">
+					<ns2:layout xsi:type="ns2:TableLayoutType">
+						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+						<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+					</ns2:layout>
+					<ns2:component xsi:type="ns2:UILabelType" UIID="couponNameText">
+					</ns2:component>
+					<ns2:component xsi:type="ns2:UILabelType" UIID="couponMsgText">
+					</ns2:component>
+					<ns2:layoutConstraint>
+						<ns2:componentId>couponNameText</ns2:componentId>
+						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+							x="0" y="0" align="FULL"></ns2:constraint>
+					</ns2:layoutConstraint>
+					<ns2:layoutConstraint>
+						<ns2:componentId>couponMsgText</ns2:componentId>
+						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+							x="0" y="1" align="FULL"></ns2:constraint>
+					</ns2:layoutConstraint>
+				</ns2:component>
+				<ns2:layoutConstraint>
+					<ns2:componentId>couponImage</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="0" y="0" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+				<ns2:layoutConstraint>
+					<ns2:componentId>couponImageRightPanel</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="1" y="0" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+			</ns2:component>
+			<ns2:component xsi:type="ns2:UIImageType" UIID="advertImage">
+				<ns2:src xsi:type="ns2:ImagePropertyType">
+					<ns2:location>/coupon/front/advert_bottom.png</ns2:location>
+				</ns2:src>
+			</ns2:component>
+			<ns2:component xsi:type="ns2:UIPanelType" UIID="bottomPanel">
+				<ns2:layout xsi:type="ns2:TableLayoutType">
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+				</ns2:layout>
+				<ns2:component xsi:type="ns2:UIPanelType" UIID="bottomLeftPanel">
+					<ns2:layout xsi:type="ns2:TableLayoutType">
+						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+						<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+					</ns2:layout>
+					<ns2:component xsi:type="ns2:UILabelType" UIID="bottom1Text">
+					</ns2:component>
+					<ns2:component xsi:type="ns2:UILabelType" UIID="bottom2Text">
+					</ns2:component>
+					<ns2:component xsi:type="ns2:UILabelType" UIID="bottom3Text">
+						<ns2:text xsi:type="ns2:StringPropertyType">
+							<ns2:value>每次消费时限用一张电子优惠券</ns2:value>
+						</ns2:text>
+					</ns2:component>
+					<ns2:component xsi:type="ns2:UILabelType" UIID="bottom5Text">
+						<ns2:text xsi:type="ns2:StringPropertyType">
+							<ns2:value>活动最终解释权归本店所有</ns2:value>
+						</ns2:text>
+					</ns2:component>
+					<ns2:component xsi:type="ns2:UIPanelType" UIID="bottom3Panel">
+						<ns2:layout xsi:type="ns2:TableLayoutType">
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+							<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+						</ns2:layout>
+						<ns2:component xsi:type="ns2:UILabelType" UIID="bottom4Text">
+							<ns2:text xsi:type="ns2:StringPropertyType">
+								<ns2:value><![CDATA[点击指纹&nbsp;保留小券]]></ns2:value>
+							</ns2:text>
+						</ns2:component>
+						<ns2:component xsi:type="ns2:UIImageType" UIID="fingerImage">
+							<ns2:src xsi:type="ns2:ImagePropertyType">
+								<ns2:location>/coupon/front/finger.png</ns2:location>
+							</ns2:src>
+						</ns2:component>
+						<ns2:layoutConstraint>
+							<ns2:componentId>bottom4Text</ns2:componentId>
+							<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+								x="0" y="0" align="FULL"></ns2:constraint>
+						</ns2:layoutConstraint>
+						<ns2:layoutConstraint>
+							<ns2:componentId>fingerImage</ns2:componentId>
+							<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+								x="1" y="0" align="FULL"></ns2:constraint>
+						</ns2:layoutConstraint>
+					</ns2:component>
+					<ns2:layoutConstraint>
+						<ns2:componentId>bottom1Text</ns2:componentId>
+						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+							x="0" y="0" align="FULL"></ns2:constraint>
+					</ns2:layoutConstraint>
+					<ns2:layoutConstraint>
+						<ns2:componentId>bottom2Text</ns2:componentId>
+						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+							x="0" y="1" align="FULL"></ns2:constraint>
+					</ns2:layoutConstraint>
+					<ns2:layoutConstraint>
+						<ns2:componentId>bottom3Text</ns2:componentId>
+						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+							x="0" y="2" align="FULL"></ns2:constraint>
+					</ns2:layoutConstraint>
+					<ns2:layoutConstraint>
+						<ns2:componentId>bottom5Text</ns2:componentId>
+						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+							x="0" y="2" align="FULL"></ns2:constraint>
+					</ns2:layoutConstraint>
+					<ns2:layoutConstraint>
+						<ns2:componentId>bottom3Panel</ns2:componentId>
+						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+							x="0" y="3" align="FULL"></ns2:constraint>
+					</ns2:layoutConstraint>
+				</ns2:component>
+				<ns2:component xsi:type="ns2:UIImageType" UIID="fingerPrintImage">
+					<ns2:src xsi:type="ns2:ImagePropertyType">
+						<ns2:location>/coupon/front/fingerPrint.png</ns2:location>
+					</ns2:src>
+				</ns2:component>
+				<ns2:layoutConstraint>
+					<ns2:componentId>bottomLeftPanel</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="0" y="0" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+				<ns2:layoutConstraint>
+					<ns2:componentId>fingerPrintImage</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="1" y="0" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+			</ns2:component>
+			<ns2:layoutConstraint>
+				<ns2:componentId>serialNumPanel</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="0" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+			<ns2:layoutConstraint>
+				<ns2:componentId>couponImagePanel</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="1" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+			<ns2:layoutConstraint>
+				<ns2:componentId>advertImage</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="2" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+			<ns2:layoutConstraint>
+				<ns2:componentId>bottomPanel</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="3" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+		</ns2:component>
+		<ns2:layoutConstraint>
+			<ns2:componentId>logoImage</ns2:componentId>
+			<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+				x="0" y="0" align="FULL"></ns2:constraint>
+		</ns2:layoutConstraint>
+		<ns2:layoutConstraint>
+			<ns2:componentId>couponPanel</ns2:componentId>
+			<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+				x="0" y="1" align="FULL"></ns2:constraint>
+		</ns2:layoutConstraint>
+	</ns2:body>
+	<ns2:mapping>
+		<systemVersion>0</systemVersion>
+	    <ns2:DataEntity scope="InOut" name="coupon" category="BusinessEntity">
+	    	<type entityName="org.shaolin.vogerp.coupon.be.Coupon"></type>
+	    </ns2:DataEntity>
+	    <ns2:DataEntity scope="InOut" name="couponType" category="BusinessEntity">
+	    	<type entityName="org.shaolin.vogerp.coupon.be.CouponType"></type>
+	    </ns2:DataEntity>
+	    <ns2:DataEntity scope="InOut" name="discountProduct" category="BusinessEntity">
+	    	<type entityName="org.shaolin.vogerp.coupon.be.DiscountProduct"></type>
+	    </ns2:DataEntity>
+	    <ns2:DataEntity scope="InOut" name="orderNum" category="JavaClass">
+	    	<type entityName="java.lang.String"></type>
+	    </ns2:DataEntity>
+	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+	      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+	      <ns2:UIComponent componentPath="serialNumText" paramName="UIWidgetType"></ns2:UIComponent>
+	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="coupon.serialNumber" paramName="StringData"></ns2:DataComponent>
+	    </ns2:ComponentMapping>
+	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+	      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+	      <ns2:UIComponent componentPath="orderNumText" paramName="UIWidgetType"></ns2:UIComponent>
+	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="orderNum" paramName="StringData"></ns2:DataComponent>
+	    </ns2:ComponentMapping>
+	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+	      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+	      <ns2:UIComponent componentPath="couponImage" paramName="UIWidgetType"></ns2:UIComponent>
+	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="discountProduct.icon" paramName="StringData"></ns2:DataComponent>
+	      <ns2:DataComponent xsi:type="ns2:ExpressionParamType"  paramName="StringData">
+	        <ns2:expression>
+	          <expressionString>$discountProduct.getIcon().substring($discountProduct.getIcon().indexOf("/", 1))</expressionString>
+	        </ns2:expression>
+	      </ns2:DataComponent>
+	    </ns2:ComponentMapping>
+	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
+	      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+	      <ns2:UIComponent componentPath="couponNameText" paramName="UIWidgetType"></ns2:UIComponent>
+	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="discountProduct.name" paramName="StringData"></ns2:DataComponent>
+	    </ns2:ComponentMapping>
+	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
+	      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+	      <ns2:UIComponent componentPath="couponMsgText" paramName="UIWidgetType"></ns2:UIComponent>
+	      <ns2:DataComponent xsi:type="ns2:ExpressionParamType"  paramName="StringData">
+	        <ns2:expression>
+	          <expressionString>"(" + $discountProduct.getSuperiorityMessage() + ")"</expressionString>
+	        </ns2:expression>
+	      </ns2:DataComponent>
+	    </ns2:ComponentMapping>
+	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
+	      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+	      <ns2:UIComponent componentPath="bottom1Text" paramName="UIWidgetType"></ns2:UIComponent>
+	      <ns2:DataComponent xsi:type="ns2:ExpressionParamType"  paramName="StringData">
+	        <ns2:expression>
+	        	<expressionString>"分享后 即刻生效"</expressionString>
+	          <!-- <expressionString><![CDATA[
+	          import org.shaolin.vogerp.coupon.util.CouponUtil;
+			  {
+			  	 if ($couponType.getIsImmediate()) {
+			  	 	return "分享后 即刻生效";
+			  	 } else {
+			  	 	return "有效期: " + CouponUtil.formatDate($coupon.getExpiredDate(), "yyyy-MM-dd");
+			  	 }
+			  }
+			  ]]></expressionString> -->
+	        </ns2:expression>
+	      </ns2:DataComponent>
+	    </ns2:ComponentMapping>
+	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
+	      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+	      <ns2:UIComponent componentPath="bottom2Text" paramName="UIWidgetType"></ns2:UIComponent>
+	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="discountProduct.limitMessage" paramName="StringData"></ns2:DataComponent>
+	    </ns2:ComponentMapping>
+	</ns2:mapping>
+</ns2:UIEntity>
