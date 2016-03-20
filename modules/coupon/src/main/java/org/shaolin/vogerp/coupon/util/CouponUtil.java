@@ -11,9 +11,9 @@ import org.shaolin.vogerp.coupon.ce.StatusType;
 import org.shaolin.vogerp.coupon.dao.CouponModel;
 
 public class CouponUtil {
-	public static final String OPERATION_TYPE_LOTTERY = "1";//抽奖
+	public static final String OPERATION_TYPE_LOTTERY = "1";
 	
-	public static final String OPERATION_TYPE_EXCHANGE = "2";//兑换
+	public static final String OPERATION_TYPE_EXCHANGE = "2";
 	
 	public static final char[] CHAR_ARR = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 
 		'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
