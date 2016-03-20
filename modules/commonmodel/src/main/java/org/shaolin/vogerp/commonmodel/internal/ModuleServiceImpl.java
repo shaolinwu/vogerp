@@ -299,7 +299,11 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
             		TargetEntityType tarEntityName = new TargetEntityType();
             		tarEntityName.setEntityName(accessURL.substring(_pageIndex + "_page=".length(), _framenameIndex - 1));
             		webNode.setSourceEntity(tarEntityName);
-            		webNodes.add(webNode);
+            		
+            		String path = accessURL.substring(chunkNameIndex + "_chunkname=".length(), _nodenameIndex - 1);
+            		if (UIFlowCacheManager.getInstance().findWebNode(path, webNode.getName()) == null) {
+            			webNodes.add(webNode);
+            		}
             	}
             }
             // find children
@@ -315,27 +319,34 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
                     	int _pageIndex = accessURL.indexOf("_page=");
                     	int _framenameIndex = accessURL.indexOf("_framename=");
                     	if (chunkNameIndex != -1) {
+                    		String path = accessURL.substring(chunkNameIndex + "_chunkname=".length(), _nodenameIndex - 1);
                     		PageNodeType webNode = new PageNodeType();
                     		webNode.setName(accessURL.substring(_nodenameIndex + "_nodename=".length(), _pageIndex -1));
                     		TargetEntityType tarEntityName = new TargetEntityType();
                     		tarEntityName.setEntityName(accessURL.substring(_pageIndex + "_page=".length(), _framenameIndex - 1));
                     		webNode.setSourceEntity(tarEntityName);
-                    		webNodes.add(webNode);
+                    		
+                    		if (UIFlowCacheManager.getInstance().findWebNode(path, webNode.getName()) == null) {
+                    			webNodes.add(webNode);
+                    		}
                     	}
                     }
             	}
             }
         }
         
+        // all dynamic page nodes are added into ModularityModel.pageflow.
         String webFlowEntity = "org.shaolin.vogerp.commonmodel.diagram.ModularityModel";
-		WebChunk chunk = new WebChunk();
-		chunk.setEntityName(webFlowEntity);
+        WebChunk chunk = AppContext.get().getEntityManager().getEntity(webFlowEntity, WebChunk.class);
+        if (chunk == null) {
+        	chunk = new WebChunk();
+        	chunk.setEntityName(webFlowEntity);
+        }
         chunk.getWebNodes().addAll(webNodes);
-        
         AppContext.get().getEntityManager().appendEntity(chunk);
         
         UIFlowCacheManager.addFlowCacheIfAbsent(AppContext.get().getAppName());
-		UIFlowCacheManager.getInstance().removeAppChunk(webFlowEntity);
+        UIFlowCacheManager.getInstance().removeAppChunk(webFlowEntity);
 		UIFlowCacheManager.getInstance().addChunk(chunk, AppContext.get().getAppName());
 	}
 	
