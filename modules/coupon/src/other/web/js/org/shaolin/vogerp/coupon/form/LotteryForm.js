@@ -178,7 +178,7 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 			
 			this.setJackpotNum = function(jackpotRes) {
 				//var jackpotRes = "/uimaster/images/coupon/front/50off.png:5,/uimaster/images/coupon/front/sign.png:300,/uimaster/images/coupon/front/newProduct.png:12,/uimaster/images/coupon/front/cashDeduction.png:95";
-				alert(jackpotRes);
+				//alert(jackpotRes);
 				var couponJackpots = jackpotRes.split(",");
 				if (null != couponJackpots) {
 					for (var a = 0; a < couponJackpots.length; a++) {

@@ -436,7 +436,7 @@
 											needRollDivIds = needRollDivIds + "," +"#lotteryForm_" + m + "-" + n;
 										}
 									}
-									var rollTime = 2000;
+									var rollTime = 3300;
 									var t1 = ((row - 2) * cellTop);
 									var count = rollTopArr[m] / cellTop + 1;
 									var cellTime = parseInt(rollTime / (count + row - 2));
@@ -471,7 +471,7 @@
 			
 			this.setJackpotNum = function(jackpotRes) {
 				//var jackpotRes = "/uimaster/images/coupon/front/50off.png:5,/uimaster/images/coupon/front/sign.png:300,/uimaster/images/coupon/front/newProduct.png:12,/uimaster/images/coupon/front/cashDeduction.png:95";
-				alert(jackpotRes);
+				//alert(jackpotRes);
 				var couponJackpots = jackpotRes.split(",");
 				if (null != couponJackpots) {
 					for (var a = 0; a < couponJackpots.length; a++) {
@@ -535,6 +535,5 @@
 		]]></ns2:constructorCode>
 	</ns2:body>
 	<ns2:mapping>
-
 	</ns2:mapping>
 </ns2:UIEntity>
