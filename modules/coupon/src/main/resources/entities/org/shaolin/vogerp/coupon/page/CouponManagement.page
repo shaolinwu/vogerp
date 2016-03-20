@@ -309,8 +309,18 @@
 								</ns2:title>
 								<ns2:beFieldId>rowBE.resetInterval</ns2:beFieldId>
 								<ns2:uiType xsi:type="ns2:UITableColHTMLType">
-									<ns2:type>Text</ns2:type>
+									<ns2:type>ComBox</ns2:type>
 								</ns2:uiType>
+								<ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+		                            <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.bmdp.runtime.AppContext;
+		                                import org.shaolin.vogerp.coupon.ce.ResetIntervalType;
+		                                {
+		                                    $rowBE.setResetInterval((ResetIntervalType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.coupon.ce.ResetIntervalType").getByIntValue(Integer.valueOf($value).intValue()));
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:updateCondition>
 							</ns2:column>
 							<ns2:column xsi:type="ns2:UITableColumnType">
 								<ns2:title xsi:type="ns2:StringPropertyType">
@@ -422,8 +432,8 @@
 									<ns2:value>优惠力度</ns2:value>
 								</ns2:title>
 								<ns2:beFieldId>rowBE.discount</ns2:beFieldId>
-								<ns2:uiType xsi:type="ns2:UITableColHTMLType">
-									<ns2:type>Label</ns2:type>
+								<ns2:uiType xsi:type="ns2:StringPropertyType">
+									<ns2:type>Text</ns2:type>
 								</ns2:uiType>
 							</ns2:column>
 							<ns2:column xsi:type="ns2:UITableColumnType">

@@ -73,7 +73,7 @@
                     </ns2:query>
 					<ns2:column xsi:type="ns2:UITableColumnType">
 	                    <ns2:title xsi:type="ns2:StringPropertyType">
-	                        <ns2:value>优惠产品图标</ns2:value>
+	                        <ns2:value>\u4F18\u60E0\u4EA7\u54C1\u56FE\u6807</ns2:value>
 	                    </ns2:title>
 	                    <ns2:beFieldId>rowBE.icon</ns2:beFieldId>
 	                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>HTML</ns2:type></ns2:uiType>
@@ -82,6 +82,36 @@
 	                            <ns2:expressionString><![CDATA[
 	                            	{
 	                            		return "<img src=\"" + $rowBE.getIcon() + "\" />";
+	                            	}
+	                            ]]></ns2:expressionString>
+	                        </ns2:expression>
+	                    </ns2:rowExpression>
+	                </ns2:column>
+	                <ns2:column xsi:type="ns2:UITableColumnType">
+	                    <ns2:title xsi:type="ns2:StringPropertyType">
+	                        <ns2:value>\u4EA7\u54C1\u540D\u79F0</ns2:value>
+	                    </ns2:title>
+	                    <ns2:beFieldId>rowBE.name</ns2:beFieldId>
+	                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>HTMLItem</ns2:type></ns2:uiType>
+	                </ns2:column>
+	                <ns2:column xsi:type="ns2:UITableColumnType">
+	                    <ns2:title xsi:type="ns2:StringPropertyType">
+	                        <ns2:value>\u4F18\u60E0\u529B\u5EA6</ns2:value>
+	                    </ns2:title>
+	                    <ns2:beFieldId>rowBE.discount</ns2:beFieldId>
+	                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>HTMLItem</ns2:type></ns2:uiType>
+	                </ns2:column>
+	                <ns2:column xsi:type="ns2:UITableColumnType">
+	                    <ns2:title xsi:type="ns2:StringPropertyType">
+	                        <ns2:value>\u70B9\u51FB\u9886\u53D6</ns2:value>
+	                    </ns2:title>
+	                    <ns2:beFieldId>rowBE.name</ns2:beFieldId>
+	                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>HTML</ns2:type></ns2:uiType>
+	                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+	                        <ns2:expression xsi:type="ns2:ExpressionType">
+	                            <ns2:expressionString><![CDATA[
+	                            	{
+	                            		return "<span>\u70B9\u51FB\u9886\u53D6</span>";
 	                            	}
 	                            ]]></ns2:expressionString>
 	                        </ns2:expression>

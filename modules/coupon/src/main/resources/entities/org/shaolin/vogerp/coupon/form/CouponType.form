@@ -11,13 +11,18 @@
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.coupon.be.CouponTypeImpl;
         import org.shaolin.vogerp.coupon.dao.CouponModel;
+        import org.shaolin.bmdp.runtime.security.UserContext;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             HashMap out = (HashMap)form.ui2Data();
 
             CouponTypeImpl couponType = (CouponTypeImpl)out.get("beObject");
             if (couponType.getId() == 0) {
+            	couponType.setRestNum(couponType.getTotalNum());
+            	couponType.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+		        couponType.setCreateDate(new java.util.Date());
                 System.out.println("created object: " + couponType);
+                CouponModel.INSTANCE.create(couponType);
             } else {
                 System.out.println("updated object: " + couponType);
                 CouponModel.INSTANCE.update(couponType);
@@ -74,7 +79,7 @@
           <ns2:key>org.shaolin.vogerp.coupon.be.CouponType.name</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="nameUI">
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="nameUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="totalNumUILabel">
@@ -134,7 +139,7 @@
           <ns2:key>org.shaolin.vogerp.coupon.be.CouponType.resetInterval</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="resetIntervalUI">
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="resetIntervalUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="isImmediateUILabel">
@@ -305,9 +310,14 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.limitMessage" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping7">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
       <ns2:UIComponent componentPath="resetIntervalUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.resetInterval" paramName="StringData"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.resetInterval" paramName="CEValue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
+        <ns2:expression>
+          <expressionString>"org.shaolin.vogerp.coupon.ce.ResetIntervalType"</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping8">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISelect"></ns2:mappingRule>

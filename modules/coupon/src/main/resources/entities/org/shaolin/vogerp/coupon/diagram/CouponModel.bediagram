@@ -51,7 +51,9 @@
 	    <!-- 重置间隔 -->
 	    <bediagram:member>
 			<bediagram:name>resetInterval</bediagram:name>
-			<bediagram:type xsi:type="bediagram:StringType" />
+			<bediagram:type xsi:type="bediagram:CEObjRefType">
+	            <bediagram:targetEntity entityName="ResetIntervalType" />
+	        </bediagram:type>
 		</bediagram:member>
 		<!-- 是否为即刻优惠券类型 -->
 		<bediagram:member>
@@ -100,7 +102,7 @@
 	    <!-- 优惠力度 -->
 	    <bediagram:member>
 	    	<bediagram:name>discount</bediagram:name>
-	    	<bediagram:type xsi:type="bediagram:IntType" />
+	    	<bediagram:type xsi:type="bediagram:StringType" />
 	    </bediagram:member>
 	    <!-- 是否可以被分享 -->
 		<bediagram:member>
@@ -233,6 +235,26 @@
 			<bediagram:value>Exchanged</bediagram:value>
 			<bediagram:intValue>3</bediagram:intValue>
 			<bediagram:description>Exchanged</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	
+	<!-- ResetIntervalType -->
+	<bediagram:ceEntity>
+		<common:entityName>ResetIntervalType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>OneDay</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>1\u5929</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+            <bediagram:value>ThreeDay</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>3\u5929</bediagram:description>
+        </bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>OneWeek</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>7\u5929</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>
 	

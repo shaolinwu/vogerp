@@ -352,12 +352,10 @@
 		</ns2:ComponentMapping>
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
 			name="simpleMapping4">
-			<ns2:mappingRule
-				entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
-			<ns2:UIComponent componentPath="discountUI"
-				paramName="UIWidgetType"></ns2:UIComponent>
+			<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+			<ns2:UIComponent componentPath="discountUI" paramName="UIWidgetType"></ns2:UIComponent>
 			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
-				componentPath="beObject.discount" paramName="Number"></ns2:DataComponent>
+				componentPath="beObject.discount" paramName="StringData"></ns2:DataComponent>
 		</ns2:ComponentMapping>
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
 			name="simpleMapping5">

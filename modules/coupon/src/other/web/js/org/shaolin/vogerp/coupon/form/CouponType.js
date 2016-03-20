@@ -13,7 +13,7 @@ function org_shaolin_vogerp_coupon_form_CouponType(json)
         ui: elementList[prefix + "nameUILabel"]
     });
 
-    var nameUI = new UIMaster.ui.label
+    var nameUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "nameUI"]
     });
@@ -73,7 +73,7 @@ function org_shaolin_vogerp_coupon_form_CouponType(json)
         ui: elementList[prefix + "resetIntervalUILabel"]
     });
 
-    var resetIntervalUI = new UIMaster.ui.textfield
+    var resetIntervalUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "resetIntervalUI"]
     });

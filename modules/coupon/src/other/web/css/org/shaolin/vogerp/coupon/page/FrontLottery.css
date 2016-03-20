@@ -398,8 +398,12 @@
 }
 
 
-#choiceDiscountForm_choiceDiscountTableActionBar, #choiceDiscountForm\.choiceDiscountTable_length,#choiceDiscountForm.choiceDiscountTable thead{
+#choiceDiscountForm_choiceDiscountTableActionBar, #choiceDiscountForm\.choiceDiscountTable_length,#choiceDiscountForm\.choiceDiscountTable thead{
 	display : none;
+}
+#div-choiceDiscountForm-choiceDiscountForm-ProductPanel-0_1, #div-choiceDiscountForm-choiceDiscountForm-ChoiceDiscountPanel-0_0{
+	width : 100%;
+	margin : 0;
 }
 
 

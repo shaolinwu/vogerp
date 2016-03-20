@@ -71,9 +71,9 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 		{
 			var windowHeight = $(window).height();
 			this.roll = function(luckyImageUrl){
-				//TODO 假设后台生成的图标url
-		        			alert(luckyImageUrl);
-		        			//计算每列的滚动百分比
+			
+		        			//alert(luckyImageUrl);
+		        			//compute roll percent distance
 		        			var rollTopArr = new Array();
 		        			var cellTop = 32;
 		        			
@@ -85,7 +85,7 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 		        			if (null != lotteryImageDivs) {
 		        				var row = lotteryImageDivs.length / 3;
 		        				if (null != luckyImageUrl && "" != luckyImageUrl) {
-		        					//中奖滚动设置
+		        					//setting lottery roll params
 		        					for (var m = 0; m < 3; m++) {
 										for (var n = 0; n < row - 1; n++) {
 											var divid = "#lotteryForm_" + m + "-" + n;
@@ -102,7 +102,7 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 										}
 									}
 		        				} else {
-		        					//未中奖滚动设置
+		        					//setting no lottery
 		        					var i1 = Math.floor(Math.random() * (row - 1)) + 1;
 									var i2 = Math.floor(Math.random() * (row - 1)) + 1;
 									rollTopArr[0] = (i1 - 1) * cellTop;
@@ -119,7 +119,6 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 												break ;
 											}
 										}
-										//如果第3列取到的全部是和第1列颜色相同，则取最后一个div，并修改该div的颜色为其它颜色
 										if (null == rollTopArr[2]) {
 											var i3 = row - 1;
 											rollTopArr[2] = (i3 - 1) * cellTop;
@@ -134,7 +133,7 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 									}
 		        				}
 		        				
-		        				//滚动奖项图标
+		        				//roll
 		        				for (var m = 0; m < 3; m++) {
 									var needRollDivIds = "";
 									for (var n = 0; n < row; n++) {
@@ -150,28 +149,67 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 									var cellTime = parseInt(rollTime / (count + row - 2));
 									$(needRollDivIds).delay(m * rollTime).animate({"top" : "-" + t1 + "%"}, cellTime * (row - 2)).animate({"top" : 97 - 2 * cellTop + "%"}, 0).animate({"top" : "-" + rollTopArr[m] + "%"}, cellTime * count);
 								}
-								var tt = 600;
+								//var tt = 0;
 								var advertTopHeight = $(window).height() - $couponPan.height() * 0.42 - $("#div-leftPanel-0_4").height();
-								$("#div-leftPanel-0_1, #div-leftPanel-0_1 img").height(advertTopHeight + "px").slideDown(tt * 2);
+								$("#div-leftPanel-0_1, #div-leftPanel-0_1 img").height(advertTopHeight + "px").css("display", "block");
+								//$("#div-leftPanel-0_1, #div-leftPanel-0_1 img").height(advertTopHeight + "px").slideDown(tt * 2);
 								var rollHeight = advertTopHeight - $couponPan.height() * 0.28 - $couponPan.offset().top;
-								$couponPan.animate({"top" : "" + rollHeight + "px"}, tt);
+								$couponPan.css("top", "" + rollHeight + "px");
+								//$couponPan.animate({"top" : "" + rollHeight + "px"}, tt);
 								var advertBottomHeight = $(window).height() - advertTopHeight - $couponPan.height() * 0.40;
-								$("#div-leftPanel-0_4, #div-leftPanel-0_4 img").height(advertBottomHeight + "px").slideDown(tt * 2);
+								$("#div-leftPanel-0_4, #div-leftPanel-0_4 img").height(advertBottomHeight + "px").css("display", "block");
+								//$("#div-leftPanel-0_4, #div-leftPanel-0_4 img").height(advertBottomHeight + "px").slideDown(tt * 2);
 								$("#div-leftPanel-0_5").css("left", $couponPan.offset().left + "px");
 								$("#div-leftPanel-0_6").css("right", $couponPan.offset().right + "px");
-		        				$("#div-leftPanel-0_5,#div-leftPanel-0_6").height($couponPan.height() + "px").delay(tt * 2).css({"display" : "block", "top" : advertTopHeight + "px"});
+		        				$("#div-leftPanel-0_5,#div-leftPanel-0_6").height($couponPan.height() + "px").css({"display" : "block", "top" : advertTopHeight + "px"});
+		        				//$("#div-leftPanel-0_5,#div-leftPanel-0_6").height($couponPan.height() + "px").delay(tt * 2).css({"display" : "block", "top" : advertTopHeight + "px"});
 		        				
 		        			}
 		        			
-		        			//抽奖框滚动结束，调用后台生成优惠券
+		        			//\u62BD\u5956\u6846\u6EDA\u52A8\u7ED3\u675F\uFF0C\u8C03\u7528\u540E\u53F0\u751F\u6210\u4F18\u60E0\u5238
 		        			var othis = this;
 							var eventsource = $couponPan;
-							var delayTime = 12000;
+							var delayTime = rollTime * 3 + 2000;
 							setTimeout(function(){
 		        				UIMaster.triggerServerEvent("lotteryForm.couponPanel","genCoupon-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
 		        			}, delayTime);
 		        			
 			};
+			
+			this.setJackpotNum = function(jackpotRes) {
+				//var jackpotRes = "/uimaster/images/coupon/front/50off.png:5,/uimaster/images/coupon/front/sign.png:300,/uimaster/images/coupon/front/newProduct.png:12,/uimaster/images/coupon/front/cashDeduction.png:95";
+				alert(jackpotRes);
+				var couponJackpots = jackpotRes.split(",");
+				if (null != couponJackpots) {
+					for (var a = 0; a < couponJackpots.length; a++) {
+						var couponJackpot = couponJackpots[a].split(":");
+						var widthNum = parseInt(100 / couponJackpots.length);
+						$rCoupon.append("<div id=\"div_lotteryForm-restCouponPanel-" + (a * 2) + "_0\" class=\"couponJackpotImageDiv\" style=\"width:" + widthNum * 0.65 + "%\"><img src=\"" + couponJackpot[0] + "\" /></div>");
+						$rCoupon.append("<div id=\"div_lotteryForm-restCouponPanel-" + (a * 2 + 1) + "_0\" class=\"couponJackpotTextDiv\" style=\"width:" + widthNum * 0.35 + "%\"><span>x" + couponJackpot[1] + "</span>");
+					}
+				}
+			};
+			
+			this.loadLotteryBox = function(imageUrls) {
+				//假设ajax请求返回该字符串，需要修改
+				var imageUrls = "/uimaster/images/coupon/front/50off.png,/uimaster/images/coupon/front/sign.png,/uimaster/images/coupon/front/newProduct.png,/uimaster/images/coupon/front/cashDeduction.png";
+				
+				var imageUrlArr = imageUrls.split(",");
+				var size = imageUrlArr.length;
+				//生成(size + 2)行3列的奖项图标,最后一行和第一行相同
+				for (var m = 0; m < size + 2; m++) {
+					for (var n = 0; n < 3; n++) {
+						//随机取一张图片
+						var index = Math.floor(Math.random() * size);
+						var imageUrl = imageUrlArr[index];
+						if (m == size + 1) {
+							imageUrl = $("#lotteryForm_" + n + "-0 img").attr("src");
+						}
+						$couponPan.append("<div id=\"lotteryForm_" + n + "-" + m + "\" class=\"lotteryForm_couponImage\"><img src=\"" + imageUrl + "\" /></div>");
+					}
+				}
+			};
+			
 			//$("#leftPanel").height(windowHeight + "px");
 			var startLotteryHeight = $("#div-lotteryForm-lotteryStartPanel-1_0 img").height();
 			$("#div-lotteryForm-lotteryStartPanel-0_0 input").height((startLotteryHeight - 6) + "px");
@@ -183,53 +221,23 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 			var $couponPan = $(couponPanel);
 			$couponPan.height(($couponPan.width() * 0.84) + "px");
 			
-			$("#div-lotteryForm-lotteryStartPanel-0_0 input").attr("placeholder", "请输入订单号后4位");
+			$("#div-lotteryForm-lotteryStartPanel-0_0 input").attr("placeholder", "\u8BF7\u8F93\u5165\u8BA2\u5355\u53F7\u540E4\u4F4D");
 			$("#div-lotteryForm-lotteryStartPanel-1_0 img").height($("#div-lotteryForm-lotteryStartPanel-0_0").height() + "px");
 			
 			var othis = this;
 			var eventsource = $couponPan;
-			//TODO ajax请求获取所有奖项图片url
-			var url = UIMaster.triggerServerEvent("lotteryForm.couponPanel","loadCouponImageUrl-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
-			//alert(url);
+			//load lottery box of all coupon icon
+			UIMaster.triggerServerEvent("lotteryForm.couponPanel","loadCouponImageUrl-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
 			
-			//假设ajax请求返回该字符串，需要修改
-			var imageUrls = "/uimaster/images/coupon/front/50off.png,/uimaster/images/coupon/front/sign.png,/uimaster/images/coupon/front/newProduct.png,/uimaster/images/coupon/front/cashDeduction.png";
-			
-			var imageUrlArr = imageUrls.split(",");
-			var size = imageUrlArr.length;
-			//生成(size + 2)行3列的奖项图标,最后一行和第一行相同
-			for (var m = 0; m < size + 2; m++) {
-				for (var n = 0; n < 3; n++) {
-					//随机取一张图片
-					var index = Math.floor(Math.random() * size);
-					var imageUrl = imageUrlArr[index];
-					if (m == size + 1) {
-						imageUrl = $("#lotteryForm_" + n + "-0 img").attr("src");
-					}
-					$couponPan.append("<div id=\"lotteryForm_" + n + "-" + m + "\" class=\"lotteryForm_couponImage\"><img src=\"" + imageUrl + "\" /></div>");
-				}
-			}
 			
 			var lotyForm = document.getElementById("lotteryForm.Form");
 			var lotyFormHeight = $("#div-lotteryForm-Form-0_0").height();
 			$(lotyForm).height(lotyFormHeight + "px");
 			$("#lotteryPanel,#div-lotteryPanel-0_0,#div-leftPanel-0_2").height(lotyFormHeight + "px");
 			
-			//查询并设置奖池数量
+			//\u67E5\u8BE2\u5E76\u8BBE\u7F6E\u5956\u6C60\u6570\u91CF
 			var eventsource1 = $rCoupon;
 			UIMaster.triggerServerEvent("lotteryForm.restCouponPanel","loadJackpot-20160112-232035",UIMaster.getValue(eventsource1),othis.__entityName);
-			
-			//TODO 假设返回奖池数量
-			var jackpotRes = "/uimaster/images/coupon/front/50off.png:5,/uimaster/images/coupon/front/sign.png:300,/uimaster/images/coupon/front/newProduct.png:12,/uimaster/images/coupon/front/cashDeduction.png:95";
-			var couponJackpots = jackpotRes.split(",");
-			if (null != couponJackpots) {
-				for (var a = 0; a < couponJackpots.length; a++) {
-					var couponJackpot = couponJackpots[a].split(":");
-					var widthNum = parseInt(100 / couponJackpots.length);
-					$rCoupon.append("<div id=\"div_lotteryForm-restCouponPanel-" + (a * 2) + "_0\" class=\"couponJackpotImageDiv\" style=\"width:" + widthNum * 0.65 + "%\"><img src=\"" + couponJackpot[0] + "\" /></div>");
-					$rCoupon.append("<div id=\"div_lotteryForm-restCouponPanel-" + (a * 2 + 1) + "_0\" class=\"couponJackpotTextDiv\" style=\"width:" + widthNum * 0.35 + "%\"><span>x" + couponJackpot[1] + "</span>");
-				}
-			}
 		}
 		
             /* Construct_LAST:org_shaolin_vogerp_coupon_form_LotteryForm */
