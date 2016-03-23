@@ -52,6 +52,7 @@ function org_shaolin_vogerp_productmodel_form_ProdTempDetailOverview(json)
         ui: elementList[prefix + "htmlDescUI"]
         ,hiddenToolbar: true
         ,persistable: false
+        ,viewMode: true
     });
 
     var detailPanel = new UIMaster.ui.panel

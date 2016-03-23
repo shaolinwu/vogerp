@@ -60,6 +60,8 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
     var photosUI = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "photosUI"]
+        ,width: "400px"
+        ,height: "320px"
     });
 
     var photoUILabel = new UIMaster.ui.label

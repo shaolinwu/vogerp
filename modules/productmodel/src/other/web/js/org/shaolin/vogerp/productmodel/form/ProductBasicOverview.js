@@ -6,6 +6,8 @@ function org_shaolin_vogerp_productmodel_form_ProductBasicOverview(json)
     var photoUI = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "photoUI"]
+        ,width: "240px"
+        ,height: "240px"
     });
 
     var priceUI = new UIMaster.ui.label

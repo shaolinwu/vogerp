@@ -7,30 +7,31 @@ function org_shaolin_bmdp_adminconsole_form_CurrentStatus(json)
     ({
         ui: elementList[prefix + "MainTab"]
         ,items: []
-        ,subComponents: [prefix + "tasksAnalysisPanel",prefix + "notiPanel",prefix + "orderPanel"]
+        ,subComponents: [prefix + "tasksAnalysisPanel"]
     });
     var currentTasksPie = new UIMaster.ui.chart
     ({
         ui: elementList[prefix + "currentTasksPie"]
+        ,width: 400
+        ,height: 400
     });
 
+    var purchaseOrderInfoTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "purchaseOrderInfoTable"]
+    });
+
+    var dlinkPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "dlinkPanel"]
+        ,items: []
+        ,subComponents: []
+    });
     var tasksAnalysisPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "tasksAnalysisPanel"]
         ,items: []
-        ,subComponents: [prefix + "currentTasksPie"]
-    });
-    var notiPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "notiPanel"]
-        ,items: []
-        ,subComponents: []
-    });
-    var orderPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "orderPanel"]
-        ,items: []
-        ,subComponents: []
+        ,subComponents: [prefix + "currentTasksPie",prefix + "purchaseOrderInfoTable",prefix + "dlinkPanel"]
     });
 
     var TaskPanel = new UIMaster.ui.panel
@@ -52,9 +53,9 @@ function org_shaolin_bmdp_adminconsole_form_CurrentStatus(json)
 
     Form.currentTasksPie=currentTasksPie;
 
-    Form.notiPanel=notiPanel;
+    Form.purchaseOrderInfoTable=purchaseOrderInfoTable;
 
-    Form.orderPanel=orderPanel;
+    Form.dlinkPanel=dlinkPanel;
 
     Form.TaskPanel=TaskPanel;
 
@@ -64,9 +65,9 @@ function org_shaolin_bmdp_adminconsole_form_CurrentStatus(json)
 
     Form.currentTasksPie=currentTasksPie;
 
-    Form.notiPanel=notiPanel;
+    Form.purchaseOrderInfoTable=purchaseOrderInfoTable;
 
-    Form.orderPanel=orderPanel;
+    Form.dlinkPanel=dlinkPanel;
 
     Form.user_constructor = function()
     {

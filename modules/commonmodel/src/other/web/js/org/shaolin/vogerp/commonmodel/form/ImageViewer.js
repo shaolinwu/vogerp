@@ -11,6 +11,8 @@ function org_shaolin_vogerp_commonmodel_form_ImageViewer(json)
     var photoUI = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "photoUI"]
+        ,width: "580px"
+        ,height: "400px"
     });
 
     var uploadFile = new UIMaster.ui.file

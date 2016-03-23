@@ -26,6 +26,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var userIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "userIcon"]
+        ,text: "????"
     });
 
     var userLogout = new UIMaster.ui.image
@@ -36,16 +37,19 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var taskIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "taskIcon"]
+        ,text: "??"
     });
 
     var notificationIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "notificationIcon"]
+        ,text: "??"
     });
 
     var helpIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "helpIcon"]
+        ,text: "??"
     });
 
     var functionTree = new UIMaster.ui.webtree

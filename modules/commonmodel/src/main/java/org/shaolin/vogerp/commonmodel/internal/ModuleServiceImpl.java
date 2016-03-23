@@ -224,7 +224,15 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	@Override
 	public List<List<DataMode>> getModulesInMatrix(String appName, int columns) {
 		List<List<DataMode>> result = new ArrayList<List<DataMode>>();
-		List<IModuleGroup> modules = getModuleGroupTree(appName);
+		List<IModuleGroup> a = getModuleGroupTree(appName);
+		List<IModuleGroup> modules = new ArrayList<IModuleGroup>();
+		for (int i = 0; i < a.size(); i++) {
+			IModuleGroup m = a.get(i);
+			if ("#".equals(m.getAccessURL())) {
+				continue;
+			}
+			modules.add(m);
+		}
 		int total = modules.size()/columns;
 		if (modules.size()%columns > 0) {
 			total += 1;

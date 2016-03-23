@@ -26,6 +26,8 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfoMap(json)
     var uiMap = new UIMaster.ui.map
     ({
         ui: elementList[prefix + "uiMap"]
+        ,width: "300px"
+        ,height: "240px"
     });
 
     var okbtn = new UIMaster.ui.button

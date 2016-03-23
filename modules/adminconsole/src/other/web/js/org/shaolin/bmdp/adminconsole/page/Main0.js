@@ -6,16 +6,19 @@ function org_shaolin_bmdp_adminconsole_page_Main0(json)
     var userIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "userIcon"]
+        ,text: "User Information"
     });
 
     var taskIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "taskIcon"]
+        ,text: "Tasks"
     });
 
     var notificationIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "notificationIcon"]
+        ,text: "Notification"
     });
 
     var userLogout = new UIMaster.ui.image

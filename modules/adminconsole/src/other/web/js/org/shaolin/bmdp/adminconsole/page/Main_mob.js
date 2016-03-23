@@ -3,14 +3,24 @@
 function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var vogerplogo = new UIMaster.ui.image
+    var searchContext = new UIMaster.ui.textfield
     ({
-        ui: elementList[prefix + "vogerplogo"]
+        ui: elementList[prefix + "searchContext"]
     });
 
     var userIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "userIcon"]
+    });
+
+    var advImagesUI = new UIMaster.ui.image
+    ({
+        ui: elementList[prefix + "advImagesUI"]
+        ,value: "/images/adv/mainpage"
+        ,height: 150
+        ,width: "100%"
+        ,mode: "slider"
+        ,thumbnailsFullScreen: false
     });
 
     var matrixUI = new UIMaster.ui.matrix
@@ -60,23 +70,32 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         ,subComponents: [prefix + "pagePanel"]
     });
 
+    var searchPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "searchPanel"]
+        ,items: []
+        ,subComponents: [prefix + "searchContext",prefix + "userIcon"]
+    });
+
     var topPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "topPanel"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
-        ,subComponents: [prefix + "vogerplogo",prefix + "userIcon"]
+        ,subComponents: [prefix + "searchPanel",prefix + "advImagesUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [vogerplogo,userIcon,matrixUI,collapseLabel1,userLogout,userFormContent,topPanel,middlePanel,pagePanel,bottomPanel,userForm]
+        ,items: [searchContext,userIcon,advImagesUI,matrixUI,collapseLabel1,userLogout,userFormContent,topPanel,searchPanel,middlePanel,pagePanel,bottomPanel,userForm]
     });
 
-    Form.vogerplogo=vogerplogo;
+    Form.searchContext=searchContext;
 
     Form.userIcon=userIcon;
+
+    Form.advImagesUI=advImagesUI;
 
     Form.matrixUI=matrixUI;
 
@@ -88,7 +107,17 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
     Form.topPanel=topPanel;
 
-    Form.vogerplogo=vogerplogo;
+    Form.searchPanel=searchPanel;
+
+    Form.searchContext=searchContext;
+
+    Form.userIcon=userIcon;
+
+    Form.advImagesUI=advImagesUI;
+
+    Form.searchPanel=searchPanel;
+
+    Form.searchContext=searchContext;
 
     Form.userIcon=userIcon;
 
@@ -226,6 +255,14 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         var UIEntity = this;
 
 			{
+			   $("#pagePanel").height($(document.body).height()-180);
+			   $("#pagePanel").css("overflow", "scroll");
+			   
+			   window.setTimeout(function(){
+			      $("#pagePanel").height($(document.body).height()-180);
+                  $("#pagePanel").css("overflow", "scroll");
+			   }, 800);
+			   
 			}
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_initPageJs */
 

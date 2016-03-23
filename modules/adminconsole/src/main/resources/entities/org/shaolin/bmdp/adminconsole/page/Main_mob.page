@@ -71,7 +71,7 @@
 		</ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:layout xsi:type="ns2:TableLayoutType">
-				<ns2:rowHeightWeight>20</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>150</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>400</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>20</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
@@ -82,41 +82,80 @@
 				</ns2:UISkin>
 				<ns2:layout xsi:type="ns2:TableLayoutType">
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-					<ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
 				</ns2:layout>
-				<ns2:component xsi:type="ns2:UIImageType" UIID="vogerplogo">
-			        <ns2:title xsi:type="ns2:StringPropertyType">
-			            <ns2:value>Vogue ERP</ns2:value>
-			        </ns2:title>
-			        <ns2:src xsi:type="ns2:ImagePropertyType">
-			            <ns2:location>/vogerp.jpg</ns2:location>
-			        </ns2:src>
-			        <ns2:EventListener xsi:type="ns2:ClickListenerType">
-	                     <ns2:handler functionName="showStartMenu" />
-	                 </ns2:EventListener>
-			  </ns2:component>
-			   <ns2:component xsi:type="ns2:UIImageType" UIID="userIcon">
-	                <ns2:title xsi:type="ns2:StringPropertyType">
-	                    <ns2:value>用户中心</ns2:value>
-	                </ns2:title>
-	                <ns2:src xsi:type="ns2:ImagePropertyType">
-	                    <ns2:location>admin/tree/manager.png</ns2:location>
-	                </ns2:src>
-	                <ns2:EventListener xsi:type="ns2:ClickListenerType">
-	                     <ns2:handler functionName="showUserInfo" />
-	                 </ns2:EventListener>
+				<ns2:component xsi:type="ns2:UIPanelType" UIID="searchPanel">
+	                <ns2:layout xsi:type="ns2:TableLayoutType">
+	                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+	                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+	                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+	                </ns2:layout>
+	                <ns2:component xsi:type="ns2:UITextFieldType" UIID="searchContext">
+                    </ns2:component>
+					<ns2:component xsi:type="ns2:UIImageType" UIID="userIcon">
+	                    <ns2:title xsi:type="ns2:StringPropertyType">
+	                        <ns2:value>用户中心</ns2:value>
+	                    </ns2:title>
+	                    <ns2:src xsi:type="ns2:ImagePropertyType">
+	                        <ns2:location>admin/tree/manager.png</ns2:location>
+	                    </ns2:src>
+	                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
+	                         <ns2:handler functionName="showUserInfo" />
+	                     </ns2:EventListener>
+	                </ns2:component>
+	                <ns2:layoutConstraint>
+	                    <ns2:componentId>searchContext</ns2:componentId>
+	                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	                         x="0" y="0" align="FULL"></ns2:constraint>
+	                </ns2:layoutConstraint>
+	                <ns2:layoutConstraint>
+                        <ns2:componentId>userIcon</ns2:componentId>
+                        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                             x="1" y="0" align="FULL"></ns2:constraint>
+                    </ns2:layoutConstraint>
 	            </ns2:component>
+			    <ns2:component xsi:type="ns2:UIImageType" UIID="advImagesUI">
+	                <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+	                <ns2:isGallery xsi:type="ns2:BooleanPropertyType">
+	                    <ns2:value>true</ns2:value>
+	                </ns2:isGallery>
+	                <ns2:Property name="value">
+	                    <ns2:value xsi:type="ns2:StringPropertyType">
+	                        <value>/images/adv/mainpage</value>
+	                    </ns2:value>
+	                </ns2:Property>
+	                <ns2:Property name="height">
+                        <ns2:value xsi:type="ns2:NumericPropertyType">
+			              <value>150</value>
+			           </ns2:value>
+                    </ns2:Property>
+                    <ns2:Property name="width">
+                        <ns2:value xsi:type="ns2:StringPropertyType">
+                          <value>100%</value>
+                       </ns2:value>
+                    </ns2:Property>
+                    <ns2:Property name="mode">
+                        <ns2:value xsi:type="ns2:StringPropertyType">
+                          <value>slider</value>
+                       </ns2:value>
+                    </ns2:Property>
+                    <ns2:Property name="thumbnailsFullScreen">
+                        <ns2:value xsi:type="ns2:BooleanPropertyType">
+                          <value>false</value>
+                       </ns2:value>
+                    </ns2:Property>
+	            </ns2:component>
+	            <ns2:layoutConstraint>
+                     <ns2:componentId>searchPanel</ns2:componentId>
+                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                         x="0" y="0" align="FULL"></ns2:constraint>
+                 </ns2:layoutConstraint>
 				<ns2:layoutConstraint>
-					<ns2:componentId>vogerplogo</ns2:componentId>
+					<ns2:componentId>advImagesUI</ns2:componentId>
 					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-						x="0" y="0" align="FULL"></ns2:constraint>
+						x="0" y="1" align="FULL" cellUIClass="advImagesUICss"></ns2:constraint>
 				</ns2:layoutConstraint>
-				<ns2:layoutConstraint>
-	                <ns2:componentId>userIcon</ns2:componentId>
-	                <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-	                    x="1" y="0" align="FULL"></ns2:constraint>
-	            </ns2:layoutConstraint>
 			</ns2:component>
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="middlePanel">
 				<ns2:layout xsi:type="ns2:TableLayoutType">
@@ -153,7 +192,7 @@
                              import org.shaolin.vogerp.commonmodel.be.IModuleGroup;
                              {
                                 IModuleService moduleService = (IModuleService)AppContext.get().getService(IModuleService.class);
-                                return moduleService.getModulesInMatrix(AppContext.get().getAppName(), 1);
+                                return moduleService.getModulesInMatrix(AppContext.get().getAppName(), 4);
                              }]]></ns2:expressionString>
                          </ns2:expression>
                      </ns2:init>
@@ -172,11 +211,10 @@
 			</ns2:component>
 			<!-- this bottom panel is hidden by default. -->
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="bottomPanel">
-			<ns2:layout xsi:type="ns2:TableLayoutType">
-				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-				<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-			</ns2:layout>
+			    <ns2:layout xsi:type="ns2:TableLayoutType">
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+			    </ns2:layout>
 			    <ns2:component xsi:type="ns2:UIPanelType" UIID="userForm">
 	                <ns2:UISkin xsi:type="ns2:UISkinType">
 	                    <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
@@ -283,6 +321,14 @@
 		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
 			<ns2:expressionString><![CDATA[
 			{
+			   $("#pagePanel").height($(document.body).height()-180);
+			   $("#pagePanel").css("overflow", "scroll");
+			   
+			   window.setTimeout(function(){
+			      $("#pagePanel").height($(document.body).height()-180);
+                  $("#pagePanel").css("overflow", "scroll");
+			   }, 800);
+			   
 			}]]></ns2:expressionString>
 		</ns2:clientAction>
 	</ns2:in>

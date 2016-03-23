@@ -6,6 +6,8 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithRadioGroup(json)
     var typeUI = new UIMaster.ui.radiobuttongroup
     ({
         ui: elementList[prefix + "typeUI"]
+        ,horizontalLayout: true
+        ,colCount: 8
     });
 
     var fieldPanel = new UIMaster.ui.panel

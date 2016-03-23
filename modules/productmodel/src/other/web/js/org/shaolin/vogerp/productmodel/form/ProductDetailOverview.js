@@ -26,6 +26,7 @@ function org_shaolin_vogerp_productmodel_form_ProductDetailOverview(json)
     var amountUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "amountUI"]
+        ,needAmount: true
     });
 
     var orderActionUILabel = new UIMaster.ui.label
@@ -77,6 +78,7 @@ function org_shaolin_vogerp_productmodel_form_ProductDetailOverview(json)
         ui: elementList[prefix + "htmlDescUI"]
         ,hiddenToolbar: true
         ,persistable: false
+        ,viewMode: true
     });
 
     var detailPanel = new UIMaster.ui.panel

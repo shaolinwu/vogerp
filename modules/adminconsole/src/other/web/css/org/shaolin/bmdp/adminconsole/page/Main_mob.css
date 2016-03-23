@@ -1,19 +1,22 @@
-#div-Form-0_0 {margin-bottom: 15px;}
-#div-Form-0_2 {margin-top: 15px;}
-#topPanel img{height: 40px;}
-#div-topPanel-0_0 {border: 1px solid #77d5f7;}
-#div-topPanel-1_0 {float: right; margin-right: 10px;} 
-#div-topPanel-1_0 img {width: 25px;height: 25px;}
+#div-Form-0_0 {margin-bottom: 5px;}
+#div-Form-0_2 {margin-top: 5px;}
+#div-topPanel-0_0 {position: absolute; z-index: 10; margin-right: 10px;width: 100%;}
+#searchPanel {float: right; clear: both; padding-right: 10px;}
+#div-searchPanel-1_0 img {width: 25px;height: 25px;padding-top: 10px;padding-left:5px}
 #pagePanel {overflow: hidden;}
 #div-bottomPanel-0_0 {display:none;position: absolute;z-index: 100000;left:45px;top:600px;background-color: white; width: 350px;}
 #div-bottomPanel-0_1 {display:none;position: absolute;z-index: 100000;left:90px;top:600px;background-color: white;}
 #div-treePanel-0_1 {border-top: 1px solid #8DB9DB;}
 #div-userForm-0_2 {width: 100%; border-top: 1px solid #8DB9DB;}
 #div-userForm-0_2 img{float: right; margin-right: 10px; cursor: pointer;}
+.advImagesUICss{
+	float: none;
+    clear: none;
+}
 .uimaster_matrix_col{
-	width: 96%;
+	width: 65px;
+	height: 50px;
     text-align: center;
-    height: 30px;
     border: 1px solid #77d5f7;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -23,6 +26,9 @@
     padding: .5em .4em .5em .4em;
     cursor: pointer;
     margin-right: 5px;
+}
+.uimaster_matrix_row {
+	text-align: center;
 }
 .ui-dialog .ui-dialog-content {
     position: relative;

@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <registry xmlns="http://bmdp.shaolin.org/datamodel/Registry">
     <node name="System">
+        <!-- 
         <node name="webConstant">
+            <node name="commonjs">
+                <node name="org.shaolin.bmdp.adminconsole.page.Main_mob">
+                    <item name="jgallery" value="/js/controls/jsgallery/jgallery.js" />
+                    <item name="touchswipe" value="/js/controls/jsgallery/touchswipe.js" />
+                       <item name="tinycolor" value="/js/controls/jsgallery/tinycolor-0.9.16.min.js" />
+                </node>
+            </node>
+            <node name="commoncss">
+                 <node name="org.shaolin.bmdp.adminconsole.page.Main_mob">
+                     <item name="font-awesome" value="/css/jsgallery/font-awesome.min.css" />
+                     <item name="jgallery.min.css" value="/css/jsgallery/jgallery.min.css?v=1.5.0" />
+                 </node>
+             </node>
         </node>
+         -->
     </node>
 </registry>
 
