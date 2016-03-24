@@ -264,6 +264,7 @@
                     import org.shaolin.vogerp.order.be.IPurchaseOrder;
                     import org.shaolin.vogerp.order.be.ISaleOrder;
                     import org.shaolin.vogerp.order.be.SaleOrderImpl;
+                    import org.shaolin.vogerp.order.be.OrderItemImpl;
                     import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
                     import org.shaolin.vogerp.ecommercial.be.GOOfferPriceImpl;
                     import org.shaolin.bmdp.runtime.AppContext; 
