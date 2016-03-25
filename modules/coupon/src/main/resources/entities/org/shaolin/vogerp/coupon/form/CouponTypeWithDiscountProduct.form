@@ -116,14 +116,16 @@
 			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
 				componentPath="couponType.totalNum" paramName="Number"></ns2:DataComponent>
 		</ns2:ComponentMapping>
-		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
-			name="simpleMapping7">
-			<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-			<ns2:UIComponent componentPath="resetIntervalUI"
-				paramName="UIWidgetType"></ns2:UIComponent>
-			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
-				componentPath="couponType.resetInterval" paramName="StringData"></ns2:DataComponent>
-		</ns2:ComponentMapping>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping7">
+	      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
+	      <ns2:UIComponent componentPath="resetIntervalUI" paramName="UIWidgetType"></ns2:UIComponent>
+	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="couponType.resetInterval" paramName="CEValue"></ns2:DataComponent>
+	      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
+	        <ns2:expression>
+	          <expressionString>"org.shaolin.vogerp.coupon.ce.ResetIntervalType"</expressionString>
+	        </ns2:expression>
+	   	  </ns2:DataComponent>
+	    </ns2:ComponentMapping>
 		<ns2:DataToUIMappingOperation>
 			<expressionString>
 				{

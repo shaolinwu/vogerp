@@ -34,8 +34,22 @@
 				<ns2:key>org.shaolin.vogerp.coupon.be.DiscountProduct.icon</ns2:key>
 			</ns2:text>
 		</ns2:component>
-		<ns2:component xsi:type="ns2:UITextFieldType" UIID="iconUI">
+		<ns2:component xsi:type="ns2:UIImageType" UIID="iconUI">
 			<ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+			<ns2:Property name="src">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString>
+			           import org.shaolin.bmdp.runtime.AppContext;
+			           import org.shaolin.bmdp.runtime.Registry;
+			           import org.shaolin.uimaster.page.WebConfig;
+			           { 
+			           	   String icon = $discountProduct.getIcon();
+			               return icon.substring(icon.indexOf("/", "/uimaster/images".length())); 
+			           }</expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+            </ns2:Property>
 		</ns2:component>
 		<ns2:layoutConstraint>
 			<ns2:componentId>nameUILabel</ns2:componentId>
@@ -85,15 +99,6 @@
 			<ns2:UIComponent componentPath="nameUI" paramName="UIWidgetType"></ns2:UIComponent>
 			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
 				componentPath="discountProduct.name" paramName="StringData"></ns2:DataComponent>
-		</ns2:ComponentMapping>
-		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
-			name="simpleMapping2">
-			<ns2:mappingRule
-				entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
-			<ns2:UIComponent componentPath="iconUI"
-				paramName="UIWidgetType"></ns2:UIComponent>
-			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
-				componentPath="discountProduct.icon" paramName="StringData"></ns2:DataComponent>
 		</ns2:ComponentMapping>
 		<ns2:DataToUIMappingOperation>
 			<expressionString>

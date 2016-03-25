@@ -1,0 +1,92 @@
+div#ThanksForm {
+    width: 100%;
+    background-image : url(/uimaster/images/coupon/front/background.jpg);
+    background-repeat : no-repeat;
+	background-size : cover;
+	-moz-background-size : cover;
+	-webkit-background-size : cover;
+    color : white;
+}
+div#div-ThanksForm-0_0 {
+    width: 100%;
+    margin : 0;
+}
+#div-ThanksForm-0_0 img.uimaster_image {
+    width: 100%;
+}
+div#div-ThanksForm-0_1 {
+    width: 100%;
+    margin: 0;
+}
+div#thanksPanel {
+    margin: 1px;
+    border : 2px solid white;
+}
+div#div-thanksPanel-0_0 {
+    width: 100%;
+}
+div#div-topPanel-0_0 {
+    width: 50%;
+    margin: 0;
+}
+#div-topPanel-0_0 img.uimaster_image {
+    width: 100%;
+    margin-left: 5%;
+}
+div#div-topPanel-1_0 {
+    width: 50%;
+    color : white;
+    font-size : 2em;
+    text-align: center;
+    margin-top : 12%;
+}
+div#div-thanksTextPanel-0_0,div#div-thanksTextPanel-0_1 {
+    width: 100%;
+}
+div#div-thanksPanel-0_1 {
+    width: 100%;
+    margin: 0;
+}
+div#div-thanksPanel-0_1 img {
+    width: 96%;
+    margin: 0 2%;
+}
+div#div-thanksPanel-0_2 {
+    width: 100%;
+    margin: 0;
+}
+div#div-bottomTextPanel-0_0 {
+    font-size: 1.5em;
+    color : #FD3657;
+}
+div#div-bottomTextPanel-0_1 {
+    font-size: 1.5em;
+    text-align: right;
+    margin-left: 20%;
+    color : #FD3657;
+}
+div#div-bottomPanel-1_0 {
+    width: 30%;
+    margin: 5% 0 0 0;
+}
+div#div-bottomPanel-1_0 img.uimaster_image {
+    width: 100%;
+}
+div#div-bottomPanel-0_0 {
+    width: 65%;
+    margin: 5% 0 0 5%;
+}
+div#bottomPanel {
+    width: 96%;
+    margin: 0 2% 0 2%;
+}
+#div-bottom3Panel-0_0{
+	margin: 15% 0 0 0;
+}
+#div-bottom3Panel-1_0{
+	width : 25%;
+	margin-left : 3%;
+}
+#div-bottom3Panel-1_0 img{
+	width : 100%;
+}

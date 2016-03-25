@@ -19,7 +19,9 @@
 					}]]></expressionString>
 			</ns2:ops>
 		</ns2:eventHandler>
-	
+		
+		<ns2:eventHandler functionName="ChoiceDiscountProductLogic"></ns2:eventHandler>
+		
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:UISkin xsi:type="ns2:UISkinType">
 				<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel
@@ -56,7 +58,7 @@
 				</ns2:component>
 				<ns2:component xsi:type="ns2:UIImageType" UIID="advertTopImage">
 					<ns2:src xsi:type="ns2:ImagePropertyType">
-						<ns2:location>/coupon/front/advert_top.png</ns2:location>
+						<ns2:location>/coupon/front/advert_top.jpg</ns2:location>
 					</ns2:src>
 				</ns2:component>
 				<ns2:component xsi:type="ns2:UIPanelType" UIID="lotteryPanel">
@@ -64,6 +66,8 @@
 						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 					</ns2:layout>
+					<ns2:component xsi:type="ns2:UIHiddenType" UIID="orderNumText" />
+					<ns2:component xsi:type="ns2:UIHiddenType" UIID="luckyImageUrlText" />
 					<ns2:component xsi:type="ns2:UIReferenceEntityType"
 						UIID="lotteryForm">
 						<ns2:referenceEntity entityName="org.shaolin.vogerp.coupon.form.LotteryForm" />
@@ -81,7 +85,7 @@
 				</ns2:component>
 				<ns2:component xsi:type="ns2:UIImageType" UIID="advertBottomImage">
 					<ns2:src xsi:type="ns2:ImagePropertyType">
-						<ns2:location>/coupon/front/advert_bottom.png</ns2:location>
+						<ns2:location>/coupon/front/advert_bottom.jpg</ns2:location>
 					</ns2:src>
 				</ns2:component>
 				<ns2:component xsi:type="ns2:UIImageType" UIID="advertLeftImage">
@@ -163,14 +167,44 @@
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>
+		<ns2:DataEntity category="JavaClass" name="orderNumText" scope="InOut">
+            <ns2:type entityName="java.lang.String" />
+        </ns2:DataEntity>
+        <ns2:DataEntity category="JavaClass" name="luckyImageUrlText" scope="InOut">
+            <ns2:type entityName="java.lang.String" />
+        </ns2:DataEntity>
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
 			name="simpleMapping1">
 			<ns2:mappingRule entityName="org.shaolin.vogerp.coupon.form.LotteryForm"></ns2:mappingRule>
 			<ns2:UIComponent componentPath="lotteryForm"
 				paramName="UIWidgetType"></ns2:UIComponent>
 		</ns2:ComponentMapping>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+			<ns2:mappingRule
+				entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+			<ns2:UIComponent componentPath="orderNumText"
+				paramName="UIWidgetType"></ns2:UIComponent>
+			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
+				componentPath="orderNumText" paramName="StringData"></ns2:DataComponent>
+		</ns2:ComponentMapping>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+			<ns2:mappingRule
+				entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+			<ns2:UIComponent componentPath="luckyImageUrlText"
+				paramName="UIWidgetType"></ns2:UIComponent>
+			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
+				componentPath="luckyImageUrlText" paramName="StringData"></ns2:DataComponent>
+		</ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
 	</ns2:in>
+	<ns2:out name="ChoiceDiscountProductLogic" functionName="ChoiceDiscountProductLogic" validate="true">
+		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
+			<ns2:expressionString><![CDATA[{
+			// hello, my first js.
+			}]]></ns2:expressionString>
+		</ns2:clientAction>
+		<ns2:serverOperation xsi:type="ns2:ExpressionParamType" />
+	</ns2:out>
 </ns2:UIPage>
  

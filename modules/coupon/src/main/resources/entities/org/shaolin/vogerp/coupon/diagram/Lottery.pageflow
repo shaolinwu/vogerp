@@ -1,0 +1,501 @@
+<?xml version="1.0" ?>
+<ns2:WebChunk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/Page" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.bmdp.coupon.diagram.Lottery</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:globalVariable name="gStr" category="JavaClass">
+    <type entityName="java.lang.String"></type>
+  </ns2:globalVariable>
+  
+  <!-- LotteryPage -->
+  <ns2:webNode xsi:type="ns2:PageNodeType" name="FrontLottery">
+    <ns2:variables name="orderNumText" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="luckyImageUrlText" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:sourceEntity entityName="org.shaolin.vogerp.coupon.page.FrontLottery"></ns2:sourceEntity>
+    <ns2:out xsi:type="ns2:DisplayOutType" name="ChoiceDiscountProductLogic">
+      <ns2:next>
+        <ns2:destNode>ChoiceDiscountProductLogic</ns2:destNode>
+        <ns2:outDataMappingToNode name="orderNumText">
+          <expression>
+            <expressionString><![CDATA[$orderNumText]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="luckyImageUrlText">
+          <expression>
+            <expressionString><![CDATA[$luckyImageUrlText]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+      </ns2:next>
+    </ns2:out>
+  </ns2:webNode>
+  
+  <!-- ChoiceDiscountProductPage -->
+  <ns2:webNode xsi:type="ns2:PageNodeType" name="ChoiceDiscountProduct">
+    <ns2:variables name="orderNumText" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="couponType" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.coupon.be.CouponTypeImpl"></type>
+      <default>
+        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.CouponTypeImpl();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="discountProducts" category="JavaClass">
+      <type entityName="java.util.List"></type>
+      <default>
+        <expressionString><![CDATA[new java.util.ArrayList();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="selectedProductId" category="JavaClass">
+      <type entityName="java.lang.Integer"></type>
+      <default>
+        <expressionString><![CDATA[0]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:sourceEntity entityName="org.shaolin.vogerp.coupon.page.ChoiceDiscountProduct"></ns2:sourceEntity>
+    <ns2:out xsi:type="ns2:DisplayOutType" name="SelectedDiscountProductLogic">
+      <ns2:next>
+        <ns2:destNode>SelectedDiscountProductLogic</ns2:destNode>
+        <ns2:outDataMappingToNode name="orderNumText">
+          <expression>
+            <expressionString><![CDATA[$orderNumText]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="couponType">
+          <expression>
+            <expressionString><![CDATA[$couponType]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="selectedProductId">
+          <expression>
+            <expressionString><![CDATA[$selectedProductId]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+      </ns2:next>
+    </ns2:out>
+  </ns2:webNode>
+  
+  <!-- CouponInfo -->
+  <ns2:webNode xsi:type="ns2:PageNodeType" name="CouponInfo">
+    <ns2:variables name="orderNumText" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="couponType" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.coupon.be.CouponTypeImpl"></type>
+      <default>
+        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.CouponTypeImpl();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="discountProduct" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.coupon.be.DiscountProductImpl"></type>
+      <default>
+        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.DiscountProductImpl();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="coupon" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.coupon.be.CouponImpl"></type>
+      <default>
+        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.CouponImpl();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:sourceEntity entityName="org.shaolin.vogerp.coupon.page.CouponInfo"></ns2:sourceEntity>
+    <ns2:out xsi:type="ns2:DisplayOutType" name="ViewOrderCouponLogic">
+      <ns2:next>
+        <ns2:destNode>ViewOrderCouponLogic</ns2:destNode>
+        <ns2:outDataMappingToNode name="orderNumText">
+          <expression>
+            <expressionString><![CDATA[$orderNumText]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+      </ns2:next>
+    </ns2:out>
+  </ns2:webNode>
+  
+  <!-- Thanks -->
+  <ns2:webNode xsi:type="ns2:PageNodeType" name="Thanks">
+    <ns2:sourceEntity entityName="org.shaolin.vogerp.coupon.page.Thanks"></ns2:sourceEntity>
+  </ns2:webNode>
+  
+  <!-- ViewOrderCoupon -->
+  <ns2:webNode xsi:type="ns2:PageNodeType" name="ViewOrderCoupon">
+    <ns2:variables name="discountProducts" category="JavaClass">
+      <type entityName="java.util.List"></type>
+      <default>
+        <expressionString><![CDATA[new java.util.ArrayList();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:sourceEntity entityName="org.shaolin.vogerp.coupon.page.ViewOrderCoupon"></ns2:sourceEntity>
+  </ns2:webNode>
+  
+  <!-- ChoiceDiscountProductLogic -->
+  <ns2:webNode xsi:type="ns2:LogicNodeType" name="ChoiceDiscountProductLogic">
+  	<ns2:variables name="orderNumText" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="luckyImageUrlText" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="couponType" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.coupon.be.CouponTypeImpl"></type>
+      <default>
+        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.CouponTypeImpl();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="discountProducts" category="JavaClass">
+      <type entityName="java.util.List"></type>
+      <default>
+        <expressionString><![CDATA[new java.util.ArrayList();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="coupon" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.coupon.be.CouponImpl"></type>
+      <default>
+        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.CouponImpl();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="discountProduct" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.coupon.be.DiscountProductImpl"></type>
+      <default>
+        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.DiscountProductImpl();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="couponOperation" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.coupon.be.CouponOperationImpl"></type>
+      <default>
+        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.CouponOperationImpl();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:operation>
+      <expressionString><![CDATA[
+      import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.vogerp.coupon.be.*;
+      import org.shaolin.vogerp.coupon.dao.CouponModel;
+		import org.shaolin.uimaster.page.ajax.*;
+		import java.util.List;
+		import org.shaolin.bmdp.runtime.security.UserContext;
+		import java.util.Date;
+		import org.shaolin.vogerp.coupon.util.CouponUtil;
+      {
+      	System.out.println("=============Lottery Logic Node=================");
+      	System.out.println("orderNumText = " + $orderNumText);
+      	System.out.println("luckyImageUrlText = " + $luckyImageUrlText);
+      	
+      	String orderNum = $orderNumText;
+      	String couponIcon = $luckyImageUrlText;
+      	
+        if (null == couponIcon || "".equals(couponIcon)) {
+	        //Not lucky lottery
+	        System.out.println("Not lucky!!");
+	        $discountProducts = null;
+			return ;
+       	}
+       	
+       	CouponTypeImpl condition = new CouponTypeImpl();
+       	condition.setIcon(couponIcon);
+       	condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+       	List couponTypes = CouponModel.INSTANCE.searchCouponType(condition, null, 0, 0);
+                	
+       	if (null != couponTypes && couponTypes.size() > 0) {
+       		CouponTypeImpl couponType = (CouponTypeImpl)(couponTypes.get(0));
+       		$couponType = couponType;
+       		
+       		DiscountProductImpl condition1 = new DiscountProductImpl();
+       		condition1.setCouponTypeId(couponType.getId());
+       		condition1.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+       		List discountProducts = CouponModel.INSTANCE.searchDiscountProduct(condition1, null, 0, 0);
+       		$discountProducts = discountProducts;
+       		
+       		CouponOperationImpl couponOperation = new CouponOperationImpl();
+   			couponOperation.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+   			couponOperation.setOrderNum(orderNum);
+   			couponOperation.setType(CouponUtil.OPERATION_TYPE_LOTTERY);
+   			couponOperation.setCreateDate(new Date());
+       		
+       		if (null != discountProducts &&  (couponType.getIsImmediate() || discountProducts.size() == 1)) {
+       			System.out.println("lucky !!!  " + couponType.getName());
+       			DiscountProductImpl discountProduct = (DiscountProductImpl)discountProducts.get(0);
+       			$discountProduct = discountProduct;
+	       		System.out.println("======discountProduct=======\n" + $discountProduct + "\n====================");
+       			
+       			Long orgId = (Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID);
+       			CouponImpl coupon = (CouponImpl)CouponUtil.genCoupon(discountProduct, orgId);
+       			coupon.setOrgId(orgId);
+       			CouponModel.INSTANCE.create(coupon);
+       			$coupon = coupon;
+       			
+       			couponOperation.setSerialNumber(coupon.getSerialNumber());
+       			
+       			couponType.setRestNum(couponType.getRestNum() - 1);
+       			CouponModel.INSTANCE.update(couponType);
+       		}
+       		//create lottery operation record
+       		CouponModel.INSTANCE.create(couponOperation);
+       		$couponOperation = couponOperation;
+       	}
+      }]]></expressionString>
+    </ns2:operation>
+    <ns2:out xsi:type="ns2:ConditionalOutType" name="ChoiceDiscountProduct">
+      <ns2:conditionExpression>
+      	<expressionString><![CDATA[{return $discountProducts != null && $discountProducts.size() > 1;}]]></expressionString>
+      </ns2:conditionExpression>
+      <ns2:next>
+        <ns2:destNode>ChoiceDiscountProduct</ns2:destNode>
+        <ns2:outDataMappingToNode name="orderNumText">
+          <expression>
+            <expressionString><![CDATA[$orderNumText]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="couponType">
+          <expression>
+            <expressionString><![CDATA[$couponType]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="discountProducts">
+          <expression>
+            <expressionString><![CDATA[$discountProducts]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="couponOperation">
+          <expression>
+            <expressionString><![CDATA[$couponOperation]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+      </ns2:next>
+    </ns2:out>
+    <ns2:out xsi:type="ns2:ConditionalOutType" name="CouponInfo">
+      <ns2:conditionExpression>
+      	<expressionString><![CDATA[{return $couponType != null && $discountProducts != null && $discountProducts.size() == 1;}]]></expressionString>
+      </ns2:conditionExpression>
+      <ns2:next>
+        <ns2:destNode>CouponInfo</ns2:destNode>
+        <ns2:outDataMappingToNode name="orderNumText">
+          <expression>
+            <expressionString><![CDATA[$orderNumText]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="couponType">
+          <expression>
+            <expressionString><![CDATA[$couponType]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="discountProduct">
+          <expression>
+            <expressionString><![CDATA[$discountProduct]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="coupon">
+          <expression>
+            <expressionString><![CDATA[$coupon]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+      </ns2:next>
+    </ns2:out>
+    <ns2:out xsi:type="ns2:ConditionalOutType" name="Thanks">
+      <ns2:conditionExpression>
+      	<expressionString><![CDATA[{return $couponType == null || $discountProducts == null || $discountProducts.size() == 0;}]]></expressionString>
+      </ns2:conditionExpression>
+      <ns2:next>
+        <ns2:destNode>Thanks</ns2:destNode>
+      </ns2:next>
+    </ns2:out>
+  </ns2:webNode>
+  
+  <ns2:webNode xsi:type="ns2:LogicNodeType" name="SelectedDiscountProductLogic">
+  	<ns2:variables name="orderNumText" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="selectedProductId" category="JavaClass">
+      <type entityName="java.lang.Integer"></type>
+      <default>
+        <expressionString><![CDATA[0]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="couponType" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.coupon.be.CouponTypeImpl"></type>
+      <default>
+        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.CouponTypeImpl();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="coupon" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.coupon.be.CouponImpl"></type>
+      <default>
+        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.CouponImpl();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="discountProduct" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.coupon.be.DiscountProductImpl"></type>
+      <default>
+        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.DiscountProductImpl();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="couponOperation" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.coupon.be.CouponOperationImpl"></type>
+      <default>
+        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.CouponOperationImpl();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:operation>
+      <expressionString><![CDATA[
+      import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.vogerp.coupon.be.*;
+      import org.shaolin.vogerp.coupon.dao.CouponModel;
+		import org.shaolin.uimaster.page.ajax.*;
+		import java.util.List;
+		import org.shaolin.bmdp.runtime.security.UserContext;
+		import java.util.Date;
+		import org.shaolin.vogerp.coupon.util.CouponUtil;
+      {
+      	System.out.println("=============Selected Lottery Logic Node=================");
+      	System.out.println("orderNumText = " + $orderNumText);
+      	System.out.println("selectedProductId = " + $selectedProductId);
+      	
+       		DiscountProductImpl condition1 = new DiscountProductImpl();
+       		condition1.setId($selectedProductId);
+       		condition1.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+       		List discountProducts = CouponModel.INSTANCE.searchDiscountProduct(condition1, null, 0, 0);
+       		if (null != discountProducts && discountProducts.size() > 0) {
+	       		$discountProduct = (DiscountProductImpl)discountProducts.get(0);
+	       		System.out.println($discountProduct);
+	       		
+	       		Long orgId = (Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID);
+       			CouponImpl coupon = (CouponImpl)CouponUtil.genCoupon($discountProduct, orgId);
+       			coupon.setOrgId(orgId);
+       			CouponModel.INSTANCE.create(coupon);
+       			
+       			$coupon = coupon;
+       			
+       			$couponOperation.setSerialNumber(coupon.getSerialNumber());
+       			CouponModel.INSTANCE.update($couponOperation);
+       			
+       			$couponType.setRestNum($couponType.getRestNum() - 1);
+       			CouponModel.INSTANCE.update($couponType);
+       		}
+      }]]></expressionString>
+    </ns2:operation>
+    <ns2:out xsi:type="ns2:ConditionalOutType" name="CouponInfo">
+      <ns2:conditionExpression>
+      	<expressionString><![CDATA[{return $couponType != null && $discountProduct != null;}]]></expressionString>
+      </ns2:conditionExpression>
+      <ns2:next>
+        <ns2:destNode>CouponInfo</ns2:destNode>
+        <ns2:outDataMappingToNode name="orderNumText">
+          <expression>
+            <expressionString><![CDATA[$orderNumText]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="couponType">
+          <expression>
+            <expressionString><![CDATA[$couponType]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="discountProduct">
+          <expression>
+            <expressionString><![CDATA[$discountProduct]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="coupon">
+          <expression>
+            <expressionString><![CDATA[$coupon]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+      </ns2:next>
+    </ns2:out>
+  </ns2:webNode>
+  
+  <ns2:webNode xsi:type="ns2:LogicNodeType" name="ViewOrderCouponLogic">
+  	<ns2:variables name="orderNumText" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="coupons" category="JavaClass">
+      <type entityName="java.util.List"></type>
+      <default>
+        <expressionString><![CDATA[new java.util.ArrayList();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:operation>
+      <expressionString><![CDATA[
+      import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.vogerp.coupon.be.*;
+      import org.shaolin.vogerp.coupon.dao.CouponModel;
+		import org.shaolin.uimaster.page.ajax.*;
+		import java.util.List;
+		import java.util.ArrayList;
+		import org.shaolin.bmdp.runtime.security.UserContext;
+		import java.util.Date;
+		import org.shaolin.vogerp.coupon.util.CouponUtil;
+		import org.shaolin.vogerp.coupon.ce.StatusType;
+      {
+      	System.out.println("=============View Order Coupon Logic Node=================");
+      	String orderNum = $orderNumText;
+      	CouponOperationImpl condition = new CouponOperationImpl();
+      	condition.setOrderNum(orderNum);
+      	condition.setType(CouponUtil.OPERATION_TYPE_LOTTERY);
+      	condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+      	List couponOpers = CouponModel.INSTANCE.searchOperationByOrderNum(condition, null, 0, 0);
+      	
+      	if (null != couponOpers && couponOpers.size() > 0) {
+	      	if (null == $coupons) {
+	      		$coupons = new ArrayList();
+	      	}
+      		for (int i = 0; i < couponOpers.size(); i++) {
+      			CouponOperationImpl couponOper = (CouponOperationImpl)couponOpers.get(i);
+      			String serialNumber = couponOper.getSerialNumber();
+      			if (null != serialNumber && !"".equals(serialNumber)) {
+      				CouponImpl condition1 = new CouponImpl();
+      				condition1.setSerialNumber(serialNumber);
+      				condition1.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+      				List coupons = CouponModel.INSTANCE.searchEffectedCoupon(condition1, null, 0, 0);
+      				if (null != coupons && coupons.size() > 0) {
+      					CouponImpl coupon = (CouponImpl)coupons.get(0);
+      					if (StatusType.SENDOUT.equals(coupon.getStatus()) || StatusType.EXCHANGED.equals(coupon.getStatus())) {
+	      					System.out.println("===============Order Num " + orderNum + " have coupon ================\n" + coupon);
+	      					$coupons.add(coupon);
+      					}
+      				}
+      			}
+      		}
+      	}
+      }]]></expressionString>
+    </ns2:operation>
+    <ns2:out xsi:type="ns2:ConditionalOutType" name="ViewOrderCoupon">
+      <ns2:conditionExpression>
+      	<expressionString><![CDATA[{return $coupons != null;}]]></expressionString>
+      </ns2:conditionExpression>
+      <ns2:next>
+        <ns2:destNode>ViewOrderCoupon</ns2:destNode>
+        <ns2:outDataMappingToNode name="coupons">
+          <expression>
+            <expressionString><![CDATA[$coupons]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+      </ns2:next>
+    </ns2:out>
+  </ns2:webNode>
+</ns2:WebChunk>

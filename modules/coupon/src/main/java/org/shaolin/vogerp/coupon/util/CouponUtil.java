@@ -1,5 +1,6 @@
 package org.shaolin.vogerp.coupon.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,12 +23,14 @@ public class CouponUtil {
 	 * Generate coupon serial number
 	 * @return
 	 */
-	public static String genCouponSerialNumber() {
+	public static String genCouponSerialNumber(Long orgId) {
+		String orgIdStr = String.valueOf(orgId);
 		int len = CHAR_ARR.length;
 		int index = 0;
 		StringBuffer couponSerialNumber = new StringBuffer();
+		couponSerialNumber.append(orgIdStr);
 		Random random = new Random();
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 8 - orgIdStr.length(); i++) {
 			index = random.nextInt(len);
 			couponSerialNumber.append(String.valueOf(CHAR_ARR[index]));
 		}
@@ -43,10 +46,10 @@ public class CouponUtil {
 		return couponSerialNumber.toString();
 	}
 	
-	public static CouponImpl genCoupon(DiscountProductImpl discountProduct) {
+	public static CouponImpl genCoupon(DiscountProductImpl discountProduct, Long orgId) {
 		CouponImpl coupon = new CouponImpl();
 		coupon.setName(discountProduct.getName());
-		coupon.setSerialNumber(genCouponSerialNumber());
+		coupon.setSerialNumber(genCouponSerialNumber(orgId));
 		coupon.setDiscountProductId(discountProduct.getId());
 		coupon.setExpiredDate(addDays(new Date(), discountProduct.getValidity()));
 		coupon.setStatus(StatusType.SENDOUT);
@@ -76,4 +79,26 @@ public class CouponUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		return sdf.format(date);
 	}
+	
+	/**
+	 * compute between days
+	 * @param smdate
+	 * @param bdate
+	 * @return
+	 * @throws ParseException
+	 */
+	public static int daysBetween(Date smdate, Date bdate) throws ParseException {    
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");  
+        smdate=sdf.parse(sdf.format(smdate));  
+        bdate=sdf.parse(sdf.format(bdate));  
+        Calendar cal = Calendar.getInstance();    
+        cal.setTime(smdate);    
+        long time1 = cal.getTimeInMillis();                 
+        cal.setTime(bdate);
+        long time2 = cal.getTimeInMillis();
+        long dayMills = 1000 * 3600 * 24;
+        long between_days=(time2-time1) % dayMills == 0 ? (time2-time1) / dayMills : (time2-time1) / dayMills + 1;  
+            
+       return Integer.parseInt(String.valueOf(between_days));           
+    }
 }

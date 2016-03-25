@@ -23,7 +23,7 @@ function org_shaolin_vogerp_coupon_form_DiscountProductWithCoupon(json)
         ui: elementList[prefix + "iconUILabel"]
     });
 
-    var iconUI = new UIMaster.ui.textfield
+    var iconUI = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "iconUI"]
     });

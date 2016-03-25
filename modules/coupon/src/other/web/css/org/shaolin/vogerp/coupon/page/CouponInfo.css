@@ -1,0 +1,144 @@
+div#Form {
+    width: 100%;
+    background-image : url(/uimaster/images/coupon/front/background.jpg);
+    background-repeat : no-repeat;
+	background-size : cover;
+	-moz-background-size : cover;
+	-webkit-background-size : cover;
+    color : white;
+}
+
+div#div-Form-0_0 {
+    margin: 0;
+    width : 100%;
+}
+
+#div-Form-0_0 img.uimaster_image {
+    width: 100%;
+}
+
+div#div-Form-0_1 {
+    width: 100%;
+}
+
+div#couponPanel {
+    margin: 1px;
+    border : 2px solid white;
+}
+
+div#div-couponPanel-0_0 {
+    background-size: cover;
+    background-image : url(/uimaster/images/coupon/front/couponSerialNumBox.png);
+    margin : 3% 2% 7% 2%;
+    width : 96%;
+    color : black;
+    font-size: 1.5em;
+}
+
+div#div-serialNumPanel-0_0 {
+    width: 27%;
+    text-align: right;
+}
+
+div#div-serialNumPanel-1_0 {
+    width: 27%;
+    text-align: left;
+}
+
+div#div-serialNumPanel-2_0 {
+    width: 25%;
+    text-align: right;
+}
+
+div#div-serialNumPanel-3_0 {
+    width: 15%;
+}
+
+div#div-couponPanel-0_1 {
+    width: 100%;
+    margin: 1% 0 8% 0;
+}
+
+div#div-couponImagePanel-0_0 {
+    width: 45%;
+    margin: 0;
+}
+
+#div-couponImagePanel-0_0 img.uimaster_image {
+    width: 70%;
+    border: solid 2px white;
+    margin-left: 20%;
+}
+
+div#div-couponImagePanel-1_0 {
+    width: 45%;
+}
+
+div#div-couponImageRightPanel-0_0 {
+    width: 100%;
+    font-size: 2.5em;
+    margin-top: 15%;
+    color: #FFE59B;
+}
+
+div#div-couponPanel-0_2 {
+    width: 96%;
+    margin: 0 2% 0 2%;
+}
+
+#div-couponPanel-0_2 img.uimaster_image {
+    width: 100%;
+}
+
+div#div-couponPanel-0_3 {
+    width: 100%;
+    margin : 0;
+}
+
+div#div-bottomPanel-0_0 {width: 65%;      margin: 5% 0 0 5%;}
+
+div#div-couponPanel-0_3 {
+    width: 100%;
+    margin : 0;
+}
+
+div#bottomPanel {
+    width: 96%;
+    margin: 0 2% 0 2%;
+}
+
+div#div-bottomLeftPanel-0_0 {
+    font-size: 1.5em;
+    color: #FD3657;
+}
+
+div#div-bottomLeftPanel-0_1,div#div-bottomLeftPanel-0_2 {
+    margin: 0;
+}
+
+div#div-bottomLeftPanel-0_3 {
+    width: 100%;
+}
+
+div#div-bottom3Panel-0_0 {
+    font-size: 1.1em;
+    margin: 13% 7% 0 0;
+}
+
+div#div-bottom3Panel-1_0 {
+    width: 25%;
+}
+
+div#div-bottomPanel-1_0 {
+    width: 30%;
+    margin : 0;
+}
+
+#div-bottomPanel-1_0 img.uimaster_image {
+    width: 90%;
+    margin: 40% 0 0 10%;
+}
+
+#div-bottom3Panel-1_0 img.uimaster_image {
+    width: 100%;
+}

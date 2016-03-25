@@ -55,6 +55,11 @@
 	            <bediagram:targetEntity entityName="ResetIntervalType" />
 	        </bediagram:type>
 		</bediagram:member>
+		<!-- 上次重置时间 -->
+		<bediagram:member>
+	        <bediagram:name>lastResetDate</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:DateTimeType" />
+	    </bediagram:member>
 		<!-- 是否为即刻优惠券类型 -->
 		<bediagram:member>
 			<bediagram:name>isImmediate</bediagram:name>
@@ -248,12 +253,12 @@
 		</bediagram:constantValue>
 		<bediagram:constantValue>
             <bediagram:value>ThreeDay</bediagram:value>
-            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:intValue>3</bediagram:intValue>
             <bediagram:description>3\u5929</bediagram:description>
         </bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>OneWeek</bediagram:value>
-			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:intValue>7</bediagram:intValue>
 			<bediagram:description>7\u5929</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>

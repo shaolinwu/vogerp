@@ -208,6 +208,8 @@ function org_shaolin_vogerp_coupon_form_CouponType(json)
 
     Form.Cancel = org_shaolin_vogerp_coupon_form_CouponType_Cancel;
 
+    Form.selectImage = org_shaolin_vogerp_coupon_form_CouponType_selectImage;
+
     Form.invokeDynamicFunction = org_shaolin_vogerp_coupon_form_CouponType_invokeDynamicFunction;
 
     Form.__entityName="org.shaolin.vogerp.coupon.form.CouponType";
@@ -240,6 +242,17 @@ function org_shaolin_vogerp_coupon_form_CouponType(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160305-201445",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_coupon_form_CouponType_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_form_CouponType_selectImage(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_form_CouponType_selectImage */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectImage-1317628417",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_coupon_form_CouponType_selectImage */
 
 
     /* auto generated eventlistener function declaration */

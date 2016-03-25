@@ -41,6 +41,7 @@
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.coupon.be.CouponTypeImpl;
                     {
+                    	System.out.println("==========openCouponType===========");
                         Table couponTypeTable = (Table)@page.getElement("couponTypeTable");
                         if (couponTypeTable.getSelectedRow() == null) {
                             return;
@@ -264,8 +265,17 @@
 								</ns2:title>
 								<ns2:beFieldId>rowBE.icon</ns2:beFieldId>
 								<ns2:uiType xsi:type="ns2:UITableColHTMLType">
-									<ns2:type>Text</ns2:type>
+									<ns2:type>HTML</ns2:type>
 								</ns2:uiType>
+								<ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+								<ns2:expression xsi:type="ns2:ExpressionType">
+									<ns2:expressionString><![CDATA[
+		                            {
+		                                return "<img src=\"" + $rowBE.getIcon() + "\" />";
+		                            }
+		                            ]]></ns2:expressionString>
+								</ns2:expression>
+							</ns2:rowExpression>
 							</ns2:column>
 							<ns2:column xsi:type="ns2:UITableColumnType">
 								<ns2:title xsi:type="ns2:StringPropertyType">

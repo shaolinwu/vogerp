@@ -1,0 +1,114 @@
+div#Form {
+    width: 100%;
+    background-size : cover;
+    background-image : url(/uimaster/images/coupon/front/background.jpg);
+    background-size : cover;
+    -moz-background-size : cover;
+	-webkit-background-size : cover;
+}
+
+div#div-Form-0_0 {
+    width: 100%;
+    margin : 0;
+}
+
+#div-Form-0_0 img.uimaster_image {
+    width: 100%;
+}
+
+div#div-Form-0_1 {
+    border : solid 2px white;
+    width : 100%;
+    margin : 0;
+    float : none;
+}
+
+div#div-ProductPanel-0_0 {
+    width: 96%;
+    margin: 2%;
+    min-width: 1px;
+}
+
+#div-ProductPanel-0_0 img.uimaster_image {width: 100%;}
+
+div#div-topTextPanel-0_1 {
+    width: 40%;
+    position: relative;
+    top: 0;
+    left: 30%;
+    min-width: 1px;
+}
+
+#ChoiceDiscountPanel{
+	width : 100%;
+	margin : 0;
+}
+#div-ChoiceDiscountPanel-0_0 {
+	margin : 0;
+	width : 100%;
+}
+#choiceDiscountTableActionBar{
+	display : none;
+}
+
+#choiceDiscountTable thead{
+	display : none;
+}
+#div-ProductPanel-0_1{
+	width: 94%;
+    margin: -10% 2% 0 2%;
+	border: solid gray 0.2em;
+    background-color: white;
+    text-align : center;
+}
+#choiceDiscountTable td{
+	width: 100%;
+    margin: 0;
+    padding: 0;
+}
+div[class1='discountProductInfoView']{
+	background-image: url(/uimaster/images/coupon/front/choiceDiscountProductBack.png);
+    background-size: 100% 100%;
+    -moz-background-size : 100% 100%;
+	-webkit-background-size : 100% 100%;
+}
+div[class1='discountProductInfoView'] .uimaster_widget_cell{
+	width : 42%;
+	margin : 1%;
+	float: left;
+    clear: none;
+}
+div[class1='discountProductInfoView'] .uimaster_widget_cell img{
+	width: 100%;
+}
+div[class1='discountProductInfoView'] .uimaster_container_cell{
+	width: 47%;
+    margin-left: 3%;
+    text-align : center;
+    color : white;
+}
+div[class1='discountProductInfoView'] div[class1='discountProductTextView'] div{
+	width : 100%;
+}
+div[class1='discountProductInfoView'] div[class1='discountProductTextView'] span[class1='discountProductNameView']{
+	font-size: 1.6em;
+    color: yellow;
+    width : 100%;
+}
+div[class1='discountProductInfoView'] div[class1='discountProductTextView'] span[class1='productDiscountView']{
+	font-size: 1.6em;
+    color: yellow;
+    width : 100%;
+}
+#choiceDiscountTable_length{
+	display : none;
+}
+div#div-discountProductForm-discountProductForm-discountProductPanel-1_0{
+	width: 47%;
+    margin-left: 3%;
+    text-align : center;
+    color : white;
+}
+#choiceDiscountTable_paginate,#choiceDiscountTable_info{
+	display : none;
+}

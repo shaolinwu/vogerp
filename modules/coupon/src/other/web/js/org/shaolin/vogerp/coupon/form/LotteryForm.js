@@ -78,6 +78,7 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 		        			var cellTop = 32;
 		        			
 		        			$("#div-lotteryForm-hidden input[name='lotteryForm.luckyImageUrlText']").val(luckyImageUrl);
+		        			$("input[name='luckyImageUrlText']").val(luckyImageUrl);
 		        			
 		        			var couponPanel = document.getElementById("lotteryForm.couponPanel");
 							var $couponPan = $(couponPanel);
@@ -143,26 +144,21 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 											needRollDivIds = needRollDivIds + "," +"#lotteryForm_" + m + "-" + n;
 										}
 									}
-									var rollTime = 2000;
+									var rollTime = 1000;
 									var t1 = ((row - 2) * cellTop);
 									var count = rollTopArr[m] / cellTop + 1;
 									var cellTime = parseInt(rollTime / (count + row - 2));
 									$(needRollDivIds).delay(m * rollTime).animate({"top" : "-" + t1 + "%"}, cellTime * (row - 2)).animate({"top" : 97 - 2 * cellTop + "%"}, 0).animate({"top" : "-" + rollTopArr[m] + "%"}, cellTime * count);
 								}
-								//var tt = 0;
 								var advertTopHeight = $(window).height() - $couponPan.height() * 0.42 - $("#div-leftPanel-0_4").height();
 								$("#div-leftPanel-0_1, #div-leftPanel-0_1 img").height(advertTopHeight + "px").css("display", "block");
-								//$("#div-leftPanel-0_1, #div-leftPanel-0_1 img").height(advertTopHeight + "px").slideDown(tt * 2);
 								var rollHeight = advertTopHeight - $couponPan.height() * 0.28 - $couponPan.offset().top;
 								$couponPan.css("top", "" + rollHeight + "px");
-								//$couponPan.animate({"top" : "" + rollHeight + "px"}, tt);
 								var advertBottomHeight = $(window).height() - advertTopHeight - $couponPan.height() * 0.40;
 								$("#div-leftPanel-0_4, #div-leftPanel-0_4 img").height(advertBottomHeight + "px").css("display", "block");
-								//$("#div-leftPanel-0_4, #div-leftPanel-0_4 img").height(advertBottomHeight + "px").slideDown(tt * 2);
 								$("#div-leftPanel-0_5").css("left", $couponPan.offset().left + "px");
 								$("#div-leftPanel-0_6").css("right", $couponPan.offset().right + "px");
 		        				$("#div-leftPanel-0_5,#div-leftPanel-0_6").height($couponPan.height() + "px").css({"display" : "block", "top" : advertTopHeight + "px"});
-		        				//$("#div-leftPanel-0_5,#div-leftPanel-0_6").height($couponPan.height() + "px").delay(tt * 2).css({"display" : "block", "top" : advertTopHeight + "px"});
 		        				
 		        			}
 		        			
@@ -243,17 +239,15 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
             /* Construct_LAST:org_shaolin_vogerp_coupon_form_LotteryForm */
     };
 
+    Form.genCoupon = org_shaolin_vogerp_coupon_form_LotteryForm_genCoupon;
+
     Form.loadCouponImageUrl = org_shaolin_vogerp_coupon_form_LotteryForm_loadCouponImageUrl;
 
     Form.rollCoupon = org_shaolin_vogerp_coupon_form_LotteryForm_rollCoupon;
 
     Form.verifyOrderNum = org_shaolin_vogerp_coupon_form_LotteryForm_verifyOrderNum;
 
-    Form.veriOrderNumBack = org_shaolin_vogerp_coupon_form_LotteryForm_veriOrderNumBack;
-
     Form.loadJackpot = org_shaolin_vogerp_coupon_form_LotteryForm_loadJackpot;
-
-    Form.genCoupon = org_shaolin_vogerp_coupon_form_LotteryForm_genCoupon;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_coupon_form_LotteryForm_invokeDynamicFunction;
 
@@ -266,6 +260,17 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_coupon_form_LotteryForm */
 /* Other_Func_LAST:org_shaolin_vogerp_coupon_form_LotteryForm */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_form_LotteryForm_genCoupon(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_form_LotteryForm_genCoupon */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"genCoupon-20160112-232035",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_coupon_form_LotteryForm_genCoupon */
+
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_coupon_form_LotteryForm_loadCouponImageUrl(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_form_LotteryForm_loadCouponImageUrl */
@@ -300,19 +305,11 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 		        	if (!reg.test(orderNum.trim())) {
 		        		$("#div-lotteryForm-lotteryStartPanel-0_0 input").val("");
 		        		$("#div-lotteryForm-lotteryStartPanel-0_0 input").attr("placeholder", "请输入订单号后4位");
+		        	} else {
+		        		$("input[name='orderNumText']").val(orderNum);
 		        	}
+		        	
 				}    }/* Gen_Last:org_shaolin_vogerp_coupon_form_LotteryForm_verifyOrderNum */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_coupon_form_LotteryForm_veriOrderNumBack(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_form_LotteryForm_veriOrderNumBack */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"veriOrderNumBack-20160112-232035",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_coupon_form_LotteryForm_veriOrderNumBack */
 
 
     /* auto generated eventlistener function declaration */
@@ -324,17 +321,6 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"loadJackpot-20160112-232035",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_coupon_form_LotteryForm_loadJackpot */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_coupon_form_LotteryForm_genCoupon(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_form_LotteryForm_genCoupon */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"genCoupon-20160112-232035",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_coupon_form_LotteryForm_genCoupon */
 
 
     /* auto generated eventlistener function declaration */

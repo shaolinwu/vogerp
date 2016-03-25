@@ -13,6 +13,16 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
         ui: elementList[prefix + "advertTopImage"]
     });
 
+    var orderNumText = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "orderNumText"]
+    });
+
+    var luckyImageUrlText = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "luckyImageUrlText"]
+    });
+
     var footerText = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "footerText"]
@@ -51,7 +61,7 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
     ({
         ui: elementList[prefix + "lotteryPanel"]
         ,items: []
-        ,subComponents: [prefix + "lotteryForm"]
+        ,subComponents: [prefix + "orderNumText",prefix + "luckyImageUrlText",prefix + "lotteryForm"]
     });
 
     var leftPanel = new UIMaster.ui.panel
@@ -65,12 +75,16 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [lotteryLogoImage,advertTopImage,footerText,advertBottomImage,advertLeftImage,advertRightImage,curtainImage,lotteryForm,leftPanel,lotteryPanel,curtainPanel]
+        ,items: [lotteryLogoImage,advertTopImage,orderNumText,luckyImageUrlText,footerText,advertBottomImage,advertLeftImage,advertRightImage,curtainImage,lotteryForm,leftPanel,lotteryPanel,curtainPanel]
     });
 
     Form.lotteryLogoImage=lotteryLogoImage;
 
     Form.advertTopImage=advertTopImage;
+
+    Form.orderNumText=orderNumText;
+
+    Form.luckyImageUrlText=luckyImageUrlText;
 
     Form.footerText=footerText;
 
@@ -92,6 +106,10 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
 
     Form.lotteryPanel=lotteryPanel;
 
+    Form.orderNumText=orderNumText;
+
+    Form.luckyImageUrlText=luckyImageUrlText;
+
     Form.lotteryForm=lotteryForm;
 
     Form.footerText=footerText;
@@ -103,6 +121,10 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
     Form.advertRightImage=advertRightImage;
 
     Form.lotteryPanel=lotteryPanel;
+
+    Form.orderNumText=orderNumText;
+
+    Form.luckyImageUrlText=luckyImageUrlText;
 
     Form.lotteryForm=lotteryForm;
 
@@ -118,9 +140,13 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
 
     Form.openCurtainFunc = org_shaolin_vogerp_coupon_page_FrontLottery_openCurtainFunc;
 
+    Form.ChoiceDiscountProductLogic = org_shaolin_vogerp_coupon_page_FrontLottery_ChoiceDiscountProductLogic;
+
     Form.initPageJs = org_shaolin_vogerp_coupon_page_FrontLottery_initPageJs;
 
     Form.finalizePageJs = org_shaolin_vogerp_coupon_page_FrontLottery_finalizePageJs;
+
+    Form.ChoiceDiscountProductLogic_OutFunctionName = org_shaolin_vogerp_coupon_page_FrontLottery_ChoiceDiscountProductLogic_OutFunctionName;
 
     Form.__AJAXSubmit = false;
     
@@ -147,6 +173,15 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
 					}    }/* Gen_Last:org_shaolin_vogerp_coupon_page_FrontLottery_openCurtainFunc */
 
 
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_page_FrontLottery_ChoiceDiscountProductLogic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_page_FrontLottery_ChoiceDiscountProductLogic */
+        var o = this;
+        var UIEntity = this;
+
+        o.ChoiceDiscountProductLogic_OutFunctionName(eventsource);
+    }/* Gen_Last:org_shaolin_vogerp_coupon_page_FrontLottery_ChoiceDiscountProductLogic */
+
+
     function org_shaolin_vogerp_coupon_page_FrontLottery_initPageJs(){/* Gen_First:org_shaolin_vogerp_coupon_page_FrontLottery_initPageJs */
         var constraint_result = true;
         var UIEntity = this;
@@ -158,5 +193,35 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
 
     }/* Gen_Last:org_shaolin_vogerp_coupon_page_FrontLottery_finalizePageJs */
 
+
+    function org_shaolin_vogerp_coupon_page_FrontLottery_ChoiceDiscountProductLogic_OutFunctionName(eventsource) {/* Gen_First:org_shaolin_vogerp_coupon_page_FrontLottery_ChoiceDiscountProductLogic_OutFunctionName */
+        var constraint_result = true;
+        var myForm;
+        if (this.formName != undefined)
+        {
+            myForm = document.forms[this.formName];
+        }
+        else
+        {
+            var p = this.Form.parentNode;
+            while(p.tagName != "FORM")
+                p = p.parentNode;
+            myForm = p;//document.forms[0];
+        }
+
+        var UIEntity = this;
+
+        constraint_result = this.Form.validate();
+{
+			// hello, my first js.
+			}        
+        myForm._outname.value = "ChoiceDiscountProductLogic";
+        myForm.target = "_self";
+             
+        if ( (constraint_result == true || constraint_result == null) && (!ajax_execute_onerror) ) {
+          myForm.submit();
+        }
+        return constraint_result;
+    }/* Gen_Last:org_shaolin_vogerp_coupon_page_FrontLottery_ChoiceDiscountProductLogic_OutFunctionName */
 
 

@@ -16,6 +16,22 @@
                     <item name="font-awesome" value="/css/jsgallery/font-awesome.min.css" />
                     <item name="jgallery.min" value="/css/jsgallery/jgallery.min.css?v=1.5.0" />
                 </node>
+                <node name="org.shaolin.vogerp.coupon.page.Thanks">
+                    <item name="font-awesome" value="/css/jsgallery/font-awesome.min.css" />
+                    <item name="jgallery.min" value="/css/jsgallery/jgallery.min.css?v=1.5.0" />
+                </node>
+                <node name="org.shaolin.vogerp.coupon.page.CouponInfo">
+                    <item name="font-awesome" value="/css/jsgallery/font-awesome.min.css" />
+                    <item name="jgallery.min" value="/css/jsgallery/jgallery.min.css?v=1.5.0" />
+                </node>
+                <node name="org.shaolin.vogerp.coupon.page.ChoiceDiscountProduct">
+                    <item name="font-awesome" value="/css/jsgallery/font-awesome.min.css" />
+                    <item name="jgallery.min" value="/css/jsgallery/jgallery.min.css?v=1.5.0" />
+                </node>
+                <node name="org.shaolin.vogerp.coupon.page.ViewOrderCoupon">
+                    <item name="font-awesome" value="/css/jsgallery/font-awesome.min.css" />
+                    <item name="jgallery.min" value="/css/jsgallery/jgallery.min.css?v=1.5.0" />
+                </node>
             </node>
         </node>
     </node>
