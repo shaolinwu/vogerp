@@ -56,6 +56,34 @@
                 </ns2:exp>
             </ns2:ops>
 		</ns2:eventHandler>
+		<ns2:eventHandler functionName="acceptGoldenOrder">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="acceptGoldenOrder-2016-0124-1351">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                    {
+                        Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("list", defaultUser.getOfferPrices());
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GOOfferPriceTable", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Open Golden Order", new TableCallBack("goldenOrderTable"), 690, 450);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
         <ns2:eventHandler functionName="openGOrderTracker">
           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openGOrderTracker-20150614">
               <ns2:exp>
@@ -163,7 +191,7 @@
 		                                <ns2:expressionString><![CDATA[
 		                                import org.shaolin.bmdp.runtime.AppContext;
 		                                {
-		                                	return $rowBE.getPublishedCustomer().getOrganization().getName() +"["+ $rowBE.getPublishedCustomer().getFirstName() + " " + $rowBE.getPublishedCustomer().getLastName()+"]";
+		                                	return org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getPublishedCustomer());
 		                                }]]></ns2:expressionString>
 		                            </ns2:expression>
 		                        </ns2:rowExpression>
@@ -283,6 +311,14 @@
 		                    </ns2:defaultActions>
 		                    <ns2:actionGroup>
                                 <ns2:type>radio</ns2:type>
+                                <ns2:action>
+                                    <ns2:uiid>acceptGoldenOrder</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>成交订单</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>acceptGoldenOrder</ns2:function>
+                                </ns2:action>
                                 <ns2:action>
 		                            <ns2:uiid>openGOrderTracker</ns2:uiid>
 		                            <ns2:title xsi:type="ns2:StringPropertyType">

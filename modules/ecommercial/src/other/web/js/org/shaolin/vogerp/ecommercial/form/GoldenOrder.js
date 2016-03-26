@@ -23,7 +23,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
         ui: elementList[prefix + "descriptionUILabel"]
     });
 
-    var descriptionUI = new UIMaster.ui.textfield
+    var descriptionUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "descriptionUI"]
     });

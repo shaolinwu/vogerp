@@ -1,6 +1,7 @@
 package org.shaolin.vogerp.productmodel;
 
 import java.util.List;
+import java.util.Map;
 
 import org.shaolin.vogerp.productmodel.be.IProductTemplate;
 
@@ -9,6 +10,8 @@ public interface IProductService {
 	public void reload();
 	
 	public List getPriceTree();
+	
+	public Map getPriceTreeMap();
 	
 	/**
 	 * Get product templates from Master node.

@@ -84,7 +84,7 @@
             CustCommonModel.INSTANCE.updateAddresses(parentId, tableWidget.getListData());
             
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            if (form.isInWindows()) {
+            if (form != null && form.isInWindows()) {
                 form.closeIfinWindows();
                 @page.removeForm(@page.getEntityUiid());
             }
@@ -100,7 +100,7 @@
         import org.shaolin.uimaster.page.ajax.*;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            if (form.isInWindows()) {
+            if (form != null && form.isInWindows()) {
             	form.closeIfinWindows(true);
             	@page.removeForm(@page.getEntityUiid()); 
             }

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
+import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 import org.shaolin.vogerp.commonmodel.be.IRegisterInfo;
 import org.shaolin.vogerp.commonmodel.internal.PasswordCheckResult;
 
@@ -46,6 +47,8 @@ public interface IUserService {
 	void changePassword(IPersonalAccount user, String newPassword);
 	
 	public IPersonalAccount getPersonalAccount(long userId);
+	
+	public IPersonalInfo getPersonalInfo(long userId);
 	
 	public String getUserName(long userId);
 	

@@ -163,7 +163,7 @@
         </bediagram:member>
     </bediagram:beEntity>
 	
-	<bediagram:beEntity needPersist="true" needUIEntity="true">
+	<bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
         <common:entityName>GOOfferPrice</common:entityName>
         <bediagram:member pk="true">
             <bediagram:name>id</bediagram:name>
@@ -183,6 +183,10 @@
         <bediagram:member>
             <bediagram:name>price</bediagram:name>
             <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>samplePhoto</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
 	</bediagram:beEntity>
 	

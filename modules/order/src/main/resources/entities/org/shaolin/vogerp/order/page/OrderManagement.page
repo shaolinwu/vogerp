@@ -64,11 +64,19 @@
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.AjaxActionHelper;
                     import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
                     import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
+                    import org.shaolin.vogerp.order.be.DeliveryInfoImpl;
                     {
+                        IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
                         PurchaseOrderImpl defaultUser = new PurchaseOrderImpl();
+                        DeliveryInfoImpl deliveryInfo = new DeliveryInfoImpl();
+                        defaultUser.setDeliveryInfo(deliveryInfo);
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
+                        input.put("personalInfo", userService.getPersonalInfo(UserContext.getUserContext().getUserId()));
                         input.put("editable", new Boolean(true));
                         RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.order.form.PurchaseOrder", input);
                         @page.addElement(form);
@@ -86,16 +94,21 @@
                     import java.util.HashMap;
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.AppContext;
                     import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
                     {
                         Table orderInfoTable = (Table)@page.getElement("purchaseOrderInfoTable");
                         if (orderInfoTable.getSelectedRow() == null) {
                             return;
                         }
+                        IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
                         PurchaseOrderImpl defaultUser = (PurchaseOrderImpl)orderInfoTable.getSelectedRow();
                         
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
+                        input.put("personalInfo", userService.getPersonalInfo(UserContext.getUserContext().getUserId()));
                         input.put("editable", new Boolean(true));
                         RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.order.form.PurchaseOrder", input);
                         @page.addElement(form);

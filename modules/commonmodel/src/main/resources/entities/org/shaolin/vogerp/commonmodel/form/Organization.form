@@ -97,10 +97,6 @@
              <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
              <ns2:key>org.shaolin.vogerp.commonmodel.form.Organization.orgCodeUI.allowBlankText</ns2:key>
          </ns2:allowBlankText>
-         <ns2:maxLength xsi:type="ns2:NumericPropertyType">
-             <type>int</type>
-             <value>20</value>
-         </ns2:maxLength>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="nameUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>

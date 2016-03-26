@@ -32,6 +32,7 @@ import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
 import org.shaolin.vogerp.commonmodel.ce.EmployeeLevel;
 import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -281,12 +282,20 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 	}
 	
 	@Override
+	public IPersonalInfo getPersonalInfo(long userId) {
+		PersonalInfoImpl userInfo = new PersonalInfoImpl();
+		userInfo.setId(userId);
+		List<IPersonalInfo> result = CommonModel.INSTANCE.searchPersonInfo(userInfo, null, 0, 1);
+		return result.get(0);
+	}
+	
+	@Override
 	public String getUserName(long userId) {
 		PersonalInfoImpl userInfo = new PersonalInfoImpl();
 		userInfo.setId(userId);
 		List<IPersonalInfo> result = CommonModel.INSTANCE.searchPersonInfo(userInfo, null, 0, 1);
 		IPersonalInfo iPersonalInfo = result.get(0);
-		return iPersonalInfo.getFirstName() + iPersonalInfo.getLastName()+"("+iPersonalInfo.getOrganization().getName()+")";
+		return CustomerInfoUtil.getCustomerEnterpriseBasicInfo(iPersonalInfo);
 	}
 	
 	@Override

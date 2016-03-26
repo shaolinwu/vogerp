@@ -9,6 +9,7 @@ import org.shaolin.bmdp.persistence.BEEntityDaoObject;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
 import org.shaolin.vogerp.commonmodel.be.IContactInfo;
 import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
@@ -21,10 +22,11 @@ public class CustCommonModel extends BEEntityDaoObject {
     }
     
     public List<ArrayList<String>>[] getIndividualParties(String type) {
-    	String sql = "SELECT c.id,c.firstname,c.lastname FROM comm_personinfo c where c.type=?;";
+    	String sql = "SELECT c.id,c.firstname,c.lastname FROM comm_personinfo c where c.type=? and c.orgid=?;";
     	Session session = HibernateUtil.getSession();
     	SQLQuery sqlQuery = session.createSQLQuery(sql);
     	sqlQuery.setString(0, type);
+    	sqlQuery.setLong(1, UserContext.getUserContext().getOrgId());
     	List<Object[]> list = sqlQuery.list();
     	
     	ArrayList<String> valueResult = new ArrayList<String>();
@@ -40,9 +42,10 @@ public class CustCommonModel extends BEEntityDaoObject {
     }
     
     public List<ArrayList<String>>[] getCustemrsDeliveryInfo(int customerId) {
-    	String sql = "SELECT p.warehouseid, count(p.warehouseid), b.name FROM prod_storageitem p, prod_warehouse b where p.warehouseid=b.id group by p.warehouseid;";
+    	String sql = "SELECT p.warehouseid, count(p.warehouseid), b.name FROM prod_storageitem p, prod_warehouse b where p.warehouseid=b.id and b.orgid=? group by p.warehouseid;";
     	Session session = HibernateUtil.getSession();	
     	SQLQuery sqlQuery = session.createSQLQuery(sql);
+    	sqlQuery.setLong(0, UserContext.getUserContext().getOrgId());
     	List<Object[]> list = sqlQuery.list();
     	
     	ArrayList<String> valueResult = new ArrayList<String>();
@@ -130,9 +133,10 @@ public class CustCommonModel extends BEEntityDaoObject {
     }
     
     public List<ArrayList<String>>[] getOrgEmployeeGroup() {
-    	String sql = "SELECT count(p.id), b.name, b.orgcode FROM comm_personinfo p, comm_organization b where p.orgcode=b.orgcode group by b.id;";
+    	String sql = "SELECT count(p.id), b.name, b.orgid FROM comm_personinfo p, comm_organization b where p.orgid=b.id and p.orgid=? group by b.id;";
     	Session session = HibernateUtil.getSession();
     	SQLQuery sqlQuery = session.createSQLQuery(sql);
+    	sqlQuery.setLong(0, UserContext.getUserContext().getOrgId());
     	List<Object[]> list = sqlQuery.list();
     	
     	ArrayList<String> valueResult = new ArrayList<String>();

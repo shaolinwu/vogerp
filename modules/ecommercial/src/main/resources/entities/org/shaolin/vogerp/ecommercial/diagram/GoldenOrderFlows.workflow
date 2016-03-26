@@ -182,6 +182,7 @@
 			            offerPrice.setTakenCustomerId(service.getUserId());
 			            offerPrice.setPrice(Double.valueOf(@page.getTextField("priceUI").getValue()));
 			            offerPrice.setCreateDate(new Date());
+			            offerPrice.setSamplePhoto(@page.getTextField("samplePhotoUI").getValue());
 			            
 			            // compare the prices.
 			            if (!OrderUtil.compareAPrice(order, offerPrice)) {
@@ -220,7 +221,7 @@
         
         <ns2:mission-node name="acceptPrice" expiredDays="0" expiredHours="0" autoTrigger="false">
             <ns2:description>接受当前价格</ns2:description>
-            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.GoldenOrder"
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.GOOfferPriceTable"
                 actionName="acceptOfferPrice" actionText="按当前价格成交">
                 <ns2:expression>
                     <expressionString><![CDATA[
@@ -238,11 +239,41 @@
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
                         
+                        HashMap result = new HashMap();
+                        result.put("gorder", out.get("beObject"));
+                        
                         form.closeIfinWindows();
                         @page.removeForm(@page.getEntityUiid()); 
                         
+                        return result;
+                    }
+                    ]]></expressionString>
+                </ns2:expression>
+            </ns2:uiAction>
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.GOOfferPriceTable"
+                actionName="acceptOfferPrice1" actionText="按当最低价格成交">
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.Date;
+                    import java.util.ArrayList;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.be.GOOfferPriceImpl;
+                    import org.shaolin.vogerp.ecommercial.dao.*;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.vogerp.commonmodel.IUserService; 
+                    { 
+                        RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+                        HashMap out = (HashMap)form.ui2Data();
+                        
                         HashMap result = new HashMap();
                         result.put("gorder", out.get("beObject"));
+                        
+                        form.closeIfinWindows();
+                        @page.removeForm(@page.getEntityUiid()); 
+                        
                         return result;
                     }
                     ]]></expressionString>
@@ -299,6 +330,7 @@
                          saleOrder.setDeliveryDate(purchaseOrder.getDeliveryDate());
                          saleOrder.setSerialNumber(org.shaolin.vogerp.order.util.OrderUtil.genSaleOrderSerialNumber());
                          saleOrder.setStatus(org.shaolin.vogerp.order.ce.OrderStatusType.CREATED);
+                         saleOrder.setDeliveryInfoId(purchaseOrder.getDeliveryInfoId());
                          
                          ArrayList saleOrderItems = new ArrayList();
                          List purchaseItems = purchaseOrder.getItems();

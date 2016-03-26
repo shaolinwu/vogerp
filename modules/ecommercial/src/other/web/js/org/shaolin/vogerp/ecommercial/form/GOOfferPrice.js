@@ -43,6 +43,16 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPrice(json)
         ui: elementList[prefix + "resultUILabel"]
     });
 
+    var samplePhotoUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "samplePhotoUILabel"]
+    });
+
+    var samplePhotoUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "samplePhotoUI"]
+    });
+
     var cancelbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "cancelbtn"]
@@ -59,13 +69,13 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPrice(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "currPriceUILabel",prefix + "currPriceUI",prefix + "lastPriceUILabel",prefix + "lastPriceUI",prefix + "priceUILabel",prefix + "priceUI",prefix + "priceDescriptionUILabel",prefix + "resultUILabel"]
+        ,subComponents: [prefix + "currPriceUILabel",prefix + "currPriceUI",prefix + "lastPriceUILabel",prefix + "lastPriceUI",prefix + "priceUILabel",prefix + "priceUI",prefix + "priceDescriptionUILabel",prefix + "resultUILabel",prefix + "samplePhotoUILabel",prefix + "samplePhotoUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [currPriceUILabel,currPriceUI,lastPriceUILabel,lastPriceUI,priceUILabel,priceUI,priceDescriptionUILabel,resultUILabel,cancelbtn,fieldPanel,actionPanel]
+        ,items: [currPriceUILabel,currPriceUI,lastPriceUILabel,lastPriceUI,priceUILabel,priceUI,priceDescriptionUILabel,resultUILabel,samplePhotoUILabel,samplePhotoUI,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.currPriceUILabel=currPriceUILabel;
@@ -83,6 +93,10 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPrice(json)
     Form.priceDescriptionUILabel=priceDescriptionUILabel;
 
     Form.resultUILabel=resultUILabel;
+
+    Form.samplePhotoUILabel=samplePhotoUILabel;
+
+    Form.samplePhotoUI=samplePhotoUI;
 
     Form.cancelbtn=cancelbtn;
 
@@ -104,6 +118,10 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPrice(json)
 
     Form.resultUILabel=resultUILabel;
 
+    Form.samplePhotoUILabel=samplePhotoUILabel;
+
+    Form.samplePhotoUI=samplePhotoUI;
+
     Form.actionPanel=actionPanel;
 
     Form.cancelbtn=cancelbtn;
@@ -117,6 +135,8 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPrice(json)
     Form.offerPrice = org_shaolin_vogerp_ecommercial_form_GOOfferPrice_offerPrice;
 
     Form.refreshPrice = org_shaolin_vogerp_ecommercial_form_GOOfferPrice_refreshPrice;
+
+    Form.selectImage = org_shaolin_vogerp_ecommercial_form_GOOfferPrice_selectImage;
 
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_GOOfferPrice_Cancel;
 
@@ -165,6 +185,17 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPrice(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"refreshPrice-20160211-201444",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GOOfferPrice_refreshPrice */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_GOOfferPrice_selectImage(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GOOfferPrice_selectImage */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectImage-1317628417",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GOOfferPrice_selectImage */
 
 
     /* auto generated eventlistener function declaration */

@@ -13,14 +13,9 @@ function org_shaolin_vogerp_order_form_PurchaseOrder(json)
         ui: elementList[prefix + "descriptionUI"]
     });
 
-    var statusUILabel = new UIMaster.ui.label
+    var deliveryInfoLabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "statusUILabel"]
-    });
-
-    var statusUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "statusUI"]
+        ui: elementList[prefix + "deliveryInfoLabel"]
     });
 
     var deliveryDateUILabel = new UIMaster.ui.label
@@ -43,6 +38,8 @@ function org_shaolin_vogerp_order_form_PurchaseOrder(json)
         ui: elementList[prefix + "cancelbtn"]
     });
 
+    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo({"prefix":prefix + "deliveryInfoUI."});
+
     var orderItemTable = new org_shaolin_vogerp_order_form_PurchaseItemTable({"prefix":prefix + "orderItemTable."});
 
     var actionPanel = new UIMaster.ui.panel
@@ -63,22 +60,20 @@ function org_shaolin_vogerp_order_form_PurchaseOrder(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "statusUILabel",prefix + "statusUI",prefix + "deliveryDateUILabel",prefix + "deliveryDateUI"]
+        ,subComponents: [prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "deliveryInfoLabel",prefix + "deliveryInfoUI",prefix + "deliveryDateUILabel",prefix + "deliveryDateUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [descriptionUILabel,descriptionUI,statusUILabel,statusUI,deliveryDateUILabel,deliveryDateUI,okbtn,cancelbtn,orderItemTable,fieldPanel,orderItemInfo,actionPanel]
+        ,items: [descriptionUILabel,descriptionUI,deliveryInfoLabel,deliveryDateUILabel,deliveryDateUI,okbtn,cancelbtn,deliveryInfoUI,orderItemTable,fieldPanel,orderItemInfo,actionPanel]
     });
 
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
 
-    Form.statusUILabel=statusUILabel;
-
-    Form.statusUI=statusUI;
+    Form.deliveryInfoLabel=deliveryInfoLabel;
 
     Form.deliveryDateUILabel=deliveryDateUILabel;
 
@@ -88,6 +83,8 @@ function org_shaolin_vogerp_order_form_PurchaseOrder(json)
 
     Form.cancelbtn=cancelbtn;
 
+    Form.deliveryInfoUI=deliveryInfoUI;
+
     Form.orderItemTable=orderItemTable;
 
     Form.fieldPanel=fieldPanel;
@@ -96,9 +93,9 @@ function org_shaolin_vogerp_order_form_PurchaseOrder(json)
 
     Form.descriptionUI=descriptionUI;
 
-    Form.statusUILabel=statusUILabel;
+    Form.deliveryInfoLabel=deliveryInfoLabel;
 
-    Form.statusUI=statusUI;
+    Form.deliveryInfoUI=deliveryInfoUI;
 
     Form.deliveryDateUILabel=deliveryDateUILabel;
 

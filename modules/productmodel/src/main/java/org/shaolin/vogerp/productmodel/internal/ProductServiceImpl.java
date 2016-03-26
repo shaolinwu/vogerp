@@ -2,6 +2,7 @@ package org.shaolin.vogerp.productmodel.internal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.exception.SQLGrammarException;
 import org.shaolin.bmdp.persistence.HibernateUtil;
@@ -163,7 +164,24 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 				LoggerFactory.getLogger(ProductServiceImpl.class).warn("Disable the product module due to " + e.getMessage());
 			} 
 		}
-		return cache.get(UserContext.getUserContext().getOrgId()).priceResult;
+		ArrayList result = new ArrayList(cache.get(UserContext.getUserContext().getOrgId()).priceResult);
+		result.add(cache.get(UserContext.getUserContext().getOrgId()).priceDataModel);
+		return result;
+	}
+	
+	@Override
+	public Map getPriceTreeMap() {
+		if (!cache.containsKey(UserContext.getUserContext().getOrgId()) 
+				|| cache.get(UserContext.getUserContext().getOrgId()).priceResult == null) {
+			try {
+					reloadPriceTree(UserContext.getUserContext().getOrgId());
+					HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
+			} catch(SQLGrammarException e) {
+				HibernateUtil.releaseSession(HibernateUtil.getSession(), false);
+				LoggerFactory.getLogger(ProductServiceImpl.class).warn("Disable the product module due to " + e.getMessage());
+			} 
+		}
+		return cache.get(UserContext.getUserContext().getOrgId()).priceDataModel;
 	}
 	
 	@Override

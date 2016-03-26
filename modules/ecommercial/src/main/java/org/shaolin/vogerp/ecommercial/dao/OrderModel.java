@@ -11,6 +11,8 @@ import org.hibernate.criterion.Restrictions;
 
 import org.hibernate.criterion.Order;
 
+import org.hibernate.criterion.Projections;
+
 import org.shaolin.bmdp.persistence.BEEntityDaoObject;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.persistence.query.operator.Operator;

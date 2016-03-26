@@ -14,7 +14,7 @@ public class CustomerInfoUtil {
 	}
 	
 	public static String getCustomerEnterpriseBasicInfo(IPersonalInfo customer) {
-		return customer.getOrganization().getDescription();
+		return customer.getOrganization().getDescription() + "["+getCustomerBasicInfo(customer)+"]";
 	}
 	
 	public static List<ArrayList<String>>[] getAddressInfo(List<IAddressInfo> list) {
