@@ -107,13 +107,16 @@
             <ns2:Property name="value">
 	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
 			         <ns2:expression>
-			           <expressionString>
+			           <expressionString><![CDATA[
 			           import org.shaolin.bmdp.runtime.AppContext;
 			           import org.shaolin.bmdp.runtime.Registry;
 			           import org.shaolin.uimaster.page.WebConfig;
 			           { 
+			           		if (null != $imagePath && !"".equals($imagePath)) {
+			           			return $imagePath;
+			           		}
 			               return "/images"; 
-			           }</expressionString>
+			           }]]></expressionString>
 			         </ns2:expression>
 		        </ns2:value>
             </ns2:Property>
@@ -146,13 +149,16 @@
 	        </ns2:isMultiple>
 	        <ns2:storedPath xsi:type="ns2:ExpressionPropertyType">
 	         <ns2:expression>
-	           <expressionString>
+	           <expressionString><![CDATA[
 	           import org.shaolin.bmdp.runtime.AppContext;
 	           import org.shaolin.bmdp.runtime.Registry;
 	           import org.shaolin.uimaster.page.WebConfig;
 	           { 
+	           		if (null != $imagePath && $imagePath.length() > 0) {
+	           			return WebConfig.getResourcePath() + $imagePath;
+	           		}
 	               return WebConfig.getResourcePath() + "/images"; 
-	           }</expressionString>
+	           }]]></expressionString>
 	         </ns2:expression>
 	        </ns2:storedPath>
       </ns2:component>
