@@ -23,6 +23,11 @@ function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct(json)
         ui: elementList[prefix + "selectedProductId"]
     });
 
+    var orderNumText = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "orderNumText"]
+    });
+
     var choiceDiscountTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "choiceDiscountTable"]
@@ -32,7 +37,7 @@ function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct(json)
     ({
         ui: elementList[prefix + "ChoiceDiscountPanel"]
         ,items: []
-        ,subComponents: [prefix + "selectedProductId",prefix + "choiceDiscountTable"]
+        ,subComponents: [prefix + "selectedProductId",prefix + "orderNumText",prefix + "choiceDiscountTable"]
     });
 
     var topTextPanel = new UIMaster.ui.panel
@@ -52,7 +57,7 @@ function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [logoImage,topImage,topSignImage,selectedProductId,choiceDiscountTable,ProductPanel,topTextPanel,ChoiceDiscountPanel]
+        ,items: [logoImage,topImage,topSignImage,selectedProductId,orderNumText,choiceDiscountTable,ProductPanel,topTextPanel,ChoiceDiscountPanel]
     });
 
     Form.logoImage=logoImage;
@@ -62,6 +67,8 @@ function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct(json)
     Form.topSignImage=topSignImage;
 
     Form.selectedProductId=selectedProductId;
+
+    Form.orderNumText=orderNumText;
 
     Form.choiceDiscountTable=choiceDiscountTable;
 
@@ -77,6 +84,8 @@ function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct(json)
 
     Form.selectedProductId=selectedProductId;
 
+    Form.orderNumText=orderNumText;
+
     Form.choiceDiscountTable=choiceDiscountTable;
 
     Form.topTextPanel=topTextPanel;
@@ -89,6 +98,8 @@ function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct(json)
 
     Form.selectedProductId=selectedProductId;
 
+    Form.orderNumText=orderNumText;
+
     Form.choiceDiscountTable=choiceDiscountTable;
 
     Form.user_constructor = function()
@@ -96,6 +107,8 @@ function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct(json)
         /* Construct_FIRST:org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct */
         /* Construct_LAST:org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct */
     };
+
+    Form.SelectedDiscountProductLogic = org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct_SelectedDiscountProductLogic;
 
     Form.initPageJs = org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct_initPageJs;
 
@@ -114,6 +127,15 @@ function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct */
 /* Other_Func_LAST:org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct_SelectedDiscountProductLogic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct_SelectedDiscountProductLogic */
+        var o = this;
+        var UIEntity = this;
+
+        o.SelectedDiscountProductLogic_OutFunctionName(eventsource);
+    }/* Gen_Last:org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct_SelectedDiscountProductLogic */
+
 
     function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct_initPageJs(){/* Gen_First:org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct_initPageJs */
         var constraint_result = true;

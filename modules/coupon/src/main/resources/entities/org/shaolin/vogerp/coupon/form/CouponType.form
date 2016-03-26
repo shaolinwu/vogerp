@@ -59,7 +59,7 @@
            HashMap input = new HashMap();
            input.put("editable", new Boolean(true));
            input.put("callbackUIID", @page.getTextField("iconUI").getId());
-           input.put("imagePath", "/images/coupon/front");
+           input.put("imagePath", "/images/coupon/front/couponIcon");
            RefForm form = new RefForm("selectImageForm", "org.shaolin.vogerp.commonmodel.form.ImageViewer", input);
            @page.addElement(form);
            form.openInWindows("Image Viewer", null, 620, 450);

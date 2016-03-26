@@ -73,9 +73,14 @@
                             return;
                         }
                         CouponTypeImpl defaultUser = (CouponTypeImpl)couponTypeTable.getSelectedRow();
-                        CouponModel.INSTANCE.delete(defaultUser);
-                        
-                        couponTypeTable.refresh();
+                        try {
+	                        CouponModel.INSTANCE.delete(defaultUser);
+	                        
+	                        couponTypeTable.refresh();
+                        } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
+                        	e.printStackTrace();
+                        	@page.executeJavaScript("alert('请先删除该奖项下的优惠产品')");
+                        }
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -95,6 +100,7 @@
                     import java.util.List;
                     import java.util.ArrayList;
                     import org.shaolin.vogerp.coupon.dao.CouponModel;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
                     {
                     	DiscountProductImpl defaultUser = new DiscountProductImpl();
                     	
@@ -103,6 +109,7 @@
                         input.put("editable", new Boolean(true));
                     	
                     	CouponTypeImpl condition = new CouponTypeImpl();
+                    	condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
                     	List couponTypes = CouponModel.INSTANCE.searchCouponType(condition, null, 0, 0);
                     	if (null != couponTypes && couponTypes.size() > 0) {
 	                    	List couponTypeIds = new ArrayList();
@@ -138,6 +145,7 @@
                     import java.util.List;
                     import java.util.ArrayList;
                     import org.shaolin.vogerp.coupon.dao.CouponModel;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
                     {
                         Table discountProductTable = (Table)@page.getElement("discountProductTable");
                         if (discountProductTable.getSelectedRow() == null) {
@@ -150,6 +158,7 @@
                         input.put("couponTypeId", Long.valueOf(discountProduct.getCouponType().getId()));
                         
                         CouponTypeImpl condition = new CouponTypeImpl();
+                        condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
                     	List couponTypes = CouponModel.INSTANCE.searchCouponType(condition, null, 0, 0);
                     	if (null != couponTypes && couponTypes.size() > 0) {
 	                    	List couponTypeIds = new ArrayList();
@@ -415,8 +424,17 @@
 								</ns2:title>
 								<ns2:beFieldId>rowBE.icon</ns2:beFieldId>
 								<ns2:uiType xsi:type="ns2:UITableColHTMLType">
-									<ns2:type>Text</ns2:type>
+									<ns2:type>HTML</ns2:type>
 								</ns2:uiType>
+								<ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+									<ns2:expression xsi:type="ns2:ExpressionType">
+										<ns2:expressionString><![CDATA[
+			                            {
+			                                return "<img src=\"" + $rowBE.getIcon() + "\" />";
+			                            }
+			                            ]]></ns2:expressionString>
+									</ns2:expression>
+								</ns2:rowExpression>
 							</ns2:column>
 							<ns2:column xsi:type="ns2:UITableColumnType">
 								<ns2:title xsi:type="ns2:StringPropertyType">

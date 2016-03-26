@@ -26,14 +26,16 @@
 					//eventsource = this;
 					//UIMaster.triggerServerEvent("discountProductForm" + id + ".confirmTextUI","choiceCoupon-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
 					
-					UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"choiceCoupon-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
+					UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"choiceCoupon1-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
 				}]]></expressionString>
 		</ns2:ops>
-		<ns2:ops xsi:type="ns2:OpCallAjaxType" name="choiceCoupon-20160112-232035">
+	</ns2:eventHandler>
+	
+	<ns2:eventHandler functionName="choiceCoupon1">
+		<ns2:ops xsi:type="ns2:OpCallAjaxType" name="choiceCoupon1-20160112-232035">
 			<ns2:exp>
 				<expressionString><![CDATA[
 				{
-					System.out.println("testtesttest");
 					@page.executeJavaScript("defaultname.SelectedDiscountProductLogic()");
 				}
 				]]></expressionString>

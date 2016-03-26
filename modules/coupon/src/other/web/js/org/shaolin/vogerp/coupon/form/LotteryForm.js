@@ -144,7 +144,7 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 											needRollDivIds = needRollDivIds + "," +"#lotteryForm_" + m + "-" + n;
 										}
 									}
-									var rollTime = 1000;
+									var rollTime = 3000;
 									var t1 = ((row - 2) * cellTop);
 									var count = rollTopArr[m] / cellTop + 1;
 									var cellTime = parseInt(rollTime / (count + row - 2));

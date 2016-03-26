@@ -82,42 +82,63 @@
 						
 						if (null == couponOperations || couponOperations.size() == 0) {
 							@page.executeJavaScript("alert('订单号 " + orderNum + "没有抽奖记录')");
+							return ;
 						} else {
-							CouponOperationImpl couponOper = (CouponOperationImpl)couponOperations.get(0);
-							if (null != couponOper.getSerialNumber() && couponOper.getSerialNumber().length() > 0) {
-								//生成兑奖记录
-								CouponOperationImpl exchangeOper = new CouponOperationImpl();
-								exchangeOper.setOrderNum(orderNum);
-								exchangeOper.setSerialNumber(couponOper.getSerialNumber());
-								exchangeOper.setType(CouponUtil.OPERATION_TYPE_EXCHANGE);
-								exchangeOper.setOperateDate(new java.util.Date());
-								exchangeOper.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-								CouponModel.INSTANCE.create(exchangeOper);
+							boolean hasImmediateCoupon = false;
+							for (int i = 0; i < couponOperations.size(); i++) {
+								CouponOperationImpl couponOper = (CouponOperationImpl)couponOperations.get(i);
+								
+								if (null != couponOper.getSerialNumber() && couponOper.getSerialNumber().length() > 0) {
+									String serialNumber = couponOper.getSerialNumber();
+									System.out.println("========serialNumber[" + serialNumber + "]");
+									//查询出中奖的优惠券
+									CouponImpl condition = new CouponImpl();
+									condition.setSerialNumber(serialNumber);
+									condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+									List coupons = CouponModel.INSTANCE.searchEffectedCoupon(condition, null, 0, 0);
+									if (null == coupons || coupons.size() < 1) {
+										System.out.println("========serialNumber[" + serialNumber + "] is not exist.");
+										continue ;
+									}
+									CouponImpl coupon = (CouponImpl)coupons.get(0);
+									if (!StatusType.SENDOUT.equals(coupon.getStatus())
+										|| !coupon.getDiscountProduct().getCouponType().getIsImmediate()) {
+										System.out.println("========serialNumber[" + serialNumber + "] status is not SENDOUT or is not immediate coupon");
+										continue ;
+									}
+									
+									//生成兑奖记录
+									CouponOperationImpl exchangeOper = new CouponOperationImpl();
+									exchangeOper.setOrderNum(orderNum);
+									exchangeOper.setSerialNumber(couponOper.getSerialNumber());
+									exchangeOper.setType(CouponUtil.OPERATION_TYPE_EXCHANGE);
+									exchangeOper.setOperateDate(new java.util.Date());
+									exchangeOper.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+									CouponModel.INSTANCE.create(exchangeOper);
+									
+									//更新优惠券状态为已兑换
+									CouponImpl exchangeCoupon = (CouponImpl)coupons.get(0);
+									exchangeCoupon.setStatus(StatusType.EXCHANGED);
+									CouponModel.INSTANCE.update(exchangeCoupon);
+									
+									hasImmediateCoupon = true;
+									System.out.println("订单号" + orderNum + "兑换优惠券" + couponOper.getSerialNumber());
+									
+									HashMap input = new HashMap();
+				                    input.put("beObject", exchangeCoupon);
+				                    input.put("editable", new Boolean(true));
+									RefForm form = new RefForm("couponForm", "org.shaolin.vogerp.coupon.form.Coupon", input);
+				                    @page.addElement(form);
+				                    
+				                    form.openInWindows("Show Coupon Information", null);
+				                    break ;
+								} 
+							}
 							
-								//查询出中奖的优惠券
-								CouponImpl condition = new CouponImpl();
-								condition.setSerialNumber(couponOper.getSerialNumber());
-								condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-								List coupons = CouponModel.INSTANCE.searchEffectedCoupon(condition, null, 0, 0);
-								System.out.println("订单号" + orderNum + "兑换优惠券" + couponOper.getSerialNumber());
-								
-								//更新优惠券状态为已兑换
-								CouponImpl exchangeCoupon = (CouponImpl)coupons.get(0);
-								exchangeCoupon.setStatus(StatusType.EXCHANGED);
-								CouponModel.INSTANCE.update(exchangeCoupon);
-								
-								HashMap input = new HashMap();
-			                    input.put("beObject", exchangeCoupon);
-			                    input.put("editable", new Boolean(true));
-								RefForm form = new RefForm("couponForm", "org.shaolin.vogerp.coupon.form.Coupon", input);
-			                    @page.addElement(form);
-			                    
-			                    form.openInWindows("Show Coupon Information", null);
-							} else {
-								@page.executeJavaScript("alert('订单号 " + orderNum + "没有中奖')");
+							if (!hasImmediateCoupon) {
+								@page.executeJavaScript("alert('订单号 " + orderNum + "没有即时优惠券')");
 							}
 						}
-						
 					}
 					]]></ns2:expressionString> 
 				</ns2:exp>

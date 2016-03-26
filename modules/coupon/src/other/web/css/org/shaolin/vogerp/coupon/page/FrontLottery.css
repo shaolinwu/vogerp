@@ -178,3 +178,28 @@
     z-index: 3;
     display: none;
 }
+
+
+.rollCurtain{
+	animation:myfirst 1s;
+	-moz-animation:myfirst 1s; /* Firefox */
+	-webkit-animation:myfirst 1s; /* Safari and Chrome */
+	-o-animation:myfirst 1s; /* Opera */
+}
+@keyframes myfirst
+{
+from {left:0;}
+to {left:-100%;}
+}
+
+@-moz-keyframes myfirst /* Firefox */
+{
+from {left:0;}
+to {left:-100%;}
+}
+
+@-webkit-keyframes myfirst /* Safari and Chrome */
+{
+from {left:0;}
+to {left:-100%;}
+}

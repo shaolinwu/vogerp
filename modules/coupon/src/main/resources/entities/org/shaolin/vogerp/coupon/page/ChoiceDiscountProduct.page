@@ -6,9 +6,9 @@
 	<systemVersion>0</systemVersion>
 	<description>优惠选择</description>
 	
-	<ns2:eventHandler functionName="SelectedDiscountProductLogic"></ns2:eventHandler>
 
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+	<ns2:eventHandler functionName="SelectedDiscountProductLogic"></ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:layout xsi:type="ns2:TableLayoutType">
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -56,6 +56,7 @@
 				</ns2:component>
 				<ns2:component xsi:type="ns2:UIPanelType" UIID="ChoiceDiscountPanel">
 					<ns2:component xsi:type="ns2:UIHiddenType" UIID="selectedProductId"></ns2:component>
+					<ns2:component xsi:type="ns2:UIHiddenType" UIID="orderNumText"></ns2:component>
 					<ns2:layout xsi:type="ns2:TableLayoutType">
 						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
@@ -140,7 +141,7 @@
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>
-		<ns2:DataEntity scope="InOut" name="orderNum" category="JavaClass">
+		<ns2:DataEntity scope="InOut" name="orderNumText" category="JavaClass">
 	    	<type entityName="java.lang.String"></type>
 	    </ns2:DataEntity>
 	    <ns2:DataEntity scope="InOut" name="couponType" category="BusinessEntity">
@@ -150,7 +151,7 @@
 	    	<type entityName="java.util.List"></type>
 	    </ns2:DataEntity>
 	    <ns2:DataEntity scope="InOut" name="selectedProductId" category="JavaClass">
-	    	<type entityName="java.lang.Integer"></type>
+	    	<type entityName="java.lang.String"></type>
 	    </ns2:DataEntity>
 	    <ns2:DataEntity scope="InOut" name="couponOperation" category="BusinessEntity">
 	    	<type entityName="org.shaolin.vogerp.coupon.be.CouponOperation"></type>

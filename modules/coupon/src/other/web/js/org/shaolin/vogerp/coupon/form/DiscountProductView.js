@@ -122,6 +122,8 @@ function org_shaolin_vogerp_coupon_form_DiscountProductView(json)
 
     Form.choiceCoupon = org_shaolin_vogerp_coupon_form_DiscountProductView_choiceCoupon;
 
+    Form.choiceCoupon1 = org_shaolin_vogerp_coupon_form_DiscountProductView_choiceCoupon1;
+
     Form.invokeDynamicFunction = org_shaolin_vogerp_coupon_form_DiscountProductView_invokeDynamicFunction;
 
     Form.__entityName="org.shaolin.vogerp.coupon.form.DiscountProductView";
@@ -156,12 +158,19 @@ function org_shaolin_vogerp_coupon_form_DiscountProductView(json)
 					//eventsource = this;
 					//UIMaster.triggerServerEvent("discountProductForm" + id + ".confirmTextUI","choiceCoupon-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
 					
-					UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"choiceCoupon-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
-				}
+					UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"choiceCoupon1-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
+				}    }/* Gen_Last:org_shaolin_vogerp_coupon_form_DiscountProductView_choiceCoupon */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_form_DiscountProductView_choiceCoupon1(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_form_DiscountProductView_choiceCoupon1 */
+        var o = this;
+        var UIEntity = this;
+
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"choiceCoupon-20160112-232035",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_coupon_form_DiscountProductView_choiceCoupon */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"choiceCoupon1-20160112-232035",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_coupon_form_DiscountProductView_choiceCoupon1 */
 
 
     /* auto generated eventlistener function declaration */

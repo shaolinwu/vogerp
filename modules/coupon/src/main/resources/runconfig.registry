@@ -32,6 +32,10 @@
                     <item name="font-awesome" value="/css/jsgallery/font-awesome.min.css" />
                     <item name="jgallery.min" value="/css/jsgallery/jgallery.min.css?v=1.5.0" />
                 </node>
+                <node name="org.shaolin.vogerp.coupon.page.CouponManagement">
+                    <item name="font-awesome" value="/css/jsgallery/font-awesome.min.css" />
+                    <item name="jgallery.min" value="/css/jsgallery/jgallery.min.css?v=1.5.0" />
+                </node>
             </node>
         </node>
     </node>
