@@ -11,6 +11,8 @@ import org.hibernate.criterion.Restrictions;
 
 import org.hibernate.criterion.Order;
 
+import org.hibernate.criterion.Projections;
+
 import org.shaolin.bmdp.persistence.BEEntityDaoObject;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.persistence.query.operator.Operator;
@@ -55,24 +57,52 @@ public class AccountingModel extends BEEntityDaoObject {
         return count(ICashFlowSheet.class);
     }
 
-    public List<org.shaolin.vogerp.accounting.be.IAccountVoucher> searchAccountVoucher(org.shaolin.vogerp.accounting.be.AccountVoucherImpl scObject,
+    public List<org.shaolin.vogerp.accounting.be.IAccountVoucher> searchAccountVoucher(org.shaolin.vogerp.accounting.be.AccountVoucherImpl scFlow,
            List<Order> orders, int offset, int count) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.AccountVoucherImpl.class, "inObject");
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.AccountVoucherImpl.class, "inFlow");
             if (orders == null) {
             } else {
-                this._addOrders(inObjectCriteria, orders);
+                this._addOrders(inFlowCriteria, orders);
             }
 
+            if (scFlow.getId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
+            }
+            if (scFlow.getOrgId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));
+            }
+            if (scFlow.getSeqNumber() != null && scFlow.getSeqNumber().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.seqNumber", scFlow.getSeqNumber()));
+            }
+            if (scFlow.getVoucherType() != null && scFlow.getVoucherType() != org.shaolin.vogerp.accounting.ce.VoucherType.NOT_SPECIFIED) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.voucherTypeInt", scFlow.getVoucherType().getIntValue()));
+            }
 
-        List result = this._list(offset, count, inObjectCriteria);
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
+        List result = this._list(offset, count, inFlowCriteria);
         return result;
     }
 
-    public long searchAccountVoucherCount(org.shaolin.vogerp.accounting.be.AccountVoucherImpl scObject) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.AccountVoucherImpl.class, "inObject");
+    public long searchAccountVoucherCount(org.shaolin.vogerp.accounting.be.AccountVoucherImpl scFlow) {
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.AccountVoucherImpl.class, "inFlow");
 
+            if (scFlow.getId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
+            }
+            if (scFlow.getOrgId() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));
+            }
+            if (scFlow.getSeqNumber() != null && scFlow.getSeqNumber().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.seqNumber", scFlow.getSeqNumber()));
+            }
+            if (scFlow.getVoucherType() != null && scFlow.getVoucherType() != org.shaolin.vogerp.accounting.ce.VoucherType.NOT_SPECIFIED) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.voucherTypeInt", scFlow.getVoucherType().getIntValue()));
+            }
 
-        return this._count(inObjectCriteria);
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
+        return this._count(inFlowCriteria);
     }
 
     public List<org.shaolin.vogerp.accounting.be.IDoubleEntry> searchDoubleEntry(org.shaolin.vogerp.accounting.be.DoubleEntryImpl scObject,
@@ -84,6 +114,8 @@ public class AccountingModel extends BEEntityDaoObject {
             }
 
 
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
         List result = this._list(offset, count, inObjectCriteria);
         return result;
     }
@@ -91,6 +123,8 @@ public class AccountingModel extends BEEntityDaoObject {
     public long searchDoubleEntryCount(org.shaolin.vogerp.accounting.be.DoubleEntryImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.DoubleEntryImpl.class, "inObject");
 
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         return this._count(inObjectCriteria);
     }
@@ -104,6 +138,8 @@ public class AccountingModel extends BEEntityDaoObject {
             }
 
 
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
         List result = this._list(offset, count, inObjectCriteria);
         return result;
     }
@@ -111,6 +147,8 @@ public class AccountingModel extends BEEntityDaoObject {
     public long searchBudgetCount(org.shaolin.vogerp.accounting.be.BudgetImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.BudgetImpl.class, "inObject");
 
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         return this._count(inObjectCriteria);
     }
@@ -124,6 +162,8 @@ public class AccountingModel extends BEEntityDaoObject {
             }
 
 
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
         List result = this._list(offset, count, inObjectCriteria);
         return result;
     }
@@ -131,6 +171,8 @@ public class AccountingModel extends BEEntityDaoObject {
     public long searchBudgetItemCount(org.shaolin.vogerp.accounting.be.BudgetItemImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.BudgetItemImpl.class, "inObject");
 
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         return this._count(inObjectCriteria);
     }
@@ -144,6 +186,8 @@ public class AccountingModel extends BEEntityDaoObject {
             }
 
 
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
         List result = this._list(offset, count, inObjectCriteria);
         return result;
     }
@@ -151,6 +195,8 @@ public class AccountingModel extends BEEntityDaoObject {
     public long searchInBalanceSheetCount(org.shaolin.vogerp.accounting.be.InBalanceSheetImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.InBalanceSheetImpl.class, "inObject");
 
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         return this._count(inObjectCriteria);
     }
@@ -164,6 +210,8 @@ public class AccountingModel extends BEEntityDaoObject {
             }
 
 
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
         List result = this._list(offset, count, inObjectCriteria);
         return result;
     }
@@ -171,6 +219,8 @@ public class AccountingModel extends BEEntityDaoObject {
     public long searchProfitSheetCount(org.shaolin.vogerp.accounting.be.ProfitSheetImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.ProfitSheetImpl.class, "inObject");
 
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         return this._count(inObjectCriteria);
     }
@@ -184,6 +234,8 @@ public class AccountingModel extends BEEntityDaoObject {
             }
 
 
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
         List result = this._list(offset, count, inObjectCriteria);
         return result;
     }
@@ -191,6 +243,8 @@ public class AccountingModel extends BEEntityDaoObject {
     public long searchCashFlowSheetCount(org.shaolin.vogerp.accounting.be.CashFlowSheetImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.CashFlowSheetImpl.class, "inObject");
 
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
         return this._count(inObjectCriteria);
     }

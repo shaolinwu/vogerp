@@ -12,52 +12,58 @@
 	通过对模型参数的调整，可以对企业的各种运营状况进行研究，从而对现金流和估值有深入的分析。
 	 -->
 	 <!-- 记账凭证按其适用的经济业务，分为专用记账凭证和通用记账凭证两类。专用记账凭证是用来专门记录某一类经济业务的记账凭证。
- 1.专用凭证按其所记录的经济业务是否与现金和银行存款的收付有无关系，又分为收款凭证、付款凭证和转账凭证三种。Collection voucher
- 1）.收款凭证: 收款凭证是用来记录现金和银行存款等货币资金收款业务的凭证，它是根据现金和银行存款收款业务的原始凭证填制的。
- 2）.付款凭证: 付款凭证是用来记录现金和银行存款等货币资金付款业务的凭证，它是根据现金和银行存款付款业务的原始凭证填制的。
- 收款凭证和付款凭证是用来记录货币收付业务的凭证既是登记现金日记账、银行存款日记账、明细分类账及总分类账等账簿的依据，
- 也是出纳人员收、付款项的依据。出纳人员不能依据现金、银行存款收付业务的原始凭证收付款项，必须根据会计主管人员或指定人
- 员审核批准的收款凭证和付款凭证收付款项，以加强对货币资金的管理，有效地监督货币资金的使用。
- 3）.转账凭证: 转账凭证是用来记录与现金、银行存款等货币资金收付款业务无关的转账业务（即在经济业务发生时不需要收付现金
- 和银行存款的各项业务）的凭证，它是根据有关转账业务的原始凭证填制的。转账凭证是登记总分类账及有关明细分类账的依据。
- 2.通用记账凭证的格式，不再分为收款凭证、付款凭证和转账凭证，而是以一种格式记录全部经济业务。
- 本系统采用通用记账凭证的格式。
+	 1.专用凭证按其所记录的经济业务是否与现金和银行存款的收付有无关系，又分为收款凭证、付款凭证和转账凭证三种。Collection voucher
+	 1）.收款凭证: 收款凭证是用来记录现金和银行存款等货币资金收款业务的凭证，它是根据现金和银行存款收款业务的原始凭证填制的。
+	 2）.付款凭证: 付款凭证是用来记录现金和银行存款等货币资金付款业务的凭证，它是根据现金和银行存款付款业务的原始凭证填制的。
+	 收款凭证和付款凭证是用来记录货币收付业务的凭证既是登记现金日记账、银行存款日记账、明细分类账及总分类账等账簿的依据，
+	 也是出纳人员收、付款项的依据。出纳人员不能依据现金、银行存款收付业务的原始凭证收付款项，必须根据会计主管人员或指定人
+	 员审核批准的收款凭证和付款凭证收付款项，以加强对货币资金的管理，有效地监督货币资金的使用。
+	 3）.转账凭证: 转账凭证是用来记录与现金、银行存款等货币资金收付款业务无关的转账业务（即在经济业务发生时不需要收付现金
+	 和银行存款的各项业务）的凭证，它是根据有关转账业务的原始凭证填制的。转账凭证是登记总分类账及有关明细分类账的依据。
+	 2.通用记账凭证的格式，不再分为收款凭证、付款凭证和转账凭证，而是以一种格式记录全部经济业务。
+	 本系统采用通用记账凭证的格式。
+	 一进一出: 
+	 购进材料，马上出库，采购员填一个入库单和出库单，一进一出.
+	 我借你钱，你再还我。在账上就是体现一进一出。
+	 1、购进货物入库，当出库的时候是购进来的这笔货物，数量品名没有任何变化，为一进一出。
+     2、往来进来的款项，出去的时候还是这笔业务，为一进一出。
+           一进一出一般为当月里发生，或者在一张凭证中发生，也有不在当期发生的一进一出。
  Accounting Voucher/Accounting Document/Transaction
   -->
-	
-	<bediagram:beEntity needOrgId="true" needPersist="true" needTask="true" needUIEntity="true">
-	 <common:entityName>AccountVoucher</common:entityName>
+	<bediagram:beEntity needOrgId="true" needPersist="true"
+	needTask="true" needUIEntity="true">
+		<common:entityName>AccountVoucher</common:entityName>
 		<bediagram:member pk="true">
 			<bediagram:name>id</bediagram:name>
 			<bediagram:type xsi:type="bediagram:LongType" />
 		</bediagram:member>
 		<bediagram:member>
-    <!-- 一个会计事务，可以基于别一个会计事务 -->
-    <bediagram:name>relatedTransId</bediagram:name>
-    <bediagram:type xsi:type="bediagram:LongType" />
-   </bediagram:member>
+			<!-- 一个会计事务，可以基于别一个会计事务 -->
+			<bediagram:name>relatedTransId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
 		<bediagram:member>
-   <!-- 顺序号 -->
-   <bediagram:name>seqNumber</bediagram:name>
-   <bediagram:type xsi:type="bediagram:IntType" />
-  </bediagram:member>
+			<!-- 顺序号 -->
+			<bediagram:name>seqNumber</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
 		<bediagram:member>
-		 <!-- 凭证字/类型 -->
-   <bediagram:name>voucherType</bediagram:name>
-   <bediagram:type xsi:type="bediagram:CEObjRefType">
-     <bediagram:targetEntity entityName="VoucherType" />
-   </bediagram:type>
-  </bediagram:member>
-  <bediagram:member>
-   <!-- 凭证号 -->
-   <bediagram:name>voucherNumber</bediagram:name>
-   <bediagram:type xsi:type="bediagram:IntType" />
-  </bediagram:member>
-  <bediagram:member>
-   <!-- 附单据 -->
-   <bediagram:name>subVoucherNumber</bediagram:name>
-   <bediagram:type xsi:type="bediagram:IntType" />
-  </bediagram:member>
+			<!-- 凭证字/类型 -->
+			<bediagram:name>voucherType</bediagram:name>
+			<bediagram:type xsi:type="bediagram:CEObjRefType">
+				<bediagram:targetEntity entityName="VoucherType" />
+			</bediagram:type>
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 凭证号 -->
+			<bediagram:name>voucherNumber</bediagram:name>
+			<bediagram:type xsi:type="bediagram:IntType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 附单据 -->
+			<bediagram:name>subVoucherNumber</bediagram:name>
+			<bediagram:type xsi:type="bediagram:IntType" />
+		</bediagram:member>
 		<bediagram:member>
 			<bediagram:name>comment</bediagram:name>
 			<bediagram:type xsi:type="bediagram:StringType" />
@@ -70,97 +76,98 @@
 				</bediagram:elementType>
 			</bediagram:type>
 		</bediagram:member>
-		 <bediagram:member>
-   <!-- 合计 -->
-   <bediagram:name>totalAmount</bediagram:name>
-   <bediagram:type xsi:type="bediagram:DoubleType" />
-  </bediagram:member>
-  <bediagram:member>
-   <!-- 主管人 -->
-   <bediagram:name>manager</bediagram:name>
-   <bediagram:type xsi:type="bediagram:LongType" />
-  </bediagram:member>
-  <bediagram:member>
-   <!-- 记账人 -->
-   <bediagram:name>entered</bediagram:name>
-   <bediagram:type xsi:type="bediagram:LongType" />
-  </bediagram:member>
-  <bediagram:member>
-   <!-- 制单人 -->
-   <bediagram:name>prepared</bediagram:name>
-   <bediagram:type xsi:type="bediagram:LongType" />
-  </bediagram:member>
-  <bediagram:member>
-   <!-- 审核人 -->
-   <bediagram:name>auditor</bediagram:name>
-   <bediagram:type xsi:type="bediagram:LongType" />
-  </bediagram:member>
-  <bediagram:member>
-   <!-- 审核人 -->
-   <bediagram:name>cashier</bediagram:name>
-   <bediagram:type xsi:type="bediagram:LongType" />
-  </bediagram:member>
-  <bediagram:member>
-   <!-- 签收人-->
-   <bediagram:name>receiver</bediagram:name>
-   <bediagram:type xsi:type="bediagram:LongType" />
-  </bediagram:member> 
-  <bediagram:member>
-   <!-- 结算方式-->
-   <bediagram:name>settlementMethod</bediagram:name>
-   <bediagram:type xsi:type="bediagram:CEObjRefType">
-     <bediagram:targetEntity entityName="SettlementMethodType" />
-   </bediagram:type>
-  </bediagram:member> 
-  <bediagram:member>
-   <!-- 结算号-->
-   <bediagram:name>settlementNumber</bediagram:name>
-   <bediagram:type xsi:type="bediagram:LongType" />
-  </bediagram:member> 
-   <bediagram:member>
-    <bediagram:name>startCreateDate</bediagram:name>
-    <bediagram:type xsi:type="bediagram:DateTimeType" />
-   </bediagram:member>
-   <bediagram:member>
-    <bediagram:name>endCreateDate</bediagram:name>
-    <bediagram:type xsi:type="bediagram:DateTimeType" />
-   </bediagram:member>
-</bediagram:beEntity>
+		<bediagram:member>
+			<!-- 合计, 不需要存储字段 -->
+			<bediagram:name>totalAmount</bediagram:name>
+			<bediagram:type xsi:type="bediagram:DoubleType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 主管人 -->
+			<bediagram:name>manager</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 记账人 -->
+			<bediagram:name>entered</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 制单人 -->
+			<bediagram:name>prepared</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 审核人 -->
+			<bediagram:name>auditor</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 出纳 -->
+			<bediagram:name>cashier</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 签收人 -->
+			<bediagram:name>receiver</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 结算方式 -->
+			<bediagram:name>settlementMethod</bediagram:name>
+			<bediagram:type xsi:type="bediagram:CEObjRefType">
+				<bediagram:targetEntity entityName="SettlementMethodType" />
+			</bediagram:type>
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 结算号 -->
+			<bediagram:name>settlementNumber</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>startCreateDate</bediagram:name>
+			<bediagram:type xsi:type="bediagram:DateTimeType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>endCreateDate</bediagram:name>
+			<bediagram:type xsi:type="bediagram:DateTimeType" />
+		</bediagram:member>
+	</bediagram:beEntity>
 	
 	<!-- 复式记账法/通用记账凭证 -->
-	<bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
-			<common:entityName>DoubleEntry</common:entityName>
-			<bediagram:member pk="true">
-				<bediagram:name>id</bediagram:name>
-				<bediagram:type xsi:type="bediagram:LongType" />
-			</bediagram:member>
-			<bediagram:member>
-    <!-- 摘要 -->
-    <bediagram:name>comment</bediagram:name>
-    <bediagram:type xsi:type="bediagram:StringType" />
-   </bediagram:member>
-			<bediagram:member>
-			 <!-- 总帐科目 -->
-	   <bediagram:name>generalLedger</bediagram:name>
-	   <bediagram:type xsi:type="bediagram:CEObjRefType">
-	       <bediagram:targetEntity entityName="ClassifyOfAccounts" />
-	   </bediagram:type>
-	  </bediagram:member>
-	  <bediagram:member>
-	   <!-- 明细科目 -->
-    <bediagram:name>subLedger</bediagram:name>
-    <bediagram:type xsi:type="bediagram:StringType" />
-   </bediagram:member>
-   <bediagram:member>
-    <!-- 借方金额 -->
-    <bediagram:name>debitAmount</bediagram:name>
-    <bediagram:type xsi:type="bediagram:DoubleType" />
-   </bediagram:member>
-   <bediagram:member>
-    <!-- 贷方金额 -->
-    <bediagram:name>creditAmount</bediagram:name>
-    <bediagram:type xsi:type="bediagram:DoubleType" />
-   </bediagram:member>
+	<bediagram:beEntity needPersist="true" needUIEntity="true"
+	needUITableEditor="true">
+		<common:entityName>DoubleEntry</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 摘要 -->
+			<bediagram:name>comment</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 总帐科目 -->
+			<bediagram:name>generalLedger</bediagram:name>
+			<bediagram:type xsi:type="bediagram:CEObjRefType">
+				<bediagram:targetEntity entityName="ClassifyOfAccounts" />
+			</bediagram:type>
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 明细科目 -->
+			<bediagram:name>subLedger</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 借方金额 -->
+			<bediagram:name>debitAmount</bediagram:name>
+			<bediagram:type xsi:type="bediagram:DoubleType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 贷方金额 -->
+			<bediagram:name>creditAmount</bediagram:name>
+			<bediagram:type xsi:type="bediagram:DoubleType" />
+		</bediagram:member>
 	</bediagram:beEntity>
 	
 	<!-- 预算是企业用来财务控制的一般方法，对资金的使用进行统一计划的一种机制。可分为月，季或年度预算等。 
@@ -186,20 +193,20 @@
 			<bediagram:type xsi:type="bediagram:LongType" />
 		</bediagram:member>
 		<bediagram:member>
-				<bediagram:name>dateType</bediagram:name>
-				<bediagram:type xsi:type="bediagram:CEObjRefType">
-					<bediagram:targetEntity entityName="BudgetDateType" />
-				</bediagram:type>
-			</bediagram:member>
-				<bediagram:member>
-					<bediagram:name>startDate</bediagram:name>
-					<bediagram:type xsi:type="bediagram:DateTimeType" />
-				</bediagram:member>
-				<bediagram:member>
-					<bediagram:name>endDate</bediagram:name>
-					<bediagram:type xsi:type="bediagram:DateTimeType" />
-	  </bediagram:member>
-   <bediagram:member>
+			<bediagram:name>dateType</bediagram:name>
+			<bediagram:type xsi:type="bediagram:CEObjRefType">
+				<bediagram:targetEntity entityName="BudgetDateType" />
+			</bediagram:type>
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>startDate</bediagram:name>
+			<bediagram:type xsi:type="bediagram:DateTimeType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>endDate</bediagram:name>
+			<bediagram:type xsi:type="bediagram:DateTimeType" />
+	    </bediagram:member>
+        <bediagram:member>
 			<bediagram:name>partyType</bediagram:name>
 			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
@@ -300,7 +307,12 @@
 	</bediagram:beEntity>
 	
 	<bediagram:ceEntity>
-		<!-- 会计科目表，从网上下载。 -->
+		<!-- 会计科目表，会计科目是按照经济业务的内容和经济管理的要求，对会计要素的具体内容进行分类核算的科目，称为会计科目。 
+		会计科目按其所提供信息的详细程度及其统驭关系不同，又分为总分类科目和明细分类科目。
+		前者是对会计要素具体内容进行总括分类，提供总括信息的会计科目，如“应收账款”、“原材料”等科目。
+		后者是对总分类科目作进一步分类、提供更详细更具体会计信息科目，如“应收账款”科目按债务人名称设置明细科目，反映应收账款具体对象。
+		而会计科目表则是由多种会计科目组成，对各类会计科目的一种集合。
+		会计科目分为: 资产类科目、负债类科目、共同类科目、所有者权益类科目、成本类科目和损益类科目。-->
 		<common:entityName>ClassifyOfAccounts</common:entityName>
 		<bediagram:constantValue>
 			<bediagram:value>Assets</bediagram:value>

@@ -7,7 +7,7 @@ function org_shaolin_vogerp_accounting_page_VoucherManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "VoucherInfoPanel"]
+        ,subComponents: [prefix + "VoucherInfoPanel",prefix + "PayVoucherInfoPanel"]
     });
     var voucherTable = new UIMaster.ui.objectlist
     ({
@@ -19,6 +19,17 @@ function org_shaolin_vogerp_accounting_page_VoucherManagement(json)
         ui: elementList[prefix + "VoucherInfoPanel"]
         ,items: []
         ,subComponents: [prefix + "voucherTable"]
+    });
+    var payVoucherTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "payVoucherTable"]
+    });
+
+    var PayVoucherInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "PayVoucherInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "payVoucherTable"]
     });
 
     var Form = new UIMaster.ui.panel
@@ -33,6 +44,10 @@ function org_shaolin_vogerp_accounting_page_VoucherManagement(json)
     Form.VoucherInfoPanel=VoucherInfoPanel;
 
     Form.voucherTable=voucherTable;
+
+    Form.PayVoucherInfoPanel=PayVoucherInfoPanel;
+
+    Form.payVoucherTable=payVoucherTable;
 
     Form.user_constructor = function()
     {
@@ -62,23 +77,23 @@ function org_shaolin_vogerp_accounting_page_VoucherManagement(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_accounting_page_VoucherManagement_createVoucher(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_page_VoucherManagement_createVoucher */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createVoucher-20150904-1109",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createVoucher-20150904-1109",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_accounting_page_VoucherManagement_createVoucher */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_accounting_page_VoucherManagement_openVoucher(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_page_VoucherManagement_openVoucher */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openVoucher-20150904-1109",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openVoucher-20150904-1109",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_accounting_page_VoucherManagement_openVoucher */
 
 

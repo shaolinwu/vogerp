@@ -168,34 +168,40 @@ function org_shaolin_vogerp_accounting_form_DoubleEntry(json)
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_accounting_form_DoubleEntry_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_form_DoubleEntry_Save */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20150904-084549",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20150904-084549",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_DoubleEntry_Save */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_accounting_form_DoubleEntry_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_form_DoubleEntry_Cancel */
+        var o = this;
+        var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20150904-084549",UIMaster.getValue(eventsource),this.__entityName);
-
-        var UIEntity = this;
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20150904-084549",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_DoubleEntry_Cancel */
 
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_accounting_form_DoubleEntry_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_form_DoubleEntry_invokeDynamicFunction */
+        var o = this;
+        var UIEntity = this;
+
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Continue?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),this.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),o.__entityName);
 
-        var UIEntity = this;
+        
+        }
+        }).open();
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_DoubleEntry_invokeDynamicFunction */
 
 
