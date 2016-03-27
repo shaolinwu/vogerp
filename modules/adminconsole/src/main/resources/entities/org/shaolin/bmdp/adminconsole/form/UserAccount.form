@@ -57,11 +57,8 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
-        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="idUI">
       	<ns2:secure>true</ns2:secure>
