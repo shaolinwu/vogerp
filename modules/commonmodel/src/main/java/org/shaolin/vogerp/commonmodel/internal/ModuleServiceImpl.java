@@ -72,7 +72,10 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
             	int _framenameIndex = accessURL.indexOf("_framename=");
             	if (chunkNameIndex != -1) {
 	            	String path = accessURL.substring(chunkNameIndex + "_chunkname=".length(), _nodenameIndex - 1);
-	            	String node = accessURL.substring(_nodenameIndex + "_nodename=".length(), _framenameIndex -1);
+	            	String node = accessURL.substring(_nodenameIndex + "_nodename=".length());
+	            	if (_framenameIndex >= 0) {
+	            		node = accessURL.substring(_nodenameIndex + "_nodename=".length(), _framenameIndex -1);
+	            	}
 	            	if (node.indexOf('&') != -1) {
 	            		node = node.substring(0, node.indexOf('&'));
 	            	}
@@ -305,7 +308,11 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
             		PageNodeType webNode = new PageNodeType();
             		webNode.setName(accessURL.substring(_nodenameIndex + "_nodename=".length(), _pageIndex -1));
             		TargetEntityType tarEntityName = new TargetEntityType();
-            		tarEntityName.setEntityName(accessURL.substring(_pageIndex + "_page=".length(), _framenameIndex - 1));
+            		String entityName = accessURL.substring(_pageIndex + "_page=".length());
+            		if (_framenameIndex >= 0) {
+            			entityName = accessURL.substring(_pageIndex + "_page=".length(), _framenameIndex - 1);
+            		}
+            		tarEntityName.setEntityName(entityName);
             		webNode.setSourceEntity(tarEntityName);
             		
             		String path = accessURL.substring(chunkNameIndex + "_chunkname=".length(), _nodenameIndex - 1);
@@ -331,7 +338,11 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
                     		PageNodeType webNode = new PageNodeType();
                     		webNode.setName(accessURL.substring(_nodenameIndex + "_nodename=".length(), _pageIndex -1));
                     		TargetEntityType tarEntityName = new TargetEntityType();
-                    		tarEntityName.setEntityName(accessURL.substring(_pageIndex + "_page=".length(), _framenameIndex - 1));
+                    		String entityName = accessURL.substring(_pageIndex + "_page=".length());
+                    		if (_framenameIndex >= 0) {
+                    			entityName = accessURL.substring(_pageIndex + "_page=".length(), _framenameIndex - 1);
+                    		}
+                    		tarEntityName.setEntityName(entityName);
                     		webNode.setSourceEntity(tarEntityName);
                     		
                     		if (UIFlowCacheManager.getInstance().findWebNode(path, webNode.getName()) == null) {

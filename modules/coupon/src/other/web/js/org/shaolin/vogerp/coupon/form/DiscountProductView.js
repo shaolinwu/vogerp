@@ -116,7 +116,6 @@ function org_shaolin_vogerp_coupon_form_DiscountProductView(json)
 				$("#ProductPanel").append("<div id=\"bottomAdvert\" style=\"margin-top:2%;width:100%;\"><img src=\"/uimaster/images/coupon/front/advert_bottom.jpg\" style=\"width:100%\" /></div>");
 			}
 			
-			$("span[class1='expiredDateView']").css("width", "100%");
 		}
 		
             /* Construct_LAST:org_shaolin_vogerp_coupon_form_DiscountProductView */

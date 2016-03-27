@@ -150,11 +150,13 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 									var cellTime = parseInt(rollTime / (count + row - 2));
 									$(needRollDivIds).delay(m * rollTime).animate({"top" : "-" + t1 + "%"}, cellTime * (row - 2)).animate({"top" : 97 - 2 * cellTop + "%"}, 0).animate({"top" : "-" + rollTopArr[m] + "%"}, cellTime * count);
 								}
-								var advertTopHeight = $(window).height() - $couponPan.height() * 0.42 - $("#div-leftPanel-0_4").height();
+								//var advertTopHeight = $(window).height() - $couponPan.height() * 0.42 - $("#div-leftPanel-0_4").height();
+								var advertTopHeight = windowHeight - $couponPan.height() * 0.42 - $("#div-leftPanel-0_4").height();
 								$("#div-leftPanel-0_1, #div-leftPanel-0_1 img").height(advertTopHeight + "px").css("display", "block");
 								var rollHeight = advertTopHeight - $couponPan.height() * 0.28 - $couponPan.offset().top;
 								$couponPan.css("top", "" + rollHeight + "px");
-								var advertBottomHeight = $(window).height() - advertTopHeight - $couponPan.height() * 0.40;
+								//var advertBottomHeight = $(window).height() - advertTopHeight - $couponPan.height() * 0.40;
+								var advertBottomHeight = windowHeight - advertTopHeight - $couponPan.height() * 0.40;
 								$("#div-leftPanel-0_4, #div-leftPanel-0_4 img").height(advertBottomHeight + "px").css("display", "block");
 								$("#div-leftPanel-0_5").css("left", $couponPan.offset().left + "px");
 								$("#div-leftPanel-0_6").css("right", $couponPan.offset().right + "px");

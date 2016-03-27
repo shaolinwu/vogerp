@@ -100,7 +100,7 @@
     <ns2:variables name="userName" category="JavaClass">
       <type entityName="java.lang.String"></type>
       <default>
-        <expressionString><![CDATA["test"]]></expressionString>
+        <expressionString><![CDATA["frank"]]></expressionString>
       </default>
     </ns2:variables>
     <ns2:variables name="password" category="JavaClass">

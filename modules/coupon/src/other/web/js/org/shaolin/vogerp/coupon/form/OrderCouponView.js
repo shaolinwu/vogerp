@@ -96,6 +96,8 @@ function org_shaolin_vogerp_coupon_form_OrderCouponView(json)
 			}
 			var winHeight = $(window).height();
 			$("#couponPanel").css("min-height", winHeight - $("#advertBottomImage").height() + "px")
+			
+			$("span[class1='expiredDateView']").css("width", "100%");
 		}
 		
             /* Construct_LAST:org_shaolin_vogerp_coupon_form_OrderCouponView */
