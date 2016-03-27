@@ -169,6 +169,8 @@
 			}
 			var winHeight = $(window).height();
 			$("#couponPanel").css("min-height", winHeight - $("#advertBottomImage").height() + "px")
+			
+			$("span[class1='expiredDateView']").css("width", "100%");
 		}
 		]]></ns2:constructorCode>
 	</ns2:body>

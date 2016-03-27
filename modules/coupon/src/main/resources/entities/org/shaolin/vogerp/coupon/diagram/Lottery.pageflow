@@ -64,6 +64,12 @@
         <expressionString><![CDATA["0"]]></expressionString>
       </default>
     </ns2:variables>
+    <ns2:variables name="couponOperation" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.coupon.be.CouponOperationImpl"></type>
+      <default>
+        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.CouponOperationImpl();]]></expressionString>
+      </default>
+    </ns2:variables>
     <ns2:sourceEntity entityName="org.shaolin.vogerp.coupon.page.ChoiceDiscountProduct"></ns2:sourceEntity>
     <ns2:out xsi:type="ns2:DisplayOutType" name="SelectedDiscountProductLogic">
       <ns2:next>
@@ -81,6 +87,11 @@
         <ns2:outDataMappingToNode name="selectedProductId">
           <expression>
             <expressionString><![CDATA[$selectedProductId]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="couponOperation">
+          <expression>
+            <expressionString><![CDATA[$couponOperation]]></expressionString>
           </expression>
         </ns2:outDataMappingToNode>
       </ns2:next>
@@ -365,10 +376,13 @@
 		import org.shaolin.bmdp.runtime.security.UserContext;
 		import java.util.Date;
 		import org.shaolin.vogerp.coupon.util.CouponUtil;
+		import org.shaolin.bmdp.persistence.HibernateUtil;
       {
       	System.out.println("=============Selected Lottery Logic Node=================");
       	System.out.println("orderNumText = " + $orderNumText);
       	System.out.println("selectedProductId = " + $selectedProductId);
+	        
+	        HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
       	
        		DiscountProductImpl condition1 = new DiscountProductImpl();
        		condition1.setId(Integer.valueOf($selectedProductId));

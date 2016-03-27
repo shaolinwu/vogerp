@@ -62,6 +62,11 @@
 						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 					</ns2:layout>
 					<ns2:component xsi:type="ns2:UITableType" UIID="choiceDiscountTable">
+					    <ns2:Property name="initialized">
+			               <ns2:value xsi:type="ns2:BooleanPropertyType">
+			                   <value>true</value>
+			               </ns2:value>
+			            </ns2:Property>
 						<ns2:beElement>org.shaolin.vogerp.coupon.be.DiscountProduct</ns2:beElement>
 						<ns2:selectMode xsi:type="ns2:UITableSelectModeType">Normal</ns2:selectMode>
 						<ns2:defaultRowSize>10</ns2:defaultRowSize>
@@ -156,6 +161,13 @@
 	    <ns2:DataEntity scope="InOut" name="couponOperation" category="BusinessEntity">
 	    	<type entityName="org.shaolin.vogerp.coupon.be.CouponOperation"></type>
 	    </ns2:DataEntity>
+	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+			<ns2:mappingRule
+				entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+			<ns2:UIComponent componentPath="selectedProductId"
+				paramName="UIWidgetType"></ns2:UIComponent>
+			<ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="selectedProductId" paramName="StringData"></ns2:DataComponent>
+		</ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
 	</ns2:in>

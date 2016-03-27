@@ -115,6 +115,8 @@ function org_shaolin_vogerp_coupon_form_DiscountProductView(json)
 			if (typeof($("#bottomAdvert")) == "undefined" || null == $("#bottomAdvert") || $("#bottomAdvert").length < 1) {
 				$("#ProductPanel").append("<div id=\"bottomAdvert\" style=\"margin-top:2%;width:100%;\"><img src=\"/uimaster/images/coupon/front/advert_bottom.jpg\" style=\"width:100%\" /></div>");
 			}
+			
+			$("span[class1='expiredDateView']").css("width", "100%");
 		}
 		
             /* Construct_LAST:org_shaolin_vogerp_coupon_form_DiscountProductView */
@@ -149,15 +151,8 @@ function org_shaolin_vogerp_coupon_form_DiscountProductView(json)
 					var id = attrFormId.substring("discountProductForm".length, attrFormId.length)
 					alert(id);
 					$("input[name='selectedProductId']").val(id);
+					
 					var othis = this;
-					
-					//var dPanel = document.getElementById("discountProductForm" + id + ".discountProductPanel")
-					//var eventsource1 = $(dPanel);
-					//UIMaster.triggerServerEvent("discountProductForm" + id + ".discountProductPanel","choiceCoupon-20160112-232035",UIMaster.getValue(eventsource1),othis.__entityName);
-					
-					//eventsource = this;
-					//UIMaster.triggerServerEvent("discountProductForm" + id + ".confirmTextUI","choiceCoupon-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
-					
 					UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"choiceCoupon1-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
 				}    }/* Gen_Last:org_shaolin_vogerp_coupon_form_DiscountProductView_choiceCoupon */
 

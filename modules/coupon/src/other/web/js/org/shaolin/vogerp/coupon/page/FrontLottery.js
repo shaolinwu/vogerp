@@ -167,7 +167,7 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
 
 					{
 						var cName = $("#div-Form-0_1").attr("class");
-						$("#div-Form-0_1").attr("class", cName + " rollCatain");
+						$("#div-Form-0_1").attr("class", cName + " rollCurtain");
 						//$("#div-Form-0_1").animate({"left" : "-100%"}, 1000);
 						setTimeout(function(){
 							$("#div-Form-0_1").css("display", "none");

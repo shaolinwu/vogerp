@@ -31,6 +31,7 @@ function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct(json)
     var choiceDiscountTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "choiceDiscountTable"]
+        ,initialized: true
     });
 
     var ChoiceDiscountPanel = new UIMaster.ui.panel
