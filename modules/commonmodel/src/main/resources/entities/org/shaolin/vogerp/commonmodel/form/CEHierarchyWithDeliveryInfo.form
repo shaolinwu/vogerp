@@ -86,32 +86,8 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
-      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="typeUI">
-        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-          <ns2:value>分类</ns2:value>
-        </ns2:widgetLabel>
-        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
-          <ns2:handler functionName="ChangeItem"></ns2:handler>
-        </ns2:EventListener>
-        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
-            <ns2:value>false</ns2:value>
-        </ns2:allowBlank>
-        <ns2:allowBlankText xsi:type="ns2:ResourceBundlePropertyType">
-            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-            <ns2:key>org.shaolin.vogerp.commonmodel.form.CEHierarchyWithParty.typeUI.allowBlankText</ns2:key>
-        </ns2:allowBlankText>
-        <!-- 
-        <ns2:editable xsi:type="ns2:ExpressionPropertyType">
-          <ns2:expression>
-            <expressionString>{return $editable;}</expressionString>
-          </ns2:expression>
-        </ns2:editable>
-         -->
-      </ns2:component>
       <ns2:component xsi:type="ns2:UIComboBoxType" UIID="partyUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
         <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
@@ -153,21 +129,17 @@
             <ns2:value>false</ns2:value>
         </ns2:allowBlank>
       </ns2:component>
-	  <ns2:layoutConstraint>
-        <ns2:componentId>typeUI</ns2:componentId>
+      <ns2:layoutConstraint>
+        <ns2:componentId>partyUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>partyUI</ns2:componentId>
+        <ns2:componentId>addressUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>addressUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
         <ns2:componentId>contactUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
@@ -233,7 +205,7 @@
     <ns2:DataEntity scope="InOut" name="displayItems3" category="JavaClass">
       <type entityName="java.util.ArrayList"></type>
     </ns2:DataEntity>
-    
+    <!-- 
 	<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
       <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
@@ -241,6 +213,7 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values" paramName="OptionValues"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
     </ns2:ComponentMapping>
+    -->
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
       <ns2:UIComponent componentPath="partyUI" paramName="UIWidgetType"></ns2:UIComponent>
@@ -283,13 +256,6 @@
       	  if ($editable == null || $editable.booleanValue()) {
 	          ArrayList values = new ArrayList();
 	          ArrayList displayItems = new ArrayList();
-	          CEOperationUtil.getCEComboBox("", values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
-	      	  $values = values;
-	      	  $displayItems = displayItems;
-	      	  
-	      	  if ($value == null || $value.length() == 0 && values.size() > 0) {
-	      	     $value = values.get(1).toString();
-	      	  }
 	          List[] partyList = CustCommonModel.INSTANCE.getIndividualParties($value);
 	      	  $values1 = (ArrayList)partyList[0];
 	      	  $displayItems1 = (ArrayList)partyList[1];
@@ -311,10 +277,11 @@
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString><![CDATA[
-      {
-									 @odContext.executeAllMappings();
-										$partyId = Long.valueOf($value1);
-				  }
+       {
+		   @odContext.executeAllMappings();
+		   $partyId = Long.valueOf($value1);
+				  
+	   }
 	    ]]></expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>

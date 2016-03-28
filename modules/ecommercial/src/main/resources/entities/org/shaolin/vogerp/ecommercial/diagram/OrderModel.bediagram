@@ -64,6 +64,16 @@
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>accVoucherId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>accVoucher</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.accounting.be.AccountVoucher" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>startCreateDate</bediagram:name>
             <bediagram:type xsi:type="bediagram:DateTimeType" />
         </bediagram:member>
@@ -144,6 +154,16 @@
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>accVoucherId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>accVoucher</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.accounting.be.AccountVoucher" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>startCreateDate</bediagram:name>
             <bediagram:type xsi:type="bediagram:DateTimeType" />
         </bediagram:member>
@@ -201,6 +221,11 @@
             <bediagram:value>Taken</bediagram:value>
             <bediagram:intValue>1</bediagram:intValue>
             <bediagram:description>Taken Order</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Payed</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>Order Payed</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Cancelled</bediagram:value>

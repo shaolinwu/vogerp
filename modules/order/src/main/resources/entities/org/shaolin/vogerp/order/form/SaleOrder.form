@@ -28,6 +28,7 @@
 		import org.shaolin.uimaster.page.AjaxContext;
 		import org.shaolin.uimaster.page.ajax.*;
 		import org.shaolin.vogerp.order.be.*;
+		import org.shaolin.vogerp.order.ce.OrderStatusType;
 		import org.shaolin.vogerp.order.dao.OrderModel;
 		import org.shaolin.vogerp.order.util.OrderUtil;
 		import org.shaolin.bmdp.runtime.security.UserContext;
@@ -36,6 +37,13 @@
 			HashMap input = (HashMap)form.ui2Data();
 		
 			SaleOrderImpl defaultUser = (SaleOrderImpl)input.get("beObject");
+            if (defaultUser.getDeliveryInfoId() == 0) {
+                defaultUser.setStatus(OrderStatusType.CREATED);
+                OrderModel.INSTANCE.create(defaultUser.getDeliveryInfo());
+                defaultUser.setDeliveryInfoId(defaultUser.getDeliveryInfo().getId());
+            } else {
+                OrderModel.INSTANCE.update(defaultUser.getDeliveryInfo());
+            }
 		    if (defaultUser.getId() == 0) {
 		        defaultUser.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
 		        defaultUser.setCreateDate(new java.util.Date());

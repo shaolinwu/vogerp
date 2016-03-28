@@ -310,6 +310,8 @@
                     import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
                     import org.shaolin.vogerp.order.be.PurchaseItemImpl;
                     import org.shaolin.vogerp.commonmodel.IOrganizationService;
+                    import org.shaolin.vogerp.accounting.be.*;
+                    import org.shaolin.vogerp.accounting.IAccountingService;
                     {
                          $gorder.setEndPrice(OrderUtil.getLowestOfferPrice($gorder, true));
                          $gorder.setTakenCustomerId(OrderUtil.getLowestOfferPriceCustId($gorder));
@@ -337,16 +339,22 @@
                          for (int i=0; i<purchaseItems.size(); i++) {
                              PurchaseItemImpl pItem = (PurchaseItemImpl)purchaseItems.get(i);
 	                         OrderItemImpl item = new OrderItemImpl();
-	                         //item.setProductId(pItem.);
-	                         //item.setPriceId(pItem.);
 	                         item.setAmount(pItem.getAmount());
 	                         item.setUnitPrice(pItem.getUnitPrice());
 	                         item.setComment(pItem.getComment());
 	                         saleOrderItems.add(item);
                          }
                          saleOrder.setItems(saleOrderItems);
+                         
+                         IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+                         IAccountVoucher accVoucher = accountingService.createOutgoingVoucher("订单支付", $gorder.getEndPrice(), "支付抢购订单" + saleOrder.getSerialNumber());
+                         @flowContext.save(accVoucher);
                          @flowContext.save(saleOrder);
                          
+                         $gorder.setSaleOrderId(saleOrder.getId());
+                         $gorder.setSaleOrderId(saleOrder.getId());
+                         OrderModel.INSTANCE.update($gorder, true);
+                          
                          String description = $gorder.getDescription();
                          NotificationImpl message = new NotificationImpl();
                          message.setPartyId($gorder.getTakenCustomerId());

@@ -3,12 +3,6 @@
 function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var typeUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "typeUI"]
-      ,allowBlank:false
-    });
-
     var partyUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "partyUI"]
@@ -31,16 +25,14 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "typeUI",prefix + "partyUI",prefix + "addressUI",prefix + "contactUI"]
+        ,subComponents: [prefix + "partyUI",prefix + "addressUI",prefix + "contactUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [typeUI,partyUI,addressUI,contactUI,fieldPanel]
+        ,items: [partyUI,addressUI,contactUI,fieldPanel]
     });
-
-    Form.typeUI=typeUI;
 
     Form.partyUI=partyUI;
 
@@ -49,8 +41,6 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo(json)
     Form.contactUI=contactUI;
 
     Form.fieldPanel=fieldPanel;
-
-    Form.typeUI=typeUI;
 
     Form.partyUI=partyUI;
 

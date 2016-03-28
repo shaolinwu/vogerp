@@ -91,6 +91,7 @@
             PurchaseItemImpl selectedRow = (PurchaseItemImpl)tableWidget.getSelectedRow();
             selectedRow.setPricePackage(prices);
             selectedRow.setPriceId(prices.getId());
+            selectedRow.setUnitPrice(prices.getPrice());
             tableWidget.refresh();
             
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid());
@@ -166,10 +167,20 @@
           	<ns2:expression xsi:type="ns2:ExpressionType">
                 <ns2:expressionString><![CDATA[
                 import org.shaolin.bmdp.runtime.AppContext;
+                import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
+                import org.shaolin.vogerp.productmodel.IProductService;
                 import org.shaolin.vogerp.productmodel.util.ProductUtil;
                 {
                     String onclick = "javascript:defaultname.saleOrder.orderItemTable.openProductPriceSelector(defaultname.saleOrder.orderItemTable.productTypeUI,event);";
-                	return "<span onclick='"+onclick+"'>请选择...</span>";
+                	if ($rowBE.getPriceId() > 0) {
+                	   if ($rowBE.getPricePackage() == null) {
+	                	   IProductService service = (IProductService)AppContext.get().getService(IProductService.class);
+	                	   $rowBE.setPricePackage((ProductPriceImpl)service.getPricePackage($rowBE.getPriceId()));
+                	   }
+                	   return "<span onclick='"+onclick+"'>"+ProductUtil.getPricePackage($rowBE.getPricePackage())+"</span>";
+                	} else {
+                	   return "<span onclick='"+onclick+"'>请选择...</span>";
+                	}
                 }]]></ns2:expressionString>
             </ns2:expression>
           </ns2:rowExpression>
@@ -244,6 +255,7 @@
              </ns2:expression>
           </ns2:updateCondition>
         </ns2:column>
+        <!-- 
         <ns2:column>
           <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
             <ns2:bundle>org_shaolin_vogerp_order_i18n</ns2:bundle>
@@ -254,6 +266,7 @@
             <ns2:type>Text</ns2:type>
           </ns2:uiType>
         </ns2:column>
+         -->
         <ns2:defaultActions>
           <ns2:defaultNewAction>addItem</ns2:defaultNewAction>
           <ns2:defaultDeleteAction>deleteItem</ns2:defaultDeleteAction>

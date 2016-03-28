@@ -65,7 +65,7 @@
 		<ns2:eventHandler functionName="Login"></ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:layout xsi:type="ns2:TableLayoutType">
-				<ns2:rowHeightWeight>200</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>180</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>350</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>80</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
@@ -99,6 +99,7 @@
 					</ns2:param>
 				</ns2:UISkin>
 				<ns2:layout xsi:type="ns2:TableLayoutType">
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -163,16 +164,14 @@
                         <ns2:handler functionName="verifiCode" />
                     </ns2:EventListener>
                 </ns2:component>
-                <!-- 
 				<ns2:component xsi:type="ns2:UIButtonType" UIID="loginBtn">
 					<ns2:text xsi:type="ns2:StringPropertyType">
 						<ns2:value>登录</ns2:value>
 					</ns2:text>
 					<ns2:EventListener xsi:type="ns2:ClickListenerType">
-						<ns2:handler functionName="Login" />
+						<ns2:handler functionName="verifiCode" />
 					</ns2:EventListener>
 				</ns2:component>
-				 -->
 				<ns2:layoutConstraint>
 					<ns2:componentId>userName</ns2:componentId>
 					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
@@ -193,13 +192,11 @@
                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                         x="0" y="3" align="FULL"></ns2:constraint>
                 </ns2:layoutConstraint>
-                <!-- 
 				<ns2:layoutConstraint>
 					<ns2:componentId>loginBtn</ns2:componentId>
 					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 						x="0" y="4" align="FULL"></ns2:constraint>
 				</ns2:layoutConstraint>
-				 -->
 			</ns2:component>
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="bottomPanel">
 				<ns2:layout xsi:type="ns2:TableLayoutType">

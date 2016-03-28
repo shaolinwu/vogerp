@@ -446,19 +446,14 @@
   <!-- 结算方式一般有银行转账、支票、或银行汇票 -->
   <common:entityName>SettlementMethodType</common:entityName>
   <bediagram:constantValue>
-   <bediagram:value>BankTransfer</bediagram:value>
+   <bediagram:value>Alipay</bediagram:value>
    <bediagram:intValue>0</bediagram:intValue>
-   <bediagram:description>银行转账</bediagram:description>
+   <bediagram:description>支付宝支付</bediagram:description>
   </bediagram:constantValue>
   <bediagram:constantValue>
    <bediagram:value>Check</bediagram:value>
    <bediagram:intValue>1</bediagram:intValue>
-   <bediagram:description>支票</bediagram:description>
-  </bediagram:constantValue>
-  <bediagram:constantValue>
-   <bediagram:value>BankDraft</bediagram:value>
-   <bediagram:intValue>2</bediagram:intValue>
-   <bediagram:description>银行汇票</bediagram:description>
+   <bediagram:description>微信支付</bediagram:description>
   </bediagram:constantValue>
  </bediagram:ceEntity>
 	

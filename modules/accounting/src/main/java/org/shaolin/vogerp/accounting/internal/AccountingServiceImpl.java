@@ -38,7 +38,7 @@ public class AccountingServiceImpl implements IServiceProvider, IAccountingServi
 		item.setComment(comment);
 		item.setOrgId(UserContext.getUserContext().getOrgId());
 		item.setEntered(UserContext.getUserContext().getUserId());
-		item.setSettlementMethod(SettlementMethodType.BANKTRANSFER);
+		item.setSettlementMethod(SettlementMethodType.ALIPAY);
 		DoubleEntryImpl entry = new DoubleEntryImpl();
 		entry.setCreditAmount(amount);
 		entry.setGeneralLedger(ClassifyOfAccounts.PROFIT);
@@ -58,7 +58,7 @@ public class AccountingServiceImpl implements IServiceProvider, IAccountingServi
 		item.setComment(comment);;
 		item.setOrgId(UserContext.getUserContext().getOrgId());
 		item.setEntered(UserContext.getUserContext().getUserId());
-		item.setSettlementMethod(SettlementMethodType.BANKTRANSFER);
+		item.setSettlementMethod(SettlementMethodType.ALIPAY);
 		DoubleEntryImpl entry = new DoubleEntryImpl();
 		entry.setDebitAmount(amount);
 		entry.setGeneralLedger(ClassifyOfAccounts.COST);

@@ -33,6 +33,11 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         ui: elementList[prefix + "veriCode"]
     });
 
+    var loginBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "loginBtn"]
+    });
+
     var bottomPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "bottomPanel"]
@@ -45,7 +50,7 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         ui: elementList[prefix + "loginPanel"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
-        ,subComponents: [prefix + "errorInfo",prefix + "userName",prefix + "password",prefix + "veriCodeQuestion",prefix + "veriCode"]
+        ,subComponents: [prefix + "errorInfo",prefix + "userName",prefix + "password",prefix + "veriCodeQuestion",prefix + "veriCode",prefix + "loginBtn"]
     });
 
     var topPanel = new UIMaster.ui.panel
@@ -58,7 +63,7 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [vogerplogo,errorInfo,userName,password,veriCodeQuestion,veriCode,topPanel,loginPanel,bottomPanel]
+        ,items: [vogerplogo,errorInfo,userName,password,veriCodeQuestion,veriCode,loginBtn,topPanel,loginPanel,bottomPanel]
     });
 
     Form.vogerplogo=vogerplogo;
@@ -72,6 +77,8 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     Form.veriCodeQuestion=veriCodeQuestion;
 
     Form.veriCode=veriCode;
+
+    Form.loginBtn=loginBtn;
 
     Form.topPanel=topPanel;
 
@@ -88,6 +95,8 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     Form.veriCodeQuestion=veriCodeQuestion;
 
     Form.veriCode=veriCode;
+
+    Form.loginBtn=loginBtn;
 
     Form.bottomPanel=bottomPanel;
 

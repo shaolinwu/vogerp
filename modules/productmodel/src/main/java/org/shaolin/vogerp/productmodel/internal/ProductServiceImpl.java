@@ -22,6 +22,7 @@ import org.shaolin.vogerp.productmodel.be.IProduct;
 import org.shaolin.vogerp.productmodel.be.IProductPrice;
 import org.shaolin.vogerp.productmodel.be.IProductTemplate;
 import org.shaolin.vogerp.productmodel.be.ProductImpl;
+import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
 import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
 import org.shaolin.vogerp.productmodel.dao.CustProductModel;
 import org.shaolin.vogerp.productmodel.dao.ProductModel;
@@ -182,6 +183,13 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 			} 
 		}
 		return cache.get(UserContext.getUserContext().getOrgId()).priceDataModel;
+	}
+	
+	public IProductPrice getPricePackage(long priceId) {
+		ProductPriceImpl condition = new ProductPriceImpl();
+		condition.setId(priceId);
+		List<IProductPrice> all = ProductModel.INSTANCE.searchProductPrice(condition, null, 0, 1);
+		return all.get(0);
 	}
 	
 	@Override

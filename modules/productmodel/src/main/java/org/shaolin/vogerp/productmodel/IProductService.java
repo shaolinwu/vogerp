@@ -3,6 +3,7 @@ package org.shaolin.vogerp.productmodel;
 import java.util.List;
 import java.util.Map;
 
+import org.shaolin.vogerp.productmodel.be.IProductPrice;
 import org.shaolin.vogerp.productmodel.be.IProductTemplate;
 
 public interface IProductService {
@@ -35,4 +36,11 @@ public interface IProductService {
 	 * @return
 	 */
 	public String getUserProductRoot();
+	
+	/**
+	 * 
+	 * @param priceId
+	 * @return
+	 */
+	public IProductPrice getPricePackage(long priceId);
 }
