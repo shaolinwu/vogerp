@@ -189,7 +189,7 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 		
 		PermissionType hasModuleId(long moduleId) {
 			if (moduleId <= 0) {
-				return PermissionType.DENIABLE;
+				return PermissionType.NOT_SPECIFIED;
 			}
 			
 			if (modelPermissions != null && modelPermissions.size() > 0) {
