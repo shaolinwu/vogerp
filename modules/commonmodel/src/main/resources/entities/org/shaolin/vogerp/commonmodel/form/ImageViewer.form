@@ -104,6 +104,11 @@
                    <value>400px</value>
                </ns2:value>
             </ns2:Property>
+            <ns2:Property name="mobheight">
+               <ns2:value xsi:type="ns2:StringPropertyType">
+                   <value>250px</value>
+               </ns2:value>
+            </ns2:Property>
             <ns2:Property name="value">
 	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
 			         <ns2:expression>
@@ -264,6 +269,7 @@
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="imagePath" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
+      <default><expressionString>""</expressionString></default>
     </ns2:DataEntity>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>

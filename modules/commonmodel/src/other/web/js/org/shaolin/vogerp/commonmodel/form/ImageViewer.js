@@ -13,6 +13,7 @@ function org_shaolin_vogerp_commonmodel_form_ImageViewer(json)
         ui: elementList[prefix + "photoUI"]
         ,width: "580px"
         ,height: "400px"
+        ,mobheight: "250px"
     });
 
     var uploadFile = new UIMaster.ui.file

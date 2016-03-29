@@ -130,6 +130,11 @@
 			              <value>150</value>
 			           </ns2:value>
                     </ns2:Property>
+                    <ns2:Property name="mobheight">
+                        <ns2:value xsi:type="ns2:NumericPropertyType">
+                          <value>150</value>
+                       </ns2:value>
+                    </ns2:Property>
                     <ns2:Property name="width">
                         <ns2:value xsi:type="ns2:StringPropertyType">
                           <value>100%</value>

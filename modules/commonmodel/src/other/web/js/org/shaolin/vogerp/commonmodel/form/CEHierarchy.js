@@ -59,6 +59,8 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchy(json)
 
     Form.refreshItem = org_shaolin_vogerp_commonmodel_form_CEHierarchy_refreshItem;
 
+    Form.dblclickTreeNode = org_shaolin_vogerp_commonmodel_form_CEHierarchy_dblclickTreeNode;
+
     Form.clickTreeNode = org_shaolin_vogerp_commonmodel_form_CEHierarchy_clickTreeNode;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_CEHierarchy_invokeDynamicFunction;
@@ -167,6 +169,17 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchy(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"refreshItem_20151108",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchy_refreshItem */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_CEHierarchy_dblclickTreeNode(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchy_dblclickTreeNode */
+        var o = this;
+        var UIEntity = this;
+
+        {   
+            this.openItem(this.ceTree, event);
+        }
+            }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchy_dblclickTreeNode */
 
 
     /* auto generated eventlistener function declaration */

@@ -20,8 +20,8 @@
         	}
         	
         	RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-         form.closeIfinWindows();
-         @page.removeForm(@page.getEntityUiid()); 
+            form.closeIfinWindows();
+            @page.removeForm(@page.getEntityUiid()); 
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -36,6 +36,15 @@
         	//sync data, don't delete this!
         }]]></expressionString>
       </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="dblclickTreeNode">
+     <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+            $(this.okbtn).trigger("click");
+        }
+        ]]></ns2:expressionString>
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="expandTreeNode" />
@@ -79,6 +88,7 @@
 	      <ns2:selectMode>Multiple</ns2:selectMode>
 	      <ns2:expandTreeEvent>expandTreeNode</ns2:expandTreeEvent>
 	      <ns2:selectNodeEvent>clickTreeNode</ns2:selectNodeEvent>
+	      <ns2:dblselectNodeEvent>dblclickTreeNode</ns2:dblselectNodeEvent>
 	      <ns2:deleteNodeEvent>moveNode</ns2:deleteNodeEvent>
 	      <ns2:initExpression xsi:type="ns2:ExpressionPropertyType">
 	          <ns2:expression xsi:type="ns2:ExpressionType">

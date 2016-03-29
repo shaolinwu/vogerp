@@ -18,6 +18,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         ui: elementList[prefix + "advImagesUI"]
         ,value: "/images/adv/mainpage"
         ,height: 150
+        ,mobheight: 150
         ,width: "100%"
         ,mode: "slider"
         ,thumbnailsFullScreen: false

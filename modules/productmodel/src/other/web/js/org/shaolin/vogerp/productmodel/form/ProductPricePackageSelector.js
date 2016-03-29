@@ -73,6 +73,8 @@ function org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector(json)
 
     Form.clickTreeNode = org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector_clickTreeNode;
 
+    Form.dblclickTreeNode = org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector_dblclickTreeNode;
+
     Form.expandTreeNode = org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector_expandTreeNode;
 
     Form.Cancel = org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector_Cancel;
@@ -109,6 +111,17 @@ function org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"clickTreeNode_201507092234",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector_clickTreeNode */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector_dblclickTreeNode(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector_dblclickTreeNode */
+        var o = this;
+        var UIEntity = this;
+
+        {   
+            $(this.okbtn).trigger("click");
+        }
+            }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector_dblclickTreeNode */
 
 
     /* auto generated eventlistener function declaration */

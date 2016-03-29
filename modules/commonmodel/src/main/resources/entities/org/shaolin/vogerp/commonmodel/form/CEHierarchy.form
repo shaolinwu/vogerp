@@ -194,6 +194,15 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
+  <ns2:eventHandler functionName="dblclickTreeNode">
+     <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+            this.openItem(this.ceTree, event);
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
+  </ns2:eventHandler>
   <ns2:eventHandler functionName="clickTreeNode">
   </ns2:eventHandler>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
@@ -219,6 +228,7 @@
 	      <ns2:itemIcon>/images/itemicon.jpg</ns2:itemIcon>
 	      <ns2:selectMode>Multiple</ns2:selectMode>
 	      <ns2:selectNodeEvent>clickTreeNode</ns2:selectNodeEvent>
+	      <ns2:dblselectNodeEvent>dblclickTreeNode</ns2:dblselectNodeEvent>
 	      <ns2:deleteNodeEvent>moveNode</ns2:deleteNodeEvent>
 	      <ns2:initExpression xsi:type="ns2:ExpressionPropertyType">
               <ns2:expression xsi:type="ns2:ExpressionType">
