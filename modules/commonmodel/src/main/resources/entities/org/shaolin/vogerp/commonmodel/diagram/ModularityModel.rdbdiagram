@@ -15,6 +15,7 @@
     <ns2:column name="BIGICON" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="ACCESSURL" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="ADDINODES" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2"></ns2:column>
     <ns2:primaryKey>
       <ns2:columnName>ID</ns2:columnName>
@@ -30,6 +31,7 @@
       <ns2:fieldMapping beFieldName="bigIcon" columnName="BIGICON"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="accessURL" columnName="ACCESSURL"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="additionNodes" columnName="ADDINODES"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>

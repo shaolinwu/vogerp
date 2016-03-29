@@ -37,6 +37,11 @@
 			<bediagram:name>accessURL</bediagram:name>
 			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
+		<bediagram:member>
+		    <!-- configure the permission of the addition nodes from page flow.-->
+            <bediagram:name>additionNodes</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
 	</bediagram:beEntity>
 
 	<bediagram:beEntity needPersist="true" needUIEntity="true">

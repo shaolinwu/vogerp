@@ -166,7 +166,7 @@
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-      <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -177,8 +177,9 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
-        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="parentIdUI">
         <ns2:secure>true</ns2:secure>
@@ -256,6 +257,15 @@
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="bigIconUI">
       	<UIStyle>uimaster_rightform_widget</UIStyle>
       </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="additionNodesLabel">
+        <UIStyle>uimaster_leftform_widget</UIStyle>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>包涵页面节点</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UITextAreaType" UIID="additionNodesUI">
+        <UIStyle>uimaster_rightform_widget</UIStyle>
+      </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="roleUILabel">
         <UIStyle>uimaster_leftform_widget</UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -311,12 +321,20 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>descriptionUILabel</ns2:componentId>
+        <ns2:componentId>additionNodesLabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>descriptionUI</ns2:componentId>
+        <ns2:componentId>additionNodesUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>descriptionUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="7" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>descriptionUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="7" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
@@ -419,6 +437,11 @@
           <expressionString>java.lang.Boolean.TRUE</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping7">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="additionNodesUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.additionNodes" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[

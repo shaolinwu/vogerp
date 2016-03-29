@@ -81,6 +81,12 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	            	}
 	            	path = path + "." + node;
 	            	moduleLinks.put(path, module.getId());
+	            	if (module.getAdditionNodes() != null && module.getAdditionNodes().trim().length() > 0) {
+	            		String[] additionalPages = module.getAdditionNodes().split(";");
+	            		for (String nodeName: additionalPages) {
+	            			moduleLinks.put(nodeName, module.getId());
+	            		}
+	            	}
 	            	logger.info("Read module link: {}", path);
             	}
         	}
