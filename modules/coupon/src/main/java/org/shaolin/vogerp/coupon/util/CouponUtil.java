@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.shaolin.vogerp.coupon.be.CouponImpl;
 import org.shaolin.vogerp.coupon.be.DiscountProductImpl;
 import org.shaolin.vogerp.coupon.ce.StatusType;
@@ -18,6 +20,10 @@ public class CouponUtil {
 	
 	public static final char[] CHAR_ARR = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 
 		'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+
+	private static final String OPEN_ID = "openId";
+
+	private static final String DEVELOP_WEIXIN = "develop_weixin";
 	
 	/**
 	 * Generate coupon serial number
@@ -101,4 +107,21 @@ public class CouponUtil {
             
        return Integer.parseInt(String.valueOf(between_days));           
     }
+	
+	/**
+	 * put weixin input params to session
+	 * @param request
+	 */
+	public static void putOpenId2Session(HttpServletRequest request) {
+		String body = request.getParameter("body");
+		if (null != body && !"".equals(body)) {
+			String openId = body.substring(body.indexOf("<FromUserName>") + "<FromUserName>".length(), body.indexOf("</FromUserName>"));
+			String developWeixin = body.substring(body.indexOf("<ToUserName >") + "<ToUserName >".length(), body.indexOf("</ToUserName >"));
+			request.getSession().setAttribute(OPEN_ID, openId);
+			request.getSession().setAttribute(DEVELOP_WEIXIN, developWeixin);
+			System.out.println(OPEN_ID + "=" + request.getSession().getAttribute(OPEN_ID));
+			System.out.println(DEVELOP_WEIXIN + "=" + request.getSession().getAttribute(DEVELOP_WEIXIN));
+		}
+		
+	}
 }

@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram"
+	xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page"
+	xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.coupon.form.DiscountProductView</entityName>
+	<systemVersion>0</systemVersion>
+	
+	<ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+		<ns2:layout xsi:type="ns2:TableLayoutType">
+			<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+			<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+			<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+		</ns2:layout>
+		<ns2:component xsi:type="ns2:UIPanelType" UIID="couponTypePanel">
+			<ns2:component xsi:type="ns2:UILabelType" UIID="bottom1Text">
+				<ns2:text xsi:type="ns2:ExpressionPropertyType">
+		        	<ns2:expression>
+			           <expressionString><![CDATA[
+			           import org.shaolin.bmdp.runtime.AppContext;
+			           import org.shaolin.bmdp.runtime.Registry;
+			           import org.shaolin.uimaster.page.WebConfig;
+			           import org.shaolin.vogerp.coupon.be.CouponTypeImpl;
+			           { 
+			           		System.out.println("\n=========Coupon Type===========\n");
+			           		return $couponType.getName();
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:text>
+			</ns2:component>
+		</ns2:component>
+		<ns2:component xsi:type="ns2:UIPanelType" UIID="discountProductsPanel">
+		</ns2:component>
+		<ns2:layoutConstraint>
+			<ns2:componentId>couponTypePanel</ns2:componentId>
+			<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+				x="0" y="0" align="FULL"></ns2:constraint>
+		</ns2:layoutConstraint>
+		<ns2:layoutConstraint>
+			<ns2:componentId>discountProductsPanel</ns2:componentId>
+			<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+				x="0" y="1" align="FULL"></ns2:constraint>
+		</ns2:layoutConstraint>
+				
+	</ns2:body>
+	<ns2:mapping>
+		<systemVersion>0</systemVersion>
+		<ns2:DataEntity scope="InOut" name="couponType" category="BusinessEntity">
+			<type entityName="org.shaolin.vogerp.coupon.be.CouponType"></type>
+		</ns2:DataEntity>
+		<ns2:DataToUIMappingOperation>
+			<expressionString>{
+				@odContext.executeAllMappings();
+				}
+			</expressionString>
+		</ns2:DataToUIMappingOperation>
+		<ns2:UIToDataMappingOperation>
+			<expressionString>{
+				@odContext.executeAllMappings();
+				}
+			</expressionString>
+		</ns2:UIToDataMappingOperation>
+	</ns2:mapping>
+</ns2:UIEntity>

@@ -73,6 +73,14 @@
 	        <bediagram:name>endCreateDate</bediagram:name>
 	        <bediagram:type xsi:type="bediagram:DateTimeType" />
 	    </bediagram:member>
+	    <!-- 优惠产品列表 -->
+	    <bediagram:member>
+			<!-- what kind of the party, the contact info from the party and etc. -->
+			<bediagram:name>discountProducts</bediagram:name>
+			<bediagram:type xsi:type="bediagram:JavaObjRefType">
+		        <bediagram:targetJava name="java.util.List" />
+		    </bediagram:type>
+		</bediagram:member>
 	</bediagram:beEntity>
 	
 	<!-- 优惠产品 -->

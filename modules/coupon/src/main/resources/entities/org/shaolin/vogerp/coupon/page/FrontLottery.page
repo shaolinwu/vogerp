@@ -199,6 +199,15 @@
 		</ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
+		<ns2:serverAction xsi:type="ns2:ExpressionParamType">
+			<ns2:expressionString><![CDATA[
+			import org.shaolin.bmdp.runtime.AppContext;
+			import org.shaolin.vogerp.coupon.util.CouponUtil;
+			{
+				System.out.println("\n=========putOpenId2Session==========\n");
+				CouponUtil.putOpenId2Session(@odContext.getRequest());
+			}]]></ns2:expressionString>
+		</ns2:serverAction>
 	</ns2:in>
 	<ns2:out name="ChoiceDiscountProductLogic" functionName="ChoiceDiscountProductLogic" validate="true">
 		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
