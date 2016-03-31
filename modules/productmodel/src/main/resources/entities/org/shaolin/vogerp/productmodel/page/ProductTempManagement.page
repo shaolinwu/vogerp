@@ -24,7 +24,7 @@
                         RefForm form = new RefForm("productInfoForm", "org.shaolin.vogerp.productmodel.form.ProductTemplate", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Create Product Information", new TableCallBack("productInfoTable"), 750, 600);
+                        form.openInWindows("\u65B0\u5EFA\u4EA7\u54C1\u6A21\u677F", new TableCallBack("productInfoTable"), 750, 600);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -52,7 +52,7 @@
                         RefForm form = new RefForm("productInfoForm", "org.shaolin.vogerp.productmodel.form.ProductTemplate", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Product Information", new TableCallBack("productInfoTable"), 750, 600);
+                        form.openInWindows("\u7F16\u8F91\u4EA7\u54C1\u6A21\u677F", new TableCallBack("productInfoTable"), 750, 600);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>

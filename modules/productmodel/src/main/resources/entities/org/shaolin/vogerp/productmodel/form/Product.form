@@ -21,7 +21,7 @@
         import org.shaolin.bmdp.runtime.AppContext;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
-        import org.shaolin.vogerp.productmodel.be.ProductImpl;
+        import org.shaolin.vogerp.productmodel.be.*;
         import org.shaolin.vogerp.productmodel.dao.ProductModel;
         import org.shaolin.vogerp.productmodel.IProductService;
         {      
@@ -33,6 +33,15 @@
             if (defaultUser.getId() == 0) {
                 ProductModel.INSTANCE.create(defaultUser);
             } else {
+                Hidden templateIdUI = @page.getHidden("templateIdUI");
+                long tid = Long.parseLong(templateIdUI.getValue());
+                if (tid != defaultUser.getTemplateId()) {
+	                defaultUser.setTemplateId(tid);
+	                ProductTemplateImpl condition = new ProductTemplateImpl();
+	                condition.setId(defaultUser.getTemplateId());
+	                condition = (ProductTemplateImpl)ProductModel.INSTANCE.searchProductTemplate(condition, null, 0, 1).get(0);
+	                defaultUser.setTemplate(condition);
+                }
 	            ProductModel.INSTANCE.update(defaultUser);
             }
             
@@ -92,6 +101,7 @@
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.bmdp.runtime.ce.CEUtil;
+        import org.shaolin.vogerp.productmodel.be.ProductImpl;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid());
             HashMap input = (HashMap)form.ui2Data();
@@ -162,7 +172,7 @@
                  import org.shaolin.bmdp.runtime.AppContext;
                  import org.shaolin.uimaster.page.AjaxContext;
                  import org.shaolin.uimaster.page.ajax.*;
-                 import org.shaolin.vogerp.productmodel.be.ProductImpl;
+                 import org.shaolin.vogerp.productmodel.be.*;
                  import org.shaolin.vogerp.productmodel.dao.ProductModel;
                  import org.shaolin.vogerp.productmodel.util.ProductUtil;
                  import org.shaolin.bmdp.runtime.security.UserContext;
@@ -173,6 +183,12 @@
 	                    HashMap input = (HashMap)form.ui2Data();
 	                    ProductImpl defaultUser = (ProductImpl)input.get("beObject");
 	                    if (defaultUser.getId() == 0) {
+	                        Hidden templateIdUI = @page.getHidden("templateIdUI");
+                            defaultUser.setTemplateId(Long.parseLong(templateIdUI.getValue()));
+                            ProductTemplateImpl condition = new ProductTemplateImpl();
+                            condition.setId(defaultUser.getTemplateId());
+                            condition = (ProductTemplateImpl)ProductModel.INSTANCE.searchProductTemplate(condition, null, 0, 1).get(0);
+                            defaultUser.setTemplate(condition);
 	                        defaultUser.setSerialNumber(ProductUtil.genSerialNumber());
 	                        defaultUser.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
 	                        ProductModel.INSTANCE.create(defaultUser);
@@ -180,10 +196,6 @@
 	                        defaultUser.setHtmlDesc("/product/" + AppContext.get().getAppName() +"/" + defaultUser.getId() + "/desc.html");
 	                        defaultUser.setPhotos("/product/" + AppContext.get().getAppName() +"/" + defaultUser.getId() + "/images");
 	                        ProductModel.INSTANCE.update(defaultUser);
-		                    AFile file = (AFile)@page.getElement("uploadFile");
-		                    file.setStoredPath(defaultUser.getPhotos());
-                            TextArea htmlDescUI = (TextArea)@page.getElement("htmlDescUI");
-                            htmlDescUI.setValue(defaultUser.getHtmlDesc());
 	                    }
                     } 
                  }]]></ns2:expressionString>
@@ -217,9 +229,8 @@
                </ns2:component>
                <ns2:component xsi:type="ns2:UILabelType" UIID="typeUILabel">
                  <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-                 <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-                   <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-                   <ns2:key>org.shaolin.vogerp.productmodel.be.Product.type</ns2:key>
+                 <ns2:text xsi:type="ns2:StringPropertyType">
+                   <ns2:value>请选择一个产品模板</ns2:value>
                  </ns2:text>
                </ns2:component>
                <ns2:component xsi:type="ns2:UILabelType" UIID="typeUI">
@@ -227,6 +238,9 @@
                  <ns2:text xsi:type="ns2:StringPropertyType">
                     <ns2:value>请选择...</ns2:value>
                  </ns2:text>
+                 <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+                   <ns2:value>false</ns2:value>
+                 </ns2:allowBlank>
                  <ns2:EventListener xsi:type="ns2:ClickListenerType">
 		           <ns2:handler functionName="openProductTempSelector"></ns2:handler>
 		         </ns2:EventListener>
@@ -240,10 +254,8 @@
                </ns2:component>
                <ns2:component xsi:type="ns2:UITextAreaType" UIID="descriptionUI">
                  <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-                 <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
-		            <ns2:value>false</ns2:value>
-		         </ns2:allowBlank>
                </ns2:component>
+               <!-- 
                <ns2:component xsi:type="ns2:UILabelType" UIID="saleEndDateUILabel">
                  <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
                  <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -257,6 +269,7 @@
                     <ns2:value>false</ns2:value>
                  </ns2:allowBlank>
                </ns2:component>
+                -->
                <ns2:layoutConstraint>
                  <ns2:componentId>serialNumberUILabel</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
@@ -281,6 +294,7 @@
                  <ns2:componentId>descriptionUI</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
+               <!-- 
                <ns2:layoutConstraint>
                  <ns2:componentId>saleEndDateUILabel</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
@@ -289,6 +303,7 @@
                  <ns2:componentId>saleEndDateUI</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
+               -->
             </ns2:panel>
          </ns2:tab>
          <ns2:tab uiid="infoPanel2">
@@ -386,6 +401,7 @@
       <ns2:UIComponent componentPath="templateIdUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.templateId" paramName="Number"></ns2:DataComponent>
     </ns2:ComponentMapping>
+    <!-- 
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithDate"></ns2:mappingRule>
       <ns2:UIComponent componentPath="saleEndDateUI" paramName="UIWidgetType"></ns2:UIComponent>
@@ -396,6 +412,7 @@
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
+     -->
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="descriptionUI" paramName="UIWidgetType"></ns2:UIComponent>

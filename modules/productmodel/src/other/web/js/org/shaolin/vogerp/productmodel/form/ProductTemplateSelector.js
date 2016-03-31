@@ -18,6 +18,11 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
         ui: elementList[prefix + "pTemplateListUI"]
     });
 
+    var addTemplateBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "addTemplateBtn"]
+    });
+
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
@@ -34,7 +39,7 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "addTemplateBtn",prefix + "okbtn",prefix + "cancelbtn"]
     });
 
     var secondPanel = new UIMaster.ui.panel
@@ -62,7 +67,7 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [selectProductTypeUI,selectPTemplateIdUI,pTemplateListUI,okbtn,cancelbtn,productTypeTree,fieldPanel,firstPanel,secondPanel,actionPanel]
+        ,items: [selectProductTypeUI,selectPTemplateIdUI,pTemplateListUI,addTemplateBtn,okbtn,cancelbtn,productTypeTree,fieldPanel,firstPanel,secondPanel,actionPanel]
     });
 
     Form.selectProductTypeUI=selectProductTypeUI;
@@ -70,6 +75,8 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
     Form.selectPTemplateIdUI=selectPTemplateIdUI;
 
     Form.pTemplateListUI=pTemplateListUI;
+
+    Form.addTemplateBtn=addTemplateBtn;
 
     Form.okbtn=okbtn;
 
@@ -105,6 +112,8 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
 
     Form.actionPanel=actionPanel;
 
+    Form.addTemplateBtn=addTemplateBtn;
+
     Form.okbtn=okbtn;
 
     Form.cancelbtn=cancelbtn;
@@ -128,6 +137,8 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
     Form.selectProductType = org_shaolin_vogerp_productmodel_form_ProductTemplateSelector_selectProductType;
 
     Form.selectPTemplate = org_shaolin_vogerp_productmodel_form_ProductTemplateSelector_selectPTemplate;
+
+    Form.addTemplate = org_shaolin_vogerp_productmodel_form_ProductTemplateSelector_addTemplate;
 
     Form.Cancel = org_shaolin_vogerp_productmodel_form_ProductTemplateSelector_Cancel;
 
@@ -166,6 +177,17 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectPTemplate-20160109-2247",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductTemplateSelector_selectPTemplate */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector_addTemplate(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductTemplateSelector_addTemplate */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"addTemplate-20160109-2247",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductTemplateSelector_addTemplate */
 
 
     /* auto generated eventlistener function declaration */

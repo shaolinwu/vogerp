@@ -92,9 +92,9 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
         ,subComponents: [prefix + "htmlDescUI"]
     });
 
-    var okbtn = new UIMaster.ui.button
+    var saveBtn = new UIMaster.ui.button
     ({
-        ui: elementList[prefix + "okbtn"]
+        ui: elementList[prefix + "saveBtn"]
     });
 
     var cancelbtn = new UIMaster.ui.button
@@ -106,7 +106,7 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "saveBtn",prefix + "cancelbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -119,7 +119,7 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [funcsPanel,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [funcsPanel,saveBtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.funcsPanel=funcsPanel;
@@ -156,7 +156,7 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
 
     Form.htmlDescUI=htmlDescUI;
 
-    Form.okbtn=okbtn;
+    Form.saveBtn=saveBtn;
 
     Form.cancelbtn=cancelbtn;
 
@@ -198,7 +198,7 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
 
     Form.actionPanel=actionPanel;
 
-    Form.okbtn=okbtn;
+    Form.saveBtn=saveBtn;
 
     Form.cancelbtn=cancelbtn;
 
