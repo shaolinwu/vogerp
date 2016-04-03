@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.coupon.page.Start</entityName>
+	<systemVersion>0</systemVersion>
+	<description>前台抽奖</description>
+
+	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<ns2:eventHandler functionName="start">
+			<ns2:ops xsi:type="ns2:OpExecuteScriptType">
+				<expressionString><![CDATA[
+					{
+						$("#div-Form-0_0").animate({"left" : "-100%"}, 1000);
+					}]]></expressionString>
+			</ns2:ops>
+			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="start-20160112-232035">
+				<ns2:exp>
+					<expressionString><![CDATA[
+					import org.shaolin.vogerp.coupon.util.CouponUtil;
+					import org.shaolin.uimaster.page.ajax.*;
+					{
+						if (CouponUtil.verifyOpenId(@page.getRequest())) {
+							@page.executeJavaScript("defaultname.StartLotteryLogic()");
+						} else {
+							@page.executeJavaScript("defaultname.setStartMsg(\"今日已抽过奖，请明日再来\")");
+						}
+					}
+					]]></expressionString>
+				</ns2:exp>
+			</ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="setStartMsg">
+			<ns2:variable xsi:name="startMsg"></ns2:variable>
+			<ns2:ops xsi:type="ns2:OpExecuteScriptType">
+				<expressionString><![CDATA[
+					{
+						alert(startMsg);
+						$("#startMsg").html(startMsg);
+					}]]></expressionString>
+			</ns2:ops>
+		</ns2:eventHandler>
+		
+		<ns2:eventHandler functionName="StartLotteryLogic"></ns2:eventHandler>
+		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UIImageType" UIID="curtainImage">
+				<ns2:src xsi:type="ns2:ImagePropertyType">
+					<ns2:location>/coupon/front/curtain_Text.png</ns2:location>
+				</ns2:src>
+				<ns2:EventListener xsi:type="ns2:ClickListenerType">
+					<ns2:handler functionName="start" />
+				</ns2:EventListener>
+			</ns2:component>
+			<ns2:component xsi:type="ns2:UILabelType" UIID="startMsg">
+				<ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+		        	<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+		        	<ns2:key>org.shaolin.vogerp.coupon.page.Start.Loading</ns2:key>
+		        </ns2:text>
+			</ns2:component>
+			<ns2:layoutConstraint>
+				<ns2:componentId>curtainImage</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="0" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+			<ns2:layoutConstraint>
+				<ns2:componentId>startMsg</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="1" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+		</ns2:body>
+	</ns2:UIEntity>
+	<ns2:ODMapping>
+	</ns2:ODMapping>
+	<ns2:in>
+		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
+			<ns2:expressionString><![CDATA[
+			{
+			}]]></ns2:expressionString>
+		</ns2:clientAction>
+	</ns2:in>
+	<ns2:out name="StartLotteryLogic" functionName="StartLotteryLogic" validate="true">
+		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
+			<ns2:expressionString><![CDATA[{
+			// hello, my first js.
+			}]]></ns2:expressionString>
+		</ns2:clientAction>
+		<ns2:serverOperation xsi:type="ns2:ExpressionParamType" />
+	</ns2:out>
+</ns2:UIPage>

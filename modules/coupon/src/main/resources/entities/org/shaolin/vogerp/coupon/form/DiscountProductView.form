@@ -15,7 +15,7 @@
 					var attrId = $(textView).attr("id");
 					var attrFormId = attrId.split(".")[0];
 					var id = attrFormId.substring("discountProductForm".length, attrFormId.length)
-					alert(id);
+					//alert(id);
 					$("input[name='selectedProductId']").val(id);
 					
 					var othis = this;
@@ -195,7 +195,6 @@
 			if (typeof($("#bottomAdvert")) == "undefined" || null == $("#bottomAdvert") || $("#bottomAdvert").length < 1) {
 				$("#ProductPanel").append("<div id=\"bottomAdvert\" style=\"margin-top:2%;width:100%;\"><img src=\"/uimaster/images/coupon/front/advert_bottom.jpg\" style=\"width:100%\" /></div>");
 			}
-			
 		}
 		]]></ns2:constructorCode>
 	</ns2:body>

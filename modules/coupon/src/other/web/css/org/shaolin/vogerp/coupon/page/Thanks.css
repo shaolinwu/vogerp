@@ -6,6 +6,7 @@ div#ThanksForm {
 	-moz-background-size : cover;
 	-webkit-background-size : cover;
     color : white;
+    font-family: "Microsoft YaHei" ! important;
 }
 div#div-ThanksForm-0_0 {
     width: 100%;

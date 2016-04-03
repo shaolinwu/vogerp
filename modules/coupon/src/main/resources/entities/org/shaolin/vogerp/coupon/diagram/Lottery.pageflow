@@ -6,6 +6,19 @@
     <type entityName="java.lang.String"></type>
   </ns2:globalVariable>
   
+  <!-- StartPage -->
+  <ns2:webNode xsi:type="ns2:PageNodeType" name="Start">
+  	<!-- <ns2:variables name="str" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+    </ns2:variables> -->
+  	<ns2:sourceEntity entityName="org.shaolin.vogerp.coupon.page.Start"></ns2:sourceEntity>
+  	<ns2:out xsi:type="ns2:DisplayOutType" name="StartLotteryLogic">
+  		<ns2:next>
+        	<ns2:destNode>StartLotteryLogic</ns2:destNode>
+        </ns2:next>
+  	</ns2:out>
+  </ns2:webNode>
+  
   <!-- LotteryPage -->
   <ns2:webNode xsi:type="ns2:PageNodeType" name="FrontLottery">
     <ns2:variables name="orderNumText" category="JavaClass">
@@ -506,6 +519,32 @@
             <expressionString><![CDATA[$coupons]]></expressionString>
           </expression>
         </ns2:outDataMappingToNode>
+      </ns2:next>
+    </ns2:out>
+  </ns2:webNode>
+  
+  <ns2:webNode xsi:type="ns2:LogicNodeType" name="StartLotteryLogic">
+  	<ns2:variables name="errorMsg" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:operation>
+      <expressionString><![CDATA[
+      import org.shaolin.bmdp.runtime.AppContext;
+      {
+      	System.out.println("=============Start Lottery Logic Node=================");
+      	
+      	$errorMsg = "";
+      }]]></expressionString>
+    </ns2:operation>
+    <ns2:out xsi:type="ns2:ConditionalOutType" name="ViewOrderCoupon">
+      <ns2:conditionExpression>
+      	<expressionString><![CDATA[{return $errorMsg == null || $errorMsg.length() == 0;}]]></expressionString>
+      </ns2:conditionExpression>
+      <ns2:next>
+        <ns2:destNode>FrontLottery</ns2:destNode>
       </ns2:next>
     </ns2:out>
   </ns2:webNode>

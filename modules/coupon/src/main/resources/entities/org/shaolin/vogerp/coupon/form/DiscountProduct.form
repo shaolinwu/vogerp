@@ -414,15 +414,6 @@
 			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
 				componentPath="beObject.validity" paramName="Number"></ns2:DataComponent>
 		</ns2:ComponentMapping>
-		<!-- 优惠产品和优惠类型的关联 -->
-		<!-- <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
-			name="simpleMapping11">
-			<ns2:mappingRule entityName="org.shaolin.vogerp.coupon.form.CouponTypeWithDiscountProduct"></ns2:mappingRule>
-			<ns2:UIComponent componentPath="couponTypeTreeUI"
-				paramName="UIWidgetType"></ns2:UIComponent>
-			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
-				componentPath="couponType" paramName="couponType"></ns2:DataComponent>
-		</ns2:ComponentMapping> -->
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping11">
 	      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
 	      <ns2:UIComponent componentPath="couponTypeTreeUI" paramName="UIWidgetType"></ns2:UIComponent>

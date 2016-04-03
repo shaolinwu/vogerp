@@ -105,14 +105,14 @@ public class CouponUtil {
         long dayMills = 1000 * 3600 * 24;
         long between_days=(time2-time1) % dayMills == 0 ? (time2-time1) / dayMills : (time2-time1) / dayMills + 1;  
             
-       return Integer.parseInt(String.valueOf(between_days));           
+       return Integer.parseInt(String.valueOf(between_days));
     }
 	
 	/**
 	 * put weixin input params to session
 	 * @param request
 	 */
-	public static void putOpenId2Session(HttpServletRequest request) {
+	public static boolean verifyOpenId(HttpServletRequest request) {
 		String body = request.getParameter("body");
 		if (null != body && !"".equals(body)) {
 			String openId = body.substring(body.indexOf("<FromUserName>") + "<FromUserName>".length(), body.indexOf("</FromUserName>"));
@@ -121,7 +121,9 @@ public class CouponUtil {
 			request.getSession().setAttribute(DEVELOP_WEIXIN, developWeixin);
 			System.out.println(OPEN_ID + "=" + request.getSession().getAttribute(OPEN_ID));
 			System.out.println(DEVELOP_WEIXIN + "=" + request.getSession().getAttribute(DEVELOP_WEIXIN));
+			
+			
 		}
-		
+		return true;
 	}
 }

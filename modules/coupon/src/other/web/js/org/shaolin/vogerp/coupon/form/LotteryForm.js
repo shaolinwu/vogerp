@@ -70,12 +70,12 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
         
 		{
 			var windowHeight = $(window).height();
+			var windowWidth = $(window).width();
 			this.roll = function(luckyImageUrl){
 			
-		        			//alert(luckyImageUrl);
 		        			//compute roll percent distance
 		        			var rollTopArr = new Array();
-		        			var cellTop = 32;
+		        			var cellTop = 32.3;
 		        			
 		        			$("#div-lotteryForm-hidden input[name='lotteryForm.luckyImageUrlText']").val(luckyImageUrl);
 		        			$("input[name='luckyImageUrlText']").val(luckyImageUrl);
@@ -88,47 +88,18 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 		        				if (null != luckyImageUrl && "" != luckyImageUrl) {
 		        					//setting lottery roll params
 		        					for (var m = 0; m < 3; m++) {
-										for (var n = 0; n < row - 1; n++) {
-											var divid = "#lotteryForm_" + m + "-" + n;
-											var imageUrl = $(divid + " img").attr("src");
-											if (imageUrl == luckyImageUrl) {
-												var n1 = n == 0 ? row - 1 : n;
-												rollTopArr[m] = (n1 - 1) * cellTop;
-												break ;
-											}
-										}
-										if (null == rollTopArr[m]) {
-											rollTopArr[m] = (row - 3) * cellTop;
-											$("#lotteryForm_" + m + "-" + (row - 2) + " img").attr("src", luckyImageUrl);
-										}
+		        						$("#lotteryForm_" + m + "-" + (row - 1) + " img").attr("src", luckyImageUrl);
 									}
 		        				} else {
 		        					//setting no lottery
-		        					var i1 = Math.floor(Math.random() * (row - 1)) + 1;
-									var i2 = Math.floor(Math.random() * (row - 1)) + 1;
-									rollTopArr[0] = (i1 - 1) * cellTop;
-									rollTopArr[1] = (i2 - 1) * cellTop;
-									var imageUrl1 = $("#lotteryForm_0-" + i1 + " img").attr("src");
-									var imageUrl2 = $("#lotteryForm_1-" + i2 + " img").attr("src");
-									if (imageUrl2 != imageUrl1) {
-										var i3 = Math.floor(Math.random() * (row - 1)) + 1;
-										rollTopArr[2] = (i3 - 1) * cellTop;
-									} else {
-										for (var k = 3; k < row; k++) {
-											if ($("#lotteryForm_2-" + k + " img").attr("src") != imageUrl1) {
-												rollTopArr[2] = (k - 1) * cellTop;
+									var imageUrl1 = $("#lotteryForm_0-" + (row - 1) + " img").attr("src");
+									var imageUrl2 = $("#lotteryForm_1-" + (row - 1) + " img").attr("src");
+									if (imageUrl2 == imageUrl1) {
+										for (var j = 0; j < lorrertImageDivs.length; j++) {
+											var otherImageUrl = $(lorrertImageDivs[j]).attr("src");
+											if (otherImageUrl != imageUrl1) {
+												$("#lotteryForm_2-" + (row - 1) + " img").attr("src", otherImageUrl);
 												break ;
-											}
-										}
-										if (null == rollTopArr[2]) {
-											var i3 = row - 1;
-											rollTopArr[2] = (i3 - 1) * cellTop;
-											for (var j = 0; j < lorrertImageDivs.length; j++) {
-												var otherImageUrl = $(lorrertImageDivs[j]).attr("src");
-												if (otherImageUrl != imageUrl1) {
-													$("#lotteryForm_2-" + (row - 1) + " img").attr("src", otherImageUrl);
-													break ;
-												}
 											}
 										}
 									}
@@ -144,18 +115,15 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 											needRollDivIds = needRollDivIds + "," +"#lotteryForm_" + m + "-" + n;
 										}
 									}
-									var rollTime = 1000;
-									var t1 = ((row - 2) * cellTop);
-									var count = rollTopArr[m] / cellTop + 1;
-									var cellTime = parseInt(rollTime / (count + row - 2));
-									$(needRollDivIds).delay(m * rollTime).animate({"top" : "-" + t1 + "%"}, cellTime * (row - 2)).animate({"top" : 97 - 2 * cellTop + "%"}, 0).animate({"top" : "-" + rollTopArr[m] + "%"}, cellTime * count);
+									var rollTime = 8000;
+									var rollTop = ((row - 2) * cellTop);
+									var cellTime = parseInt(rollTime / (row - 2));
+									$(needRollDivIds).delay(m * cellTime).animate({"top" : "-" + rollTop + "%"}, rollTime, "linear");
 								}
-								//var advertTopHeight = $(window).height() - $couponPan.height() * 0.42 - $("#div-leftPanel-0_4").height();
 								var advertTopHeight = windowHeight - $couponPan.height() * 0.42 - $("#div-leftPanel-0_4").height();
 								$("#div-leftPanel-0_1, #div-leftPanel-0_1 img").height(advertTopHeight + "px").css("display", "block");
 								var rollHeight = advertTopHeight - $couponPan.height() * 0.28 - $couponPan.offset().top;
 								$couponPan.css("top", "" + rollHeight + "px");
-								//var advertBottomHeight = $(window).height() - advertTopHeight - $couponPan.height() * 0.40;
 								var advertBottomHeight = windowHeight - advertTopHeight - $couponPan.height() * 0.40;
 								$("#div-leftPanel-0_4, #div-leftPanel-0_4 img").height(advertBottomHeight + "px").css("display", "block");
 								$("#div-leftPanel-0_5").css("left", $couponPan.offset().left + "px");
@@ -167,7 +135,7 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 		        			//\u62BD\u5956\u6846\u6EDA\u52A8\u7ED3\u675F\uFF0C\u8C03\u7528\u540E\u53F0\u751F\u6210\u4F18\u60E0\u5238
 		        			var othis = this;
 							var eventsource = $couponPan;
-							var delayTime = rollTime * 3 + 2000;
+							var delayTime = 11000;
 							setTimeout(function(){
 		        				UIMaster.triggerServerEvent("lotteryForm.couponPanel","genCoupon-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
 		        			}, delayTime);
@@ -190,19 +158,14 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 			
 			this.loadLotteryBox = function(imageUrls) {
 				//假设ajax请求返回该字符串，需要修改
-				var imageUrls = "/uimaster/images/coupon/front/50off.png,/uimaster/images/coupon/front/sign.png,/uimaster/images/coupon/front/newProduct.png,/uimaster/images/coupon/front/cashDeduction.png";
 				
 				var imageUrlArr = imageUrls.split(",");
-				var size = imageUrlArr.length;
-				//生成(size + 2)行3列的奖项图标,最后一行和第一行相同
-				for (var m = 0; m < size + 2; m++) {
+				var rowNum = 30;
+				for (var m = 0; m < rowNum; m++) {
 					for (var n = 0; n < 3; n++) {
 						//随机取一张图片
-						var index = Math.floor(Math.random() * size);
+						var index = Math.floor(Math.random() * imageUrlArr.length);
 						var imageUrl = imageUrlArr[index];
-						if (m == size + 1) {
-							imageUrl = $("#lotteryForm_" + n + "-0 img").attr("src");
-						}
 						$couponPan.append("<div id=\"lotteryForm_" + n + "-" + m + "\" class=\"lotteryForm_couponImage\"><img src=\"" + imageUrl + "\" /></div>");
 					}
 				}
@@ -211,13 +174,14 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 			//$("#leftPanel").height(windowHeight + "px");
 			var startLotteryHeight = $("#div-lotteryForm-lotteryStartPanel-1_0 img").height();
 			$("#div-lotteryForm-lotteryStartPanel-0_0 input").height((startLotteryHeight - 6) + "px");
-			var restCoupon = document.getElementById("lotteryForm.restCouponPanel");
-			var $rCoupon = $(restCoupon)
-			$rCoupon.height(($rCoupon.width() * 0.32) + "px");
 			
 			var couponPanel = document.getElementById("lotteryForm.couponPanel");
 			var $couponPan = $(couponPanel);
-			$couponPan.height(($couponPan.width() * 0.84) + "px");
+			$couponPan.height((windowWidth * 0.945 * 0.84) + "px");
+			
+			var restCoupon = document.getElementById("lotteryForm.restCouponPanel");
+			var $rCoupon = $(restCoupon)
+			$rCoupon.height((windowWidth * 0.945 * 0.32) + "px");
 			
 			$("#div-lotteryForm-lotteryStartPanel-0_0 input").attr("placeholder", "\u8BF7\u8F93\u5165\u8BA2\u5355\u53F7\u540E4\u4F4D");
 			$("#div-lotteryForm-lotteryStartPanel-1_0 img").height($("#div-lotteryForm-lotteryStartPanel-0_0").height() + "px");

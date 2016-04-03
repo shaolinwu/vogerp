@@ -33,12 +33,6 @@
 	        <bediagram:name>icon</bediagram:name>
 	        <bediagram:type xsi:type="bediagram:StringType" />
 	    </bediagram:member>
-	    <!-- 优惠产品列表(多个以”,”分隔) -->
-		<!-- <bediagram:member>
-	        <bediagram:name>discountProductIds</bediagram:name>
-	        <bediagram:type xsi:type="bediagram:StringType" />
-	    </bediagram:member> -->
-	    <!-- 优势信息 -->
 	    <bediagram:member>
 	    	<bediagram:name>superiorityMessage</bediagram:name>
 	    	<bediagram:type xsi:type="bediagram:StringType" />
@@ -80,6 +74,11 @@
 			<bediagram:type xsi:type="bediagram:JavaObjRefType">
 		        <bediagram:targetJava name="java.util.List" />
 		    </bediagram:type>
+		</bediagram:member>
+		<!-- 占比 -->
+		<bediagram:member>
+			<bediagram:name>percent</bediagram:name>
+			<bediagram:type xsi:type="bediagram:DoubleType" />
 		</bediagram:member>
 	</bediagram:beEntity>
 	

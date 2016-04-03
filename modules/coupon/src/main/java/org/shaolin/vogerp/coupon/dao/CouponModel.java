@@ -35,6 +35,9 @@ public class CouponModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
+            if (scObject.getId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.id", scObject.getId()));
+            }
             if (scObject.getOrgId() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
             }
@@ -51,6 +54,9 @@ public class CouponModel extends BEEntityDaoObject {
     public long searchCouponTypeCount(org.shaolin.vogerp.coupon.be.CouponTypeImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponTypeImpl.class, "inObject");
 
+            if (scObject.getId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.id", scObject.getId()));
+            }
             if (scObject.getOrgId() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
             }

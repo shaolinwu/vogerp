@@ -7,10 +7,138 @@
 	<description>奖项设置</description>
 
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<!-- 新建优惠类型 -->
+		<ns2:eventHandler functionName="createCouponType">
+			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="createCouponType-20160302-3542">
+				<ns2:exp>
+					<ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.coupon.be.CouponTypeImpl;
+                    {
+                    	CouponTypeImpl defaultUser = new CouponTypeImpl();
+                    	
+                    	HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                    	
+                        RefForm form = new RefForm("couponType", "org.shaolin.vogerp.coupon.form.CouponType", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Create Coupon Type", null, 690, 500);
+                    }
+                    ]]></ns2:expressionString>
+				</ns2:exp>
+			</ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="openCouponType">
+			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="openCouponType-20160302-3542">
+				<ns2:exp>
+					<ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.coupon.be.CouponTypeImpl;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.coupon.dao.CouponModel;
+                    import java.util.List;
+                    {
+                    	System.out.println("==========openCouponType===========");
+                    	Hidden selectedHidden = @page.getHidden("selectedCouponTypeId");
+                    	if (null == selectedHidden || null == selectedHidden.getValue() || selectedHidden.getValue().length() < 1) {
+                    		System.out.println("There is no selected coupon type");
+                    		return ;
+                    	}
+                    	
+                    	String couponTypeId = selectedHidden.getValue();
+                        CouponTypeImpl condition = new CouponTypeImpl();
+                        condition.setId(Long.valueOf(couponTypeId));
+                        condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+                        List couponTypes = CouponModel.INSTANCE.searchCouponType(condition, null, 0, 0);
+                        
+                        if (couponTypes == null || couponTypes.size() <=0) {
+                        	System.out.println("There is coupon type for id " + couponTypeId);
+                    		return ;
+                        }
+                        
+                        CouponTypeImpl couponType = (CouponTypeImpl)couponTypes.get(0);
+                        HashMap input = new HashMap();
+                        input.put("beObject", couponType);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("couponType", "org.shaolin.vogerp.coupon.form.CouponType", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Open Coupon Type", null, 690, 500);
+                    }
+                    ]]></ns2:expressionString>
+				</ns2:exp>
+			</ns2:ops>
+		</ns2:eventHandler>
+		<!-- 删除优惠类型 -->
+		<ns2:eventHandler functionName="deleteCouponType">
+			<ns2:ops xsi:type="ns2:OpExecuteScriptType">
+				<expressionString><![CDATA[
+					{
+			        	var couponTypeId = $("input[name='selectedCouponTypeId']");
+			        	if (typeof(conponTypeId) != undefined) {
+			        		if (!confirm("删除奖项会删除下面的优惠产品！！")) {
+					        	return ;
+			        		}
+			        	} else {
+			        		alert("请选中一个奖项");
+			        		return ;
+			        	}
+					}]]></expressionString>
+			</ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="delCouponType">
+           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="delCouponType-201511-2224">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.coupon.be.*;
+                    import org.shaolin.vogerp.coupon.dao.CouponModel;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import java.util.List;
+                    {
+                        System.out.println("==========openCouponType===========");
+                    	Hidden selectedHidden = @page.getHidden("selectedCouponTypeId");
+                    	if (null == selectedHidden || null == selectedHidden.getValue() || selectedHidden.getValue().length() < 1) {
+                    		System.out.println("There is no selected coupon type");
+                    		return ;
+                    	}
+                    	
+                    	String couponTypeId = selectedHidden.getValue();
+                    	CouponTypeImpl condition = new CouponTypeImpl();
+                        condition.setId(Long.valueOf(couponTypeId));
+                        condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+                        List couponTypes = CouponModel.INSTANCE.searchCouponType(condition, null, 0, 0);
+                        
+                        if (couponTypes == null || couponTypes.size() <=0) {
+                        	System.out.println("There is coupon type for id " + couponTypeId);
+                    		return ;
+                        }
+                        
+                        CouponTypeImpl couponType = (CouponTypeImpl)couponTypes.get(0);
+                        DiscountProductImpl condition1 = new DiscountProductImpl();
+                        condition1.setCouponTypeId(couponType.getId());
+                        condition1.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+                        List discountProducts = CouponModel.INSTANCE.searchDiscountProduct(condition1, null, 0, 0);
+                        if (null != discountProducts && discountProducts.size() > 0) {
+                        	for (int i = 0; i < discountProducts.size(); i++) {
+                        		CouponModel.INSTANCE.delete((DiscountProductImpl)discountProducts.get(i));
+                        	}
+                        }
+                        CouponModel.INSTANCE.delete(couponType);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+	
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:UISkin xsi:type="ns2:UISkinType">
-				<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel
-				</ns2:skinName>
+				<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
 				<ns2:param name="text">
 					<ns2:value xsi:type="ns2:StringPropertyType">
 						<ns2:value></ns2:value>
@@ -19,70 +147,164 @@
 			</ns2:UISkin>
 			<ns2:layout xsi:type="ns2:TableLayoutType">
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			</ns2:layout>
-			<ns2:component xsi:type="ns2:UITableType" UIID="couponTypeTable">
-				<ns2:beElement>org.shaolin.vogerp.coupon.be.CouponType</ns2:beElement>
-				<ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
-				<ns2:showActionBar>false</ns2:showActionBar>
-				<ns2:showFilter>false</ns2:showFilter> -->
-				<ns2:query xsi:type="ns2:ExpressionPropertyType">
-					<ns2:expression xsi:type="ns2:ExpressionType">
-						<ns2:expressionString><![CDATA[
-                           import org.shaolin.bmdp.runtime.security.UserContext;
-                           import org.shaolin.vogerp.coupon.be.*;
-                           import org.shaolin.vogerp.coupon.dao.CouponModel;
-                           import java.util.HashMap;
-                           {
-                           		 CouponTypeImpl condition = new CouponTypeImpl();
-                                 condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-                                 return CouponModel.INSTANCE.searchCouponType(condition, null, 0, 0);
-                           }]]></ns2:expressionString>
-					</ns2:expression>
-				</ns2:query>
-				<ns2:column xsi:type="ns2:UITableColumnType">
-					<ns2:title xsi:type="ns2:StringPropertyType">
-						<ns2:value>Coupon Type</ns2:value>
-					</ns2:title>
-					<ns2:beFieldId>rowBE.name</ns2:beFieldId>
-					<ns2:uiType xsi:type="ns2:UITableColHTMLType">
-						<ns2:type>HtmlItem</ns2:type>
-					</ns2:uiType>
-					<ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+			<ns2:component UIID="couponTypeBtnPanel" xsi:type="ns2:UIPanelType">
+				<ns2:layout xsi:type="ns2:TableLayoutType">
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+				</ns2:layout>
+				<ns2:component xsi:type="ns2:UIButtonType" UIID="addBtn">
+					<ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+			        	<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+			        	<ns2:key>org.shaolin.vogerp.coupon.page.CouponSetting.add</ns2:key>
+			        </ns2:text>
+			        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+						<ns2:handler functionName="createCouponType" />
+					</ns2:EventListener>
+				</ns2:component>
+				<ns2:component xsi:type="ns2:UIHiddenType" UIID="selectedCouponTypeId" />
+				<ns2:component xsi:type="ns2:UIHiddenType" UIID="selectedDiscountProductId" />
+				<ns2:component xsi:type="ns2:UIButtonType" UIID="modifyBtn">
+					<ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+			        	<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+			        	<ns2:key>org.shaolin.vogerp.coupon.page.CouponSetting.modify</ns2:key>
+			        </ns2:text>
+			        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+						<ns2:handler functionName="openCouponType" />
+					</ns2:EventListener>
+				</ns2:component>
+				<ns2:component xsi:type="ns2:UIButtonType" UIID="deleteBtn">
+					<ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+			        	<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+			        	<ns2:key>org.shaolin.vogerp.coupon.page.CouponSetting.delete</ns2:key>
+			        </ns2:text>
+			        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+						<ns2:handler functionName="deleteCouponType" />
+					</ns2:EventListener>
+				</ns2:component>
+				<ns2:layoutConstraint>
+					<ns2:componentId>addBtn</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+				</ns2:layoutConstraint>
+				<ns2:layoutConstraint>
+					<ns2:componentId>modifyBtn</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="1" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+				</ns2:layoutConstraint>
+				<ns2:layoutConstraint>
+					<ns2:componentId>deleteBtn</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="2" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+				</ns2:layoutConstraint>
+			</ns2:component>
+			<ns2:component UIID="couponTypeTablePanel" xsi:type="ns2:UIPanelType">
+				<ns2:layout xsi:type="ns2:TableLayoutType">
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+				</ns2:layout>
+				<ns2:component xsi:type="ns2:UITableType" UIID="couponTypeTable">
+					<ns2:Property name="initialized">
+		               <ns2:value xsi:type="ns2:BooleanPropertyType">
+		                   <value>true</value>
+		               </ns2:value>
+		            </ns2:Property>
+					<ns2:beElement>org.shaolin.vogerp.coupon.be.CouponType</ns2:beElement>
+					<ns2:selectMode xsi:type="ns2:UITableSelectModeType">Normal</ns2:selectMode>
+					<ns2:defaultRowSize>10</ns2:defaultRowSize> 
+					<ns2:showActionBar>false</ns2:showActionBar>
+					<ns2:showFilter>false</ns2:showFilter>
+					<ns2:query xsi:type="ns2:ExpressionPropertyType">
 						<ns2:expression xsi:type="ns2:ExpressionType">
 							<ns2:expressionString><![CDATA[
-                            import java.util.HashMap;
-                            import org.shaolin.uimaster.page.AjaxContext;
-                            import org.shaolin.uimaster.page.AjaxActionHelper;
-                            import org.shaolin.uimaster.page.ajax.*;
-                            import java.util.List;
-                            import org.shaolin.vogerp.coupon.be.*;
-                            import org.shaolin.vogerp.coupon.dao.CouponModel;
-                            import org.shaolin.bmdp.runtime.security.UserContext;
-                            {
-                           		CouponTypeImpl couponType = $rowBE;
-                           		DiscountProductImpl condition1 = new DiscountProductImpl();
-                           		condition1.setCouponTypeId(couponType.getId());
-                           		condition1.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-                           		List discountProducts = CouponModel.INSTANCE.searchDiscountProduct(condition1, null, 0, 0);
-                           		couponType.setDiscountProducts(discountProducts);
-                                	
-                               	HashMap input = new HashMap();
-                               	input.put("couponType", couponType);
-                               	RefForm form = new RefForm("couponType" + $rowBE.getId(), 
-                                 "org.shaolin.vogerp.coupon.form.CouponSettingForm", input);
-                                StringBuffer sb = new StringBuffer();
-                                sb.append(form.generateHTML());
-                                sb.append("<script type=\"text/javascript\">UIMaster.pageInitFunctions.push(function(){");
-                                sb.append(form.generateJS());
-                                sb.append("});</script>");
-                                return sb.toString();
-                            }
-                            ]]></ns2:expressionString>
+	                           import org.shaolin.bmdp.runtime.security.UserContext;
+	                           import org.shaolin.vogerp.coupon.be.*;
+	                           import org.shaolin.vogerp.coupon.dao.CouponModel;
+	                           import java.util.HashMap;
+	                           import java.util.List;
+	                           {
+	                           		 CouponTypeImpl condition = new CouponTypeImpl();
+	                                 condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+	                                 List couponTypes = CouponModel.INSTANCE.searchCouponType(condition, null, 0, 0);
+	                                 if (null != couponTypes && couponTypes.size() > 0) {
+	                                 	int totalNum = 0;
+	                                 	for (int i = 0; i < couponTypes.size(); i++) {
+	                                 		CouponTypeImpl couponType = (CouponTypeImpl)couponTypes.get(i);
+	                                 		totalNum += couponType.getTotalNum();
+	                                 	}
+	                                 	
+	                                 	for (int j = 0; j < couponTypes.size(); j++) {
+	                                 		CouponTypeImpl couponType = (CouponTypeImpl) couponTypes.get(j);
+	                                 		couponType.setPercent(couponType.getTotalNum() * 1.0 / totalNum);
+	                                 	}
+	                                 }
+	                                 return couponTypes;
+	                           }]]></ns2:expressionString>
 						</ns2:expression>
-					</ns2:rowExpression>
-				</ns2:column>
+					</ns2:query>
+					<ns2:column xsi:type="ns2:UITableColumnType">
+						<ns2:title xsi:type="ns2:StringPropertyType">
+							<ns2:value>Coupon Type</ns2:value>
+						</ns2:title>
+						<ns2:beFieldId>rowBE.name</ns2:beFieldId>
+						<ns2:uiType xsi:type="ns2:UITableColHTMLType">
+							<ns2:type>HtmlItem</ns2:type>
+						</ns2:uiType>
+						<ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+							<ns2:expression xsi:type="ns2:ExpressionType">
+								<ns2:expressionString><![CDATA[
+	                            import java.util.HashMap;
+	                            import org.shaolin.uimaster.page.AjaxContext;
+	                            import org.shaolin.uimaster.page.AjaxActionHelper;
+	                            import org.shaolin.uimaster.page.ajax.*;
+	                            import java.util.List;
+	                            import org.shaolin.vogerp.coupon.be.*;
+	                            import org.shaolin.vogerp.coupon.dao.CouponModel;
+	                            import org.shaolin.bmdp.runtime.security.UserContext;
+	                            {
+	                           		CouponTypeImpl couponType = $rowBE;
+	                           		DiscountProductImpl condition1 = new DiscountProductImpl();
+	                           		condition1.setCouponTypeId(couponType.getId());
+	                           		condition1.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+	                           		List discountProducts = CouponModel.INSTANCE.searchDiscountProduct(condition1, null, 0, 0);
+	                           		couponType.setDiscountProducts(discountProducts);
+	                                	
+	                               	HashMap input = new HashMap();
+	                               	input.put("couponType", couponType);
+	                               	RefForm form = new RefForm("couponType" + $rowBE.getId(), 
+	                                 "org.shaolin.vogerp.coupon.form.CouponSettingForm", input);
+	                                StringBuffer sb = new StringBuffer();
+	                                sb.append(form.generateHTML());
+	                                sb.append("<script type=\"text/javascript\">UIMaster.pageInitFunctions.push(function(){");
+	                                sb.append(form.generateJS());
+	                                sb.append("});</script>");
+	                                return sb.toString();
+	                            }
+	                            ]]></ns2:expressionString>
+							</ns2:expression>
+						</ns2:rowExpression>
+					</ns2:column>
+				</ns2:component>
+				<ns2:layoutConstraint>
+					<ns2:componentId>couponTypeTable</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="0" y="0" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
 			</ns2:component>
+			<ns2:layoutConstraint>
+				<ns2:componentId>couponTypeBtnPanel</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="0" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+			<ns2:layoutConstraint>
+				<ns2:componentId>couponTypeTablePanel</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="1" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>

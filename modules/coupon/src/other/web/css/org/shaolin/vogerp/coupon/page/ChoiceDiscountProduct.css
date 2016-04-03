@@ -5,6 +5,7 @@ div#Form {
     background-size : cover;
     -moz-background-size : cover;
 	-webkit-background-size : cover;
+	font-family: "Microsoft YaHei" ! important;
 }
 
 div#div-Form-0_0 {
@@ -91,7 +92,7 @@ div[class1='discountProductInfoView'] div[class1='discountProductTextView'] div{
 	width : 100%;
 }
 div[class1='discountProductInfoView'] div[class1='discountProductTextView'] span[class1='discountProductNameView']{
-	font-size: 1.6em;
+	font-size: 1.2em;
     color: yellow;
     width : 100%;
 }
@@ -111,4 +112,8 @@ div#div-discountProductForm-discountProductForm-discountProductPanel-1_0{
 }
 #choiceDiscountTable_paginate,#choiceDiscountTable_info{
 	display : none;
+}
+
+span {
+    white-space: nowrap;
 }

@@ -76,7 +76,6 @@
 							<ns2:expression xsi:type="ns2:ExpressionType">
 								<ns2:expressionString><![CDATA[
 	                            {
-	                            	System.out.println("\n========discountProducts========\n" + $discountProducts + "\n================");
 	                            	return $discountProducts;
 	                            }
 	                            ]]></ns2:expressionString>

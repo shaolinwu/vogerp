@@ -6,6 +6,7 @@ div#Form {
 	-moz-background-size : cover;
 	-webkit-background-size : cover;
     color : white;
+    font-family: "Microsoft YaHei" ! important;
 }
 
 div#div-Form-0_0 {
@@ -32,7 +33,7 @@ div#div-couponPanel-0_0 {
     margin : 3% 2% 7% 2%;
     width : 96%;
     color : black;
-    font-size: 1.5em;
+    font-size: 1.3em;
 }
 
 div#div-serialNumPanel-0_0 {
@@ -76,7 +77,7 @@ div#div-couponImagePanel-1_0 {
 
 div#div-couponImageRightPanel-0_0 {
     width: 100%;
-    font-size: 2.5em;
+    font-size: 2em;
     margin-top: 15%;
     color: #FFE59B;
 }
@@ -141,4 +142,8 @@ div#div-bottomPanel-1_0 {
 
 #div-bottom3Panel-1_0 img.uimaster_image {
     width: 100%;
+}
+
+span {
+    white-space: nowrap;
 }

@@ -3,44 +3,126 @@
 function org_shaolin_vogerp_coupon_form_DiscountProductView(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var bottom1Text = new UIMaster.ui.label
+    var productImage = new UIMaster.ui.image
     ({
-        ui: elementList[prefix + "bottom1Text"]
+        ui: elementList[prefix + "productImage"]
     });
 
-    var discountProductsPanel = new UIMaster.ui.panel
+    var idUI = new UIMaster.ui.hidden
     ({
-        ui: elementList[prefix + "discountProductsPanel"]
-        ,items: []
-        ,subComponents: []
+        ui: elementList[prefix + "idUI"]
     });
 
-    var couponTypePanel = new UIMaster.ui.panel
+    var productNameUI = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "couponTypePanel"]
+        ui: elementList[prefix + "productNameUI"]
+    });
+
+    var productDiscountUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "productDiscountUI"]
+    });
+
+    var confirmTextUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "confirmTextUI"]
+    });
+
+    var vsImage = new UIMaster.ui.image
+    ({
+        ui: elementList[prefix + "vsImage"]
+    });
+
+    var productInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "productInfoPanel"]
         ,items: []
-        ,subComponents: [prefix + "bottom1Text"]
+        ,subComponents: [prefix + "idUI",prefix + "productNameUI",prefix + "productDiscountUI",prefix + "confirmTextUI"]
+    });
+
+    var discountProductPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "discountProductPanel"]
+        ,items: []
+        ,subComponents: [prefix + "productImage",prefix + "productInfoPanel"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [bottom1Text,couponTypePanel,discountProductsPanel]
+        ,items: [productImage,idUI,productNameUI,productDiscountUI,confirmTextUI,vsImage,discountProductPanel,productInfoPanel]
     });
 
-    Form.bottom1Text=bottom1Text;
+    Form.productImage=productImage;
 
-    Form.couponTypePanel=couponTypePanel;
+    Form.idUI=idUI;
 
-    Form.bottom1Text=bottom1Text;
+    Form.productNameUI=productNameUI;
 
-    Form.discountProductsPanel=discountProductsPanel;
+    Form.productDiscountUI=productDiscountUI;
+
+    Form.confirmTextUI=confirmTextUI;
+
+    Form.vsImage=vsImage;
+
+    Form.discountProductPanel=discountProductPanel;
+
+    Form.productImage=productImage;
+
+    Form.productInfoPanel=productInfoPanel;
+
+    Form.idUI=idUI;
+
+    Form.productNameUI=productNameUI;
+
+    Form.productDiscountUI=productDiscountUI;
+
+    Form.confirmTextUI=confirmTextUI;
+
+    Form.productInfoPanel=productInfoPanel;
+
+    Form.idUI=idUI;
+
+    Form.productNameUI=productNameUI;
+
+    Form.productDiscountUI=productDiscountUI;
+
+    Form.confirmTextUI=confirmTextUI;
 
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_coupon_form_DiscountProductView */
-        /* Construct_LAST:org_shaolin_vogerp_coupon_form_DiscountProductView */
+
+        
+		{
+			$("#div-topTextPanel-0_1").css("top", "-" + $("#div-topTextPanel-0_0 img").height() * 0.865 + "px");
+			var productInfoViews = $("div[class1='discountProductInfoView']");
+			for (var i = 0; i < productInfoViews.length; i++) {
+				var productInfoView = productInfoViews[i];
+				var subImageView = $(productInfoView).children("div.uimaster_widget_cell")[0];
+				var subTextView = $(productInfoView).children("div.uimaster_container_cell")[0];
+				var productImage = $(subImageView).children("img")[0];
+				$(productImage).height($(productImage).width() * 0.73 + "px");
+			}
+			
+			var vsImgs = $("img[class1='vsImage']");
+			var lastVsImg = $(vsImgs[vsImgs.length - 1]);
+			$(lastVsImg).parent().css("display", "none");
+			
+			$("#div-ProductPanel-0_1").height($("#choiceDiscountTable").height() + "px");
+			var needDels = $("#ProductPanel").children("div.uimaster_widget_cell");
+			$(needDels[needDels.length - 1]).css("display", "none");
+			if (typeof($("#bottomAdvert")) == "undefined" || null == $("#bottomAdvert") || $("#bottomAdvert").length < 1) {
+				$("#ProductPanel").append("<div id=\"bottomAdvert\" style=\"margin-top:2%;width:100%;\"><img src=\"/uimaster/images/coupon/front/advert_bottom.jpg\" style=\"width:100%\" /></div>");
+			}
+		}
+		
+            /* Construct_LAST:org_shaolin_vogerp_coupon_form_DiscountProductView */
     };
+
+    Form.choiceCoupon = org_shaolin_vogerp_coupon_form_DiscountProductView_choiceCoupon;
+
+    Form.choiceCoupon1 = org_shaolin_vogerp_coupon_form_DiscountProductView_choiceCoupon1;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_coupon_form_DiscountProductView_invokeDynamicFunction;
 
@@ -53,6 +135,36 @@ function org_shaolin_vogerp_coupon_form_DiscountProductView(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_coupon_form_DiscountProductView */
 /* Other_Func_LAST:org_shaolin_vogerp_coupon_form_DiscountProductView */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_form_DiscountProductView_choiceCoupon(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_form_DiscountProductView_choiceCoupon */
+        var o = this;
+        var UIEntity = this;
+
+				{
+					var textView = $(eventsource).parents("div[class1='discountProductTextView']")[0];
+					//discountProductForm4.productInfoPanel
+					var attrId = $(textView).attr("id");
+					var attrFormId = attrId.split(".")[0];
+					var id = attrFormId.substring("discountProductForm".length, attrFormId.length)
+					//alert(id);
+					$("input[name='selectedProductId']").val(id);
+					
+					var othis = this;
+					UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"choiceCoupon1-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
+				}    }/* Gen_Last:org_shaolin_vogerp_coupon_form_DiscountProductView_choiceCoupon */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_form_DiscountProductView_choiceCoupon1(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_form_DiscountProductView_choiceCoupon1 */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"choiceCoupon1-20160112-232035",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_coupon_form_DiscountProductView_choiceCoupon1 */
+
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_coupon_form_DiscountProductView_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_form_DiscountProductView_invokeDynamicFunction */

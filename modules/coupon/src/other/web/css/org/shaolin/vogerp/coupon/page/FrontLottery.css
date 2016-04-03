@@ -1,25 +1,8 @@
 #Form{
 	width : 100%;
 	text-align : center;
-	background-size : cover;
-	background-image : url(/uimaster/images/coupon/front/background.jpg);
-	background-repeat : no-repeat;
-	background-size : cover;
-	-moz-background-size : cover;
-	-webkit-background-size : cover;
-}
-#div-Form-0_0{
-	width : 100%;
-}
-#div-Form-0_1{
-	position : absolute;
-	background-size : 110% 110%;
-	background-image : url(/uimaster/images/coupon/front/curtain.gif);
-	top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 5;
+	background : black;
+	font-family: "Microsoft YaHei" ! important;
 }
 #curtainPanel{
 	margin: 50% auto;
@@ -179,27 +162,3 @@
     display: none;
 }
 
-
-.rollCurtain{
-	animation:myfirst 1s;
-	-moz-animation:myfirst 1s; /* Firefox */
-	-webkit-animation:myfirst 1s; /* Safari and Chrome */
-	-o-animation:myfirst 1s; /* Opera */
-}
-@keyframes myfirst
-{
-from {left:0;}
-to {left:-100%;}
-}
-
-@-moz-keyframes myfirst /* Firefox */
-{
-from {left:0;}
-to {left:-100%;}
-}
-
-@-webkit-keyframes myfirst /* Safari and Chrome */
-{
-from {left:0;}
-to {left:-100%;}
-}

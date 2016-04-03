@@ -165,7 +165,7 @@
 				$(couponPanel).parent("div.uimaster_container_cell").css({});
 			});
 			if ($("#advertBottomImage").length < 1) {
-				$("#Form").append("<div id=\"advertBottomImage\" style=\"width:100%;position:relative;bottom:0;\"><img style=\"width:100%\" src=\"/uimaster/images/coupon/front/advert_bottom.jpg\"></div>");
+				$("#Form").append("<div id=\"advertBottomImage\" style=\"width:100%;position:fixed;bottom:-1%;\"><img style=\"width:100%\" src=\"/uimaster/images/coupon/front/advert_bottom.jpg\"></div>");
 			}
 			var winHeight = $(window).height();
 			$("#couponPanel").css("min-height", winHeight - $("#advertBottomImage").height() + "px")

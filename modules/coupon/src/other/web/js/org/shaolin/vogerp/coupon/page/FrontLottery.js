@@ -33,29 +33,7 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
         ui: elementList[prefix + "advertBottomImage"]
     });
 
-    var advertLeftImage = new UIMaster.ui.image
-    ({
-        ui: elementList[prefix + "advertLeftImage"]
-    });
-
-    var advertRightImage = new UIMaster.ui.image
-    ({
-        ui: elementList[prefix + "advertRightImage"]
-    });
-
-    var curtainImage = new UIMaster.ui.image
-    ({
-        ui: elementList[prefix + "curtainImage"]
-    });
-
     var lotteryForm = new org_shaolin_vogerp_coupon_form_LotteryForm({"prefix":prefix + "lotteryForm."});
-
-    var curtainPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "curtainPanel"]
-        ,items: []
-        ,subComponents: [prefix + "curtainImage"]
-    });
 
     var lotteryPanel = new UIMaster.ui.panel
     ({
@@ -68,14 +46,14 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
     ({
         ui: elementList[prefix + "leftPanel"]
         ,items: []
-        ,subComponents: [prefix + "lotteryLogoImage",prefix + "advertTopImage",prefix + "lotteryPanel",prefix + "footerText",prefix + "advertBottomImage",prefix + "advertLeftImage",prefix + "advertRightImage"]
+        ,subComponents: [prefix + "lotteryLogoImage",prefix + "advertTopImage",prefix + "lotteryPanel",prefix + "footerText",prefix + "advertBottomImage"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [lotteryLogoImage,advertTopImage,orderNumText,luckyImageUrlText,footerText,advertBottomImage,advertLeftImage,advertRightImage,curtainImage,lotteryForm,leftPanel,lotteryPanel,curtainPanel]
+        ,items: [lotteryLogoImage,advertTopImage,orderNumText,luckyImageUrlText,footerText,advertBottomImage,lotteryForm,leftPanel,lotteryPanel]
     });
 
     Form.lotteryLogoImage=lotteryLogoImage;
@@ -89,12 +67,6 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
     Form.footerText=footerText;
 
     Form.advertBottomImage=advertBottomImage;
-
-    Form.advertLeftImage=advertLeftImage;
-
-    Form.advertRightImage=advertRightImage;
-
-    Form.curtainImage=curtainImage;
 
     Form.lotteryForm=lotteryForm;
 
@@ -116,10 +88,6 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
 
     Form.advertBottomImage=advertBottomImage;
 
-    Form.advertLeftImage=advertLeftImage;
-
-    Form.advertRightImage=advertRightImage;
-
     Form.lotteryPanel=lotteryPanel;
 
     Form.orderNumText=orderNumText;
@@ -127,10 +95,6 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
     Form.luckyImageUrlText=luckyImageUrlText;
 
     Form.lotteryForm=lotteryForm;
-
-    Form.curtainPanel=curtainPanel;
-
-    Form.curtainImage=curtainImage;
 
     Form.user_constructor = function()
     {
@@ -166,11 +130,11 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
         var UIEntity = this;
 
 					{
-						var cName = $("#div-Form-0_1").attr("class");
-						$("#div-Form-0_1").attr("class", cName + " rollCurtain");
-						//$("#div-Form-0_1").animate({"left" : "-100%"}, 1000);
+						var cName = $("#div-Form-0_0").attr("class");
+						$("#div-Form-0_0").attr("class", cName + " rollCurtain");
+						//$("#div-Form-0_0").animate({"left" : "-100%"}, 1000);
 						setTimeout(function(){
-							$("#div-Form-0_1").css("display", "none");
+							$("#div-Form-0_0").css("display", "none");
 						}, 1000);
 					}    }/* Gen_Last:org_shaolin_vogerp_coupon_page_FrontLottery_openCurtainFunc */
 
