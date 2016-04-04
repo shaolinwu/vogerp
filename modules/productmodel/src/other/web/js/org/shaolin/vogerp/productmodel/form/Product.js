@@ -34,7 +34,7 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         ui: elementList[prefix + "typeUILabel"]
     });
 
-    var typeUI = new UIMaster.ui.label
+    var typeUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "typeUI"]
     });

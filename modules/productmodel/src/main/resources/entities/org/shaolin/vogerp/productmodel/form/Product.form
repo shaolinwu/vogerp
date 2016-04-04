@@ -87,7 +87,7 @@
                   RefForm form = new RefForm("ptemplateForm", "org.shaolin.vogerp.productmodel.form.ProductTemplateSelector", input);
                   @page.addElement(form);
                   
-                  form.openInWindows("Product Template Selector", null, 750, 600);
+                  form.openInWindows("\u9009\u62E9\u4EA7\u54C1\u6A21\u677F", null, 750, 600);
               }
               ]]></ns2:expressionString>
           </ns2:exp>
@@ -116,7 +116,7 @@
             productTypeUI.setValue(selectProductType);
             AList plist = @page.getList("pTemplateListUI");
             
-            Label typeUI = @page.getLabel(formId + "typeUI");
+            TextField typeUI = @page.getTextField(formId + "typeUI");
             typeUI.setValue(CEUtil.getValue(selectProductType) + " : " + plist.getSelectedDisplayValues().get(0));
             
             form.closeIfinWindows(true);
@@ -233,7 +233,7 @@
                    <ns2:value>请选择一个产品模板</ns2:value>
                  </ns2:text>
                </ns2:component>
-               <ns2:component xsi:type="ns2:UILabelType" UIID="typeUI">
+               <ns2:component xsi:type="ns2:UITextFieldType" UIID="typeUI">
 		         <ns2:UIStyle>productInfoForm_typeUI_Label</ns2:UIStyle>
                  <ns2:text xsi:type="ns2:StringPropertyType">
                     <ns2:value>请选择...</ns2:value>
@@ -387,6 +387,9 @@
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
         <ns2:expression>
           <expressionString>import org.shaolin.bmdp.runtime.ce.CEUtil;{
+          if ($beObject.getTemplate().getId() == 0) {
+             return "";
+          }
           return CEUtil.getValue($beObject.getTemplate().getType()) + " : " + $beObject.getTemplate().getName();}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>

@@ -28,6 +28,11 @@ function org_shaolin_vogerp_order_form_PurchaseOrder(json)
         ui: elementList[prefix + "deliveryDateUI"]
     });
 
+    var orderItemLabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "orderItemLabel"]
+    });
+
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
@@ -53,7 +58,7 @@ function org_shaolin_vogerp_order_form_PurchaseOrder(json)
     ({
         ui: elementList[prefix + "orderItemInfo"]
         ,items: []
-        ,subComponents: [prefix + "orderItemTable"]
+        ,subComponents: [prefix + "orderItemLabel",prefix + "orderItemTable"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -66,7 +71,7 @@ function org_shaolin_vogerp_order_form_PurchaseOrder(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [descriptionUILabel,descriptionUI,deliveryInfoLabel,deliveryDateUILabel,deliveryDateUI,okbtn,cancelbtn,deliveryInfoUI,orderItemTable,fieldPanel,orderItemInfo,actionPanel]
+        ,items: [descriptionUILabel,descriptionUI,deliveryInfoLabel,deliveryDateUILabel,deliveryDateUI,orderItemLabel,okbtn,cancelbtn,deliveryInfoUI,orderItemTable,fieldPanel,orderItemInfo,actionPanel]
     });
 
     Form.descriptionUILabel=descriptionUILabel;
@@ -78,6 +83,8 @@ function org_shaolin_vogerp_order_form_PurchaseOrder(json)
     Form.deliveryDateUILabel=deliveryDateUILabel;
 
     Form.deliveryDateUI=deliveryDateUI;
+
+    Form.orderItemLabel=orderItemLabel;
 
     Form.okbtn=okbtn;
 
@@ -102,6 +109,8 @@ function org_shaolin_vogerp_order_form_PurchaseOrder(json)
     Form.deliveryDateUI=deliveryDateUI;
 
     Form.orderItemInfo=orderItemInfo;
+
+    Form.orderItemLabel=orderItemLabel;
 
     Form.orderItemTable=orderItemTable;
 

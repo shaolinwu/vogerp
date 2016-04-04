@@ -510,14 +510,6 @@
 		                    <ns2:actionGroup>
 		                        <ns2:type>radio</ns2:type>
 		                        <ns2:action>
-		                            <ns2:uiid>openPurchaseOrderItem</ns2:uiid>
-		                            <ns2:title xsi:type="ns2:StringPropertyType">
-		                                <ns2:value>Order Items</ns2:value>
-		                            </ns2:title>
-		                            <ns2:icon>ui-icon-note</ns2:icon>
-		                            <ns2:function>openPurchaseOrderItem</ns2:function>
-		                        </ns2:action>
-		                        <ns2:action>
                                     <ns2:uiid>openPurchaseOrderTracker</ns2:uiid>
                                     <ns2:title xsi:type="ns2:StringPropertyType">
                                         <ns2:value>Order Tracker</ns2:value>

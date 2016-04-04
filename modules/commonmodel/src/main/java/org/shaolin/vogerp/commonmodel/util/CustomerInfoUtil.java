@@ -51,9 +51,12 @@ public class CustomerInfoUtil {
     	sb.append(address.getCountry()).append(" ");
     	sb.append(address.getCity()).append(" ");
     	sb.append(address.getStreet()).append(" ");
-    	sb.append(address.getBlock()).append(" ");
-    	sb.append(address.getZipcode()).append(" ");
-    	
+    	if (address.getBlock() != null) {
+    		sb.append(address.getBlock()).append(" ");
+    	}
+    	if (address.getZipcode() != null) {
+    		sb.append(address.getZipcode()).append(" ");
+    	}    	
     	return sb.toString();
     }
 }

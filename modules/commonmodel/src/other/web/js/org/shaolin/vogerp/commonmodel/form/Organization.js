@@ -3,14 +3,19 @@
 function org_shaolin_vogerp_commonmodel_form_Organization(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var idUI = new UIMaster.ui.hidden
-    ({
-        ui: elementList[prefix + "idUI"]
-    });
-
     var parentIdUI = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "parentIdUI"]
+    });
+
+    var idUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "idUILabel"]
+    });
+
+    var idUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "idUI"]
     });
 
     var orgCodeUILabel = new UIMaster.ui.label
@@ -71,18 +76,20 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "parentIdUI",prefix + "orgCodeUILabel",prefix + "orgCodeUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI"]
+        ,subComponents: [prefix + "parentIdUI",prefix + "idUILabel",prefix + "idUI",prefix + "orgCodeUILabel",prefix + "orgCodeUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,parentIdUI,orgCodeUILabel,orgCodeUI,nameUILabel,nameUI,typeUILabel,descriptionUILabel,descriptionUI,okbtn,cancelbtn,typeUI,fieldPanel,actionPanel]
+        ,items: [parentIdUI,idUILabel,idUI,orgCodeUILabel,orgCodeUI,nameUILabel,nameUI,typeUILabel,descriptionUILabel,descriptionUI,okbtn,cancelbtn,typeUI,fieldPanel,actionPanel]
     });
 
-    Form.idUI=idUI;
-
     Form.parentIdUI=parentIdUI;
+
+    Form.idUILabel=idUILabel;
+
+    Form.idUI=idUI;
 
     Form.orgCodeUILabel=orgCodeUILabel;
 
@@ -106,9 +113,11 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
 
     Form.fieldPanel=fieldPanel;
 
-    Form.idUI=idUI;
-
     Form.parentIdUI=parentIdUI;
+
+    Form.idUILabel=idUILabel;
+
+    Form.idUI=idUI;
 
     Form.orgCodeUILabel=orgCodeUILabel;
 

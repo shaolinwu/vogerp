@@ -27,11 +27,13 @@
                         import org.shaolin.vogerp.productmodel.be.IProduct;
                         import org.shaolin.vogerp.productmodel.be.ProductImpl;
                         import org.shaolin.vogerp.productmodel.dao.ProductModel;
+                        import org.shaolin.bmdp.runtime.security.UserContext;
                         {
                               if ($tableCondition == null) {
                                  $tableCondition = TableConditions.createCondition(new ProductImpl());
                               }
                               ProductImpl condition = (ProductImpl)$tableCondition.getCondition();
+                              condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
                               return ProductModel.INSTANCE.searchProductInfo(condition,
                                             $tableCondition.getOrders(),
                                             $tableCondition.getOffset(), 
@@ -39,22 +41,6 @@
                         }]]></ns2:expressionString>
                     </ns2:expression>
                 </ns2:query>
-                <ns2:totalCount xsi:type="ns2:ExpressionPropertyType">
-                    <ns2:expression xsi:type="ns2:ExpressionType">
-                        <ns2:expressionString><![CDATA[
-                        import org.shaolin.uimaster.page.ajax.TableConditions;
-                        import org.shaolin.vogerp.productmodel.be.IProduct;
-                        import org.shaolin.vogerp.productmodel.be.ProductImpl;
-                        import org.shaolin.vogerp.productmodel.dao.ProductModel;
-                        {
-                             if ($tableCondition == null) {
-                                $tableCondition = TableConditions.createCondition(new ProductImpl());
-                             }
-                             ProductImpl condition = (ProductImpl)$tableCondition.getCondition();
-                             return ProductModel.INSTANCE.searchProductInfoCount(condition);
-                        }]]></ns2:expressionString>
-                    </ns2:expression>
-                </ns2:totalCount>
                 <ns2:column xsi:type="ns2:UITableColumnType">
                     <ns2:title xsi:type="ns2:StringPropertyType">
                         <ns2:value>Description</ns2:value>

@@ -74,6 +74,13 @@
            if (values == null || values.size() == 0) {
                return;
            }
+           Hidden selectPTemplateIdUI = @page.getHidden("selectPTemplateIdUI");
+           if (selectPTemplateIdUI.getValue() != null 
+               && selectPTemplateIdUI.getValue().equals(values.get(0).toString())) {
+               // double click event supported for selecting template.
+               @page.executeJavaScript("$(defaultname." + @page.getEntityUiid() + ".okbtn).trigger('click');");
+               return;
+           }
            
            RefForm oldForm = @page.getRefForm("prodTempDetailOverview");
            if (oldForm != null) {
@@ -84,7 +91,6 @@
            AList typelist = (AList)@page.getList("productTypeTree.typeUI");
            Hidden selectProductTypeUI = @page.getHidden("selectProductTypeUI");
            selectProductTypeUI.setValue(typelist.getValues().get(0).toString());
-           Hidden selectPTemplateIdUI = @page.getHidden("selectPTemplateIdUI");
            selectPTemplateIdUI.setValue(values.get(0).toString());
            
            ProductTemplateImpl condition = new ProductTemplateImpl();

@@ -57,6 +57,10 @@
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
+                        PurchaseOrderImpl defaultUser = (PurchaseOrderImpl)input.get("beObject");
+                        if (defaultUser.getId() == 0) {
+                           return false;
+                        }
                         
                         form.closeIfinWindows();
                         @page.removeForm(@page.getEntityUiid()); 

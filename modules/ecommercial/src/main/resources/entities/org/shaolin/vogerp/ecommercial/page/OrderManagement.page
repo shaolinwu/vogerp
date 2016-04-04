@@ -153,7 +153,8 @@
 		                            import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
 		                            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
 		                            import org.shaolin.bmdp.runtime.AppContext; 
-                                    import org.shaolin.vogerp.commonmodel.IUserService; 
+                                    import org.shaolin.vogerp.commonmodel.IUserService;
+                                    import org.shaolin.bmdp.runtime.security.UserContext;
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
@@ -163,8 +164,7 @@
 		                                  }
 		                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
 		                                  if (!AppContext.isMasterNode()) {
-			                                  IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
-			                                  condition.setPublishedCustomerId(service.getUserId());
+			                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
 		                                  }
 		                                  return OrderModel.INSTANCE.searchGoldenOrder(condition,
 		                                                $tableCondition.getOrders(),

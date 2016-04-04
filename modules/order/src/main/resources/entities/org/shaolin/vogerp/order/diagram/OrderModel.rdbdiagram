@@ -255,10 +255,6 @@
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="DELIVERYINFOCONTACTINFO" mappingType="One-to-One" beFieldName="contact" columnName="CONTACTID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="comment" columnName="COMMENT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_version" columnName="_version"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_starttime" columnName="_starttime"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_endtime" columnName="_endtime"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_optuserid" columnName="_optuserid"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
   <ns2:joinTable name="ORDER_SALEORDER_ORDERITEM_JT" srcTable="ORDER_SALEORDER" srcPKColumn="items" tarTable="ORDER_ORDERITEM" tarPKColumn="id"></ns2:joinTable>

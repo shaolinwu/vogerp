@@ -2,8 +2,10 @@
 #div-Form-0_2 {margin-top: 5px;}
 #div-topPanel-0_0 {position: absolute; z-index: 10; margin-right: 10px;width: 100%;}
 #searchPanel {float: right; clear: both; width: 100%;}
-#div-searchPanel-0_0 {width: 88%; float: left;}
+#div-searchPanel-0_0 {width: 80%; float: left;}
+#div-searchPanel-1_0 {float: left;}
 #div-searchPanel-1_0 img {width: 25px;height: 25px;padding-top: 10px;padding-left:5px}
+#div-searchPanel-2_0 img {width: 25px;height: 25px;padding-top: 10px;padding-left:5px}
 #pagePanel {overflow: hidden;}
 #div-bottomPanel-0_0 {display:none;position: absolute;z-index: 100000;left:45px;top:600px;background-color: white; width: 350px;}
 #div-bottomPanel-0_1 {display:none;position: absolute;z-index: 100000;left:90px;top:600px;background-color: white;}

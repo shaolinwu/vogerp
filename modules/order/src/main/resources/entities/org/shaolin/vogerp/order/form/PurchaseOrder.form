@@ -39,6 +39,9 @@
 
             PurchaseOrderImpl defaultUser = (PurchaseOrderImpl)input.get("beObject");
             List items = defaultUser.getItems();
+            if (items == null || items.size() == 0) {
+                return;
+            }
             for (int i=0; i<items.size(); i++) {
                 PurchaseItemImpl item = (PurchaseItemImpl)items.get(i);
                 item.setPricePackage(null);//clear this value.
@@ -160,14 +163,25 @@
     <ns2:component xsi:type="ns2:UIPanelType" UIID="orderItemInfo">
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="orderItemLabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>商品详细信息: 至少需要配制一项产品。</ns2:value>
+        </ns2:text>
+      </ns2:component>
       <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="orderItemTable">
          <ns2:referenceEntity entityName="org.shaolin.vogerp.order.form.PurchaseItemTable" />
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>orderItemTable</ns2:componentId>
+        <ns2:componentId>orderItemLabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>orderItemTable</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
