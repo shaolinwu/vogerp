@@ -54,10 +54,11 @@
                     import org.shaolin.vogerp.ecommercial.dao.*;
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.vogerp.commonmodel.IUserService; 
+                    import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
-                        PurchaseOrderImpl defaultUser = (PurchaseOrderImpl)input.get("beObject");
+                        PurchaseOrderImpl defaultUser = (PurchaseOrderImpl)out.get("beObject");
                         if (defaultUser.getId() == 0) {
                            return false;
                         }
