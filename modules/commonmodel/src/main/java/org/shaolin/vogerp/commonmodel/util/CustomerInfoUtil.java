@@ -14,7 +14,12 @@ public class CustomerInfoUtil {
 	}
 	
 	public static String getCustomerEnterpriseBasicInfo(IPersonalInfo customer) {
-		return customer.getOrganization().getDescription() + "["+getCustomerBasicInfo(customer)+"]";
+		if (customer.getOrganization() != null) {
+			return customer.getOrganization().getDescription() + "["
+					+ getCustomerBasicInfo(customer) + "]";
+		} else {
+			return getCustomerBasicInfo(customer);
+		}
 	}
 	
 	public static List<ArrayList<String>>[] getAddressInfo(List<IAddressInfo> list) {

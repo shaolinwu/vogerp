@@ -55,24 +55,6 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
-  <ns2:eventHandler functionName="selectImage">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectImage-1317628417">
-      <ns2:exp>
-        <expressionString><![CDATA[
-        import java.util.HashMap;
-        import org.shaolin.uimaster.page.AjaxContext;
-        import org.shaolin.uimaster.page.ajax.*;
-        { 
-           HashMap input = new HashMap();
-           input.put("editable", new Boolean(true));
-           input.put("callbackUIID", @page.getTextField("samplePhotoUI").getId());
-           RefForm form = new RefForm("selectImageForm", "org.shaolin.vogerp.commonmodel.form.ImageViewer", input);
-           @page.addElement(form);
-           form.openInWindows("Image Viewer", null, 620, 450);
-        }]]></expressionString>
-      </ns2:exp>
-    </ns2:ops>
-  </ns2:eventHandler>
   <ns2:eventHandler functionName="Cancel">
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20160124-175742">
       <ns2:exp>
@@ -80,6 +62,7 @@
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         { 
+            @page.getImage("samplePhotoUI.photoUI").clearAll(); 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             form.closeIfinWindows(true);
             @page.removeForm(@page.getEntityUiid()); 
@@ -95,6 +78,7 @@
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -138,7 +122,7 @@
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="priceUI">
-        <ns2:UIStyle></ns2:UIStyle>
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
         <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
             <ns2:value>false</ns2:value>
         </ns2:allowBlank>
@@ -150,8 +134,34 @@
             <value>^(([1-9]\d{0,9})|0)(\.\d{1,2})?$</value>
         </ns2:regex>
       </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="leaveWordUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>留言</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UITextAreaType" UIID="leaveWordUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>        
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>true</ns2:value>
+        </ns2:allowBlank>
+        <ns2:maxLength xsi:type="ns2:NumericPropertyType">
+            <type>int</type>
+            <value>255</value>
+        </ns2:maxLength>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="samplePhotoUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.ecommercial.be.GOOfferPrice.samplePhoto</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="samplePhotoUI">
+         <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.ImageUploader" />
+      </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="priceDescriptionUILabel">
-        <ns2:UIStyle></ns2:UIStyle>
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
             <ns2:value>出价必须小于当前价，一天只能出价三次！</ns2:value>
         </ns2:text>
@@ -161,18 +171,6 @@
         <ns2:text xsi:type="ns2:StringPropertyType">
             <ns2:value></ns2:value>
         </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="samplePhotoUILabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.ecommercial.be.GOOfferPrice.samplePhoto</ns2:key>
-        </ns2:text>
-        <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="selectImage"></ns2:handler>
-        </ns2:EventListener>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="samplePhotoUI">
       </ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>currPriceUILabel</ns2:componentId>
@@ -199,20 +197,28 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>samplePhotoUILabel</ns2:componentId>
+        <ns2:componentId>leaveWordUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>samplePhotoUI</ns2:componentId>
+        <ns2:componentId>leaveWordUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
+        <ns2:componentId>samplePhotoUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>samplePhotoUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
         <ns2:componentId>priceDescriptionUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>resultUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
@@ -311,6 +317,27 @@
             } else { 
                return $beObject.getEstimatedPrice() - 1;
             } 
+          }]]></expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
+      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.ImageUploader"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="samplePhotoUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="imagePath">
+         <ns2:expression>
+          <expressionString><![CDATA[
+          {
+            int i = (int)(Math.random() * 10000);
+            return "/images/gorder/" + $beObject.getId() + "/" + i; 
+          }]]></expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="allowNumber">
+         <ns2:expression>
+          <expressionString><![CDATA[
+          {
+            return 3; 
           }]]></expressionString>
         </ns2:expression>
       </ns2:DataComponent>

@@ -31,6 +31,11 @@
 			<version>${uimaster.version}</version>
 		</dependency>
 		<dependency>
+            <groupId>org.shaolin.vogerp</groupId>
+            <artifactId>commonmodel</artifactId>
+            <version>${uimaster.version}</version>
+        </dependency>
+		<dependency>
 		    <groupId>junit</groupId>
 		    <artifactId>junit</artifactId>
 	    </dependency>

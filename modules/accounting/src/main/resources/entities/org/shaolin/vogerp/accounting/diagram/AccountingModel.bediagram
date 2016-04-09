@@ -7,6 +7,123 @@
 	<cePackage>org.shaolin.vogerp.accounting.ce</cePackage>
 	<diagramPackage>org.shaolin.vogerp.accounting.diagram</diagramPackage>
 	
+	<!-- 平台虚拟客户帐户 (钱包功能)基本原理：
+	           交易订单生成后，客户A支付资金汇入平台银行帐户。
+	           客户B完成订单后，由客户A确认收货，完成订单交易。
+	           平台将这笔钱授权给客户B，之后客户B能将本帐户中的金额提现。
+	           对于未完成订单，这笔资金冻结在平台银行帐户里，同时客户B可见。
+	 -->
+	<bediagram:beEntity needOrgId="true" needPersist="true" needUIEntity="true">
+        <common:entityName>CustomerAccount</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- platform virtual account -->
+            <bediagram:name>accountId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>WechatAccount</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>AlipayAccount</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+    </bediagram:beEntity>    
+	
+	<!--to pay an bill of any order. -->
+	<bediagram:beEntity needOrgId="true" needPersist="true"
+    needTask="true" needUIEntity="true">
+        <common:entityName>PayOrder</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>orderId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>serialNumber</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>description</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>amount</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>startCreateDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>endCreateDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 支付的业务类型 -->
+            <bediagram:name>payBusinessType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="PayBusinessType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>status</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="PayOrderStatusType" />
+            </bediagram:type>
+        </bediagram:member>
+        <!-- 客户A支付给平台 -->
+        <bediagram:member>
+            <bediagram:name>customerAPaymentMethod</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="SettlementMethodType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 客户帐号 -->
+            <bediagram:name>customerAPayAccount</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 第三方系统对帐流水号给平台 -->
+            <bediagram:name>thirdGenSerialNumber</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 第三方交易成功时间 给平台-->
+            <bediagram:name>thirdTransactionTime</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <!-- 最终客户B -->
+        <bediagram:member>
+            <bediagram:name>customerBPaymentMethod</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="SettlementMethodType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 客户帐号 -->
+            <bediagram:name>customerBPayAccount</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 第三方系统对帐流水号给最终客户 -->
+            <bediagram:name>thirdGenSerialNumber2</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 第三方交易成功时间给最终客户 -->
+            <bediagram:name>thirdTransactionTime2</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+    </bediagram:beEntity>
 	<!-- 
 	一个完整的企业财务模型包括三张表：资产负债表、利润表、现金流量表。这三张表相互联系，互相影响，构成了对一个企业财务运营的完整模拟。
 	通过对模型参数的调整，可以对企业的各种运营状况进行研究，从而对现金流和估值有深入的分析。
@@ -442,19 +559,87 @@
   </bediagram:constantValue>
  </bediagram:ceEntity>
  
- <bediagram:ceEntity>
-  <!-- 结算方式一般有银行转账、支票、或银行汇票 -->
-  <common:entityName>SettlementMethodType</common:entityName>
-  <bediagram:constantValue>
-   <bediagram:value>Alipay</bediagram:value>
-   <bediagram:intValue>0</bediagram:intValue>
-   <bediagram:description>支付宝支付</bediagram:description>
-  </bediagram:constantValue>
-  <bediagram:constantValue>
-   <bediagram:value>Check</bediagram:value>
-   <bediagram:intValue>1</bediagram:intValue>
-   <bediagram:description>微信支付</bediagram:description>
-  </bediagram:constantValue>
- </bediagram:ceEntity>
-	
+	 <bediagram:ceEntity>
+		<!-- 结算方式一般有银行转账、支票、或银行汇票 -->
+		<common:entityName>SettlementMethodType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Alipay</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>支付宝支付</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>WeChat</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>微信支付</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>UnionPay</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>银联</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	 
+     <bediagram:ceEntity>
+        <common:entityName>PayOrderStatusType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>Created</bediagram:value>
+            <bediagram:intValue>0</bediagram:intValue>
+            <bediagram:description>建立</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>NotPayed</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>未支付</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Payed</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>支付给平台</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>AgreedPayToEnd</bediagram:value>
+            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:description>同意支付给客户</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>PayedToEnd</bediagram:value>
+            <bediagram:intValue>4</bediagram:intValue>
+            <bediagram:description>支付给客户</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Cancelled</bediagram:value>
+            <bediagram:intValue>5</bediagram:intValue>
+            <bediagram:description>取消支付</bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
+    
+    <bediagram:ceEntity>
+        <common:entityName>PayBusinessType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>ERPBusi</bediagram:value>
+            <bediagram:intValue>0</bediagram:intValue>
+            <bediagram:description>在线ERP管理业务</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>GoldenOrderBusi</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>抢单业务</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>EquipmentLeaseBusi</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>设备出租业务</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>SmallLoanBusi</bediagram:value>
+            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:description>小额贷款业务</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>AccountingBusi</bediagram:value>
+            <bediagram:intValue>4</bediagram:intValue>
+            <bediagram:description>在线会计业务</bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
+ 
 </bediagram:BEDiagram>

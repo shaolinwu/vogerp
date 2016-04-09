@@ -2,9 +2,9 @@
 <ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
 	xsi:schemaLocation="">
-	<entityName>org.shaolin.vogerp.ecommercial.page.OnlineOrderList</entityName>
+	<entityName>org.shaolin.vogerp.ecommercial.page.OnlineOrderList_mob</entityName>
 	<systemVersion>0</systemVersion>
-	<description>抢单达人主面</description>
+	<description>抢单达人页主</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="takeGoldenOrder">
 		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="takeGoldenOrder-20160124-1333">
@@ -23,7 +23,7 @@
                             @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\");");
                             return;
                         }
-                     
+                        
                         Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
                         if (orderInfoTable.getSelectedRow() == null) {
                             return;
@@ -33,14 +33,13 @@
                            @page.executeJavaScript("alert(\"\u8BE5\u8BA2\u5355\u4E0D\u53EF\u7ADF\u4EF7\");");
                            return;
                         }
-                        
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
                         input.put("editable", new Boolean(true));
                         RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GOOfferPrice", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Offer Price", null, 500, 400);
+                        form.openInWindows("Offer Price", new TableCallBack("goldenOrderTable"), 500, 400);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -62,7 +61,7 @@
                             @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\");");
                             return;
                         }
-                    
+                        
                         @page.executeJavaScript("javascript:alert('link to the purchase order.');");
                     }
                     ]]></ns2:expressionString>
@@ -91,8 +90,8 @@
                 </ns2:layout>
                 <ns2:component xsi:type="ns2:UITableType" UIID="goldenOrderTable">
                     <ns2:beElement>org.shaolin.vogerp.ecommercial.be.GoldenOrder</ns2:beElement>
-                    <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
-                    <ns2:defaultRowSize>10</ns2:defaultRowSize>
+                    <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Normal</ns2:selectMode>
+                    <ns2:defaultRowSize>5</ns2:defaultRowSize>
                     <ns2:showActionBar>true</ns2:showActionBar>
                     <ns2:showFilter>true</ns2:showFilter>
                     <ns2:query xsi:type="ns2:ExpressionPropertyType">
@@ -108,7 +107,7 @@
                             {
                                   if ($tableCondition == null) {
                                      $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
-                                     $tableCondition.setCount(10);
+                                     $tableCondition.setCount(5);
                                      $tableCondition.addOrder("statusInt", true);
                                      $tableCondition.addOrder("createDate", false);
                                   }
@@ -148,7 +147,7 @@
 	                                HashMap input = new HashMap();
 	                                input.put("beObject", $rowBE);
 	                                RefForm form = new RefForm("gOrderForm"+$rowBE.getId(), 
-	                                  "org.shaolin.vogerp.ecommercial.form.GoldenOrderOverView", input);
+	                                  "org.shaolin.vogerp.ecommercial.form.GoldenOrderOverView_mob", input);
 	                                StringBuffer sb = new StringBuffer();
 	                                sb.append(form.generateHTML());
 	                                sb.append("<script type=\"text/javascript\">UIMaster.pageInitFunctions.push(function(){");
@@ -185,7 +184,7 @@
                         <ns2:action>
                             <ns2:uiid>takeGoldenOrder</ns2:uiid>
                             <ns2:title xsi:type="ns2:StringPropertyType">
-                                <ns2:value>抢单</ns2:value>
+                                <ns2:value>抢购</ns2:value>
                             </ns2:title>
                             <ns2:icon>ui-icon-note</ns2:icon>
                             <ns2:function>takeGoldenOrder</ns2:function>
@@ -208,5 +207,15 @@
 	<ns2:ODMapping>
 	</ns2:ODMapping>
 	<ns2:in>
+	   <ns2:clientAction xsi:type="ns2:ExpressionParamType">
+            <ns2:expressionString><![CDATA[
+            {
+               $("#goldenOrderTableActionBar").css("position", "absolute").css("top","70px").css("left",($(window).width()-70)+"px").width(80);
+               $(window).scroll(function(event){
+                  var winPos = $(window).scrollTop();
+                  $("#goldenOrderTableActionBar").css("top", (winPos + 20) + "px");
+               });
+            }]]></ns2:expressionString>
+        </ns2:clientAction>
 	</ns2:in>
 </ns2:UIPage>

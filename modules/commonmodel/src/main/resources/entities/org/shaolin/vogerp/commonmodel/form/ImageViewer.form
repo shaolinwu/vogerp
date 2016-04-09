@@ -96,7 +96,7 @@
             </ns2:isGallery>
             <ns2:Property name="width">
                <ns2:value xsi:type="ns2:StringPropertyType">
-                   <value>580px</value>
+                   <value>100%</value>
                </ns2:value>
             </ns2:Property>
             <ns2:Property name="height">

@@ -1,6 +1,7 @@
 package org.shaolin.vogerp.commonmodel.internal;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -42,9 +43,12 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 	
 	private static Localizer LOCALIZER = new Localizer("org_shaolin_vogerp_commonmodel_i18n");
 	
-	void init() {
-	}
+	private List<UserActionListener> listeners = new ArrayList<UserActionListener>();
 	
+	public void addListener(UserActionListener listener) {
+		this.listeners.add(listener);
+	}
+
 	public static String genOrgCode() {
 		DateParser parse = new DateParser(new Date());
 		return "ORGCode-" + parse.getCNDateString() 
@@ -105,6 +109,10 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 		// assign modules
 		IModuleService moduleService = AppContext.get().getService(IModuleService.class);
 		moduleService.newAppModules(org.getOrgCode(), "jounioruser");
+		
+		for (UserActionListener listener: listeners) {
+			listener.registered(userInfo);
+		}
 		
 		// manual commit the transaction.
 		HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
@@ -215,7 +223,10 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 			boolean isMobile = MobilitySupport.isMobileRequest(userAgent);
 			//add user-context thread bind
             UserContext.registerCurrentUserContext(session, userContext, userLocale, userRoles, isMobile);
-			
+            for (UserActionListener listener: listeners) {
+    			listener.loggedIn(matchedUser.getInfo());
+    		}
+            
 			boolean hasCookie = false;
 			Cookie[] cookies = request.getCookies();
 			if (cookies != null) {

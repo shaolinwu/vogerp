@@ -3,9 +3,6 @@ package org.shaolin.vogerp.commonmodel.internal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.shaolin.bmdp.runtime.AppContext;
-import org.shaolin.bmdp.runtime.cache.CacheManager;
-import org.shaolin.bmdp.runtime.cache.ICache;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.vogerp.commonmodel.IOrganizationService;
@@ -19,11 +16,7 @@ import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 
 public class OrganizationServiceImpl implements IOrganizationService, IServiceProvider {
 
-	private static ICache<Long, List> employeeseCache;
-	
 	public OrganizationServiceImpl() {
-		employeeseCache = CacheManager.getInstance().getCache(AppContext.get().getAppName() + "_employeese_cache", Long.class, 
-				List.class);
 	}
 	
 	public void reload() {
@@ -73,18 +66,16 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 	
 	@Override
 	public IOrganization getOrganizationInfo() {
-		Object orgId = UserContext.getUserData(UserContext.CURRENT_USER_ORGID, true);
 		OrganizationImpl scFlow = new OrganizationImpl();
-		scFlow.setId((Long)orgId);
+		scFlow.setId(UserContext.getUserContext().getOrgId());
 		List<IOrganization> list = CommonModel.INSTANCE.searchOrganization(scFlow, null, 0, -1);
 		return list.get(0);
 	}
 	
 	@Override
 	public ILegalOrganizationInfo getLegalInfo() {
-		Object orgId = UserContext.getUserData(UserContext.CURRENT_USER_ORGID, true);
 		LegalOrganizationInfoImpl scFlow = new LegalOrganizationInfoImpl();
-		scFlow.setOrgId((Long)orgId);
+		scFlow.setOrgId(UserContext.getUserContext().getOrgId());
 		List<ILegalOrganizationInfo> list = CommonModel.INSTANCE.searchOrgaLegalInfo(scFlow, null, 0, -1);
 		return list.get(0);
 	}
@@ -107,14 +98,9 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<IPersonalInfo> getEmployeese(long orgId) {
-		if (employeeseCache.containsKey(orgId)) {
-			return employeeseCache.get(orgId);
-		}
-		
 		PersonalInfoImpl condition = new PersonalInfoImpl();
 		condition.setOrgId(orgId);
 		List<IPersonalInfo> result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, -1);
-		employeeseCache.put(orgId, result);
 		return result;
 	}
 	
@@ -122,14 +108,9 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 	@Override
 	public List<IPersonalInfo> getEmployeese() {
 		Object orgId = UserContext.getUserData(UserContext.CURRENT_USER_ORGID, true);
-		if (employeeseCache.containsKey((Long)orgId)) {
-			return employeeseCache.get((Long)orgId);
-		}
-		
 		PersonalInfoImpl condition = new PersonalInfoImpl();
 		condition.setOrgId((Long)orgId);
 		List<IPersonalInfo> result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, -1);
-		employeeseCache.put((Long)orgId, result);
 		return result;
 	}
 		

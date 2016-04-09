@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
-  <entityName>org.shaolin.vogerp.ecommercial.form.GoldenOrderOverView</entityName>
+  <entityName>org.shaolin.vogerp.ecommercial.form.GoldenOrderOverView_mob</entityName>
   <systemVersion>0</systemVersion>
   <ns2:eventHandler functionName="Save">
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveDetail-20160106-214008">
@@ -37,62 +37,19 @@
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-      <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-      <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="topPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
-      <ns2:component xsi:type="ns2:UIImageType" UIID="photoUI">
-         <ns2:isGallery xsi:type="ns2:BooleanPropertyType">
-             <ns2:value>true</ns2:value>
-         </ns2:isGallery>
-         <ns2:Property name="width">
-            <ns2:value xsi:type="ns2:StringPropertyType">
-                <value>250px</value>
-            </ns2:value>
-         </ns2:Property>
-         <ns2:Property name="height">
-            <ns2:value xsi:type="ns2:StringPropertyType">
-                <value>200px</value>
-            </ns2:value>
-         </ns2:Property>
-         <ns2:Property name="mobheight">
-            <ns2:value xsi:type="ns2:StringPropertyType">
-                <value>200px</value>
-            </ns2:value>
-         </ns2:Property>
-         <ns2:Property name="thumbnails">
-            <ns2:value xsi:type="ns2:BooleanPropertyType">
-                <value>false</value>
-            </ns2:value>
-         </ns2:Property>
-         <ns2:Property name="enableSelectSync">
-            <ns2:value xsi:type="ns2:BooleanPropertyType">
-                <value>false</value>
-            </ns2:value>
-         </ns2:Property>
-         <ns2:Property name="value">
-             <ns2:value xsi:type="ns2:ExpressionPropertyType">
-                  <ns2:expression>
-                    <expressionString><![CDATA[
-                    import org.shaolin.bmdp.runtime.AppContext;
-                    import org.shaolin.bmdp.runtime.Registry;
-                    import org.shaolin.uimaster.page.WebConfig;
-                    { 
-                        return $beObject.getPhotos(); 
-                    }]]></expressionString>
-                  </ns2:expression>
-             </ns2:value>
-         </ns2:Property>
-       </ns2:component>
+      <!-- don't show images on this form of Mobile mode, it's too slow!!! -->
        <ns2:component xsi:type="ns2:UICountDownType" UIID="expiratedDateUI">
         <ns2:Property name="style">
             <ns2:value xsi:type="ns2:StringPropertyType">
-                <value>width:250px;height:50px;</value>
+                <value>width:100%;height:90px;</value>
             </ns2:value>
          </ns2:Property>
          <ns2:Property name="count">
@@ -112,18 +69,13 @@
              </ns2:value>
          </ns2:Property>
       </ns2:component>
-       <ns2:layoutConstraint>
-        <ns2:componentId>photoUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
-      </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>expiratedDateUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -188,16 +140,6 @@
       <ns2:component xsi:type="ns2:UILabelType" UIID="createDateUI">
         <ns2:UIStyle></ns2:UIStyle>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="statusUILabel">
-        <ns2:UIStyle></ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.ecommercial.be.GoldenOrder.status</ns2:key>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="statusUI">
-        <ns2:UIStyle></ns2:UIStyle>
-      </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="moreDetailUILabel0">
         <ns2:UIStyle></ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
@@ -251,29 +193,21 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>statusUILabel</ns2:componentId>
+        <ns2:componentId>moreDetailUILabel0</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>statusUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass=""></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>moreDetailUILabel0</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
         <ns2:componentId>moreDetailUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass=""></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
       <ns2:componentId>topPanel</ns2:componentId>
-      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
     <ns2:layoutConstraint>
       <ns2:componentId>fieldPanel</ns2:componentId>
-      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="gorder_attr"></ns2:constraint>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
   </ns2:body>
   <ns2:mapping>
@@ -287,7 +221,11 @@
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="serialNumberUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.serialNumber" paramName="StringData"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
+         <ns2:expression>
+             <expressionString>$beObject.getSerialNumber() + "(" +$beObject.getStatus().getDisplayName() + ")"</expressionString>
+         </ns2:expression>
+      </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
@@ -312,15 +250,6 @@
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithDate"></ns2:mappingRule>
       <ns2:UIComponent componentPath="createDateUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.createDate" paramName="Date"></ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping6">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="statusUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
-         <ns2:expression>
-             <expressionString>$beObject.getStatus().getDisplayName()</expressionString>
-         </ns2:expression>
-      </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>{

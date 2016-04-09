@@ -53,6 +53,11 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
         ui: elementList[prefix + "descriptionUI"]
     });
 
+    var moreUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "moreUILabel"]
+    });
+
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
@@ -76,13 +81,13 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "parentIdUI",prefix + "idUILabel",prefix + "idUI",prefix + "orgCodeUILabel",prefix + "orgCodeUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI"]
+        ,subComponents: [prefix + "parentIdUI",prefix + "idUILabel",prefix + "idUI",prefix + "orgCodeUILabel",prefix + "orgCodeUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "moreUILabel"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentIdUI,idUILabel,idUI,orgCodeUILabel,orgCodeUI,nameUILabel,nameUI,typeUILabel,descriptionUILabel,descriptionUI,okbtn,cancelbtn,typeUI,fieldPanel,actionPanel]
+        ,items: [parentIdUI,idUILabel,idUI,orgCodeUILabel,orgCodeUI,nameUILabel,nameUI,typeUILabel,descriptionUILabel,descriptionUI,moreUILabel,okbtn,cancelbtn,typeUI,fieldPanel,actionPanel]
     });
 
     Form.parentIdUI=parentIdUI;
@@ -104,6 +109,8 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
+
+    Form.moreUILabel=moreUILabel;
 
     Form.okbtn=okbtn;
 
@@ -135,6 +142,8 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
 
     Form.descriptionUI=descriptionUI;
 
+    Form.moreUILabel=moreUILabel;
+
     Form.actionPanel=actionPanel;
 
     Form.okbtn=okbtn;
@@ -148,6 +157,8 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
     };
 
     Form.Save = org_shaolin_vogerp_commonmodel_form_Organization_Save;
+
+    Form.ShowIllegalInfo = org_shaolin_vogerp_commonmodel_form_Organization_ShowIllegalInfo;
 
     Form.Cancel = org_shaolin_vogerp_commonmodel_form_Organization_Cancel;
 
@@ -179,6 +190,17 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail946655221",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_Organization_Save */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_Organization_ShowIllegalInfo(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_Organization_ShowIllegalInfo */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showIllegalInfo-1509902581",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_Organization_ShowIllegalInfo */
 
 
     /* auto generated eventlistener function declaration */

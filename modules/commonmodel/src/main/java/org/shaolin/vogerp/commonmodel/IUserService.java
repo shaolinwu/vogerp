@@ -18,6 +18,8 @@ public interface IUserService {
 	
 	public static final String USER_REGISTER_FAIL = "user.register.fail";
 	
+	public void addListener(UserActionListener listener);
+	
 	public boolean register(IRegisterInfo info);
 	
 	public PasswordCheckResult checkPasswordPattern(String password);
@@ -64,4 +66,9 @@ public interface IUserService {
 	 * @return
 	 */
 	public long getUserId();
+	
+	public interface UserActionListener {
+		void loggedIn(IPersonalInfo userInfo);
+		void registered(IPersonalInfo userInfo);
+	}
 }

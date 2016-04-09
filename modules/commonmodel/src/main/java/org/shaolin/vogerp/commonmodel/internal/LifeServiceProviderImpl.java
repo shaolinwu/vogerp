@@ -108,7 +108,6 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 		
 		try {
 			UserServiceImpl userService = new UserServiceImpl();
-			userService.init();
 			serviceManger.register(userService);
 			
 			PermissionServiceImpl permissionService = new PermissionServiceImpl(serviceManger.getService(IModuleService.class));

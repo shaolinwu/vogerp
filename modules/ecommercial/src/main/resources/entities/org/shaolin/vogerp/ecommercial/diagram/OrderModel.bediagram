@@ -49,6 +49,12 @@
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>purchaseOrder</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.order.be.PurchaseOrder" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
             <!-- the golden order is taken by the customer. -->
             <bediagram:name>takenCustomerId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
@@ -64,16 +70,6 @@
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
-            <bediagram:name>accVoucherId</bediagram:name>
-            <bediagram:type xsi:type="bediagram:LongType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>accVoucher</bediagram:name>
-            <bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="org.shaolin.vogerp.accounting.be.AccountVoucher" />
-            </bediagram:type>
-        </bediagram:member>
-        <bediagram:member>
             <bediagram:name>startCreateDate</bediagram:name>
             <bediagram:type xsi:type="bediagram:DateTimeType" />
         </bediagram:member>
@@ -84,6 +80,10 @@
         <bediagram:member>
             <bediagram:name>expiredDate</bediagram:name>
             <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>photos</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>
             <bediagram:name>status</bediagram:name>
@@ -208,6 +208,10 @@
             <bediagram:name>samplePhoto</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>leaveWords</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
 	</bediagram:beEntity>
 	
 	<bediagram:ceEntity>
@@ -215,22 +219,22 @@
         <bediagram:constantValue>
             <bediagram:value>Published</bediagram:value>
             <bediagram:intValue>0</bediagram:intValue>
-            <bediagram:description>Published</bediagram:description>
+            <bediagram:description>发布</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Taken</bediagram:value>
             <bediagram:intValue>1</bediagram:intValue>
-            <bediagram:description>Taken Order</bediagram:description>
+            <bediagram:description>拍下</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Payed</bediagram:value>
             <bediagram:intValue>2</bediagram:intValue>
-            <bediagram:description>Order Payed</bediagram:description>
+            <bediagram:description>已支付</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Cancelled</bediagram:value>
-            <bediagram:intValue>2</bediagram:intValue>
-            <bediagram:description>Cancelled</bediagram:description>
+            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:description>取消</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
 </bediagram:BEDiagram>

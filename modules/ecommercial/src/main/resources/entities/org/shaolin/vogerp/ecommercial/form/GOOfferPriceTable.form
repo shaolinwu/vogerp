@@ -151,7 +151,17 @@
         <ns2:column>
           <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
             <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
-            <ns2:key>org.shaolin.vogerp.ecommercial.be.GOOfferPrice.samplePhoto</ns2:key>
+            <ns2:key>org.shaolin.vogerp.ecommercial.be.GOOfferPrice.leaveWords</ns2:key>
+          </ns2:title>
+          <ns2:beFieldId>rowBE.leaveWords</ns2:beFieldId>
+          <ns2:uiType>
+            <ns2:type>Label</ns2:type>
+          </ns2:uiType>
+        </ns2:column>
+        <ns2:column>
+          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+            <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
+            <ns2:key>org.shaolin.vogerp.ecommercial.be.GOOfferPrice.samplePhoto1</ns2:key>
           </ns2:title>
           <ns2:beFieldId>rowBE.samplePhoto</ns2:beFieldId>
           <ns2:uiType>

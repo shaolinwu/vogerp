@@ -105,6 +105,7 @@
                          IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
                          order.setPublishedCustomerId(service.getUserId());
                          order.setPurchaseOrderId($purchaseOrder.getId());
+                         //order.setPhotos();
                          order.setCreateDate(new Date());
                          order.setExpiredDate(new Date());
                          order.setStatus(OrderStatusType.PUBLISHED);
@@ -187,7 +188,8 @@
 			            offerPrice.setTakenCustomerId(service.getUserId());
 			            offerPrice.setPrice(Double.valueOf(@page.getTextField("priceUI").getValue()));
 			            offerPrice.setCreateDate(new Date());
-			            offerPrice.setSamplePhoto(@page.getTextField("samplePhotoUI").getValue());
+			            offerPrice.setSamplePhoto(@page.getHidden("samplePhotoUI.imagePathUI").getValue());
+			            offerPrice.setLeaveWords(@page.getTextArea("leaveWordUI").getValue());
 			            
 			            // compare the prices.
 			            if (!OrderUtil.compareAPrice(order, offerPrice)) {
@@ -315,7 +317,8 @@
                     import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
                     import org.shaolin.vogerp.order.be.PurchaseItemImpl;
                     import org.shaolin.vogerp.commonmodel.IOrganizationService;
-                    import org.shaolin.vogerp.accounting.be.*;
+                    import org.shaolin.vogerp.accounting.be.IPayOrder;
+                    import org.shaolin.vogerp.accounting.ce.PayBusinessType;
                     import org.shaolin.vogerp.accounting.IAccountingService;
                     {
                          $gorder.setEndPrice(OrderUtil.getLowestOfferPrice($gorder, true));
@@ -352,8 +355,8 @@
                          saleOrder.setItems(saleOrderItems);
                          
                          IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
-                         IAccountVoucher accVoucher = accountingService.createOutgoingVoucher("订单支付", $gorder.getEndPrice(), "支付抢购订单" + saleOrder.getSerialNumber());
-                         @flowContext.save(accVoucher);
+                         IPayOrder payOrder = accountingService.createPayOrder(PayBusinessType.GOLDENORDERBUSI, $gorder.getId(), $gorder.getEndPrice());
+                         @flowContext.save(payOrder);
                          @flowContext.save(saleOrder);
                          
                          $gorder.setSaleOrderId(saleOrder.getId());

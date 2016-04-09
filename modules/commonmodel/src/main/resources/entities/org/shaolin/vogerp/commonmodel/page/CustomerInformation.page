@@ -111,6 +111,15 @@
 		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.PersonalInfo" />
 		            </ns2:refEntity>
                 </ns2:tab>
+                <ns2:tab uiid="orgInfoForm">
+                    <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+                        <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+                        <ns2:key>org.shaolin.vogerp.commonmodel.page.CustomerInformation.orgInfoPanel</ns2:key>
+                    </ns2:title>
+                    <ns2:refEntity UIID="orgInfoForm">
+                       <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.Organization" />
+                    </ns2:refEntity>
+                </ns2:tab>
                 <ns2:tab uiid="personalAccountForm">
                     <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
                         <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
@@ -153,6 +162,9 @@
 	    <ns2:DataEntity scope="InOut" name="personalAccount" category="BusinessEntity">
 	      <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalAccount"></type>
 	    </ns2:DataEntity>
+	    <ns2:DataEntity scope="InOut" name="orgInfo" category="BusinessEntity">
+          <type entityName="org.shaolin.vogerp.commonmodel.be.Organization"></type>
+        </ns2:DataEntity>
 	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
 	      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.PersonalInfo"></ns2:mappingRule>
 	      <ns2:UIComponent componentPath="personalInfoForm" paramName="UIWidgetType"></ns2:UIComponent>
@@ -164,6 +176,16 @@
 	      </ns2:DataComponent>
 	    </ns2:ComponentMapping>
 	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.Organization"></ns2:mappingRule>
+          <ns2:UIComponent componentPath="orgInfoForm" paramName="UIWidgetType"></ns2:UIComponent>
+          <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="orgInfo" paramName="beObject"></ns2:DataComponent>
+          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
+            <ns2:expression>
+              <expressionString>Boolean.TRUE</expressionString>
+            </ns2:expression>
+          </ns2:DataComponent>
+        </ns2:ComponentMapping>
+	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
           <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.PersonalAccount"></ns2:mappingRule>
           <ns2:UIComponent componentPath="personalAccountForm" paramName="UIWidgetType"></ns2:UIComponent>
           <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalAccount" paramName="beObject"></ns2:DataComponent>
@@ -173,7 +195,7 @@
 	        </ns2:expression>
 	      </ns2:DataComponent>
         </ns2:ComponentMapping>
-        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
           <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.ContactInfoTable"></ns2:mappingRule>
           <ns2:UIComponent componentPath="contractForm" paramName="UIWidgetType"></ns2:UIComponent>
           <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalInfo.contacts" paramName="list"></ns2:DataComponent>
@@ -184,7 +206,7 @@
 	        </ns2:expression>
 	      </ns2:DataComponent>
         </ns2:ComponentMapping>
-        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
+        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
           <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.AddressInfoTable"></ns2:mappingRule>
           <ns2:UIComponent componentPath="addressForm" paramName="UIWidgetType"></ns2:UIComponent>
           <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalInfo.addresses" paramName="list"></ns2:DataComponent>
@@ -202,16 +224,18 @@
 			import org.shaolin.bmdp.runtime.AppContext;
 			import org.shaolin.bmdp.runtime.security.UserContext;
 		    import org.shaolin.vogerp.commonmodel.IUserService;
-		    import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
-		    import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
-		    import org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl;
+		    import org.shaolin.vogerp.commonmodel.be.*;
 		    import org.shaolin.uimaster.page.flow.WebflowConstants;
+		    import org.shaolin.vogerp.commonmodel.IOrganizationService;
 			{
 			  UserContext userContext = (UserContext)@odContext.getRequest().getSession().getAttribute(WebflowConstants.USER_SESSION_KEY);
 			  IUserService moduleService = (IUserService)AppContext.get().getService(IUserService.class);
 			  $personalAccount = (PersonalAccountImpl)moduleService.getPersonalAccount(userContext.getUserId());
 			  $personalInfo = $personalAccount.getInfo();
 			  //$contract = new OrganizationContractImpl();
+			  
+			  IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
+			  $orgInfo = (OrganizationImpl)orgService.getOrganizationInfo();
 			  
 			  @odContext.executeAllMappings();
 			}]]></ns2:expressionString>
