@@ -75,8 +75,15 @@
                return;
            }
            Hidden selectPTemplateIdUI = @page.getHidden("selectPTemplateIdUI");
+           if (selectPTemplateIdUI.getAttribute("count") == null) {
+               selectPTemplateIdUI.addAttribute("count", "1");
+           } else {    
+               selectPTemplateIdUI.addAttribute("count", "2");
+           }
            if (selectPTemplateIdUI.getValue() != null 
-               && selectPTemplateIdUI.getValue().equals(values.get(0).toString())) {
+               && selectPTemplateIdUI.getValue().equals(values.get(0).toString())
+               && "2".equals(selectPTemplateIdUI.getAttribute("count"))) {
+               selectPTemplateIdUI.removeAttribute("count");
                // double click event supported for selecting template.
                @page.executeJavaScript("$(defaultname." + @page.getEntityUiid() + ".okbtn).trigger('click');");
                return;

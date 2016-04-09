@@ -23,6 +23,11 @@
         </ns2:outDataMappingToNode>
       </ns2:next>
     </ns2:out>
+    <ns2:out xsi:type="ns2:DisplayOutType" name="Login">
+      <ns2:next>
+        <ns2:destNode>LoginPage</ns2:destNode>
+      </ns2:next>
+    </ns2:out>  
   </ns2:webNode>
   <ns2:webNode xsi:type="ns2:LogicNodeType" name="register">
     <ns2:variables name="registerInfo" category="JavaClass">
@@ -141,6 +146,11 @@
         </ns2:outDataMappingToNode>
       </ns2:next>
     </ns2:out>
+    <ns2:out xsi:type="ns2:DisplayOutType" name="Register">
+      <ns2:next>
+        <ns2:destNode>Registration</ns2:destNode>
+      </ns2:next>
+    </ns2:out>  
     <ns2:sourceEntity entityName="org.shaolin.bmdp.adminconsole.page.Login"></ns2:sourceEntity>
   </ns2:webNode>
   <ns2:webNode xsi:type="ns2:LogicNodeType" name="Authentication">

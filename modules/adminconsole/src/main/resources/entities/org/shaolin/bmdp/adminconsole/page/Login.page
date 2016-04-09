@@ -63,15 +63,17 @@
             </ns2:ops>
         </ns2:eventHandler>
 		<ns2:eventHandler functionName="Login"></ns2:eventHandler>
+		<ns2:eventHandler functionName="Register"></ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:layout xsi:type="ns2:TableLayoutType">
-				<ns2:rowHeightWeight>180</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>150</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>350</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>80</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			</ns2:layout>
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="topPanel">
 				<ns2:layout xsi:type="ns2:TableLayoutType">
+					<ns2:rowHeightWeight>30</ns2:rowHeightWeight>
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 				</ns2:layout>
@@ -80,13 +82,13 @@
                         <ns2:value>Vogue Enterprise Service</ns2:value>
                     </ns2:title>
                     <ns2:src xsi:type="ns2:ImagePropertyType">
-                        <ns2:location>/vogerp.jpg</ns2:location>
+                        <ns2:location>/qd-logo.png</ns2:location>
                     </ns2:src>
                 </ns2:component>
                 <ns2:layoutConstraint>
                     <ns2:componentId>vogerplogo</ns2:componentId>
                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                        x="0" y="0" align="FULL"></ns2:constraint>
+                        x="0" y="1" align="FULL"></ns2:constraint>
                 </ns2:layoutConstraint>
 			</ns2:component>
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="loginPanel">
@@ -99,7 +101,6 @@
 					</ns2:param>
 				</ns2:UISkin>
 				<ns2:layout xsi:type="ns2:TableLayoutType">
-					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -164,14 +165,39 @@
                         <ns2:handler functionName="verifiCode" />
                     </ns2:EventListener>
                 </ns2:component>
-				<ns2:component xsi:type="ns2:UIButtonType" UIID="loginBtn">
-					<ns2:text xsi:type="ns2:StringPropertyType">
-						<ns2:value>登录</ns2:value>
-					</ns2:text>
-					<ns2:EventListener xsi:type="ns2:ClickListenerType">
-						<ns2:handler functionName="verifiCode" />
-					</ns2:EventListener>
-				</ns2:component>
+                <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+	                <ns2:layout xsi:type="ns2:TableLayoutType">
+	                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+	                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+	                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+	                </ns2:layout>
+					<ns2:component xsi:type="ns2:UIButtonType" UIID="loginBtn">
+						<ns2:text xsi:type="ns2:StringPropertyType">
+							<ns2:value>登录</ns2:value>
+						</ns2:text>
+						<ns2:EventListener xsi:type="ns2:ClickListenerType">
+							<ns2:handler functionName="verifiCode" />
+						</ns2:EventListener>
+					</ns2:component>
+					<ns2:component xsi:type="ns2:UILabelType" UIID="registerBtn">
+	                    <ns2:text xsi:type="ns2:StringPropertyType">
+	                        <ns2:value>注册</ns2:value>
+	                    </ns2:text>
+	                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
+	                        <ns2:handler functionName="Register" />
+	                    </ns2:EventListener>
+	                </ns2:component>
+	                <ns2:layoutConstraint>
+	                    <ns2:componentId>loginBtn</ns2:componentId>
+	                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	                        x="0" y="0" align="FULL"></ns2:constraint>
+	                </ns2:layoutConstraint>
+	                <ns2:layoutConstraint>
+	                    <ns2:componentId>registerBtn</ns2:componentId>
+	                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	                        x="1" y="0" align="FULL"></ns2:constraint>
+	                </ns2:layoutConstraint>
+                </ns2:component>
 				<ns2:layoutConstraint>
 					<ns2:componentId>userName</ns2:componentId>
 					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
@@ -192,11 +218,11 @@
                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                         x="0" y="3" align="FULL"></ns2:constraint>
                 </ns2:layoutConstraint>
-				<ns2:layoutConstraint>
-					<ns2:componentId>loginBtn</ns2:componentId>
-					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-						x="0" y="4" align="FULL"></ns2:constraint>
-				</ns2:layoutConstraint>
+                <ns2:layoutConstraint>
+                    <ns2:componentId>actionPanel</ns2:componentId>
+                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                        x="0" y="4" align="FULL"></ns2:constraint>
+                </ns2:layoutConstraint>
 			</ns2:component>
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="bottomPanel">
 				<ns2:layout xsi:type="ns2:TableLayoutType">
@@ -297,4 +323,12 @@
 		</ns2:clientAction>
 		<ns2:serverOperation xsi:type="ns2:ExpressionParamType" />
 	</ns2:out>
+	<ns2:out name="Register" functionName="Register" validate="false">
+        <ns2:clientAction xsi:type="ns2:ExpressionParamType">
+            <ns2:expressionString><![CDATA[{
+            // hello, my first js.
+            }]]></ns2:expressionString>
+        </ns2:clientAction>
+        <ns2:serverOperation xsi:type="ns2:ExpressionParamType" />
+    </ns2:out>
 </ns2:UIPage>

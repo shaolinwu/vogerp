@@ -351,12 +351,12 @@
 		<bediagram:constantValue>
 			<bediagram:value>Good</bediagram:value>
 			<bediagram:intValue>0</bediagram:intValue>
-			<bediagram:description>Good</bediagram:description>
+			<bediagram:description>商品</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Service</bediagram:value>
 			<bediagram:intValue>1</bediagram:intValue>
-			<bediagram:description>Service</bediagram:description>
+			<bediagram:description>服务</bediagram:description>
 		</bediagram:constantValue>
 		<!-- TODO: add more type to DB through industry categories -->
 	</bediagram:ceEntity>
@@ -366,31 +366,31 @@
 			<!-- 厂商标识号 -->
 			<bediagram:value>FactoryCode</bediagram:value>
 			<bediagram:intValue>0</bediagram:intValue>
-			<bediagram:description>Factory Code</bediagram:description>
+			<bediagram:description>厂商标识号 </bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<!-- SKU库存单元 -->
 			<bediagram:value>SKUCode</bediagram:value>
 			<bediagram:intValue>1</bediagram:intValue>
-			<bediagram:description>SKU Code</bediagram:description>
+			<bediagram:description>SKU库存单元</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<!-- ISBNl国际标准图书代码 -->
 			<bediagram:value>ISBNCode</bediagram:value>
 			<bediagram:intValue>2</bediagram:intValue>
-			<bediagram:description>ISBN Code</bediagram:description>
+			<bediagram:description>ISBNl国际标准图书代码</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<!-- UPCA美国通用产品代码 -->
 			<bediagram:value>UPCACode</bediagram:value>
 			<bediagram:intValue>3</bediagram:intValue>
-			<bediagram:description>UPCA Code</bediagram:description>
+			<bediagram:description>UPCA美国通用产品代码</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<!-- UPCE欧洲通用产品代码 -->
 			<bediagram:value>UPCECode</bediagram:value>
 			<bediagram:intValue>4</bediagram:intValue>
-			<bediagram:description>UPCE Code</bediagram:description>
+			<bediagram:description>UPCE欧洲通用产品代码</bediagram:description>
 		</bediagram:constantValue>
 		<!-- TODO: add more type to DB through industry categories -->
 	</bediagram:ceEntity>
@@ -414,17 +414,17 @@
 		<bediagram:constantValue>
 			<bediagram:value>White</bediagram:value>
 			<bediagram:intValue>0</bediagram:intValue>
-			<bediagram:description>White</bediagram:description>
+			<bediagram:description>白色</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Red</bediagram:value>
 			<bediagram:intValue>1</bediagram:intValue>
-			<bediagram:description>Red</bediagram:description>
+			<bediagram:description>红色</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Black</bediagram:value>
 			<bediagram:intValue>2</bediagram:intValue>
-			<bediagram:description>Black</bediagram:description>
+			<bediagram:description>黑色</bediagram:description>
 		</bediagram:constantValue>
 		<!-- TODO: add more type to DB through industry categories -->
 	</bediagram:ceEntity>
@@ -537,27 +537,27 @@
 		<bediagram:constantValue>
 			<bediagram:value>Daily</bediagram:value>
 			<bediagram:intValue>0</bediagram:intValue>
-			<bediagram:description>Day</bediagram:description>
+			<bediagram:description>天</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Weekly</bediagram:value>
 			<bediagram:intValue>1</bediagram:intValue>
-			<bediagram:description>Weekly</bediagram:description>
+			<bediagram:description>周</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Monthly</bediagram:value>
 			<bediagram:intValue>2</bediagram:intValue>
-			<bediagram:description>Monthly</bediagram:description>
+			<bediagram:description>月</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Season</bediagram:value>
 			<bediagram:intValue>3</bediagram:intValue>
-			<bediagram:description>Season</bediagram:description>
+			<bediagram:description>季</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Year</bediagram:value>
 			<bediagram:intValue>4</bediagram:intValue>
-			<bediagram:description>Year</bediagram:description>
+			<bediagram:description>年</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>
 	<bediagram:ceEntity>
@@ -565,22 +565,22 @@
 		<bediagram:constantValue>
 			<bediagram:value>Level1</bediagram:value>
 			<bediagram:intValue>0</bediagram:intValue>
-			<bediagram:description>Day</bediagram:description>
+			<bediagram:description>天</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Level2</bediagram:value>
 			<bediagram:intValue>1</bediagram:intValue>
-			<bediagram:description>Weekly</bediagram:description>
+			<bediagram:description>周</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Level3</bediagram:value>
 			<bediagram:intValue>2</bediagram:intValue>
-			<bediagram:description>Monthly</bediagram:description>
+			<bediagram:description>月</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Level4</bediagram:value>
 			<bediagram:intValue>3</bediagram:intValue>
-			<bediagram:description>Season</bediagram:description>
+			<bediagram:description>季</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>
 	<bediagram:ceEntity>
@@ -620,17 +620,17 @@
 		<bediagram:constantValue>
 			<bediagram:value>Good</bediagram:value>
 			<bediagram:intValue>0</bediagram:intValue>
-			<bediagram:description>Good</bediagram:description>
+			<bediagram:description>商品</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Defect</bediagram:value>
 			<bediagram:intValue>1</bediagram:intValue>
-			<bediagram:description>Defect</bediagram:description>
+			<bediagram:description>缺陷商品</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Damaged</bediagram:value>
 			<bediagram:intValue>2</bediagram:intValue>
-			<bediagram:description>Damaged</bediagram:description>
+			<bediagram:description>损毁商品</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>
 	

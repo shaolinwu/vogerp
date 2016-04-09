@@ -27,7 +27,9 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         ,mobheight: 150
         ,width: "100%"
         ,mode: "slider"
+        ,slideshowAutostart: "false"
         ,thumbnailsFullScreen: false
+        ,enableSelectSync: false
     });
 
     var matrixUI = new UIMaster.ui.matrix

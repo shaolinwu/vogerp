@@ -195,35 +195,35 @@
 		                    </ns2:query>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Name</ns2:value>
+		                            <ns2:value>名称</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.name</ns2:beFieldId>
 		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
 		                    </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Description</ns2:value>
+		                            <ns2:value>描述</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.description</ns2:beFieldId>
 		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
 		                    </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Photo</ns2:value>
+		                            <ns2:value>图片</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.photoPath</ns2:beFieldId>
-		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Image</ns2:type></ns2:uiType>
 		                    </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Location</ns2:value>
+		                            <ns2:value>位置</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.location</ns2:beFieldId>
 		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
 		                    </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Container Type</ns2:value>
+		                            <ns2:value>容器类型</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.containerType</ns2:beFieldId>
 		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
@@ -252,7 +252,7 @@
                            <!-- first we have the cost, then we generate the price from the cost. -->
                               <ns2:uiid>showMatrix</ns2:uiid>
                               <ns2:title xsi:type="ns2:StringPropertyType">
-                                  <ns2:value>Warehouse Matrix</ns2:value>
+                                  <ns2:value>仓库内容矩阵显示</ns2:value>
                               </ns2:title>
                               <ns2:icon>ui-icon-note</ns2:icon>
                               <ns2:function>showMatrix</ns2:function>
@@ -308,7 +308,7 @@
 		                    </ns2:query>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Warehouse</ns2:value>
+		                            <ns2:value>仓库名称</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.warehouseId</ns2:beFieldId>
 		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
@@ -348,7 +348,7 @@
 		                    </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Product</ns2:value>
+		                            <ns2:value>产品</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.productId</ns2:beFieldId>
 		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
@@ -388,28 +388,28 @@
 		                    </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Serial Number</ns2:value>
+		                            <ns2:value>序列号</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.serialNumber</ns2:beFieldId>
 		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
 		                    </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Amount</ns2:value>
+		                            <ns2:value>数量</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.number</ns2:beFieldId>
 		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
 		                    </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Coordinate</ns2:value>
+		                            <ns2:value>位置坐标</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.coordinate</ns2:beFieldId>
 		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
 		                    </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Status</ns2:value>
+		                            <ns2:value>状态</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.itemStatus</ns2:beFieldId>
 		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>

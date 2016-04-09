@@ -285,7 +285,7 @@
 		                    </ns2:query>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Name</ns2:value>
+		                            <ns2:value>产品名称</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.name</ns2:beFieldId>
 		                        <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
@@ -301,14 +301,14 @@
 		                    </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Description</ns2:value>
+		                            <ns2:value>描述</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.description</ns2:beFieldId>
 		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
 		                    </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>Type</ns2:value>
+		                            <ns2:value>类型</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.type</ns2:beFieldId>
 		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
@@ -352,37 +352,12 @@
 		                    </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>On Sale End Date</ns2:value>
+		                            <ns2:value>建立时间</ns2:value>
 		                        </ns2:title>
-		                        <ns2:beFieldId>rowBE.saleEndDate</ns2:beFieldId>
+		                        <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
 		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType">
-		                          <ns2:type>DateRange</ns2:type>
-		                          <ns2:startCondition>rowBE.saleEndDateStart</ns2:startCondition> 
-		                          <ns2:endCondition>rowBE.saleEndDateEnd</ns2:endCondition>
+		                          <ns2:type>Label</ns2:type>
 		                        </ns2:uiType>
-		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-		                            <ns2:expression xsi:type="ns2:ExpressionType">
-		                                <ns2:expressionString><![CDATA[
-		                                import org.shaolin.uimaster.page.od.formats.FormatUtil;
-		                                import java.util.Date;
-		                                {
-		                                    if ($value == null || "".equals($value)) {
-		                                        if ("rowBE.saleEndDateStart".equals($filterId)) {
-		                                            $rowBE.setSaleEndDateStart(null);
-		                                        } else {
-		                                            $rowBE.setSaleEndDateEnd(null);
-		                                        }
-		                                    } else {
-		                                        Date d = (Date)FormatUtil.convertUIToData(FormatUtil.DATE, $value);
-		                                        if ("rowBE.saleEndDateStart".equals($filterId)) {
-		                                            $rowBE.setSaleEndDateStart(d);
-		                                        } else {
-		                                            $rowBE.setSaleEndDateEnd(d);
-		                                        }
-		                                    }
-		                                }]]></ns2:expressionString>
-		                            </ns2:expression>
-		                        </ns2:updateCondition>
 		                    </ns2:column>
 		                    <ns2:defaultActions>
 		                        <ns2:defaultNewAction>createProduct</ns2:defaultNewAction>
@@ -411,6 +386,7 @@
 		                </ns2:layoutConstraint>
                     </ns2:panel>
                 </ns2:tab>
+                <!-- 
                 <ns2:tab uiid="productListPanel">
                     <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
                         <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
@@ -420,6 +396,7 @@
                        <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductListOverview" />
                     </ns2:refEntity>
                 </ns2:tab>
+                 -->
                 <ns2:tab uiid="productTreePanel">
                     <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
                         <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
@@ -445,10 +422,12 @@
 	      that cannot pass a internal mapping value such as following simpleMapping0-->
 	      <ns2:default><expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString></ns2:default>
 	    </ns2:DataEntity>
+	    <!-- 
         <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
           <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductListOverview"></ns2:mappingRule>
           <ns2:UIComponent componentPath="productListPanel" paramName="UIWidgetType"></ns2:UIComponent>
         </ns2:ComponentMapping>
+         -->
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
           <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy"></ns2:mappingRule>
           <ns2:UIComponent componentPath="productTreePanel" paramName="UIWidgetType"></ns2:UIComponent>

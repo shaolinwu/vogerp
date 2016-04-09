@@ -49,6 +49,15 @@
 				]]></ns2:expressionString>
 			</ns2:ops>
 		</ns2:eventHandler>
+		<ns2:eventHandler functionName="dblclickTreeNode">
+		     <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+		        <ns2:expressionString><![CDATA[
+		        {   
+		            this.clickTreeNode(eventsource,event);
+		        }
+		        ]]></ns2:expressionString>
+		    </ns2:ops>
+		</ns2:eventHandler>
 		<ns2:eventHandler functionName="showUserInfo">
 			<ns2:ops xsi:type="ns2:OpExecuteScriptType">
 				<ns2:expressionString><![CDATA[
@@ -176,8 +185,13 @@
 						<ns2:value>Vogue ERP</ns2:value>
 					</ns2:title>
 					<ns2:src xsi:type="ns2:ImagePropertyType">
-						<ns2:location>/vogerp.jpg</ns2:location>
+						<ns2:location>/qd-logo.png</ns2:location>
 					</ns2:src>
+					<ns2:Property name="captureScreen">
+                       <ns2:value xsi:type="ns2:BooleanPropertyType">
+                            <value>true</value>
+                       </ns2:value>
+                    </ns2:Property>
 				</ns2:component>
 				<ns2:component xsi:type="ns2:UIPanelType" UIID="topMiddlePanel">
 					<ns2:layout xsi:type="ns2:TableLayoutType">
@@ -423,6 +437,7 @@
 						<ns2:selectMode>Multiple</ns2:selectMode>
 						<ns2:expandTreeEvent>expandTree</ns2:expandTreeEvent>
 						<ns2:selectNodeEvent>clickTreeNode</ns2:selectNodeEvent>
+						<ns2:dblselectNodeEvent>dblclickTreeNode</ns2:dblselectNodeEvent>
 						<ns2:initExpression xsi:type="ns2:ExpressionPropertyType">
 							<ns2:expression xsi:type="ns2:ExpressionType">
 								<ns2:expressionString><![CDATA[

@@ -38,6 +38,11 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         ui: elementList[prefix + "loginBtn"]
     });
 
+    var registerBtn = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "registerBtn"]
+    });
+
     var bottomPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "bottomPanel"]
@@ -45,12 +50,19 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         ,subComponents: []
     });
 
+    var actionPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "actionPanel"]
+        ,items: []
+        ,subComponents: [prefix + "loginBtn",prefix + "registerBtn"]
+    });
+
     var loginPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "loginPanel"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
-        ,subComponents: [prefix + "errorInfo",prefix + "userName",prefix + "password",prefix + "veriCodeQuestion",prefix + "veriCode",prefix + "loginBtn"]
+        ,subComponents: [prefix + "errorInfo",prefix + "userName",prefix + "password",prefix + "veriCodeQuestion",prefix + "veriCode",prefix + "actionPanel"]
     });
 
     var topPanel = new UIMaster.ui.panel
@@ -63,7 +75,7 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [vogerplogo,errorInfo,userName,password,veriCodeQuestion,veriCode,loginBtn,topPanel,loginPanel,bottomPanel]
+        ,items: [vogerplogo,errorInfo,userName,password,veriCodeQuestion,veriCode,loginBtn,registerBtn,topPanel,loginPanel,actionPanel,bottomPanel]
     });
 
     Form.vogerplogo=vogerplogo;
@@ -79,6 +91,8 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     Form.veriCode=veriCode;
 
     Form.loginBtn=loginBtn;
+
+    Form.registerBtn=registerBtn;
 
     Form.topPanel=topPanel;
 
@@ -96,7 +110,17 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
 
     Form.veriCode=veriCode;
 
+    Form.actionPanel=actionPanel;
+
     Form.loginBtn=loginBtn;
+
+    Form.registerBtn=registerBtn;
+
+    Form.actionPanel=actionPanel;
+
+    Form.loginBtn=loginBtn;
+
+    Form.registerBtn=registerBtn;
 
     Form.bottomPanel=bottomPanel;
 
@@ -112,11 +136,15 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
 
     Form.Login = org_shaolin_bmdp_adminconsole_page_Login_Login;
 
+    Form.Register = org_shaolin_bmdp_adminconsole_page_Login_Register;
+
     Form.initPageJs = org_shaolin_bmdp_adminconsole_page_Login_initPageJs;
 
     Form.finalizePageJs = org_shaolin_bmdp_adminconsole_page_Login_finalizePageJs;
 
     Form.Submit_OutFunctionName = org_shaolin_bmdp_adminconsole_page_Login_Submit_OutFunctionName;
+
+    Form.Register_OutFunctionName = org_shaolin_bmdp_adminconsole_page_Login_Register_OutFunctionName;
 
     Form.__AJAXSubmit = false;
     
@@ -168,6 +196,15 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_Login */
 
 
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Login_Register(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_Register */
+        var o = this;
+        var UIEntity = this;
+
+        o.Register_OutFunctionName(eventsource);
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_Register */
+
+
     function org_shaolin_bmdp_adminconsole_page_Login_initPageJs(){/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_initPageJs */
         var constraint_result = true;
         var UIEntity = this;
@@ -211,5 +248,33 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         }
         return constraint_result;
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_Submit_OutFunctionName */
+
+    function org_shaolin_bmdp_adminconsole_page_Login_Register_OutFunctionName(eventsource) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_Register_OutFunctionName */
+        var constraint_result = true;
+        var myForm;
+        if (this.formName != undefined)
+        {
+            myForm = document.forms[this.formName];
+        }
+        else
+        {
+            var p = this.Form.parentNode;
+            while(p.tagName != "FORM")
+                p = p.parentNode;
+            myForm = p;//document.forms[0];
+        }
+
+        var UIEntity = this;
+{
+            // hello, my first js.
+            }        
+        myForm._outname.value = "Register";
+        myForm.target = "_self";
+             
+        if ( (constraint_result == true || constraint_result == null) && (!ajax_execute_onerror) ) {
+          myForm.submit();
+        }
+        return constraint_result;
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_Register_OutFunctionName */
 
 

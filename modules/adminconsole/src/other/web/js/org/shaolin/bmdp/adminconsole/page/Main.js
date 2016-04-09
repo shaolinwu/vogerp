@@ -11,6 +11,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var vogerplogo = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "vogerplogo"]
+        ,captureScreen: true
     });
 
     var searchContext = new UIMaster.ui.textfield
@@ -285,6 +286,8 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
     Form.clickTreeNode = org_shaolin_bmdp_adminconsole_page_Main_clickTreeNode;
 
+    Form.dblclickTreeNode = org_shaolin_bmdp_adminconsole_page_Main_dblclickTreeNode;
+
     Form.showUserInfo = org_shaolin_bmdp_adminconsole_page_Main_showUserInfo;
 
     Form.showNotification = org_shaolin_bmdp_adminconsole_page_Main_showNotification;
@@ -352,6 +355,17 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
         }
 				}
 				    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_clickTreeNode */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Main_dblclickTreeNode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_dblclickTreeNode */
+        var o = this;
+        var UIEntity = this;
+
+		        {   
+		            this.clickTreeNode(eventsource,event);
+		        }
+		            }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_dblclickTreeNode */
 
 
     /* auto generated eventlistener function declaration */

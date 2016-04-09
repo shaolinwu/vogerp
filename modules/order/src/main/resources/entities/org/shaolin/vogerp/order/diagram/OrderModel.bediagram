@@ -272,27 +272,27 @@
 		<bediagram:constantValue>
 			<bediagram:value>SaleOrder</bediagram:value>
 			<bediagram:intValue>0</bediagram:intValue>
-			<bediagram:description>SaleOrder</bediagram:description>
+			<bediagram:description>销售订单</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>PurchaseOrder</bediagram:value>
 			<bediagram:intValue>1</bediagram:intValue>
-			<bediagram:description>PurchaseOrder</bediagram:description>
+			<bediagram:description>采购订单</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>ProductOrder</bediagram:value>
 			<bediagram:intValue>2</bediagram:intValue>
-			<bediagram:description>ProductOrder</bediagram:description>
+			<bediagram:description>生产订单</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>StorageInOrder</bediagram:value>
 			<bediagram:intValue>3</bediagram:intValue>
-			<bediagram:description>StorageInOrder</bediagram:description>
+			<bediagram:description>入库订单</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>StorageOutOrder</bediagram:value>
 			<bediagram:intValue>4</bediagram:intValue>
-			<bediagram:description>StorageOutOrder</bediagram:description>
+			<bediagram:description>出库订单</bediagram:description>
 		</bediagram:constantValue>
 		<!-- more orders -->
 	</bediagram:ceEntity>
@@ -302,17 +302,22 @@
 		<bediagram:constantValue>
 			<bediagram:value>Created</bediagram:value>
 			<bediagram:intValue>0</bediagram:intValue>
-			<bediagram:description>Created</bediagram:description>
+			<bediagram:description>建立</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
             <bediagram:value>Processing</bediagram:value>
             <bediagram:intValue>1</bediagram:intValue>
-            <bediagram:description>Processing</bediagram:description>
+            <bediagram:description>执行</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Delivering</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>寄送中</bediagram:description>
         </bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Delivered</bediagram:value>
-			<bediagram:intValue>2</bediagram:intValue>
-			<bediagram:description>Delivered</bediagram:description>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>寄送完成</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>
 	

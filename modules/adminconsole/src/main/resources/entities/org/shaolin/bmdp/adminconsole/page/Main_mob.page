@@ -4,7 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.bmdp.adminconsole.page.Main_mob</entityName>
 	<systemVersion>0</systemVersion>
-	<description>欢迎来到Vogue E-Service主页</description>
+	<description>欢迎登录抢单达人网</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="Submit"></ns2:eventHandler>
 		<ns2:eventHandler functionName="logout">
@@ -184,11 +184,21 @@
                           <value>slider</value>
                        </ns2:value>
                     </ns2:Property>
+                    <ns2:Property name="slideshowAutostart">
+                        <ns2:value xsi:type="ns2:StringPropertyType">
+                          <value>true</value>
+                       </ns2:value>
+                    </ns2:Property>
                     <ns2:Property name="thumbnailsFullScreen">
                         <ns2:value xsi:type="ns2:BooleanPropertyType">
                           <value>false</value>
                        </ns2:value>
                     </ns2:Property>
+                    <ns2:Property name="enableSelectSync">
+			            <ns2:value xsi:type="ns2:BooleanPropertyType">
+			                <value>false</value>
+			            </ns2:value>
+			         </ns2:Property>
 	            </ns2:component>
 	            <ns2:layoutConstraint>
                      <ns2:componentId>searchPanel</ns2:componentId>

@@ -33,6 +33,22 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
         ui: elementList[prefix + "veriCode"]
     });
 
+    var termsUI = new UIMaster.ui.checkbox
+    ({
+        ui: elementList[prefix + "termsUI"]
+        ,label: "???????????"
+    });
+
+    var registerBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "registerBtn"]
+    });
+
+    var loginBtn = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "loginBtn"]
+    });
+
     var registerInfo = new org_shaolin_bmdp_adminconsole_form_RegisterInfo({"prefix":prefix + "registerInfo."});
 
     var bottomPanel = new UIMaster.ui.panel
@@ -46,7 +62,7 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     ({
         ui: elementList[prefix + "verifyCodePanel"]
         ,items: []
-        ,subComponents: [prefix + "veriCodeQuestionUILabel",prefix + "veriCodeQuestion",prefix + "veriCodeUILabel",prefix + "veriCode"]
+        ,subComponents: [prefix + "veriCodeQuestionUILabel",prefix + "veriCodeQuestion",prefix + "veriCodeUILabel",prefix + "veriCode",prefix + "termsUI",prefix + "registerBtn",prefix + "loginBtn"]
     });
 
     var loginPanel = new UIMaster.ui.panel
@@ -67,7 +83,7 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [vogerplogo,errorInfo,veriCodeQuestionUILabel,veriCodeQuestion,veriCodeUILabel,veriCode,registerInfo,topPanel,loginPanel,verifyCodePanel,bottomPanel]
+        ,items: [vogerplogo,errorInfo,veriCodeQuestionUILabel,veriCodeQuestion,veriCodeUILabel,veriCode,termsUI,registerBtn,loginBtn,registerInfo,topPanel,loginPanel,verifyCodePanel,bottomPanel]
     });
 
     Form.vogerplogo=vogerplogo;
@@ -81,6 +97,12 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     Form.veriCodeUILabel=veriCodeUILabel;
 
     Form.veriCode=veriCode;
+
+    Form.termsUI=termsUI;
+
+    Form.registerBtn=registerBtn;
+
+    Form.loginBtn=loginBtn;
 
     Form.registerInfo=registerInfo;
 
@@ -104,6 +126,12 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
     Form.veriCode=veriCode;
 
+    Form.termsUI=termsUI;
+
+    Form.registerBtn=registerBtn;
+
+    Form.loginBtn=loginBtn;
+
     Form.verifyCodePanel=verifyCodePanel;
 
     Form.veriCodeQuestionUILabel=veriCodeQuestionUILabel;
@@ -113,6 +141,12 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     Form.veriCodeUILabel=veriCodeUILabel;
 
     Form.veriCode=veriCode;
+
+    Form.termsUI=termsUI;
+
+    Form.registerBtn=registerBtn;
+
+    Form.loginBtn=loginBtn;
 
     Form.bottomPanel=bottomPanel;
 
@@ -126,6 +160,8 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
     Form.verifiCode = org_shaolin_bmdp_adminconsole_page_Registration_verifiCode;
 
+    Form.Login = org_shaolin_bmdp_adminconsole_page_Registration_Login;
+
     Form.Register = org_shaolin_bmdp_adminconsole_page_Registration_Register;
 
     Form.initPageJs = org_shaolin_bmdp_adminconsole_page_Registration_initPageJs;
@@ -133,6 +169,8 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     Form.finalizePageJs = org_shaolin_bmdp_adminconsole_page_Registration_finalizePageJs;
 
     Form.Register_OutFunctionName = org_shaolin_bmdp_adminconsole_page_Registration_Register_OutFunctionName;
+
+    Form.Login_OutFunctionName = org_shaolin_bmdp_adminconsole_page_Registration_Login_OutFunctionName;
 
     Form.__AJAXSubmit = false;
     
@@ -173,6 +211,15 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifiCode-20151227-1839",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Registration_verifiCode */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Registration_Login(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Registration_Login */
+        var o = this;
+        var UIEntity = this;
+
+        o.Login_OutFunctionName(eventsource);
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Registration_Login */
 
 
     /* auto generated eventlistener function declaration */
@@ -227,5 +274,33 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
         }
         return constraint_result;
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Registration_Register_OutFunctionName */
+
+    function org_shaolin_bmdp_adminconsole_page_Registration_Login_OutFunctionName(eventsource) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Registration_Login_OutFunctionName */
+        var constraint_result = true;
+        var myForm;
+        if (this.formName != undefined)
+        {
+            myForm = document.forms[this.formName];
+        }
+        else
+        {
+            var p = this.Form.parentNode;
+            while(p.tagName != "FORM")
+                p = p.parentNode;
+            myForm = p;//document.forms[0];
+        }
+
+        var UIEntity = this;
+{
+            // hello, my first js.
+            }        
+        myForm._outname.value = "Login";
+        myForm.target = "_self";
+             
+        if ( (constraint_result == true || constraint_result == null) && (!ajax_execute_onerror) ) {
+          myForm.submit();
+        }
+        return constraint_result;
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Registration_Login_OutFunctionName */
 
 

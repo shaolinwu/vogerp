@@ -7,7 +7,7 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "productInfoPanel",prefix + "productListPanel",prefix + "productTreePanel"]
+        ,subComponents: [prefix + "productInfoPanel",prefix + "productTreePanel"]
     });
     var productInfoTable = new UIMaster.ui.objectlist
     ({
@@ -20,8 +20,6 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
         ,items: []
         ,subComponents: [prefix + "productInfoTable"]
     });
-    var productListPanel = new org_shaolin_vogerp_productmodel_form_ProductListOverview({"prefix":prefix + "productListPanel."});
-
     var productTreePanel = new org_shaolin_vogerp_commonmodel_form_CEHierarchy({"prefix":prefix + "productTreePanel."});
 
 
@@ -37,8 +35,6 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
     Form.productInfoPanel=productInfoPanel;
 
     Form.productInfoTable=productInfoTable;
-
-    Form.productListPanel=productListPanel;
 
     Form.productTreePanel=productTreePanel;
 
