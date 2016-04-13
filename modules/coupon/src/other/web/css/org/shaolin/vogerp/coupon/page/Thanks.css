@@ -1,4 +1,4 @@
-div#ThanksForm {
+div#Form {
     width: 100%;
     background-image : url(/uimaster/images/coupon/front/background.jpg);
     background-repeat : no-repeat;
@@ -8,14 +8,16 @@ div#ThanksForm {
     color : white;
     font-family: "Microsoft YaHei" ! important;
 }
-div#div-ThanksForm-0_0 {
+div#div-Form-0_0 {
     width: 100%;
     margin : 0;
+    max-height: 35px;
 }
-#div-ThanksForm-0_0 img.uimaster_image {
+#div-Form-0_0 img.uimaster_image {
     width: 100%;
+    min-height: 100%;
 }
-div#div-ThanksForm-0_1 {
+div#div-Form-0_1 {
     width: 100%;
     margin: 0;
 }

@@ -8,20 +8,20 @@
   
   <!-- StartPage -->
   <ns2:webNode xsi:type="ns2:PageNodeType" name="Start">
-  	<!-- <ns2:variables name="str" category="JavaClass">
-      <type entityName="java.lang.String"></type>
-    </ns2:variables> -->
   	<ns2:sourceEntity entityName="org.shaolin.vogerp.coupon.page.Start"></ns2:sourceEntity>
   	<ns2:out xsi:type="ns2:DisplayOutType" name="StartLotteryLogic">
   		<ns2:next>
-        	<ns2:destNode>StartLotteryLogic</ns2:destNode>
+        	<ns2:destNode>FrontLottery</ns2:destNode>
         </ns2:next>
   	</ns2:out>
   </ns2:webNode>
   
   <!-- LotteryPage -->
   <ns2:webNode xsi:type="ns2:PageNodeType" name="FrontLottery">
-    <ns2:variables name="orderNumText" category="JavaClass">
+  	<ns2:variables name="openId" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+    </ns2:variables>
+    <ns2:variables name="phoneNumText" category="JavaClass">
       <type entityName="java.lang.String"></type>
       <default>
         <expressionString><![CDATA[""]]></expressionString>
@@ -37,9 +37,14 @@
     <ns2:out xsi:type="ns2:DisplayOutType" name="ChoiceDiscountProductLogic">
       <ns2:next>
         <ns2:destNode>ChoiceDiscountProductLogic</ns2:destNode>
-        <ns2:outDataMappingToNode name="orderNumText">
+        <ns2:outDataMappingToNode name="openId">
           <expression>
-            <expressionString><![CDATA[$orderNumText]]></expressionString>
+            <expressionString><![CDATA[$openId]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="phoneNumText">
+          <expression>
+            <expressionString><![CDATA[$phoneNumText]]></expressionString>
           </expression>
         </ns2:outDataMappingToNode>
         <ns2:outDataMappingToNode name="luckyImageUrlText">
@@ -51,9 +56,12 @@
     </ns2:out>
   </ns2:webNode>
   
-  <!-- ChoiceDiscountProductPage -->
+  <!-- ChoiceDiscountProduct -->
   <ns2:webNode xsi:type="ns2:PageNodeType" name="ChoiceDiscountProduct">
-    <ns2:variables name="orderNumText" category="JavaClass">
+  	<ns2:variables name="openId" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+    </ns2:variables>
+    <ns2:variables name="phoneNumText" category="JavaClass">
       <type entityName="java.lang.String"></type>
       <default>
         <expressionString><![CDATA[""]]></expressionString>
@@ -87,9 +95,14 @@
     <ns2:out xsi:type="ns2:DisplayOutType" name="SelectedDiscountProductLogic">
       <ns2:next>
         <ns2:destNode>SelectedDiscountProductLogic</ns2:destNode>
-        <ns2:outDataMappingToNode name="orderNumText">
+        <ns2:outDataMappingToNode name="openId">
           <expression>
-            <expressionString><![CDATA[$orderNumText]]></expressionString>
+            <expressionString><![CDATA[$openId]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="phoneNumText">
+          <expression>
+            <expressionString><![CDATA[$phoneNumText]]></expressionString>
           </expression>
         </ns2:outDataMappingToNode>
         <ns2:outDataMappingToNode name="couponType">
@@ -113,7 +126,10 @@
   
   <!-- CouponInfo -->
   <ns2:webNode xsi:type="ns2:PageNodeType" name="CouponInfo">
-    <ns2:variables name="orderNumText" category="JavaClass">
+  	<ns2:variables name="openId" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+    </ns2:variables>
+    <ns2:variables name="phoneNumText" category="JavaClass">
       <type entityName="java.lang.String"></type>
       <default>
         <expressionString><![CDATA[""]]></expressionString>
@@ -141,9 +157,9 @@
     <ns2:out xsi:type="ns2:DisplayOutType" name="ViewOrderCouponLogic">
       <ns2:next>
         <ns2:destNode>ViewOrderCouponLogic</ns2:destNode>
-        <ns2:outDataMappingToNode name="orderNumText">
+        <ns2:outDataMappingToNode name="openId">
           <expression>
-            <expressionString><![CDATA[$orderNumText]]></expressionString>
+            <expressionString><![CDATA[$openId]]></expressionString>
           </expression>
         </ns2:outDataMappingToNode>
       </ns2:next>
@@ -157,18 +173,42 @@
   
   <!-- ViewOrderCoupon -->
   <ns2:webNode xsi:type="ns2:PageNodeType" name="ViewOrderCoupon">
-    <ns2:variables name="discountProducts" category="JavaClass">
+    <ns2:variables name="coupons" category="JavaClass">
       <type entityName="java.util.List"></type>
       <default>
         <expressionString><![CDATA[new java.util.ArrayList();]]></expressionString>
       </default>
     </ns2:variables>
+    <ns2:variables name="openId" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+    </ns2:variables>
+    <ns2:variables name="selectedCouponId" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+    </ns2:variables>
     <ns2:sourceEntity entityName="org.shaolin.vogerp.coupon.page.ViewOrderCoupon"></ns2:sourceEntity>
+    <ns2:out xsi:type="ns2:DisplayOutType" name="backViewCouponLogic">
+      <ns2:next>
+        <ns2:destNode>backViewCouponLogic</ns2:destNode>
+        <ns2:outDataMappingToNode name="openId">
+          <expression>
+            <expressionString><![CDATA[$openId]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="selectedCouponId">
+          <expression>
+            <expressionString><![CDATA[$selectedCouponId]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+      </ns2:next>
+    </ns2:out>
   </ns2:webNode>
   
   <!-- ChoiceDiscountProductLogic -->
   <ns2:webNode xsi:type="ns2:LogicNodeType" name="ChoiceDiscountProductLogic">
-  	<ns2:variables name="orderNumText" category="JavaClass">
+  	<ns2:variables name="openId" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+    </ns2:variables>
+  	<ns2:variables name="phoneNumText" category="JavaClass">
       <type entityName="java.lang.String"></type>
       <default>
         <expressionString><![CDATA[""]]></expressionString>
@@ -219,19 +259,32 @@
 		import java.util.List;
 		import org.shaolin.bmdp.runtime.security.UserContext;
 		import java.util.Date;
-		import org.shaolin.vogerp.coupon.util.CouponUtil;
+		import org.shaolin.vogerp.coupon.util.*;
       {
       	System.out.println("=============Lottery Logic Node=================");
-      	System.out.println("orderNumText = " + $orderNumText);
+      	System.out.println("phoneNumText = " + $phoneNumText);
       	System.out.println("luckyImageUrlText = " + $luckyImageUrlText);
       	
-      	String orderNum = $orderNumText;
+      	String phoneNum = $phoneNumText;
       	String couponIcon = $luckyImageUrlText;
+      	
+      	//String openId = @request.getSession().getAttribute(WechatUtil.OPEN_ID);
+      	String openId = $openId;
+      	System.out.println("\n\nopenId[" + openId + "]\n\n");
       	
         if (null == couponIcon || "".equals(couponIcon)) {
 	        //Not lucky lottery
 	        System.out.println("Not lucky!!");
 	        $discountProducts = null;
+	        CouponOperationImpl couponOperation = new CouponOperationImpl();
+   			couponOperation.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+   			couponOperation.setPhoneNum(phoneNum);
+   			couponOperation.setOpenId(openId);
+   			couponOperation.setType(CouponUtil.OPERATION_TYPE_LOTTERY);
+   			Date current = new Date();
+   			couponOperation.setOperateDate(current);
+   			couponOperation.setCreateDate(current);
+   			CouponModel.INSTANCE.create(couponOperation);
 			return ;
        	}
        	
@@ -250,11 +303,15 @@
        		List discountProducts = CouponModel.INSTANCE.searchDiscountProduct(condition1, null, 0, 0);
        		$discountProducts = discountProducts;
        		
+       		
        		CouponOperationImpl couponOperation = new CouponOperationImpl();
    			couponOperation.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-   			couponOperation.setOrderNum(orderNum);
+   			couponOperation.setPhoneNum(phoneNum);
+   			couponOperation.setOpenId(openId);
    			couponOperation.setType(CouponUtil.OPERATION_TYPE_LOTTERY);
-   			couponOperation.setCreateDate(new Date());
+   			Date current = new Date();
+   			couponOperation.setOperateDate(current);
+   			couponOperation.setCreateDate(current);
        		
        		if (null != discountProducts &&  (couponType.getIsImmediate() || discountProducts.size() == 1)) {
        			System.out.println("lucky !!!  " + couponType.getName());
@@ -265,6 +322,8 @@
        			Long orgId = (Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID);
        			CouponImpl coupon = (CouponImpl)CouponUtil.genCoupon(discountProduct, orgId);
        			coupon.setOrgId(orgId);
+       			coupon.setOpenId(openId);
+       			coupon.setPhoneNum(phoneNum);
        			CouponModel.INSTANCE.create(coupon);
        			$coupon = coupon;
        			
@@ -285,9 +344,14 @@
       </ns2:conditionExpression>
       <ns2:next>
         <ns2:destNode>ChoiceDiscountProduct</ns2:destNode>
-        <ns2:outDataMappingToNode name="orderNumText">
+        <ns2:outDataMappingToNode name="openId">
           <expression>
-            <expressionString><![CDATA[$orderNumText]]></expressionString>
+            <expressionString><![CDATA[$openId]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="phoneNumText">
+          <expression>
+            <expressionString><![CDATA[$phoneNumText]]></expressionString>
           </expression>
         </ns2:outDataMappingToNode>
         <ns2:outDataMappingToNode name="couponType">
@@ -313,9 +377,14 @@
       </ns2:conditionExpression>
       <ns2:next>
         <ns2:destNode>CouponInfo</ns2:destNode>
-        <ns2:outDataMappingToNode name="orderNumText">
+        <ns2:outDataMappingToNode name="openId">
           <expression>
-            <expressionString><![CDATA[$orderNumText]]></expressionString>
+            <expressionString><![CDATA[$openId]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="phoneNumText">
+          <expression>
+            <expressionString><![CDATA[$phoneNumText]]></expressionString>
           </expression>
         </ns2:outDataMappingToNode>
         <ns2:outDataMappingToNode name="couponType">
@@ -346,7 +415,10 @@
   </ns2:webNode>
   
   <ns2:webNode xsi:type="ns2:LogicNodeType" name="SelectedDiscountProductLogic">
-  	<ns2:variables name="orderNumText" category="JavaClass">
+  	<ns2:variables name="openId" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+    </ns2:variables>
+  	<ns2:variables name="phoneNumText" category="JavaClass">
       <type entityName="java.lang.String"></type>
       <default>
         <expressionString><![CDATA[""]]></expressionString>
@@ -392,7 +464,8 @@
 		import org.shaolin.bmdp.persistence.HibernateUtil;
       {
       	System.out.println("=============Selected Lottery Logic Node=================");
-      	System.out.println("orderNumText = " + $orderNumText);
+      	System.out.println("openId = " + $openId);
+      	System.out.println("phoneNumText = " + $phoneNumText);
       	System.out.println("selectedProductId = " + $selectedProductId);
 	        
 	        HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
@@ -408,6 +481,8 @@
 	       		Long orgId = (Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID);
        			CouponImpl coupon = (CouponImpl)CouponUtil.genCoupon($discountProduct, orgId);
        			coupon.setOrgId(orgId);
+       			coupon.setOpenId($openId);
+       			coupon.setPhoneNum($phoneNumText);
        			CouponModel.INSTANCE.create(coupon);
        			
        			$coupon = coupon;
@@ -426,9 +501,14 @@
       </ns2:conditionExpression>
       <ns2:next>
         <ns2:destNode>CouponInfo</ns2:destNode>
-        <ns2:outDataMappingToNode name="orderNumText">
+        <ns2:outDataMappingToNode name="openId">
           <expression>
-            <expressionString><![CDATA[$orderNumText]]></expressionString>
+            <expressionString><![CDATA[$openId]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="phoneNumText">
+          <expression>
+            <expressionString><![CDATA[$phoneNumText]]></expressionString>
           </expression>
         </ns2:outDataMappingToNode>
         <ns2:outDataMappingToNode name="couponType">
@@ -451,11 +531,8 @@
   </ns2:webNode>
   
   <ns2:webNode xsi:type="ns2:LogicNodeType" name="ViewOrderCouponLogic">
-  	<ns2:variables name="orderNumText" category="JavaClass">
+  	<ns2:variables name="openId" category="JavaClass">
       <type entityName="java.lang.String"></type>
-      <default>
-        <expressionString><![CDATA[""]]></expressionString>
-      </default>
     </ns2:variables>
     <ns2:variables name="coupons" category="JavaClass">
       <type entityName="java.util.List"></type>
@@ -476,13 +553,14 @@
 		import org.shaolin.vogerp.coupon.util.CouponUtil;
 		import org.shaolin.vogerp.coupon.ce.StatusType;
       {
-      	System.out.println("=============View Order Coupon Logic Node=================");
-      	String orderNum = $orderNumText;
+      	System.out.println("\n\n=============View Order Coupon Logic Node=================");
+      	String openId = $openId;
+      	System.out.println("openId=" + openId);
       	CouponOperationImpl condition = new CouponOperationImpl();
-      	condition.setOrderNum(orderNum);
+      	condition.setOpenId(openId);
       	condition.setType(CouponUtil.OPERATION_TYPE_LOTTERY);
       	condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-      	List couponOpers = CouponModel.INSTANCE.searchOperationByOrderNum(condition, null, 0, 0);
+      	List couponOpers = CouponModel.INSTANCE.searchCouponOperation(condition, null, 0, 0);
       	
       	if (null != couponOpers && couponOpers.size() > 0) {
 	      	if (null == $coupons) {
@@ -497,10 +575,11 @@
       				condition1.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
       				List coupons = CouponModel.INSTANCE.searchEffectedCoupon(condition1, null, 0, 0);
       				if (null != coupons && coupons.size() > 0) {
-      					CouponImpl coupon = (CouponImpl)coupons.get(0);
-      					if (StatusType.SENDOUT.equals(coupon.getStatus()) || StatusType.EXCHANGED.equals(coupon.getStatus())) {
-	      					System.out.println("===============Order Num " + orderNum + " have coupon ================\n" + coupon);
-	      					$coupons.add(coupon);
+      					for (int k = 0; k < coupons.size(); k++) {
+      						CouponImpl coupon = (CouponImpl)coupons.get(k);
+      						if (coupon.getExpiredDate().compareTo(new Date()) >= 0) {
+		      					$coupons.add(coupon);
+      						}
       					}
       				}
       			}
@@ -514,6 +593,11 @@
       </ns2:conditionExpression>
       <ns2:next>
         <ns2:destNode>ViewOrderCoupon</ns2:destNode>
+        <ns2:outDataMappingToNode name="openId">
+          <expression>
+            <expressionString><![CDATA[$openId]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
         <ns2:outDataMappingToNode name="coupons">
           <expression>
             <expressionString><![CDATA[$coupons]]></expressionString>
@@ -523,28 +607,91 @@
     </ns2:out>
   </ns2:webNode>
   
-  <ns2:webNode xsi:type="ns2:LogicNodeType" name="StartLotteryLogic">
-  	<ns2:variables name="errorMsg" category="JavaClass">
+  <!-- backViewCouponLogic -->
+  <ns2:webNode xsi:type="ns2:LogicNodeType" name="backViewCouponLogic">
+  	<ns2:variables name="openId" category="JavaClass">
       <type entityName="java.lang.String"></type>
+    </ns2:variables>
+    <ns2:variables name="selectedCouponId" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+    </ns2:variables>
+    <ns2:variables name="phoneNumText" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+    </ns2:variables>
+    <ns2:variables name="couponType" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.coupon.be.CouponTypeImpl"></type>
       <default>
-        <expressionString><![CDATA[""]]></expressionString>
+        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.CouponTypeImpl();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="discountProduct" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.coupon.be.DiscountProductImpl"></type>
+      <default>
+        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.DiscountProductImpl();]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="coupon" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.coupon.be.CouponImpl"></type>
+      <default>
+        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.CouponImpl();]]></expressionString>
       </default>
     </ns2:variables>
     <ns2:operation>
       <expressionString><![CDATA[
       import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.vogerp.coupon.be.*;
+      import org.shaolin.vogerp.coupon.dao.CouponModel;
+		import org.shaolin.uimaster.page.ajax.*;
+		import java.util.List;
+		import org.shaolin.bmdp.runtime.security.UserContext;
       {
-      	System.out.println("=============Start Lottery Logic Node=================");
+      	System.out.println("\n\n=============Back View Coupon Logic Node=================");
+      	System.out.println("openId=" + $openId + "\nselectedCouponId=" + $selectedCouponId);
       	
-      	$errorMsg = "";
+      	CouponImpl condition = new CouponImpl();
+      	condition.setId(Long.valueOf($selectedCouponId));
+      	condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+      	List coupons = CouponModel.INSTANCE.searchEffectedCoupon(condition, null, 0, 0);
+      	
+      	if (coupons != null && coupons.size() > 0) {
+      		$coupon = (CouponImpl)coupons.get(0);
+      		$phoneNumText = $coupon.getPhoneNum();
+      		$discountProduct = $coupon.getDiscountProduct();
+      		$couponType = $discountProduct.getCouponType();
+      	}
       }]]></expressionString>
     </ns2:operation>
-    <ns2:out xsi:type="ns2:ConditionalOutType" name="ViewOrderCoupon">
+    <ns2:out xsi:type="ns2:ConditionalOutType" name="CouponInfo">
       <ns2:conditionExpression>
-      	<expressionString><![CDATA[{return $errorMsg == null || $errorMsg.length() == 0;}]]></expressionString>
+      	<expressionString><![CDATA[{return $coupon != null;}]]></expressionString>
       </ns2:conditionExpression>
       <ns2:next>
-        <ns2:destNode>FrontLottery</ns2:destNode>
+        <ns2:destNode>CouponInfo</ns2:destNode>
+        <ns2:outDataMappingToNode name="openId">
+          <expression>
+            <expressionString><![CDATA[$openId]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="phoneNumText">
+          <expression>
+            <expressionString><![CDATA[$phoneNumText]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="couponType">
+          <expression>
+            <expressionString><![CDATA[$couponType]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="discountProduct">
+          <expression>
+            <expressionString><![CDATA[$discountProduct]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="coupon">
+          <expression>
+            <expressionString><![CDATA[$coupon]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
       </ns2:next>
     </ns2:out>
   </ns2:webNode>

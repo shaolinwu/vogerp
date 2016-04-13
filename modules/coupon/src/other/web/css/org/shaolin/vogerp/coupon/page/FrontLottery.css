@@ -11,6 +11,9 @@
 #curtainPanel img{
 	width : 100%;
 }
+#div-leftPanel-0_0{
+	margin : 1% auto;
+}
 #div-leftPanel-0_0 img{
 	width : 100%;
 }
@@ -37,6 +40,8 @@
 	width : 100%;
 	min-height : 3px;
 	font-size : 1em;
+	margin : 0;
+	padding : 0;
 }
 #div-lotteryForm-lotteryStartPanel-0_0 span{
 	display : none;
@@ -54,9 +59,9 @@
 	margin : auto;
 	background-image : url(/uimaster/images/coupon/front/jackpotBackground.png);
 	background-repeat : no-repeat;
-	background-size : cover;
-	-moz-background-size : cover;
-	-webkit-background-size : cover;
+	background-size : 100% 100%;
+	-moz-background-size : 100% 100%;
+	-webkit-background-size : 100% 100%;
 }
 
 #lotteryPanel{
@@ -70,8 +75,9 @@
 	clear : none;
 }
 .couponJackpotImageDiv img{
-	width : 90%;
+	width : 100%;
 	border: solid 1px white;
+	min-height : 100%;
 }
 .couponJackpotTextDiv{
 	min-width : 1px;
@@ -84,15 +90,16 @@
 }
 #div-leftPanel-0_3{
 	color : white;
+	margin : 1% auto;
 }
 
 #lotteryForm\.couponPanel{
 	width : 100%;
 	background-image : url(/uimaster/images/coupon/front/border.png);
 	background-repeat : no-repeat;
-	background-size : cover;
-	-moz-background-size : cover;
-	-webkit-background-size : cover;
+	background-size : 100% 100%;
+	-moz-background-size : 100% 100%;
+	-webkit-background-size : 100% 100%;
 	margin : 2% 0 2% 0;
 	overflow : hidden;
 	position : relative;
@@ -102,13 +109,14 @@
 	display : none;
 }
 .lotteryForm_couponImage{
-	width: 30%;
+	width: 33%;
     float: left;
-    margin-left: 2.5%;
     position : relative;
 }
 .lotteryForm_couponImage img{
-	width: 77%;
+	width: 70%;
+    margin: 0 auto;
+    padding-top: 15%;
 }
 #div-leftPanel-0_3{
 	text-decoration:underline;

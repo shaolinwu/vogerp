@@ -38,6 +38,9 @@ div#div-topTextPanel-0_1 {
     top: 0;
     left: 30%;
     min-width: 1px;
+    text-align: center;
+    font-size: 1.1em;
+    color : yellow;
 }
 
 #ChoiceDiscountPanel{

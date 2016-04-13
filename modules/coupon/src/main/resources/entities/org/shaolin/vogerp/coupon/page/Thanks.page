@@ -7,7 +7,7 @@
 	<description>谢谢惠顾</description>
 
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
-		<ns2:body UIID="ThanksForm" xsi:type="ns2:UIPanelType">
+		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:layout xsi:type="ns2:TableLayoutType">
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -197,5 +197,12 @@
 	<ns2:ODMapping>
 	</ns2:ODMapping>
 	<ns2:in>
+		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
+			<ns2:expressionString><![CDATA[{
+				var windowHeight = $(window).height();
+				$("#div-Form-0_0").height(windowHeight - $("#div-Form-0_1").height() + "px");
+				$("#thanksPanel").height(windowHeight - $("#div-Form-0_0").height() - 4 + "px");
+			}]]></ns2:expressionString>
+		</ns2:clientAction>
 	</ns2:in>
 </ns2:UIPage>

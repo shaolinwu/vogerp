@@ -7,7 +7,7 @@ function org_shaolin_vogerp_coupon_page_DiscountValidation(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "couponValidationPanel",prefix + "immediateCouponPanel",prefix + "resetOrderNumPanel"]
+        ,subComponents: [prefix + "couponValidationPanel",prefix + "immediateCouponPanel",prefix + "resetPhoneNumPanel"]
     });
     var couponNumberText = new UIMaster.ui.textfield
     ({
@@ -25,9 +25,9 @@ function org_shaolin_vogerp_coupon_page_DiscountValidation(json)
         ,items: []
         ,subComponents: [prefix + "couponNumberText",prefix + "validateBtn"]
     });
-    var orderNumText = new UIMaster.ui.textfield
+    var phoneNumText = new UIMaster.ui.textfield
     ({
-        ui: elementList[prefix + "orderNumText"]
+        ui: elementList[prefix + "phoneNumText"]
     });
 
     var exchangeBtn = new UIMaster.ui.button
@@ -39,11 +39,11 @@ function org_shaolin_vogerp_coupon_page_DiscountValidation(json)
     ({
         ui: elementList[prefix + "immediateCouponPanel"]
         ,items: []
-        ,subComponents: [prefix + "orderNumText",prefix + "exchangeBtn"]
+        ,subComponents: [prefix + "phoneNumText",prefix + "exchangeBtn"]
     });
-    var orderNum1Text = new UIMaster.ui.textfield
+    var phoneNum1Text = new UIMaster.ui.textfield
     ({
-        ui: elementList[prefix + "orderNum1Text"]
+        ui: elementList[prefix + "phoneNum1Text"]
     });
 
     var resetBtn = new UIMaster.ui.button
@@ -51,11 +51,11 @@ function org_shaolin_vogerp_coupon_page_DiscountValidation(json)
         ui: elementList[prefix + "resetBtn"]
     });
 
-    var resetOrderNumPanel = new UIMaster.ui.panel
+    var resetPhoneNumPanel = new UIMaster.ui.panel
     ({
-        ui: elementList[prefix + "resetOrderNumPanel"]
+        ui: elementList[prefix + "resetPhoneNumPanel"]
         ,items: []
-        ,subComponents: [prefix + "orderNum1Text",prefix + "resetBtn"]
+        ,subComponents: [prefix + "phoneNum1Text",prefix + "resetBtn"]
     });
 
     var Form = new UIMaster.ui.panel
@@ -75,13 +75,13 @@ function org_shaolin_vogerp_coupon_page_DiscountValidation(json)
 
     Form.immediateCouponPanel=immediateCouponPanel;
 
-    Form.orderNumText=orderNumText;
+    Form.phoneNumText=phoneNumText;
 
     Form.exchangeBtn=exchangeBtn;
 
-    Form.resetOrderNumPanel=resetOrderNumPanel;
+    Form.resetPhoneNumPanel=resetPhoneNumPanel;
 
-    Form.orderNum1Text=orderNum1Text;
+    Form.phoneNum1Text=phoneNum1Text;
 
     Form.resetBtn=resetBtn;
 

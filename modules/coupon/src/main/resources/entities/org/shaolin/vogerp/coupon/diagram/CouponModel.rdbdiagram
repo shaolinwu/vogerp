@@ -92,8 +92,9 @@
     <ns2:column name="NAME" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="SERIALNUMBER" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="DISCOUNTPRODUCTID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="OPENID" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="PHONENUM" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="EXPIREDDATE" type="DATETIME" isNull="true"></ns2:column>
-    <ns2:column name="QRCODE" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="STATUS" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="STARTCREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="ENDCREATEDATE" type="DATETIME" isNull="true"></ns2:column>
@@ -111,8 +112,9 @@
       <ns2:fieldMapping beFieldName="serialNumber" columnName="SERIALNUMBER"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="discountProductId" columnName="DISCOUNTPRODUCTID"></ns2:fieldMapping>
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="COUPONDISCOUNTPRODUCT" mappingType="One-to-One" beFieldName="discountProduct" columnName="DISCOUNTPRODUCTID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="openId" columnName="OPENID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="phoneNum" columnName="PHONENUM"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="expiredDate" columnName="EXPIREDDATE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="qrCode" columnName="QRCODE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="status" columnName="STATUS"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="startCreateDate" columnName="STARTCREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="endCreateDate" columnName="ENDCREATEDATE"></ns2:fieldMapping>
@@ -125,7 +127,8 @@
     <entityName>LOTY_COUPONOPERATION</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="ORDERNUM" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="OPENID" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="PHONENUM" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="SERIALNUMBER" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="TYPE" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="OPERATEDATE" type="DATETIME" isNull="true"></ns2:column>
@@ -139,10 +142,40 @@
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.coupon.be.CouponOperation"></ns2:businessEntity>
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="orderNum" columnName="ORDERNUM"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="openId" columnName="OPENID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="phoneNum" columnName="PHONENUM"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="serialNumber" columnName="SERIALNUMBER"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="operateDate" columnName="OPERATEDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="orgId" columnName="ORGID"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>LOTY_COUPONSYSTEM</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="ISDEVELOPTEST" type="BIT" isNull="true"></ns2:column>
+    <ns2:column name="ISVALIDATEOPENID" type="BIT" isNull="true"></ns2:column>
+    <ns2:column name="ISMAINTAIN" type="BIT" isNull="true"></ns2:column>
+    <ns2:column name="TOPADVERTIMAGE" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="BOTTOMADVERTIMAGE" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:column name="ORGID" type="BIGINT" length="38" default="0"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.coupon.be.CouponSystem"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="isDevelopTest" columnName="ISDEVELOPTEST"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="isValidateOpenId" columnName="ISVALIDATEOPENID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="isMaintain" columnName="ISMAINTAIN"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="topAdvertImage" columnName="TOPADVERTIMAGE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="bottomAdvertImage" columnName="BOTTOMADVERTIMAGE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="orgId" columnName="ORGID"></ns2:fieldMapping>
@@ -315,6 +348,94 @@
         <type entityName="org.shaolin.vogerp.coupon.be.CouponOperation"></type>
       </ns2:searchConditionData>
     </ns2:searchConditionMapping>
+    <ns2:searchConditionMapping name="Search">
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.phoneNum</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type><![CDATA[=]]></ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.phoneNum</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getPhoneNum() != null && scObject.getPhoneNum().length() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.openId</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type><![CDATA[=]]></ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.openId</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getOpenId() != null && scObject.getOpenId().length() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.type</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type><![CDATA[=]]></ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.type</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getType() != null && scObject.getType().length() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:searchConditionData name="scObject" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.coupon.be.CouponOperation"></type>
+      </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  
+  <ns2:query queryName="searchCouponSystem">
+    <ns2:searchResult name="outObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.coupon.be.CouponSystem"></type>
+    </ns2:searchResult>
+    <ns2:fromData name="inObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.coupon.be.CouponSystem"></type>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>outObject</ns2:toDataFieldPath>
+        <ns2:value xsi:type="ns2:SimpleFieldValueType">
+          <ns2:valueFieldPath>inObject</ns2:valueFieldPath>
+        </ns2:value>
+      </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+      <ns2:searchConditionData name="scObject" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.coupon.be.CouponSystem"></type>
+      </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+    <ns2:searchConditionMapping name="Search">
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.orgId</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type><![CDATA[=]]></ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.orgId</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getOrgId() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:searchConditionData name="scObject" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.coupon.be.CouponSystem"></type>
+      </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
   </ns2:query>
   
   <!-- 根据券号查询优惠券 -->
@@ -334,6 +455,20 @@
       </ns2:fieldMapping>
     </ns2:searchResultMapping>
     <ns2:searchConditionMapping name="Search">
+    	<ns2:fieldMapping>
+         <ns2:toDataFieldPath>inObject.id</ns2:toDataFieldPath>
+         <ns2:conditionValue>
+             <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                 <ns2:type>=</ns2:type>
+             </ns2:operator>
+             <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                 <ns2:valueFieldPath>scObject.id</ns2:valueFieldPath>
+             </ns2:value>
+             <ns2:condition>
+                 <expressionString><![CDATA[scObject.getId() > 0]]></expressionString>
+             </ns2:condition>
+         </ns2:conditionValue>
+      </ns2:fieldMapping>
       <ns2:fieldMapping>
          <ns2:toDataFieldPath>inObject.orgId</ns2:toDataFieldPath>
          <ns2:conditionValue>
@@ -378,57 +513,6 @@
       </ns2:fieldMapping>
       <ns2:searchConditionData name="scObject" category="BusinessEntity">
         <type entityName="org.shaolin.vogerp.coupon.be.Coupon"></type>
-      </ns2:searchConditionData>
-    </ns2:searchConditionMapping>
-  </ns2:query>
-  
-  <!-- 根据订单号查询抽奖兑换记录 -->
-  <ns2:query queryName="searchOperationByOrderNum">
-    <ns2:searchResult name="outObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.coupon.be.CouponOperation"></type>
-    </ns2:searchResult>
-    <ns2:fromData name="inObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.coupon.be.CouponOperation"></type>
-    </ns2:fromData>
-    <ns2:searchResultMapping>
-      <ns2:fieldMapping>
-        <ns2:toDataFieldPath>outObject</ns2:toDataFieldPath>
-        <ns2:value xsi:type="ns2:SimpleFieldValueType">
-          <ns2:valueFieldPath>inObject</ns2:valueFieldPath>
-        </ns2:value>
-      </ns2:fieldMapping>
-    </ns2:searchResultMapping>
-    <ns2:searchConditionMapping name="Search">
-      <ns2:fieldMapping>
-        <ns2:toDataFieldPath>inObject.orderNum</ns2:toDataFieldPath>
-        <ns2:conditionValue>
-          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
-            <ns2:type><![CDATA[=]]></ns2:type>
-          </ns2:operator>
-          <ns2:value xsi:type="ns2:SimpleFieldValueType">
-            <ns2:valueFieldPath>scObject.orderNum</ns2:valueFieldPath>
-          </ns2:value>
-          <ns2:condition>
-            <expressionString><![CDATA[scObject.getOrderNum() != null && scObject.getOrderNum().length() > 0]]></expressionString>
-          </ns2:condition>
-        </ns2:conditionValue>
-      </ns2:fieldMapping>
-      <ns2:fieldMapping>
-        <ns2:toDataFieldPath>inObject.type</ns2:toDataFieldPath>
-        <ns2:conditionValue>
-          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
-            <ns2:type><![CDATA[=]]></ns2:type>
-          </ns2:operator>
-          <ns2:value xsi:type="ns2:SimpleFieldValueType">
-            <ns2:valueFieldPath>scObject.type</ns2:valueFieldPath>
-          </ns2:value>
-          <ns2:condition>
-            <expressionString><![CDATA[scObject.getType() != null && scObject.getType().length() > 0]]></expressionString>
-          </ns2:condition>
-        </ns2:conditionValue>
-      </ns2:fieldMapping>
-      <ns2:searchConditionData name="scObject" category="BusinessEntity">
-        <type entityName="org.shaolin.vogerp.coupon.be.CouponOperation"></type>
       </ns2:searchConditionData>
     </ns2:searchConditionMapping>
   </ns2:query>

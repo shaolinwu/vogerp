@@ -13,9 +13,14 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
         ui: elementList[prefix + "advertTopImage"]
     });
 
-    var orderNumText = new UIMaster.ui.hidden
+    var openId = new UIMaster.ui.hidden
     ({
-        ui: elementList[prefix + "orderNumText"]
+        ui: elementList[prefix + "openId"]
+    });
+
+    var phoneNumText = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "phoneNumText"]
     });
 
     var luckyImageUrlText = new UIMaster.ui.hidden
@@ -39,7 +44,7 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
     ({
         ui: elementList[prefix + "lotteryPanel"]
         ,items: []
-        ,subComponents: [prefix + "orderNumText",prefix + "luckyImageUrlText",prefix + "lotteryForm"]
+        ,subComponents: [prefix + "openId",prefix + "phoneNumText",prefix + "luckyImageUrlText",prefix + "lotteryForm"]
     });
 
     var leftPanel = new UIMaster.ui.panel
@@ -53,14 +58,16 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [lotteryLogoImage,advertTopImage,orderNumText,luckyImageUrlText,footerText,advertBottomImage,lotteryForm,leftPanel,lotteryPanel]
+        ,items: [lotteryLogoImage,advertTopImage,openId,phoneNumText,luckyImageUrlText,footerText,advertBottomImage,lotteryForm,leftPanel,lotteryPanel]
     });
 
     Form.lotteryLogoImage=lotteryLogoImage;
 
     Form.advertTopImage=advertTopImage;
 
-    Form.orderNumText=orderNumText;
+    Form.openId=openId;
+
+    Form.phoneNumText=phoneNumText;
 
     Form.luckyImageUrlText=luckyImageUrlText;
 
@@ -78,7 +85,9 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
 
     Form.lotteryPanel=lotteryPanel;
 
-    Form.orderNumText=orderNumText;
+    Form.openId=openId;
+
+    Form.phoneNumText=phoneNumText;
 
     Form.luckyImageUrlText=luckyImageUrlText;
 
@@ -90,7 +99,9 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
 
     Form.lotteryPanel=lotteryPanel;
 
-    Form.orderNumText=orderNumText;
+    Form.openId=openId;
+
+    Form.phoneNumText=phoneNumText;
 
     Form.luckyImageUrlText=luckyImageUrlText;
 

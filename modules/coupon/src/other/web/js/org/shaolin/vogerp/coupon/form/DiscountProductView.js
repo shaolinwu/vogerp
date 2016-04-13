@@ -95,7 +95,6 @@ function org_shaolin_vogerp_coupon_form_DiscountProductView(json)
 
         
 		{
-			$("#div-topTextPanel-0_1").css("top", "-" + $("#div-topTextPanel-0_0 img").height() * 0.865 + "px");
 			var productInfoViews = $("div[class1='discountProductInfoView']");
 			for (var i = 0; i < productInfoViews.length; i++) {
 				var productInfoView = productInfoViews[i];
@@ -103,17 +102,6 @@ function org_shaolin_vogerp_coupon_form_DiscountProductView(json)
 				var subTextView = $(productInfoView).children("div.uimaster_container_cell")[0];
 				var productImage = $(subImageView).children("img")[0];
 				$(productImage).height($(productImage).width() * 0.73 + "px");
-			}
-			
-			var vsImgs = $("img[class1='vsImage']");
-			var lastVsImg = $(vsImgs[vsImgs.length - 1]);
-			$(lastVsImg).parent().css("display", "none");
-			
-			$("#div-ProductPanel-0_1").height($("#choiceDiscountTable").height() + "px");
-			var needDels = $("#ProductPanel").children("div.uimaster_widget_cell");
-			$(needDels[needDels.length - 1]).css("display", "none");
-			if (typeof($("#bottomAdvert")) == "undefined" || null == $("#bottomAdvert") || $("#bottomAdvert").length < 1) {
-				$("#ProductPanel").append("<div id=\"bottomAdvert\" style=\"margin-top:2%;width:100%;\"><img src=\"/uimaster/images/coupon/front/advert_bottom.jpg\" style=\"width:100%\" /></div>");
 			}
 		}
 		

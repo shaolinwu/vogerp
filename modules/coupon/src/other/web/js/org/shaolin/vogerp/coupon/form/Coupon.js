@@ -43,16 +43,6 @@ function org_shaolin_vogerp_coupon_form_Coupon(json)
         ui: elementList[prefix + "expiredDateUI"]
     });
 
-    var qrCodeUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "qrCodeUILabel"]
-    });
-
-    var qrCodeUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "qrCodeUI"]
-    });
-
     var statusUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "statusUILabel"]
@@ -69,13 +59,13 @@ function org_shaolin_vogerp_coupon_form_Coupon(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "discountProductUILabel",prefix + "discountProductUI",prefix + "expiredDateUILabel",prefix + "expiredDateUI",prefix + "qrCodeUILabel",prefix + "qrCodeUI",prefix + "statusUILabel",prefix + "statusUI"]
+        ,subComponents: [prefix + "idUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "discountProductUILabel",prefix + "discountProductUI",prefix + "expiredDateUILabel",prefix + "expiredDateUI",prefix + "statusUILabel",prefix + "statusUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,nameUILabel,nameUI,serialNumberUILabel,serialNumberUI,discountProductUILabel,expiredDateUILabel,expiredDateUI,qrCodeUILabel,qrCodeUI,statusUILabel,statusUI,discountProductUI,fieldPanel]
+        ,items: [idUI,nameUILabel,nameUI,serialNumberUILabel,serialNumberUI,discountProductUILabel,expiredDateUILabel,expiredDateUI,statusUILabel,statusUI,discountProductUI,fieldPanel]
     });
 
     Form.idUI=idUI;
@@ -93,10 +83,6 @@ function org_shaolin_vogerp_coupon_form_Coupon(json)
     Form.expiredDateUILabel=expiredDateUILabel;
 
     Form.expiredDateUI=expiredDateUI;
-
-    Form.qrCodeUILabel=qrCodeUILabel;
-
-    Form.qrCodeUI=qrCodeUI;
 
     Form.statusUILabel=statusUILabel;
 
@@ -123,10 +109,6 @@ function org_shaolin_vogerp_coupon_form_Coupon(json)
     Form.expiredDateUILabel=expiredDateUILabel;
 
     Form.expiredDateUI=expiredDateUI;
-
-    Form.qrCodeUILabel=qrCodeUILabel;
-
-    Form.qrCodeUI=qrCodeUI;
 
     Form.statusUILabel=statusUILabel;
 

@@ -38,10 +38,15 @@
 							<ns2:location>/coupon/front/msgBox.png</ns2:location>
 						</ns2:src>
 					</ns2:component>
-					<ns2:component xsi:type="ns2:UIImageType" UIID="topSignImage">
-						<ns2:src xsi:type="ns2:ImagePropertyType">
-							<ns2:location>/coupon/front/signCoupon.png</ns2:location>
-						</ns2:src>
+					<ns2:component xsi:type="ns2:UILabelType" UIID="couponTypeText">
+						<ns2:text xsi:type="ns2:ExpressionPropertyType">
+				        	<ns2:expression>
+					           <expressionString><![CDATA[
+					           { 
+					           		return $couponType.getName();
+					           }]]></expressionString>
+					         </ns2:expression>
+				        </ns2:text>
 					</ns2:component>
 					<ns2:layoutConstraint>
 						<ns2:componentId>topImage</ns2:componentId>
@@ -49,14 +54,27 @@
 							x="0" y="0" align="FULL"></ns2:constraint>
 					</ns2:layoutConstraint>
 					<ns2:layoutConstraint>
-						<ns2:componentId>topSignImage</ns2:componentId>
+						<ns2:componentId>couponTypeText</ns2:componentId>
 						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 							x="0" y="1" align="FULL"></ns2:constraint>
 					</ns2:layoutConstraint>
 				</ns2:component>
 				<ns2:component xsi:type="ns2:UIPanelType" UIID="ChoiceDiscountPanel">
 					<ns2:component xsi:type="ns2:UIHiddenType" UIID="selectedProductId"></ns2:component>
-					<ns2:component xsi:type="ns2:UIHiddenType" UIID="orderNumText"></ns2:component>
+					<ns2:component xsi:type="ns2:UIHiddenType" UIID="openId"></ns2:component>
+					<ns2:component xsi:type="ns2:UIHiddenType" UIID="phoneNumText"></ns2:component>
+					<ns2:component xsi:type="ns2:UIHiddenType" UIID="bottomAdvertImage">
+						<ns2:Property name="value">
+				            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+						         <ns2:expression>
+						           <expressionString>
+						           { 
+						           	   return $bottomAdvertImage;
+						           }</expressionString>
+						         </ns2:expression>
+					        </ns2:value>
+			            </ns2:Property>
+					</ns2:component>
 					<ns2:layout xsi:type="ns2:TableLayoutType">
 						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
@@ -145,7 +163,10 @@
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>
-		<ns2:DataEntity scope="InOut" name="orderNumText" category="JavaClass">
+		<ns2:DataEntity scope="InOut" name="openId" category="JavaClass">
+	    	<type entityName="java.lang.String"></type>
+	    </ns2:DataEntity>
+		<ns2:DataEntity scope="InOut" name="phoneNumText" category="JavaClass">
 	    	<type entityName="java.lang.String"></type>
 	    </ns2:DataEntity>
 	    <ns2:DataEntity scope="InOut" name="couponType" category="BusinessEntity">
@@ -160,6 +181,9 @@
 	    <ns2:DataEntity scope="InOut" name="couponOperation" category="BusinessEntity">
 	    	<type entityName="org.shaolin.vogerp.coupon.be.CouponOperation"></type>
 	    </ns2:DataEntity>
+	    <ns2:DataEntity scope="InOut" name="bottomAdvertImage" category="JavaClass">
+	    	<type entityName="java.lang.String"></type>
+	    </ns2:DataEntity>
 	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
 			<ns2:mappingRule
 				entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
@@ -167,8 +191,38 @@
 				paramName="UIWidgetType"></ns2:UIComponent>
 			<ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="selectedProductId" paramName="StringData"></ns2:DataComponent>
 		</ns2:ComponentMapping>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+			<ns2:mappingRule
+				entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+			<ns2:UIComponent componentPath="openId"
+				paramName="UIWidgetType"></ns2:UIComponent>
+			<ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="openId" paramName="StringData"></ns2:DataComponent>
+		</ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
+		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">
+            <ns2:expressionString><![CDATA[{
+            	$bottomAdvertImage = (String)@odContext.getRequest().getSession().getAttribute("BottomAdvertImage");
+            }]]></ns2:expressionString>
+        </ns2:serverOperation>
+		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
+			<ns2:expressionString><![CDATA[
+			{
+				$("#div-topTextPanel-0_1").css("top", "-" + $("#div-topTextPanel-0_0 img").height() * 0.865 + "px");
+				var vsImgs = $("img[class1='vsImage']");
+				var lastVsImg = $(vsImgs[vsImgs.length - 1]);
+				$(lastVsImg).parent().css("display", "none");
+				
+				$("#div-ProductPanel-0_1").height($("#choiceDiscountTable").height() + "px");
+				var needDels = $("#ProductPanel").children("div.uimaster_widget_cell");
+				$(needDels[needDels.length - 1]).css("display", "none");
+				var bottomImage = $("input[name='bottomAdvertImage']").val();
+				if (typeof($("#bottomAdvert")) == "undefined" || null == $("#bottomAdvert") || $("#bottomAdvert").length < 1) {
+					$("#ProductPanel").append("<div id=\"bottomAdvert\" style=\"margin-top:2%;width:100%;\"><img src=\"" + bottomImage + "\" style=\"width:100%\" /></div>");
+				}
+			}
+			]]></ns2:expressionString>
+		</ns2:clientAction>
 	</ns2:in>
 	<ns2:out name="SelectedDiscountProductLogic" functionName="SelectedDiscountProductLogic" validate="true">
 		<ns2:clientAction xsi:type="ns2:ExpressionParamType">

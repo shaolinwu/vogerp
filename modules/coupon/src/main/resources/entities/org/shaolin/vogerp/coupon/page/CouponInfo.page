@@ -6,7 +6,6 @@
 	<systemVersion>0</systemVersion>
 	<description>优惠券信息</description>
 
-	
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 	<!-- 查看订单下有哪些优惠券 -->
 	<ns2:eventHandler functionName="viewCoupon">
@@ -41,6 +40,19 @@
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 				</ns2:layout>
+				<ns2:component xsi:type="ns2:UIHiddenType" UIID="openId"></ns2:component>
+				<ns2:component xsi:type="ns2:UIHiddenType" UIID="wechatSign">
+					<ns2:Property name="value">
+			            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+					         <ns2:expression>
+					           <expressionString>
+					           { 
+					           	   return $wechatSign;
+					           }</expressionString>
+					         </ns2:expression>
+				        </ns2:value>
+		            </ns2:Property>
+				</ns2:component>
 				<ns2:component xsi:type="ns2:UIPanelType" UIID="serialNumPanel">
 					<ns2:layout xsi:type="ns2:TableLayoutType">
 						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -63,7 +75,15 @@
 				        	<ns2:key>org.shaolin.vogerp.coupon.page.CouponInfo.orderLabelText</ns2:key>
 				        </ns2:text>
 					</ns2:component>
-					<ns2:component xsi:type="ns2:UILabelType" UIID="orderNumText">
+					<ns2:component xsi:type="ns2:UILabelType" UIID="phoneNumText">
+						<ns2:text xsi:type="ns2:ExpressionPropertyType">
+				        	<ns2:expression>
+					           <expressionString><![CDATA[
+					           { 
+					           		return $phoneNumText;
+					           }]]></expressionString>
+					         </ns2:expression>
+				        </ns2:text>
 					</ns2:component>
 					<ns2:layoutConstraint>
 						<ns2:componentId>serialLabeText</ns2:componentId>
@@ -81,7 +101,7 @@
 							x="2" y="0" align="FULL"></ns2:constraint>
 					</ns2:layoutConstraint>
 					<ns2:layoutConstraint>
-						<ns2:componentId>orderNumText</ns2:componentId>
+						<ns2:componentId>phoneNumText</ns2:componentId>
 						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 							x="3" y="0" align="FULL"></ns2:constraint>
 					</ns2:layoutConstraint>
@@ -141,9 +161,16 @@
 					</ns2:layoutConstraint>
 				</ns2:component>
 				<ns2:component xsi:type="ns2:UIImageType" UIID="advertImage">
-					<ns2:src xsi:type="ns2:ImagePropertyType">
-						<ns2:location>/coupon/front/advert_bottom.jpg</ns2:location>
-					</ns2:src>
+					<ns2:Property name="src">
+			            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+					         <ns2:expression>
+					           <expressionString>
+					           { 
+					               return $bottomAdvertImage.substring($bottomAdvertImage.indexOf("/", "/uimaster/images".length()));
+					           }</expressionString>
+					         </ns2:expression>
+				        </ns2:value>
+		            </ns2:Property>
 				</ns2:component>
 				<ns2:component xsi:type="ns2:UIPanelType" UIID="bottomPanel">
 					<ns2:layout xsi:type="ns2:TableLayoutType">
@@ -299,7 +326,10 @@
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>
-		<ns2:DataEntity scope="InOut" name="orderNumText" category="JavaClass">
+		<ns2:DataEntity scope="InOut" name="openId" category="JavaClass">
+			<type entityName="java.lang.String"></type>
+		</ns2:DataEntity>
+		<ns2:DataEntity scope="InOut" name="phoneNumText" category="JavaClass">
 			<type entityName="java.lang.String"></type>
 		</ns2:DataEntity>
 		<ns2:DataEntity scope="InOut" name="couponType"
@@ -312,6 +342,12 @@
 		<ns2:DataEntity scope="InOut" name="coupon" category="BusinessEntity">
 			<type entityName="org.shaolin.vogerp.coupon.be.Coupon"></type>
 		</ns2:DataEntity>
+		<ns2:DataEntity scope="InOut" name="wechatSign" category="JavaClass">
+			<type entityName="java.lang.String"></type>
+		</ns2:DataEntity>
+		<ns2:DataEntity category="JavaClass" name="bottomAdvertImage" scope="InOut">
+            <ns2:type entityName="java.lang.String" />
+        </ns2:DataEntity>
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
 			name="simpleMapping0">
 			<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
@@ -323,10 +359,10 @@
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
 			name="simpleMapping1">
 			<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-			<ns2:UIComponent componentPath="orderNumText"
+			<ns2:UIComponent componentPath="phoneNumText"
 				paramName="UIWidgetType"></ns2:UIComponent>
 			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
-				componentPath="orderNumText" paramName="StringData"></ns2:DataComponent>
+				componentPath="phoneNumText" paramName="StringData"></ns2:DataComponent>
 		</ns2:ComponentMapping>
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
 			name="simpleMapping3">
@@ -357,11 +393,99 @@
 			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
 				componentPath="discountProduct.limitMessage" paramName="StringData"></ns2:DataComponent>
 		</ns2:ComponentMapping>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
+			name="simpleMapping6">
+			<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+			<ns2:UIComponent componentPath="openId"
+				paramName="UIWidgetType"></ns2:UIComponent>
+			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
+				componentPath="openId" paramName="StringData"></ns2:DataComponent>
+		</ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
+		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">
+            <ns2:expressionString><![CDATA[
+            import org.shaolin.vogerp.coupon.util.WechatUtil;
+            import org.shaolin.uimaster.page.ajax.*;
+            import org.shaolin.bmdp.runtime.security.UserContext;
+            import org.shaolin.vogerp.coupon.be.DiscountProductImpl;
+            import org.shaolin.vogerp.coupon.dao.CouponModel;
+            {
+            	Long couponTypeId = $couponType.getId();
+            	DiscountProductImpl condition = new DiscountProductImpl();
+            	condition.setCouponTypeId(couponTypeId);
+            	condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+            	long productNum = CouponModel.INSTANCE.searchDiscountProductCount(condition);
+            	//String url = "http://localhost:8080/uimaster";
+            	String url = "http://www.mr-prize.com/uimaster";
+            	if (productNum > 1) {
+	            	url += "/webflow.do?_timestamp=1&_chunkname=org.shaolin.bmdp.coupon.diagram.Lottery&_nodename=ChoiceDiscountProduct&_needCheckSessionTimeOut=true";
+            	} else {
+            		url += "/webflow.do?_timestamp=1&_chunkname=org.shaolin.bmdp.coupon.diagram.Lottery&_nodename=FrontLottery&_needCheckSessionTimeOut=true";
+            	}
+            	
+            	Long orgId = (Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID);
+            	$wechatSign = WechatUtil.generateSign(orgId, url);
+            	
+            	$bottomAdvertImage = (String)@odContext.getRequest().getSession().getAttribute("BottomAdvertImage");
+            	
+            	@odContext.executeAllMappings();
+            }]]></ns2:expressionString>
+        </ns2:serverOperation>
 		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
 			<ns2:expressionString><![CDATA[
 			{
+				var timestamp = "";
+				var nonceStr = "";
+				var signature = "";
+				var wechatSign = $("input[name='wechatSign']").val();
+				var attrs = wechatSign.split(",");
+				if (null != attrs && attrs.length > 0) {
+					for(var i = 0; i < attrs.length; i++) {
+						var attrItems = attrs[i].split("=");
+						if ("timestamp" == attrItems[0]) {
+							timestamp = attrItems[1];
+						}
+						if ("nonceStr" == attrItems[0]) {
+							nonceStr = attrItems[1];
+						}
+						if ("signature" == attrItems[0]) {
+							signature = attrItems[1];
+						}
+					}
+				}
+				wx.config({
+					debug: false,
+					appId: 'wx7425c40996a4e8c3',
+					timestamp: timestamp,
+					nonceStr: nonceStr,
+					signature: signature,
+					jsApiList: ['hideOptionMenu','hideMenuItems', 'onMenuShareTimeline']
+				});
+				wx.ready(function(){
+					wx.hideMenuItems({
+					    menuList: ["menuItem:exposeArticle", "menuItem:setFont", "menuItem:refresh", "menuItem:share:appMessage", 
+					    	"menuItem:share:qq", "menuItem:share:weiboApp", "menuItem:favorite", "menuItem:share:facebook", "menuItem:share:QZone", 
+					    	"menuItem:share:email", "menuItem:openWithSafari", "menuItem:openWithQQBrowser", "menuItem:readMode", "menuItem:copyUrl"]
+					});
+					wx.onMenuShareTimeline({
+						title: '测试测试-我的分享小功能-朋友圈',
+						link: 'http://www.vogerp.com/uimaster/jsp/main.html',
+						imgUrl: 'http://www.mr-prize.com/uimaster/images/coupon/front/couponIcon/50off.png',
+						success: function () { 
+							alert("share success");
+						},
+						cancel: function () { 
+							alert("share cancel");
+						}
+					});	
+				});
+				
+				var windowHeight = $(window).height();
+				if ($("#couponPanel").height() < windowHeight) {
+					$("#couponPanel").height(windowHeight - $("#div-Form-0_0").height() - 4 + "px");
+				}
+				
 			}]]></ns2:expressionString>
 		</ns2:clientAction>
 	</ns2:in>

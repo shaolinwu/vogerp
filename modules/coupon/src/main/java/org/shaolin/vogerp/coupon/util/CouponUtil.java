@@ -4,11 +4,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.shaolin.vogerp.coupon.be.CouponImpl;
+import org.shaolin.vogerp.coupon.be.CouponOperationImpl;
 import org.shaolin.vogerp.coupon.be.DiscountProductImpl;
 import org.shaolin.vogerp.coupon.ce.StatusType;
 import org.shaolin.vogerp.coupon.dao.CouponModel;
@@ -21,9 +21,6 @@ public class CouponUtil {
 	public static final char[] CHAR_ARR = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 
 		'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
-	private static final String OPEN_ID = "openId";
-
-	private static final String DEVELOP_WEIXIN = "develop_weixin";
 	
 	/**
 	 * Generate coupon serial number
@@ -58,7 +55,11 @@ public class CouponUtil {
 		coupon.setSerialNumber(genCouponSerialNumber(orgId));
 		coupon.setDiscountProductId(discountProduct.getId());
 		coupon.setExpiredDate(addDays(new Date(), discountProduct.getValidity()));
-		coupon.setStatus(StatusType.SENDOUT);
+		if (discountProduct.getCouponType().getIsImmediate()) {
+			coupon.setStatus(StatusType.CREATED);
+		} else {
+			coupon.setStatus(StatusType.SENDOUT);
+		}
 		coupon.setCreateDate(new Date());
 		return coupon;
 	}
@@ -73,6 +74,11 @@ public class CouponUtil {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_MONTH, day);
 		return cal.getTime();
+	}
+	
+	public static Date addTime(Date date, long millSeconds) {
+		long time = date.getTime();
+		return new Date(time + millSeconds);
 	}
 	
 	/**
@@ -109,21 +115,31 @@ public class CouponUtil {
     }
 	
 	/**
-	 * put weixin input params to session
-	 * @param request
+	 * verify whether openid had lottery
+	 * @param openId
+	 * @param orgId
+	 * @return
 	 */
-	public static boolean verifyOpenId(HttpServletRequest request) {
-		String body = request.getParameter("body");
-		if (null != body && !"".equals(body)) {
-			String openId = body.substring(body.indexOf("<FromUserName>") + "<FromUserName>".length(), body.indexOf("</FromUserName>"));
-			String developWeixin = body.substring(body.indexOf("<ToUserName >") + "<ToUserName >".length(), body.indexOf("</ToUserName >"));
-			request.getSession().setAttribute(OPEN_ID, openId);
-			request.getSession().setAttribute(DEVELOP_WEIXIN, developWeixin);
-			System.out.println(OPEN_ID + "=" + request.getSession().getAttribute(OPEN_ID));
-			System.out.println(DEVELOP_WEIXIN + "=" + request.getSession().getAttribute(DEVELOP_WEIXIN));
-			
-			
+	public static boolean verifyOpenIdAndOrgId(String openId, Long orgId) throws ParseException {
+		CouponOperationImpl condition = new CouponOperationImpl();
+		condition.setOpenId(openId);
+		condition.setType(OPERATION_TYPE_LOTTERY);
+		condition.setOrgId(orgId);
+		List couponOperations = CouponModel.INSTANCE.searchCouponOperation(condition, null, 0, 0);
+		if (null != couponOperations && couponOperations.size() > 0) {
+			CouponOperationImpl couponOperation = (CouponOperationImpl) couponOperations.get(0);
+			if (compareDay(couponOperation.getOperateDate(), new Date()) == 0) {
+				return true;
+			}
 		}
-		return true;
+		return false;
 	}
+	
+	public static long compareDay(Date date1, Date date2) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Date d1 = sdf.parse(sdf.format(date1));
+		Date d2 = sdf.parse(sdf.format(date2));
+		return d1.getTime() - d2.getTime();
+	}
+	
 }

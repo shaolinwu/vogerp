@@ -3,6 +3,11 @@
 function org_shaolin_vogerp_coupon_page_Start(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var code = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "code"]
+    });
+
     var curtainImage = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "curtainImage"]
@@ -16,8 +21,10 @@ function org_shaolin_vogerp_coupon_page_Start(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [curtainImage,startMsg]
+        ,items: [code,curtainImage,startMsg]
     });
+
+    Form.code=code;
 
     Form.curtainImage=curtainImage;
 
@@ -30,8 +37,6 @@ function org_shaolin_vogerp_coupon_page_Start(json)
     };
 
     Form.start = org_shaolin_vogerp_coupon_page_Start_start;
-
-    Form.setStartMsg = org_shaolin_vogerp_coupon_page_Start_setStartMsg;
 
     Form.StartLotteryLogic = org_shaolin_vogerp_coupon_page_Start_StartLotteryLogic;
 
@@ -59,23 +64,12 @@ function org_shaolin_vogerp_coupon_page_Start(json)
         var UIEntity = this;
 
 					{
-						$("#div-Form-0_0").attr("class", $("#div-Form-0_0").attr("class") + " rollCurtain");
+						$("#div-Form-0_0").animate({"left" : "-100%"}, 1000);
 					}
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"start-20160112-232035",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_coupon_page_Start_start */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_coupon_page_Start_setStartMsg(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_page_Start_setStartMsg */
-        var o = this;
-        var UIEntity = this;
-
-					{
-						alert(startMsg);
-						$("#startMsg").html(startMsg);
-					}    }/* Gen_Last:org_shaolin_vogerp_coupon_page_Start_setStartMsg */
 
 
     /* auto generated eventlistener function declaration */

@@ -8,6 +8,16 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
         ui: elementList[prefix + "logoImage"]
     });
 
+    var openId = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "openId"]
+    });
+
+    var wechatSign = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "wechatSign"]
+    });
+
     var serialLabeText = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "serialLabeText"]
@@ -23,9 +33,9 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
         ui: elementList[prefix + "orderLabelText"]
     });
 
-    var orderNumText = new UIMaster.ui.label
+    var phoneNumText = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "orderNumText"]
+        ui: elementList[prefix + "phoneNumText"]
     });
 
     var couponImage = new UIMaster.ui.image
@@ -122,23 +132,27 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
     ({
         ui: elementList[prefix + "serialNumPanel"]
         ,items: []
-        ,subComponents: [prefix + "serialLabeText",prefix + "serialNumText",prefix + "orderLabelText",prefix + "orderNumText"]
+        ,subComponents: [prefix + "serialLabeText",prefix + "serialNumText",prefix + "orderLabelText",prefix + "phoneNumText"]
     });
 
     var couponPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "couponPanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumPanel",prefix + "couponImagePanel",prefix + "advertImage",prefix + "bottomPanel"]
+        ,subComponents: [prefix + "openId",prefix + "wechatSign",prefix + "serialNumPanel",prefix + "couponImagePanel",prefix + "advertImage",prefix + "bottomPanel"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [logoImage,serialLabeText,serialNumText,orderLabelText,orderNumText,couponImage,couponNameText,couponMsgText,advertImage,bottom1Text,bottom2Text,bottom3Text,bottom5Text,bottom4Text,fingerImage,fingerPrintImage,couponPanel,serialNumPanel,couponImagePanel,couponImageRightPanel,bottomPanel,bottomLeftPanel,bottom3Panel]
+        ,items: [logoImage,openId,wechatSign,serialLabeText,serialNumText,orderLabelText,phoneNumText,couponImage,couponNameText,couponMsgText,advertImage,bottom1Text,bottom2Text,bottom3Text,bottom5Text,bottom4Text,fingerImage,fingerPrintImage,couponPanel,serialNumPanel,couponImagePanel,couponImageRightPanel,bottomPanel,bottomLeftPanel,bottom3Panel]
     });
 
     Form.logoImage=logoImage;
+
+    Form.openId=openId;
+
+    Form.wechatSign=wechatSign;
 
     Form.serialLabeText=serialLabeText;
 
@@ -146,7 +160,7 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 
     Form.orderLabelText=orderLabelText;
 
-    Form.orderNumText=orderNumText;
+    Form.phoneNumText=phoneNumText;
 
     Form.couponImage=couponImage;
 
@@ -172,6 +186,10 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 
     Form.couponPanel=couponPanel;
 
+    Form.openId=openId;
+
+    Form.wechatSign=wechatSign;
+
     Form.serialNumPanel=serialNumPanel;
 
     Form.serialLabeText=serialLabeText;
@@ -180,7 +198,7 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 
     Form.orderLabelText=orderLabelText;
 
-    Form.orderNumText=orderNumText;
+    Form.phoneNumText=phoneNumText;
 
     Form.couponImagePanel=couponImagePanel;
 
@@ -222,7 +240,7 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 
     Form.orderLabelText=orderLabelText;
 
-    Form.orderNumText=orderNumText;
+    Form.phoneNumText=phoneNumText;
 
     Form.couponImagePanel=couponImagePanel;
 
@@ -335,6 +353,57 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
         var UIEntity = this;
 
 			{
+				var timestamp = "";
+				var nonceStr = "";
+				var signature = "";
+				var wechatSign = $("input[name='wechatSign']").val();
+				var attrs = wechatSign.split(",");
+				if (null != attrs && attrs.length > 0) {
+					for(var i = 0; i < attrs.length; i++) {
+						var attrItems = attrs[i].split("=");
+						if ("timestamp" == attrItems[0]) {
+							timestamp = attrItems[1];
+						}
+						if ("nonceStr" == attrItems[0]) {
+							nonceStr = attrItems[1];
+						}
+						if ("signature" == attrItems[0]) {
+							signature = attrItems[1];
+						}
+					}
+				}
+				wx.config({
+					debug: false,
+					appId: 'wx7425c40996a4e8c3',
+					timestamp: timestamp,
+					nonceStr: nonceStr,
+					signature: signature,
+					jsApiList: ['hideOptionMenu','hideMenuItems', 'onMenuShareTimeline']
+				});
+				wx.ready(function(){
+					wx.hideMenuItems({
+					    menuList: ["menuItem:exposeArticle", "menuItem:setFont", "menuItem:refresh", "menuItem:share:appMessage", 
+					    	"menuItem:share:qq", "menuItem:share:weiboApp", "menuItem:favorite", "menuItem:share:facebook", "menuItem:share:QZone", 
+					    	"menuItem:share:email", "menuItem:openWithSafari", "menuItem:openWithQQBrowser", "menuItem:readMode", "menuItem:copyUrl"]
+					});
+					wx.onMenuShareTimeline({
+						title: '测试测试-我的分享小功能-朋友圈',
+						link: 'http://www.vogerp.com/uimaster/jsp/main.html',
+						imgUrl: 'http://www.mr-prize.com/uimaster/images/coupon/front/couponIcon/50off.png',
+						success: function () { 
+							alert("share success");
+						},
+						cancel: function () { 
+							alert("share cancel");
+						}
+					});	
+				});
+				
+				var windowHeight = $(window).height();
+				if ($("#couponPanel").height() < windowHeight) {
+					$("#couponPanel").height(windowHeight - $("#div-Form-0_0").height() - 4 + "px");
+				}
+				
 			}
     }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponInfo_initPageJs */
 

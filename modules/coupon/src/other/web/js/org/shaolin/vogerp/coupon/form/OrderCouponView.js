@@ -3,6 +3,11 @@
 function org_shaolin_vogerp_coupon_form_OrderCouponView(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var couponId = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "couponId"]
+    });
+
     var productImage = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "productImage"]
@@ -45,8 +50,10 @@ function org_shaolin_vogerp_coupon_form_OrderCouponView(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [productImage,productNameUI,productDiscountUI,expiredDateUI,productMessageUI,couponInfoPanel,productPanel]
+        ,items: [couponId,productImage,productNameUI,productDiscountUI,expiredDateUI,productMessageUI,couponInfoPanel,productPanel]
     });
+
+    Form.couponId=couponId;
 
     Form.productImage=productImage;
 
@@ -91,17 +98,14 @@ function org_shaolin_vogerp_coupon_form_OrderCouponView(json)
 			$couponPanels.each(function(j, couponPanel){
 				$(couponPanel).parent("div.uimaster_container_cell").css({});
 			});
-			if ($("#advertBottomImage").length < 1) {
-				$("#Form").append("<div id=\"advertBottomImage\" style=\"width:100%;position:fixed;bottom:-1%;\"><img style=\"width:100%\" src=\"/uimaster/images/coupon/front/advert_bottom.jpg\"></div>");
-			}
-			var winHeight = $(window).height();
-			$("#couponPanel").css("min-height", winHeight - $("#advertBottomImage").height() + "px")
 			
 			$("span[class1='expiredDateView']").css("width", "100%");
 		}
 		
             /* Construct_LAST:org_shaolin_vogerp_coupon_form_OrderCouponView */
     };
+
+    Form.viewCoupon = org_shaolin_vogerp_coupon_form_OrderCouponView_viewCoupon;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_coupon_form_OrderCouponView_invokeDynamicFunction;
 
@@ -114,6 +118,19 @@ function org_shaolin_vogerp_coupon_form_OrderCouponView(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_coupon_form_OrderCouponView */
 /* Other_Func_LAST:org_shaolin_vogerp_coupon_form_OrderCouponView */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_form_OrderCouponView_viewCoupon(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_form_OrderCouponView_viewCoupon */
+        var o = this;
+        var UIEntity = this;
+
+				{
+					var couponIds = $(eventsource).find(".coupoId");
+					$("input[name='selectedCouponId']").val($(couponIds[0]).val());
+					
+					defaultname.backViewCouponLogic();
+				}    }/* Gen_Last:org_shaolin_vogerp_coupon_form_OrderCouponView_viewCoupon */
+
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_coupon_form_OrderCouponView_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_form_OrderCouponView_invokeDynamicFunction */

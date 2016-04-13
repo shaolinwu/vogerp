@@ -71,17 +71,17 @@
 					import org.shaolin.bmdp.runtime.security.UserContext;
 					import org.shaolin.vogerp.coupon.ce.StatusType;
 					{
-						String orderNum = @page.getTextField("orderNumText").getValue();
+						String phoneNum = @page.getTextField("phoneNumText").getValue();
 						//兑换订单下的即时优惠券，生成兑换记录
 						CouponOperationImpl couponOperation = new CouponOperationImpl();
-						couponOperation.setOrderNum(orderNum);
+						couponOperation.setPhoneNum(phoneNum);
 						couponOperation.setType(CouponUtil.OPERATION_TYPE_LOTTERY);
 						couponOperation.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
 						//查询该订单的抽奖记录
-						List couponOperations = CouponModel.INSTANCE.searchOperationByOrderNum(couponOperation, null, 0, 0);
+						List couponOperations = CouponModel.INSTANCE.searchCouponOperation(couponOperation, null, 0, 0);
 						
 						if (null == couponOperations || couponOperations.size() == 0) {
-							@page.executeJavaScript("alert('订单号 " + orderNum + "没有抽奖记录')");
+							@page.executeJavaScript("alert('手机号 " + phoneNum + "没有抽奖记录')");
 							return ;
 						} else {
 							boolean hasImmediateCoupon = false;
@@ -109,7 +109,7 @@
 									
 									//生成兑奖记录
 									CouponOperationImpl exchangeOper = new CouponOperationImpl();
-									exchangeOper.setOrderNum(orderNum);
+									exchangeOper.setPhoneNum(phoneNum);
 									exchangeOper.setSerialNumber(couponOper.getSerialNumber());
 									exchangeOper.setType(CouponUtil.OPERATION_TYPE_EXCHANGE);
 									exchangeOper.setOperateDate(new java.util.Date());
@@ -122,7 +122,7 @@
 									CouponModel.INSTANCE.update(exchangeCoupon);
 									
 									hasImmediateCoupon = true;
-									System.out.println("订单号" + orderNum + "兑换优惠券" + couponOper.getSerialNumber());
+									System.out.println("手机号" + phoneNum + "兑换优惠券" + couponOper.getSerialNumber());
 									
 									HashMap input = new HashMap();
 				                    input.put("beObject", exchangeCoupon);
@@ -136,7 +136,7 @@
 							}
 							
 							if (!hasImmediateCoupon) {
-								@page.executeJavaScript("alert('订单号 " + orderNum + "没有即时优惠券')");
+								@page.executeJavaScript("alert('手机号 " + phoneNum + "没有即时优惠券')");
 							}
 						}
 					}
@@ -155,18 +155,18 @@
 					import org.shaolin.vogerp.coupon.dao.CouponModel;
 					import java.util.List;
 					{
-						String orderNum = @page.getTextField("orderNum1Text").getValue();
+						String phoneNum = @page.getTextField("phoneNum1Text").getValue();
 						CouponOperationImpl couponOperation = new CouponOperationImpl();
-						couponOperation.setOrderNum(orderNum);
-						List couponOperations = CouponModel.INSTANCE.searchOperationByOrderNum(couponOperation, null, 0, 0);
+						couponOperation.setPhoneNum(phoneNum);
+						List couponOperations = CouponModel.INSTANCE.searchCouponOperation(couponOperation, null, 0, 0);
 						if (null != couponOperations && couponOperations.size() > 0) {
 							for (int i = 0; i < couponOperations.size(); i++ ) {
 								CouponModel.INSTANCE.delete((CouponOperationImpl)(couponOperations.get(i)));
 							}
 							
-							@page.executeJavaScript("alert('订单号 " + orderNum + "重置成功')");
+							@page.executeJavaScript("alert('手机号 " + phoneNum + "重置成功')");
 						} else {
-							@page.executeJavaScript("alert('订单号 " + orderNum + "没有抽奖记录，无需重置')");
+							@page.executeJavaScript("alert('手机号 " + phoneNum + "没有抽奖记录，无需重置')");
 						}
 					}
 					]]></ns2:expressionString>
@@ -248,9 +248,9 @@
 							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 							<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 						</ns2:layout>
-						<ns2:component xsi:type="ns2:UITextFieldType" UIID="orderNumText">
+						<ns2:component xsi:type="ns2:UITextFieldType" UIID="phoneNumText">
 		                    <ns2:title xsi:type="ns2:StringPropertyType">
-		                        <ns2:value>Order Number</ns2:value>
+		                        <ns2:value>Phone Number</ns2:value>
 		                    </ns2:title>
 		                    <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
 		                        <ns2:value>订单号</ns2:value>
@@ -271,7 +271,7 @@
 		                    </ns2:EventListener>
 		                </ns2:component>
 		                <ns2:layoutConstraint>
-		                    <ns2:componentId>orderNumText</ns2:componentId>
+		                    <ns2:componentId>phoneNumText</ns2:componentId>
 		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 		                        x="0" y="0" align="FULL"></ns2:constraint>
 		                </ns2:layoutConstraint>
@@ -283,18 +283,18 @@
 					</ns2:panel>
 				</ns2:tab>
 				<!-- 单号重置Panel -->
-				<ns2:tab uiid="resetOrderNumPanel">
+				<ns2:tab uiid="resetPhoneNumPanel">
 					<ns2:title xsi:type="ns2:ResourceBundlePropertyType">
 						<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
-						<ns2:key>org.shaolin.vogerp.coupon.page.DiscountValidation.resetOrderNumPanel</ns2:key>
+						<ns2:key>org.shaolin.vogerp.coupon.page.DiscountValidation.resetPhoneNumPanel</ns2:key>
 					</ns2:title>
-					<ns2:panel UIID="resetOrderNumPanel">
+					<ns2:panel UIID="resetPhoneNumPanel">
 						<ns2:layout xsi:type="ns2:TableLayoutType">
 							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 							<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 						</ns2:layout>
-						<ns2:component xsi:type="ns2:UITextFieldType" UIID="orderNum1Text">
+						<ns2:component xsi:type="ns2:UITextFieldType" UIID="phoneNum1Text">
 		                    <ns2:title xsi:type="ns2:StringPropertyType">
 		                        <ns2:value>Order Number</ns2:value>
 		                    </ns2:title>
@@ -317,7 +317,7 @@
 		                    </ns2:EventListener>
 		                </ns2:component>
 		                <ns2:layoutConstraint>
-		                    <ns2:componentId>orderNum1Text</ns2:componentId>
+		                    <ns2:componentId>phoneNum1Text</ns2:componentId>
 		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 		                        x="0" y="0" align="FULL"></ns2:constraint>
 		                </ns2:layoutConstraint>

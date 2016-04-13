@@ -95,9 +95,9 @@ function org_shaolin_vogerp_coupon_page_Thanks(json)
         ,subComponents: [prefix + "topPanel",prefix + "couponImage",prefix + "bottomPanel"]
     });
 
-    var ThanksForm = new UIMaster.ui.panel
+    var Form = new UIMaster.ui.panel
     ({
-        ui: elementList[prefix + "ThanksForm"]
+        ui: elementList[prefix + "Form"]
         ,items: [logoImage,thanksImage,thanks1Text,thanks2Text,couponImage,bottom1Text,bottom2Text,bottom3Text,bottomRight1Image,bottomRightImage,thanksPanel,topPanel,thanksTextPanel,bottomPanel,bottomTextPanel,bottom3Panel]
     });
 
@@ -201,7 +201,7 @@ function org_shaolin_vogerp_coupon_page_Thanks(json)
 
     Form.bottomRight1Image=bottomRight1Image;
 
-    ThanksForm.user_constructor = function()
+    Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_coupon_page_Thanks */
         /* Construct_LAST:org_shaolin_vogerp_coupon_page_Thanks */
@@ -226,7 +226,11 @@ function org_shaolin_vogerp_coupon_page_Thanks(json)
     function org_shaolin_vogerp_coupon_page_Thanks_initPageJs(){/* Gen_First:org_shaolin_vogerp_coupon_page_Thanks_initPageJs */
         var constraint_result = true;
         var UIEntity = this;
-
+{
+				var windowHeight = $(window).height();
+				$("#div-Form-0_0").height(windowHeight - $("#div-Form-0_1").height() + "px");
+				$("#thanksPanel").height(windowHeight - $("#div-Form-0_0").height() - 4 + "px");
+			}
     }/* Gen_Last:org_shaolin_vogerp_coupon_page_Thanks_initPageJs */
 
 

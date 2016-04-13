@@ -13,9 +13,9 @@ function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct(json)
         ui: elementList[prefix + "topImage"]
     });
 
-    var topSignImage = new UIMaster.ui.image
+    var couponTypeText = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "topSignImage"]
+        ui: elementList[prefix + "couponTypeText"]
     });
 
     var selectedProductId = new UIMaster.ui.hidden
@@ -23,9 +23,19 @@ function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct(json)
         ui: elementList[prefix + "selectedProductId"]
     });
 
-    var orderNumText = new UIMaster.ui.hidden
+    var openId = new UIMaster.ui.hidden
     ({
-        ui: elementList[prefix + "orderNumText"]
+        ui: elementList[prefix + "openId"]
+    });
+
+    var phoneNumText = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "phoneNumText"]
+    });
+
+    var bottomAdvertImage = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "bottomAdvertImage"]
     });
 
     var choiceDiscountTable = new UIMaster.ui.objectlist
@@ -38,14 +48,14 @@ function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct(json)
     ({
         ui: elementList[prefix + "ChoiceDiscountPanel"]
         ,items: []
-        ,subComponents: [prefix + "selectedProductId",prefix + "orderNumText",prefix + "choiceDiscountTable"]
+        ,subComponents: [prefix + "selectedProductId",prefix + "openId",prefix + "phoneNumText",prefix + "bottomAdvertImage",prefix + "choiceDiscountTable"]
     });
 
     var topTextPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "topTextPanel"]
         ,items: []
-        ,subComponents: [prefix + "topImage",prefix + "topSignImage"]
+        ,subComponents: [prefix + "topImage",prefix + "couponTypeText"]
     });
 
     var ProductPanel = new UIMaster.ui.panel
@@ -58,18 +68,22 @@ function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [logoImage,topImage,topSignImage,selectedProductId,orderNumText,choiceDiscountTable,ProductPanel,topTextPanel,ChoiceDiscountPanel]
+        ,items: [logoImage,topImage,couponTypeText,selectedProductId,openId,phoneNumText,bottomAdvertImage,choiceDiscountTable,ProductPanel,topTextPanel,ChoiceDiscountPanel]
     });
 
     Form.logoImage=logoImage;
 
     Form.topImage=topImage;
 
-    Form.topSignImage=topSignImage;
+    Form.couponTypeText=couponTypeText;
 
     Form.selectedProductId=selectedProductId;
 
-    Form.orderNumText=orderNumText;
+    Form.openId=openId;
+
+    Form.phoneNumText=phoneNumText;
+
+    Form.bottomAdvertImage=bottomAdvertImage;
 
     Form.choiceDiscountTable=choiceDiscountTable;
 
@@ -79,13 +93,17 @@ function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct(json)
 
     Form.topImage=topImage;
 
-    Form.topSignImage=topSignImage;
+    Form.couponTypeText=couponTypeText;
 
     Form.ChoiceDiscountPanel=ChoiceDiscountPanel;
 
     Form.selectedProductId=selectedProductId;
 
-    Form.orderNumText=orderNumText;
+    Form.openId=openId;
+
+    Form.phoneNumText=phoneNumText;
+
+    Form.bottomAdvertImage=bottomAdvertImage;
 
     Form.choiceDiscountTable=choiceDiscountTable;
 
@@ -93,13 +111,17 @@ function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct(json)
 
     Form.topImage=topImage;
 
-    Form.topSignImage=topSignImage;
+    Form.couponTypeText=couponTypeText;
 
     Form.ChoiceDiscountPanel=ChoiceDiscountPanel;
 
     Form.selectedProductId=selectedProductId;
 
-    Form.orderNumText=orderNumText;
+    Form.openId=openId;
+
+    Form.phoneNumText=phoneNumText;
+
+    Form.bottomAdvertImage=bottomAdvertImage;
 
     Form.choiceDiscountTable=choiceDiscountTable;
 
@@ -142,6 +164,21 @@ function org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct(json)
         var constraint_result = true;
         var UIEntity = this;
 
+			{
+				$("#div-topTextPanel-0_1").css("top", "-" + $("#div-topTextPanel-0_0 img").height() * 0.865 + "px");
+				var vsImgs = $("img[class1='vsImage']");
+				var lastVsImg = $(vsImgs[vsImgs.length - 1]);
+				$(lastVsImg).parent().css("display", "none");
+				
+				$("#div-ProductPanel-0_1").height($("#choiceDiscountTable").height() + "px");
+				var needDels = $("#ProductPanel").children("div.uimaster_widget_cell");
+				$(needDels[needDels.length - 1]).css("display", "none");
+				var bottomImage = $("input[name='bottomAdvertImage']").val();
+				if (typeof($("#bottomAdvert")) == "undefined" || null == $("#bottomAdvert") || $("#bottomAdvert").length < 1) {
+					$("#ProductPanel").append("<div id=\"bottomAdvert\" style=\"margin-top:2%;width:100%;\"><img src=\"" + bottomImage + "\" style=\"width:100%\" /></div>");
+				}
+			}
+			
     }/* Gen_Last:org_shaolin_vogerp_coupon_page_ChoiceDiscountProduct_initPageJs */
 
 

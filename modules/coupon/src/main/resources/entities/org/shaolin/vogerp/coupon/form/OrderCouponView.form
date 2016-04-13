@@ -6,12 +6,40 @@
 	<entityName>org.shaolin.vogerp.coupon.form.OrderCouponView</entityName>
 	<systemVersion>0</systemVersion>
 	
+	<ns2:eventHandler functionName="viewCoupon">
+		<ns2:ops xsi:type="ns2:OpExecuteScriptType">
+			<expressionString><![CDATA[
+				{
+					var couponIds = $(eventsource).find(".coupoId");
+					$("input[name='selectedCouponId']").val($(couponIds[0]).val());
+					
+					defaultname.backViewCouponLogic();
+				}]]></expressionString>
+		</ns2:ops>
+	</ns2:eventHandler>
+	
 	<ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+		<ns2:EventListener xsi:type="ns2:ClickListenerType">
+			<ns2:handler functionName="viewCoupon" />
+		</ns2:EventListener>
 		<ns2:layout xsi:type="ns2:TableLayoutType">
 			<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 			<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 			<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 		</ns2:layout>
+		<ns2:component xsi:type="ns2:UIHiddenType" UIID="couponId">
+			<ns2:UIStyle>coupoId</ns2:UIStyle>
+			<ns2:Property name="value">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString>
+			           { 
+			           	   return String.valueOf($coupon.getId());
+			           }</expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+            </ns2:Property>
+		</ns2:component>
 		<ns2:component xsi:type="ns2:UIImageType" UIID="productImage">
 			<ns2:Property name="src">
 	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
@@ -87,7 +115,11 @@
 				           <expressionString><![CDATA[
 				           import org.shaolin.vogerp.coupon.util.CouponUtil;
 				           import java.util.Date;
+				           import org.shaolin.vogerp.coupon.ce.StatusType;
 				           {	
+				           		if ($coupon.getDiscountProduct().getCouponType().getIsImmediate()) {
+				           			return StatusType.CREATED.equals($coupon.getStatus()) ? "未生效" : "已生效";
+				           		}
 				           		Integer day = CouponUtil.daysBetween(new Date(), $coupon.getExpiredDate());
 				           		return day > 0 ? day + "天后过期" : "已过期";
 				           }
@@ -164,11 +196,6 @@
 			$couponPanels.each(function(j, couponPanel){
 				$(couponPanel).parent("div.uimaster_container_cell").css({});
 			});
-			if ($("#advertBottomImage").length < 1) {
-				$("#Form").append("<div id=\"advertBottomImage\" style=\"width:100%;position:fixed;bottom:-1%;\"><img style=\"width:100%\" src=\"/uimaster/images/coupon/front/advert_bottom.jpg\"></div>");
-			}
-			var winHeight = $(window).height();
-			$("#couponPanel").css("min-height", winHeight - $("#advertBottomImage").height() + "px")
 			
 			$("span[class1='expiredDateView']").css("width", "100%");
 		}

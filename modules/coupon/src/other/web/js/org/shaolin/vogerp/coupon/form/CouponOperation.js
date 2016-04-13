@@ -8,14 +8,14 @@ function org_shaolin_vogerp_coupon_form_CouponOperation(json)
         ui: elementList[prefix + "idUI"]
     });
 
-    var orderNumUILabel = new UIMaster.ui.label
+    var phoneNumUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "orderNumUILabel"]
+        ui: elementList[prefix + "phoneNumUILabel"]
     });
 
-    var orderNumUI = new UIMaster.ui.textfield
+    var phoneNumUI = new UIMaster.ui.textfield
     ({
-        ui: elementList[prefix + "orderNumUI"]
+        ui: elementList[prefix + "phoneNumUI"]
     });
 
     var serialNumberUILabel = new UIMaster.ui.label
@@ -69,20 +69,20 @@ function org_shaolin_vogerp_coupon_form_CouponOperation(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "orderNumUILabel",prefix + "orderNumUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "operateDateUILabel",prefix + "operateDateUI"]
+        ,subComponents: [prefix + "idUI",prefix + "phoneNumUILabel",prefix + "phoneNumUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "operateDateUILabel",prefix + "operateDateUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,orderNumUILabel,orderNumUI,serialNumberUILabel,serialNumberUI,typeUILabel,typeUI,operateDateUILabel,operateDateUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,phoneNumUILabel,phoneNumUI,serialNumberUILabel,serialNumberUI,typeUILabel,typeUI,operateDateUILabel,operateDateUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
 
-    Form.orderNumUILabel=orderNumUILabel;
+    Form.phoneNumUILabel=phoneNumUILabel;
 
-    Form.orderNumUI=orderNumUI;
+    Form.phoneNumUI=phoneNumUI;
 
     Form.serialNumberUILabel=serialNumberUILabel;
 
@@ -104,9 +104,9 @@ function org_shaolin_vogerp_coupon_form_CouponOperation(json)
 
     Form.idUI=idUI;
 
-    Form.orderNumUILabel=orderNumUILabel;
+    Form.phoneNumUILabel=phoneNumUILabel;
 
-    Form.orderNumUI=orderNumUI;
+    Form.phoneNumUI=phoneNumUI;
 
     Form.serialNumberUILabel=serialNumberUILabel;
 
