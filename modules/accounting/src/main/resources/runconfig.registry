@@ -12,6 +12,84 @@
 	   	       ]]></expression>
    	       </node>
         </node>
+        <node name="webConstant">
+            <node name="commonjs">
+                <node name="org.shaolin.vogerp.accounting.page.PaymentOrderManagement">
+                    <item name="beecloud" value="https://jspay.beecloud.cn/1/pay/jsbutton/returnscripts?appId=1ab7992b-26b6-4f1c-b007-02f6c325444c" />
+                </node>
+            </node>
+        </node>
+        <node name="payment">
+            <node name="beecloud">
+                <node name="buttonPay">
+                    <item name="app_id" value="1ab7992b-26b6-4f1c-b007-02f6c325444c" />
+                    <item name="app_secret" value="72e12f38-c89d-4061-bf6e-2b446ef2fe9c" />
+                    <item name="out_trade_no" value="" />
+                    <item name="title" value="" />
+                    <item name="amount" value="" />
+                    <item name="sign" value="" />
+                    <item name="return_url" value="" />
+                    <item name="debug" value="false" />
+                </node>
+	            <node name="urlPay">
+	                <item name="app_id" value="1ab7992b-26b6-4f1c-b007-02f6c325444c" />
+	                <item name="app_secret" value="72e12f38-c89d-4061-bf6e-2b446ef2fe9c" />
+	                <item name="channel" value="" />
+	                <item name="title" value="" />
+	                <item name="total_fee" value="" />
+	                <item name="optional" value="" />
+                    <item name="return_url" value="" />
+                    <item name="openid" value="" />
+                    <item name="show_url" value="" />
+                    <item name="qr_pay_mode" value="" />
+                    <item name="app_sign" value="" />
+                    <item name="timestamp" value="" />
+	            </node>
+	            <node name="queryBills">
+                    <item name="app_id" value="1ab7992b-26b6-4f1c-b007-02f6c325444c" />
+                    <item name="app_secret" value="72e12f38-c89d-4061-bf6e-2b446ef2fe9c" />
+                    <item name="channel" value="" />
+                    <item name="bill_no" value="" />
+                    <item name="start_time" value="" />
+                    <item name="end_time" value="" />
+                    <item name="skip" value="" />
+                    <item name="limit" value="" />
+                    <item name="app_sign" value="" />
+                    <item name="timestamp" value="" />
+                </node>
+                <node name="refund">
+                    <item name="app_id" value="1ab7992b-26b6-4f1c-b007-02f6c325444c" />
+                    <item name="app_secret" value="72e12f38-c89d-4061-bf6e-2b446ef2fe9c" />
+                    <item name="channel" value="" />
+                    <item name="refund_no" value="" />
+                    <item name="bill_no" value="" />
+                    <item name="refund_fee" value="" />
+                    <item name="optional" value="" />
+                    <item name="app_sign" value="" />
+                    <item name="timestamp" value="" />
+                </node>
+                <node name="queryRefund">
+                    <item name="app_id" value="1ab7992b-26b6-4f1c-b007-02f6c325444c" />
+                    <item name="app_secret" value="72e12f38-c89d-4061-bf6e-2b446ef2fe9c" />
+                    <item name="channel" value="" />
+                    <item name="bill_no" value="" />
+                    <item name="start_time" value="" />
+                    <item name="end_time" value="" />
+                    <item name="skip" value="" />
+                    <item name="limit" value="" />
+                    <item name="app_sign" value="" />
+                    <item name="timestamp" value="" />
+                </node>
+                <node name="queryRefundStatus">
+                    <item name="app_id" value="1ab7992b-26b6-4f1c-b007-02f6c325444c" />
+                    <item name="app_secret" value="72e12f38-c89d-4061-bf6e-2b446ef2fe9c" />
+                    <item name="channel" value="" />
+                    <item name="refund_no" value="" />
+                    <item name="app_sign" value="" />
+                    <item name="timestamp" value="" />
+                </node>
+	        </node> 
+        </node> 
     </node>
 </registry>
 

@@ -597,14 +597,14 @@
             <bediagram:description>支付给平台</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
-            <bediagram:value>AgreedPayToEnd</bediagram:value>
+            <bediagram:value>Refund</bediagram:value>
             <bediagram:intValue>3</bediagram:intValue>
-            <bediagram:description>同意支付给客户</bediagram:description>
+            <bediagram:description>退款</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
-            <bediagram:value>PayedToEnd</bediagram:value>
+            <bediagram:value>AgreedPayToEnd</bediagram:value>
             <bediagram:intValue>4</bediagram:intValue>
-            <bediagram:description>支付给客户</bediagram:description>
+            <bediagram:description>同意支付给客户</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Cancelled</bediagram:value>

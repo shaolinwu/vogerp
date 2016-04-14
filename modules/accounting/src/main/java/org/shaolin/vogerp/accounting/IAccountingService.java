@@ -8,7 +8,15 @@ public interface IAccountingService {
 
 	public IPayOrder createPayOrder(PayBusinessType type, long origOrderId, double amount);
 	
-	public void withdrawals(IPayOrder order);
+	public String prepay(IPayOrder order);
+	
+	public String queryforPayStatus(IPayOrder order);
+	
+	public void ensurePayment(IPayOrder order);
+	
+	public void refund(IPayOrder order);
+	
+	public void cancelPayment(IPayOrder order);
 	
 	/**
 	 * for all receiving money orders.

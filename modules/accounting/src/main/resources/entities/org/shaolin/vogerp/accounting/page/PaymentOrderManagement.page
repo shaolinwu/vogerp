@@ -5,29 +5,6 @@
 	<entityName>org.shaolin.vogerp.accounting.page.PaymentOrderManagement</entityName>
 	<systemVersion>0</systemVersion>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
-		<ns2:eventHandler functionName="pay">
-			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="pay-20160406-1109">
-				<ns2:exp>
-					<ns2:expressionString><![CDATA[
-         import java.util.HashMap;
-         import java.util.ArrayList;
-         import java.util.Date;
-         import org.shaolin.uimaster.page.AjaxContext;
-         import org.shaolin.uimaster.page.AjaxActionHelper;
-         import org.shaolin.uimaster.page.ajax.*;
-         import org.shaolin.vogerp.accounting.be.PayOrderImpl;
-         {
-             Table orderInfoTable = (Table)@page.getElement("payOrderTable");
-             if (orderInfoTable.getSelectedRow() == null) {
-                 return;
-             }
-             PayOrderImpl defaultUser = (PayOrderImpl)orderInfoTable.getSelectedRow();
-            
-         }
-         ]]></ns2:expressionString>
-				</ns2:exp>
-			</ns2:ops>
-		</ns2:eventHandler>
 		<ns2:eventHandler functionName="openPOrder">
             <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openPOrder-20150904-1109">
                 <ns2:exp>
@@ -49,7 +26,7 @@
             RefForm form = new RefForm("Voucher", "org.shaolin.vogerp.accounting.form.PayOrder", input);
             @page.addElement(form);
             
-            form.openInWindows("Open Voucher", new TableCallBack("receivePayOrderTable"), 720, 500);
+            form.openInWindows("\u652F\u4ED8\u8BA2\u5355", new TableCallBack("receivePayOrderTable"), 720, 500);
         }
         ]]></ns2:expressionString>
                 </ns2:exp>
@@ -76,12 +53,121 @@
             RefForm form = new RefForm("Voucher", "org.shaolin.vogerp.accounting.form.PayOrder", input);
             @page.addElement(form);
             
-            form.openInWindows("Open Voucher", new TableCallBack("payOrderTable"), 720, 500);
+            form.openInWindows("\u652F\u4ED8\u8BA2\u5355", new TableCallBack("payOrderTable"), 720, 500);
         }
         ]]></ns2:expressionString>
 				</ns2:exp>
 			</ns2:ops>
 		</ns2:eventHandler>
+		<ns2:eventHandler functionName="pay">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="pay-20160406-1109">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+		         import java.util.HashMap;
+		         import java.util.ArrayList;
+		         import java.util.Date;
+		         import org.shaolin.bmdp.runtime.AppContext; 
+		         import org.shaolin.uimaster.page.AjaxContext;
+		         import org.shaolin.uimaster.page.ajax.*;
+		         import org.shaolin.vogerp.accounting.be.PayOrderImpl;
+		         import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+		         import org.shaolin.vogerp.accounting.IAccountingService;
+		         {
+		             Table orderInfoTable = (Table)@page.getElement("payOrderTable");
+		             if (orderInfoTable.getSelectedRow() == null) {
+		                 return;
+		             }
+		             PayOrderImpl order = (PayOrderImpl)orderInfoTable.getSelectedRow();
+		             if (order.getStatus() == PayOrderStatusType.NOTPAYED) {
+		                 IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+		                 String json = accountingService.prepay(order);
+		                 @page.executeJavaScript("BC.click("+json+", event);");  
+		             } else {
+		                 @page.executeJavaScript("alert(\"\");");  
+		             }
+		         }
+		         ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="ensurePayment">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="ensurePayment-20160406-1109">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                 import java.util.HashMap;
+                 import java.util.ArrayList;
+                 import java.util.Date;
+                 import org.shaolin.uimaster.page.AjaxContext;
+                 import org.shaolin.uimaster.page.AjaxActionHelper;
+                 import org.shaolin.uimaster.page.ajax.*;
+                 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
+                 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+                 {
+                     Table orderInfoTable = (Table)@page.getElement("payOrderTable");
+                     if (orderInfoTable.getSelectedRow() == null) {
+                         return;
+                     }
+                     PayOrderImpl defaultUser = (PayOrderImpl)orderInfoTable.getSelectedRow();
+                     if (defaultUser.getStatus() == PayOrderStatusType.PAYED) {
+	                    
+                     }
+                 }
+                 ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="refund">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="refund-20160406-1109">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                 import java.util.HashMap;
+                 import java.util.ArrayList;
+                 import java.util.Date;
+                 import org.shaolin.uimaster.page.AjaxContext;
+                 import org.shaolin.uimaster.page.AjaxActionHelper;
+                 import org.shaolin.uimaster.page.ajax.*;
+                 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
+                 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+                 {
+                     Table orderInfoTable = (Table)@page.getElement("payOrderTable");
+                     if (orderInfoTable.getSelectedRow() == null) {
+                         return;
+                     }
+                     PayOrderImpl defaultUser = (PayOrderImpl)orderInfoTable.getSelectedRow();
+                     if (defaultUser.getStatus() == PayOrderStatusType.PAYED) {
+                        
+                     }
+                 }
+                 ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="cancelPayment">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelPayment-20160406-1109">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                 import java.util.HashMap;
+                 import java.util.ArrayList;
+                 import java.util.Date;
+                 import org.shaolin.uimaster.page.AjaxContext;
+                 import org.shaolin.uimaster.page.AjaxActionHelper;
+                 import org.shaolin.uimaster.page.ajax.*;
+                 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
+                 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+                 {
+                     Table orderInfoTable = (Table)@page.getElement("payOrderTable");
+                     if (orderInfoTable.getSelectedRow() == null) {
+                         return;
+                     }
+                     PayOrderImpl defaultUser = (PayOrderImpl)orderInfoTable.getSelectedRow();
+                     if (defaultUser.getStatus() == PayOrderStatusType.NOTPAYED) {
+                         
+                     }
+                 }
+                 ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:UISkin xsi:type="ns2:UISkinType">
 				<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel
@@ -385,12 +471,36 @@
                             <ns2:actionGroup>
                                 <ns2:type>radio</ns2:type>
                                 <ns2:action>
+                                    <ns2:uiid>cancelPayment</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>取消支付</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>cancelPayment</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
                                     <ns2:uiid>pay</ns2:uiid>
                                     <ns2:title xsi:type="ns2:StringPropertyType">
                                         <ns2:value>支付</ns2:value>
                                     </ns2:title>
                                     <ns2:icon>ui-icon-note</ns2:icon>
                                     <ns2:function>pay</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>refund</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>申请退款</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>refund</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>ensurePayment</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>确认付款给客户</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>ensurePayment</ns2:function>
                                 </ns2:action>
                             </ns2:actionGroup>
                         </ns2:component>

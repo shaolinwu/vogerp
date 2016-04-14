@@ -55,11 +55,17 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
         /* Construct_LAST:org_shaolin_vogerp_accounting_page_PaymentOrderManagement */
     };
 
-    Form.pay = org_shaolin_vogerp_accounting_page_PaymentOrderManagement_pay;
-
     Form.openPOrder = org_shaolin_vogerp_accounting_page_PaymentOrderManagement_openPOrder;
 
     Form.openPOrder1 = org_shaolin_vogerp_accounting_page_PaymentOrderManagement_openPOrder1;
+
+    Form.pay = org_shaolin_vogerp_accounting_page_PaymentOrderManagement_pay;
+
+    Form.ensurePayment = org_shaolin_vogerp_accounting_page_PaymentOrderManagement_ensurePayment;
+
+    Form.refund = org_shaolin_vogerp_accounting_page_PaymentOrderManagement_refund;
+
+    Form.cancelPayment = org_shaolin_vogerp_accounting_page_PaymentOrderManagement_cancelPayment;
 
     Form.initPageJs = org_shaolin_vogerp_accounting_page_PaymentOrderManagement_initPageJs;
 
@@ -76,17 +82,6 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_accounting_page_PaymentOrderManagement */
 /* Other_Func_LAST:org_shaolin_vogerp_accounting_page_PaymentOrderManagement */
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_accounting_page_PaymentOrderManagement_pay(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_pay */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"pay-20160406-1109",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_pay */
-
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_accounting_page_PaymentOrderManagement_openPOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_openPOrder */
@@ -108,6 +103,50 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openPOrder1-20150904-1109",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_openPOrder1 */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_accounting_page_PaymentOrderManagement_pay(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_pay */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"pay-20160406-1109",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_pay */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_accounting_page_PaymentOrderManagement_ensurePayment(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_ensurePayment */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"ensurePayment-20160406-1109",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_ensurePayment */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_accounting_page_PaymentOrderManagement_refund(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_refund */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"refund-20160406-1109",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_refund */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_accounting_page_PaymentOrderManagement_cancelPayment(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_cancelPayment */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelPayment-20160406-1109",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_cancelPayment */
 
 
     function org_shaolin_vogerp_accounting_page_PaymentOrderManagement_initPageJs(){/* Gen_First:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_initPageJs */

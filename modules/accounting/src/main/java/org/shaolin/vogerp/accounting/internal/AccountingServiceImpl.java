@@ -1,13 +1,19 @@
 package org.shaolin.vogerp.accounting.internal;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.shaolin.bmdp.runtime.AppContext;
+import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.bmdp.utils.DateParser;
+import org.shaolin.bmdp.utils.StringUtil;
+import org.shaolin.uimaster.page.ajax.json.JSONException;
+import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.vogerp.accounting.IAccountingService;
 import org.shaolin.vogerp.accounting.be.AccountVoucherImpl;
 import org.shaolin.vogerp.accounting.be.CustomerAccountImpl;
@@ -22,6 +28,7 @@ import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
 import org.shaolin.vogerp.accounting.ce.SettlementMethodType;
 import org.shaolin.vogerp.accounting.ce.VoucherType;
 import org.shaolin.vogerp.accounting.dao.AccountingModel;
+import org.shaolin.vogerp.accounting.util.PaymentUtil;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.IUserService.UserActionListener;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
@@ -90,10 +97,6 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		return order;
 	}
 	
-	public void withdrawals(IPayOrder order) {
-		
-	}
-	
 	/**
 	 * for all receiving money orders.
 	 */
@@ -132,6 +135,71 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		item.getDoubleEnties().add(entry);
 		AccountingModel.INSTANCE.create(item);
 		return item;
+	}
+	
+	/**
+	 * before pay to system.
+	 * 
+	 */
+	public String prepay(IPayOrder order) {
+		if (order.getStatus() == PayOrderStatusType.NOTPAYED) {
+			Map<String, String> attributes = new HashMap<String, String>(Registry.getInstance().getNodeItems("/System/payment/beecloud/buttonPay"));
+			attributes.put("out_trade_no", order.getSerialNumber());
+			String title = "(" + order.getPayBusinessType().getDescription() + ")" + order.getDescription();
+			attributes.put("title", title);
+			attributes.put("amount", ((int)(order.getAmount() * 100)) + "");//it's fen unit.
+			String sign = PaymentUtil.sign(attributes.get("app_id"), 
+					attributes.get("title"), 
+					attributes.get("amount"), 
+					order.getSerialNumber(), 
+					attributes.get("app_secret"));
+			attributes.put("sign", sign);
+			JSONObject json = new JSONObject(attributes); 
+			return json.toString();
+		}
+		return "";
+	}
+	
+	public String queryforPayStatus(IPayOrder order) {
+		if (order.getStatus() == PayOrderStatusType.NOTPAYED) {
+			Map<String, String> attributes = new HashMap<String, String>(Registry.getInstance().getNodeItems("/System/payment/beecloud/queryBills"));
+			attributes.put("out_trade_no", order.getSerialNumber());
+			attributes.put("amount", ((int)(order.getAmount() * 100)) + "");//it's fen unit.
+			String sign = PaymentUtil.sign(attributes.get("app_id"), 
+					attributes.get("title"), 
+					attributes.get("amount"), 
+					order.getSerialNumber(), 
+					attributes.get("app_secret"));
+			attributes.put("sign", sign);
+			
+			JSONObject optional = new JSONObject();
+			try {
+				optional.put("out_trade_no", order.getSerialNumber());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			attributes.put("optional", optional.toString());
+			JSONObject json = new JSONObject(attributes); 
+			return json.toString();
+		}
+		return "";
+	}
+	
+	/**
+	 * Ensure the payment to the end customer.
+	 * 
+	 * @param order
+	 */
+	public void ensurePayment(IPayOrder order) {
+		
+	}
+	
+	public void refund(IPayOrder order) {
+		
+	}
+	
+	public void cancelPayment(IPayOrder order) {
+		
 	}
 	
 	@Override
