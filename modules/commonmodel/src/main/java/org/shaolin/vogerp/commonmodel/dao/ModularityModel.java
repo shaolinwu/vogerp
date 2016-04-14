@@ -27,6 +27,30 @@ public class ModularityModel extends BEEntityDaoObject {
     private ModularityModel() {
     }
 
+    public List<org.shaolin.vogerp.commonmodel.be.IRegistry> searchRegistryItems(org.shaolin.vogerp.commonmodel.be.RegistryImpl scFlow,
+           List<Order> orders, int offset, int count) {
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.RegistryImpl.class, "inFlow");
+            if (orders == null) {
+            } else {
+                this._addOrders(inFlowCriteria, orders);
+            }
+
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
+        List result = this._list(offset, count, inFlowCriteria);
+        return result;
+    }
+
+    public long searchRegistryItemsCount(org.shaolin.vogerp.commonmodel.be.RegistryImpl scFlow) {
+            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.RegistryImpl.class, "inFlow");
+
+
+        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
+
+        return this._count(inFlowCriteria);
+    }
+
     public List<org.shaolin.vogerp.commonmodel.be.IModuleGroup> searchModuleGroup(org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl scFlow,
            List<Order> orders, int offset, int count) {
             Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl.class, "inFlow");

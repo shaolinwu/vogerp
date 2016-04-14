@@ -17,6 +17,7 @@ import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.bmdp.utils.DateParser;
+import org.shaolin.bmdp.utils.HttpUserUtil;
 import org.shaolin.uimaster.page.MobilitySupport;
 import org.shaolin.uimaster.page.WebConfig;
 import org.shaolin.uimaster.page.flow.WebflowConstants;
@@ -155,7 +156,6 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 		if (result.size() == 1) {
 			IPersonalAccount matchedUser = result.get(0);
 			
-			// bmiasia.ebos.security.manager.UserAccountManager
 			long now = System.currentTimeMillis();
 			Date lastLoginTime = matchedUser.getLastLogin();
 			if (lastLoginTime == null) {
@@ -187,6 +187,15 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 				return USER_LOGIN_PASSWORDRULES_PASSWORDINCORRECT;
 			}
 			
+			String userIP = HttpUserUtil.getIP(request);
+			if (matchedUser.getLoginIP() == null ||
+					!matchedUser.getLoginIP().equals(userIP)) {
+				matchedUser.setLoginIP(userIP);
+				try {//could be slow.
+					matchedUser.setLocationInfo(HttpUserUtil.getRealLocationInfo(matchedUser.getLoginIP(), "UTF-8"));
+				} catch (Exception e) {
+				}
+			}
 			matchedUser.setLastLogin(new Date());
 			matchedUser.setAttempt(0);
 			matchedUser.setIsLocked(false);

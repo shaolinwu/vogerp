@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.runtime.AppContext;
+import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.ce.AbstractConstant;
 import org.shaolin.bmdp.runtime.ce.ConstantServiceImpl;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
@@ -23,6 +24,8 @@ import org.shaolin.vogerp.commonmodel.be.ICEEntityInfo;
 import org.shaolin.vogerp.commonmodel.be.ICEExtension;
 import org.shaolin.vogerp.commonmodel.be.ICEHierarchy;
 import org.shaolin.vogerp.commonmodel.be.ICaptcha;
+import org.shaolin.vogerp.commonmodel.be.IRegistry;
+import org.shaolin.vogerp.commonmodel.be.RegistryImpl;
 import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
 import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
@@ -35,6 +38,15 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 		IAppServiceManager serviceManger = AppContext.get();
 		if (AppContext.isMasterNode()) {
 			try {
+				RegistryImpl condition0 = new RegistryImpl();
+				List<IRegistry> registerItems = ModularityModel.INSTANCE.searchRegistryItems(condition0, null, 0, -1);
+				for (IRegistry item : registerItems) {
+					String parentPath = item.getPath().substring(0, item.getPath().lastIndexOf('/'));
+					String nodeName = item.getPath().substring(item.getPath().lastIndexOf('/') + 1);
+					Registry.getInstance().getNodeItems(parentPath).put(nodeName, item.getValue());
+					LoggerFactory.getLogger(Registry.class).info("Read Registry item: " + item.getPath() + "=" + item.getValue());
+				}
+				
 				CEHierarchyImpl condition = new CEHierarchyImpl();
 				condition.setParentCeItem(-1);
 				List<ICEHierarchy> hierarchy = ModularityModel.INSTANCE.searchCEHierarchy(condition, null, 0, -1);

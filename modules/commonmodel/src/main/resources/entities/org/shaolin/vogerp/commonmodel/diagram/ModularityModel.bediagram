@@ -7,6 +7,22 @@
 	<cePackage>org.shaolin.vogerp.commonmodel.ce</cePackage>
 	<diagramPackage>org.shaolin.vogerp.commonmodel.diagram</diagramPackage>
 
+    <bediagram:beEntity needPersist="true" needUIEntity="true">
+        <common:entityName>Registry</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>path</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>value</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+    </bediagram:beEntity>
+
 	<bediagram:beEntity needPersist="true" needUIEntity="true">
 		<common:entityName>ModuleGroup</common:entityName>
 		<bediagram:member pk="true">

@@ -5,6 +5,25 @@
   <ns2:diagramPackage>org.shaolin.vogerp.commonmodel.diagram</ns2:diagramPackage>
   <ns2:daoPackage>org.shaolin.vogerp.commonmodel.dao</ns2:daoPackage>
   <ns2:table>
+    <entityName>COMM_REGISTRY</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="PATH" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="VALUE" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.Registry"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="path" columnName="PATH"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="value" columnName="VALUE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
     <entityName>COMM_MODULEGROUP</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
@@ -164,7 +183,27 @@
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
-  
+  <ns2:query queryName="searchRegistryItems">
+    <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.Registry" systemVersion="0"/>
+    </ns2:searchResult>
+    <ns2:fromData name="inFlow" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.commonmodel.be.Registry"/>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>outFlow</ns2:toDataFieldPath>
+            <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
+            </ns2:value>
+        </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+        <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
+            <type entityName="org.shaolin.vogerp.commonmodel.be.Registry"/>
+        </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
   <ns2:query queryName="searchModuleGroup">
     <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
         <type entityName="org.shaolin.vogerp.commonmodel.be.ModuleGroup" systemVersion="0"/>
