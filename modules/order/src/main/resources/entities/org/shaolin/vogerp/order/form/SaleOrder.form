@@ -256,7 +256,7 @@
         </ns2:editable>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
           <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>OKbtn</ns2:key>
+          <ns2:key>Savebtn</ns2:key>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
@@ -265,7 +265,7 @@
         </ns2:EventListener>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
           <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>Cancelbtn</ns2:key>
+          <ns2:key>Closebtn</ns2:key>
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>

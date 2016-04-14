@@ -60,7 +60,8 @@
                         HashMap out = (HashMap)form.ui2Data();
                         PurchaseOrderImpl defaultUser = (PurchaseOrderImpl)out.get("beObject");
                         if (defaultUser.getId() == 0) {
-                           return false;
+                           @page.executeJavaScript("alert(\"请先保存订单!\");");
+                           return;
                         }
                         
                         form.closeIfinWindows();

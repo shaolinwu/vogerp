@@ -13,21 +13,21 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable(json)
         ui: elementList[prefix + "itemTable"]
     });
 
-    var cancelbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "cancelbtn"]
-    });
-
     var chatbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "chatbtn"]
+    });
+
+    var cancelbtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "cancelbtn"]
     });
 
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "cancelbtn",prefix + "chatbtn"]
+        ,subComponents: [prefix + "chatbtn",prefix + "cancelbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -40,16 +40,16 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentIdUI,itemTable,cancelbtn,chatbtn,fieldPanel,actionPanel]
+        ,items: [parentIdUI,itemTable,chatbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.parentIdUI=parentIdUI;
 
     Form.itemTable=itemTable;
 
-    Form.cancelbtn=cancelbtn;
-
     Form.chatbtn=chatbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.fieldPanel=fieldPanel;
 
@@ -59,9 +59,9 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable(json)
 
     Form.actionPanel=actionPanel;
 
-    Form.cancelbtn=cancelbtn;
-
     Form.chatbtn=chatbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

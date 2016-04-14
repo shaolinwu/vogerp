@@ -512,7 +512,7 @@
 		                        <ns2:action>
                                     <ns2:uiid>openPurchaseOrderTracker</ns2:uiid>
                                     <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>Order Tracker</ns2:value>
+                                        <ns2:value>状态跟踪</ns2:value>
                                     </ns2:title>
                                     <ns2:icon>ui-icon-note</ns2:icon>
                                     <ns2:function>openPurchaseOrderTracker</ns2:function>

@@ -39,15 +39,22 @@
 					import java.util.HashMap;
 					import org.shaolin.uimaster.page.AjaxContext;
 	                import org.shaolin.uimaster.page.ajax.*;
+	                import org.shaolin.vogerp.order.be.*;
 					{
 					    System.out.println("workflow action!!!");
 					    RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
 					    HashMap values = (HashMap)form.ui2Data();
+					    SaleOrderImpl defaultUser = (SaleOrderImpl)values.get("beObject");
+					    if (defaultUser.getId() == 0) {
+                           @page.executeJavaScript("alert(\"请先保存订单!\");");
+                           return;
+                        }
+					    
 					    form.closeIfinWindows(true);
-				         @page.removeForm(@page.getEntityUiid()); 
-				         HashMap result = new HashMap();
-				         result.put("saleOrder", values.get("beObject"));
-				         return result;
+				        @page.removeForm(@page.getEntityUiid()); 
+				        HashMap result = new HashMap();
+				        result.put("saleOrder", defaultUser);
+				        return result;
 				    }
 					]]></expressionString>
 				</ns2:expression>
