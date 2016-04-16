@@ -5,6 +5,27 @@
  xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
  <entityName>org.shaolin.vogerp.ecommercial.form.SearchBar</entityName>
  <systemVersion>0</systemVersion>
+ <ns2:eventHandler functionName="selectCity">
+   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectCity-201604102211">
+    <ns2:exp>
+     <expressionString><![CDATA[
+          import java.util.HashMap;
+          import org.shaolin.bmdp.runtime.AppContext;
+          import org.shaolin.uimaster.page.AjaxContext;
+          import org.shaolin.uimaster.page.ajax.*;
+          {
+              HashMap input = new HashMap();
+              input.put("parentUIID", @page.getEntityUiid() + ".citiesCbx");
+              input.put("editable", new Boolean(true));
+              RefForm form = new RefForm("cityListForm", "org.shaolin.vogerp.commonmodel.form.CitySelelctor", input);
+              @page.addElement(form);
+              
+              form.openInWindows("\u9009\u62E9\u57CE\u5E02", null, 470, 350);
+          }
+          ]]></expressionString>
+    </ns2:exp>
+   </ns2:ops>
+  </ns2:eventHandler>
  <ns2:eventHandler functionName="search">
    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="search-201506102211">
     <ns2:exp>
@@ -31,18 +52,18 @@
    </ns2:UISkin>
    <ns2:layout xsi:type="ns2:TableLayoutType">
      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-     <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
-     <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
-     <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+     <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+     <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+     <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
    </ns2:layout>
-   <ns2:component xsi:type="ns2:UIImageType" UIID="vogerplogo">
-     <ns2:title xsi:type="ns2:StringPropertyType">
-      <ns2:value>Vogue ERP</ns2:value>
-     </ns2:title>
-     <ns2:src xsi:type="ns2:ImagePropertyType">
-      <ns2:location>/vogerp.jpg</ns2:location>
-     </ns2:src>
-    </ns2:component>
+     <ns2:component xsi:type="ns2:UILabelType" UIID="citiesCbx">
+       <ns2:text xsi:type="ns2:StringPropertyType">
+           <ns2:value>选择城市</ns2:value>
+        </ns2:text>
+       <ns2:EventListener xsi:type="ns2:ClickListenerType">
+         <ns2:handler functionName="selectCity"></ns2:handler>
+       </ns2:EventListener>
+     </ns2:component>
    <ns2:component xsi:type="ns2:UITextFieldType" UIID="searchContext">
      </ns2:component>
      <ns2:component xsi:type="ns2:UIButtonType" UIID="searchButton">
@@ -50,26 +71,26 @@
        <ns2:value>Search</ns2:value>
       </ns2:text>
       <ns2:EventListener xsi:type="ns2:ClickListenerType">
-       <ns2:handler functionName="search" />
+         <ns2:handler functionName="search" />
       </ns2:EventListener>
       <ns2:value xsi:type="ns2:StringPropertyType">
        <ns2:value>Search</ns2:value>
       </ns2:value>
      </ns2:component>
      <ns2:layoutConstraint>
-     <ns2:layoutConstraint>
-     <ns2:componentId>vogerplogo</ns2:componentId>
-     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-      x="0" y="0" align="FULL"></ns2:constraint>
-    </ns2:layoutConstraint>
-     <ns2:componentId>searchContext</ns2:componentId>
-     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-      x="1" y="0" align="FULL"></ns2:constraint>
+         <ns2:componentId>citiesCbx</ns2:componentId>
+         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+          x="0" y="0" align="FULL"></ns2:constraint>
      </ns2:layoutConstraint>
      <ns2:layoutConstraint>
-      <ns2:componentId>searchButton</ns2:componentId>
-      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-       x="2" y="0" align="FULL"></ns2:constraint>
+	     <ns2:componentId>searchContext</ns2:componentId>
+	     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	      x="1" y="0" align="FULL"></ns2:constraint>
+     </ns2:layoutConstraint>
+     <ns2:layoutConstraint>
+	      <ns2:componentId>searchButton</ns2:componentId>
+	      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	       x="2" y="0" align="FULL"></ns2:constraint>
      </ns2:layoutConstraint>
   </ns2:component>
   <ns2:layoutConstraint>

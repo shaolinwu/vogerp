@@ -35,6 +35,8 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCheckboxGroup(json)
         /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCheckboxGroup */
     };
 
+    Form.selectSubItem = org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCheckboxGroup_selectSubItem;
+
     Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCheckboxGroup_invokeDynamicFunction;
 
     Form.__entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCheckboxGroup";
@@ -46,6 +48,13 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCheckboxGroup(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCheckboxGroup */
 /* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCheckboxGroup */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCheckboxGroup_selectSubItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCheckboxGroup_selectSubItem */
+        var o = this;
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCheckboxGroup_selectSubItem */
+
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCheckboxGroup_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCheckboxGroup_invokeDynamicFunction */

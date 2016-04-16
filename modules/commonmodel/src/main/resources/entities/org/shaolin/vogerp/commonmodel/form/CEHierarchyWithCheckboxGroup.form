@@ -2,6 +2,8 @@
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
   <entityName>org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCheckboxGroup</entityName>
   <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="selectSubItem">
+  </ns2:eventHandler>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -24,6 +26,9 @@
             <value>8</value>
          </ns2:value>
         </ns2:Property>
+        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
+          <ns2:handler functionName="selectSubItem"></ns2:handler>
+        </ns2:EventListener>
       </ns2:component>
 	     <ns2:layoutConstraint>
         <ns2:componentId>typeUI</ns2:componentId>

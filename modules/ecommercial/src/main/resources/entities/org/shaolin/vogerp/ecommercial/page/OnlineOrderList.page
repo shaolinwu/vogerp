@@ -80,10 +80,25 @@
 		   </ns2:UISkin>
 			<ns2:layout xsi:type="ns2:TableLayoutType">
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			</ns2:layout>
 			<ns2:component xsi:type="ns2:UIHiddenType" UIID="defaultAction">
             </ns2:component>
+            <ns2:component xsi:type="ns2:UIPanelType" UIID="searchConditionPanel">
+              <ns2:layout xsi:type="ns2:TableLayoutType">
+                <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+              </ns2:layout>
+              <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="searchBar">
+                <ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.SearchBar" />
+              </ns2:component>
+              <ns2:layoutConstraint>
+                <ns2:componentId>searchBar</ns2:componentId>
+                <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                    x="0" y="0" align="FULL"></ns2:constraint>
+              </ns2:layoutConstraint>
+            </ns2:component>  
             <ns2:component xsi:type="ns2:UIPanelType" UIID="goldenOrderInfoPanel">
                 <ns2:layout xsi:type="ns2:TableLayoutType">
                     <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -198,14 +213,23 @@
                         x="0" y="0" align="FULL"></ns2:constraint>
                 </ns2:layoutConstraint>
             </ns2:component>
-	      <ns2:layoutConstraint>
-             <ns2:componentId>goldenOrderInfoPanel</ns2:componentId>
-             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                 x="0" y="0" align="FULL"></ns2:constraint>
-         </ns2:layoutConstraint>
+            <ns2:layoutConstraint>
+	             <ns2:componentId>searchConditionPanel</ns2:componentId>
+	             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	                 x="0" y="0" align="FULL"></ns2:constraint>
+	         </ns2:layoutConstraint>
+		      <ns2:layoutConstraint>
+	             <ns2:componentId>goldenOrderInfoPanel</ns2:componentId>
+	             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	                 x="0" y="1" align="FULL"></ns2:constraint>
+	         </ns2:layoutConstraint>
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>
+	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+            <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.SearchBar"></ns2:mappingRule>
+            <ns2:UIComponent componentPath="searchBar" paramName="UIWidgetType"></ns2:UIComponent>
+        </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
 	</ns2:in>

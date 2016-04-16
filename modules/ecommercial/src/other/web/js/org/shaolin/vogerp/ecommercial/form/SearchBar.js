@@ -3,9 +3,9 @@
 function org_shaolin_vogerp_ecommercial_form_SearchBar(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var vogerplogo = new UIMaster.ui.image
+    var citiesCbx = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "vogerplogo"]
+        ui: elementList[prefix + "citiesCbx"]
     });
 
     var searchContext = new UIMaster.ui.textfield
@@ -23,16 +23,16 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar(json)
         ui: elementList[prefix + "root"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
-        ,subComponents: [prefix + "vogerplogo",prefix + "searchContext",prefix + "searchButton"]
+        ,subComponents: [prefix + "citiesCbx",prefix + "searchContext",prefix + "searchButton"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [vogerplogo,searchContext,searchButton,root]
+        ,items: [citiesCbx,searchContext,searchButton,root]
     });
 
-    Form.vogerplogo=vogerplogo;
+    Form.citiesCbx=citiesCbx;
 
     Form.searchContext=searchContext;
 
@@ -40,7 +40,7 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar(json)
 
     Form.root=root;
 
-    Form.vogerplogo=vogerplogo;
+    Form.citiesCbx=citiesCbx;
 
     Form.searchContext=searchContext;
 
@@ -51,6 +51,8 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar(json)
         /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_SearchBar */
         /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_SearchBar */
     };
+
+    Form.selectCity = org_shaolin_vogerp_ecommercial_form_SearchBar_selectCity;
 
     Form.search = org_shaolin_vogerp_ecommercial_form_SearchBar_search;
 
@@ -65,6 +67,17 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_ecommercial_form_SearchBar */
 /* Other_Func_LAST:org_shaolin_vogerp_ecommercial_form_SearchBar */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_SearchBar_selectCity(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_SearchBar_selectCity */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectCity-201604102211",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_SearchBar_selectCity */
+
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_form_SearchBar_search(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_SearchBar_search */

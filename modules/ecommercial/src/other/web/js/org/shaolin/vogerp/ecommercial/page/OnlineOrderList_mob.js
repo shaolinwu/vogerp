@@ -13,6 +13,8 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob(json)
         ui: elementList[prefix + "goldenOrderTable"]
     });
 
+    var searchBar = new org_shaolin_vogerp_ecommercial_form_SearchBar({"prefix":prefix + "searchBar."});
+
     var goldenOrderInfoPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "goldenOrderInfoPanel"]
@@ -20,16 +22,29 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob(json)
         ,subComponents: [prefix + "goldenOrderTable"]
     });
 
+    var searchConditionPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "searchConditionPanel"]
+        ,items: []
+        ,subComponents: [prefix + "searchBar"]
+    });
+
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [defaultAction,goldenOrderTable,goldenOrderInfoPanel]
+        ,items: [defaultAction,goldenOrderTable,searchBar,searchConditionPanel,goldenOrderInfoPanel]
     });
 
     Form.defaultAction=defaultAction;
 
     Form.goldenOrderTable=goldenOrderTable;
+
+    Form.searchBar=searchBar;
+
+    Form.searchConditionPanel=searchConditionPanel;
+
+    Form.searchBar=searchBar;
 
     Form.goldenOrderInfoPanel=goldenOrderInfoPanel;
 

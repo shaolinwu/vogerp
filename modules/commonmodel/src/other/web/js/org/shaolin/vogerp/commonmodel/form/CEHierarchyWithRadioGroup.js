@@ -35,6 +35,8 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithRadioGroup(json)
         /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithRadioGroup */
     };
 
+    Form.selectSubItem = org_shaolin_vogerp_commonmodel_form_CEHierarchyWithRadioGroup_selectSubItem;
+
     Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_CEHierarchyWithRadioGroup_invokeDynamicFunction;
 
     Form.__entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithRadioGroup";
@@ -46,6 +48,13 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithRadioGroup(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithRadioGroup */
 /* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithRadioGroup */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithRadioGroup_selectSubItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithRadioGroup_selectSubItem */
+        var o = this;
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithRadioGroup_selectSubItem */
+
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithRadioGroup_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithRadioGroup_invokeDynamicFunction */
