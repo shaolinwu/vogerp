@@ -101,6 +101,31 @@
         </bediagram:member>
 	</bediagram:beEntity>
 	
+	<!-- Rent or Loan order  -->
+	<bediagram:beEntity needPersist="true" needTask="true" needUIEntity="true">
+        <common:entityName>RentOrLoanOrder</common:entityName>
+        <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
+            <bediagram:targetEntity entityName="GoldenOrder" />
+        </bediagram:parentObject>
+        <bediagram:member>
+            <bediagram:name>type</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="RentOrLoanOrderType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>dateType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="RentDateType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <!-- the number of date type. -->
+            <bediagram:name>dateCount</bediagram:name>
+            <bediagram:type xsi:type="bediagram:IntType" />
+        </bediagram:member>
+    </bediagram:beEntity>    
+	
 	<bediagram:beEntity needPersist="true" needOrgId="true" needTask="true" needUIEntity="true">
         <common:entityName>GoldenOrderHistory</common:entityName>
         <bediagram:member pk="true">
@@ -237,4 +262,38 @@
             <bediagram:description>取消</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
+    
+    <bediagram:ceEntity>
+        <common:entityName>RentOrLoanOrderType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>Loan</bediagram:value>
+            <bediagram:intValue>0</bediagram:intValue>
+            <bediagram:description>租入订单</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Rent</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>租出订单</bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
+    
+    <bediagram:ceEntity>
+        <common:entityName>RentDateType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>Monthly</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>月</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Season</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>季</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Year</bediagram:value>
+            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:description>年</bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
+    
 </bediagram:BEDiagram>

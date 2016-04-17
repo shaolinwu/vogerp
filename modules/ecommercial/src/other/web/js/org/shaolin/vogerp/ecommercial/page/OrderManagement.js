@@ -7,7 +7,7 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "goldenOrderInfoPanel"]
+        ,subComponents: [prefix + "goldenOrderInfoPanel",prefix + "rentOrderInfoPanel"]
     });
     var goldenOrderTable = new UIMaster.ui.objectlist
     ({
@@ -19,6 +19,17 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         ui: elementList[prefix + "goldenOrderInfoPanel"]
         ,items: []
         ,subComponents: [prefix + "goldenOrderTable"]
+    });
+    var rentOrderTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "rentOrderTable"]
+    });
+
+    var rentOrderInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "rentOrderInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "rentOrderTable"]
     });
 
     var Form = new UIMaster.ui.panel
@@ -33,6 +44,10 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     Form.goldenOrderInfoPanel=goldenOrderInfoPanel;
 
     Form.goldenOrderTable=goldenOrderTable;
+
+    Form.rentOrderInfoPanel=rentOrderInfoPanel;
+
+    Form.rentOrderTable=rentOrderTable;
 
     Form.user_constructor = function()
     {

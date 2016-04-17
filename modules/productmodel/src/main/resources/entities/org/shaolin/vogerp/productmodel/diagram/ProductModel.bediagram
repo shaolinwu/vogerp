@@ -171,6 +171,13 @@
 			<bediagram:type xsi:type="bediagram:LongType" />
 		</bediagram:member>
 		<bediagram:member>
+		    <!-- temp object. -->
+            <bediagram:name>product</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.productmodel.be.Product" />
+            </bediagram:type>
+        </bediagram:member>
+		<bediagram:member>
 			<!-- the product package is support for special combination. 
 			the combination comes from ProductCharacteristic.-->
 			<bediagram:name>packages</bediagram:name>

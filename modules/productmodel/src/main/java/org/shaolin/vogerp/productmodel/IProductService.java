@@ -43,4 +43,13 @@ public interface IProductService {
 	 * @return
 	 */
 	public IProductPrice getPricePackage(long priceId);
+	
+	/**
+	 * 
+	 * @param productId
+	 * @return
+	 */
+	public String getProductPhotos(long productId);
+	
+	public String getProductPhotos(IProductPrice pack);
 }

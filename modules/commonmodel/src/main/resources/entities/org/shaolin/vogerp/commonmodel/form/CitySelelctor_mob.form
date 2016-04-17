@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
-  <entityName>org.shaolin.vogerp.commonmodel.form.CitySelelctor</entityName>
+  <entityName>org.shaolin.vogerp.commonmodel.form.CitySelelctor_mob</entityName>
   <systemVersion>0</systemVersion>
   <ns2:eventHandler functionName="selectSubItem">
      <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectSubItem-201604102211">
@@ -16,15 +16,15 @@
               import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
               import org.shaolin.bmdp.runtime.spi.IConstantService;
 	          {
-	              RadioButtonGroup cityListUI = @page.getRadioBtnGroup("cityListUI");
+	              AList cityListUI = @page.getList("cityListUI");
 	              
 	              IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
 	              ArrayList values1 = new ArrayList();
 		          ArrayList displayItems1 = new ArrayList();
 		          CEOperationUtil.getCEItems(values1, displayItems1, cs.getChildren(CEUtil.toCEValue(cityListUI.getValue())));
 		          
-	              RadioButtonGroup citySubListUI = @page.getRadioBtnGroup("citySubListUI");
-                  citySubListUI.clearValue();
+	              AList citySubListUI = @page.getList("citySubListUI");
+                  citySubListUI.clearValues();
                   citySubListUI.setOptions(displayItems1, values1);
 	          }
 	          ]]></expressionString>
@@ -41,9 +41,9 @@
               import org.shaolin.uimaster.page.AjaxContext;
               import org.shaolin.uimaster.page.ajax.*;
               {
-                  RadioButtonGroup cityListUI = @page.getRadioBtnGroup("cityListUI");
+                  AList cityListUI = @page.getList("cityListUI");
               
-                  RadioButtonGroup citySubListUI = @page.getRadioBtnGroup("citySubListUI");
+                  AList citySubListUI = @page.getList("citySubListUI");
                   TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(@page.getHidden("parentUI").getValue());
                   textWidget.setValue(citySubListUI.getValue());
                   if (textWidget instanceof Label) {
@@ -75,7 +75,7 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
-      <ns2:component xsi:type="ns2:UIRadioButtonGroupType" UIID="cityListUI">
+      <ns2:component xsi:type="ns2:UIListType" UIID="cityListUI">
         <ns2:Property name="horizontalLayout" >
          <ns2:value xsi:type="ns2:BooleanPropertyType">
             <value>true</value>
@@ -87,6 +87,11 @@
             <value>6</value>
          </ns2:value>
         </ns2:Property>
+        <ns2:size xsi:type="ns2:ExpressionPropertyType">
+          <ns2:expression>
+            <expressionString>{return 10;}</expressionString>
+          </ns2:expression>
+        </ns2:size>
         <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
           <ns2:handler functionName="selectSubItem"></ns2:handler>
         </ns2:EventListener>
@@ -104,7 +109,7 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
-      <ns2:component xsi:type="ns2:UIRadioButtonGroupType" UIID="citySubListUI">
+      <ns2:component xsi:type="ns2:UIListType" UIID="citySubListUI">
         <ns2:Property name="horizontalLayout" >
          <ns2:value xsi:type="ns2:BooleanPropertyType">
             <value>true</value>
@@ -115,6 +120,11 @@
             <type>int</type>
             <value>6</value>
          </ns2:value>
+         <ns2:size xsi:type="ns2:ExpressionPropertyType">
+          <ns2:expression>
+            <expressionString>{return 10;}</expressionString>
+          </ns2:expression>
+        </ns2:size>
         </ns2:Property>
         <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
           <ns2:handler functionName="selectedCity"></ns2:handler>
@@ -160,14 +170,13 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="parentUIID" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIMultipleChoice"></ns2:mappingRule>
       <ns2:UIComponent componentPath="cityListUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="selectedCity" paramName="Value"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values" paramName="OptionValues"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIMultipleChoice"></ns2:mappingRule>
       <ns2:UIComponent componentPath="citySubListUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values1" paramName="OptionValues"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems1" paramName="OptionDisplayValues"></ns2:DataComponent>

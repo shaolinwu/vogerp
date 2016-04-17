@@ -80,6 +80,7 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 					}
 					for (int f = 0; f < priceItems.size(); f++) {
 						IProductPrice price = priceItems.get(f);
+						price.setProduct(mg);
 						dataModel.put("pg_" + price.getId(), price);
 					
 						TreeItem pitem = new TreeItem();
@@ -190,6 +191,20 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		condition.setId(priceId);
 		List<IProductPrice> all = ProductModel.INSTANCE.searchProductPrice(condition, null, 0, 1);
 		return all.get(0);
+	}
+	
+	public String getProductPhotos(IProductPrice pack) {
+		List tree = getPriceTree();
+		Map dataModel = (Map)tree.get(tree.size()-1);
+		IProductPrice newPrice = (IProductPrice)dataModel.get("pg_" + pack.getId());
+		return newPrice.getProduct().getPhotos();
+	}
+	
+	public String getProductPhotos(long productId) {
+		ProductImpl condition = new ProductImpl();
+		condition.setId(productId);
+		List<IProduct> all = ProductModel.INSTANCE.searchProductInfo(condition, null, 0, 1);
+		return all.get(0).getPhotos();
 	}
 	
 	@Override

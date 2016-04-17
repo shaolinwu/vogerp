@@ -88,13 +88,14 @@
                     import java.util.Date;
                     import java.util.HashMap;
                     import org.shaolin.bmdp.utils.DateUtil;
-                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
-                    import org.shaolin.vogerp.order.be.IPurchaseOrder;
-                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.vogerp.commonmodel.IUserService; 
-                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     import org.shaolin.vogerp.order.be.IPurchaseItem;
+                    import org.shaolin.vogerp.order.be.IPurchaseOrder;
+                    import org.shaolin.vogerp.productmodel.IProductService;
+                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
                     {
                          GoldenOrderImpl order = new GoldenOrderImpl();
                          order.setSerialNumber(OrderUtil.genSerialNumber());
@@ -106,7 +107,13 @@
                          IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
                          order.setPublishedCustomerId(service.getUserId());
                          order.setPurchaseOrderId($purchaseOrder.getId());
-                         //order.setPhotos();
+                         
+                         IProductService productService = (IProductService)AppContext.get().getService(IProductService.class);
+                         if (a.getPricePackage().getProduct() == null) {
+                            order.setPhotos(productService.getProductPhotos(a.getPricePackage()));
+                         } else {
+                            order.setPhotos(productService.getProductPhotos(a.getPricePackage().getProduct().getId()));
+                         }
                          order.setCreateDate(new Date());
                          order.setExpiredDate(new Date());
                          order.setStatus(OrderStatusType.PUBLISHED);

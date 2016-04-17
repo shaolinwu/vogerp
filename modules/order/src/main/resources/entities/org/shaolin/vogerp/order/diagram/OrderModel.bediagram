@@ -178,6 +178,10 @@
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>productId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>amount</bediagram:name>
             <bediagram:type xsi:type="bediagram:IntType" />
         </bediagram:member>

@@ -90,6 +90,7 @@
             
             PurchaseItemImpl selectedRow = (PurchaseItemImpl)tableWidget.getSelectedRow();
             selectedRow.setPricePackage(prices);
+            selectedRow.setProductId(prices.getProduct().getId());
             selectedRow.setPriceId(prices.getId());
             selectedRow.setUnitPrice(prices.getPrice());
             tableWidget.refresh();

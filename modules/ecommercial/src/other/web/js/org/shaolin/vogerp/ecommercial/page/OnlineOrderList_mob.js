@@ -8,12 +8,16 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob(json)
         ui: elementList[prefix + "defaultAction"]
     });
 
+    var functionsTab = new UIMaster.ui.tab
+    ({
+        ui: elementList[prefix + "functionsTab"]
+        ,items: []
+        ,subComponents: [prefix + "goldenOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "loanOrderInfoPanel"]
+    });
     var goldenOrderTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "goldenOrderTable"]
     });
-
-    var searchBar = new org_shaolin_vogerp_ecommercial_form_SearchBar({"prefix":prefix + "searchBar."});
 
     var goldenOrderInfoPanel = new UIMaster.ui.panel
     ({
@@ -21,6 +25,30 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob(json)
         ,items: []
         ,subComponents: [prefix + "goldenOrderTable"]
     });
+    var rentOrderTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "rentOrderTable"]
+    });
+
+    var rentOrderInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "rentOrderInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "rentOrderTable"]
+    });
+    var loanOrderTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "loanOrderTable"]
+    });
+
+    var loanOrderInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "loanOrderInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "loanOrderTable"]
+    });
+
+    var searchBar = new org_shaolin_vogerp_ecommercial_form_SearchBar_mob({"prefix":prefix + "searchBar."});
 
     var searchConditionPanel = new UIMaster.ui.panel
     ({
@@ -33,22 +61,30 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob(json)
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [defaultAction,goldenOrderTable,searchBar,searchConditionPanel,goldenOrderInfoPanel]
+        ,items: [defaultAction,functionsTab,searchBar,searchConditionPanel]
     });
 
     Form.defaultAction=defaultAction;
 
+    Form.functionsTab=functionsTab;
+
+    Form.goldenOrderInfoPanel=goldenOrderInfoPanel;
+
     Form.goldenOrderTable=goldenOrderTable;
+
+    Form.rentOrderInfoPanel=rentOrderInfoPanel;
+
+    Form.rentOrderTable=rentOrderTable;
+
+    Form.loanOrderInfoPanel=loanOrderInfoPanel;
+
+    Form.loanOrderTable=loanOrderTable;
 
     Form.searchBar=searchBar;
 
     Form.searchConditionPanel=searchConditionPanel;
 
     Form.searchBar=searchBar;
-
-    Form.goldenOrderInfoPanel=goldenOrderInfoPanel;
-
-    Form.goldenOrderTable=goldenOrderTable;
 
     Form.user_constructor = function()
     {
