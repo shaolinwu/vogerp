@@ -26,16 +26,6 @@ function org_shaolin_vogerp_commonmodel_form_ImageViewer(json)
         ui: elementList[prefix + "refreshbtn"]
     });
 
-    var addAblumbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "addAblumbtn"]
-    });
-
-    var movePicToAlbumbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "movePicToAlbumbtn"]
-    });
-
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
@@ -50,7 +40,7 @@ function org_shaolin_vogerp_commonmodel_form_ImageViewer(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "refreshbtn",prefix + "addAblumbtn",prefix + "movePicToAlbumbtn",prefix + "okbtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "refreshbtn",prefix + "okbtn",prefix + "cancelbtn"]
     });
 
     var photoPanel = new UIMaster.ui.panel
@@ -70,7 +60,7 @@ function org_shaolin_vogerp_commonmodel_form_ImageViewer(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [callbackUIIDUI,photoUI,uploadFile,refreshbtn,addAblumbtn,movePicToAlbumbtn,okbtn,cancelbtn,fieldPanel,photoPanel,actionPanel]
+        ,items: [callbackUIIDUI,photoUI,uploadFile,refreshbtn,okbtn,cancelbtn,fieldPanel,photoPanel,actionPanel]
     });
 
     Form.callbackUIIDUI=callbackUIIDUI;
@@ -80,10 +70,6 @@ function org_shaolin_vogerp_commonmodel_form_ImageViewer(json)
     Form.uploadFile=uploadFile;
 
     Form.refreshbtn=refreshbtn;
-
-    Form.addAblumbtn=addAblumbtn;
-
-    Form.movePicToAlbumbtn=movePicToAlbumbtn;
 
     Form.okbtn=okbtn;
 
@@ -104,10 +90,6 @@ function org_shaolin_vogerp_commonmodel_form_ImageViewer(json)
     Form.actionPanel=actionPanel;
 
     Form.refreshbtn=refreshbtn;
-
-    Form.addAblumbtn=addAblumbtn;
-
-    Form.movePicToAlbumbtn=movePicToAlbumbtn;
 
     Form.okbtn=okbtn;
 

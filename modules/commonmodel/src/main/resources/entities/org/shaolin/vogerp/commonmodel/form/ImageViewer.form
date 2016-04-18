@@ -182,8 +182,6 @@
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="refreshbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
@@ -193,6 +191,7 @@
           <ns2:value>刷新</ns2:value>
         </ns2:text>
       </ns2:component>
+      <!-- 
       <ns2:component xsi:type="ns2:UIButtonType" UIID="addAblumbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="addAblum"></ns2:handler>
@@ -209,6 +208,7 @@
           <ns2:value>复制到目录...</ns2:value>
         </ns2:text>
       </ns2:component>
+       -->
       <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="Save"></ns2:handler>
@@ -226,6 +226,7 @@
           <ns2:key>Cancelbtn</ns2:key>
         </ns2:text>
       </ns2:component>
+      <!-- 
       <ns2:layoutConstraint>
         <ns2:componentId>addAblumbtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
@@ -234,17 +235,18 @@
         <ns2:componentId>movePicToAlbumbtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
+       -->
       <ns2:layoutConstraint>
         <ns2:componentId>refreshbtn</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="2" y="0" align="FULL"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>okbtn</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="3" y="0" align="FULL"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>cancelbtn</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="4" y="0" align="FULL"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="2" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
