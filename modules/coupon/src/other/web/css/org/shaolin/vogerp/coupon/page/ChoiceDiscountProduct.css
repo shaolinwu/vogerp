@@ -91,6 +91,9 @@ div[class1='discountProductInfoView'] .uimaster_container_cell{
     text-align : center;
     color : white;
 }
+div[class1='discountProductInfoView'] div[class1='discountProductTextView']{
+	padding-top: 9%;
+}
 div[class1='discountProductInfoView'] div[class1='discountProductTextView'] div{
 	width : 100%;
 }
@@ -119,4 +122,8 @@ div#div-discountProductForm-discountProductForm-discountProductPanel-1_0{
 
 span {
     white-space: nowrap;
+}
+img[class1='discountProductImageView']{
+	float: left;
+	clear: none;
 }

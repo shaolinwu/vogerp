@@ -55,11 +55,13 @@
 		        import java.util.HashMap;
 		        import org.shaolin.uimaster.page.AjaxContext;
 		        import org.shaolin.uimaster.page.ajax.*;
+		        import org.shaolin.bmdp.runtime.security.UserContext;
 		        { 
 		           HashMap input = new HashMap();
 		           input.put("editable", new Boolean(true));
 		           input.put("callbackUIID", @page.getTextField("topAdvertUI").getId());
-		           input.put("imagePath", "/images/coupon/front/couponIcon");
+		           Long orgId = (Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID);
+		           input.put("imagePath", "/images/coupon/front/couponIcon/" + orgId);
 		           RefForm form = new RefForm("selectImageForm", "org.shaolin.vogerp.commonmodel.form.ImageViewer", input);
 		           @page.addElement(form);
 		           form.openInWindows("Image Viewer", null, 620, 450);
@@ -74,11 +76,13 @@
 		        import java.util.HashMap;
 		        import org.shaolin.uimaster.page.AjaxContext;
 		        import org.shaolin.uimaster.page.ajax.*;
+		        import org.shaolin.bmdp.runtime.security.UserContext;
 		        { 
 		           HashMap input = new HashMap();
 		           input.put("editable", new Boolean(true));
 		           input.put("callbackUIID", @page.getTextField("bottomAdvertUI").getId());
-		           input.put("imagePath", "/images/coupon/front/couponIcon");
+		           Long orgId = (Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID);
+		           input.put("imagePath", "/images/coupon/front/couponIcon/" + orgId);
 		           RefForm form = new RefForm("selectImageForm", "org.shaolin.vogerp.commonmodel.form.ImageViewer", input);
 		           @page.addElement(form);
 		           form.openInWindows("Image Viewer", null, 620, 450);

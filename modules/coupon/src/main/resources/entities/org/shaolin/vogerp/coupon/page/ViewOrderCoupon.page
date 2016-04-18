@@ -139,8 +139,56 @@
 	</ns2:ODMapping>
 	<ns2:in>
 		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">
-            <ns2:expressionString><![CDATA[{
+            <ns2:expressionString><![CDATA[
+            import org.shaolin.bmdp.runtime.AppContext;
+		    import org.shaolin.vogerp.coupon.be.*;
+		    import org.shaolin.vogerp.coupon.dao.CouponModel;
+			import org.shaolin.uimaster.page.ajax.*;
+			import java.util.List;
+			import java.util.ArrayList;
+			import org.shaolin.bmdp.runtime.security.UserContext;
+			import java.util.Date;
+			import org.shaolin.vogerp.coupon.util.*;
+			import org.shaolin.vogerp.coupon.ce.StatusType;
+            {
             	$bottomAdvertImage = (String)@odContext.getRequest().getSession().getAttribute("BottomAdvertImage");
+            	
+            	String code = @odContext.getRequest().getParameter("code");
+           		System.out.println("code=" + code);
+            	if (null != code && code.length() > 0) {
+					String openId = WechatUtil.getOpenIdByOauth(code);
+					System.out.println("openId=" + openId);
+			      	CouponOperationImpl condition = new CouponOperationImpl();
+			      	condition.setOpenId(openId);
+			      	condition.setType(CouponUtil.OPERATION_TYPE_LOTTERY);
+			      	condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+			      	List couponOpers = CouponModel.INSTANCE.searchCouponOperation(condition, null, 0, 0);
+			      	
+			      	if (null != couponOpers && couponOpers.size() > 0) {
+				      	if (null == $coupons) {
+				      		$coupons = new ArrayList();
+				      	}
+			      		for (int i = 0; i < couponOpers.size(); i++) {
+			      			CouponOperationImpl couponOper = (CouponOperationImpl)couponOpers.get(i);
+			      			String serialNumber = couponOper.getSerialNumber();
+			      			if (null != serialNumber && !"".equals(serialNumber)) {
+			      				CouponImpl condition1 = new CouponImpl();
+			      				condition1.setSerialNumber(serialNumber);
+			      				condition1.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+			      				List coupons = CouponModel.INSTANCE.searchEffectedCoupon(condition1, null, 0, 0);
+			      				if (null != coupons && coupons.size() > 0) {
+			      					for (int k = 0; k < coupons.size(); k++) {
+			      						CouponImpl coupon = (CouponImpl)coupons.get(k);
+			      						if (coupon.getExpiredDate().compareTo(new Date()) >= 0) {
+					      					$coupons.add(coupon);
+			      						}
+			      					}
+			      				}
+			      			}
+			      		}
+      				}
+            	}
+            	
             }]]></ns2:expressionString>
         </ns2:serverOperation>
 		<ns2:clientAction xsi:type="ns2:ExpressionParamType">

@@ -257,7 +257,7 @@
 	        <bediagram:name>isValidateOpenId</bediagram:name>
 	        <bediagram:type xsi:type="bediagram:BooleanType" />
 	    </bediagram:member>
-	    <!-- 优惠券码 -->
+	    <!-- 系统是否正在维护 -->
 	    <bediagram:member>
 	        <bediagram:name>isMaintain</bediagram:name>
 	        <bediagram:type xsi:type="bediagram:BooleanType" />
@@ -273,6 +273,74 @@
 	        <bediagram:type xsi:type="bediagram:StringType" />
 	    </bediagram:member>
     </bediagram:beEntity>
+    
+    <!-- 用户信息 -->
+	<bediagram:beEntity needOrgId="true" needPersist="true" needUIEntity="true">
+        <common:entityName>CouponUserInfo</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <!-- 抽奖链接 -->
+        <bediagram:member>
+	        <bediagram:name>lotteryLink</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+        <!-- 查询链接 -->
+        <bediagram:member>
+	        <bediagram:name>queryLink</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 月均人流 -->
+	    <bediagram:member>
+	        <bediagram:name>volumn</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:LongType" />
+	    </bediagram:member>
+	    <!-- 所在区域 -->
+        <bediagram:member>
+	        <bediagram:name>address</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 主营业务 -->
+        <bediagram:member>
+	        <bediagram:name>mainBusiness</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 其它备注 -->
+        <bediagram:member>
+	        <bediagram:name>remark</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 顶部广告位 -->
+	    <bediagram:member>
+	        <bediagram:name>topAdvertImage</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 底部广告位 -->
+	    <bediagram:member>
+	        <bediagram:name>bottomAdvertImage</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 抽奖入口 -->
+	    <bediagram:member>
+	        <bediagram:name>lotteryChannel</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:CEObjRefType">
+	            <bediagram:targetEntity entityName="ChannelType" />
+	        </bediagram:type>
+	    </bediagram:member>
+	    <!-- 二维码 -->
+	    <bediagram:member>
+	        <bediagram:name>qrCode</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 品牌介绍 -->
+	    <bediagram:member>
+	        <bediagram:name>brand</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+    </bediagram:beEntity>
+    
+    
     
     <!-- 状态 1-创建 2-已发出 3-已兑换 -->
 	<bediagram:ceEntity>
@@ -311,6 +379,26 @@
 			<bediagram:value>OneWeek</bediagram:value>
 			<bediagram:intValue>7</bediagram:intValue>
 			<bediagram:description>7\u5929</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	
+	<!-- ChannelType -->
+	<bediagram:ceEntity>
+		<common:entityName>ChannelType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>wechat</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>微信公众号</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+            <bediagram:value>Alipay</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>支付宝</bediagram:description>
+        </bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Scan</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>独立扫码</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>
 	

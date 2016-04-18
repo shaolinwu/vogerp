@@ -308,6 +308,8 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 
     Form.viewCoupon = org_shaolin_vogerp_coupon_page_CouponInfo_viewCoupon;
 
+    Form.effectCoupon = org_shaolin_vogerp_coupon_page_CouponInfo_effectCoupon;
+
     Form.ViewOrderCouponLogic = org_shaolin_vogerp_coupon_page_CouponInfo_ViewOrderCouponLogic;
 
     Form.initPageJs = org_shaolin_vogerp_coupon_page_CouponInfo_initPageJs;
@@ -337,6 +339,17 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"viewCoupon-20160112-232035",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponInfo_viewCoupon */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_page_CouponInfo_effectCoupon(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_page_CouponInfo_effectCoupon */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"effectCoupon-20160112-232035",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponInfo_effectCoupon */
 
 
     /* auto generated eventlistener function declaration */
@@ -391,10 +404,13 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 						link: 'http://www.vogerp.com/uimaster/jsp/main.html',
 						imgUrl: 'http://www.mr-prize.com/uimaster/images/coupon/front/couponIcon/50off.png',
 						success: function () { 
-							alert("share success");
+							//设置优惠券状态为已生效
+							othis = this;
+							var eventsource = $("#couponPanel");
+							UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"effectCoupon-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
 						},
 						cancel: function () { 
-							alert("share cancel");
+							//alert("share cancel");
 						}
 					});	
 				});

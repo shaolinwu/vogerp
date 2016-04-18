@@ -45,6 +45,7 @@
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 				</ns2:layout>
 				<ns2:component xsi:type="ns2:UIImageType" UIID="lotteryLogoImage">
@@ -84,6 +85,18 @@
 					        </ns2:value>
 			            </ns2:Property>
 					</ns2:component>
+					<ns2:component xsi:type="ns2:UIHiddenType" UIID="orgId">
+						<ns2:Property name="value">
+				            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+						         <ns2:expression>
+						           <expressionString>
+						           { 
+						           	   return $orgIdText;
+						           }</expressionString>
+						         </ns2:expression>
+					        </ns2:value>
+			            </ns2:Property>
+					</ns2:component>
 					<ns2:component xsi:type="ns2:UIHiddenType" UIID="phoneNumText" />
 					<ns2:component xsi:type="ns2:UIHiddenType" UIID="luckyImageUrlText" />
 					<ns2:component xsi:type="ns2:UIReferenceEntityType"
@@ -113,12 +126,13 @@
 				        </ns2:value>
 		            </ns2:Property>
 				</ns2:component>
+				<ns2:component xsi:type="ns2:UIPanelType" UIID="rollLottery">
+				</ns2:component>
 				<ns2:layoutConstraint>
 					<ns2:componentId>lotteryLogoImage</ns2:componentId>
 					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 						x="0" y="0" align="FULL"></ns2:constraint>
 				</ns2:layoutConstraint>
-				advertTopImage
 				<ns2:layoutConstraint>
 					<ns2:componentId>advertTopImage</ns2:componentId>
 					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
@@ -138,6 +152,11 @@
 					<ns2:componentId>advertBottomImage</ns2:componentId>
 					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 						x="0" y="4" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+				<ns2:layoutConstraint>
+					<ns2:componentId>rollLottery</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="0" y="5" align="FULL"></ns2:constraint>
 				</ns2:layoutConstraint>
 			</ns2:component>
 			<ns2:layoutConstraint>
@@ -161,6 +180,9 @@
             <ns2:type entityName="java.lang.String" />
         </ns2:DataEntity>
         <ns2:DataEntity category="JavaClass" name="bottomAdvertImage" scope="InOut">
+            <ns2:type entityName="java.lang.String" />
+        </ns2:DataEntity>
+        <ns2:DataEntity category="JavaClass" name="orgIdText" scope="InOut">
             <ns2:type entityName="java.lang.String" />
         </ns2:DataEntity>
         <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
@@ -208,7 +230,9 @@
             	System.out.println("\n\nFrontLottery page  openId=" + $openId + "\n\n");
             	
             	CouponSystemImpl condition = new CouponSystemImpl();
-            	condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+            	long orgId = (Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID);
+            	condition.setOrgId(orgId);
+            	$orgIdText = String.valueOf(orgId);
             	List couponSystems = CouponModel.INSTANCE.searchCouponSystem(condition, null, 0, 0);
             	if (null == couponSystems || couponSystems.size() <= 0) {
 	            	$topAdvertImage = "/uimaster/images/coupon/front/advert_top.jpg";

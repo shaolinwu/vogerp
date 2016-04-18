@@ -168,6 +168,9 @@ function org_shaolin_vogerp_coupon_page_CouponSetting(json)
         var constraint_result = true;
         var UIEntity = this;
 
+			{
+				$(".resetIntervalUI").show();
+			}
     }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponSetting_initPageJs */
 
 

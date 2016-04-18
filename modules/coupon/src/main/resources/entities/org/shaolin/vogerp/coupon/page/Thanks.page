@@ -120,7 +120,7 @@
 							</ns2:component>
 							<ns2:component xsi:type="ns2:UIImageType" UIID="bottomRight1Image">
 								<ns2:src xsi:type="ns2:ImagePropertyType">
-									<ns2:location>/coupon/front/finger.png</ns2:location>
+									<ns2:location>/coupon/front/finger.gif</ns2:location>
 								</ns2:src>
 							</ns2:component>
 							<ns2:layoutConstraint>

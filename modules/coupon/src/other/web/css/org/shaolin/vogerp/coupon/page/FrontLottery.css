@@ -114,9 +114,9 @@
     position : relative;
 }
 .lotteryForm_couponImage img{
-	width: 70%;
+	width: 60%;
     margin: 0 auto;
-    padding-top: 15%;
+    padding-top: 10%;
 }
 #div-leftPanel-0_3{
 	text-decoration:underline;
@@ -133,6 +133,7 @@
 }
 #div-leftPanel-0_1 img{
 	width : 100%;
+	min-height: 100%;
 }
 #div-leftPanel-0_4{
 	min-width: 100%;
@@ -145,6 +146,7 @@
 }
 #div-leftPanel-0_4 img{
 	width : 100%;
+	min-height: 100%;
 }
 #div-leftPanel-0_5{
 	min-width: 100%;
@@ -156,9 +158,6 @@
     z-index: 3;
     display: none;
 }
-#div-leftPanel-0_5 img, #div-leftPanel-0_6 img{
-	width: 4%;
-}
 #div-leftPanel-0_6{
 	min-width: 100%;
     position: absolute;
@@ -168,5 +167,33 @@
     top : 0;
     z-index: 3;
     display: none;
+}
+
+#div-leftPanel-0_5 {
+	width : 100%;
+	margin : 0;
+	background-image : url(/uimaster/images/coupon/front/border_new.png);
+	background-repeat : no-repeat;
+	background-size : 100% 100%;
+	-moz-background-size : 100% 100%;
+	-webkit-background-size : 100% 100%;
+	z-index : 10;
+	left: 0;
+	top: 0;
+}
+#rollLottery img {
+	float: left;
+}
+#rollImage1 {
+	width : 25%;
+	margin : 2.5% 0 0 7%;
+}
+#rollImage2 {
+	width : 26%;
+	margin: 2.5% 0 0 4%;
+}
+#rollImage3 {
+	width : 25%;
+	margin: 2.7% 0 0 5.5%;
 }
 

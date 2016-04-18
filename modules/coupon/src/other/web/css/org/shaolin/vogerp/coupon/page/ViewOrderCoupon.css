@@ -57,10 +57,12 @@ thead {
     margin: 0;
     padding: 0;
     max-width: 700px;
-    border-bottom : 2px white dashed;
 }
 img[class1='couponImageView']{
 	width : 100%;
+	min-height: 100%;
+	float: left;
+    clear: none;
 }
 div[class1='couponInfoPanel'] > div.uimaster_widget_cell,div[class1='couponInfoPanel'] > div.uimaster_container_cell {
 	width : 100%;

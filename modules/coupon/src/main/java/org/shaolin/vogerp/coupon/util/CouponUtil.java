@@ -56,7 +56,8 @@ public class CouponUtil {
 		coupon.setDiscountProductId(discountProduct.getId());
 		coupon.setExpiredDate(addDays(new Date(), discountProduct.getValidity()));
 		if (discountProduct.getCouponType().getIsImmediate()) {
-			coupon.setStatus(StatusType.CREATED);
+			//TODO if add share function, need change to CREATE
+			coupon.setStatus(StatusType.SENDOUT);
 		} else {
 			coupon.setStatus(StatusType.SENDOUT);
 		}

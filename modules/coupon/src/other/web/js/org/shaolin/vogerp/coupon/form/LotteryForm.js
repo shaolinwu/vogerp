@@ -71,75 +71,36 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 		{
 				var windowHeight = $(window).height();
 				var windowWidth = $(window).width();
-				this.roll = function(luckyImageUrl){
-				
-			        			//compute roll percent distance
-			        			var rollTopArr = new Array();
-			        			var cellTop = 32.5;
-			        			
-			        			$("#div-lotteryForm-hidden input[name='lotteryForm.luckyImageUrlText']").val(luckyImageUrl);
-			        			$("input[name='luckyImageUrlText']").val(luckyImageUrl);
-			        			
-			        			var couponPanel = document.getElementById("lotteryForm.couponPanel");
-								var $couponPan = $(couponPanel);
-								var lotteryImageDivs = $couponPan.children(".lotteryForm_couponImage");
-			        			if (null != lotteryImageDivs) {
-			        				var row = lotteryImageDivs.length / 3;
-			        				if (null != luckyImageUrl && "" != luckyImageUrl) {
-			        					//setting lottery roll params
-			        					for (var m = 0; m < 3; m++) {
-			        						$("#lotteryForm_" + m + "-" + (row - 1) + " img").attr("src", luckyImageUrl);
-										}
-			        				} else {
-			        					//setting no lottery
-										var imageUrl1 = $("#lotteryForm_0-" + (row - 1) + " img").attr("src");
-										var imageUrl2 = $("#lotteryForm_1-" + (row - 1) + " img").attr("src");
-										if (imageUrl2 == imageUrl1) {
-											for (var j = 0; j < lotteryImageDivs.length; j++) {
-												var otherImageUrl = $(lotteryImageDivs[j]).attr("src");
-												if (otherImageUrl != imageUrl1) {
-													$("#lotteryForm_2-" + (row - 1) + " img").attr("src", otherImageUrl);
-													break ;
-												}
-											}
-										}
-			        				}
-			        				
-			        				//roll
-			        				for (var m = 0; m < 3; m++) {
-										var needRollDivIds = "";
-										for (var n = 0; n < row; n++) {
-											if (null == needRollDivIds || "" == needRollDivIds) {
-												needRollDivIds = "#lotteryForm_" + m + "-" + n;
-											} else {
-												needRollDivIds = needRollDivIds + "," +"#lotteryForm_" + m + "-" + n;
-											}
-										}
-										var rollTime = 8000;
-										var rollTop = ((row - 2) * cellTop);
-										var cellTime = parseInt(rollTime / (row - 2));
-										$(needRollDivIds).delay(m * cellTime).animate({"top" : "-" + rollTop + "%"}, rollTime, "linear");
-									}
-									var advertTopHeight = windowHeight - $couponPan.height() * 0.42 - $("#div-leftPanel-0_4").height();
-									$("#div-leftPanel-0_1, #div-leftPanel-0_1 img").height(advertTopHeight + "px").css("display", "block");
-									var rollHeight = advertTopHeight - $couponPan.height() * 0.28 - $couponPan.offset().top;
-									$couponPan.css("top", "" + rollHeight + "px");
-									var advertBottomHeight = windowHeight - advertTopHeight - $couponPan.height() * 0.40;
-									$("#div-leftPanel-0_4, #div-leftPanel-0_4 img").height(advertBottomHeight + "px").css("display", "block");
-									$("#div-leftPanel-0_5").css("left", $couponPan.offset().left + "px");
-									$("#div-leftPanel-0_6").css("right", $couponPan.offset().right + "px");
-			        				$("#div-leftPanel-0_5,#div-leftPanel-0_6").height($couponPan.height() + "px").css({"display" : "block", "top" : advertTopHeight + "px"});
-			        				
-			        			}
-			        			
-			        			//\u62BD\u5956\u6846\u6EDA\u52A8\u7ED3\u675F\uFF0C\u8C03\u7528\u540E\u53F0\u751F\u6210\u4F18\u60E0\u5238
-			        			var othis = this;
-								var eventsource = $couponPan;
-								var delayTime = 11000;
-								setTimeout(function(){
-			        				UIMaster.triggerServerEvent("lotteryForm.couponPanel","genCoupon-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
-			        			}, delayTime);
-			        			
+				this.roll = function(luckyImageUrl, showImages){
+					
+					//alert(luckyImageUrl+ "    " +showImages);
+					
+					$("input[name='luckyImageUrlText']").val(luckyImageUrl);
+					$("#div-leftPanel-0_1").height(windowHeight * 0.55).show();
+		        	$("#div-leftPanel-0_4").height(windowHeight * 0.25).show();
+					var orgId = $("input[name='orgId']").val();
+					$("#rollLottery").append("<img id=\"rollImage1\" src=\"/uimaster/images/coupon/front/couponIcon/" + orgId + "/lotteryRoll_a.gif\" /><img id=\"rollImage2\"  src=\"/uimaster/images/coupon/front/couponIcon/" + orgId + "/lotteryRoll_b.gif\" /><img id=\"rollImage3\"  src=\"/uimaster/images/coupon/front/couponIcon/" + orgId + "/lotteryRoll_c.gif\" />");
+					$("#div-leftPanel-0_5").height(windowHeight * 0.2).css("top" , windowHeight * 0.55 + "px").show();
+					$("#div-leftPanel-0_5 img").height(windowHeight * 0.17 + "px");
+					
+					var showIcons = showImages.split(",");
+					
+					setTimeout(function(){
+						$("#rollImage1").attr("src", showIcons[0]);
+					}, 7800);
+					setTimeout(function(){
+						$("#rollImage2").attr("src", showIcons[1]);
+					}, 9000);
+					setTimeout(function(){
+						$("#rollImage3").attr("src", showIcons[2]);
+					}, 10200);
+					
+					var othis = this;
+					var couponPanel = document.getElementById("lotteryForm.couponPanel");
+					var eventsource = $(couponPanel);
+					setTimeout(function(){
+        				UIMaster.triggerServerEvent("lotteryForm.couponPanel","genCoupon-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
+        			}, 13000);
 				};
 				
 				this.setJackpotNum = function(jackpotRes) {
@@ -150,7 +111,7 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 						for (var a = 0; a < couponJackpots.length; a++) {
 							var couponJackpot = couponJackpots[a].split(":");
 							var widthNum = parseInt(100 / couponJackpots.length);
-							$rCoupon.append("<div id=\"div_lotteryForm-restCouponPanel-" + (a * 2) + "_0\" class=\"couponJackpotImageDiv\" style=\"width:" + widthNum * 0.65 + "%\"><img src=\"" + couponJackpot[0] + "\" /></div>");
+							$rCoupon.append("<div id=\"div_lotteryForm-restCouponPanel-" + (a * 2) + "_0\" class=\"couponJackpotImageDiv\" style=\"width:" + widthNum * 0.65 + "%\"><img data-src=\"" + couponJackpot[0] + "\" /></div>");
 							$rCoupon.append("<div id=\"div_lotteryForm-restCouponPanel-" + (a * 2 + 1) + "_0\" class=\"couponJackpotTextDiv\" style=\"width:" + widthNum * 0.35 + "%\"><span>x" + couponJackpot[1] + "</span>");
 						}
 						
@@ -168,13 +129,13 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 					//假设ajax请求返回该字符串，需要修改
 					
 					var imageUrlArr = imageUrls.split(",");
-					var rowNum = 12;
+					var rowNum = 3;
 					for (var m = 0; m < rowNum; m++) {
 						for (var n = 0; n < 3; n++) {
 							//随机取一张图片
 							var index = Math.floor(Math.random() * imageUrlArr.length);
 							var imageUrl = imageUrlArr[index];
-							$couponPan.append("<div id=\"lotteryForm_" + n + "-" + m + "\" class=\"lotteryForm_couponImage\"><img src=\"" + imageUrl + "\" /></div>");
+							$couponPan.append("<div id=\"lotteryForm_" + n + "-" + m + "\" class=\"lotteryForm_couponImage\"><img data-src=\"" + imageUrl + "\" /></div>");
 						}
 					}
 					
@@ -191,36 +152,41 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 				
 				var couponPanel = document.getElementById("lotteryForm.couponPanel");
 				var $couponPan = $(couponPanel);
-				//$couponPan.height((windowWidth * 0.945 * 0.83) + "px");
 				$couponPan.height(windowHeight * 0.53 + "px");
 				
-				
 				var restCoupon = document.getElementById("lotteryForm.restCouponPanel");
-				var $rCoupon = $(restCoupon)
+				var $rCoupon = $(restCoupon);
 				$rCoupon.height(windowHeight * 0.26 + "px");
 				
-				$("#div-lotteryForm-lotteryStartPanel-0_0 input").attr("placeholder", "\u8BF7\u8F93\u5165\u8BA2\u5355\u53F7\u540E4\u4F4D");
+				$("#div-lotteryForm-lotteryStartPanel-0_0 input").attr("placeholder", "\u8BF7\u8F93\u5165\u624B\u673A\u53F7\u540E4\u4F4D");
 				$("#div-lotteryForm-lotteryStartPanel-1_0 img").height($("#div-lotteryForm-lotteryStartPanel-0_0").height() + "px");
 				
 				var othis = this;
 				var eventsource = $couponPan;
-				//load lottery box of all coupon icon
-				UIMaster.triggerServerEvent("lotteryForm.couponPanel","loadCouponImageUrl-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
+				setTimeout(function(){
+					//load lottery box of all coupon icon
+					UIMaster.triggerServerEvent("lotteryForm.couponPanel","loadCouponImageUrl-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
+					
+					var lotyForm = document.getElementById("lotteryForm.Form");
+					var lotyFormHeight = $("#div-lotteryForm-Form-0_0").height();
+					$(lotyForm).height(lotyFormHeight + "px");
+					$(lotyForm).width(windowWidth * 0.945 + "px");
+					$("#lotteryPanel,#div-lotteryPanel-0_0,#div-leftPanel-0_2").height(lotyFormHeight + "px");
+					
+					$("#div-leftPanel-0_0").height(windowHeight * 0.05 + "px");
+					$("#div-leftPanel-0_0 img").height(windowHeight * 0.05 + "px");
+					$("#div-leftPanel-0_3").height(windowHeight * 0.05 + "px");
+					
+					var eventsource1 = $rCoupon;
+					UIMaster.triggerServerEvent("lotteryForm.restCouponPanel","loadJackpot-20160112-232035",UIMaster.getValue(eventsource1),othis.__entityName);
+					var $dataImgs = $("img[data-src]");
+					$dataImgs.each(function(i, dataImg){
+						setTimeout(function(){
+							$(dataImg).attr("src", $(dataImg).attr("data-src"));
+						}, i * 100);
+					});
+				}, 100);
 				
-				
-				var lotyForm = document.getElementById("lotteryForm.Form");
-				var lotyFormHeight = $("#div-lotteryForm-Form-0_0").height();
-				$(lotyForm).height(lotyFormHeight + "px");
-				$(lotyForm).width(windowWidth * 0.945 + "px");
-				$("#lotteryPanel,#div-lotteryPanel-0_0,#div-leftPanel-0_2").height(lotyFormHeight + "px");
-				
-				$("#div-leftPanel-0_0").height(windowHeight * 0.05 + "px");
-				$("#div-leftPanel-0_0 img").height(windowHeight * 0.05 + "px");
-				$("#div-leftPanel-0_3").height(windowHeight * 0.05 + "px");
-				
-				//\u67E5\u8BE2\u5E76\u8BBE\u7F6E\u5956\u6C60\u6570\u91CF
-				var eventsource1 = $rCoupon;
-				UIMaster.triggerServerEvent("lotteryForm.restCouponPanel","loadJackpot-20160112-232035",UIMaster.getValue(eventsource1),othis.__entityName);
 			}
 		
             /* Construct_LAST:org_shaolin_vogerp_coupon_form_LotteryForm */
@@ -276,6 +242,7 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
         var UIEntity = this;
 
 				{
+					
 					var phoneNum = $("#div-lotteryForm-lotteryStartPanel-0_0 input").val();
 					var reg = new RegExp("^[0-9]{4}$");
 		        	if (!reg.test(phoneNum.trim())) {

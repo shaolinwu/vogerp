@@ -240,3 +240,11 @@ input[icon='ui-icon-refresh'] {
 label.ui-last-child {
     display: none;
 }
+
+.resetIntervalUI {
+	display : block;
+	width : 80%;
+}
+span.ui-selectmenu-button {
+    display: none;
+}

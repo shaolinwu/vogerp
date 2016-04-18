@@ -310,5 +310,11 @@
 	<ns2:ODMapping>
 	</ns2:ODMapping>
 	<ns2:in>
+		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
+			<ns2:expressionString><![CDATA[
+			{
+				$(".resetIntervalUI").show();
+			}]]></ns2:expressionString>
+		</ns2:clientAction>
 	</ns2:in>
 </ns2:UIPage>

@@ -18,6 +18,11 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
         ui: elementList[prefix + "openId"]
     });
 
+    var orgId = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "orgId"]
+    });
+
     var phoneNumText = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "phoneNumText"]
@@ -40,25 +45,32 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
 
     var lotteryForm = new org_shaolin_vogerp_coupon_form_LotteryForm({"prefix":prefix + "lotteryForm."});
 
+    var rollLottery = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "rollLottery"]
+        ,items: []
+        ,subComponents: []
+    });
+
     var lotteryPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "lotteryPanel"]
         ,items: []
-        ,subComponents: [prefix + "openId",prefix + "phoneNumText",prefix + "luckyImageUrlText",prefix + "lotteryForm"]
+        ,subComponents: [prefix + "openId",prefix + "orgId",prefix + "phoneNumText",prefix + "luckyImageUrlText",prefix + "lotteryForm"]
     });
 
     var leftPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "leftPanel"]
         ,items: []
-        ,subComponents: [prefix + "lotteryLogoImage",prefix + "advertTopImage",prefix + "lotteryPanel",prefix + "footerText",prefix + "advertBottomImage"]
+        ,subComponents: [prefix + "lotteryLogoImage",prefix + "advertTopImage",prefix + "lotteryPanel",prefix + "footerText",prefix + "advertBottomImage",prefix + "rollLottery"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [lotteryLogoImage,advertTopImage,openId,phoneNumText,luckyImageUrlText,footerText,advertBottomImage,lotteryForm,leftPanel,lotteryPanel]
+        ,items: [lotteryLogoImage,advertTopImage,openId,orgId,phoneNumText,luckyImageUrlText,footerText,advertBottomImage,lotteryForm,leftPanel,lotteryPanel,rollLottery]
     });
 
     Form.lotteryLogoImage=lotteryLogoImage;
@@ -66,6 +78,8 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
     Form.advertTopImage=advertTopImage;
 
     Form.openId=openId;
+
+    Form.orgId=orgId;
 
     Form.phoneNumText=phoneNumText;
 
@@ -87,6 +101,8 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
 
     Form.openId=openId;
 
+    Form.orgId=orgId;
+
     Form.phoneNumText=phoneNumText;
 
     Form.luckyImageUrlText=luckyImageUrlText;
@@ -97,15 +113,21 @@ function org_shaolin_vogerp_coupon_page_FrontLottery(json)
 
     Form.advertBottomImage=advertBottomImage;
 
+    Form.rollLottery=rollLottery;
+
     Form.lotteryPanel=lotteryPanel;
 
     Form.openId=openId;
+
+    Form.orgId=orgId;
 
     Form.phoneNumText=phoneNumText;
 
     Form.luckyImageUrlText=luckyImageUrlText;
 
     Form.lotteryForm=lotteryForm;
+
+    Form.rollLottery=rollLottery;
 
     Form.user_constructor = function()
     {

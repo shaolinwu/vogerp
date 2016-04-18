@@ -19,6 +19,39 @@
 			</ns2:exp>
 		</ns2:ops>
 	</ns2:eventHandler>
+	
+	<ns2:eventHandler functionName="effectCoupon">
+		<ns2:ops xsi:type="ns2:OpCallAjaxType" name="effectCoupon-20160112-232035">
+			<ns2:exp>
+				<expressionString><![CDATA[
+				import org.shaolin.uimaster.page.ajax.*;
+				import org.shaolin.bmdp.runtime.security.UserContext;
+				import org.shaolin.vogerp.coupon.dao.CouponModel;
+				import org.shaolin.vogerp.coupon.be.CouponImpl;
+				import org.shaolin.vogerp.coupon.be.CouponTypeImpl;
+				import java.util.List;
+				import org.shaolin.vogerp.coupon.ce.StatusType;
+				{
+					System.out.println("\n\n========effectCoupon===========");
+					String serialNumber = @page.getTextField("serialNumText").getValue();
+					System.out.println(serialNumber);
+					CouponImpl condition = new CouponImpl();
+					condition.setSerialNumber(serialNumber);
+					condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+					List coupons = CouponModel.INSTANCE.searchEffectedCoupon(condition, null, 0, 0);
+					if (null != coupons && coupons.size() > 0) {
+						CouponImpl coupon = (CouponImpl) coupons.get(0);
+						System.out.println(coupon);
+						if (coupon.getDiscountProduct().getCouponType().getIsImmediate()) {
+							coupon.setStatus(StatusType.SENDOUT);
+							CouponModel.INSTANCE.update(coupon);
+						}
+					}
+				}
+				]]></expressionString>
+			</ns2:exp>
+		</ns2:ops>
+	</ns2:eventHandler>
 
 	<ns2:eventHandler functionName="ViewOrderCouponLogic"></ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
@@ -197,7 +230,7 @@
 						           import org.shaolin.vogerp.coupon.util.CouponUtil;
 						           { 
 						           		if ($couponType.getIsImmediate()) {
-						           			return "分享后 即刻生效";
+						           			return "分享到群里 即可兑换";
 						           		} else {
 						           			return "有效期: " + CouponUtil.formatDate($coupon.getExpiredDate(), "yyyy-MM-dd");			           			
 						           		}
@@ -233,7 +266,7 @@
 							</ns2:component>
 							<ns2:component xsi:type="ns2:UIImageType" UIID="fingerImage">
 								<ns2:src xsi:type="ns2:ImagePropertyType">
-									<ns2:location>/coupon/front/finger.png</ns2:location>
+									<ns2:location>/coupon/front/finger.gif</ns2:location>
 								</ns2:src>
 							</ns2:component>
 							<ns2:layoutConstraint>
@@ -418,11 +451,8 @@
             	long productNum = CouponModel.INSTANCE.searchDiscountProductCount(condition);
             	//String url = "http://localhost:8080/uimaster";
             	String url = "http://www.mr-prize.com/uimaster";
-            	if (productNum > 1) {
-	            	url += "/webflow.do?_timestamp=1&_chunkname=org.shaolin.bmdp.coupon.diagram.Lottery&_nodename=ChoiceDiscountProduct&_needCheckSessionTimeOut=true";
-            	} else {
-            		url += "/webflow.do?_timestamp=1&_chunkname=org.shaolin.bmdp.coupon.diagram.Lottery&_nodename=FrontLottery&_needCheckSessionTimeOut=true";
-            	}
+            	String nodeName = (String) @odContext.getRequest().getParameter("_nodename");
+            	url += "/webflow.do?_timestamp=1&_chunkname=org.shaolin.bmdp.coupon.diagram.Lottery&_nodename=" + nodeName + "&_needCheckSessionTimeOut=true";
             	
             	Long orgId = (Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID);
             	$wechatSign = WechatUtil.generateSign(orgId, url);
@@ -473,10 +503,13 @@
 						link: 'http://www.vogerp.com/uimaster/jsp/main.html',
 						imgUrl: 'http://www.mr-prize.com/uimaster/images/coupon/front/couponIcon/50off.png',
 						success: function () { 
-							alert("share success");
+							//设置优惠券状态为已生效
+							othis = this;
+							var eventsource = $("#couponPanel");
+							UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"effectCoupon-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
 						},
 						cancel: function () { 
-							alert("share cancel");
+							//alert("share cancel");
 						}
 					});	
 				});

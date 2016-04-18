@@ -181,6 +181,42 @@
       <ns2:fieldMapping beFieldName="orgId" columnName="ORGID"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
+  <ns2:table>
+    <entityName>LOTY_COUPONUSERINFO</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="LOTTERYLINK" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="QUERYLINK" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="VOLUMN" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="ADDRESS" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="MAINBUSINESS" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="REMARK" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="TOPADVERTIMAGE" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="BOTTOMADVERTIMAGE" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:column name="ORGID" type="BIGINT" length="38" default="0"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.coupon.be.CouponUserInfo"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="lotteryLink" columnName="LOTTERYLINK"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="queryLink" columnName="QUERYLINK"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="volumn" columnName="VOLUMN"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="address" columnName="ADDRESS"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="mainBusiness" columnName="MAINBUSINESS"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="remark" columnName="REMARK"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="topAdvertImage" columnName="TOPADVERTIMAGE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="bottomAdvertImage" columnName="BOTTOMADVERTIMAGE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="orgId" columnName="ORGID"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  
   <ns2:query queryName="searchCouponType">
     <ns2:searchResult name="outObject" category="BusinessEntity">
       <type entityName="org.shaolin.vogerp.coupon.be.CouponType"></type>
@@ -418,6 +454,61 @@
       </ns2:searchConditionData>
     </ns2:searchConditionMapping>
     <ns2:searchConditionMapping name="Search">
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.orgId</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type><![CDATA[=]]></ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.orgId</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getOrgId() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:searchConditionData name="scObject" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.coupon.be.CouponSystem"></type>
+      </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  
+  <ns2:query queryName="searchCouponUserInfo">
+    <ns2:searchResult name="outObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.coupon.be.CouponUserInfo"></type>
+    </ns2:searchResult>
+    <ns2:fromData name="inObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.coupon.be.CouponUserInfo"></type>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>outObject</ns2:toDataFieldPath>
+        <ns2:value xsi:type="ns2:SimpleFieldValueType">
+          <ns2:valueFieldPath>inObject</ns2:valueFieldPath>
+        </ns2:value>
+      </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+      <ns2:searchConditionData name="scObject" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.coupon.be.CouponUserInfo"></type>
+      </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+    <ns2:searchConditionMapping name="Search">
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.id</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type><![CDATA[=]]></ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.id</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getId() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
       <ns2:fieldMapping>
         <ns2:toDataFieldPath>inObject.orgId</ns2:toDataFieldPath>
         <ns2:conditionValue>

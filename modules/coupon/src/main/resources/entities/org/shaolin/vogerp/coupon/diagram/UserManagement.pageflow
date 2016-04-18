@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<ns2:WebChunk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/Page" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.bmdp.coupon.diagram.UserManagement</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:globalVariable name="gStr" category="JavaClass">
+    <type entityName="java.lang.String"></type>
+  </ns2:globalVariable>
+  
+  <!-- LotteryPage -->
+  <ns2:webNode xsi:type="ns2:PageNodeType" name="UserInfoMngr">
+    <ns2:sourceEntity entityName="org.shaolin.vogerp.coupon.page.UserManagement"></ns2:sourceEntity>
+    <!-- <ns2:out xsi:type="ns2:DisplayOutType" name="ChoiceDiscountProductLogic">
+      <ns2:next>
+        <ns2:destNode>ChoiceDiscountProductLogic</ns2:destNode>
+        <ns2:outDataMappingToNode name="openId">
+          <expression>
+            <expressionString><![CDATA[$openId]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+      </ns2:next>
+    </ns2:out> -->
+  </ns2:webNode>
+  
+  <!-- <ns2:webNode xsi:type="ns2:LogicNodeType" name="SelectedDiscountProductLogic">
+  	<ns2:variables name="openId" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+    </ns2:variables>
+    <ns2:operation>
+      <expressionString><![CDATA[
+      {
+      }]]></expressionString>
+    </ns2:operation>
+    <ns2:out xsi:type="ns2:ConditionalOutType" name="CouponInfo">
+      <ns2:conditionExpression>
+      	<expressionString><![CDATA[{return $couponType != null && $discountProduct != null;}]]></expressionString>
+      </ns2:conditionExpression>
+      <ns2:next>
+        <ns2:destNode>CouponInfo</ns2:destNode>
+        <ns2:outDataMappingToNode name="openId">
+          <expression>
+            <expressionString><![CDATA[$openId]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+      </ns2:next>
+    </ns2:out>
+  </ns2:webNode> -->
+</ns2:WebChunk>
