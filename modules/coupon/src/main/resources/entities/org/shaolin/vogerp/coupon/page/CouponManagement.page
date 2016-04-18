@@ -274,13 +274,13 @@
 								</ns2:title>
 								<ns2:beFieldId>rowBE.icon</ns2:beFieldId>
 								<ns2:uiType xsi:type="ns2:UITableColHTMLType">
-									<ns2:type>HTML</ns2:type>
+									<ns2:type>Image</ns2:type>
 								</ns2:uiType>
 								<ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
 								<ns2:expression xsi:type="ns2:ExpressionType">
 									<ns2:expressionString><![CDATA[
 		                            {
-		                                return "<img src=\"" + $rowBE.getIcon() + "\" style=\"width:120px;height:120px;\" />";
+		                                return $rowBE.getIcon();
 		                            }
 		                            ]]></ns2:expressionString>
 								</ns2:expression>
@@ -358,10 +358,6 @@
 								<!-- <ns2:defaultEnableAction>enableProduct</ns2:defaultEnableAction> 
 									<ns2:defaultDisableAction>disableProduct</ns2:defaultDisableAction> -->
 							</ns2:defaultActions>
-							<ns2:actionGroup> <ns2:type>radio</ns2:type> <ns2:action> <ns2:uiid>openSaleOrderTracker</ns2:uiid> 
-								<ns2:title xsi:type="ns2:StringPropertyType"> <ns2:value>Order Tracker</ns2:value> 
-								</ns2:title> <ns2:icon>ui-icon-note</ns2:icon> <ns2:function>openSaleOrderTracker</ns2:function> 
-								</ns2:action> </ns2:actionGroup>
 						</ns2:component>
 						<ns2:layoutConstraint>
 							<ns2:componentId>couponTypeTable</ns2:componentId>
@@ -424,13 +420,13 @@
 								</ns2:title>
 								<ns2:beFieldId>rowBE.icon</ns2:beFieldId>
 								<ns2:uiType xsi:type="ns2:UITableColHTMLType">
-									<ns2:type>HTML</ns2:type>
+									<ns2:type>Image</ns2:type>
 								</ns2:uiType>
 								<ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
 									<ns2:expression xsi:type="ns2:ExpressionType">
 										<ns2:expressionString><![CDATA[
 			                            {
-			                                return "<img src=\"" + $rowBE.getIcon() + "\" style=\"width:120px;height:120px;\" />";
+			                                return $rowBE.getIcon();
 			                            }
 			                            ]]></ns2:expressionString>
 									</ns2:expression>
@@ -499,10 +495,6 @@
 								<!-- <ns2:defaultEnableAction>enableProduct</ns2:defaultEnableAction> 
 									<ns2:defaultDisableAction>disableProduct</ns2:defaultDisableAction> -->
 							</ns2:defaultActions>
-							<ns2:actionGroup> <ns2:type>radio</ns2:type> <ns2:action> <ns2:uiid>openSaleOrderTracker</ns2:uiid> 
-								<ns2:title xsi:type="ns2:StringPropertyType"> <ns2:value>Order Tracker</ns2:value> 
-								</ns2:title> <ns2:icon>ui-icon-note</ns2:icon> <ns2:function>openSaleOrderTracker</ns2:function> 
-								</ns2:action> </ns2:actionGroup>
 						</ns2:component>
 						<ns2:layoutConstraint>
 							<ns2:componentId>discountProductTable</ns2:componentId>
