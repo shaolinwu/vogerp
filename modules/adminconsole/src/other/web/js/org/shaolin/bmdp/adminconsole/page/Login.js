@@ -8,7 +8,7 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         ui: elementList[prefix + "vogerplogo"]
     });
 
-    var errorInfo = new UIMaster.ui.hidden
+    var errorInfo = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "errorInfo"]
     });

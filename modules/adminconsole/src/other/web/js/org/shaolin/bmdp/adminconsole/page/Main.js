@@ -27,7 +27,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var userIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "userIcon"]
-        ,text: "????"
+        ,text: "用户中心"
     });
 
     var userLogout = new UIMaster.ui.image
@@ -38,19 +38,19 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var taskIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "taskIcon"]
-        ,text: "??"
+        ,text: "任务"
     });
 
     var notificationIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "notificationIcon"]
-        ,text: "??"
+        ,text: "通知"
     });
 
     var helpIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "helpIcon"]
-        ,text: "??"
+        ,text: "帮助"
     });
 
     var functionTree = new UIMaster.ui.webtree

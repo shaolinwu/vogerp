@@ -148,7 +148,7 @@
 	                        <ns2:value>false</ns2:value>
 	                    </ns2:allowBlank>
 	                    <ns2:allowBlankText xsi:type="ns2:StringPropertyType">
-	                        <ns2:value>The verification code must not be null.</ns2:value>
+	                        <ns2:value>\u9A8C\u8BC1\u7801\u4E0D\u80FD\u4E3A\u7A7A\uFF01</ns2:value>
 	                    </ns2:allowBlankText>
 	                    <ns2:EventListener xsi:type="ns2:KeyPressListenerType">
 	                        <ns2:handler functionName="verifiCode" />
@@ -158,12 +158,15 @@
                         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
                         <ns2:Property name="label">
 				            <ns2:value xsi:type="ns2:StringPropertyType">
-				                <value>抚企抢单达人用户协议书</value>
+				                <value>用户注册协议书</value>
 				            </ns2:value>
 				        </ns2:Property>
                         <ns2:text xsi:type="ns2:StringPropertyType">
-                          <ns2:value>抚企抢单达人用户协议书</ns2:value>
+                          <ns2:value>用户注册协议书</ns2:value>
                         </ns2:text>
+                        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+				            <ns2:value>false</ns2:value>
+				        </ns2:allowBlank>
                     </ns2:component>
 	                <ns2:component xsi:type="ns2:UIButtonType" UIID="registerBtn">
 	                    <ns2:text xsi:type="ns2:StringPropertyType">
@@ -264,12 +267,9 @@
             <ns2:type entityName="org.shaolin.vogerp.commonmodel.be.RegisterInfoImpl" />
         </ns2:DataEntity>
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
-			<ns2:mappingRule
-				entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-			<ns2:UIComponent componentPath="errorInfo"
-				paramName="UIWidgetType"></ns2:UIComponent>
-			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
-				componentPath="errorCode" paramName="StringData"></ns2:DataComponent>
+			<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+			<ns2:UIComponent componentPath="errorInfo" paramName="UIWidgetType"></ns2:UIComponent>
+			<ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="errorCode" paramName="StringData"></ns2:DataComponent>
 		</ns2:ComponentMapping>
         <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
             <ns2:mappingRule entityName="org.shaolin.bmdp.adminconsole.form.RegisterInfo"></ns2:mappingRule>
@@ -278,7 +278,7 @@
         </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
-		<ns2:serverAction xsi:type="ns2:ExpressionParamType">
+		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">
 			<ns2:expressionString><![CDATA[
 			import org.shaolin.bmdp.runtime.AppContext;
 			import org.shaolin.vogerp.commonmodel.IUserService;
@@ -287,8 +287,10 @@
 			  	  IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
 			  	  $errorCode = service.getErrorInfo($errorCode);
 			  }
+			  
+			  @odContext.executeAllMappings();
 			}]]></ns2:expressionString>
-		</ns2:serverAction>
+		</ns2:serverOperation>
 		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
 			<ns2:expressionString><![CDATA[{
 			// hello, my first js.

@@ -43,7 +43,7 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 	@Override
 	public void loggedIn(IPersonalInfo userInfo) {
 		CustomerAccountImpl scObject = new CustomerAccountImpl();
-		scObject.setOrgId(UserContext.getUserContext().getOrgId());
+		scObject.setOrgId(userInfo.getOrgId());
 		List<ICustomerAccount> result = AccountingModel.INSTANCE.searchAccount(scObject, null, 0, 1);
 		if (result.size() == 0) {
 //			throw new IllegalStateException("No Account ");
@@ -56,7 +56,7 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 	public void registered(IPersonalInfo userInfo) {
 		CustomerAccountImpl newAccount = new CustomerAccountImpl();
 		newAccount.setAccountId(genAccountNumber());
-		newAccount.setOrgId(UserContext.getUserContext().getOrgId());
+		newAccount.setOrgId(userInfo.getOrgId());
 		
 		AccountingModel.INSTANCE.create(newAccount);
 	}	

@@ -87,7 +87,7 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchy(json)
 						    }
           new UIMaster.ui.dialog({
               dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
-              message:'????????: ' + this.ceTree._selectedNodeName,
+              message:'是否添加子节点到: ' + this.ceTree._selectedNodeName,
               messageType:UIMaster.ui.dialog.Information,
               optionType:UIMaster.ui.dialog.YES_NO_OPTION,
               title:'',

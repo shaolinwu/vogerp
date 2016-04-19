@@ -106,9 +106,10 @@
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 				</ns2:layout>
-				<ns2:component xsi:type="ns2:UIHiddenType" UIID="errorInfo" />
+				<ns2:component xsi:type="ns2:UILabelType" UIID="errorInfo" />
 				<ns2:component xsi:type="ns2:UITextFieldType" UIID="userName">
 					<ns2:title xsi:type="ns2:StringPropertyType">
 						<ns2:value>用户名</ns2:value>
@@ -159,7 +160,7 @@
                         <ns2:value>false</ns2:value>
                     </ns2:allowBlank>
                     <ns2:allowBlankText xsi:type="ns2:StringPropertyType">
-                        <ns2:value>The verification code must not be null.</ns2:value>
+                        <ns2:value>\u9A8C\u8BC1\u7801\u4E0D\u80FD\u4E3A\u7A7A\uFF01</ns2:value>
                     </ns2:allowBlankText>
                     <ns2:EventListener xsi:type="ns2:KeyPressListenerType">
                         <ns2:handler functionName="verifiCode" />
@@ -198,30 +199,35 @@
 	                        x="1" y="0" align="FULL"></ns2:constraint>
 	                </ns2:layoutConstraint>
                 </ns2:component>
+                <ns2:layoutConstraint>
+                    <ns2:componentId>errorInfo</ns2:componentId>
+                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                        x="0" y="0" align="FULL"></ns2:constraint>
+                </ns2:layoutConstraint>
 				<ns2:layoutConstraint>
-					<ns2:componentId>userName</ns2:componentId>
-					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-						x="0" y="0" align="FULL"></ns2:constraint>
-				</ns2:layoutConstraint>
+                    <ns2:componentId>userName</ns2:componentId>
+                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                        x="0" y="1" align="FULL"></ns2:constraint>
+                </ns2:layoutConstraint>
 				<ns2:layoutConstraint>
 					<ns2:componentId>password</ns2:componentId>
 					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-						x="0" y="1" align="FULL"></ns2:constraint>
+						x="0" y="2" align="FULL"></ns2:constraint>
 				</ns2:layoutConstraint>
 				<ns2:layoutConstraint>
                     <ns2:componentId>veriCodeQuestion</ns2:componentId>
                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                        x="0" y="2" align="FULL"></ns2:constraint>
+                        x="0" y="3" align="FULL"></ns2:constraint>
                 </ns2:layoutConstraint>
 				<ns2:layoutConstraint>
                     <ns2:componentId>veriCode</ns2:componentId>
                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                        x="0" y="3" align="FULL"></ns2:constraint>
+                        x="0" y="4" align="FULL"></ns2:constraint>
                 </ns2:layoutConstraint>
                 <ns2:layoutConstraint>
                     <ns2:componentId>actionPanel</ns2:componentId>
                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                        x="0" y="4" align="FULL"></ns2:constraint>
+                        x="0" y="5" align="FULL"></ns2:constraint>
                 </ns2:layoutConstraint>
 			</ns2:component>
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="bottomPanel">
@@ -298,7 +304,7 @@
         </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
-		<ns2:serverAction xsi:type="ns2:ExpressionParamType">
+		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">
 			<ns2:expressionString><![CDATA[
 			import org.shaolin.bmdp.runtime.AppContext;
 			import org.shaolin.vogerp.commonmodel.IUserService;
@@ -307,8 +313,10 @@
 			  	  IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
 			  	  $errorCode = service.getErrorInfo($errorCode);
 			  }
+			  
+			   @odContext.executeAllMappings();
 			}]]></ns2:expressionString>
-		</ns2:serverAction>
+		</ns2:serverOperation>
 		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
 			<ns2:expressionString><![CDATA[{
 			// hello, my first js.

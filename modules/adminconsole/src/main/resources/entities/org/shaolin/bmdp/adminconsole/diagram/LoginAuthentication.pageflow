@@ -115,9 +115,9 @@
       </default>
     </ns2:variables>
     <ns2:variables name="errorCode" category="JavaClass">
-      <type entityName="java.lang.Integer"></type>
+      <type entityName="java.lang.String"></type>
       <default>
-        <expressionString><![CDATA[new Integer(0)]]></expressionString>
+        <expressionString><![CDATA[""]]></expressionString>
       </default>
     </ns2:variables>
      <ns2:variables name="verifyCode" category="JavaClass">

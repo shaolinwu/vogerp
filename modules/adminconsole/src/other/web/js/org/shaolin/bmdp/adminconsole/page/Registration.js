@@ -36,7 +36,7 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     var termsUI = new UIMaster.ui.checkbox
     ({
         ui: elementList[prefix + "termsUI"]
-        ,label: "???????????"
+        ,label: "用户注册协议书"
     });
 
     var registerBtn = new UIMaster.ui.button

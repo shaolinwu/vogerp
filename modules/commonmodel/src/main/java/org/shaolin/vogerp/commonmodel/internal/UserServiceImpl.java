@@ -64,6 +64,10 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 	 * @param registerInfo
 	 */
 	public synchronized boolean register(IRegisterInfo registerInfo) {
+		if (registerInfo.getEmail() == null ||
+				registerInfo.getEmail().trim().length() == 0) {
+			return false;
+		}
 		PersonalAccountImpl account = new PersonalAccountImpl();
 		account.setUserName(registerInfo.getEmail());
 		List<IPersonalAccount> result = CommonModel.INSTANCE.searchUserAccount(account, null, 0, 1);
@@ -86,7 +90,11 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 		PersonalInfoImpl userInfo = new PersonalInfoImpl();
 		userInfo.setOrgCode(org.getOrgCode());
 		userInfo.setOrgId(org.getId());
-		userInfo.setFirstName(registerInfo.getName());
+		if (registerInfo.getName() != null) {
+			userInfo.setFirstName(registerInfo.getName());
+		} else {
+			userInfo.setFirstName(registerInfo.getOrgName());
+		}
 		userInfo.setLastName("");
 		userInfo.setType("GenericOrganizationType.Director,0");
 		userInfo.setBirthday(new Date());
@@ -288,7 +296,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 	
 	@Override
 	public String getErrorInfo(String errorCode) {
-		return ResourceUtil.getResource(LOCALIZER.getName(), errorCode);
+		return ResourceUtil.getResource("zh_CN", LOCALIZER.getName(), errorCode);
 	}
 
 	@Override
