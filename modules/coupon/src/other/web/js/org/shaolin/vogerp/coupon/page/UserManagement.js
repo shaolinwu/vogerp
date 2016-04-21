@@ -23,11 +23,35 @@ function org_shaolin_vogerp_coupon_page_UserManagement(json)
         ui: elementList[prefix + "nameUI"]
     });
 
+    var couponUserInfoTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "couponUserInfoTable"]
+    });
+
+    var orgSelectPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "orgSelectPanel"]
+        ,items: []
+        ,subComponents: [prefix + "orgNameUILabel",prefix + "orgNameUI",prefix + "nameUILabel",prefix + "nameUI"]
+    });
+
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [orgNameUILabel,orgNameUI,nameUILabel,nameUI]
+        ,items: [orgNameUILabel,orgNameUI,nameUILabel,nameUI,couponUserInfoTable,orgSelectPanel]
     });
+
+    Form.orgNameUILabel=orgNameUILabel;
+
+    Form.orgNameUI=orgNameUI;
+
+    Form.nameUILabel=nameUILabel;
+
+    Form.nameUI=nameUI;
+
+    Form.couponUserInfoTable=couponUserInfoTable;
+
+    Form.orgSelectPanel=orgSelectPanel;
 
     Form.orgNameUILabel=orgNameUILabel;
 
@@ -44,6 +68,8 @@ function org_shaolin_vogerp_coupon_page_UserManagement(json)
     };
 
     Form.selectOrg = org_shaolin_vogerp_coupon_page_UserManagement_selectOrg;
+
+    Form.openCouponUserInfo = org_shaolin_vogerp_coupon_page_UserManagement_openCouponUserInfo;
 
     Form.initPageJs = org_shaolin_vogerp_coupon_page_UserManagement_initPageJs;
 
@@ -70,6 +96,17 @@ function org_shaolin_vogerp_coupon_page_UserManagement(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectOrg-201508111433",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_coupon_page_UserManagement_selectOrg */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_page_UserManagement_openCouponUserInfo(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_page_UserManagement_openCouponUserInfo */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openCouponUserInfo-20160302-3542",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_coupon_page_UserManagement_openCouponUserInfo */
 
 
     function org_shaolin_vogerp_coupon_page_UserManagement_initPageJs(){/* Gen_First:org_shaolin_vogerp_coupon_page_UserManagement_initPageJs */

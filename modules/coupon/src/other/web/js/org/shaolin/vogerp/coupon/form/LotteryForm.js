@@ -183,7 +183,7 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 					$dataImgs.each(function(i, dataImg){
 						setTimeout(function(){
 							$(dataImg).attr("src", $(dataImg).attr("data-src"));
-						}, i * 100);
+						}, i * 50);
 					});
 				}, 100);
 				

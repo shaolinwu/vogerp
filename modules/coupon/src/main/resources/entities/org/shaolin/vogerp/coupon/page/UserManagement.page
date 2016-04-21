@@ -18,6 +18,7 @@
                     import org.shaolin.vogerp.commonmodel.be.*;
                     import org.shaolin.vogerp.commonmodel.dao.CommonModel;
                     import java.util.List;
+                    import org.shaolin.vogerp.coupon.be.CouponUserInfoImpl;
                     {
                     	String orgId = @page.getComboBox("orgNameUI").getValue();
                     	PersonalInfoImpl personCond = new PersonalInfoImpl();
@@ -28,66 +29,311 @@
                     		@page.getLabel("nameUI").setDisplayValue(person.getFirstName());
                     	}
                     	
-                        /*Table moduleInfoTable = (Table)@page.getElement("moduleInfoTable");
-                        ModuleGroupImpl condition = (ModuleGroupImpl)moduleInfoTable.getConditions().getCondition();
-                        condition.setName(@page.getComboBox("allOrgsUI").getValue());
+                        Table couponUserInfoTable = (Table)@page.getElement("couponUserInfoTable");
+                        CouponUserInfoImpl condition = (CouponUserInfoImpl)couponUserInfoTable.getConditions().getCondition();
+                        condition.setOrgId(Long.valueOf(orgId));
                         
-                        moduleInfoTable.refresh();*/
+                        couponUserInfoTable.refresh();
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
+        
+		<ns2:eventHandler functionName="openCouponUserInfo">
+			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="openCouponUserInfo-20160302-3542">
+				<ns2:exp>
+					<ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.coupon.be.CouponUserInfoImpl;
+                    {
+                        Table couponUserInfoTable = (Table)@page.getElement("couponUserInfoTable");
+                        if (couponUserInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        CouponUserInfoImpl couponUserInfo = (CouponUserInfoImpl)couponUserInfoTable.getSelectedRow();
+                        HashMap input = new HashMap();
+                        input.put("beObject", couponUserInfo);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("couponUserInfo", "org.shaolin.vogerp.coupon.form.CouponUserInfo", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Open Coupon User Info", new TableCallBack("couponUserInfoTable"), 690, 500);
+                    }
+                    ]]></ns2:expressionString>
+				</ns2:exp>
+			</ns2:ops>
+		</ns2:eventHandler>
 	
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:layout xsi:type="ns2:TableLayoutType">
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-				<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 			</ns2:layout>
-			<ns2:component xsi:type="ns2:UILabelType" UIID="orgNameUILabel">
-		        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-		        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-		          <ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
-		          <ns2:key>org.shaolin.vogerp.coupon.be.UserManagement.orgName</ns2:key>
-		        </ns2:text>
-		    </ns2:component>
-		    <ns2:component xsi:type="ns2:UIComboBoxType" UIID="orgNameUI">
-		        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-		        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
-                    <ns2:handler functionName="selectOrg"></ns2:handler>
-                </ns2:EventListener>
-		    </ns2:component>
-		    <ns2:component xsi:type="ns2:UILabelType" UIID="nameUILabel">
-		        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-		        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-		          <ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
-		          <ns2:key>org.shaolin.vogerp.coupon.be.UserManagement.name</ns2:key>
-		        </ns2:text>
-		    </ns2:component>
-		    <ns2:component xsi:type="ns2:UILabelType" UIID="nameUI">
-		        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-		    </ns2:component>
+			
+			<ns2:component UIID="orgSelectPanel" xsi:type="ns2:UIPanelType">
+				<ns2:layout xsi:type="ns2:TableLayoutType">
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+				</ns2:layout>
+				<ns2:component xsi:type="ns2:UILabelType" UIID="orgNameUILabel">
+			        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+			        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+			          <ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+			          <ns2:key>org.shaolin.vogerp.coupon.be.UserManagement.orgName</ns2:key>
+			        </ns2:text>
+			    </ns2:component>
+			    <ns2:component xsi:type="ns2:UIComboBoxType" UIID="orgNameUI">
+			        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+			        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
+	                    <ns2:handler functionName="selectOrg"></ns2:handler>
+	                </ns2:EventListener>
+			    </ns2:component>
+			    <ns2:component xsi:type="ns2:UILabelType" UIID="nameUILabel">
+			        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+			        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+			          <ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+			          <ns2:key>org.shaolin.vogerp.coupon.be.UserManagement.name</ns2:key>
+			        </ns2:text>
+			    </ns2:component>
+			    <ns2:component xsi:type="ns2:UILabelType" UIID="nameUI">
+			        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+			    </ns2:component>
+		    	<ns2:layoutConstraint>
+					<ns2:componentId>orgNameUILabel</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+				</ns2:layoutConstraint>
+				<ns2:layoutConstraint>
+					<ns2:componentId>orgNameUI</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+				</ns2:layoutConstraint>
+				<ns2:layoutConstraint>
+					<ns2:componentId>nameUILabel</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+				</ns2:layoutConstraint>
+				<ns2:layoutConstraint>
+					<ns2:componentId>nameUI</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+				</ns2:layoutConstraint>
+			</ns2:component>
+		    
+		    <!-- CouponUserInfo -->
+			<ns2:component xsi:type="ns2:UITableType" UIID="couponUserInfoTable">
+				<ns2:beElement>org.shaolin.vogerp.coupon.be.CouponUserInfo</ns2:beElement>
+				<ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+				<ns2:showActionBar>true</ns2:showActionBar>
+				<!-- <ns2:showFilter>true</ns2:showFilter> -->
+				<ns2:query xsi:type="ns2:ExpressionPropertyType">
+					<ns2:expression xsi:type="ns2:ExpressionType">
+						<ns2:expressionString><![CDATA[
+                           import java.util.List;
+                           import org.shaolin.uimaster.page.ajax.TableConditions;
+                           import org.shaolin.bmdp.runtime.security.UserContext;
+                           import org.shaolin.vogerp.coupon.be.CouponUserInfoImpl;
+                           import org.shaolin.vogerp.coupon.dao.CouponModel;
+                           import org.shaolin.bmdp.runtime.security.UserContext;
+                           {
+                                 if ($tableCondition == null) {
+                                    $tableCondition = TableConditions.createCondition(new CouponUserInfoImpl());
+                                    $tableCondition.setCount(10);
+                                    $tableCondition.addOrder("createDate", false);
+                                 }
+                                 CouponUserInfoImpl condition = (CouponUserInfoImpl)$tableCondition.getCondition();
+                                 //condition.setOrgId(Long.valueOf($orgId));
+                                 return CouponModel.INSTANCE.searchCouponUserInfo(condition,
+                                               $tableCondition.getOrders(),
+                                               $tableCondition.getOffset(), 
+                                               $tableCondition.getCount());
+                           }]]></ns2:expressionString>
+					</ns2:expression>
+				</ns2:query>
+				<ns2:column xsi:type="ns2:UITableColumnType">
+					<ns2:title xsi:type="ns2:StringPropertyType">
+						<ns2:value>orgId</ns2:value>
+					</ns2:title>
+					<ns2:beFieldId>rowBE.orgId</ns2:beFieldId>
+					<ns2:uiType xsi:type="ns2:UITableColHTMLType">
+						<ns2:type>Label</ns2:type>
+					</ns2:uiType>
+				</ns2:column>
+				<ns2:column xsi:type="ns2:UITableColumnType">
+					<ns2:title xsi:type="ns2:StringPropertyType">
+						<ns2:value>抽奖链接</ns2:value>
+					</ns2:title>
+					<ns2:beFieldId>rowBE.lotteryLink</ns2:beFieldId>
+					<ns2:uiType xsi:type="ns2:UITableColHTMLType">
+						<ns2:type>Text</ns2:type>
+					</ns2:uiType>
+				</ns2:column>
+				<ns2:column xsi:type="ns2:UITableColumnType">
+					<ns2:title xsi:type="ns2:StringPropertyType">
+						<ns2:value>查询链接</ns2:value>
+					</ns2:title>
+					<ns2:beFieldId>rowBE.queryLink</ns2:beFieldId>
+					<ns2:uiType xsi:type="ns2:UITableColHTMLType">
+						<ns2:type>Text</ns2:type>
+					</ns2:uiType>
+				</ns2:column>
+				<ns2:column xsi:type="ns2:UITableColumnType">
+					<ns2:title xsi:type="ns2:StringPropertyType">
+						<ns2:value>抽奖二维码</ns2:value>
+					</ns2:title>
+					<ns2:beFieldId>rowBE.lotteryQrCode</ns2:beFieldId>
+					<ns2:uiType xsi:type="ns2:UITableColHTMLType">
+						<ns2:type>Image</ns2:type>
+					</ns2:uiType>
+					<ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+						<ns2:expression xsi:type="ns2:ExpressionType">
+							<ns2:expressionString><![CDATA[
+                            {
+                                return $rowBE.getLotteryQrCode();
+                            }
+                            ]]></ns2:expressionString>
+						</ns2:expression>
+					</ns2:rowExpression>
+				</ns2:column>
+				<ns2:column xsi:type="ns2:UITableColumnType">
+					<ns2:title xsi:type="ns2:StringPropertyType">
+						<ns2:value>月均人流</ns2:value>
+					</ns2:title>
+					<ns2:beFieldId>rowBE.volumn</ns2:beFieldId>
+					<ns2:uiType xsi:type="ns2:UITableColHTMLType">
+						<ns2:type>Label</ns2:type>
+					</ns2:uiType>
+				</ns2:column>
+				<ns2:column xsi:type="ns2:UITableColumnType">
+					<ns2:title xsi:type="ns2:StringPropertyType">
+						<ns2:value>所在区域</ns2:value>
+					</ns2:title>
+					<ns2:beFieldId>rowBE.address</ns2:beFieldId>
+					<ns2:uiType xsi:type="ns2:UITableColHTMLType">
+						<ns2:type>Text</ns2:type>
+					</ns2:uiType>
+				</ns2:column>
+				<ns2:column xsi:type="ns2:UITableColumnType">
+					<ns2:title xsi:type="ns2:StringPropertyType">
+						<ns2:value>主营业务</ns2:value>
+					</ns2:title>
+					<ns2:beFieldId>rowBE.mainBusiness</ns2:beFieldId>
+					<ns2:uiType xsi:type="ns2:UITableColHTMLType">
+						<ns2:type>Text</ns2:type>
+					</ns2:uiType>
+				</ns2:column>
+				<ns2:column xsi:type="ns2:UITableColumnType">
+					<ns2:title xsi:type="ns2:StringPropertyType">
+						<ns2:value>其它备注</ns2:value>
+					</ns2:title>
+					<ns2:beFieldId>rowBE.remark</ns2:beFieldId>
+					<ns2:uiType xsi:type="ns2:UITableColHTMLType">
+						<ns2:type>Text</ns2:type>
+					</ns2:uiType>
+				</ns2:column>
+				<ns2:column xsi:type="ns2:UITableColumnType">
+					<ns2:title xsi:type="ns2:StringPropertyType">
+						<ns2:value>顶部广告位</ns2:value>
+					</ns2:title>
+					<ns2:beFieldId>rowBE.topAdvertImage</ns2:beFieldId>
+					<ns2:uiType xsi:type="ns2:UITableColHTMLType">
+						<ns2:type>Image</ns2:type>
+					</ns2:uiType>
+					<ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+						<ns2:expression xsi:type="ns2:ExpressionType">
+							<ns2:expressionString><![CDATA[
+                            {
+                                return $rowBE.getTopAdvertImage();
+                            }
+                            ]]></ns2:expressionString>
+						</ns2:expression>
+					</ns2:rowExpression>
+				</ns2:column>
+				<ns2:column xsi:type="ns2:UITableColumnType">
+					<ns2:title xsi:type="ns2:StringPropertyType">
+						<ns2:value>底部广告位</ns2:value>
+					</ns2:title>
+					<ns2:beFieldId>rowBE.bottomAdvertImage</ns2:beFieldId>
+					<ns2:uiType xsi:type="ns2:UITableColHTMLType">
+						<ns2:type>Image</ns2:type>
+					</ns2:uiType>
+					<ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+						<ns2:expression xsi:type="ns2:ExpressionType">
+							<ns2:expressionString><![CDATA[
+                            {
+                                return $rowBE.getBottomAdvertImage();
+                            }
+                            ]]></ns2:expressionString>
+						</ns2:expression>
+					</ns2:rowExpression>
+				</ns2:column>
+				<ns2:column xsi:type="ns2:UITableColumnType">
+					<ns2:title xsi:type="ns2:StringPropertyType">
+						<ns2:value>抽奖入口</ns2:value>
+					</ns2:title>
+					<ns2:beFieldId>rowBE.lotteryChannel</ns2:beFieldId>
+					<ns2:uiType xsi:type="ns2:UITableColHTMLType">
+						<ns2:type>ComBox</ns2:type>
+					</ns2:uiType>
+					<ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                           <ns2:expression xsi:type="ns2:ExpressionType">
+                               <ns2:expressionString><![CDATA[
+                               import org.shaolin.bmdp.runtime.AppContext;
+                               import org.shaolin.vogerp.coupon.ce.ChannelType;
+                               {
+                                   $rowBE.setLotteryChannel((ChannelType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.coupon.ce.ChannelType").getByIntValue(Integer.valueOf($value).intValue()));
+                               }]]></ns2:expressionString>
+                           </ns2:expression>
+                       </ns2:updateCondition>
+				</ns2:column>
+				<ns2:column xsi:type="ns2:UITableColumnType">
+					<ns2:title xsi:type="ns2:StringPropertyType">
+						<ns2:value>商家二维码</ns2:value>
+					</ns2:title>
+					<ns2:beFieldId>rowBE.qrCode</ns2:beFieldId>
+					<ns2:uiType xsi:type="ns2:UITableColHTMLType">
+						<ns2:type>Image</ns2:type>
+					</ns2:uiType>
+					<ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+						<ns2:expression xsi:type="ns2:ExpressionType">
+							<ns2:expressionString><![CDATA[
+                            {
+                                return $rowBE.getQrCode();
+                            }
+                            ]]></ns2:expressionString>
+						</ns2:expression>
+					</ns2:rowExpression>
+				</ns2:column>
+				<ns2:column xsi:type="ns2:UITableColumnType">
+					<ns2:title xsi:type="ns2:StringPropertyType">
+						<ns2:value>品牌介绍</ns2:value>
+					</ns2:title>
+					<ns2:beFieldId>rowBE.brand</ns2:beFieldId>
+					<ns2:uiType xsi:type="ns2:UITableColHTMLType">
+						<ns2:type>Text</ns2:type>
+					</ns2:uiType>
+				</ns2:column>
+				<ns2:defaultActions>
+					<ns2:defaultNewAction>createCouponUserInfo</ns2:defaultNewAction>
+					<ns2:defaultOpenAction>openCouponUserInfo</ns2:defaultOpenAction>
+				</ns2:defaultActions>
+			</ns2:component>
 		    <ns2:layoutConstraint>
-				<ns2:componentId>orgNameUILabel</ns2:componentId>
-				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+				<ns2:componentId>orgSelectPanel</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
 			</ns2:layoutConstraint>
 			<ns2:layoutConstraint>
-				<ns2:componentId>orgNameUI</ns2:componentId>
-				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-			</ns2:layoutConstraint>
-			<ns2:layoutConstraint>
-				<ns2:componentId>nameUILabel</ns2:componentId>
-				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-			</ns2:layoutConstraint>
-			<ns2:layoutConstraint>
-				<ns2:componentId>nameUI</ns2:componentId>
-				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+				<ns2:componentId>couponUserInfoTable</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
 			</ns2:layoutConstraint>
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>
+		<ns2:DataEntity scope="InOut" name="orgId" category="JavaClass">
+			<type entityName="java.lang.String"></type>
+		</ns2:DataEntity>
 		<ns2:DataEntity scope="InOut" name="orgIds" category="JavaClass">
 			<type entityName="java.util.List"></type>
 		</ns2:DataEntity>
@@ -118,6 +364,7 @@
             	OrganizationImpl condition = new OrganizationImpl();
             	List orgs = CommonModel.INSTANCE.searchOrganization(condition, null, 0, 0);
             	if (null != orgs && orgs.size() > 0) {
+            		$orgId = String.valueOf(((OrganizationImpl)orgs.get(0)).getId());
             		for (int i = 0; i < orgs.size(); i++) {
 	            		OrganizationImpl org = (OrganizationImpl) orgs.get(i);
 	            		$orgIds.add(String.valueOf(org.getId()));

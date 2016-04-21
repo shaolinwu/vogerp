@@ -3,6 +3,11 @@
 function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var orgIdHidden = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "orgIdHidden"]
+    });
+
     var idUI = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "idUI"]
@@ -13,7 +18,7 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
         ui: elementList[prefix + "lotteryLinkUILabel"]
     });
 
-    var lotteryLinkUI = new UIMaster.ui.textfield
+    var lotteryLinkUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "lotteryLinkUI"]
     });
@@ -23,7 +28,7 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
         ui: elementList[prefix + "queryLinkUILabel"]
     });
 
-    var queryLinkUI = new UIMaster.ui.textfield
+    var queryLinkUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "queryLinkUI"]
     });
@@ -68,9 +73,9 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
         ui: elementList[prefix + "remarkUI"]
     });
 
-    var topAdvertImageUILabel = new UIMaster.ui.label
+    var topAdvertImageUIBtn = new UIMaster.ui.button
     ({
-        ui: elementList[prefix + "topAdvertImageUILabel"]
+        ui: elementList[prefix + "topAdvertImageUIBtn"]
     });
 
     var topAdvertImageUI = new UIMaster.ui.textfield
@@ -78,9 +83,9 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
         ui: elementList[prefix + "topAdvertImageUI"]
     });
 
-    var bottomAdvertImageUILabel = new UIMaster.ui.label
+    var bottomAdvertImageUIBtn = new UIMaster.ui.button
     ({
-        ui: elementList[prefix + "bottomAdvertImageUILabel"]
+        ui: elementList[prefix + "bottomAdvertImageUIBtn"]
     });
 
     var bottomAdvertImageUI = new UIMaster.ui.textfield
@@ -139,14 +144,16 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "lotteryLinkUILabel",prefix + "lotteryLinkUI",prefix + "queryLinkUILabel",prefix + "queryLinkUI",prefix + "volumnUILabel",prefix + "volumnUI",prefix + "addressUILabel",prefix + "addressUI",prefix + "mainBusinessUILabel",prefix + "mainBusinessUI",prefix + "remarkUILabel",prefix + "remarkUI",prefix + "topAdvertImageUILabel",prefix + "topAdvertImageUI",prefix + "bottomAdvertImageUILabel",prefix + "bottomAdvertImageUI",prefix + "lotteryChannelUILabel",prefix + "lotteryChannelUI",prefix + "qrCodeUILabel",prefix + "qrCodeUI",prefix + "brandUILabel",prefix + "brandUI"]
+        ,subComponents: [prefix + "orgIdHidden",prefix + "idUI",prefix + "lotteryLinkUILabel",prefix + "lotteryLinkUI",prefix + "queryLinkUILabel",prefix + "queryLinkUI",prefix + "volumnUILabel",prefix + "volumnUI",prefix + "addressUILabel",prefix + "addressUI",prefix + "mainBusinessUILabel",prefix + "mainBusinessUI",prefix + "remarkUILabel",prefix + "remarkUI",prefix + "topAdvertImageUIBtn",prefix + "topAdvertImageUI",prefix + "bottomAdvertImageUIBtn",prefix + "bottomAdvertImageUI",prefix + "lotteryChannelUILabel",prefix + "lotteryChannelUI",prefix + "qrCodeUILabel",prefix + "qrCodeUI",prefix + "brandUILabel",prefix + "brandUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,lotteryLinkUILabel,lotteryLinkUI,queryLinkUILabel,queryLinkUI,volumnUILabel,volumnUI,addressUILabel,addressUI,mainBusinessUILabel,mainBusinessUI,remarkUILabel,remarkUI,topAdvertImageUILabel,topAdvertImageUI,bottomAdvertImageUILabel,bottomAdvertImageUI,lotteryChannelUILabel,lotteryChannelUI,qrCodeUILabel,qrCodeUI,brandUILabel,brandUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [orgIdHidden,idUI,lotteryLinkUILabel,lotteryLinkUI,queryLinkUILabel,queryLinkUI,volumnUILabel,volumnUI,addressUILabel,addressUI,mainBusinessUILabel,mainBusinessUI,remarkUILabel,remarkUI,topAdvertImageUIBtn,topAdvertImageUI,bottomAdvertImageUIBtn,bottomAdvertImageUI,lotteryChannelUILabel,lotteryChannelUI,qrCodeUILabel,qrCodeUI,brandUILabel,brandUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
+
+    Form.orgIdHidden=orgIdHidden;
 
     Form.idUI=idUI;
 
@@ -174,11 +181,11 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
 
     Form.remarkUI=remarkUI;
 
-    Form.topAdvertImageUILabel=topAdvertImageUILabel;
+    Form.topAdvertImageUIBtn=topAdvertImageUIBtn;
 
     Form.topAdvertImageUI=topAdvertImageUI;
 
-    Form.bottomAdvertImageUILabel=bottomAdvertImageUILabel;
+    Form.bottomAdvertImageUIBtn=bottomAdvertImageUIBtn;
 
     Form.bottomAdvertImageUI=bottomAdvertImageUI;
 
@@ -200,6 +207,8 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.orgIdHidden=orgIdHidden;
+
     Form.idUI=idUI;
 
     Form.lotteryLinkUILabel=lotteryLinkUILabel;
@@ -226,11 +235,11 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
 
     Form.remarkUI=remarkUI;
 
-    Form.topAdvertImageUILabel=topAdvertImageUILabel;
+    Form.topAdvertImageUIBtn=topAdvertImageUIBtn;
 
     Form.topAdvertImageUI=topAdvertImageUI;
 
-    Form.bottomAdvertImageUILabel=bottomAdvertImageUILabel;
+    Form.bottomAdvertImageUIBtn=bottomAdvertImageUIBtn;
 
     Form.bottomAdvertImageUI=bottomAdvertImageUI;
 
@@ -261,6 +270,10 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
     Form.Save = org_shaolin_vogerp_coupon_form_CouponUserInfo_Save;
 
     Form.Cancel = org_shaolin_vogerp_coupon_form_CouponUserInfo_Cancel;
+
+    Form.selectTopAdvertImage = org_shaolin_vogerp_coupon_form_CouponUserInfo_selectTopAdvertImage;
+
+    Form.selectBottomAdvertImage = org_shaolin_vogerp_coupon_form_CouponUserInfo_selectBottomAdvertImage;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_coupon_form_CouponUserInfo_invokeDynamicFunction;
 
@@ -294,6 +307,28 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160417-092847",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_coupon_form_CouponUserInfo_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_form_CouponUserInfo_selectTopAdvertImage(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_form_CouponUserInfo_selectTopAdvertImage */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectTopAdvertImage-1317628417",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_coupon_form_CouponUserInfo_selectTopAdvertImage */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_form_CouponUserInfo_selectBottomAdvertImage(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_form_CouponUserInfo_selectBottomAdvertImage */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectBottomAdvertImage-1317628417",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_coupon_form_CouponUserInfo_selectBottomAdvertImage */
 
 
     /* auto generated eventlistener function declaration */

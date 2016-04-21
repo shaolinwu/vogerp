@@ -187,12 +187,16 @@
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="LOTTERYLINK" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="QUERYLINK" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="LOTTERYQRCODE" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="VOLUMN" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="ADDRESS" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="MAINBUSINESS" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="REMARK" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="TOPADVERTIMAGE" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="BOTTOMADVERTIMAGE" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="LOTTERYCHANNEL" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="QRCODE" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="BRAND" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="ORGID" type="BIGINT" length="38" default="0"></ns2:column>
@@ -205,12 +209,16 @@
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="lotteryLink" columnName="LOTTERYLINK"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="queryLink" columnName="QUERYLINK"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="lotteryQrCode" columnName="LOTTERYQRCODE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="volumn" columnName="VOLUMN"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="address" columnName="ADDRESS"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="mainBusiness" columnName="MAINBUSINESS"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="remark" columnName="REMARK"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="topAdvertImage" columnName="TOPADVERTIMAGE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="bottomAdvertImage" columnName="BOTTOMADVERTIMAGE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="lotteryChannel" columnName="LOTTERYCHANNEL"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="qrCode" columnName="QRCODE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="brand" columnName="BRAND"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="orgId" columnName="ORGID"></ns2:fieldMapping>
@@ -524,7 +532,7 @@
         </ns2:conditionValue>
       </ns2:fieldMapping>
       <ns2:searchConditionData name="scObject" category="BusinessEntity">
-        <type entityName="org.shaolin.vogerp.coupon.be.CouponSystem"></type>
+        <type entityName="org.shaolin.vogerp.coupon.be.CouponUserInfo"></type>
       </ns2:searchConditionData>
     </ns2:searchConditionMapping>
   </ns2:query>

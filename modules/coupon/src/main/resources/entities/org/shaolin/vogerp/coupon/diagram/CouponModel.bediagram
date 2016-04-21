@@ -291,6 +291,11 @@
 	        <bediagram:name>queryLink</bediagram:name>
 	        <bediagram:type xsi:type="bediagram:StringType" />
 	    </bediagram:member>
+	    <!-- 抽奖二维码 -->
+        <bediagram:member>
+	        <bediagram:name>lotteryQrCode</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
 	    <!-- 月均人流 -->
 	    <bediagram:member>
 	        <bediagram:name>volumn</bediagram:name>

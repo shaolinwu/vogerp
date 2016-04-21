@@ -207,7 +207,7 @@ public class CouponModel extends BEEntityDaoObject {
         return this._count(inObjectCriteria);
     }
 
-    public List<org.shaolin.vogerp.coupon.be.ICouponUserInfo> searchCouponUserInfo(org.shaolin.vogerp.coupon.be.CouponSystemImpl scObject,
+    public List<org.shaolin.vogerp.coupon.be.ICouponUserInfo> searchCouponUserInfo(org.shaolin.vogerp.coupon.be.CouponUserInfoImpl scObject,
            List<Order> orders, int offset, int count) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponUserInfoImpl.class, "inObject");
             if (orders == null) {
@@ -228,7 +228,7 @@ public class CouponModel extends BEEntityDaoObject {
         return result;
     }
 
-    public long searchCouponUserInfoCount(org.shaolin.vogerp.coupon.be.CouponSystemImpl scObject) {
+    public long searchCouponUserInfoCount(org.shaolin.vogerp.coupon.be.CouponUserInfoImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponUserInfoImpl.class, "inObject");
 
             if (scObject.getId() > 0) {

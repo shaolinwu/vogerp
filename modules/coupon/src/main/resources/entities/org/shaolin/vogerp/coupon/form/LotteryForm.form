@@ -133,7 +133,7 @@
 	               			String icon = c.getIcon();
 	               			if (null != icon && icon.length() > 0 && !icon.equals(lastIcon)) {
 	               				lastIcon = icon;
-	               				showImages += icon;
+	               				showImages = showImages + "," + icon;
 	               				m++;
 	               			}
 	               		}
