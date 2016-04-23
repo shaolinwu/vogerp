@@ -7,12 +7,12 @@
          <ns2:expressionString><![CDATA[
          {
           var o = this;
-						    if (o.ceTree._selectedNodeName == null || o.ceTree._selectedNodeName == "") {
-						        return;
-						    }
+	      if (o.ceTree._selectedNodeName == null || o.ceTree._selectedNodeName == "") {
+	          return;
+	      }
           new UIMaster.ui.dialog({
               dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
-              message:'是否添加子节点到: ' + this.ceTree._selectedNodeName,
+              message:'\u662F\u5426\u6DFB\u52A0\u5B50\u8282\u70B9\u5230: ' + this.ceTree._selectedNodeName,
               messageType:UIMaster.ui.dialog.Information,
               optionType:UIMaster.ui.dialog.YES_NO_OPTION,
               title:'',
@@ -65,17 +65,16 @@
                        @page.addElement(form);
                        form.openInWindows("Open Item", null, 500, 300);
                     } else {
-			                    HashMap input = new HashMap();
-			                    input.put("list", new ArrayList());
-			                    input.put("ceName", "");
-			                    input.put("parentCE", entityName);
+	                   HashMap input = new HashMap();
+	                   input.put("list", new ArrayList());
+	                   input.put("ceName", "");
+	                   input.put("parentCE", entityName);
                        input.put("parentIntValue", new Integer(parentIntValue));
-			                    input.put("editable", new Boolean(true));
-			                    RefForm form = new RefForm("userForm1", "org.shaolin.vogerp.commonmodel.form.CEExtension", input);
-			                    @page.addElement(form);
+                       input.put("editable", new Boolean(true));
+                       RefForm form = new RefForm("userForm1", "org.shaolin.vogerp.commonmodel.form.CEExtension", input);
+                       @page.addElement(form);
                        form.openInWindows("Open Item", null, 600, 400);
                     }
-                    
                 }
                 ]]></ns2:expressionString>
             </ns2:exp>
@@ -137,14 +136,14 @@
               message:'Are you sure delete this node?',
               messageType:UIMaster.ui.dialog.Warning,
               optionType:UIMaster.ui.dialog.YES_NO_OPTION,
-              title:'',
+              title:'\u5220\u9664\u8282\u70B9?',
               height:150,
               width:300,
               handler: function() {
                  if (o.ceTree._selectedNodeName == null || o.ceTree._selectedNodeName == "") {
-							              return;
-							          }
-							          o.ceTree.sync();
+		             return;
+		         }
+		         o.ceTree.sync();
                  UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_2040990210",UIMaster.getValue(eventsource),o.__entityName);
               }
           }).open();
@@ -159,7 +158,7 @@
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.bmdp.runtime.AppContext;
         import org.shaolin.uimaster.page.ajax.*;
-		      import org.shaolin.bmdp.runtime.ce.ConstantServiceImpl;
+		import org.shaolin.bmdp.runtime.ce.ConstantServiceImpl;
         import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
         import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
         import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
@@ -205,6 +204,7 @@
   </ns2:eventHandler>
   <ns2:eventHandler functionName="clickTreeNode">
   </ns2:eventHandler>
+  <ns2:reconfigurableProperty functionName="clickTreeNode" xsi:type="ns2:ReconfigurableFunctionType"/>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>

@@ -110,14 +110,18 @@
             
             String formId = "productInfoForm.";
             // because this is a reconfigurable function, we have to get the right form id.
-            Hidden templateIdUI = @page.getHidden(formId + "templateIdUI");
-            templateIdUI.setValue(selectPTempalteId);
             Hidden productTypeUI = @page.getHidden(formId + "productTypeUI");
             productTypeUI.setValue(selectProductType);
-            AList plist = @page.getList("pTemplateListUI");
             
             TextField typeUI = @page.getTextField(formId + "typeUI");
-            typeUI.setValue(CEUtil.getValue(selectProductType) + " : " + plist.getSelectedDisplayValues().get(0));
+            if (selectPTempalteId != null) {
+                Hidden templateIdUI = @page.getHidden(formId + "templateIdUI");
+                templateIdUI.setValue(selectPTempalteId);
+                AList plist = @page.getList("pTemplateListUI");
+                typeUI.setValue(CEUtil.getValue(selectProductType) + " : " + plist.getSelectedDisplayValues().get(0));
+            } else {
+                typeUI.setValue(CEUtil.getValue(selectProductType));
+            }
             
             form.closeIfinWindows(true);
             @page.removeForm(@page.getEntityUiid()); 

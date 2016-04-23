@@ -7,12 +7,20 @@
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
+        import java.util.List;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl;
         import org.shaolin.bmdp.runtime.ce.CEUtil;
+        import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+        import org.shaolin.bmdp.runtime.spi.IConstantService;
         { 
-             @page.getTextArea("ceDetailIU").setValue(CEUtil.listCEValues(@page.getTextField("ceNameUI").getValue(), false).toString());
+             IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
+             List items = cs.getChildren(CEUtil.toCEValue(@page.getComboBox("ceNameUI").getValue())).getConstantList();
+             if (items != null) {
+                String info = CEUtil.listCEValues(items).toString();
+                @page.getTextArea("ceDetailIU").setValue(info);
+             }
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -27,14 +35,10 @@
         import org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl;
         import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
         { 
-            UIDyanimcItemImpl defaultUser = new UIDyanimcItemImpl();
-            HashMap input = new HashMap();
-            input.put("beObject", defaultUser);
-            input.put("editable", new Boolean(true));
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            form.ui2Data(input);
+            HashMap input = (HashMap)form.ui2Data();
 
-            defaultUser = (UIDyanimcItemImpl)input.get("beObject");
+            UIDyanimcItemImpl defaultUser = (UIDyanimcItemImpl)input.get("beObject");
             if (defaultUser.getId() == 0) {
                 ModularityModel.INSTANCE.create(defaultUser);
             } else {
@@ -121,8 +125,11 @@
           <ns2:key>org.shaolin.vogerp.commonmodel.be.UIDyanimcItem.ceName</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="ceNameUI">
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="ceNameUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
+          <ns2:handler functionName="RefreshCEDetail"></ns2:handler>
+        </ns2:EventListener>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="ceDetailUILabel">
         <ns2:UIStyle>uimaster_leftform_widget refreshCEDetail</ns2:UIStyle>
@@ -130,9 +137,6 @@
           <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
           <ns2:key>org.shaolin.vogerp.commonmodel.be.UIDyanimcItem.ceDetail</ns2:key>
         </ns2:text>
-        <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="RefreshCEDetail"></ns2:handler>
-        </ns2:EventListener>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextAreaType" UIID="ceDetailIU">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
@@ -266,11 +270,20 @@
     <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
       <type entityName="org.shaolin.vogerp.commonmodel.be.UIDyanimcItem"></type>
     </ns2:DataEntity>
+    <ns2:DataEntity scope="Internal" name="parentCE" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
     <ns2:DataEntity scope="Internal" name="ceDetail" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="values" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="displayItems" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
     </ns2:DataEntity>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
@@ -293,9 +306,11 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.labelName" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
       <ns2:UIComponent componentPath="ceNameUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.ceName" paramName="StringData"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.ceName" paramName="Value"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values" paramName="OptionValues"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping6">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
@@ -314,18 +329,42 @@
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>
+      import java.util.List;
+      import java.util.ArrayList;
       import org.shaolin.bmdp.runtime.ce.CEUtil;
+      import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+      import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+      import org.shaolin.bmdp.runtime.spi.IConstantService;
       {
          if ($beObject.getCeName() != null) {
-             $ceDetail = CEUtil.listCEValues($beObject.getCeName(), false).toString();
+             List items = CEUtil.listCEValues($beObject.getCeName(), false);
+             if (items != null) {
+                $ceDetail = items.toString();
+             }
          }
+         
+         $values = new ArrayList();
+         $displayItems = new ArrayList();
+         CEOperationUtil.getCEComboBox($values, $displayItems, AppContext.get().getConstantService().getConstantEntity($parentCE));
+         
          @odContext.executeAllMappings();
       }</expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
-      <expressionString>{
-@odContext.executeAllMappings();
-}</expressionString>
+      <expressionString><![CDATA[
+      import org.shaolin.bmdp.runtime.ce.CEUtil;
+      import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+      import org.shaolin.bmdp.runtime.spi.IConstantService;
+      import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+      import org.shaolin.bmdp.runtime.spi.IConstantService;
+      {
+         @odContext.executeAllMappings();
+         
+         IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
+         $beObject.setCeName(cs.getChildren(CEUtil.toCEValue($beObject.getCeName())).getEntityName());
+      }]]></expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>
 </ns2:UIEntity>

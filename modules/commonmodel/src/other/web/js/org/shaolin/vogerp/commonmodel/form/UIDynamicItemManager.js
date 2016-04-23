@@ -8,6 +8,11 @@ function org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager(json)
         ui: elementList[prefix + "CENameUI"]
     });
 
+    var filterId = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "filterId"]
+    });
+
     var entityTypes = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "entityTypes"]
@@ -28,10 +33,12 @@ function org_shaolin_vogerp_commonmodel_form_UIDynamicItemManager(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [CENameUI,entityTypes,uiDynamicInfoTable,constantInfoPanel]
+        ,items: [CENameUI,filterId,entityTypes,uiDynamicInfoTable,constantInfoPanel]
     });
 
     Form.CENameUI=CENameUI;
+
+    Form.filterId=filterId;
 
     Form.entityTypes=entityTypes;
 

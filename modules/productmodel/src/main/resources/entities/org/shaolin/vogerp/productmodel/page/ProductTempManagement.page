@@ -345,7 +345,8 @@
                         <ns2:key>org.shaolin.vogerp.productmodel.page.ProductManagement.productTreePanel</ns2:key>
                     </ns2:title>
                     <ns2:refEntity UIID="productTreePanel">
-		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy" />
+                       <!-- support the product characteristic configuration -->
+		               <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductTypeManager" />
 		            </ns2:refEntity>
                 </ns2:tab>
             </ns2:component>
@@ -365,7 +366,7 @@
 	      <ns2:default><expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString></ns2:default>
 	    </ns2:DataEntity>
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
-          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy"></ns2:mappingRule>
+          <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductTypeManager"></ns2:mappingRule>
           <ns2:UIComponent componentPath="productTreePanel" paramName="UIWidgetType"></ns2:UIComponent>
           <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
 	        <ns2:expression>

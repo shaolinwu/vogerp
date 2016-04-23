@@ -82,12 +82,12 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchy(json)
 
          {
           var o = this;
-						    if (o.ceTree._selectedNodeName == null || o.ceTree._selectedNodeName == "") {
-						        return;
-						    }
+	      if (o.ceTree._selectedNodeName == null || o.ceTree._selectedNodeName == "") {
+	          return;
+	      }
           new UIMaster.ui.dialog({
               dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
-              message:'是否添加子节点到: ' + this.ceTree._selectedNodeName,
+              message:'\u662F\u5426\u6DFB\u52A0\u5B50\u8282\u70B9\u5230: ' + this.ceTree._selectedNodeName,
               messageType:UIMaster.ui.dialog.Information,
               optionType:UIMaster.ui.dialog.YES_NO_OPTION,
               title:'',
@@ -140,14 +140,14 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchy(json)
               message:'Are you sure delete this node?',
               messageType:UIMaster.ui.dialog.Warning,
               optionType:UIMaster.ui.dialog.YES_NO_OPTION,
-              title:'',
+              title:'\u5220\u9664\u8282\u70B9?',
               height:150,
               width:300,
               handler: function() {
                  if (o.ceTree._selectedNodeName == null || o.ceTree._selectedNodeName == "") {
-							              return;
-							          }
-							          o.ceTree.sync();
+		             return;
+		         }
+		         o.ceTree.sync();
                  UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_2040990210",UIMaster.getValue(eventsource),o.__entityName);
               }
           }).open();

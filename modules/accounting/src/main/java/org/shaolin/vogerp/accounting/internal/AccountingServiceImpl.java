@@ -11,7 +11,6 @@ import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.bmdp.utils.DateParser;
-import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.uimaster.page.ajax.json.JSONException;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.vogerp.accounting.IAccountingService;
@@ -32,6 +31,7 @@ import org.shaolin.vogerp.accounting.util.PaymentUtil;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.IUserService.UserActionListener;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -209,6 +209,12 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 
 	@Override
 	public void startService() {
+		String isDisabled = Registry.getInstance().getValue("/System/modules/disable/accounting");
+		if (isDisabled != null && "true".equals(isDisabled)) {
+			LoggerFactory.getLogger(AccountingServiceImpl.class).info("Disable the accounting module by setting.");
+			return;
+		}
+		
 		AppContext.get().register(this);
 		IUserService userService = (IUserService) AppContext.get().getService(
 				IUserService.class);

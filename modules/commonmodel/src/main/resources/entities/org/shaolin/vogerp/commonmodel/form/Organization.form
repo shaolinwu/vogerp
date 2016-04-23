@@ -306,46 +306,15 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.type" paramName="value"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
         <ns2:expression>
-          <expressionString>"org.shaolin.vogerp.commonmodel.ce.PartyType"</expressionString>
+          <expressionString>"org.shaolin.vogerp.productmodel.ce.IndustryType"</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="singleLevel">
+        <ns2:expression>
+          <expressionString>{return Boolean.TRUE;}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
-    <!-- 
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping32">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="roleUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
-        <ns2:expression>
-          <expressionString>"org.shaolin.vogerp.commonmodel.ce.PartyRoleType"</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEValue">
-        <ns2:expression>
-          <expressionString><![CDATA[
-          import org.shaolin.vogerp.commonmodel.ce.PartyRoleType;
-          {
-             if ($beObject.getRoles() == null || $beObject.getRoles().size() == 0) {
-                return PartyRoleType.NOT_SPECIFIED;
-             }
-             return (PartyRoleType)$beObject.getRoles().get(0);
-          }]]></expressionString>
-        </ns2:expression>
-        <ns2:uiToDataExpression>
-           <ns2:expression>
-             <expressionString><![CDATA[
-             import java.util.ArrayList;
-             {
-               // DONOT use list.add method for CE list!
-               ArrayList list = new ArrayList();
-               list.add(@CEValue);
-               $beObject.setRoles(list);
-             }
-             ]]></expressionString>
-           </ns2:expression>
-        </ns2:uiToDataExpression>
-      </ns2:DataComponent>
-    </ns2:ComponentMapping>
-     -->
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="descriptionUI" paramName="UIWidgetType"></ns2:UIComponent>

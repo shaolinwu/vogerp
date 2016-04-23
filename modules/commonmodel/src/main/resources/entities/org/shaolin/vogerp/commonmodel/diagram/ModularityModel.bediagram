@@ -233,17 +233,17 @@
 		<bediagram:constantValue>
 			<bediagram:value>List</bediagram:value>
 			<bediagram:intValue>0</bediagram:intValue>
-			<bediagram:description>List</bediagram:description>
+			<bediagram:description>列表</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>RadioButtonGroup</bediagram:value>
 			<bediagram:intValue>1</bediagram:intValue>
-			<bediagram:description>RadioButtonGroup</bediagram:description>
+			<bediagram:description>单选组</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>CheckBoxGroup</bediagram:value>
 			<bediagram:intValue>2</bediagram:intValue>
-			<bediagram:description>CheckBoxGroup</bediagram:description>
+			<bediagram:description>多选组</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>
 </bediagram:BEDiagram>

@@ -43,7 +43,7 @@ function org_shaolin_vogerp_commonmodel_form_UIDyanimcItem(json)
         ui: elementList[prefix + "ceNameUILabel"]
     });
 
-    var ceNameUI = new UIMaster.ui.textfield
+    var ceNameUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "ceNameUI"]
     });

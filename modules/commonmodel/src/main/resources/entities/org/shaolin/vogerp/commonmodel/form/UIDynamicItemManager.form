@@ -42,9 +42,11 @@
                     String type = entityTypes.getOptionName(entityTypes.getValue());
                     UIDyanimcItemImpl newItem = new UIDyanimcItemImpl();
                     newItem.setUiEntityName(type);
+                    newItem.setFilter(@page.getHidden("filterId").getValue());
                     
                 	HashMap input = new HashMap();
                     input.put("beObject", newItem);
+                    input.put("parentCE", "ProductCharacteristic");
                     input.put("editable", new Boolean(true));
                     RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.UIDyanimcItem", input);
                     @page.addElement(form);
@@ -69,10 +71,13 @@
                     if (uiDynamicInfoTable.getSelectedRow() == null) {
                         return;
                     }
+                    ComboBox entityTypes = @page.getComboBox("entityTypes");
+                    String type = entityTypes.getOptionName(entityTypes.getValue());
                     
                     UIDyanimcItemImpl defaultUser = (UIDyanimcItemImpl)uiDynamicInfoTable.getSelectedRow();
                     HashMap input = new HashMap();
                     input.put("beObject", defaultUser);
+                    input.put("parentCE", "ProductCharacteristic");
                     input.put("editable", new Boolean(true));
                     RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.UIDyanimcItem", input);
                     @page.addElement(form);
@@ -154,6 +159,7 @@
             <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
         </ns2:layout>
         <ns2:component xsi:type="ns2:UIHiddenType" UIID="CENameUI"></ns2:component>
+        <ns2:component xsi:type="ns2:UIHiddenType" UIID="filterId"></ns2:component>
         <ns2:component xsi:type="ns2:UIPanelType" UIID="constantInfoPanel">
             <ns2:layout xsi:type="ns2:TableLayoutType">
                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -170,7 +176,7 @@
 		    </ns2:component>
             <ns2:component xsi:type="ns2:UITableType" UIID="uiDynamicInfoTable">
                 <ns2:beElement>org.shaolin.vogerp.commonmodel.be.UIDyanimcItem</ns2:beElement>
-                <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Multiple</ns2:selectMode>
+                <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
                 <ns2:defaultRowSize>20</ns2:defaultRowSize>
                 <ns2:showActionBar>true</ns2:showActionBar>
                 <ns2:showFilter>true</ns2:showFilter>

@@ -20,7 +20,7 @@ function org_shaolin_vogerp_productmodel_page_ProductTempManagement(json)
         ,items: []
         ,subComponents: [prefix + "productInfoTable"]
     });
-    var productTreePanel = new org_shaolin_vogerp_commonmodel_form_CEHierarchy({"prefix":prefix + "productTreePanel."});
+    var productTreePanel = new org_shaolin_vogerp_productmodel_form_ProductTypeManager({"prefix":prefix + "productTreePanel."});
 
 
     var Form = new UIMaster.ui.panel
