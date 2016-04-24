@@ -48,6 +48,9 @@
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.coupon.be.CouponUserInfoImpl;
+                    import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+                    import java.util.List;
+                    import org.shaolin.vogerp.commonmodel.dao.CommonModel;
                     {
                         Table couponUserInfoTable = (Table)@page.getElement("couponUserInfoTable");
                         if (couponUserInfoTable.getSelectedRow() == null) {
@@ -57,10 +60,21 @@
                         HashMap input = new HashMap();
                         input.put("beObject", couponUserInfo);
                         input.put("editable", new Boolean(true));
+                        long orgId = couponUserInfo.getOrgId();
+                        input.put("orgId", String.valueOf(orgId));
+                        
+                        /*OrganizationImpl condition = new OrganizationImpl();
+                        condition.setId(orgId);
+                        List orgs = CommonModel.INSTANCE.searchOrganization(condition, null, 0, 0);
+                        if (null != orgs && orgs.size() > 0) {
+                        	OrganizationImpl org = (OrganizationImpl) orgs.get(0);
+	                        input.put("industryType", org.get);
+                        }*/
+                        
                         RefForm form = new RefForm("couponUserInfo", "org.shaolin.vogerp.coupon.form.CouponUserInfo", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Open Coupon User Info", new TableCallBack("couponUserInfoTable"), 690, 500);
+                        form.openInWindows("Open Coupon User Info", new TableCallBack("couponUserInfoTable"), 800, 600);
                     }
                     ]]></ns2:expressionString>
 				</ns2:exp>
@@ -316,7 +330,7 @@
 					</ns2:uiType>
 				</ns2:column>
 				<ns2:defaultActions>
-					<ns2:defaultNewAction>createCouponUserInfo</ns2:defaultNewAction>
+					<!-- <ns2:defaultNewAction>createCouponUserInfo</ns2:defaultNewAction> -->
 					<ns2:defaultOpenAction>openCouponUserInfo</ns2:defaultOpenAction>
 				</ns2:defaultActions>
 			</ns2:component>

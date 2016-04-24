@@ -91,6 +91,27 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
+  <ns2:eventHandler functionName="selectUserQrCode">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectUserQrCode-1317628417">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.bmdp.runtime.security.UserContext;
+        { 
+           HashMap input = new HashMap();
+           input.put("editable", new Boolean(true));
+           input.put("callbackUIID", @page.getTextField("qrCodeUI").getId());
+           String orgId = @page.getHidden("orgIdHidden").getValue();
+           input.put("imagePath", "/images/coupon/front/couponIcon/" + orgId);
+           RefForm form = new RefForm("selectImageForm", "org.shaolin.vogerp.commonmodel.form.ImageViewer", input);
+           @page.addElement(form);
+           form.openInWindows("Image Viewer", null, 700, 750);
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
 
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -100,6 +121,8 @@
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -140,6 +163,37 @@
       <ns2:component xsi:type="ns2:UILabelType" UIID="queryLinkUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="lotteryQrCodeUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.coupon.be.CouponUserInfo.lotteryQrCode</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIImageType" UIID="lotteryQrCodeUI">
+      	<ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+		<ns2:Property name="src">
+            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+		         <ns2:expression>
+		           <expressionString>
+		           { 
+		           		String src = $beObject.getLotteryQrCode();
+		           		return src.substring(src.indexOf("/", "/uimaster/images".length())); 
+		           }</expressionString>
+		         </ns2:expression>
+	        </ns2:value>
+         </ns2:Property>
+	  </ns2:component>
+      <!-- <ns2:component xsi:type="ns2:UILabelType" UIID="industryTypeUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.coupon.be.CouponUserInfo.industryType</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="industryTypeUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+      </ns2:component> -->
       <ns2:component xsi:type="ns2:UILabelType" UIID="volumnUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -216,12 +270,15 @@
       <ns2:component xsi:type="ns2:UIComboBoxType" UIID="lotteryChannelUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="qrCodeUILabel">
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="qrCodeUIBtn">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
           <ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
           <ns2:key>org.shaolin.vogerp.coupon.be.CouponUserInfo.qrCode</ns2:key>
         </ns2:text>
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+			<ns2:handler functionName="selectUserQrCode" />
+		</ns2:EventListener>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="qrCodeUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
@@ -253,76 +310,92 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>volumnUILabel</ns2:componentId>
+        <ns2:componentId>lotteryQrCodeUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>volumnUI</ns2:componentId>
+        <ns2:componentId>lotteryQrCodeUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>addressUILabel</ns2:componentId>
+      <!-- <ns2:layoutConstraint>
+        <ns2:componentId>industryTypeUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>addressUI</ns2:componentId>
+        <ns2:componentId>industryTypeUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
+      </ns2:layoutConstraint> -->
       <ns2:layoutConstraint>
-        <ns2:componentId>mainBusinessUILabel</ns2:componentId>
+        <ns2:componentId>volumnUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>mainBusinessUI</ns2:componentId>
+        <ns2:componentId>volumnUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>remarkUILabel</ns2:componentId>
+        <ns2:componentId>addressUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>remarkUI</ns2:componentId>
+        <ns2:componentId>addressUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>topAdvertImageUIBtn</ns2:componentId>
+        <ns2:componentId>mainBusinessUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>topAdvertImageUI</ns2:componentId>
+        <ns2:componentId>mainBusinessUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>bottomAdvertImageUIBtn</ns2:componentId>
+        <ns2:componentId>remarkUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="7" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>bottomAdvertImageUI</ns2:componentId>
+        <ns2:componentId>remarkUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="7" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>lotteryChannelUILabel</ns2:componentId>
+        <ns2:componentId>topAdvertImageUIBtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="8" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>lotteryChannelUI</ns2:componentId>
+        <ns2:componentId>topAdvertImageUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="8" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>qrCodeUILabel</ns2:componentId>
+        <ns2:componentId>bottomAdvertImageUIBtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="9" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>qrCodeUI</ns2:componentId>
+        <ns2:componentId>bottomAdvertImageUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="9" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>brandUILabel</ns2:componentId>
+        <ns2:componentId>lotteryChannelUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="10" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>brandUI</ns2:componentId>
+        <ns2:componentId>lotteryChannelUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="10" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>qrCodeUIBtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="11" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>qrCodeUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="11" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>brandUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="12" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>brandUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="12" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
@@ -457,6 +530,16 @@
       <ns2:UIComponent componentPath="orgIdHidden" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="orgId" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
+    <!-- <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping13">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="industryTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="industryType" paramName="CEValue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
+        <ns2:expression>
+          <expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping> -->
     <ns2:DataToUIMappingOperation>
       <expressionString>{
 @odContext.executeAllMappings();

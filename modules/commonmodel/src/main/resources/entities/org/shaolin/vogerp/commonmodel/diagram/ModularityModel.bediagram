@@ -58,6 +58,16 @@
             <bediagram:name>additionNodes</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
+        <bediagram:member>
+		    <!-- configure whether the node is frontend page.-->
+            <bediagram:name>isFrontend</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BooleanType" />
+        </bediagram:member>
+        <bediagram:member>
+		    <!-- configure whether the node display in backstage system.-->
+            <bediagram:name>isDisplay</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BooleanType" />
+        </bediagram:member>
 	</bediagram:beEntity>
 
 	<bediagram:beEntity needPersist="true" needUIEntity="true">

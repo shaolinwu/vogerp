@@ -80,6 +80,11 @@
 			<bediagram:name>percent</bediagram:name>
 			<bediagram:type xsi:type="bediagram:DoubleType" />
 		</bediagram:member>
+		<!-- 是否为谢谢惠顾 -->
+		<bediagram:member>
+			<bediagram:name>isThanks</bediagram:name>
+			<bediagram:type xsi:type="bediagram:BooleanType" />
+		</bediagram:member>
 	</bediagram:beEntity>
 	
 	<!-- 优惠产品 -->
@@ -261,16 +266,6 @@
 	    <bediagram:member>
 	        <bediagram:name>isMaintain</bediagram:name>
 	        <bediagram:type xsi:type="bediagram:BooleanType" />
-	    </bediagram:member>
-	    <!-- 顶部广告位 -->
-	    <bediagram:member>
-	        <bediagram:name>topAdvertImage</bediagram:name>
-	        <bediagram:type xsi:type="bediagram:StringType" />
-	    </bediagram:member>
-	    <!-- 底部广告位 -->
-	    <bediagram:member>
-	        <bediagram:name>bottomAdvertImage</bediagram:name>
-	        <bediagram:type xsi:type="bediagram:StringType" />
 	    </bediagram:member>
     </bediagram:beEntity>
     

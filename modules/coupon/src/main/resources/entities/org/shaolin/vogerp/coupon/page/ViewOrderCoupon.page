@@ -152,6 +152,15 @@
 			import org.shaolin.vogerp.coupon.ce.StatusType;
             {
             	$bottomAdvertImage = (String)@odContext.getRequest().getSession().getAttribute("BottomAdvertImage");
+            	if (null == $bottomAdvertImage || $bottomAdvertImage.length() <=0) {
+            		CouponUserInfoImpl condition = new CouponUserInfoImpl();
+	            	long orgId = (Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID);
+	            	condition.setOrgId(orgId);
+	            	List couponUsers = CouponModel.INSTANCE.searchCouponUserInfo(condition, null, 0, 0);
+	            	if (null != couponUsers && couponUsers.size() > 0) {
+	            		$bottomAdvertImage = ((CouponUserInfoImpl) couponUsers.get(0)).getBottomAdvertImage();
+	            	}
+            	}
             	
             	String code = @odContext.getRequest().getParameter("code");
            		System.out.println("code=" + code);

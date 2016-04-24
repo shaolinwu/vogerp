@@ -16,7 +16,7 @@ public interface IModuleService {
 
 	public void reload();
 
-	public void newAppModules(String appName, String reference);
+	public void newAppModules(String appName, String reference, Long orgId);
 
 	public long getModuleId(String chunkName, String nodeName);
 

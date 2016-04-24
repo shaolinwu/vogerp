@@ -79,7 +79,8 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 					$("#div-leftPanel-0_1").height(windowHeight * 0.55).show();
 		        	$("#div-leftPanel-0_4").height(windowHeight * 0.25).show();
 					var orgId = $("input[name='orgId']").val();
-					$("#rollLottery").append("<img id=\"rollImage1\" src=\"/uimaster/images/coupon/front/couponIcon/" + orgId + "/lotteryRoll_a.gif\" /><img id=\"rollImage2\"  src=\"/uimaster/images/coupon/front/couponIcon/" + orgId + "/lotteryRoll_b.gif\" /><img id=\"rollImage3\"  src=\"/uimaster/images/coupon/front/couponIcon/" + orgId + "/lotteryRoll_c.gif\" />");
+					//$("#rollLottery").append("<img id=\"rollImage1\" src=\"/uimaster/images/coupon/front/couponIcon/" + orgId + "/lotteryRoll_a.gif\" /><img id=\"rollImage2\"  src=\"/uimaster/images/coupon/front/couponIcon/" + orgId + "/lotteryRoll_b.gif\" /><img id=\"rollImage3\"  src=\"/uimaster/images/coupon/front/couponIcon/" + orgId + "/lotteryRoll_c.gif\" />");
+					$("#rollLottery").append("<img id=\"rollImage1\" src=\"/uimaster/images/coupon/front/lotteryRoll_a.gif\" /><img id=\"rollImage2\"  src=\"/uimaster/images/coupon/front/lotteryRoll_b.gif\" /><img id=\"rollImage3\"  src=\"/uimaster/images/coupon/front/lotteryRoll_c.gif\" />");
 					$("#div-leftPanel-0_5").height(windowHeight * 0.2).css("top" , windowHeight * 0.55 + "px").show();
 					$("#div-leftPanel-0_5 img").height(windowHeight * 0.17 + "px");
 					

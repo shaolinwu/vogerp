@@ -129,7 +129,7 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	}
 	
 	@Override
-	public synchronized void newAppModules(String appName, String reference) {
+	public synchronized void newAppModules(String appName, String reference, Long orgId) {
 		if (appName == null || appName.trim().length() == 0) {
 			throw new IllegalArgumentException("Application must not be null!");
 		}
@@ -153,10 +153,15 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 			ModuleGroupImpl item = new ModuleGroupImpl();
 			item.setParentId(newGroup.getId());
 			item.setName(node.getName());
-			item.setAccessURL(escapeTNR(node.getAccessURL()));
+			String accessUrl = node.getAccessURL();
+			accessUrl = accessUrl.replace("{orgid}", String.valueOf(orgId));
+			item.setAccessURL(escapeTNR(accessUrl));
 			item.setDescription(node.getDescription());
 			item.setBigIcon(node.getBigIcon());
 			item.setSmallIcon(node.getSmallIcon());
+			item.setAdditionNodes(node.getAdditionNodes());
+			item.setIsDisplay(node.getIsDisplay());
+			item.setIsFrontend(node.getIsFrontend());
 			newSubNodes.add(item);
 		}
 		ModularityModel.INSTANCE.batchInsert(newSubNodes);
@@ -168,6 +173,13 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 			permission.setModuleId(m.getId());
 			permission.setPartyType("org.shaolin.vogerp.commonmodel.ce.GenericOrganizationType,0");
 			modulePermissions.add(permission);
+			//If this node is frontend, need configure [org.shaolin.vogerp.commonmodel.ce.PermissionType,-1]
+			if (m.getIsFrontend()) {
+				ModelPermissionImpl permission1 = new ModelPermissionImpl();
+				permission1.setModuleId(m.getId());
+				permission1.setPartyType("org.shaolin.vogerp.commonmodel.ce.PermissionType,-1");
+				modulePermissions.add(permission1);
+			}
 		}
 		ModularityModel.INSTANCE.batchInsert(modulePermissions);
 		

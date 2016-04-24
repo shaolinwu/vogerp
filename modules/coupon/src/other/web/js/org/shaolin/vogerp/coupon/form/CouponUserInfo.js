@@ -33,6 +33,16 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
         ui: elementList[prefix + "queryLinkUI"]
     });
 
+    var lotteryQrCodeUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "lotteryQrCodeUILabel"]
+    });
+
+    var lotteryQrCodeUI = new UIMaster.ui.image
+    ({
+        ui: elementList[prefix + "lotteryQrCodeUI"]
+    });
+
     var volumnUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "volumnUILabel"]
@@ -103,9 +113,9 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
         ui: elementList[prefix + "lotteryChannelUI"]
     });
 
-    var qrCodeUILabel = new UIMaster.ui.label
+    var qrCodeUIBtn = new UIMaster.ui.button
     ({
-        ui: elementList[prefix + "qrCodeUILabel"]
+        ui: elementList[prefix + "qrCodeUIBtn"]
     });
 
     var qrCodeUI = new UIMaster.ui.textfield
@@ -144,13 +154,13 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "orgIdHidden",prefix + "idUI",prefix + "lotteryLinkUILabel",prefix + "lotteryLinkUI",prefix + "queryLinkUILabel",prefix + "queryLinkUI",prefix + "volumnUILabel",prefix + "volumnUI",prefix + "addressUILabel",prefix + "addressUI",prefix + "mainBusinessUILabel",prefix + "mainBusinessUI",prefix + "remarkUILabel",prefix + "remarkUI",prefix + "topAdvertImageUIBtn",prefix + "topAdvertImageUI",prefix + "bottomAdvertImageUIBtn",prefix + "bottomAdvertImageUI",prefix + "lotteryChannelUILabel",prefix + "lotteryChannelUI",prefix + "qrCodeUILabel",prefix + "qrCodeUI",prefix + "brandUILabel",prefix + "brandUI"]
+        ,subComponents: [prefix + "orgIdHidden",prefix + "idUI",prefix + "lotteryLinkUILabel",prefix + "lotteryLinkUI",prefix + "queryLinkUILabel",prefix + "queryLinkUI",prefix + "lotteryQrCodeUILabel",prefix + "lotteryQrCodeUI",prefix + "volumnUILabel",prefix + "volumnUI",prefix + "addressUILabel",prefix + "addressUI",prefix + "mainBusinessUILabel",prefix + "mainBusinessUI",prefix + "remarkUILabel",prefix + "remarkUI",prefix + "topAdvertImageUIBtn",prefix + "topAdvertImageUI",prefix + "bottomAdvertImageUIBtn",prefix + "bottomAdvertImageUI",prefix + "lotteryChannelUILabel",prefix + "lotteryChannelUI",prefix + "qrCodeUIBtn",prefix + "qrCodeUI",prefix + "brandUILabel",prefix + "brandUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [orgIdHidden,idUI,lotteryLinkUILabel,lotteryLinkUI,queryLinkUILabel,queryLinkUI,volumnUILabel,volumnUI,addressUILabel,addressUI,mainBusinessUILabel,mainBusinessUI,remarkUILabel,remarkUI,topAdvertImageUIBtn,topAdvertImageUI,bottomAdvertImageUIBtn,bottomAdvertImageUI,lotteryChannelUILabel,lotteryChannelUI,qrCodeUILabel,qrCodeUI,brandUILabel,brandUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [orgIdHidden,idUI,lotteryLinkUILabel,lotteryLinkUI,queryLinkUILabel,queryLinkUI,lotteryQrCodeUILabel,lotteryQrCodeUI,volumnUILabel,volumnUI,addressUILabel,addressUI,mainBusinessUILabel,mainBusinessUI,remarkUILabel,remarkUI,topAdvertImageUIBtn,topAdvertImageUI,bottomAdvertImageUIBtn,bottomAdvertImageUI,lotteryChannelUILabel,lotteryChannelUI,qrCodeUIBtn,qrCodeUI,brandUILabel,brandUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.orgIdHidden=orgIdHidden;
@@ -164,6 +174,10 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
     Form.queryLinkUILabel=queryLinkUILabel;
 
     Form.queryLinkUI=queryLinkUI;
+
+    Form.lotteryQrCodeUILabel=lotteryQrCodeUILabel;
+
+    Form.lotteryQrCodeUI=lotteryQrCodeUI;
 
     Form.volumnUILabel=volumnUILabel;
 
@@ -193,7 +207,7 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
 
     Form.lotteryChannelUI=lotteryChannelUI;
 
-    Form.qrCodeUILabel=qrCodeUILabel;
+    Form.qrCodeUIBtn=qrCodeUIBtn;
 
     Form.qrCodeUI=qrCodeUI;
 
@@ -219,6 +233,10 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
 
     Form.queryLinkUI=queryLinkUI;
 
+    Form.lotteryQrCodeUILabel=lotteryQrCodeUILabel;
+
+    Form.lotteryQrCodeUI=lotteryQrCodeUI;
+
     Form.volumnUILabel=volumnUILabel;
 
     Form.volumnUI=volumnUI;
@@ -247,7 +265,7 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
 
     Form.lotteryChannelUI=lotteryChannelUI;
 
-    Form.qrCodeUILabel=qrCodeUILabel;
+    Form.qrCodeUIBtn=qrCodeUIBtn;
 
     Form.qrCodeUI=qrCodeUI;
 
@@ -274,6 +292,8 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
     Form.selectTopAdvertImage = org_shaolin_vogerp_coupon_form_CouponUserInfo_selectTopAdvertImage;
 
     Form.selectBottomAdvertImage = org_shaolin_vogerp_coupon_form_CouponUserInfo_selectBottomAdvertImage;
+
+    Form.selectUserQrCode = org_shaolin_vogerp_coupon_form_CouponUserInfo_selectUserQrCode;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_coupon_form_CouponUserInfo_invokeDynamicFunction;
 
@@ -329,6 +349,17 @@ function org_shaolin_vogerp_coupon_form_CouponUserInfo(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectBottomAdvertImage-1317628417",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_coupon_form_CouponUserInfo_selectBottomAdvertImage */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_form_CouponUserInfo_selectUserQrCode(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_form_CouponUserInfo_selectUserQrCode */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectUserQrCode-1317628417",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_coupon_form_CouponUserInfo_selectUserQrCode */
 
 
     /* auto generated eventlistener function declaration */

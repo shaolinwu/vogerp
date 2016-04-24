@@ -67,6 +67,7 @@
 						System.out.println("openid=" + @page.getRequest().getSession().getAttribute(WechatUtil.OPEN_ID) + ", orgid=" + orgId);
 						
 						boolean hadLottery = CouponUtil.verifyOpenIdAndOrgId(openId, orgId);
+						System.out.println("hadLottery=" + hadLottery);
 						//boolean hadLottery = false;
 						if (hadLottery && isValidateOpenId) {
 							@page.getLabel("startMsg").setDisplayValue("今日已抽过奖，请明日再来");

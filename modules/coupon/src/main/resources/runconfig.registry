@@ -5,7 +5,9 @@
     	   <node name="common_coupon_service">
 	   	       <expression><![CDATA[
 	   	       import org.shaolin.bmdp.runtime.AppContext;
+	   	       import org.shaolin.vogerp.coupon.internal.CouponLifeServiceProviderImpl;
 	   	       {
+	   	           AppContext.get().registerLifeCycleProvider(new CouponLifeServiceProviderImpl());
 	   	       }
 	   	       ]]></expression>
    	       </node>

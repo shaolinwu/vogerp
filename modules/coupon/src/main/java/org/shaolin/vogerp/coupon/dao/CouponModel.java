@@ -143,6 +143,9 @@ public class CouponModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
             if (scObject.getPhoneNum() != null && scObject.getPhoneNum().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.phoneNum", scObject.getPhoneNum()));
             }
@@ -162,6 +165,9 @@ public class CouponModel extends BEEntityDaoObject {
     public long searchCouponOperationCount(org.shaolin.vogerp.coupon.be.CouponOperationImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.coupon.be.CouponOperationImpl.class, "inObject");
 
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
             if (scObject.getPhoneNum() != null && scObject.getPhoneNum().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.phoneNum", scObject.getPhoneNum()));
             }

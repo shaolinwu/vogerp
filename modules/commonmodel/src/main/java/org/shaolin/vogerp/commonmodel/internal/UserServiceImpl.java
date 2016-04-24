@@ -117,7 +117,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 		
 		// assign modules
 		IModuleService moduleService = AppContext.get().getService(IModuleService.class);
-		moduleService.newAppModules(org.getOrgCode(), "jounioruser");
+		moduleService.newAppModules(org.getOrgCode(), "jounioruser", org.getId());
 		
 		for (UserActionListener listener: listeners) {
 			listener.registered(userInfo);
