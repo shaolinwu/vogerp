@@ -5,6 +5,11 @@
 	<entityName>org.shaolin.vogerp.ecommercial.page.OnlineOrderList</entityName>
 	<systemVersion>0</systemVersion>
 	<description>抢单达人主页</description>
+	<descriptionExpr>
+	   <expressionString><![CDATA[
+	       return "抢单达人主页";
+	   ]]></expressionString>
+	</descriptionExpr>
 	<ns2:eventHandler functionName="toRentOrder"></ns2:eventHandler>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="takeGoldenOrder">
@@ -487,6 +492,4 @@
             <ns2:UIComponent componentPath="searchBar" paramName="UIWidgetType"></ns2:UIComponent>
         </ns2:ComponentMapping>
 	</ns2:ODMapping>
-	<ns2:in>
-	</ns2:in>
 </ns2:UIPage>

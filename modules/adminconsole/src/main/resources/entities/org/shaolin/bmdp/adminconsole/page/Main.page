@@ -631,7 +631,7 @@
         </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
-		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">
+		<ns2:serverOperation xsi:type="ns2:ExpressionType">
 			<ns2:expressionString><![CDATA[
 			import org.shaolin.bmdp.runtime.AppContext;
 		    import org.shaolin.vogerp.commonmodel.IUserService;
@@ -647,7 +647,7 @@
 			  @odContext.executeAllMappings();
 			}]]></ns2:expressionString>
 		</ns2:serverOperation>
-		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
+		<ns2:clientAction xsi:type="ns2:ExpressionType">
 			<ns2:expressionString><![CDATA[
 			{
 			  this.tabCounter = this.functionsTab.getTabLength(); // performance counter

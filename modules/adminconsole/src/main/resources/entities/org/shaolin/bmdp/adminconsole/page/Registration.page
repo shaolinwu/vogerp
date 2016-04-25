@@ -278,7 +278,7 @@
         </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
-		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">
+		<ns2:serverOperation xsi:type="ns2:ExpressionType">
 			<ns2:expressionString><![CDATA[
 			import org.shaolin.bmdp.runtime.AppContext;
 			import org.shaolin.vogerp.commonmodel.IUserService;
@@ -291,26 +291,26 @@
 			  @odContext.executeAllMappings();
 			}]]></ns2:expressionString>
 		</ns2:serverOperation>
-		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
+		<ns2:clientAction xsi:type="ns2:ExpressionType">
 			<ns2:expressionString><![CDATA[{
 			// hello, my first js.
 			}]]></ns2:expressionString>
 		</ns2:clientAction>
 	</ns2:in>
 	<ns2:out name="Register" functionName="Register" validate="true">
-		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
+		<ns2:clientAction xsi:type="ns2:ExpressionType">
 			<ns2:expressionString><![CDATA[{
 			// hello, my first js.
 			}]]></ns2:expressionString>
 		</ns2:clientAction>
-		<ns2:serverOperation xsi:type="ns2:ExpressionParamType" />
+		<ns2:serverOperation xsi:type="ns2:ExpressionType" />
 	</ns2:out>
 	<ns2:out name="Login" functionName="Login" validate="false">
-        <ns2:clientAction xsi:type="ns2:ExpressionParamType">
+        <ns2:clientAction xsi:type="ns2:ExpressionType">
             <ns2:expressionString><![CDATA[{
             // hello, my first js.
             }]]></ns2:expressionString>
         </ns2:clientAction>
-        <ns2:serverOperation xsi:type="ns2:ExpressionParamType" />
+        <ns2:serverOperation xsi:type="ns2:ExpressionType" />
     </ns2:out>
 </ns2:UIPage>

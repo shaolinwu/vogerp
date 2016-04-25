@@ -188,6 +188,4 @@
     <ns2:UIComponent componentPath="dynamicPageLinkPanel" paramName="UIWidgetType"></ns2:UIComponent>
   </ns2:ComponentMapping>
 	</ns2:ODMapping>
-	<ns2:in>
-	</ns2:in>
 </ns2:UIPage>

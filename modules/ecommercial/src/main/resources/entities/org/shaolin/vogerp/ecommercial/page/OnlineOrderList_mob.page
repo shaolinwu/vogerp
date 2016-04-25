@@ -485,7 +485,7 @@
         </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
-	   <ns2:clientAction xsi:type="ns2:ExpressionParamType">
+	   <ns2:clientAction xsi:type="ns2:ExpressionType">
             <ns2:expressionString><![CDATA[
             {
                $("#goldenOrderTableActionBar").css("position", "absolute").css("top","70px").css("left",($(window).width()-70)+"px").width(80);
