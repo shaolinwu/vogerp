@@ -3,6 +3,11 @@
 function org_shaolin_vogerp_coupon_page_UserManagement(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var orgIdHidden = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "orgIdHidden"]
+    });
+
     var orgNameUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "orgNameUILabel"]
@@ -32,14 +37,16 @@ function org_shaolin_vogerp_coupon_page_UserManagement(json)
     ({
         ui: elementList[prefix + "orgSelectPanel"]
         ,items: []
-        ,subComponents: [prefix + "orgNameUILabel",prefix + "orgNameUI",prefix + "nameUILabel",prefix + "nameUI"]
+        ,subComponents: [prefix + "orgIdHidden",prefix + "orgNameUILabel",prefix + "orgNameUI",prefix + "nameUILabel",prefix + "nameUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [orgNameUILabel,orgNameUI,nameUILabel,nameUI,couponUserInfoTable,orgSelectPanel]
+        ,items: [orgIdHidden,orgNameUILabel,orgNameUI,nameUILabel,nameUI,couponUserInfoTable,orgSelectPanel]
     });
+
+    Form.orgIdHidden=orgIdHidden;
 
     Form.orgNameUILabel=orgNameUILabel;
 
@@ -52,6 +59,8 @@ function org_shaolin_vogerp_coupon_page_UserManagement(json)
     Form.couponUserInfoTable=couponUserInfoTable;
 
     Form.orgSelectPanel=orgSelectPanel;
+
+    Form.orgIdHidden=orgIdHidden;
 
     Form.orgNameUILabel=orgNameUILabel;
 

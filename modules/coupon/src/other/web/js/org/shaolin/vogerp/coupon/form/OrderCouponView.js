@@ -91,7 +91,9 @@ function org_shaolin_vogerp_coupon_form_OrderCouponView(json)
 		{
 			var $couponImages = $("img[class1='couponImageView']");
 			$couponImages.each(function(i, couponImage){
-				$(couponImage).parent("div.uimaster_widget_cell").css({"margin" : "2%", "border" : "solid 2px white", "width" : "30%"});
+				var $p = $(couponImage).parent("div.uimaster_widget_cell");
+				$p.css({"margin" : "2%", "border" : "solid 2px white", "width" : "35%"});
+				$p.height($p.width() * 0.75 + "px");
 			});
 			
 			var $couponPanels = $("div[class1='couponInfoPanel']");

@@ -28,14 +28,14 @@ function org_shaolin_vogerp_coupon_form_CouponType(json)
         ui: elementList[prefix + "totalNumUI"]
     });
 
-    var restNumUILabel = new UIMaster.ui.label
+    var percentUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "restNumUILabel"]
+        ui: elementList[prefix + "percentUILabel"]
     });
 
-    var restNumUI = new UIMaster.ui.label
+    var percentUI = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "restNumUI"]
+        ui: elementList[prefix + "percentUI"]
     });
 
     var iconUILabel = new UIMaster.ui.label
@@ -46,26 +46,6 @@ function org_shaolin_vogerp_coupon_form_CouponType(json)
     var iconUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "iconUI"]
-    });
-
-    var superiorityMessageUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "superiorityMessageUILabel"]
-    });
-
-    var superiorityMessageUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "superiorityMessageUI"]
-    });
-
-    var limitMessageUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "limitMessageUILabel"]
-    });
-
-    var limitMessageUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "limitMessageUI"]
     });
 
     var resetIntervalUILabel = new UIMaster.ui.label
@@ -86,6 +66,16 @@ function org_shaolin_vogerp_coupon_form_CouponType(json)
     var isImmediateUI = new UIMaster.ui.checkbox
     ({
         ui: elementList[prefix + "isImmediateUI"]
+    });
+
+    var isThanksUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "isThanksUILabel"]
+    });
+
+    var isThanksUI = new UIMaster.ui.checkbox
+    ({
+        ui: elementList[prefix + "isThanksUI"]
     });
 
     var okbtn = new UIMaster.ui.button
@@ -109,13 +99,13 @@ function org_shaolin_vogerp_coupon_form_CouponType(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "totalNumUILabel",prefix + "totalNumUI",prefix + "restNumUILabel",prefix + "restNumUI",prefix + "iconUILabel",prefix + "iconUI",prefix + "superiorityMessageUILabel",prefix + "superiorityMessageUI",prefix + "limitMessageUILabel",prefix + "limitMessageUI",prefix + "resetIntervalUILabel",prefix + "resetIntervalUI",prefix + "isImmediateUILabel",prefix + "isImmediateUI"]
+        ,subComponents: [prefix + "idUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "totalNumUILabel",prefix + "totalNumUI",prefix + "percentUILabel",prefix + "percentUI",prefix + "iconUILabel",prefix + "iconUI",prefix + "resetIntervalUILabel",prefix + "resetIntervalUI",prefix + "isImmediateUILabel",prefix + "isImmediateUI",prefix + "isThanksUILabel",prefix + "isThanksUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,nameUILabel,nameUI,totalNumUILabel,totalNumUI,restNumUILabel,restNumUI,iconUILabel,iconUI,superiorityMessageUILabel,superiorityMessageUI,limitMessageUILabel,limitMessageUI,resetIntervalUILabel,resetIntervalUI,isImmediateUILabel,isImmediateUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,nameUILabel,nameUI,totalNumUILabel,totalNumUI,percentUILabel,percentUI,iconUILabel,iconUI,resetIntervalUILabel,resetIntervalUI,isImmediateUILabel,isImmediateUI,isThanksUILabel,isThanksUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -128,21 +118,13 @@ function org_shaolin_vogerp_coupon_form_CouponType(json)
 
     Form.totalNumUI=totalNumUI;
 
-    Form.restNumUILabel=restNumUILabel;
+    Form.percentUILabel=percentUILabel;
 
-    Form.restNumUI=restNumUI;
+    Form.percentUI=percentUI;
 
     Form.iconUILabel=iconUILabel;
 
     Form.iconUI=iconUI;
-
-    Form.superiorityMessageUILabel=superiorityMessageUILabel;
-
-    Form.superiorityMessageUI=superiorityMessageUI;
-
-    Form.limitMessageUILabel=limitMessageUILabel;
-
-    Form.limitMessageUI=limitMessageUI;
 
     Form.resetIntervalUILabel=resetIntervalUILabel;
 
@@ -151,6 +133,10 @@ function org_shaolin_vogerp_coupon_form_CouponType(json)
     Form.isImmediateUILabel=isImmediateUILabel;
 
     Form.isImmediateUI=isImmediateUI;
+
+    Form.isThanksUILabel=isThanksUILabel;
+
+    Form.isThanksUI=isThanksUI;
 
     Form.okbtn=okbtn;
 
@@ -168,21 +154,13 @@ function org_shaolin_vogerp_coupon_form_CouponType(json)
 
     Form.totalNumUI=totalNumUI;
 
-    Form.restNumUILabel=restNumUILabel;
+    Form.percentUILabel=percentUILabel;
 
-    Form.restNumUI=restNumUI;
+    Form.percentUI=percentUI;
 
     Form.iconUILabel=iconUILabel;
 
     Form.iconUI=iconUI;
-
-    Form.superiorityMessageUILabel=superiorityMessageUILabel;
-
-    Form.superiorityMessageUI=superiorityMessageUI;
-
-    Form.limitMessageUILabel=limitMessageUILabel;
-
-    Form.limitMessageUI=limitMessageUI;
 
     Form.resetIntervalUILabel=resetIntervalUILabel;
 
@@ -191,6 +169,10 @@ function org_shaolin_vogerp_coupon_form_CouponType(json)
     Form.isImmediateUILabel=isImmediateUILabel;
 
     Form.isImmediateUI=isImmediateUI;
+
+    Form.isThanksUILabel=isThanksUILabel;
+
+    Form.isThanksUI=isThanksUI;
 
     Form.actionPanel=actionPanel;
 

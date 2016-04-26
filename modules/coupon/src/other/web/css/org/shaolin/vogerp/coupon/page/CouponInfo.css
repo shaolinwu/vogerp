@@ -78,8 +78,8 @@ div#div-couponImagePanel-1_0 {
 
 div#div-couponImageRightPanel-0_0 {
     width: 100%;
-    font-size: 2em;
-    margin-top: 15%;
+    font-size: 1.4em;
+    margin-top: 0%;
     color: #FFE59B;
 }
 
@@ -147,4 +147,8 @@ div#div-bottomPanel-1_0 {
 
 span {
     white-space: nowrap;
+}
+#couponDiscountText_Label{
+	font-size: 1.4em;
+	color: #FFE59B;
 }

@@ -18,6 +18,14 @@
     left: 29%;
     width: 40%;
 }
+#div-Form-0_1{
+	top: 45%;
+    position: absolute;
+}
+#startMsg_Label{
+	text-align: center;
+    display: block;
+}
 
 .rollCurtain{
 	animation:myfirst 1s;

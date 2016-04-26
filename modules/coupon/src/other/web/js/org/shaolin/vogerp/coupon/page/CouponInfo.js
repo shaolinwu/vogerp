@@ -48,6 +48,11 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
         ui: elementList[prefix + "couponNameText"]
     });
 
+    var couponDiscountText = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "couponDiscountText"]
+    });
+
     var couponMsgText = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "couponMsgText"]
@@ -118,7 +123,7 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
     ({
         ui: elementList[prefix + "couponImageRightPanel"]
         ,items: []
-        ,subComponents: [prefix + "couponNameText",prefix + "couponMsgText"]
+        ,subComponents: [prefix + "couponNameText",prefix + "couponDiscountText",prefix + "couponMsgText"]
     });
 
     var couponImagePanel = new UIMaster.ui.panel
@@ -145,7 +150,7 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [logoImage,openId,wechatSign,serialLabeText,serialNumText,orderLabelText,phoneNumText,couponImage,couponNameText,couponMsgText,advertImage,bottom1Text,bottom2Text,bottom3Text,bottom5Text,bottom4Text,fingerImage,fingerPrintImage,couponPanel,serialNumPanel,couponImagePanel,couponImageRightPanel,bottomPanel,bottomLeftPanel,bottom3Panel]
+        ,items: [logoImage,openId,wechatSign,serialLabeText,serialNumText,orderLabelText,phoneNumText,couponImage,couponNameText,couponDiscountText,couponMsgText,advertImage,bottom1Text,bottom2Text,bottom3Text,bottom5Text,bottom4Text,fingerImage,fingerPrintImage,couponPanel,serialNumPanel,couponImagePanel,couponImageRightPanel,bottomPanel,bottomLeftPanel,bottom3Panel]
     });
 
     Form.logoImage=logoImage;
@@ -165,6 +170,8 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
     Form.couponImage=couponImage;
 
     Form.couponNameText=couponNameText;
+
+    Form.couponDiscountText=couponDiscountText;
 
     Form.couponMsgText=couponMsgText;
 
@@ -208,6 +215,8 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 
     Form.couponNameText=couponNameText;
 
+    Form.couponDiscountText=couponDiscountText;
+
     Form.couponMsgText=couponMsgText;
 
     Form.advertImage=advertImage;
@@ -250,11 +259,15 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 
     Form.couponNameText=couponNameText;
 
+    Form.couponDiscountText=couponDiscountText;
+
     Form.couponMsgText=couponMsgText;
 
     Form.couponImageRightPanel=couponImageRightPanel;
 
     Form.couponNameText=couponNameText;
+
+    Form.couponDiscountText=couponDiscountText;
 
     Form.couponMsgText=couponMsgText;
 

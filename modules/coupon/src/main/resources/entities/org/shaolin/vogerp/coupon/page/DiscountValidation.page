@@ -13,7 +13,7 @@
 				<ns2:exp>
 					<ns2:expressionString><![CDATA[
 					import org.shaolin.uimaster.page.AjaxContext;
-					import org.shaolin.vogerp.coupon.be.CouponImpl;
+					import org.shaolin.vogerp.coupon.be.*;
 					import org.shaolin.vogerp.coupon.dao.CouponModel;
 					import java.util.List;
 					import java.util.Date;
@@ -21,6 +21,7 @@
 					import org.shaolin.uimaster.page.ajax.RefForm;
 					import org.shaolin.vogerp.coupon.ce.StatusType;
 					import org.shaolin.bmdp.runtime.security.UserContext;
+					import org.shaolin.vogerp.coupon.util.CouponUtil;
 					{
 						String couponNumber = @page.getTextField("couponNumberText").getValue();
 						//验证优惠券是否在有效期内
@@ -36,7 +37,24 @@
 						} else {
 							CouponImpl coupon = (CouponImpl)coupons.get(0);
 							//已发出或已兑换状态
-							if (StatusType.SENDOUT.equals(coupon.getStatus()) || StatusType.EXCHANGED.equals(coupon.getStatus())) {
+							if (StatusType.EXCHANGED.equals(coupon.getStatus()) && !coupon.getDiscountProduct().getIsShared()) {
+								@page.executeJavaScript("alert('优惠券号 " + couponNumber + "不可重复兑换')");
+							} else if (StatusType.SENDOUT.equals(coupon.getStatus()) 
+								|| (StatusType.EXCHANGED.equals(coupon.getStatus()) && coupon.getDiscountProduct().getIsShared())) {
+								
+								//更新优惠券状态为已兑换并生成兑换记录
+								coupon.setStatus(StatusType.EXCHANGED);
+								CouponModel.INSTANCE.update(coupon);
+								CouponOperationImpl operation = new CouponOperationImpl();
+								operation.setOpenId(coupon.getOpenId());
+								operation.setPhoneNum(coupon.getPhoneNum());
+								operation.setSerialNumber(coupon.getSerialNumber());
+								operation.setType(CouponUtil.OPERATION_TYPE_EXCHANGE);
+								operation.setOperateDate(new Date());
+								operation.setCreateDate(new Date());
+								operation.setOrgId(coupon.getOrgId());
+								CouponModel.INSTANCE.create(operation);
+								
 								//显示优惠券信息 
 			                    HashMap input = new HashMap();
 			                    input.put("beObject", coupon);
@@ -44,7 +62,7 @@
 			                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.coupon.form.Coupon", input);
 			                    @page.addElement(form);
 			                    
-			                    form.openInWindows("Show Coupon Information", null);
+			                    form.openInWindows("Show Coupon Information", null, 800, 700);
 							} else {
 								@page.executeJavaScript("alert('优惠券号 " + couponNumber + "不存在或已过期')");
 							}
@@ -56,7 +74,7 @@
 		</ns2:eventHandler>
 		
 		<!-- 即刻优惠兑换 -->
-		<ns2:eventHandler functionName="ImmediateExchangeFunction">
+		<!-- <ns2:eventHandler functionName="ImmediateExchangeFunction">
 			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="ImmediateExchangeFunction">
 				<ns2:exp>
 					<ns2:expressionString><![CDATA[
@@ -143,7 +161,7 @@
 					]]></ns2:expressionString> 
 				</ns2:exp>
 			</ns2:ops>
-		</ns2:eventHandler>
+		</ns2:eventHandler> -->
 		
 		<!-- 单号重置 -->
 		<ns2:eventHandler functionName="ResetOrderCouponFunction">
@@ -212,9 +230,13 @@
 		                    <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
 		                        <ns2:value>false</ns2:value>
 		                    </ns2:allowBlank>
-		                    <ns2:allowBlankText xsi:type="ns2:StringPropertyType">
+		                    <ns2:allowBlankText xsi:type="ns2:StringPropertyType">,
 		                        <ns2:value>The coupon number must not be null.</ns2:value>
 		                    </ns2:allowBlankText>
+		                    <ns2:maxLength xsi:type="ns2:NumericPropertyType">
+								<type>int</type>
+								<value>8</value>
+							</ns2:maxLength>
 		                </ns2:component>
 		                <ns2:component xsi:type="ns2:UIButtonType" UIID="validateBtn">
 		                    <ns2:text xsi:type="ns2:StringPropertyType">
@@ -237,7 +259,7 @@
 					</ns2:panel>
 				</ns2:tab>
 				<!-- 即刻优惠兑换Panel -->
-				<ns2:tab uiid="immediateCouponPanel">
+				<!-- <ns2:tab uiid="immediateCouponPanel">
 					<ns2:title xsi:type="ns2:ResourceBundlePropertyType">
 						<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
 						<ns2:key>org.shaolin.vogerp.coupon.page.DiscountValidation.immediateCouponPanel</ns2:key>
@@ -281,7 +303,7 @@
 		                        x="0" y="1" align="FULL"></ns2:constraint>
 		                </ns2:layoutConstraint>
 					</ns2:panel>
-				</ns2:tab>
+				</ns2:tab> -->
 				<!-- 单号重置Panel -->
 				<ns2:tab uiid="resetPhoneNumPanel">
 					<ns2:title xsi:type="ns2:ResourceBundlePropertyType">

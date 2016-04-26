@@ -165,9 +165,12 @@
 						<ns2:layout xsi:type="ns2:TableLayoutType">
 							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 							<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 						</ns2:layout>
 						<ns2:component xsi:type="ns2:UILabelType" UIID="couponNameText">
+						</ns2:component>
+						<ns2:component xsi:type="ns2:UILabelType" UIID="couponDiscountText">
 						</ns2:component>
 						<ns2:component xsi:type="ns2:UILabelType" UIID="couponMsgText">
 						</ns2:component>
@@ -177,9 +180,14 @@
 								x="0" y="0" align="FULL"></ns2:constraint>
 						</ns2:layoutConstraint>
 						<ns2:layoutConstraint>
-							<ns2:componentId>couponMsgText</ns2:componentId>
+							<ns2:componentId>couponDiscountText</ns2:componentId>
 							<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 								x="0" y="1" align="FULL"></ns2:constraint>
+						</ns2:layoutConstraint>
+						<ns2:layoutConstraint>
+							<ns2:componentId>couponMsgText</ns2:componentId>
+							<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+								x="0" y="2" align="FULL"></ns2:constraint>
 						</ns2:layoutConstraint>
 					</ns2:component>
 					<ns2:layoutConstraint>
@@ -230,7 +238,7 @@
 						           import org.shaolin.vogerp.coupon.util.CouponUtil;
 						           { 
 						           		if ($couponType.getIsImmediate()) {
-						           			return "分享到群里 即可兑换";
+						           			return "仅限本次消费使用";
 						           		} else {
 						           			return "有效期: " + CouponUtil.formatDate($coupon.getExpiredDate(), "yyyy-MM-dd");			           			
 						           		}
@@ -434,16 +442,27 @@
 			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
 				componentPath="openId" paramName="StringData"></ns2:DataComponent>
 		</ns2:ComponentMapping>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping7">
+			<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+			<ns2:UIComponent componentPath="couponDiscountText" paramName="UIWidgetType"></ns2:UIComponent>
+			<ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="discountProduct.discount" paramName="StringData"></ns2:DataComponent>
+		</ns2:ComponentMapping>
+		
 	</ns2:ODMapping>
 	<ns2:in>
-		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">
+		<ns2:serverOperation xsi:type="ns2:ExpressionType">
             <ns2:expressionString><![CDATA[
-            import org.shaolin.vogerp.coupon.util.WechatUtil;
+            import org.shaolin.vogerp.coupon.util.*;
             import org.shaolin.uimaster.page.ajax.*;
             import org.shaolin.bmdp.runtime.security.UserContext;
-            import org.shaolin.vogerp.coupon.be.DiscountProductImpl;
+            import org.shaolin.vogerp.coupon.be.*;
             import org.shaolin.vogerp.coupon.dao.CouponModel;
+            import java.util.List;
             {
+            	if (null == $openId || $openId.length() <=0) {
+            		$openId = (String)@odContext.getRequest().getSession().getAttribute(WechatUtil.OPEN_ID);
+            	}
+            
             	Long couponTypeId = $couponType.getId();
             	DiscountProductImpl condition = new DiscountProductImpl();
             	condition.setCouponTypeId(couponTypeId);
@@ -458,11 +477,20 @@
             	$wechatSign = WechatUtil.generateSign(orgId, url);
             	
             	$bottomAdvertImage = (String)@odContext.getRequest().getSession().getAttribute("BottomAdvertImage");
+            	if (null == $bottomAdvertImage || $bottomAdvertImage.length() <= 0) {
+            		CouponUserInfoImpl cond = new CouponUserInfoImpl();
+	            	cond.setOrgId(orgId);
+	            	List couponUsers = CouponModel.INSTANCE.searchCouponUserInfo(cond, null, 0, 0);
+	            	if (null != couponUsers) {
+	            		CouponUserInfoImpl couponUser = (CouponUserInfoImpl) couponUsers.get(0);
+	            		$bottomAdvertImage = couponUser.getBottomAdvertImage();
+	            	}
+            	}
             	
             	@odContext.executeAllMappings();
             }]]></ns2:expressionString>
         </ns2:serverOperation>
-		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
+		<ns2:clientAction xsi:type="ns2:ExpressionType">
 			<ns2:expressionString><![CDATA[
 			{
 				var timestamp = "";
@@ -523,11 +551,11 @@
 		</ns2:clientAction>
 	</ns2:in>
 	<ns2:out name="ViewOrderCouponLogic" functionName="ViewOrderCouponLogic" validate="true">
-		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
+		<ns2:clientAction xsi:type="ns2:ExpressionType">
 			<ns2:expressionString><![CDATA[{
 			// hello, my first js.
 			}]]></ns2:expressionString>
 		</ns2:clientAction>
-		<ns2:serverOperation xsi:type="ns2:ExpressionParamType" />
+		<ns2:serverOperation xsi:type="ns2:ExpressionType" />
 	</ns2:out>
 </ns2:UIPage>

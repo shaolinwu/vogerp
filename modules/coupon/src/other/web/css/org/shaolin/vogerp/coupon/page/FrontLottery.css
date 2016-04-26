@@ -75,7 +75,7 @@
 	clear : none;
 }
 .couponJackpotImageDiv img{
-	width : 100%;
+	width : 90%;
 	border: solid 1px white;
 	min-height : 100%;
 }
@@ -87,10 +87,15 @@
 	float : left;
 	clear : none;
 	text-align: left;
+	color: gold;
 }
 #div-leftPanel-0_3{
 	color : white;
 	margin : 1% auto;
+}
+#footerText_Label{
+	margin-top: -5%;
+    display: block;
 }
 
 #lotteryForm\.couponPanel{
@@ -185,15 +190,15 @@
 	float: left;
 }
 #rollImage1 {
-	width : 25%;
-	margin : 2.5% 0 0 7%;
+	width : 22%;
+	margin : 2.5% 0 0 9%;
 }
 #rollImage2 {
-	width : 26%;
-	margin: 2.5% 0 0 4%;
+	width : 22%;
+	margin: 2.5% 0 0 8%;
 }
 #rollImage3 {
-	width : 25%;
-	margin: 2.7% 0 0 5.5%;
+	width : 22%;
+	margin: 2.5% 0 0 8%;
 }
 

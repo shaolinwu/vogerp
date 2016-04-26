@@ -77,12 +77,12 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 					
 					$("input[name='luckyImageUrlText']").val(luckyImageUrl);
 					$("#div-leftPanel-0_1").height(windowHeight * 0.55).show();
-		        	$("#div-leftPanel-0_4").height(windowHeight * 0.25).show();
+		        	$("#div-leftPanel-0_4").height(windowHeight * 0.20).show();
 					var orgId = $("input[name='orgId']").val();
 					//$("#rollLottery").append("<img id=\"rollImage1\" src=\"/uimaster/images/coupon/front/couponIcon/" + orgId + "/lotteryRoll_a.gif\" /><img id=\"rollImage2\"  src=\"/uimaster/images/coupon/front/couponIcon/" + orgId + "/lotteryRoll_b.gif\" /><img id=\"rollImage3\"  src=\"/uimaster/images/coupon/front/couponIcon/" + orgId + "/lotteryRoll_c.gif\" />");
 					$("#rollLottery").append("<img id=\"rollImage1\" src=\"/uimaster/images/coupon/front/lotteryRoll_a.gif\" /><img id=\"rollImage2\"  src=\"/uimaster/images/coupon/front/lotteryRoll_b.gif\" /><img id=\"rollImage3\"  src=\"/uimaster/images/coupon/front/lotteryRoll_c.gif\" />");
-					$("#div-leftPanel-0_5").height(windowHeight * 0.2).css("top" , windowHeight * 0.55 + "px").show();
-					$("#div-leftPanel-0_5 img").height(windowHeight * 0.17 + "px");
+					$("#div-leftPanel-0_5").height(windowHeight * 0.25).css("top" , windowHeight * 0.55 + "px").show();
+					$("#div-leftPanel-0_5 img").css({"height":windowHeight * 0.20 + "px", "margin-top":windowHeight * 0.02 + "px"});
 					
 					var showIcons = showImages.split(",");
 					
@@ -248,7 +248,7 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 					var reg = new RegExp("^[0-9]{4}$");
 		        	if (!reg.test(phoneNum.trim())) {
 		        		$("#div-lotteryForm-lotteryStartPanel-0_0 input").val("");
-		        		$("#div-lotteryForm-lotteryStartPanel-0_0 input").attr("placeholder", "请输入订单号后4位");
+		        		$("#div-lotteryForm-lotteryStartPanel-0_0 input").attr("placeholder", "\u8BF7\u8F93\u5165\u624B\u673A\u53F7\u540E4\u4F4D");
 		        		return ;
 		        	} else {
 		        		$("input[name='phoneNumText']").val(phoneNum);
@@ -270,7 +270,7 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 					var reg = new RegExp("^[0-9]+$");
 		        	if (!reg.test(phoneNum.trim())) {
 		        		$("#div-lotteryForm-lotteryStartPanel-0_0 input").val("");
-		        		$("#div-lotteryForm-lotteryStartPanel-0_0 input").attr("placeholder", "请输入订单号后4位");
+		        		$("#div-lotteryForm-lotteryStartPanel-0_0 input").attr("placeholder", "\u8BF7\u8F93\u5165\u624B\u673A\u53F7\u540E4\u4F4D");
 		        	} else {
 		        		$("input[name='phoneNumText']").val(phoneNum);
 		        	}

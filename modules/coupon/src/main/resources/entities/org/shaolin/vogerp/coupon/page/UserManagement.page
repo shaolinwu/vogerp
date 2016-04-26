@@ -21,12 +21,22 @@
                     import org.shaolin.vogerp.coupon.be.CouponUserInfoImpl;
                     {
                     	String orgId = @page.getComboBox("orgNameUI").getValue();
+                    	@page.getHidden("orgIdHidden").setValue(orgId);
                     	PersonalInfoImpl personCond = new PersonalInfoImpl();
                     	personCond.setOrgId(Long.valueOf(orgId));
                     	List personInfos = CommonModel.INSTANCE.searchPersonInfo(personCond, null, 0, 0);
+                    	System.out.println(personInfos);
                     	if (null != personInfos && personInfos.size() > 0) {
                     		PersonalInfoImpl person = (PersonalInfoImpl) personInfos.get(0);
-                    		@page.getLabel("nameUI").setDisplayValue(person.getFirstName());
+                    		long personId = person.getId();
+                    		PersonalAccountImpl cond = new PersonalAccountImpl();
+                    		cond.setInfo(person);
+                    		List perAccounts = CommonModel.INSTANCE.searchUserAccount(cond, null, 0, 0);
+                    		System.out.println(perAccounts);
+                    		if (null != perAccounts && perAccounts.size() > 0) {
+                    			PersonalAccountImpl account = (PersonalAccountImpl) perAccounts.get(0);
+	                    		@page.getLabel("nameUI").setDisplayValue(account.getUserName());
+                    		}
                     	}
                     	
                         Table couponUserInfoTable = (Table)@page.getElement("couponUserInfoTable");
@@ -57,6 +67,7 @@
                             return;
                         }
                         CouponUserInfoImpl couponUserInfo = (CouponUserInfoImpl)couponUserInfoTable.getSelectedRow();
+                        System.out.println(couponUserInfo);
                         HashMap input = new HashMap();
                         input.put("beObject", couponUserInfo);
                         input.put("editable", new Boolean(true));
@@ -95,6 +106,7 @@
 					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 				</ns2:layout>
+				<ns2:component xsi:type="ns2:UIHiddenType" UIID="orgIdHidden"></ns2:component>
 				<ns2:component xsi:type="ns2:UILabelType" UIID="orgNameUILabel">
 			        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
 			        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -365,7 +377,7 @@
 	    </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
-		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">
+		<ns2:serverOperation xsi:type="ns2:ExpressionType">
             <ns2:expressionString><![CDATA[
             import java.util.List;
             import org.shaolin.bmdp.runtime.AppContext;

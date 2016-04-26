@@ -200,12 +200,12 @@
 		</ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
-		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">
+		<ns2:serverOperation xsi:type="ns2:ExpressionType">
             <ns2:expressionString><![CDATA[{
             	$bottomAdvertImage = (String)@odContext.getRequest().getSession().getAttribute("BottomAdvertImage");
             }]]></ns2:expressionString>
         </ns2:serverOperation>
-		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
+		<ns2:clientAction xsi:type="ns2:ExpressionType">
 			<ns2:expressionString><![CDATA[
 			{
 				$("#div-topTextPanel-0_1").css("top", "-" + $("#div-topTextPanel-0_0 img").height() * 0.865 + "px");
@@ -225,11 +225,11 @@
 		</ns2:clientAction>
 	</ns2:in>
 	<ns2:out name="SelectedDiscountProductLogic" functionName="SelectedDiscountProductLogic" validate="true">
-		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
+		<ns2:clientAction xsi:type="ns2:ExpressionType">
 			<ns2:expressionString><![CDATA[{
 			// hello, my first js.
 			}]]></ns2:expressionString>
 		</ns2:clientAction>
-		<ns2:serverOperation xsi:type="ns2:ExpressionParamType" />
+		<ns2:serverOperation xsi:type="ns2:ExpressionType" />
 	</ns2:out>
 </ns2:UIPage>

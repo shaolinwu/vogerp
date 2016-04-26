@@ -7,7 +7,7 @@ function org_shaolin_vogerp_coupon_page_DiscountValidation(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "couponValidationPanel",prefix + "immediateCouponPanel",prefix + "resetPhoneNumPanel"]
+        ,subComponents: [prefix + "couponValidationPanel",prefix + "resetPhoneNumPanel"]
     });
     var couponNumberText = new UIMaster.ui.textfield
     ({
@@ -24,22 +24,6 @@ function org_shaolin_vogerp_coupon_page_DiscountValidation(json)
         ui: elementList[prefix + "couponValidationPanel"]
         ,items: []
         ,subComponents: [prefix + "couponNumberText",prefix + "validateBtn"]
-    });
-    var phoneNumText = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "phoneNumText"]
-    });
-
-    var exchangeBtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "exchangeBtn"]
-    });
-
-    var immediateCouponPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "immediateCouponPanel"]
-        ,items: []
-        ,subComponents: [prefix + "phoneNumText",prefix + "exchangeBtn"]
     });
     var phoneNum1Text = new UIMaster.ui.textfield
     ({
@@ -73,12 +57,6 @@ function org_shaolin_vogerp_coupon_page_DiscountValidation(json)
 
     Form.validateBtn=validateBtn;
 
-    Form.immediateCouponPanel=immediateCouponPanel;
-
-    Form.phoneNumText=phoneNumText;
-
-    Form.exchangeBtn=exchangeBtn;
-
     Form.resetPhoneNumPanel=resetPhoneNumPanel;
 
     Form.phoneNum1Text=phoneNum1Text;
@@ -92,8 +70,6 @@ function org_shaolin_vogerp_coupon_page_DiscountValidation(json)
     };
 
     Form.CouponValidateFunction = org_shaolin_vogerp_coupon_page_DiscountValidation_CouponValidateFunction;
-
-    Form.ImmediateExchangeFunction = org_shaolin_vogerp_coupon_page_DiscountValidation_ImmediateExchangeFunction;
 
     Form.ResetOrderCouponFunction = org_shaolin_vogerp_coupon_page_DiscountValidation_ResetOrderCouponFunction;
 
@@ -122,17 +98,6 @@ function org_shaolin_vogerp_coupon_page_DiscountValidation(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"CouponValidateFunction",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_coupon_page_DiscountValidation_CouponValidateFunction */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_coupon_page_DiscountValidation_ImmediateExchangeFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_page_DiscountValidation_ImmediateExchangeFunction */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"ImmediateExchangeFunction",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_coupon_page_DiscountValidation_ImmediateExchangeFunction */
 
 
     /* auto generated eventlistener function declaration */

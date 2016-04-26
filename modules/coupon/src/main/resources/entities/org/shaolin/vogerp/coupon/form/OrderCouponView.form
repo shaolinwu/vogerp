@@ -87,6 +87,7 @@
             	</ns2:Property>
 			</ns2:component>
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="productPanel">
+				<ns2:UIStyle>productPanel</ns2:UIStyle>
 				<ns2:layout xsi:type="ns2:TableLayoutType">
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
@@ -136,7 +137,7 @@
 				<ns2:layoutConstraint>
 					<ns2:componentId>expiredDateUI</ns2:componentId>
 					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-						x="1" y="0" align="FULL"></ns2:constraint>
+						x="1" y="0" align="FULL" cellUIClass="expiredDateDiv"></ns2:constraint>
 				</ns2:layoutConstraint>
 			</ns2:component>
 			<ns2:component xsi:type="ns2:UILabelType" UIID="productMessageUI">
@@ -183,13 +184,15 @@
 		<ns2:layoutConstraint>
 			<ns2:componentId>couponInfoPanel</ns2:componentId>
 			<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-				x="1" y="0" align="FULL"></ns2:constraint>
+				x="1" y="0" align="FULL" cellUIClass="couponInfoPanel"></ns2:constraint>
 		</ns2:layoutConstraint>
 		<ns2:constructorCode><![CDATA[
 		{
 			var $couponImages = $("img[class1='couponImageView']");
 			$couponImages.each(function(i, couponImage){
-				$(couponImage).parent("div.uimaster_widget_cell").css({"margin" : "2%", "border" : "solid 2px white", "width" : "30%"});
+				var $p = $(couponImage).parent("div.uimaster_widget_cell");
+				$p.css({"margin" : "2%", "border" : "solid 2px white", "width" : "35%"});
+				$p.height($p.width() * 0.75 + "px");
 			});
 			
 			var $couponPanels = $("div[class1='couponInfoPanel']");

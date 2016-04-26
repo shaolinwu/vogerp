@@ -138,7 +138,7 @@
 		</ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
-		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">
+		<ns2:serverOperation xsi:type="ns2:ExpressionType">
             <ns2:expressionString><![CDATA[
             import org.shaolin.bmdp.runtime.AppContext;
 		    import org.shaolin.vogerp.coupon.be.*;
@@ -166,6 +166,7 @@
            		System.out.println("code=" + code);
             	if (null != code && code.length() > 0) {
 					String openId = WechatUtil.getOpenIdByOauth(code);
+					@odContext.getRequest().getSession().setAttribute(WechatUtil.OPEN_ID, openId);
 					System.out.println("openId=" + openId);
 			      	CouponOperationImpl condition = new CouponOperationImpl();
 			      	condition.setOpenId(openId);
@@ -200,7 +201,7 @@
             	
             }]]></ns2:expressionString>
         </ns2:serverOperation>
-		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
+		<ns2:clientAction xsi:type="ns2:ExpressionType">
 			<ns2:expressionString><![CDATA[{
 				var bottomImage = $("input[name='bottomAdvertImage']").val();
 				if ($("#advertBottomImage").length < 1) {
@@ -214,11 +215,11 @@
 		</ns2:clientAction>
 	</ns2:in>
 	<ns2:out name="backViewCouponLogic" functionName="backViewCouponLogic" validate="true">
-		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
+		<ns2:clientAction xsi:type="ns2:ExpressionType">
 			<ns2:expressionString><![CDATA[{
 			// hello, my first js.
 			}]]></ns2:expressionString>
 		</ns2:clientAction>
-		<ns2:serverOperation xsi:type="ns2:ExpressionParamType" />
+		<ns2:serverOperation xsi:type="ns2:ExpressionType" />
 	</ns2:out>
 </ns2:UIPage>

@@ -13,7 +13,7 @@
 	<ns2:ODMapping>
 	</ns2:ODMapping>
 	<ns2:in>
-		<ns2:serverOperation xsi:type="ns2:ExpressionParamType">
+		<ns2:serverOperation xsi:type="ns2:ExpressionType">
 			<ns2:expressionString><![CDATA[
             import org.shaolin.vogerp.coupon.dao;
 			import org.shaolin.vogerp.coupon.be.CouponTypeImpl;

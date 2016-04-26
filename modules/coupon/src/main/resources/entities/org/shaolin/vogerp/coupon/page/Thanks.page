@@ -197,7 +197,7 @@
 	<ns2:ODMapping>
 	</ns2:ODMapping>
 	<ns2:in>
-		<ns2:clientAction xsi:type="ns2:ExpressionParamType">
+		<ns2:clientAction xsi:type="ns2:ExpressionType">
 			<ns2:expressionString><![CDATA[{
 				var windowHeight = $(window).height();
 				$("#div-Form-0_0").height(windowHeight - $("#div-Form-0_1").height() + "px");
