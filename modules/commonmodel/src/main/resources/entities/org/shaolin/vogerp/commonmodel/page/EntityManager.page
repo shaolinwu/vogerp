@@ -187,5 +187,13 @@
     <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.UIDyanimcPageLinkTable"></ns2:mappingRule>
     <ns2:UIComponent componentPath="dynamicPageLinkPanel" paramName="UIWidgetType"></ns2:UIComponent>
   </ns2:ComponentMapping>
-	</ns2:ODMapping>
+  </ns2:ODMapping>
+  <ns2:in>
+     <ns2:serverOperation xsi:type="ns2:ExpressionType">
+            <ns2:expressionString><![CDATA[
+            {
+              @odContext.executeAllMappings();
+            }]]></ns2:expressionString>
+        </ns2:serverOperation>
+  </ns2:in>
 </ns2:UIPage>

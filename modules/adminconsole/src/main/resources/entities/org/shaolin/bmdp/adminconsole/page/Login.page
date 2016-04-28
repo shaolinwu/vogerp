@@ -159,9 +159,6 @@
                     <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
                         <ns2:value>false</ns2:value>
                     </ns2:allowBlank>
-                    <ns2:allowBlankText xsi:type="ns2:StringPropertyType">
-                        <ns2:value>\u9A8C\u8BC1\u7801\u4E0D\u80FD\u4E3A\u7A7A\uFF01</ns2:value>
-                    </ns2:allowBlankText>
                     <ns2:EventListener xsi:type="ns2:KeyPressListenerType">
                         <ns2:handler functionName="verifiCode" />
                     </ns2:EventListener>
