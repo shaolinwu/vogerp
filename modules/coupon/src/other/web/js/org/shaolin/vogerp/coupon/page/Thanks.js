@@ -207,9 +207,13 @@ function org_shaolin_vogerp_coupon_page_Thanks(json)
         /* Construct_LAST:org_shaolin_vogerp_coupon_page_Thanks */
     };
 
+    Form.ViewOrderCouponLogic = org_shaolin_vogerp_coupon_page_Thanks_ViewOrderCouponLogic;
+
     Form.initPageJs = org_shaolin_vogerp_coupon_page_Thanks_initPageJs;
 
     Form.finalizePageJs = org_shaolin_vogerp_coupon_page_Thanks_finalizePageJs;
+
+    Form.ViewOrderCouponLogic_OutFunctionName = org_shaolin_vogerp_coupon_page_Thanks_ViewOrderCouponLogic_OutFunctionName;
 
     Form.__AJAXSubmit = false;
     
@@ -222,6 +226,15 @@ function org_shaolin_vogerp_coupon_page_Thanks(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_coupon_page_Thanks */
 /* Other_Func_LAST:org_shaolin_vogerp_coupon_page_Thanks */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_page_Thanks_ViewOrderCouponLogic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_page_Thanks_ViewOrderCouponLogic */
+        var o = this;
+        var UIEntity = this;
+
+        o.ViewOrderCouponLogic_OutFunctionName(eventsource);
+    }/* Gen_Last:org_shaolin_vogerp_coupon_page_Thanks_ViewOrderCouponLogic */
+
 
     function org_shaolin_vogerp_coupon_page_Thanks_initPageJs(){/* Gen_First:org_shaolin_vogerp_coupon_page_Thanks_initPageJs */
         var constraint_result = true;
@@ -238,5 +251,35 @@ function org_shaolin_vogerp_coupon_page_Thanks(json)
 
     }/* Gen_Last:org_shaolin_vogerp_coupon_page_Thanks_finalizePageJs */
 
+
+    function org_shaolin_vogerp_coupon_page_Thanks_ViewOrderCouponLogic_OutFunctionName(eventsource) {/* Gen_First:org_shaolin_vogerp_coupon_page_Thanks_ViewOrderCouponLogic_OutFunctionName */
+        var constraint_result = true;
+        var myForm;
+        if (this.formName != undefined)
+        {
+            myForm = document.forms[this.formName];
+        }
+        else
+        {
+            var p = this.Form.parentNode;
+            while(p.tagName != "FORM")
+                p = p.parentNode;
+            myForm = p;//document.forms[0];
+        }
+
+        var UIEntity = this;
+
+        constraint_result = this.Form.validate();
+{
+			// hello, my first js.
+			}        
+        myForm._outname.value = "ViewOrderCouponLogic";
+        myForm.target = "_self";
+             
+        if ( (constraint_result == true || constraint_result == null) && (!ajax_execute_onerror) ) {
+          myForm.submit();
+        }
+        return constraint_result;
+    }/* Gen_Last:org_shaolin_vogerp_coupon_page_Thanks_ViewOrderCouponLogic_OutFunctionName */
 
 

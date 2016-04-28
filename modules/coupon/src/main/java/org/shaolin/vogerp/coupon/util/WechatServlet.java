@@ -98,7 +98,7 @@ public class WechatServlet extends HttpServlet {
 			System.out.println("\n\n=============oauth===========\n\n");
 			String orgId = request.getParameter("orgId");
 			System.out.println("orgId=" + orgId);
-			String appId = "wx7425c40996a4e8c3";
+			String appId = "wx8f4239ff75ca1770";
 			String redirectUri = "http%3A%2F%2Fwww.mr-prize.com%2Fuimaster%2Fwebflow.do%3F_timestamp%3D1%26_chunkname%3Dorg.shaolin.bmdp.coupon.diagram.Lottery%26_nodename%3DStart%26orgid%3D" + orgId;
 			System.out.println("redirectUri=" + redirectUri);
 			String scope = "snsapi_base";

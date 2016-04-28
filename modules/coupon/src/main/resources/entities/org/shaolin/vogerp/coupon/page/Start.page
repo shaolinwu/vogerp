@@ -4,7 +4,26 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.coupon.page.Start</entityName>
 	<systemVersion>0</systemVersion>
-	<description>前台抽奖</description>
+	<description>前台抽奖11</description>
+	<descriptionExpr>
+	   <expressionString><![CDATA[
+	   import org.shaolin.bmdp.runtime.security.UserContext;
+	   import org.shaolin.vogerp.coupon.be.CouponUserInfoImpl;
+	   import java.util.List;
+	   import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+	   {
+	   		long orgId = (Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID);
+	   		CouponUserInfoImpl condition = new CouponUserInfoImpl();
+	   		condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+	   		List userInfos = CouponModel.INSTANCE.searchCouponUserInfo(condition, null, 0, 0);
+	   		if (userInfos != null && userInfos.size() > 0) {
+	   			CouponUserInfoImpl userInfo = (CouponUserInfoImpl) userInfos.get(0);
+	   			System.out.println(userInfo.getLotteryTitle());
+	   			return userInfo.getLotteryTitle();
+	   		}
+	   }
+	   ]]></expressionString>
+	</descriptionExpr>
 
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="start">
@@ -85,7 +104,7 @@
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:layout xsi:type="ns2:TableLayoutType">
 				<ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
-				<ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			</ns2:layout>
 			<ns2:component xsi:type="ns2:UIHiddenType" UIID="code">

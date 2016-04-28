@@ -7,6 +7,8 @@
 	<description>谢谢惠顾</description>
 
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<ns2:eventHandler functionName="ViewOrderCouponLogic"></ns2:eventHandler>
+	
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:layout xsi:type="ns2:TableLayoutType">
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -154,6 +156,9 @@
 						<ns2:src xsi:type="ns2:ImagePropertyType">
 							<ns2:location>/coupon/front/fingerPrint.gif</ns2:location>
 						</ns2:src>
+						<ns2:EventListener xsi:type="ns2:ClickListenerType">
+							<ns2:handler functionName="ViewOrderCouponLogic" />
+						</ns2:EventListener>
 					</ns2:component>
 					<ns2:layoutConstraint>
 						<ns2:componentId>bottomTextPanel</ns2:componentId>
@@ -195,6 +200,9 @@
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>
+		<ns2:DataEntity scope="InOut" name="openId" category="JavaClass">
+			<type entityName="java.lang.String"></type>
+		</ns2:DataEntity>
 	</ns2:ODMapping>
 	<ns2:in>
 		<ns2:clientAction xsi:type="ns2:ExpressionType">
@@ -205,4 +213,12 @@
 			}]]></ns2:expressionString>
 		</ns2:clientAction>
 	</ns2:in>
+	<ns2:out name="ViewOrderCouponLogic" functionName="ViewOrderCouponLogic" validate="true">
+		<ns2:clientAction xsi:type="ns2:ExpressionType">
+			<ns2:expressionString><![CDATA[{
+			// hello, my first js.
+			}]]></ns2:expressionString>
+		</ns2:clientAction>
+		<ns2:serverOperation xsi:type="ns2:ExpressionType" />
+	</ns2:out>
 </ns2:UIPage>

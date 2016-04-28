@@ -268,7 +268,7 @@
 			                                 	for (int j = 0; j < couponTypes.size(); j++) {
 			                                 		CouponTypeImpl couponType = (CouponTypeImpl) couponTypes.get(j);
 			                                 		if (j == couponTypes.size() - 1) {
-			                                 			couponType.setPercent(100.0 - p);
+			                                 			couponType.setPercent(Math.round((100.0 - p) * 10) / 10.0);
 			                                 			continue;
 			                                 		}
 			                                 		double per = Math.floor(couponType.getTotalNum() * 1000.0 / totalNum) / 10D;
@@ -402,9 +402,6 @@
 								<ns2:defaultNewAction>createCouponType</ns2:defaultNewAction>
 								<ns2:defaultOpenAction>openCouponType</ns2:defaultOpenAction>
 								<ns2:defaultDisableAction>deleteCouponType</ns2:defaultDisableAction>
-								<!-- can be default actions. -->
-								<!-- <ns2:defaultEnableAction>enableProduct</ns2:defaultEnableAction> 
-									<ns2:defaultDisableAction>disableProduct</ns2:defaultDisableAction> -->
 							</ns2:defaultActions>
 						</ns2:component>
 						<ns2:layoutConstraint>
@@ -557,9 +554,6 @@
 								<ns2:defaultNewAction>createDiscountProduct</ns2:defaultNewAction>
 								<ns2:defaultOpenAction>openDiscountProduct</ns2:defaultOpenAction>
 								<ns2:defaultDisableAction>deleteDiscountProduct</ns2:defaultDisableAction>
-								<!-- can be default actions. -->
-								<!-- <ns2:defaultEnableAction>enableProduct</ns2:defaultEnableAction> 
-									<ns2:defaultDisableAction>disableProduct</ns2:defaultDisableAction> -->
 							</ns2:defaultActions>
 						</ns2:component>
 						<ns2:layoutConstraint>

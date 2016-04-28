@@ -9,7 +9,7 @@
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<!-- 优惠验证逻辑 -->
 		<ns2:eventHandler functionName="CouponValidateFunction">
-			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="CouponValidateFunction">
+			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="CouponValidateFunction-20160112-232035">
 				<ns2:exp>
 					<ns2:expressionString><![CDATA[
 					import org.shaolin.uimaster.page.AjaxContext;
@@ -18,7 +18,7 @@
 					import java.util.List;
 					import java.util.Date;
 					import java.util.HashMap;
-					import org.shaolin.uimaster.page.ajax.RefForm;
+					import org.shaolin.uimaster.page.ajax.*;
 					import org.shaolin.vogerp.coupon.ce.StatusType;
 					import org.shaolin.bmdp.runtime.security.UserContext;
 					import org.shaolin.vogerp.coupon.util.CouponUtil;
@@ -32,13 +32,17 @@
 						condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
 						List coupons = CouponModel.INSTANCE.searchEffectedCoupon(condition, null, 0, 0);
 						
+						Label validateResultText = @page.getLabel("validateResultText");
+						
 						if (null == coupons || coupons.size() == 0) {
-							@page.executeJavaScript("alert('优惠券号 " + couponNumber + "不存在或已过期')");
+							validateResultText.setDisplayValue("(券号" + couponNumber + ")不存在或已过期!!!");
+							validateResultText.addStyle("color", "red");
 						} else {
 							CouponImpl coupon = (CouponImpl)coupons.get(0);
 							//已发出或已兑换状态
 							if (StatusType.EXCHANGED.equals(coupon.getStatus()) && !coupon.getDiscountProduct().getIsShared()) {
-								@page.executeJavaScript("alert('优惠券号 " + couponNumber + "不可重复兑换')");
+								validateResultText.setDisplayValue("优惠券" + coupon.getName() + "(券号" + couponNumber + ")不可重复兑换!!!");
+								validateResultText.addStyle("color", "red");
 							} else if (StatusType.SENDOUT.equals(coupon.getStatus()) 
 								|| (StatusType.EXCHANGED.equals(coupon.getStatus()) && coupon.getDiscountProduct().getIsShared())) {
 								
@@ -55,16 +59,11 @@
 								operation.setOrgId(coupon.getOrgId());
 								CouponModel.INSTANCE.create(operation);
 								
-								//显示优惠券信息 
-			                    HashMap input = new HashMap();
-			                    input.put("beObject", coupon);
-			                    input.put("editable", new Boolean(true));
-			                    RefForm form = new RefForm("userForm", "org.shaolin.vogerp.coupon.form.Coupon", input);
-			                    @page.addElement(form);
-			                    
-			                    form.openInWindows("Show Coupon Information", null, 800, 700);
+								validateResultText.setDisplayValue("优惠券" + coupon.getName() + "(券号" + couponNumber + ")兑换成功");
+								validateResultText.addStyle("color", "black");
 							} else {
-								@page.executeJavaScript("alert('优惠券号 " + couponNumber + "不存在或已过期')");
+								validateResultText.setDisplayValue("(券号" + couponNumber + ")不存在或已过期!!!");
+								validateResultText.addStyle("color", "red");
 							}
 						}
 					}
@@ -73,99 +72,9 @@
 			</ns2:ops>
 		</ns2:eventHandler>
 		
-		<!-- 即刻优惠兑换 -->
-		<!-- <ns2:eventHandler functionName="ImmediateExchangeFunction">
-			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="ImmediateExchangeFunction">
-				<ns2:exp>
-					<ns2:expressionString><![CDATA[
-					import org.shaolin.uimaster.page.AjaxContext;
-					import org.shaolin.vogerp.coupon.be.CouponOperationImpl;
-					import org.shaolin.vogerp.coupon.dao.CouponModel;
-					import org.shaolin.vogerp.coupon.util.CouponUtil;
-					import java.util.List;
-					import org.shaolin.vogerp.coupon.be.CouponImpl;
-					import java.util.HashMap;
-					import org.shaolin.uimaster.page.ajax.RefForm;
-					import org.shaolin.bmdp.runtime.security.UserContext;
-					import org.shaolin.vogerp.coupon.ce.StatusType;
-					{
-						String phoneNum = @page.getTextField("phoneNumText").getValue();
-						//兑换订单下的即时优惠券，生成兑换记录
-						CouponOperationImpl couponOperation = new CouponOperationImpl();
-						couponOperation.setPhoneNum(phoneNum);
-						couponOperation.setType(CouponUtil.OPERATION_TYPE_LOTTERY);
-						couponOperation.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-						//查询该订单的抽奖记录
-						List couponOperations = CouponModel.INSTANCE.searchCouponOperation(couponOperation, null, 0, 0);
-						
-						if (null == couponOperations || couponOperations.size() == 0) {
-							@page.executeJavaScript("alert('手机号 " + phoneNum + "没有抽奖记录')");
-							return ;
-						} else {
-							boolean hasImmediateCoupon = false;
-							for (int i = 0; i < couponOperations.size(); i++) {
-								CouponOperationImpl couponOper = (CouponOperationImpl)couponOperations.get(i);
-								
-								if (null != couponOper.getSerialNumber() && couponOper.getSerialNumber().length() > 0) {
-									String serialNumber = couponOper.getSerialNumber();
-									System.out.println("========serialNumber[" + serialNumber + "]");
-									//查询出中奖的优惠券
-									CouponImpl condition = new CouponImpl();
-									condition.setSerialNumber(serialNumber);
-									condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-									List coupons = CouponModel.INSTANCE.searchEffectedCoupon(condition, null, 0, 0);
-									if (null == coupons || coupons.size() < 1) {
-										System.out.println("========serialNumber[" + serialNumber + "] is not exist.");
-										continue ;
-									}
-									CouponImpl coupon = (CouponImpl)coupons.get(0);
-									if (!StatusType.SENDOUT.equals(coupon.getStatus())
-										|| !coupon.getDiscountProduct().getCouponType().getIsImmediate()) {
-										System.out.println("========serialNumber[" + serialNumber + "] status is not SENDOUT or is not immediate coupon");
-										continue ;
-									}
-									
-									//生成兑奖记录
-									CouponOperationImpl exchangeOper = new CouponOperationImpl();
-									exchangeOper.setPhoneNum(phoneNum);
-									exchangeOper.setSerialNumber(couponOper.getSerialNumber());
-									exchangeOper.setType(CouponUtil.OPERATION_TYPE_EXCHANGE);
-									exchangeOper.setOperateDate(new java.util.Date());
-									exchangeOper.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-									CouponModel.INSTANCE.create(exchangeOper);
-									
-									//更新优惠券状态为已兑换
-									CouponImpl exchangeCoupon = (CouponImpl)coupons.get(0);
-									exchangeCoupon.setStatus(StatusType.EXCHANGED);
-									CouponModel.INSTANCE.update(exchangeCoupon);
-									
-									hasImmediateCoupon = true;
-									System.out.println("手机号" + phoneNum + "兑换优惠券" + couponOper.getSerialNumber());
-									
-									HashMap input = new HashMap();
-				                    input.put("beObject", exchangeCoupon);
-				                    input.put("editable", new Boolean(true));
-									RefForm form = new RefForm("couponForm", "org.shaolin.vogerp.coupon.form.Coupon", input);
-				                    @page.addElement(form);
-				                    
-				                    form.openInWindows("Show Coupon Information", null);
-				                    break ;
-								} 
-							}
-							
-							if (!hasImmediateCoupon) {
-								@page.executeJavaScript("alert('手机号 " + phoneNum + "没有即时优惠券')");
-							}
-						}
-					}
-					]]></ns2:expressionString> 
-				</ns2:exp>
-			</ns2:ops>
-		</ns2:eventHandler> -->
-		
 		<!-- 单号重置 -->
 		<ns2:eventHandler functionName="ResetOrderCouponFunction">
-			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="ResetOrderCouponFunction">
+			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="ResetOrderCouponFunction-20160112-232035">
 				<ns2:exp>
 					<ns2:expressionString><![CDATA[
 					import org.shaolin.uimaster.page.AjaxContext;
@@ -218,8 +127,11 @@
 						<ns2:layout xsi:type="ns2:TableLayoutType">
 							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 							<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 						</ns2:layout>
+						<ns2:component xsi:type="ns2:UILabelType" UIID="validateResultText">
+		                </ns2:component>
 						<ns2:component xsi:type="ns2:UITextFieldType" UIID="couponNumberText">
 		                    <ns2:title xsi:type="ns2:StringPropertyType">
 		                        <ns2:value>Coupon Number</ns2:value>
@@ -247,63 +159,22 @@
 		                    </ns2:EventListener>
 		                </ns2:component>
 		                <ns2:layoutConstraint>
-		                    <ns2:componentId>couponNumberText</ns2:componentId>
+		                    <ns2:componentId>validateResultText</ns2:componentId>
 		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 		                        x="0" y="0" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>couponNumberText</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="0" y="1" align="FULL"></ns2:constraint>
 		                </ns2:layoutConstraint>
 		                <ns2:layoutConstraint>
 		                    <ns2:componentId>validateBtn</ns2:componentId>
 		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-		                        x="0" y="1" align="FULL"></ns2:constraint>
+		                        x="0" y="2" align="FULL"></ns2:constraint>
 		                </ns2:layoutConstraint>
 					</ns2:panel>
 				</ns2:tab>
-				<!-- 即刻优惠兑换Panel -->
-				<!-- <ns2:tab uiid="immediateCouponPanel">
-					<ns2:title xsi:type="ns2:ResourceBundlePropertyType">
-						<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
-						<ns2:key>org.shaolin.vogerp.coupon.page.DiscountValidation.immediateCouponPanel</ns2:key>
-					</ns2:title>
-					<ns2:panel UIID="immediateCouponPanel">
-						<ns2:layout xsi:type="ns2:TableLayoutType">
-							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-							<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-							<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-						</ns2:layout>
-						<ns2:component xsi:type="ns2:UITextFieldType" UIID="phoneNumText">
-		                    <ns2:title xsi:type="ns2:StringPropertyType">
-		                        <ns2:value>Phone Number</ns2:value>
-		                    </ns2:title>
-		                    <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-		                        <ns2:value>订单号</ns2:value>
-		                    </ns2:widgetLabel>
-		                    <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
-		                        <ns2:value>false</ns2:value>
-		                    </ns2:allowBlank>
-		                    <ns2:allowBlankText xsi:type="ns2:StringPropertyType">
-		                        <ns2:value>The order number must not be null.</ns2:value>
-		                    </ns2:allowBlankText>
-		                </ns2:component>
-		                <ns2:component xsi:type="ns2:UIButtonType" UIID="exchangeBtn">
-		                    <ns2:text xsi:type="ns2:StringPropertyType">
-		                        <ns2:value>兑换</ns2:value>
-		                    </ns2:text>
-		                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
-		                        <ns2:handler functionName="ImmediateExchangeFunction" />
-		                    </ns2:EventListener>
-		                </ns2:component>
-		                <ns2:layoutConstraint>
-		                    <ns2:componentId>phoneNumText</ns2:componentId>
-		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-		                        x="0" y="0" align="FULL"></ns2:constraint>
-		                </ns2:layoutConstraint>
-		                <ns2:layoutConstraint>
-		                    <ns2:componentId>exchangeBtn</ns2:componentId>
-		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-		                        x="0" y="1" align="FULL"></ns2:constraint>
-		                </ns2:layoutConstraint>
-					</ns2:panel>
-				</ns2:tab> -->
 				<!-- 单号重置Panel -->
 				<ns2:tab uiid="resetPhoneNumPanel">
 					<ns2:title xsi:type="ns2:ResourceBundlePropertyType">

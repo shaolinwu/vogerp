@@ -247,17 +247,42 @@
 					        </ns2:text>
 						</ns2:component>
 						<ns2:component xsi:type="ns2:UILabelType" UIID="bottom2Text">
+							<ns2:text xsi:type="ns2:ExpressionPropertyType">
+					        	<ns2:expression>
+						           <expressionString><![CDATA[
+						           { 
+						           		if (null != $limitMsg) {
+							           		String[] limitMsgs = $limitMsg.split("\n");
+							           		return limitMsgs.length >= 1 ? limitMsgs[0] : "";
+						           		}
+						           }]]></expressionString>
+						         </ns2:expression>
+					        </ns2:text>
 						</ns2:component>
 						<ns2:component xsi:type="ns2:UILabelType" UIID="bottom3Text">
-							<ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-					        	<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
-					        	<ns2:key>org.shaolin.vogerp.coupon.page.CouponInfo.bottom3Text</ns2:key>
+							<ns2:text xsi:type="ns2:ExpressionPropertyType">
+					        	<ns2:expression>
+						           <expressionString><![CDATA[
+						           { 
+						           		if (null != $limitMsg) {
+							           		String[] limitMsgs = $limitMsg.split("\n");
+							           		return limitMsgs.length >= 2 ? limitMsgs[1] : "";
+						           		}
+						           }]]></expressionString>
+						         </ns2:expression>
 					        </ns2:text>
 						</ns2:component>
 						<ns2:component xsi:type="ns2:UILabelType" UIID="bottom5Text">
-							<ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-					        	<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
-					        	<ns2:key>org.shaolin.vogerp.coupon.page.CouponInfo.bottom5Text</ns2:key>
+							<ns2:text xsi:type="ns2:ExpressionPropertyType">
+					        	<ns2:expression>
+						           <expressionString><![CDATA[
+						           { 
+						           		if (null != $limitMsg) {
+							           		String[] limitMsgs = $limitMsg.split("\n");
+							           		return limitMsgs.length >= 3 ? limitMsgs[2] : "";
+						           		}
+						           }]]></expressionString>
+						         </ns2:expression>
 					        </ns2:text>
 						</ns2:component>
 						<ns2:component xsi:type="ns2:UIPanelType" UIID="bottom3Panel">
@@ -301,17 +326,17 @@
 						<ns2:layoutConstraint>
 							<ns2:componentId>bottom3Text</ns2:componentId>
 							<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-								x="0" y="2" align="FULL"></ns2:constraint>
+								x="0" y="1" align="FULL"></ns2:constraint>
 						</ns2:layoutConstraint>
 						<ns2:layoutConstraint>
 							<ns2:componentId>bottom5Text</ns2:componentId>
 							<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-								x="0" y="2" align="FULL"></ns2:constraint>
+								x="0" y="1" align="FULL"></ns2:constraint>
 						</ns2:layoutConstraint>
 						<ns2:layoutConstraint>
 							<ns2:componentId>bottom3Panel</ns2:componentId>
 							<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-								x="0" y="3" align="FULL"></ns2:constraint>
+								x="0" y="2" align="FULL"></ns2:constraint>
 						</ns2:layoutConstraint>
 					</ns2:component>
 					<ns2:component xsi:type="ns2:UIImageType" UIID="fingerPrintImage">
@@ -389,6 +414,9 @@
 		<ns2:DataEntity category="JavaClass" name="bottomAdvertImage" scope="InOut">
             <ns2:type entityName="java.lang.String" />
         </ns2:DataEntity>
+        <ns2:DataEntity category="JavaClass" name="limitMsg" scope="InOut">
+            <ns2:type entityName="java.lang.String" />
+        </ns2:DataEntity>
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
 			name="simpleMapping0">
 			<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
@@ -427,14 +455,6 @@
 			</ns2:DataComponent>
 		</ns2:ComponentMapping>
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
-			name="simpleMapping5">
-			<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-			<ns2:UIComponent componentPath="bottom2Text"
-				paramName="UIWidgetType"></ns2:UIComponent>
-			<ns2:DataComponent xsi:type="ns2:ComponentParamType"
-				componentPath="discountProduct.limitMessage" paramName="StringData"></ns2:DataComponent>
-		</ns2:ComponentMapping>
-		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
 			name="simpleMapping6">
 			<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
 			<ns2:UIComponent componentPath="openId"
@@ -462,6 +482,8 @@
             	if (null == $openId || $openId.length() <=0) {
             		$openId = (String)@odContext.getRequest().getSession().getAttribute(WechatUtil.OPEN_ID);
             	}
+            	
+            	$limitMsg = $discountProduct.getLimitMessage();
             
             	Long couponTypeId = $couponType.getId();
             	DiscountProductImpl condition = new DiscountProductImpl();

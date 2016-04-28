@@ -18,7 +18,7 @@ function org_shaolin_vogerp_coupon_form_DiscountProduct(json)
         ui: elementList[prefix + "nameUI"]
     });
 
-    var iconUILabel = new UIMaster.ui.label
+    var iconUILabel = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "iconUILabel"]
     });
@@ -75,10 +75,31 @@ function org_shaolin_vogerp_coupon_form_DiscountProduct(json)
         ui: elementList[prefix + "limitMessageUILabel"]
     });
 
-    var limitMessageUI = new UIMaster.ui.textfield
+    var limitMessageUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "limitMessageUI"]
-    });
+        ,validators:[
+        {
+            func: function() {
+                
+	                    {
+	                    	var text = this.value;
+	                        if (text.length > 0) {
+	                        	var arr = text.split("\n");
+	                        	for (var i = 0; i < arr.length; i++) {
+	                        		var t = arr[i];
+	                        		if (t.length > 12) {
+	                        			return false;
+	                        		}
+	                        	}
+	                        }
+	                        return true;
+	                    }
+	                    
+            }
+            ,msg: "\u6BCF\u884C\u957F\u5EA6\u4E0D\u80FD\u8D85\u8FC712\u5B57"
+        }
+]    });
 
     var validityUILabel = new UIMaster.ui.label
     ({

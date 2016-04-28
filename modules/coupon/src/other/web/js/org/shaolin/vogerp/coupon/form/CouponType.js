@@ -38,7 +38,7 @@ function org_shaolin_vogerp_coupon_form_CouponType(json)
         ui: elementList[prefix + "percentUI"]
     });
 
-    var iconUILabel = new UIMaster.ui.label
+    var iconUILabel = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "iconUILabel"]
     });

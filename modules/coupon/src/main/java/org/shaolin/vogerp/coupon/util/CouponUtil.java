@@ -46,6 +46,7 @@ public class CouponUtil {
 				isExist = false;
 			}
 		}
+		
 		return couponSerialNumber.toString();
 	}
 	
@@ -73,6 +74,7 @@ public class CouponUtil {
 	 */
 	public static Date addDays(Date date, int day) {
 		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
 		cal.add(Calendar.DAY_OF_MONTH, day);
 		return cal.getTime();
 	}

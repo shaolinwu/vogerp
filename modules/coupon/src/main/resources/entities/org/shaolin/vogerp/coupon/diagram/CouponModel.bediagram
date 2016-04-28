@@ -338,6 +338,11 @@
 	        <bediagram:name>brand</bediagram:name>
 	        <bediagram:type xsi:type="bediagram:StringType" />
 	    </bediagram:member>
+	    <!-- 抽奖页标题 -->
+	    <bediagram:member>
+	        <bediagram:name>lotteryTitle</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
     </bediagram:beEntity>
     
     

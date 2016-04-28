@@ -108,17 +108,21 @@
 			</ns2:component>
 			<ns2:component xsi:type="ns2:UITextFieldType" UIID="nameUI">
 				<ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+				<ns2:maxLength xsi:type="ns2:NumericPropertyType">
+					<type>int</type>
+					<value>8</value>
+				</ns2:maxLength>
 			</ns2:component>
-			<ns2:component xsi:type="ns2:UILabelType" UIID="iconUILabel">
-				<ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-				<ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-					<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
-					<ns2:key>org.shaolin.vogerp.coupon.be.DiscountProduct.icon</ns2:key>
-				</ns2:text>
-				<ns2:EventListener xsi:type="ns2:ClickListenerType">
-		          <ns2:handler functionName="selectImage"></ns2:handler>
-		        </ns2:EventListener>
-			</ns2:component>
+			<ns2:component xsi:type="ns2:UIButtonType" UIID="iconUILabel">
+		        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+		        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+		          <ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+		          <ns2:key>org.shaolin.vogerp.coupon.be.DiscountProduct.icon</ns2:key>
+		        </ns2:text>
+		        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+					<ns2:handler functionName="selectImage" />
+				</ns2:EventListener>
+		    </ns2:component>
 			<ns2:component xsi:type="ns2:UITextFieldType" UIID="iconUI">
 				<ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
 			</ns2:component>
@@ -129,17 +133,9 @@
 					<ns2:key>org.shaolin.vogerp.coupon.be.DiscountProduct.couponType</ns2:key>
 				</ns2:text>
 			</ns2:component>
-			<!-- <ns2:component xsi:type="ns2:UIReferenceEntityType"
-				UIID="couponTypeTreeUI">
-				<ns2:referenceEntity entityName="org.shaolin.vogerp.coupon.form.CouponTypeWithDiscountProduct" />
-				<ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-			</ns2:component> -->
 			
 			<ns2:component xsi:type="ns2:UIComboBoxType" UIID="couponTypeTreeUI">
 		        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-		        <!-- <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
-		          <ns2:handler functionName="ChangePaty"></ns2:handler>
-		        </ns2:EventListener> -->
 		        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
 		            <ns2:value>false</ns2:value>
 		        </ns2:allowBlank>
@@ -175,6 +171,10 @@
 			</ns2:component>
 			<ns2:component xsi:type="ns2:UITextFieldType" UIID="superiorityMessageUI">
 				<ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+				<ns2:maxLength xsi:type="ns2:NumericPropertyType">
+					<type>int</type>
+					<value>10</value>
+				</ns2:maxLength>
 			</ns2:component>
 			<ns2:component xsi:type="ns2:UILabelType" UIID="limitMessageUILabel">
 				<ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -183,8 +183,30 @@
 					<ns2:key>org.shaolin.vogerp.coupon.be.DiscountProduct.limitMessage</ns2:key>
 				</ns2:text>
 			</ns2:component>
-			<ns2:component xsi:type="ns2:UITextFieldType" UIID="limitMessageUI">
+			<!-- <ns2:component xsi:type="ns2:UITextFieldType" UIID="limitMessageUI"> -->
+			<ns2:component xsi:type="ns2:UITextAreaType" UIID="limitMessageUI">
 				<ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+				<ns2:validator xsi:type="ns2:ValidatorsPropertyType">
+		            <ns2:validator xsi:type="ns2:ValidatorPropertyType">
+	                    <isFuncRef>false</isFuncRef>
+	                    <funcCode><![CDATA[
+	                    {
+	                    	var text = this.value;
+	                        if (text.length > 0) {
+	                        	var arr = text.split("\n");
+	                        	for (var i = 0; i < arr.length; i++) {
+	                        		var t = arr[i];
+	                        		if (t.length > 12) {
+	                        			return false;
+	                        		}
+	                        	}
+	                        }
+	                        return true;
+	                    }
+	                    ]]></funcCode>
+	                    <errMsg>\u6BCF\u884C\u957F\u5EA6\u4E0D\u80FD\u8D85\u8FC712\u5B57</errMsg>
+		            </ns2:validator>
+	        	</ns2:validator>
 			</ns2:component>
 			<ns2:component xsi:type="ns2:UILabelType" UIID="validityUILabel">
 				<ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>

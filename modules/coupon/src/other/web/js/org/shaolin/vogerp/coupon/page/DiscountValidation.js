@@ -9,6 +9,11 @@ function org_shaolin_vogerp_coupon_page_DiscountValidation(json)
         ,items: []
         ,subComponents: [prefix + "couponValidationPanel",prefix + "resetPhoneNumPanel"]
     });
+    var validateResultText = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "validateResultText"]
+    });
+
     var couponNumberText = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "couponNumberText"]
@@ -23,7 +28,7 @@ function org_shaolin_vogerp_coupon_page_DiscountValidation(json)
     ({
         ui: elementList[prefix + "couponValidationPanel"]
         ,items: []
-        ,subComponents: [prefix + "couponNumberText",prefix + "validateBtn"]
+        ,subComponents: [prefix + "validateResultText",prefix + "couponNumberText",prefix + "validateBtn"]
     });
     var phoneNum1Text = new UIMaster.ui.textfield
     ({
@@ -52,6 +57,8 @@ function org_shaolin_vogerp_coupon_page_DiscountValidation(json)
     Form.functionsTab=functionsTab;
 
     Form.couponValidationPanel=couponValidationPanel;
+
+    Form.validateResultText=validateResultText;
 
     Form.couponNumberText=couponNumberText;
 
@@ -96,7 +103,7 @@ function org_shaolin_vogerp_coupon_page_DiscountValidation(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"CouponValidateFunction",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"CouponValidateFunction-20160112-232035",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_coupon_page_DiscountValidation_CouponValidateFunction */
 
 
@@ -107,7 +114,7 @@ function org_shaolin_vogerp_coupon_page_DiscountValidation(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"ResetOrderCouponFunction",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"ResetOrderCouponFunction-20160112-232035",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_coupon_page_DiscountValidation_ResetOrderCouponFunction */
 
 

@@ -32,10 +32,11 @@ public class CouponUserActionListener implements UserActionListener {
 		
 		//generate couponUserInfo
 		CouponUserInfoImpl couponUserInfo = new CouponUserInfoImpl();
-		String lotteryLink = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7425c40996a4e8c3"
+		/*String lotteryLink = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7425c40996a4e8c3"
 				+ "&redirect_uri=http%3A%2F%2Fwww.mr-prize.com%2Fuimaster%2Fwebflow.do%3F_timestamp%3D1"
 				+ "%26_chunkname%3Dorg.shaolin.bmdp.coupon.diagram.Lottery%26_nodename%3DStart%26orgid%3D" 
-				+ orgId + "&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+				+ orgId + "&response_type=code&scope=snsapi_base&state=123#wechat_redirect";*/
+		String lotteryLink = "http://mr-prize.com/uimaster/wechatpush?orgId=" + orgId;
 		couponUserInfo.setLotteryLink(lotteryLink);
 		couponUserInfo.setQueryLink("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7425c40996a4e8c3&redirect_uri=http%3A%2F%2F"
 				+ "www.mr-prize.com%2Fuimaster%2Fwebflow.do%3F_chunkname%3Dorg.shaolin.bmdp.coupon.diagram.Lottery%26_nodename%3DViewOrderCoupon%26"
@@ -47,7 +48,9 @@ public class CouponUserActionListener implements UserActionListener {
 		try {
 			String relativePath = "/images/coupon/front/couponIcon/" + orgId;
 			String path = WebConfig.getRealPath(relativePath);
-			String file = QRCodeUtil.encode(lotteryLink, path, false);
+			String relativePath1 = "/images/coupon/front/mr-prize.png";
+			String path1 = WebConfig.getRealPath(relativePath1);
+			String file = QRCodeUtil.encode(lotteryLink, path1, path, false);
 			couponUserInfo.setLotteryQrCode("/uimaster/images/coupon/front/couponIcon/" + orgId + "/" + file);
 		} catch (Exception e) {
 			LoggerFactory.getLogger(CouponUserActionListener.class).warn("Generate qrCode failed", e);

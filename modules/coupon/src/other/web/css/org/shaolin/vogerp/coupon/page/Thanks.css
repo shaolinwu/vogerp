@@ -33,13 +33,13 @@ div#div-topPanel-0_0 {
     margin: 0;
 }
 #div-topPanel-0_0 img.uimaster_image {
-    width: 100%;
-    margin-left: 5%;
+    width: 90%;
+    margin: 7% 0 0 10%;
 }
 div#div-topPanel-1_0 {
     width: 50%;
     color : white;
-    font-size : 2em;
+    font-size : 1.5em;
     text-align: center;
     margin-top : 12%;
 }

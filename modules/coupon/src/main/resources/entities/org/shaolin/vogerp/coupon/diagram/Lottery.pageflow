@@ -168,7 +168,20 @@
   
   <!-- Thanks -->
   <ns2:webNode xsi:type="ns2:PageNodeType" name="Thanks">
+  	<ns2:variables name="openId" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+    </ns2:variables>
     <ns2:sourceEntity entityName="org.shaolin.vogerp.coupon.page.Thanks"></ns2:sourceEntity>
+    <ns2:out xsi:type="ns2:DisplayOutType" name="ViewOrderCouponLogic">
+      <ns2:next>
+        <ns2:destNode>ViewOrderCouponLogic</ns2:destNode>
+        <ns2:outDataMappingToNode name="openId">
+          <expression>
+            <expressionString><![CDATA[$openId]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+      </ns2:next>
+    </ns2:out>
   </ns2:webNode>
   
   <!-- ViewOrderCoupon -->
@@ -410,6 +423,11 @@
       </ns2:conditionExpression>
       <ns2:next>
         <ns2:destNode>Thanks</ns2:destNode>
+        <ns2:outDataMappingToNode name="openId">
+          <expression>
+            <expressionString><![CDATA[$openId]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
       </ns2:next>
     </ns2:out>
   </ns2:webNode>

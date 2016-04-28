@@ -30,7 +30,8 @@
 						CouponTypeImpl couponType = (CouponTypeImpl)couponTypes.get(i);
 						int resetInterval = couponType.getResetInterval().getIntValue();
 						Date lastResetDate = couponType.getLastResetDate();
-						if (lastResetDate == null || CouponUtil.addDays(lastResetDate, resetInterval).compareTo(new Date()) <= 0) {
+						Date nextResetDate = CouponUtil.addDays(lastResetDate, resetInterval);
+						if (lastResetDate == null || nextResetDate.compareTo(new Date()) <= 0) {
 							couponType.setRestNum(couponType.getTotalNum());
 							couponType.setLastResetDate(new Date());
 							CouponModel.INSTANCE.update(couponType);
