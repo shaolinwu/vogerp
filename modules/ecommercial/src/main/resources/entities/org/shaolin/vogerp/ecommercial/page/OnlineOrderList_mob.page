@@ -488,11 +488,6 @@
 	   <ns2:clientAction xsi:type="ns2:ExpressionType">
             <ns2:expressionString><![CDATA[
             {
-               $("#goldenOrderTableActionBar").css("position", "absolute").css("top","70px").css("left",($(window).width()-70)+"px").width(80);
-               $(window).scroll(function(event){
-                  var winPos = $(window).scrollTop();
-                  $("#goldenOrderTableActionBar").css("top", (winPos + 20) + "px");
-               });
             }]]></ns2:expressionString>
         </ns2:clientAction>
 	</ns2:in>

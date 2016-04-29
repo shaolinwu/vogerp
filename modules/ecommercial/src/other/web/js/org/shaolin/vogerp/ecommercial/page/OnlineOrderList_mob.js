@@ -139,11 +139,6 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob(json)
         var UIEntity = this;
 
             {
-               $("#goldenOrderTableActionBar").css("position", "absolute").css("top","70px").css("left",($(window).width()-70)+"px").width(80);
-               $(window).scroll(function(event){
-                  var winPos = $(window).scrollTop();
-                  $("#goldenOrderTableActionBar").css("top", (winPos + 20) + "px");
-               });
             }
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob_initPageJs */
 
