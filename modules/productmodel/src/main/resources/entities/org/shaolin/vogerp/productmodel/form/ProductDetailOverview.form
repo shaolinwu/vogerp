@@ -45,6 +45,21 @@
 		        <ns2:isGallery xsi:type="ns2:BooleanPropertyType">
 		            <ns2:value>true</ns2:value>
 		        </ns2:isGallery>
+		        <ns2:Property name="width">
+                   <ns2:value xsi:type="ns2:StringPropertyType">
+                       <value>100%</value>
+                   </ns2:value>
+                </ns2:Property>
+		        <ns2:Property name="height">
+                   <ns2:value xsi:type="ns2:StringPropertyType">
+                       <value>300px</value>
+                   </ns2:value>
+                </ns2:Property>
+		        <ns2:Property name="mobheight">
+	               <ns2:value xsi:type="ns2:StringPropertyType">
+	                   <value>220px</value>
+	               </ns2:value>
+	            </ns2:Property>
 		      </ns2:component>
 		      <ns2:layoutConstraint>
 	            <ns2:componentId>photoUI</ns2:componentId>

@@ -58,11 +58,6 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
         ui: elementList[prefix + "publishedCustomerIdUI"]
     });
 
-    var publishedCustomerUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "publishedCustomerUILabel"]
-    });
-
     var purchaseOrderIdUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "purchaseOrderIdUILabel"]
@@ -73,11 +68,6 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
         ui: elementList[prefix + "purchaseOrderIdUI"]
     });
 
-    var purchaseOrderUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "purchaseOrderUILabel"]
-    });
-
     var takenCustomerIdUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "takenCustomerIdUILabel"]
@@ -86,11 +76,6 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
     var takenCustomerIdUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "takenCustomerIdUI"]
-    });
-
-    var takenCustomerUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "takenCustomerUILabel"]
     });
 
     var saleOrderIdUILabel = new UIMaster.ui.label
@@ -193,7 +178,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
         ui: elementList[prefix + "cancelbtn"]
     });
 
-// refered ui form[publishedCustomerUI] is null.// refered ui form[purchaseOrderUI] is null.// refered ui form[takenCustomerUI] is null.    var actionPanel = new UIMaster.ui.panel
+    var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
@@ -204,13 +189,13 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "endPriceUILabel",prefix + "endPriceUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "publishedCustomerUILabel",prefix + "publishedCustomerUI",prefix + "purchaseOrderIdUILabel",prefix + "purchaseOrderIdUI",prefix + "purchaseOrderUILabel",prefix + "purchaseOrderUI",prefix + "takenCustomerIdUILabel",prefix + "takenCustomerIdUI",prefix + "takenCustomerUILabel",prefix + "takenCustomerUI",prefix + "saleOrderIdUILabel",prefix + "saleOrderIdUI",prefix + "startCreateDateUILabel",prefix + "startCreateDateUI",prefix + "endCreateDateUILabel",prefix + "endCreateDateUI",prefix + "expiredDateUILabel",prefix + "expiredDateUI",prefix + "photosUILabel",prefix + "photosUI",prefix + "statusUILabel",prefix + "statusUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "dateTypeUILabel",prefix + "dateTypeUI",prefix + "dateCountUILabel",prefix + "dateCountUI"]
+        ,subComponents: [prefix + "idUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "endPriceUILabel",prefix + "endPriceUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "purchaseOrderIdUILabel",prefix + "purchaseOrderIdUI",prefix + "takenCustomerIdUILabel",prefix + "takenCustomerIdUI",prefix + "saleOrderIdUILabel",prefix + "saleOrderIdUI",prefix + "startCreateDateUILabel",prefix + "startCreateDateUI",prefix + "endCreateDateUILabel",prefix + "endCreateDateUI",prefix + "expiredDateUILabel",prefix + "expiredDateUI",prefix + "photosUILabel",prefix + "photosUI",prefix + "statusUILabel",prefix + "statusUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "dateTypeUILabel",prefix + "dateTypeUI",prefix + "dateCountUILabel",prefix + "dateCountUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,estimatedPriceUILabel,estimatedPriceUI,endPriceUILabel,endPriceUI,publishedCustomerIdUILabel,publishedCustomerIdUI,publishedCustomerUILabel,purchaseOrderIdUILabel,purchaseOrderIdUI,purchaseOrderUILabel,takenCustomerIdUILabel,takenCustomerIdUI,takenCustomerUILabel,saleOrderIdUILabel,saleOrderIdUI,startCreateDateUILabel,startCreateDateUI,endCreateDateUILabel,endCreateDateUI,expiredDateUILabel,expiredDateUI,photosUILabel,photosUI,statusUILabel,statusUI,typeUILabel,typeUI,dateTypeUILabel,dateTypeUI,dateCountUILabel,dateCountUI,okbtn,cancelbtn,publishedCustomerUI,purchaseOrderUI,takenCustomerUI,fieldPanel,actionPanel]
+        ,items: [idUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,estimatedPriceUILabel,estimatedPriceUI,endPriceUILabel,endPriceUI,publishedCustomerIdUILabel,publishedCustomerIdUI,purchaseOrderIdUILabel,purchaseOrderIdUI,takenCustomerIdUILabel,takenCustomerIdUI,saleOrderIdUILabel,saleOrderIdUI,startCreateDateUILabel,startCreateDateUI,endCreateDateUILabel,endCreateDateUI,expiredDateUILabel,expiredDateUI,photosUILabel,photosUI,statusUILabel,statusUI,typeUILabel,typeUI,dateTypeUILabel,dateTypeUI,dateCountUILabel,dateCountUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -235,19 +220,13 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.publishedCustomerUILabel=publishedCustomerUILabel;
-
     Form.purchaseOrderIdUILabel=purchaseOrderIdUILabel;
 
     Form.purchaseOrderIdUI=purchaseOrderIdUI;
 
-    Form.purchaseOrderUILabel=purchaseOrderUILabel;
-
     Form.takenCustomerIdUILabel=takenCustomerIdUILabel;
 
     Form.takenCustomerIdUI=takenCustomerIdUI;
-
-    Form.takenCustomerUILabel=takenCustomerUILabel;
 
     Form.saleOrderIdUILabel=saleOrderIdUILabel;
 
@@ -289,12 +268,6 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
 
     Form.cancelbtn=cancelbtn;
 
-    Form.publishedCustomerUI=publishedCustomerUI;
-
-    Form.purchaseOrderUI=purchaseOrderUI;
-
-    Form.takenCustomerUI=takenCustomerUI;
-
     Form.fieldPanel=fieldPanel;
 
     Form.idUI=idUI;
@@ -319,25 +292,13 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.publishedCustomerUILabel=publishedCustomerUILabel;
-
-    Form.publishedCustomerUI=publishedCustomerUI;
-
     Form.purchaseOrderIdUILabel=purchaseOrderIdUILabel;
 
     Form.purchaseOrderIdUI=purchaseOrderIdUI;
 
-    Form.purchaseOrderUILabel=purchaseOrderUILabel;
-
-    Form.purchaseOrderUI=purchaseOrderUI;
-
     Form.takenCustomerIdUILabel=takenCustomerIdUILabel;
 
     Form.takenCustomerIdUI=takenCustomerIdUI;
-
-    Form.takenCustomerUILabel=takenCustomerUILabel;
-
-    Form.takenCustomerUI=takenCustomerUI;
 
     Form.saleOrderIdUILabel=saleOrderIdUILabel;
 

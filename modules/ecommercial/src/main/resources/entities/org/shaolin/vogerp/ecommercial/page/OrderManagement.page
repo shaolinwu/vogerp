@@ -6,29 +6,6 @@
 	<systemVersion>0</systemVersion>
 	<description>抢单管理</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
-		<ns2:eventHandler functionName="createGoldenOrder">
-		   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createGoldenOrder-2016-0124-1351">
-                <ns2:exp>
-                    <ns2:expressionString><![CDATA[
-                    import java.util.HashMap;
-                    import org.shaolin.uimaster.page.AjaxContext;
-                    import org.shaolin.uimaster.page.AjaxActionHelper;
-                    import org.shaolin.uimaster.page.ajax.*;
-                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
-                    {
-                        GoldenOrderImpl defaultUser = new GoldenOrderImpl();
-                        HashMap input = new HashMap();
-                        input.put("beObject", defaultUser);
-                        input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GoldenOrder", input);
-                        @page.addElement(form);
-                        
-                        form.openInWindows("Create Golden Order", new TableCallBack("goldenOrderTable"), 690, 450);
-                    }
-                    ]]></ns2:expressionString>
-                </ns2:exp>
-            </ns2:ops>
-		</ns2:eventHandler>
 		<ns2:eventHandler functionName="openGoldenOrder">
 		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openGoldenOrder-2016-0124-1351">
                 <ns2:exp>
@@ -50,7 +27,7 @@
                         RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GoldenOrder", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Open Golden Order", new TableCallBack("goldenOrderTable"), 690, 450);
+                        form.openInWindows("订单详情", new TableCallBack("goldenOrderTable"), 690, 450);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -78,7 +55,7 @@
                         RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GOOfferPriceTable", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Open Golden Order", new TableCallBack("goldenOrderTable"), 690, 450);
+                        form.openInWindows("接受价格", new TableCallBack("goldenOrderTable"), 690, 450);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -306,7 +283,6 @@
 		                        </ns2:updateCondition>
 		                    </ns2:column>
 		                    <ns2:defaultActions>
-		                        <ns2:defaultNewAction>createGoldenOrder</ns2:defaultNewAction>
 		                        <ns2:defaultOpenAction>openGoldenOrder</ns2:defaultOpenAction>
 		                        <ns2:defaultDisableAction>disableProduct</ns2:defaultDisableAction>
 		                    </ns2:defaultActions>
@@ -493,7 +469,6 @@
                                 </ns2:updateCondition>
                             </ns2:column>
                             <ns2:defaultActions>
-                                <ns2:defaultNewAction>createGoldenOrder</ns2:defaultNewAction>
                                 <ns2:defaultOpenAction>openGoldenOrder</ns2:defaultOpenAction>
                                 <ns2:defaultDisableAction>disableProduct</ns2:defaultDisableAction>
                             </ns2:defaultActions>

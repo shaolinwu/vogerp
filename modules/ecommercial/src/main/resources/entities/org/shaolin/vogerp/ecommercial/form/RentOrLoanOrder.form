@@ -127,16 +127,6 @@
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="publishedCustomerIdUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="publishedCustomerUILabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder.publishedCustomer</ns2:key>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="publishedCustomerUI">
-        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-      </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="purchaseOrderIdUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -147,16 +137,6 @@
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="purchaseOrderIdUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="purchaseOrderUILabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder.purchaseOrder</ns2:key>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="purchaseOrderUI">
-        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-      </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="takenCustomerIdUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -165,16 +145,6 @@
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="takenCustomerIdUI">
-        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="takenCustomerUILabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder.takenCustomer</ns2:key>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="takenCustomerUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="saleOrderIdUILabel">
@@ -308,14 +278,6 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>publishedCustomerUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>publishedCustomerUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
         <ns2:componentId>purchaseOrderIdUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
@@ -324,28 +286,12 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>purchaseOrderUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="7" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>purchaseOrderUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="7" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
         <ns2:componentId>takenCustomerIdUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="8" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>takenCustomerIdUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="8" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>takenCustomerUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="9" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>takenCustomerUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="9" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>saleOrderIdUILabel</ns2:componentId>

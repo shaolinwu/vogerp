@@ -92,6 +92,8 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList(json)
         /* Construct_LAST:org_shaolin_vogerp_ecommercial_page_OnlineOrderList */
     };
 
+    Form.openGoldenOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openGoldenOrder;
+
     Form.takeGoldenOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_takeGoldenOrder;
 
     Form.publishOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_publishOrder;
@@ -111,6 +113,17 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_ecommercial_page_OnlineOrderList */
 /* Other_Func_LAST:org_shaolin_vogerp_ecommercial_page_OnlineOrderList */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openGoldenOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openGoldenOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openGoldenOrder-20160124-1333",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openGoldenOrder */
+
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_takeGoldenOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_takeGoldenOrder */

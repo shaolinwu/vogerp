@@ -64,21 +64,11 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob(json)
         ui: elementList[prefix + "createDateUI"]
     });
 
-    var moreDetailUILabel0 = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "moreDetailUILabel0"]
-    });
-
-    var moreDetailUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "moreDetailUILabel"]
-    });
-
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "createDateUILabel",prefix + "createDateUI",prefix + "moreDetailUILabel0",prefix + "moreDetailUILabel"]
+        ,subComponents: [prefix + "idUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "createDateUILabel",prefix + "createDateUI"]
     });
 
     var topPanel = new UIMaster.ui.panel
@@ -91,7 +81,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [expiratedDateUI,idUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,estimatedPriceUILabel,estimatedPriceUI,publishedCustomerIdUILabel,publishedCustomerIdUI,createDateUILabel,createDateUI,moreDetailUILabel0,moreDetailUILabel,topPanel,fieldPanel]
+        ,items: [expiratedDateUI,idUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,estimatedPriceUILabel,estimatedPriceUI,publishedCustomerIdUILabel,publishedCustomerIdUI,createDateUILabel,createDateUI,topPanel,fieldPanel]
     });
 
     Form.expiratedDateUI=expiratedDateUI;
@@ -117,10 +107,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob(json)
     Form.createDateUILabel=createDateUILabel;
 
     Form.createDateUI=createDateUI;
-
-    Form.moreDetailUILabel0=moreDetailUILabel0;
-
-    Form.moreDetailUILabel=moreDetailUILabel;
 
     Form.topPanel=topPanel;
 
@@ -149,10 +135,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob(json)
     Form.createDateUILabel=createDateUILabel;
 
     Form.createDateUI=createDateUI;
-
-    Form.moreDetailUILabel0=moreDetailUILabel0;
-
-    Form.moreDetailUILabel=moreDetailUILabel;
 
     Form.user_constructor = function()
     {

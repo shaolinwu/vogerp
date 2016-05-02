@@ -3,9 +3,12 @@
 function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var idUI = new UIMaster.ui.hidden
+    var photoUI = new UIMaster.ui.image
     ({
-        ui: elementList[prefix + "idUI"]
+        ui: elementList[prefix + "photoUI"]
+        ,width: "100%"
+        ,height: "300px"
+        ,mobheight: "220px"
     });
 
     var serialNumberUILabel = new UIMaster.ui.label
@@ -13,7 +16,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
         ui: elementList[prefix + "serialNumberUILabel"]
     });
 
-    var serialNumberUI = new UIMaster.ui.textfield
+    var serialNumberUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "serialNumberUI"]
     });
@@ -23,9 +26,19 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
         ui: elementList[prefix + "descriptionUILabel"]
     });
 
-    var descriptionUI = new UIMaster.ui.textarea
+    var descriptionUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "descriptionUI"]
+    });
+
+    var estimatedPriceUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "estimatedPriceUILabel"]
+    });
+
+    var estimatedPriceUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "estimatedPriceUI"]
     });
 
     var publishedCustomerIdUILabel = new UIMaster.ui.label
@@ -33,39 +46,9 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
         ui: elementList[prefix + "publishedCustomerIdUILabel"]
     });
 
-    var publishedCustomerIdUI = new UIMaster.ui.textfield
+    var publishedCustomerIdUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "publishedCustomerIdUI"]
-    });
-
-    var purchaseOrderIdUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "purchaseOrderIdUILabel"]
-    });
-
-    var purchaseOrderIdUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "purchaseOrderIdUI"]
-    });
-
-    var takenCustomerIdUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "takenCustomerIdUILabel"]
-    });
-
-    var takenCustomerIdUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "takenCustomerIdUI"]
-    });
-
-    var saleOrderIdUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "saleOrderIdUILabel"]
-    });
-
-    var saleOrderIdUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "saleOrderIdUI"]
     });
 
     var createDateUILabel = new UIMaster.ui.label
@@ -73,25 +56,17 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
         ui: elementList[prefix + "createDateUILabel"]
     });
 
-    var createDateUI = new UIMaster.ui.calendar
+    var createDateUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "createDateUI"]
-    });
-
-    var expiredDateUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "expiredDateUILabel"]
-    });
-
-    var expiredDateUI = new UIMaster.ui.calendar
-    ({
-        ui: elementList[prefix + "expiredDateUI"]
     });
 
     var cancelbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "cancelbtn"]
     });
+
+    var orderItemTable = new org_shaolin_vogerp_order_form_PurchaseItemTable({"prefix":prefix + "orderItemTable."});
 
     var actionPanel = new UIMaster.ui.panel
     ({
@@ -100,20 +75,42 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
         ,subComponents: [prefix + "cancelbtn"]
     });
 
+    var prodcutInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "prodcutInfoPanel"]
+        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
+        ,items: []
+        ,subComponents: [prefix + "orderItemTable"]
+    });
+
+    var attributePanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "attributePanel"]
+        ,items: []
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "createDateUILabel",prefix + "createDateUI"]
+    });
+
+    var photoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "photoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "photoUI"]
+    });
+
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "purchaseOrderIdUILabel",prefix + "purchaseOrderIdUI",prefix + "takenCustomerIdUILabel",prefix + "takenCustomerIdUI",prefix + "saleOrderIdUILabel",prefix + "saleOrderIdUI",prefix + "createDateUILabel",prefix + "createDateUI",prefix + "expiredDateUILabel",prefix + "expiredDateUI"]
+        ,subComponents: [prefix + "photoPanel",prefix + "attributePanel",prefix + "prodcutInfoPanel"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,publishedCustomerIdUILabel,publishedCustomerIdUI,purchaseOrderIdUILabel,purchaseOrderIdUI,takenCustomerIdUILabel,takenCustomerIdUI,saleOrderIdUILabel,saleOrderIdUI,createDateUILabel,createDateUI,expiredDateUILabel,expiredDateUI,cancelbtn,fieldPanel,actionPanel]
+        ,items: [photoUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,estimatedPriceUILabel,estimatedPriceUI,publishedCustomerIdUILabel,publishedCustomerIdUI,createDateUILabel,createDateUI,cancelbtn,orderItemTable,fieldPanel,photoPanel,attributePanel,prodcutInfoPanel,actionPanel]
     });
 
-    Form.idUI=idUI;
+    Form.photoUI=photoUI;
 
     Form.serialNumberUILabel=serialNumberUILabel;
 
@@ -123,35 +120,29 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
 
     Form.descriptionUI=descriptionUI;
 
+    Form.estimatedPriceUILabel=estimatedPriceUILabel;
+
+    Form.estimatedPriceUI=estimatedPriceUI;
+
     Form.publishedCustomerIdUILabel=publishedCustomerIdUILabel;
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.purchaseOrderIdUILabel=purchaseOrderIdUILabel;
-
-    Form.purchaseOrderIdUI=purchaseOrderIdUI;
-
-    Form.takenCustomerIdUILabel=takenCustomerIdUILabel;
-
-    Form.takenCustomerIdUI=takenCustomerIdUI;
-
-    Form.saleOrderIdUILabel=saleOrderIdUILabel;
-
-    Form.saleOrderIdUI=saleOrderIdUI;
-
     Form.createDateUILabel=createDateUILabel;
 
     Form.createDateUI=createDateUI;
-
-    Form.expiredDateUILabel=expiredDateUILabel;
-
-    Form.expiredDateUI=expiredDateUI;
 
     Form.cancelbtn=cancelbtn;
 
+    Form.orderItemTable=orderItemTable;
+
     Form.fieldPanel=fieldPanel;
 
-    Form.idUI=idUI;
+    Form.photoPanel=photoPanel;
+
+    Form.photoUI=photoUI;
+
+    Form.attributePanel=attributePanel;
 
     Form.serialNumberUILabel=serialNumberUILabel;
 
@@ -161,29 +152,51 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
 
     Form.descriptionUI=descriptionUI;
 
+    Form.estimatedPriceUILabel=estimatedPriceUILabel;
+
+    Form.estimatedPriceUI=estimatedPriceUI;
+
     Form.publishedCustomerIdUILabel=publishedCustomerIdUILabel;
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
-
-    Form.purchaseOrderIdUILabel=purchaseOrderIdUILabel;
-
-    Form.purchaseOrderIdUI=purchaseOrderIdUI;
-
-    Form.takenCustomerIdUILabel=takenCustomerIdUILabel;
-
-    Form.takenCustomerIdUI=takenCustomerIdUI;
-
-    Form.saleOrderIdUILabel=saleOrderIdUILabel;
-
-    Form.saleOrderIdUI=saleOrderIdUI;
 
     Form.createDateUILabel=createDateUILabel;
 
     Form.createDateUI=createDateUI;
 
-    Form.expiredDateUILabel=expiredDateUILabel;
+    Form.prodcutInfoPanel=prodcutInfoPanel;
 
-    Form.expiredDateUI=expiredDateUI;
+    Form.orderItemTable=orderItemTable;
+
+    Form.photoPanel=photoPanel;
+
+    Form.photoUI=photoUI;
+
+    Form.attributePanel=attributePanel;
+
+    Form.serialNumberUILabel=serialNumberUILabel;
+
+    Form.serialNumberUI=serialNumberUI;
+
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
+    Form.estimatedPriceUILabel=estimatedPriceUILabel;
+
+    Form.estimatedPriceUI=estimatedPriceUI;
+
+    Form.publishedCustomerIdUILabel=publishedCustomerIdUILabel;
+
+    Form.publishedCustomerIdUI=publishedCustomerIdUI;
+
+    Form.createDateUILabel=createDateUILabel;
+
+    Form.createDateUI=createDateUI;
+
+    Form.prodcutInfoPanel=prodcutInfoPanel;
+
+    Form.orderItemTable=orderItemTable;
 
     Form.actionPanel=actionPanel;
 
@@ -194,8 +207,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
         /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_GoldenOrder */
         /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_GoldenOrder */
     };
-
-    Form.Save = org_shaolin_vogerp_ecommercial_form_GoldenOrder_Save;
 
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_GoldenOrder_Cancel;
 
@@ -210,17 +221,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_ecommercial_form_GoldenOrder */
 /* Other_Func_LAST:org_shaolin_vogerp_ecommercial_form_GoldenOrder */
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_GoldenOrder_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrder_Save */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20160106-214008",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrder_Save */
-
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_form_GoldenOrder_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrder_Cancel */

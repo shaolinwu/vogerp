@@ -120,9 +120,16 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="productTypeUI" />
       <ns2:component xsi:type="ns2:UITableType" UIID="itemTable">
-        <ns2:editable xsi:type="ns2:BooleanPropertyType">
-          <ns2:value>true</ns2:value>
-        </ns2:editable>
+         <ns2:Property name="editable">
+            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+             <ns2:expression>
+                   <expressionString><![CDATA[
+                   { 
+                       return $editable; 
+                   }]]></expressionString>
+                 </ns2:expression>
+            </ns2:value>
+        </ns2:Property>
         <ns2:beElement>org.shaolin.vogerp.order.be.PurchaseItem</ns2:beElement>
         <ns2:initQuery>
           <ns2:expression>
@@ -151,7 +158,7 @@
         }]]></expressionString>
           </ns2:expression>
         </ns2:totalCount>
-        <ns2:defaultRowSize>20</ns2:defaultRowSize>
+        <ns2:defaultRowSize>10</ns2:defaultRowSize>
         <ns2:showActionBar>true</ns2:showActionBar>
         <ns2:showFilter>false</ns2:showFilter>
         <ns2:editableCell>true</ns2:editableCell>
@@ -293,11 +300,11 @@
     </ns2:DataEntity>
     <ns2:DataToUIMappingOperation>
       <expressionString>{
-@odContext.executeAllMappings();
-      if ($list == null) {
-          $list = new java.util.ArrayList();
-      }
-}</expressionString>
+		  @odContext.executeAllMappings();
+	      if ($list == null) {
+	          $list = new java.util.ArrayList();
+	      }
+		}</expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString><![CDATA[

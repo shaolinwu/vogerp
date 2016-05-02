@@ -12,6 +12,40 @@
 	</descriptionExpr>
 	<ns2:eventHandler functionName="toRentOrder"></ns2:eventHandler>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+	    <ns2:eventHandler functionName="openGoldenOrder">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openGoldenOrder-20160124-1333">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
+                    {
+                        IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+                        if (!userService.checkUserOnline(@page.getRequest().getSession())) {
+                            @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\");");
+                            return;
+                        }
+                        
+                        Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GoldenOrder", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, 500, 400);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
 		<ns2:eventHandler functionName="takeGoldenOrder">
 		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="takeGoldenOrder-20160124-1333">
                 <ns2:exp>
@@ -200,6 +234,7 @@
 			                    </ns2:updateCondition>
 			                </ns2:column>
 		                    <ns2:defaultActions>
+		                        <ns2:defaultOpenAction>openGoldenOrder</ns2:defaultOpenAction>
 		                    </ns2:defaultActions>
 		                    <ns2:actionGroup>
 		                        <ns2:type>radio</ns2:type>
@@ -322,6 +357,7 @@
 		                        </ns2:updateCondition>
 		                    </ns2:column>
 		                    <ns2:defaultActions>
+		                        <ns2:defaultOpenAction>openRentOrder</ns2:defaultOpenAction>
 		                    </ns2:defaultActions>
 		                    <ns2:actionGroup>
 		                        <ns2:type>radio</ns2:type>
@@ -444,6 +480,7 @@
                                 </ns2:updateCondition>
                             </ns2:column>
                             <ns2:defaultActions>
+                                <ns2:defaultOpenAction>openLoanOrder</ns2:defaultOpenAction>
                             </ns2:defaultActions>
                             <ns2:actionGroup>
                                 <ns2:type>radio</ns2:type>
