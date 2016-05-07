@@ -184,6 +184,11 @@
     </ns2:out>
   </ns2:webNode>
   
+  <!-- Thanks_new -->
+  <ns2:webNode xsi:type="ns2:PageNodeType" name="Thanks_new">
+    <ns2:sourceEntity entityName="org.shaolin.vogerp.coupon.page.Thanks_new"></ns2:sourceEntity>
+  </ns2:webNode>
+  
   <!-- ViewOrderCoupon -->
   <ns2:webNode xsi:type="ns2:PageNodeType" name="ViewOrderCoupon">
     <ns2:variables name="coupons" category="JavaClass">
@@ -422,7 +427,7 @@
       	<expressionString><![CDATA[{return $couponType == null || $discountProducts == null || $discountProducts.size() == 0;}]]></expressionString>
       </ns2:conditionExpression>
       <ns2:next>
-        <ns2:destNode>Thanks</ns2:destNode>
+        <ns2:destNode>Thanks_new</ns2:destNode>
         <ns2:outDataMappingToNode name="openId">
           <expression>
             <expressionString><![CDATA[$openId]]></expressionString>

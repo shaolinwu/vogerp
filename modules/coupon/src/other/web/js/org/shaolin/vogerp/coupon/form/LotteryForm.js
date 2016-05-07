@@ -82,7 +82,7 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 					//$("#rollLottery").append("<img id=\"rollImage1\" src=\"/uimaster/images/coupon/front/couponIcon/" + orgId + "/lotteryRoll_a.gif\" /><img id=\"rollImage2\"  src=\"/uimaster/images/coupon/front/couponIcon/" + orgId + "/lotteryRoll_b.gif\" /><img id=\"rollImage3\"  src=\"/uimaster/images/coupon/front/couponIcon/" + orgId + "/lotteryRoll_c.gif\" />");
 					$("#rollLottery").append("<img id=\"rollImage1\" src=\"/uimaster/images/coupon/front/lotteryRoll_a.gif\" /><img id=\"rollImage2\"  src=\"/uimaster/images/coupon/front/lotteryRoll_b.gif\" /><img id=\"rollImage3\"  src=\"/uimaster/images/coupon/front/lotteryRoll_c.gif\" />");
 					$("#div-leftPanel-0_5").height(windowHeight * 0.1529).css("top" , windowHeight * 0.6353 + "px").show();
-					//$("#div-leftPanel-0_5 img").css({"height":windowHeight * 0.16 + "px", "margin-top":windowHeight * 0.05 + "px"});
+					$("#div-leftPanel-0_5 img").css({"height":windowHeight * 0.1329 + "px", "margin-top":windowHeight * 0.01 + "px"});
 					
 					var showIcons = showImages.split(",");
 					

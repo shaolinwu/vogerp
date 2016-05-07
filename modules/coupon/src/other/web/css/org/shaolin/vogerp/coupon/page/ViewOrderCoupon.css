@@ -1,3 +1,4 @@
+body{margin:0;}
 div#Form {
     width: 100%;
     background-image : url(/uimaster/images/coupon/front/background.jpg);
@@ -93,7 +94,20 @@ span[class1='expiredDateView']{
 	width: 90%;
 	margin: 0 auto;
 }
-
-
+.couponInfoLeftPanel{
+	width: 35%;
+    margin: 2%;
+}
+.productImage{
+	border: solid 2px white;
+	margin: 0;
+	width: 100%;
+}
+.brandText{
+	margin: 0;
+}
+span[class1='productMessageView'] {
+	white-space: nowrap;
+}
 
 

@@ -1,0 +1,50 @@
+div#Form {
+    width: 100%;
+    background-image: url(/uimaster/images/coupon/front/curtain.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -webkit-background-size: 100% 100%;
+    color: white;
+    font-family: "Microsoft YaHei" ! important;
+    position: absolute;
+    height: 100%;
+}
+
+div#div-Form-0_0 {
+    width: 40%;
+    margin: 5% auto;
+    float: none;
+}
+
+#div-Form-0_0 img.uimaster_image {
+    width: 100%;
+}
+
+div#div-Form-0_2 {
+    position: absolute;
+    bottom: 5%;
+    left: 25%;
+    width: 50%;
+    text-align: center;
+}
+
+div#div-Form-0_1 {
+	position: absolute;
+    top: 30%;
+    float: none;
+    width: 100%;
+    text-align: center;
+    font-size: 1.5em;
+    color: #FFE59B;
+}
+#div-middlePanel-0_0, #div-middlePanel-0_1{
+	float: none;
+}
+
+div#div-bottomPanel-0_0,#div-bottomPanel-0_1,#div-bottomPanel-0_2 {
+    float: none;
+}
+#div-bottomPanel-0_1,#div-bottomPanel-0_2{
+    margin: 0;
+}

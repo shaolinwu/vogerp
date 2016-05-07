@@ -50,8 +50,8 @@ public class WechatUtil {
 	}
 	
 	public static String generateSign(Long orgId, String url) throws Exception {
-		String appId = "wx7425c40996a4e8c3";
-		String appSecret = "caa40fbbf42e2f432da882aa9b639c37";
+		String appId = "wx8f4239ff75ca1770";
+		String appSecret = "43980f0ded91775f6e505c97657e7789";
 		String charset = "UTF-8";
 		
 		Date current = new Date();
@@ -103,8 +103,8 @@ public class WechatUtil {
 	}
 	
 	public static String getOpenIdByOauth(String code) throws JSONException, IOException {
-		String appId = "wx7425c40996a4e8c3";
-		String appSecret = "caa40fbbf42e2f432da882aa9b639c37";
+		String appId = "wx8f4239ff75ca1770";
+		String appSecret = "43980f0ded91775f6e505c97657e7789";
 		String charset = "UTF-8";
 		String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appId + "&secret=" + appSecret + "&code=" + code + "&grant_type=authorization_code";
 		String message = HttpsUtil.get(url, charset);

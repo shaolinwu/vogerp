@@ -252,6 +252,9 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 			if ("#".equals(m.getAccessURL())) {
 				continue;
 			}
+			if (!m.getIsDisplay()) {
+				continue ;
+			}
 			modules.add(m);
 		}
 		int total = modules.size()/columns;

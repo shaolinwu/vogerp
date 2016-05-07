@@ -4,11 +4,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.shaolin.vogerp.coupon.be.CouponImpl;
 import org.shaolin.vogerp.coupon.be.CouponOperationImpl;
+import org.shaolin.vogerp.coupon.be.CouponUserInfoImpl;
 import org.shaolin.vogerp.coupon.be.DiscountProductImpl;
 import org.shaolin.vogerp.coupon.ce.StatusType;
 import org.shaolin.vogerp.coupon.dao.CouponModel;
@@ -21,6 +24,7 @@ public class CouponUtil {
 	public static final char[] CHAR_ARR = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 
 		'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
+	public static Map<Long, CouponUserInfoImpl> orgMap;
 	
 	/**
 	 * Generate coupon serial number
@@ -128,6 +132,14 @@ public class CouponUtil {
 		condition.setOpenId(openId);
 		condition.setType(OPERATION_TYPE_LOTTERY);
 		condition.setOrgId(orgId);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		condition.setOperateDate(cal.getTime());
+		
 		List couponOperations = CouponModel.INSTANCE.searchCouponOperation(condition, null, 0, 0);
 		if (null != couponOperations && couponOperations.size() > 0) {
 			CouponOperationImpl couponOperation = (CouponOperationImpl) couponOperations.get(0);
@@ -143,6 +155,22 @@ public class CouponUtil {
 		Date d1 = sdf.parse(sdf.format(date1));
 		Date d2 = sdf.parse(sdf.format(date2));
 		return d1.getTime() - d2.getTime();
+	}
+	
+	public static CouponUserInfoImpl getCouponUserInfoByOrgId(long orgId) {
+		if (null == orgMap) {
+			orgMap = new HashMap();
+			CouponUserInfoImpl cond = new CouponUserInfoImpl();
+			List userInfos = CouponModel.INSTANCE.searchCouponUserInfo(cond, null, 0, 0);
+			if (null != userInfos && userInfos.size() > 0) {
+				for (int i = 0; i < userInfos.size(); i++) {
+					CouponUserInfoImpl userInfo = (CouponUserInfoImpl) userInfos.get(i);
+					orgMap.put(userInfo.getOrgId(), userInfo);
+				}
+			}
+		}
+		
+		return orgMap.get(orgId);
 	}
 	
 }

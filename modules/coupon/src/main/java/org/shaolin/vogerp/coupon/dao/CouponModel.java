@@ -155,6 +155,9 @@ public class CouponModel extends BEEntityDaoObject {
             if (scObject.getType() != null && scObject.getType().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.type", scObject.getType()));
             }
+            if (scObject.getOperateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN, "inObject.operateDate", scObject.getOperateDate()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -176,6 +179,9 @@ public class CouponModel extends BEEntityDaoObject {
             }
             if (scObject.getType() != null && scObject.getType().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.type", scObject.getType()));
+            }
+            if (scObject.getOperateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN, "inObject.operateDate", scObject.getOperateDate()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));

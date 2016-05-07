@@ -3,6 +3,11 @@
 function org_shaolin_vogerp_coupon_form_CouponType(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var selectedOrgId = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "selectedOrgId"]
+    });
+
     var idUI = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "idUI"]
@@ -99,14 +104,16 @@ function org_shaolin_vogerp_coupon_form_CouponType(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "totalNumUILabel",prefix + "totalNumUI",prefix + "percentUILabel",prefix + "percentUI",prefix + "iconUILabel",prefix + "iconUI",prefix + "resetIntervalUILabel",prefix + "resetIntervalUI",prefix + "isImmediateUILabel",prefix + "isImmediateUI",prefix + "isThanksUILabel",prefix + "isThanksUI"]
+        ,subComponents: [prefix + "selectedOrgId",prefix + "idUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "totalNumUILabel",prefix + "totalNumUI",prefix + "percentUILabel",prefix + "percentUI",prefix + "iconUILabel",prefix + "iconUI",prefix + "resetIntervalUILabel",prefix + "resetIntervalUI",prefix + "isImmediateUILabel",prefix + "isImmediateUI",prefix + "isThanksUILabel",prefix + "isThanksUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,nameUILabel,nameUI,totalNumUILabel,totalNumUI,percentUILabel,percentUI,iconUILabel,iconUI,resetIntervalUILabel,resetIntervalUI,isImmediateUILabel,isImmediateUI,isThanksUILabel,isThanksUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [selectedOrgId,idUI,nameUILabel,nameUI,totalNumUILabel,totalNumUI,percentUILabel,percentUI,iconUILabel,iconUI,resetIntervalUILabel,resetIntervalUI,isImmediateUILabel,isImmediateUI,isThanksUILabel,isThanksUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
+
+    Form.selectedOrgId=selectedOrgId;
 
     Form.idUI=idUI;
 
@@ -143,6 +150,8 @@ function org_shaolin_vogerp_coupon_form_CouponType(json)
     Form.cancelbtn=cancelbtn;
 
     Form.fieldPanel=fieldPanel;
+
+    Form.selectedOrgId=selectedOrgId;
 
     Form.idUI=idUI;
 

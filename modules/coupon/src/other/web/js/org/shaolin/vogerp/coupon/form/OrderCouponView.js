@@ -13,6 +13,11 @@ function org_shaolin_vogerp_coupon_form_OrderCouponView(json)
         ui: elementList[prefix + "productImage"]
     });
 
+    var brandText = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "brandText"]
+    });
+
     var productNameUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "productNameUI"]
@@ -47,15 +52,24 @@ function org_shaolin_vogerp_coupon_form_OrderCouponView(json)
         ,subComponents: [prefix + "productNameUI",prefix + "productPanel",prefix + "productMessageUI"]
     });
 
+    var couponInfoLeftPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "couponInfoLeftPanel"]
+        ,items: []
+        ,subComponents: [prefix + "productImage",prefix + "brandText"]
+    });
+
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [couponId,productImage,productNameUI,productDiscountUI,expiredDateUI,productMessageUI,couponInfoPanel,productPanel]
+        ,items: [couponId,productImage,brandText,productNameUI,productDiscountUI,expiredDateUI,productMessageUI,couponInfoLeftPanel,couponInfoPanel,productPanel]
     });
 
     Form.couponId=couponId;
 
     Form.productImage=productImage;
+
+    Form.brandText=brandText;
 
     Form.productNameUI=productNameUI;
 
@@ -64,6 +78,12 @@ function org_shaolin_vogerp_coupon_form_OrderCouponView(json)
     Form.expiredDateUI=expiredDateUI;
 
     Form.productMessageUI=productMessageUI;
+
+    Form.couponInfoLeftPanel=couponInfoLeftPanel;
+
+    Form.productImage=productImage;
+
+    Form.brandText=brandText;
 
     Form.couponInfoPanel=couponInfoPanel;
 
@@ -89,11 +109,11 @@ function org_shaolin_vogerp_coupon_form_OrderCouponView(json)
 
         
 		{
-			var $couponImages = $("img[class1='couponImageView']");
-			$couponImages.each(function(i, couponImage){
-				var $p = $(couponImage).parent("div.uimaster_widget_cell");
-				$p.css({"margin" : "2%", "border" : "solid 2px white", "width" : "35%"});
-				$p.height($p.width() * 0.75 + "px");
+			var $couponInfos = $(".couponInfoLeftPanel");
+			$couponInfos.each(function(i, couponInfo){
+				$(couponInfo).height($(couponInfo).width() * 0.90 + "px");
+				$(couponInfo).children("div.uimaster_panel").height($(couponInfo).height() + "px");
+				$(couponInfo).find(".productImage").height($(couponInfo).height() * 0.75 + "px");
 			});
 			
 			var $couponPanels = $("div[class1='couponInfoPanel']");

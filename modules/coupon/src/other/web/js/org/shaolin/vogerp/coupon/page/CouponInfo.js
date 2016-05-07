@@ -83,9 +83,14 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
         ui: elementList[prefix + "bottom5Text"]
     });
 
-    var bottom4Text = new UIMaster.ui.label
+    var bottom40Text = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "bottom4Text"]
+        ui: elementList[prefix + "bottom40Text"]
+    });
+
+    var bottom41Text = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "bottom41Text"]
     });
 
     var fingerImage = new UIMaster.ui.image
@@ -98,11 +103,18 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
         ui: elementList[prefix + "fingerPrintImage"]
     });
 
+    var bottom3LeftPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "bottom3LeftPanel"]
+        ,items: []
+        ,subComponents: [prefix + "bottom40Text",prefix + "bottom41Text"]
+    });
+
     var bottom3Panel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "bottom3Panel"]
         ,items: []
-        ,subComponents: [prefix + "bottom4Text",prefix + "fingerImage"]
+        ,subComponents: [prefix + "bottom3LeftPanel",prefix + "fingerImage"]
     });
 
     var bottomLeftPanel = new UIMaster.ui.panel
@@ -150,7 +162,7 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [logoImage,openId,wechatSign,serialLabeText,serialNumText,orderLabelText,phoneNumText,couponImage,couponNameText,couponDiscountText,couponMsgText,advertImage,bottom1Text,bottom2Text,bottom3Text,bottom5Text,bottom4Text,fingerImage,fingerPrintImage,couponPanel,serialNumPanel,couponImagePanel,couponImageRightPanel,bottomPanel,bottomLeftPanel,bottom3Panel]
+        ,items: [logoImage,openId,wechatSign,serialLabeText,serialNumText,orderLabelText,phoneNumText,couponImage,couponNameText,couponDiscountText,couponMsgText,advertImage,bottom1Text,bottom2Text,bottom3Text,bottom5Text,bottom40Text,bottom41Text,fingerImage,fingerPrintImage,couponPanel,serialNumPanel,couponImagePanel,couponImageRightPanel,bottomPanel,bottomLeftPanel,bottom3Panel,bottom3LeftPanel]
     });
 
     Form.logoImage=logoImage;
@@ -185,7 +197,9 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 
     Form.bottom5Text=bottom5Text;
 
-    Form.bottom4Text=bottom4Text;
+    Form.bottom40Text=bottom40Text;
+
+    Form.bottom41Text=bottom41Text;
 
     Form.fingerImage=fingerImage;
 
@@ -235,7 +249,11 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 
     Form.bottom3Panel=bottom3Panel;
 
-    Form.bottom4Text=bottom4Text;
+    Form.bottom3LeftPanel=bottom3LeftPanel;
+
+    Form.bottom40Text=bottom40Text;
+
+    Form.bottom41Text=bottom41Text;
 
     Form.fingerImage=fingerImage;
 
@@ -285,7 +303,11 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 
     Form.bottom3Panel=bottom3Panel;
 
-    Form.bottom4Text=bottom4Text;
+    Form.bottom3LeftPanel=bottom3LeftPanel;
+
+    Form.bottom40Text=bottom40Text;
+
+    Form.bottom41Text=bottom41Text;
 
     Form.fingerImage=fingerImage;
 
@@ -303,15 +325,29 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 
     Form.bottom3Panel=bottom3Panel;
 
-    Form.bottom4Text=bottom4Text;
+    Form.bottom3LeftPanel=bottom3LeftPanel;
+
+    Form.bottom40Text=bottom40Text;
+
+    Form.bottom41Text=bottom41Text;
 
     Form.fingerImage=fingerImage;
 
     Form.bottom3Panel=bottom3Panel;
 
-    Form.bottom4Text=bottom4Text;
+    Form.bottom3LeftPanel=bottom3LeftPanel;
+
+    Form.bottom40Text=bottom40Text;
+
+    Form.bottom41Text=bottom41Text;
 
     Form.fingerImage=fingerImage;
+
+    Form.bottom3LeftPanel=bottom3LeftPanel;
+
+    Form.bottom40Text=bottom40Text;
+
+    Form.bottom41Text=bottom41Text;
 
     Form.user_constructor = function()
     {

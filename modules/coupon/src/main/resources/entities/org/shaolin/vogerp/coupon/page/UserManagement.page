@@ -51,6 +51,15 @@
         </ns2:eventHandler>
         
 		<ns2:eventHandler functionName="openCouponUserInfo">
+			<!-- <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+				<expressionString><![CDATA[
+					{
+						var selectedTr = $("#" + eventsource).find("tr.selected");
+						var tds = $(selectedTr[0]).children("td");
+						var selectedOrgId = $(tds[1]).text();
+						alert("orgId=" + selectedOrgId);
+					}]]></expressionString>
+			</ns2:ops> -->
 			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="openCouponUserInfo-20160302-3542">
 				<ns2:exp>
 					<ns2:expressionString><![CDATA[
@@ -58,29 +67,35 @@
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.coupon.be.CouponUserInfoImpl;
-                    import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
                     import java.util.List;
-                    import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                    import org.shaolin.vogerp.coupon.dao.CouponModel;
                     {
                         Table couponUserInfoTable = (Table)@page.getElement("couponUserInfoTable");
                         if (couponUserInfoTable.getSelectedRow() == null) {
                             return;
                         }
-                        CouponUserInfoImpl couponUserInfo = (CouponUserInfoImpl)couponUserInfoTable.getSelectedRow();
-                        System.out.println(couponUserInfo);
-                        HashMap input = new HashMap();
-                        input.put("beObject", couponUserInfo);
-                        input.put("editable", new Boolean(true));
-                        long orgId = couponUserInfo.getOrgId();
-                        input.put("orgId", String.valueOf(orgId));
                         
-                        /*OrganizationImpl condition = new OrganizationImpl();
-                        condition.setId(orgId);
-                        List orgs = CommonModel.INSTANCE.searchOrganization(condition, null, 0, 0);
-                        if (null != orgs && orgs.size() > 0) {
-                        	OrganizationImpl org = (OrganizationImpl) orgs.get(0);
-	                        input.put("industryType", org.get);
-                        }*/
+                        HashMap input = new HashMap();
+                        String selectedOrgId = @page.getHidden("orgIdHidden").getValue();
+                        if (null != selectedOrgId && selectedOrgId.length() > 0) {
+                        	CouponUserInfoImpl cond = new CouponUserInfoImpl();
+                        	cond.setOrgId(Long.valueOf(selectedOrgId));
+                        	List userInfos = CouponModel.INSTANCE.searchCouponUserInfo(cond, null, 0, 0);
+                        	if (userInfos != null && userInfos.size() > 0) {
+                        		CouponUserInfoImpl userInfo = (CouponUserInfoImpl) userInfos.get(0);
+                        		input.put("beObject", userInfo);
+		                        input.put("editable", new Boolean(true));
+		                        long orgId = userInfo.getOrgId();
+		                        input.put("orgId", String.valueOf(orgId));
+                        	}
+                        } else {
+                        	CouponUserInfoImpl couponUserInfo = (CouponUserInfoImpl)couponUserInfoTable.getSelectedRow();
+	                        System.out.println(couponUserInfo);
+	                        input.put("beObject", couponUserInfo);
+	                        input.put("editable", new Boolean(true));
+	                        long orgId = couponUserInfo.getOrgId();
+	                        input.put("orgId", String.valueOf(orgId));
+                        }
                         
                         RefForm form = new RefForm("couponUserInfo", "org.shaolin.vogerp.coupon.form.CouponUserInfo", input);
                         @page.addElement(form);

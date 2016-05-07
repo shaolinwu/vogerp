@@ -1,3 +1,4 @@
+body{margin:0;}
 div#Form {
     width: 100%;
     background-image : url(/uimaster/images/coupon/front/background.jpg);
@@ -30,10 +31,10 @@ div#couponPanel {
 
 div#div-couponPanel-0_0 {
     background-size: cover;
-    background-image : url(/uimaster/images/coupon/front/couponSerialNumBox.png);
-    margin : 3% 2% 7% 2%;
-    width : 96%;
-    color : black;
+    background-image: url(/uimaster/images/coupon/front/couponInfoBackground.jpg);
+    margin: 3% 2% 7% 2%;
+    width: 96%;
+    color: white;
     font-size: 1em;
 }
 
@@ -124,11 +125,7 @@ div#div-bottomLeftPanel-0_3 {
 
 div#div-bottom3Panel-0_0 {
     font-size: 1.1em;
-    margin: 13% 7% 0 0;
-}
-
-div#div-bottom3Panel-1_0 {
-    width: 25%;
+    width:85%;
 }
 
 div#div-bottomPanel-1_0 {
@@ -151,4 +148,12 @@ span {
 #couponDiscountText_Label{
 	font-size: 1.4em;
 	color: #FFE59B;
+}
+#div-bottom3LeftPanel-0_0, #div-bottom3LeftPanel-0_1{
+	margin: 0;
+	color: #FFE59B;
+}
+#div-bottom3Panel-1_0{
+	width: 15%;
+    margin-top: 7%;
 }

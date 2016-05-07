@@ -1,3 +1,4 @@
+body{margin:0;}
 #Form{
 	width : 100%;
 	text-align : center;
@@ -139,6 +140,7 @@
 #div-leftPanel-0_1 img{
 	width : 100%;
 	min-height: 100%;
+	max-height: 100%;
 }
 #div-leftPanel-0_4{
 	min-width: 100%;
@@ -152,6 +154,7 @@
 #div-leftPanel-0_4 img{
 	width : 100%;
 	min-height: 100%;
+	max-height: 100%;
 }
 #div-leftPanel-0_5{
 	min-width: 100%;

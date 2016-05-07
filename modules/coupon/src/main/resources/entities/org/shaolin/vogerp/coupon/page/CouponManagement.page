@@ -21,8 +21,15 @@
                     	HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
                         input.put("editable", new Boolean(true));
+                        
+                        String selectedOrgId = @page.getHidden("selectedOrgId").getValue();
+                        if (null == selectedOrgId || selectedOrgId.length() <= 0) {
+                        	@page.executeJavaScript("alert(\"请先选择一个公司\")");
+                        	return ;
+                        }
+                        input.put("selectedOrgId", selectedOrgId);
                     	
-                        RefForm form = new RefForm("couponType", "org.shaolin.vogerp.coupon.form.CouponType", input);
+                        RefForm form = new RefForm("couponForm", "org.shaolin.vogerp.coupon.form.CouponType", input);
                         @page.addElement(form);
                         
                         form.openInWindows("Create Coupon Type", new TableCallBack("couponTypeTable"), 690, 500);
@@ -43,14 +50,19 @@
                     {
                     	System.out.println("==========openCouponType===========");
                         Table couponTypeTable = (Table)@page.getElement("couponTypeTable");
-                        if (couponTypeTable.getSelectedRow() == null) {
-                            return;
+                        String selectedOrgId = @page.getHidden("selectedOrgId").getValue();
+                        if (null == selectedOrgId || selectedOrgId.length() <= 0) {
+                        	@page.executeJavaScript("alert(\"请先选择一个公司\")");
+                        	return;
                         }
+                        
                         CouponTypeImpl couponType = (CouponTypeImpl)couponTypeTable.getSelectedRow();
                         HashMap input = new HashMap();
                         input.put("beObject", couponType);
                         input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("couponType", "org.shaolin.vogerp.coupon.form.CouponType", input);
+                        input.put("selectedOrgId", selectedOrgId);
+                        
+                        RefForm form = new RefForm("couponForm", "org.shaolin.vogerp.coupon.form.CouponType", input);
                         @page.addElement(form);
                         
                         form.openInWindows("Open Coupon Type", new TableCallBack("couponTypeTable"), 690, 500);
@@ -102,14 +114,22 @@
                     import org.shaolin.vogerp.coupon.dao.CouponModel;
                     import org.shaolin.bmdp.runtime.security.UserContext;
                     {
+                    	
+                    	String selectedOrgId = @page.getHidden("selectedOrgId").getValue();
+                        if (null == selectedOrgId || selectedOrgId.length() <= 0) {
+                        	@page.executeJavaScript("alert(\"请先选择一个公司\")");
+                        	return ;
+                        }
+                    	
                     	DiscountProductImpl defaultUser = new DiscountProductImpl();
                     	
                     	HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
                         input.put("editable", new Boolean(true));
+                        input.put("selectedOrgId", selectedOrgId);
                     	
                     	CouponTypeImpl condition = new CouponTypeImpl();
-                    	condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+                    	condition.setOrgId(Long.valueOf(selectedOrgId));
                     	List couponTypes = CouponModel.INSTANCE.searchCouponType(condition, null, 0, 0);
                     	if (null != couponTypes && couponTypes.size() > 0) {
 	                    	List couponTypeIds = new ArrayList();
@@ -123,7 +143,7 @@
                     		input.put("couponTypeNames", couponTypeNames);
                     	}
                         
-                        RefForm form = new RefForm("discountProduct", "org.shaolin.vogerp.coupon.form.DiscountProduct", input);
+                        RefForm form = new RefForm("discountForm", "org.shaolin.vogerp.coupon.form.DiscountProduct", input);
                         @page.addElement(form);
                         
                         form.openInWindows("Create Discount Product", new TableCallBack("discountProductTable"), 690, 500);
@@ -148,17 +168,22 @@
                     import org.shaolin.bmdp.runtime.security.UserContext;
                     {
                         Table discountProductTable = (Table)@page.getElement("discountProductTable");
-                        if (discountProductTable.getSelectedRow() == null) {
-                            return;
+                        
+						String selectedOrgId = @page.getHidden("selectedOrgId").getValue();
+                        if (null == selectedOrgId || selectedOrgId.length() <= 0) {
+                        	@page.executeJavaScript("alert(\"请先选择一个公司\")");
+                        	return ;
                         }
+
                         DiscountProductImpl discountProduct = (DiscountProductImpl)discountProductTable.getSelectedRow();
                         HashMap input = new HashMap();
                         input.put("beObject", discountProduct);
                         input.put("editable", new Boolean(true));
                         input.put("couponTypeId", Long.valueOf(discountProduct.getCouponType().getId()));
+                        input.put("selectedOrgId", selectedOrgId);
                         
                         CouponTypeImpl condition = new CouponTypeImpl();
-                        condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+                        condition.setOrgId(Long.valueOf(selectedOrgId));
                     	List couponTypes = CouponModel.INSTANCE.searchCouponType(condition, null, 0, 0);
                     	if (null != couponTypes && couponTypes.size() > 0) {
 	                    	List couponTypeIds = new ArrayList();
@@ -172,7 +197,7 @@
                     		input.put("couponTypeNames", couponTypeNames);
                     	}
                         
-                        RefForm form = new RefForm("discountProduct", "org.shaolin.vogerp.coupon.form.DiscountProduct", input);
+                        RefForm form = new RefForm("discountForm", "org.shaolin.vogerp.coupon.form.DiscountProduct", input);
                         @page.addElement(form);
                         
                         form.openInWindows("Open Discount Product", new TableCallBack("discountProductTable"), 690, 500);
@@ -203,6 +228,39 @@
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
+        
+        <ns2:eventHandler functionName="selectOrg">
+           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectOrg-201508111433">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import java.util.List;
+                    import org.shaolin.vogerp.coupon.be.*;
+                    import org.shaolin.vogerp.coupon.dao.CouponModel;
+                    {
+                    	String orgId = @page.getComboBox("orgNameUI").getValue();
+                    	@page.getHidden("selectedOrgId").setValue(orgId);
+                    	
+                    	Table couponTypeTable = (Table)@page.getElement("couponTypeTable");
+                    	if (null != couponTypeTable) {
+	                        CouponTypeImpl condition1 = (CouponTypeImpl)couponTypeTable.getConditions().getCondition();
+	                        condition1.setOrgId(Long.valueOf(orgId));
+	                        couponTypeTable.refresh();
+                    	}
+                    	
+                        Table discountProductTable = (Table)@page.getElement("discountProductTable");
+                        if (null != discountProductTable) {
+	                        DiscountProductImpl condition2 = (DiscountProductImpl)discountProductTable.getConditions().getCondition();
+	                        condition2.setOrgId(Long.valueOf(orgId));
+	                        discountProductTable.refresh();
+                        }
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
 		
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:UISkin xsi:type="ns2:UISkinType">
@@ -216,8 +274,53 @@
 			</ns2:UISkin>
 			<ns2:layout xsi:type="ns2:TableLayoutType">
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			</ns2:layout>
+			<ns2:component UIID="selectOrgPanel" xsi:type="ns2:UIPanelType">
+				<ns2:layout xsi:type="ns2:TableLayoutType">
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+				</ns2:layout>
+				<ns2:component xsi:type="ns2:UIHiddenType" UIID="selectedOrgId"></ns2:component>
+				<ns2:component xsi:type="ns2:UILabelType" UIID="orgNameUILabel">
+			        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+			        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+			          <ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+			          <ns2:key>org.shaolin.vogerp.coupon.be.UserManagement.orgName</ns2:key>
+			        </ns2:text>
+			    </ns2:component>
+			    <ns2:component xsi:type="ns2:UIComboBoxType" UIID="orgNameUI">
+			        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+			        <ns2:readOnly xsi:type="ns2:BooleanPropertyType">
+			            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+					         <ns2:expression>
+					           <expressionString>
+					           import org.shaolin.bmdp.runtime.AppContext;
+					           { 
+					           	   if (AppContext.isMasterNode()) {
+					           	   		return false;
+					           	   } else {
+					           	   		return true;
+					           	   }
+					           }</expressionString>
+					         </ns2:expression>
+				        </ns2:value>
+			        </ns2:readOnly>
+			        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
+	                    <ns2:handler functionName="selectOrg"></ns2:handler>
+	                </ns2:EventListener>
+			    </ns2:component>
+			    <ns2:layoutConstraint>
+					<ns2:componentId>orgNameUILabel</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+				<ns2:layoutConstraint>
+					<ns2:componentId>orgNameUI</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+			</ns2:component>
 			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
 				<ns2:ajaxLoad>true</ns2:ajaxLoad>
 				<ns2:tab uiid="couponTypePanel">
@@ -245,6 +348,7 @@
 		                            import org.shaolin.vogerp.coupon.be.CouponTypeImpl;
 		                            import org.shaolin.vogerp.coupon.dao.CouponModel;
 		                            import java.util.List;
+		                            import org.shaolin.bmdp.runtime.AppContext;
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new CouponTypeImpl());
@@ -252,7 +356,9 @@
 		                                     $tableCondition.addOrder("createDate", false);
 		                                  }
 		                                  CouponTypeImpl condition = (CouponTypeImpl)$tableCondition.getCondition();
-		                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+		                                  if (!AppContext.isMasterNode()) {
+			                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+		                                  }
 		                                  List couponTypes = CouponModel.INSTANCE.searchCouponType(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 
@@ -401,7 +507,7 @@
 							<ns2:defaultActions>
 								<ns2:defaultNewAction>createCouponType</ns2:defaultNewAction>
 								<ns2:defaultOpenAction>openCouponType</ns2:defaultOpenAction>
-								<ns2:defaultDisableAction>deleteCouponType</ns2:defaultDisableAction>
+								<ns2:defaultDeleteAction>deleteCouponType</ns2:defaultDeleteAction>
 							</ns2:defaultActions>
 						</ns2:component>
 						<ns2:layoutConstraint>
@@ -435,6 +541,7 @@
 		                            import org.shaolin.bmdp.runtime.security.UserContext;
 		                            import org.shaolin.vogerp.coupon.be.DiscountProductImpl;
 		                            import org.shaolin.vogerp.coupon.dao.CouponModel;
+		                            import org.shaolin.bmdp.runtime.AppContext;
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new DiscountProductImpl());
@@ -442,7 +549,9 @@
 		                                     $tableCondition.addOrder("createDate", false);
 		                                  }
 		                                  DiscountProductImpl condition = (DiscountProductImpl)$tableCondition.getCondition();
-		                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+		                                  if (!AppContext.isMasterNode()) {
+			                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+		                                  }
 		                                  return CouponModel.INSTANCE.searchDiscountProduct(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 
@@ -553,7 +662,7 @@
 							<ns2:defaultActions>
 								<ns2:defaultNewAction>createDiscountProduct</ns2:defaultNewAction>
 								<ns2:defaultOpenAction>openDiscountProduct</ns2:defaultOpenAction>
-								<ns2:defaultDisableAction>deleteDiscountProduct</ns2:defaultDisableAction>
+								<ns2:defaultDeleteAction>deleteDiscountProduct</ns2:defaultDeleteAction>
 							</ns2:defaultActions>
 						</ns2:component>
 						<ns2:layoutConstraint>
@@ -565,15 +674,77 @@
 				</ns2:tab>
 			</ns2:component>
 			<ns2:layoutConstraint>
+				<ns2:componentId>selectOrgPanel</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+			<ns2:layoutConstraint>
 				<ns2:componentId>functionsTab</ns2:componentId>
-				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-					x="0" y="0" align="FULL"></ns2:constraint>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
 			</ns2:layoutConstraint>
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>
+		<ns2:DataEntity scope="InOut" name="selectedOrgId" category="JavaClass">
+			<type entityName="java.lang.String"></type>
+		</ns2:DataEntity>
+		<ns2:DataEntity scope="InOut" name="orgIds" category="JavaClass">
+			<type entityName="java.util.List"></type>
+		</ns2:DataEntity>
+		<ns2:DataEntity scope="InOut" name="orgNames" category="JavaClass">
+			<type entityName="java.util.List"></type>
+		</ns2:DataEntity>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+	      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+	      <ns2:UIComponent componentPath="orgNameUI" paramName="UIWidgetType"></ns2:UIComponent>
+	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="orgIds" paramName="OptionValues"></ns2:DataComponent>
+	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="orgNames" paramName="OptionDisplayValues"></ns2:DataComponent>
+	    </ns2:ComponentMapping>
+	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping10">
+	      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+	      <ns2:UIComponent componentPath="selectedOrgId" paramName="UIWidgetType"></ns2:UIComponent>
+	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="selectedOrgId" paramName="StringData"></ns2:DataComponent>
+	    </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
+		<ns2:serverOperation xsi:type="ns2:ExpressionType">
+            <ns2:expressionString><![CDATA[
+            import java.util.List;
+            import org.shaolin.bmdp.runtime.AppContext;
+            import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+            import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+            import java.util.ArrayList;
+            import org.shaolin.bmdp.runtime.security.UserContext;
+            {
+            	$orgIds = new ArrayList();
+            	$orgNames = new ArrayList();
+            	if (AppContext.isMasterNode()) {
+	            	OrganizationImpl condition = new OrganizationImpl();
+	            	List orgs = CommonModel.INSTANCE.searchOrganization(condition, null, 0, 0);
+	            	if (null != orgs && orgs.size() > 0) {
+	            		$selectedOrgId = String.valueOf(((OrganizationImpl)orgs.get(0)).getId());
+	            		for (int i = 0; i < orgs.size(); i++) {
+		            		OrganizationImpl org = (OrganizationImpl) orgs.get(i);
+		            		$orgIds.add(String.valueOf(org.getId()));
+		            		$orgNames.add(org.getName());
+	            		}
+	            	}
+            	} else {
+            		long orgId = (Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID);
+            		$selectedOrgId = String.valueOf(orgId);
+            		OrganizationImpl condition = new OrganizationImpl();
+            		condition.setId(orgId);
+	            	List orgs = CommonModel.INSTANCE.searchOrganization(condition, null, 0, 0);
+	            	if (null != orgs && orgs.size() > 0) {
+	            		OrganizationImpl org = (OrganizationImpl) orgs.get(0);
+	            		$orgIds.add(String.valueOf(org.getId()));
+	            		$orgNames.add(org.getName());
+	            	}
+            	}
+            	
+            	@odContext.executeAllMappings();
+            }
+            ]]></ns2:expressionString>
+        </ns2:serverOperation>
 	</ns2:in>
 </ns2:UIPage>
  

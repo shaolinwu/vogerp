@@ -252,7 +252,7 @@
 						           <expressionString><![CDATA[
 						           { 
 						           		if (null != $limitMsg) {
-							           		String[] limitMsgs = $limitMsg.split("\n");
+							           		String[] limitMsgs = $limitMsg.split(",");
 							           		return limitMsgs.length >= 1 ? limitMsgs[0] : "";
 						           		}
 						           }]]></expressionString>
@@ -265,7 +265,7 @@
 						           <expressionString><![CDATA[
 						           { 
 						           		if (null != $limitMsg) {
-							           		String[] limitMsgs = $limitMsg.split("\n");
+							           		String[] limitMsgs = $limitMsg.split(",");
 							           		return limitMsgs.length >= 2 ? limitMsgs[1] : "";
 						           		}
 						           }]]></expressionString>
@@ -278,7 +278,7 @@
 						           <expressionString><![CDATA[
 						           { 
 						           		if (null != $limitMsg) {
-							           		String[] limitMsgs = $limitMsg.split("\n");
+							           		String[] limitMsgs = $limitMsg.split(",");
 							           		return limitMsgs.length >= 3 ? limitMsgs[2] : "";
 						           		}
 						           }]]></expressionString>
@@ -291,11 +291,34 @@
 								<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 								<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 							</ns2:layout>
-							<ns2:component xsi:type="ns2:UILabelType" UIID="bottom4Text">
-								<ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-						        	<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
-						        	<ns2:key>org.shaolin.vogerp.coupon.page.CouponInfo.bottom4Text</ns2:key>
-						        </ns2:text>
+							<ns2:component xsi:type="ns2:UIPanelType" UIID="bottom3LeftPanel">
+								<ns2:layout xsi:type="ns2:TableLayoutType">
+									<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+									<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+									<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+								</ns2:layout>
+								<ns2:component xsi:type="ns2:UILabelType" UIID="bottom40Text">
+									<ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+							        	<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+							        	<ns2:key>org.shaolin.vogerp.coupon.page.CouponInfo.bottom40Text</ns2:key>
+							        </ns2:text>
+								</ns2:component>
+								<ns2:component xsi:type="ns2:UILabelType" UIID="bottom41Text">
+									<ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+							        	<ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+							        	<ns2:key>org.shaolin.vogerp.coupon.page.CouponInfo.bottom41Text</ns2:key>
+							        </ns2:text>
+								</ns2:component>
+								<ns2:layoutConstraint>
+									<ns2:componentId>bottom40Text</ns2:componentId>
+									<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+										x="0" y="0" align="FULL"></ns2:constraint>
+								</ns2:layoutConstraint>
+								<ns2:layoutConstraint>
+									<ns2:componentId>bottom41Text</ns2:componentId>
+									<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+										x="0" y="1" align="FULL"></ns2:constraint>
+								</ns2:layoutConstraint>
 							</ns2:component>
 							<ns2:component xsi:type="ns2:UIImageType" UIID="fingerImage">
 								<ns2:src xsi:type="ns2:ImagePropertyType">
@@ -303,7 +326,7 @@
 								</ns2:src>
 							</ns2:component>
 							<ns2:layoutConstraint>
-								<ns2:componentId>bottom4Text</ns2:componentId>
+								<ns2:componentId>bottom3LeftPanel</ns2:componentId>
 								<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 									x="0" y="0" align="FULL"></ns2:constraint>
 							</ns2:layoutConstraint>
@@ -341,11 +364,12 @@
 					</ns2:component>
 					<ns2:component xsi:type="ns2:UIImageType" UIID="fingerPrintImage">
 						<ns2:src xsi:type="ns2:ImagePropertyType">
-							<ns2:location>/coupon/front/fingerPrint.gif</ns2:location>
+							<!-- <ns2:location>/coupon/front/fingerPrint.gif</ns2:location> -->
+							<ns2:location>/coupon/front/mr-prize_qrcode.png</ns2:location>
 						</ns2:src>
-						<ns2:EventListener xsi:type="ns2:ClickListenerType">
+						<!-- <ns2:EventListener xsi:type="ns2:ClickListenerType">
 							<ns2:handler functionName="viewCoupon" />
-						</ns2:EventListener>
+						</ns2:EventListener> -->
 					</ns2:component>
 					<ns2:layoutConstraint>
 						<ns2:componentId>bottomLeftPanel</ns2:componentId>

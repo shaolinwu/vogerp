@@ -40,28 +40,56 @@
 		        </ns2:value>
             </ns2:Property>
 		</ns2:component>
-		<ns2:component xsi:type="ns2:UIImageType" UIID="productImage">
-			<ns2:Property name="src">
-	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
-			         <ns2:expression>
-			           <expressionString>
-			           import org.shaolin.bmdp.runtime.AppContext;
-			           import org.shaolin.bmdp.runtime.Registry;
-			           import org.shaolin.uimaster.page.WebConfig;
+		<ns2:component xsi:type="ns2:UIPanelType" UIID="couponInfoLeftPanel">
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UIImageType" UIID="productImage">
+				<ns2:Property name="src">
+		            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+				         <ns2:expression>
+				           <expressionString>
+				           import org.shaolin.bmdp.runtime.AppContext;
+				           import org.shaolin.bmdp.runtime.Registry;
+				           import org.shaolin.uimaster.page.WebConfig;
+				           { 
+				           	   String icon = $coupon.getDiscountProduct().getIcon();
+				               return icon.substring(icon.indexOf("/", "/uimaster/images".length())); 
+				           }</expressionString>
+				         </ns2:expression>
+			        </ns2:value>
+	            </ns2:Property>
+	            <ns2:Property name="class1">
+		            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+				         <ns2:expression>
+				           <expressionString>"couponImageView"</expressionString>
+				         </ns2:expression>
+			        </ns2:value>
+	            </ns2:Property>
+			</ns2:component>
+			<ns2:component xsi:type="ns2:UILabelType" UIID="brandText">
+				<ns2:text xsi:type="ns2:ExpressionPropertyType">
+		        	<ns2:expression>
+			           <expressionString><![CDATA[
+			           import org.shaolin.vogerp.coupon.util.CouponUtil;
+			           import org.shaolin.vogerp.coupon.be.CouponUserInfoImpl;
 			           { 
-			           	   String icon = $coupon.getDiscountProduct().getIcon();
-			               return icon.substring(icon.indexOf("/", "/uimaster/images".length())); 
-			           }</expressionString>
+			           		CouponUserInfoImpl userInfo = CouponUtil.getCouponUserInfoByOrgId($coupon.getOrgId());
+			           		return userInfo == null ? "" : userInfo.getBrand();
+			           }]]></expressionString>
 			         </ns2:expression>
-		        </ns2:value>
-            </ns2:Property>
-            <ns2:Property name="class1">
-	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
-			         <ns2:expression>
-			           <expressionString>"couponImageView"</expressionString>
-			         </ns2:expression>
-		        </ns2:value>
-            </ns2:Property>
+		        </ns2:text>
+			</ns2:component>
+			<ns2:layoutConstraint>
+				<ns2:componentId>productImage</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="productImage"></ns2:constraint>
+			</ns2:layoutConstraint>
+			<ns2:layoutConstraint>
+				<ns2:componentId>brandText</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="brandText"></ns2:constraint>
+			</ns2:layoutConstraint>
 		</ns2:component>
 		<ns2:component xsi:type="ns2:UIPanelType" UIID="couponInfoPanel">
 			<ns2:Property name="class1">
@@ -177,9 +205,9 @@
 			</ns2:layoutConstraint>
 		</ns2:component>
 		<ns2:layoutConstraint>
-			<ns2:componentId>productImage</ns2:componentId>
+			<ns2:componentId>couponInfoLeftPanel</ns2:componentId>
 			<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-				x="0" y="0" align="FULL"></ns2:constraint>
+				x="0" y="0" align="FULL" cellUIClass="couponInfoLeftPanel"></ns2:constraint>
 		</ns2:layoutConstraint>
 		<ns2:layoutConstraint>
 			<ns2:componentId>couponInfoPanel</ns2:componentId>
@@ -188,11 +216,11 @@
 		</ns2:layoutConstraint>
 		<ns2:constructorCode><![CDATA[
 		{
-			var $couponImages = $("img[class1='couponImageView']");
-			$couponImages.each(function(i, couponImage){
-				var $p = $(couponImage).parent("div.uimaster_widget_cell");
-				$p.css({"margin" : "2%", "border" : "solid 2px white", "width" : "35%"});
-				$p.height($p.width() * 0.75 + "px");
+			var $couponInfos = $(".couponInfoLeftPanel");
+			$couponInfos.each(function(i, couponInfo){
+				$(couponInfo).height($(couponInfo).width() * 0.90 + "px");
+				$(couponInfo).children("div.uimaster_panel").height($(couponInfo).height() + "px");
+				$(couponInfo).find(".productImage").height($(couponInfo).height() * 0.75 + "px");
 			});
 			
 			var $couponPanels = $("div[class1='couponInfoPanel']");

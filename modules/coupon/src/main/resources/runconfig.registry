@@ -15,24 +15,28 @@
         <node name="webConstant">
             <node name="commoncss">
                 <node name="org.shaolin.vogerp.coupon.page.FrontLottery">
-                    <item name="font-awesome" value="/css/jsgallery/font-awesome.min.css" />
-                    <item name="jgallery.min" value="/css/jsgallery/jgallery.min.css?v=1.5.0" />
+                    <item name="commoncss" value="/css/common.css" />
+                    <item name="skipCommonCss" value="skipCommonCss" />
                 </node>
                 <node name="org.shaolin.vogerp.coupon.page.Thanks">
-                    <item name="font-awesome" value="/css/jsgallery/font-awesome.min.css" />
-                    <item name="jgallery.min" value="/css/jsgallery/jgallery.min.css?v=1.5.0" />
+                    <item name="commoncss" value="/css/common.css" />
+                    <item name="skipCommonCss" value="skipCommonCss" />
                 </node>
                 <node name="org.shaolin.vogerp.coupon.page.CouponInfo">
-                    <item name="font-awesome" value="/css/jsgallery/font-awesome.min.css" />
-                    <item name="jgallery.min" value="/css/jsgallery/jgallery.min.css?v=1.5.0" />
+                    <item name="commoncss" value="/css/common.css" />
+                    <item name="skipCommonCss" value="skipCommonCss" />
                 </node>
                 <node name="org.shaolin.vogerp.coupon.page.ChoiceDiscountProduct">
-                    <item name="font-awesome" value="/css/jsgallery/font-awesome.min.css" />
-                    <item name="jgallery.min" value="/css/jsgallery/jgallery.min.css?v=1.5.0" />
+                    <item name="commoncss" value="/css/common.css" />
+                    <item name="skipCommonCss" value="skipCommonCss" />
                 </node>
                 <node name="org.shaolin.vogerp.coupon.page.ViewOrderCoupon">
-                    <item name="font-awesome" value="/css/jsgallery/font-awesome.min.css" />
-                    <item name="jgallery.min" value="/css/jsgallery/jgallery.min.css?v=1.5.0" />
+                    <item name="commoncss" value="/css/common.css" />
+                    <item name="skipCommonCss" value="skipCommonCss" />
+                </node>
+                <node name="org.shaolin.vogerp.coupon.page.Start">
+                    <item name="commoncss" value="/css/common.css" />
+                    <item name="skipCommonCss" value="skipCommonCss" />
                 </node>
                 <node name="org.shaolin.vogerp.coupon.page.CouponManagement">
                     <item name="font-awesome" value="/css/jsgallery/font-awesome.min.css" />
@@ -40,8 +44,30 @@
                 </node>
             </node>
             <node name="commonjs">
+                <node name="org.shaolin.vogerp.coupon.page.Start">
+                    <item name="commonjs" value="/js/org/shaolin/vogerp/coupon/coupon-common.js" />
+                    <item name="skipCommonJs" value="skipCommonJs" />
+                </node>
+                <node name="org.shaolin.vogerp.coupon.page.FrontLottery">
+                	<item name="commonjs" value="/js/org/shaolin/vogerp/coupon/coupon-common.js" />
+                    <item name="skipCommonJs" value="skipCommonJs" />
+                </node>
+                <node name="org.shaolin.vogerp.coupon.page.ChoiceDiscountProduct">
+					<item name="commonjs" value="/js/org/shaolin/vogerp/coupon/coupon-common.js" />
+                    <item name="skipCommonJs" value="skipCommonJs" />
+                </node>
+                <node name="org.shaolin.vogerp.coupon.page.Thanks">
+                    <item name="commonjs" value="/js/org/shaolin/vogerp/coupon/coupon-common.js" />
+                    <item name="skipCommonJs" value="skipCommonJs" />
+                </node>
                 <node name="org.shaolin.vogerp.coupon.page.CouponInfo">
+                    <item name="commonjs" value="/js/org/shaolin/vogerp/coupon/coupon-common.js" />
+                    <item name="skipCommonJs" value="skipCommonJs" />
                     <item name="wechat" value="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" />
+                </node>
+                <node name="org.shaolin.vogerp.coupon.page.ViewOrderCoupon">
+                    <item name="commonjs" value="/js/org/shaolin/vogerp/coupon/coupon-common.js" />
+                    <item name="skipCommonJs" value="skipCommonJs" />
                 </node>
             </node>
         </node>

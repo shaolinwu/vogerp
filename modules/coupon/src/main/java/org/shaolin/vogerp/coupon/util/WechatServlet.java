@@ -100,6 +100,7 @@ public class WechatServlet extends HttpServlet {
 			System.out.println("orgId=" + orgId);
 			String appId = "wx8f4239ff75ca1770";
 			String redirectUri = "http%3A%2F%2Fwww.mr-prize.com%2Fuimaster%2Fwebflow.do%3F_timestamp%3D1%26_chunkname%3Dorg.shaolin.bmdp.coupon.diagram.Lottery%26_nodename%3DStart%26orgid%3D" + orgId;
+			//String redirectUri = "http%3A%2F%2Fwww.mr-prize.com%2Fuimaster%2Fjsp%2FStartCoupon.jsp%3Forgid%3D" + orgId;
 			System.out.println("redirectUri=" + redirectUri);
 			String scope = "snsapi_base";
 			String state = "123";

@@ -68,9 +68,9 @@ function org_shaolin_vogerp_coupon_page_CouponSystem(json)
 
 					{
 						if ("维护系统" == $("input[name='maintainBtn']").val()) {
-							$("input[name='maintainBtn']").val("恢复系统");
+							$("input[name='maintainBtn']").val("\u6062\u590D\u7CFB\u7EDF");
 						} else {
-							$("input[name='maintainBtn']").val("维护系统");
+							$("input[name='maintainBtn']").val("\u7EF4\u62A4\u7CFB\u7EDF");
 						}
 					}
         // cal ajax function. 

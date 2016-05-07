@@ -13,9 +13,9 @@
 				<expressionString><![CDATA[
 					{
 						if ("维护系统" == $("input[name='maintainBtn']").val()) {
-							$("input[name='maintainBtn']").val("恢复系统");
+							$("input[name='maintainBtn']").val("\u6062\u590D\u7CFB\u7EDF");
 						} else {
-							$("input[name='maintainBtn']").val("维护系统");
+							$("input[name='maintainBtn']").val("\u7EF4\u62A4\u7CFB\u7EDF");
 						}
 					}]]></expressionString>
 			</ns2:ops>
@@ -48,7 +48,7 @@
 		            		CouponModel.INSTANCE.update(couponSystem);
 		            	}
 		            	
-		            	@page.getLabel("systemStatusText").setDisplayValue(isMaintain ? "系统维护中" : "系统正常");
+		            	@page.getLabel("systemStatusText").setDisplayValue(isMaintain ? "\u7CFB\u7EDF\u7EF4\u62A4\u4E2D" : "\u7CFB\u7EDF\u6B63\u5E38");
 					}
 					]]></expressionString>
 				</ns2:exp>

@@ -3,6 +3,11 @@
 function org_shaolin_vogerp_coupon_form_DiscountProduct(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var selectedOrgId = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "selectedOrgId"]
+    });
+
     var idUI = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "idUI"]
@@ -85,7 +90,7 @@ function org_shaolin_vogerp_coupon_form_DiscountProduct(json)
 	                    {
 	                    	var text = this.value;
 	                        if (text.length > 0) {
-	                        	var arr = text.split("\n");
+	                        	var arr = text.split(",");
 	                        	for (var i = 0; i < arr.length; i++) {
 	                        		var t = arr[i];
 	                        		if (t.length > 12) {
@@ -97,7 +102,7 @@ function org_shaolin_vogerp_coupon_form_DiscountProduct(json)
 	                    }
 	                    
             }
-            ,msg: "\u6BCF\u884C\u957F\u5EA6\u4E0D\u80FD\u8D85\u8FC712\u5B57"
+            ,msg: "\u591A\u53E5\u4EE5\u82F1\u6587\u7B26\u53F7','\u9694\u5F00\uFF0C\u6BCF\u53E5\u4E0D\u8D85\u8FC712\u4E2A\u5B57"
         }
 ]    });
 
@@ -132,14 +137,16 @@ function org_shaolin_vogerp_coupon_form_DiscountProduct(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "iconUILabel",prefix + "iconUI",prefix + "couponTypeTreeUILabel",prefix + "couponTypeTreeUI",prefix + "discountUILabel",prefix + "discountUI",prefix + "isSharedUILabel",prefix + "isSharedUI",prefix + "superiorityMessageUILabel",prefix + "superiorityMessageUI",prefix + "limitMessageUILabel",prefix + "limitMessageUI",prefix + "validityUILabel",prefix + "validityUI"]
+        ,subComponents: [prefix + "selectedOrgId",prefix + "idUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "iconUILabel",prefix + "iconUI",prefix + "couponTypeTreeUILabel",prefix + "couponTypeTreeUI",prefix + "discountUILabel",prefix + "discountUI",prefix + "isSharedUILabel",prefix + "isSharedUI",prefix + "superiorityMessageUILabel",prefix + "superiorityMessageUI",prefix + "limitMessageUILabel",prefix + "limitMessageUI",prefix + "validityUILabel",prefix + "validityUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,nameUILabel,nameUI,iconUILabel,iconUI,couponTypeTreeUILabel,couponTypeTreeUI,discountUILabel,discountUI,isSharedUILabel,isSharedUI,superiorityMessageUILabel,superiorityMessageUI,limitMessageUILabel,limitMessageUI,validityUILabel,validityUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [selectedOrgId,idUI,nameUILabel,nameUI,iconUILabel,iconUI,couponTypeTreeUILabel,couponTypeTreeUI,discountUILabel,discountUI,isSharedUILabel,isSharedUI,superiorityMessageUILabel,superiorityMessageUI,limitMessageUILabel,limitMessageUI,validityUILabel,validityUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
+
+    Form.selectedOrgId=selectedOrgId;
 
     Form.idUI=idUI;
 
@@ -180,6 +187,8 @@ function org_shaolin_vogerp_coupon_form_DiscountProduct(json)
     Form.cancelbtn=cancelbtn;
 
     Form.fieldPanel=fieldPanel;
+
+    Form.selectedOrgId=selectedOrgId;
 
     Form.idUI=idUI;
 

@@ -3,6 +3,21 @@
 function org_shaolin_vogerp_coupon_page_CouponManagement(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var selectedOrgId = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "selectedOrgId"]
+    });
+
+    var orgNameUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "orgNameUILabel"]
+    });
+
+    var orgNameUI = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "orgNameUI"]
+    });
+
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
@@ -32,12 +47,25 @@ function org_shaolin_vogerp_coupon_page_CouponManagement(json)
         ,subComponents: [prefix + "discountProductTable"]
     });
 
+    var selectOrgPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "selectOrgPanel"]
+        ,items: []
+        ,subComponents: [prefix + "selectedOrgId",prefix + "orgNameUILabel",prefix + "orgNameUI"]
+    });
+
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [functionsTab]
+        ,items: [selectedOrgId,orgNameUILabel,orgNameUI,functionsTab,selectOrgPanel]
     });
+
+    Form.selectedOrgId=selectedOrgId;
+
+    Form.orgNameUILabel=orgNameUILabel;
+
+    Form.orgNameUI=orgNameUI;
 
     Form.functionsTab=functionsTab;
 
@@ -48,6 +76,14 @@ function org_shaolin_vogerp_coupon_page_CouponManagement(json)
     Form.discountProductPanel=discountProductPanel;
 
     Form.discountProductTable=discountProductTable;
+
+    Form.selectOrgPanel=selectOrgPanel;
+
+    Form.selectedOrgId=selectedOrgId;
+
+    Form.orgNameUILabel=orgNameUILabel;
+
+    Form.orgNameUI=orgNameUI;
 
     Form.user_constructor = function()
     {
@@ -66,6 +102,8 @@ function org_shaolin_vogerp_coupon_page_CouponManagement(json)
     Form.openDiscountProduct = org_shaolin_vogerp_coupon_page_CouponManagement_openDiscountProduct;
 
     Form.deleteDiscountProduct = org_shaolin_vogerp_coupon_page_CouponManagement_deleteDiscountProduct;
+
+    Form.selectOrg = org_shaolin_vogerp_coupon_page_CouponManagement_selectOrg;
 
     Form.initPageJs = org_shaolin_vogerp_coupon_page_CouponManagement_initPageJs;
 
@@ -147,6 +185,17 @@ function org_shaolin_vogerp_coupon_page_CouponManagement(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteDiscountProduct-201511-2224",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponManagement_deleteDiscountProduct */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_page_CouponManagement_selectOrg(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_page_CouponManagement_selectOrg */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectOrg-201508111433",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponManagement_selectOrg */
 
 
     function org_shaolin_vogerp_coupon_page_CouponManagement_initPageJs(){/* Gen_First:org_shaolin_vogerp_coupon_page_CouponManagement_initPageJs */

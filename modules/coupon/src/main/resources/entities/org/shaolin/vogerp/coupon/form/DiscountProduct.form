@@ -19,6 +19,8 @@
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             HashMap out = (HashMap)form.ui2Data();
+            
+            String selectedOrgId = @page.getHidden("selectedOrgId").getValue();
 
             DiscountProductImpl discountProduct = (DiscountProductImpl)out.get("beObject");
             ComboBox couponTypeTreeUI = @page.getComboBox("couponTypeTreeUI");
@@ -26,7 +28,7 @@
             discountProduct.setCouponTypeId(Long.valueOf(couponTypeId));
             if (discountProduct.getId() == 0) {
                 System.out.println("created object: " + discountProduct);
-                discountProduct.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+                discountProduct.setOrgId(Long.valueOf(selectedOrgId));
 		        discountProduct.setCreateDate(new java.util.Date());
 				CouponModel.INSTANCE.create(discountProduct);
             } else {
@@ -66,7 +68,8 @@
            HashMap input = new HashMap();
            input.put("editable", new Boolean(true));
            input.put("callbackUIID", @page.getTextField("iconUI").getId());
-           input.put("imagePath", "/images/coupon/front/couponIcon");
+           String selectedOrgId = @page.getHidden("selectedOrgId").getValue();
+           input.put("imagePath", "/images/coupon/front/couponIcon/" + selectedOrgId);
            RefForm form = new RefForm("selectImageForm", "org.shaolin.vogerp.commonmodel.form.ImageViewer", input);
            @page.addElement(form);
            form.openInWindows("Image Viewer", null, 620, 450);
@@ -94,6 +97,7 @@
 				<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 				<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 			</ns2:layout>
+			<ns2:component xsi:type="ns2:UIHiddenType" UIID="selectedOrgId"></ns2:component>
 			<ns2:component xsi:type="ns2:UIHiddenType" UIID="idUI">
 				<ns2:secure>
 					<ns2:value>true</ns2:value>
@@ -193,7 +197,7 @@
 	                    {
 	                    	var text = this.value;
 	                        if (text.length > 0) {
-	                        	var arr = text.split("\n");
+	                        	var arr = text.split(",");
 	                        	for (var i = 0; i < arr.length; i++) {
 	                        		var t = arr[i];
 	                        		if (t.length > 12) {
@@ -204,9 +208,19 @@
 	                        return true;
 	                    }
 	                    ]]></funcCode>
-	                    <errMsg>\u6BCF\u884C\u957F\u5EA6\u4E0D\u80FD\u8D85\u8FC712\u5B57</errMsg>
+	                    <errMsg>\u591A\u53E5\u4EE5\u82F1\u6587\u7B26\u53F7','\u9694\u5F00\uFF0C\u6BCF\u53E5\u4E0D\u8D85\u8FC712\u4E2A\u5B57</errMsg>
 		            </ns2:validator>
 	        	</ns2:validator>
+	        	<ns2:Property name="placeholder">
+		            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+				         <ns2:expression>
+				           <expressionString>
+				           { 
+				               return "\u591A\u53E5\u4EE5\u82F1\u6587\u7B26\u53F7','\u9694\u5F00\uFF0C\u6BCF\u53E5\u4E0D\u8D85\u8FC712\u4E2A\u5B57";
+				           }</expressionString>
+				         </ns2:expression>
+			        </ns2:value>
+	            </ns2:Property>
 			</ns2:component>
 			<ns2:component xsi:type="ns2:UILabelType" UIID="validityUILabel">
 				<ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -370,6 +384,9 @@
 			category="JavaClass">
 			<type entityName="java.util.ArrayList"></type>
 		</ns2:DataEntity>
+		<ns2:DataEntity scope="InOut" name="selectedOrgId" category="JavaPrimitive">
+	        <type entityName="java.lang.String"></type>
+	    </ns2:DataEntity>
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
 			name="simpleMapping0">
 			<ns2:mappingRule
@@ -442,6 +459,11 @@
 	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="couponTypeId" paramName="Value"></ns2:DataComponent>
 	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="couponTypeIds" paramName="OptionValues"></ns2:DataComponent>
 	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="couponTypeNames" paramName="OptionDisplayValues"></ns2:DataComponent>
+	    </ns2:ComponentMapping>
+	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping12">
+	      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+	      <ns2:UIComponent componentPath="selectedOrgId" paramName="UIWidgetType"></ns2:UIComponent>
+	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="selectedOrgId" paramName="StringData"></ns2:DataComponent>
 	    </ns2:ComponentMapping>
 		
 
