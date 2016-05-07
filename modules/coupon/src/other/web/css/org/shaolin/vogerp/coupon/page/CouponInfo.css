@@ -31,10 +31,10 @@ div#couponPanel {
 
 div#div-couponPanel-0_0 {
     background-size: cover;
-    background-image: url(/uimaster/images/coupon/front/couponInfoBackground.jpg);
+    background-image: url(/uimaster/images/coupon/front/couponSerialNumBox.png);
     margin: 3% 2% 7% 2%;
     width: 96%;
-    color: white;
+    color: black;
     font-size: 1em;
 }
 
@@ -98,7 +98,7 @@ div#div-couponPanel-0_3 {
     margin : 0;
 }
 
-div#div-bottomPanel-0_0 {width: 65%;      margin: 5% 0 0 5%;}
+div#div-bottomPanel-0_0 {width: 55%;      margin: 5% 0 0 5%;}
 
 div#div-couponPanel-0_3 {
     width: 100%;
@@ -111,12 +111,15 @@ div#bottomPanel {
 }
 
 div#div-bottomLeftPanel-0_0 {
-    font-size: 1.5em;
+    font-size: 1.3em;
     color: #FD3657;
 }
 
-div#div-bottomLeftPanel-0_1,div#div-bottomLeftPanel-0_2 {
+div#div-bottomLeftPanel-0_1 {
     margin: 0;
+}
+div#div-bottomLeftPanel-0_2{
+	margin: 5% 0 0 0;
 }
 
 div#div-bottomLeftPanel-0_3 {
@@ -124,18 +127,18 @@ div#div-bottomLeftPanel-0_3 {
 }
 
 div#div-bottom3Panel-0_0 {
-    font-size: 1.1em;
+    font-size: 0.9em;
     width:85%;
 }
 
 div#div-bottomPanel-1_0 {
-    width: 30%;
+    width: 40%;
     margin : 0;
 }
 
 #div-bottomPanel-1_0 img.uimaster_image {
     width: 90%;
-    margin: 40% 0 0 10%;
+    margin: 20% 0 0 10%;
 }
 
 #div-bottom3Panel-1_0 img.uimaster_image {
@@ -156,4 +159,7 @@ span {
 #div-bottom3Panel-1_0{
 	width: 15%;
     margin-top: 7%;
+}
+#div-bottomLeftPanel-0_1 {
+	font-size: 0.9em;
 }

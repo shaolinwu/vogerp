@@ -4,7 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.coupon.page.Start</entityName>
 	<systemVersion>0</systemVersion>
-	<description>前台抽奖</description>
+	<description>买单先生</description>
 	<descriptionExpr>
 	   <expressionString><![CDATA[
 	   import org.shaolin.bmdp.runtime.security.UserContext;

@@ -32,6 +32,7 @@ body{margin:0;}
 	width : 67%;
 	margin : 0;
 	padding : 0;
+	overflow: hidden;
 }
 #div-lotteryForm-lotteryStartPanel-0_0 div{
 	margin : 0;

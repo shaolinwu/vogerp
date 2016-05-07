@@ -45,23 +45,23 @@
             </node>
             <node name="commonjs">
                 <node name="org.shaolin.vogerp.coupon.page.Start">
-                    <item name="commonjs" value="/js/org/shaolin/vogerp/coupon/coupon-common.js" />
+                    <item name="commonjs" value="/js/common.js" />
                     <item name="skipCommonJs" value="skipCommonJs" />
                 </node>
                 <node name="org.shaolin.vogerp.coupon.page.FrontLottery">
-                	<item name="commonjs" value="/js/org/shaolin/vogerp/coupon/coupon-common.js" />
+                	<item name="commonjs" value="/js/common.js" />
                     <item name="skipCommonJs" value="skipCommonJs" />
                 </node>
                 <node name="org.shaolin.vogerp.coupon.page.ChoiceDiscountProduct">
-					<item name="commonjs" value="/js/org/shaolin/vogerp/coupon/coupon-common.js" />
+					<item name="commonjs" value="/js/common.js" />
                     <item name="skipCommonJs" value="skipCommonJs" />
                 </node>
                 <node name="org.shaolin.vogerp.coupon.page.Thanks">
-                    <item name="commonjs" value="/js/org/shaolin/vogerp/coupon/coupon-common.js" />
+                    <item name="commonjs" value="/js/common.js" />
                     <item name="skipCommonJs" value="skipCommonJs" />
                 </node>
                 <node name="org.shaolin.vogerp.coupon.page.CouponInfo">
-                    <item name="commonjs" value="/js/org/shaolin/vogerp/coupon/coupon-common.js" />
+                    <item name="commonjs" value="/js/common.js" />
                     <item name="skipCommonJs" value="skipCommonJs" />
                     <item name="wechat" value="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" />
                 </node>
