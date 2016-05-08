@@ -61,6 +61,14 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
         ui: elementList[prefix + "createDateUI"]
     });
 
+    var htmlDescUI = new UIMaster.ui.textarea
+    ({
+        ui: elementList[prefix + "htmlDescUI"]
+        ,hiddenToolbar: true
+        ,persistable: false
+        ,disabled: "disabled"
+    });
+
     var cancelbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "cancelbtn"]
@@ -80,7 +88,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
         ui: elementList[prefix + "prodcutInfoPanel"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
-        ,subComponents: [prefix + "orderItemTable"]
+        ,subComponents: [prefix + "orderItemTable",prefix + "htmlDescUI"]
     });
 
     var attributePanel = new UIMaster.ui.panel
@@ -107,7 +115,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [photoUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,estimatedPriceUILabel,estimatedPriceUI,publishedCustomerIdUILabel,publishedCustomerIdUI,createDateUILabel,createDateUI,cancelbtn,orderItemTable,fieldPanel,photoPanel,attributePanel,prodcutInfoPanel,actionPanel]
+        ,items: [photoUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,estimatedPriceUILabel,estimatedPriceUI,publishedCustomerIdUILabel,publishedCustomerIdUI,createDateUILabel,createDateUI,htmlDescUI,cancelbtn,orderItemTable,fieldPanel,photoPanel,attributePanel,prodcutInfoPanel,actionPanel]
     });
 
     Form.photoUI=photoUI;
@@ -131,6 +139,8 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
     Form.createDateUILabel=createDateUILabel;
 
     Form.createDateUI=createDateUI;
+
+    Form.htmlDescUI=htmlDescUI;
 
     Form.cancelbtn=cancelbtn;
 
@@ -168,6 +178,8 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
 
     Form.orderItemTable=orderItemTable;
 
+    Form.htmlDescUI=htmlDescUI;
+
     Form.photoPanel=photoPanel;
 
     Form.photoUI=photoUI;
@@ -197,6 +209,8 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
     Form.prodcutInfoPanel=prodcutInfoPanel;
 
     Form.orderItemTable=orderItemTable;
+
+    Form.htmlDescUI=htmlDescUI;
 
     Form.actionPanel=actionPanel;
 

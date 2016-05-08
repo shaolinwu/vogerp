@@ -215,7 +215,7 @@
                     ]]></expressionString>
                 </ns2:expression>
             </ns2:uiAction>
-            <ns2:participant partyType="GenericOrganizationType.Director,0" />
+            <ns2:participant partyType="GenericOrganizationType.Director,0" onlyOwner="false"/>
             <ns2:process>
                 <ns2:var name="goldenOrder" category="BusinessEntity" scope="InOut">
                     <type entityName="org.shaolin.vogerp.ecommercial.be.GoldenOrder"></type>

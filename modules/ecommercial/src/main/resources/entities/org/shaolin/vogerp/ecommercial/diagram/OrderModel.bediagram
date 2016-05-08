@@ -86,6 +86,10 @@
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>htmlDesc</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>status</bediagram:name>
             <bediagram:type xsi:type="bediagram:CEObjRefType">
                 <bediagram:targetEntity entityName="OrderStatusType" />
@@ -199,6 +203,14 @@
         <bediagram:member>
             <bediagram:name>expiredDate</bediagram:name>
             <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>photos</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>htmlDesc</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>
             <bediagram:name>status</bediagram:name>

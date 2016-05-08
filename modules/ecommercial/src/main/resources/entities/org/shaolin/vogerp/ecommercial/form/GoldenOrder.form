@@ -166,7 +166,7 @@
              <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
              <ns2:param name="text">
                  <ns2:value xsi:type="ns2:StringPropertyType">
-                     <ns2:value>商品信息----</ns2:value>
+                     <ns2:value>商品详细信息</ns2:value>
                  </ns2:value>
              </ns2:param>
            </ns2:UISkin>
@@ -178,10 +178,35 @@
           <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="orderItemTable">
             <ns2:referenceEntity entityName="org.shaolin.vogerp.order.form.PurchaseItemTable" />
 	      </ns2:component>
+	      <ns2:component xsi:type="ns2:UITextAreaType" UIID="htmlDescUI">
+            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+            <ns2:htmlSupport xsi:type="ns2:BooleanPropertyType">
+                <value>true</value>
+            </ns2:htmlSupport>
+            <ns2:Property name="hiddenToolbar" >
+	            <ns2:value xsi:type="ns2:BooleanPropertyType">
+	                <value>true</value>
+	            </ns2:value>
+	        </ns2:Property>
+	        <ns2:Property name="persistable" >
+	            <ns2:value xsi:type="ns2:BooleanPropertyType">
+	                <value>false</value>
+	            </ns2:value>
+	        </ns2:Property>
+	        <ns2:Property name="disabled" >
+                <ns2:value xsi:type="ns2:StringPropertyType">
+                    <value>disabled</value>
+                </ns2:value>
+            </ns2:Property>
+          </ns2:component>
 	      <ns2:layoutConstraint>
 	        <ns2:componentId>orderItemTable</ns2:componentId>
 	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
 	      </ns2:layoutConstraint>
+	      <ns2:layoutConstraint>
+            <ns2:componentId>htmlDescUI</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+          </ns2:layoutConstraint>
       </ns2:component>     
       <ns2:layoutConstraint>
         <ns2:componentId>photoPanel</ns2:componentId>
@@ -280,6 +305,11 @@
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping7">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="htmlDescUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.htmlDesc" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>{
 @odContext.executeAllMappings();
@@ -287,7 +317,7 @@
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString>{
-@odContext.executeAllMappings();
+@odContext.executeMapping("simpleMapping2");
 }</expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>
