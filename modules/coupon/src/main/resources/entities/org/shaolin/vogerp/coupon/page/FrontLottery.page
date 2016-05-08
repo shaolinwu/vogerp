@@ -4,7 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.coupon.page.FrontLottery</entityName>
 	<systemVersion>0</systemVersion>
-	<description>前台抽奖</description>
+	<description>买单先生</description>
 
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<!-- 揭开窗帘 -->

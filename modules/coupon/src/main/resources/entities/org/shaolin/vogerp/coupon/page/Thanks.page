@@ -4,7 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.coupon.page.Thanks</entityName>
 	<systemVersion>0</systemVersion>
-	<description>谢谢惠顾</description>
+	<description>买单先生</description>
 
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="ViewOrderCouponLogic"></ns2:eventHandler>

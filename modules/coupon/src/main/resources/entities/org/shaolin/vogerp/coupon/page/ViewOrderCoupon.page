@@ -4,7 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.coupon.page.ViewOrderCoupon</entityName>
 	<systemVersion>0</systemVersion>
-	<description>订单下的优惠券信息</description>
+	<description>买单先生</description>
 	
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="backViewCouponLogic"></ns2:eventHandler>

@@ -4,7 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.coupon.page.CouponInfo</entityName>
 	<systemVersion>0</systemVersion>
-	<description>优惠券信息</description>
+	<description>买单先生</description>
 
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 	<!-- 查看订单下有哪些优惠券 -->
