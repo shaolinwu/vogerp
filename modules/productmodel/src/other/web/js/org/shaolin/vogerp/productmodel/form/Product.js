@@ -7,7 +7,7 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     ({
         ui: elementList[prefix + "funcsPanel"]
         ,items: []
-        ,subComponents: [prefix + "infoPanel0",prefix + "infoPanel2"]
+        ,subComponents: [prefix + "infoPanel0",prefix + "infoPanel1",prefix + "infoPanel2",prefix + "infoPanel3"]
     });
     var productTypeUI = new UIMaster.ui.hidden
     ({
@@ -55,8 +55,48 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         ,items: []
         ,subComponents: [prefix + "productTypeUI",prefix + "templateIdUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI"]
     });
-    var infoPanel2 = new org_shaolin_vogerp_productmodel_form_ProductPriceTable({"prefix":prefix + "infoPanel2."});
+    var infoPanel1 = new org_shaolin_vogerp_productmodel_form_ProductPriceTable({"prefix":prefix + "infoPanel1."});
 
+    var photoPathUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "photoPathUI"]
+    });
+
+    var photosUI = new UIMaster.ui.image
+    ({
+        ui: elementList[prefix + "photosUI"]
+        ,width: "100%"
+        ,height: "320px"
+        ,mobheight: "220px"
+    });
+
+    var photoUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "photoUILabel"]
+    });
+
+    var uploadFile = new UIMaster.ui.file
+    ({
+        ui: elementList[prefix + "uploadFile"]
+    });
+
+    var infoPanel2 = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "infoPanel2"]
+        ,items: []
+        ,subComponents: [prefix + "photoPathUI",prefix + "photosUI",prefix + "photoUILabel",prefix + "uploadFile"]
+    });
+    var htmlDescUI = new UIMaster.ui.textarea
+    ({
+        ui: elementList[prefix + "htmlDescUI"]
+    });
+
+    var infoPanel3 = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "infoPanel3"]
+        ,items: []
+        ,subComponents: [prefix + "htmlDescUI"]
+    });
 
     var okbtn = new UIMaster.ui.button
     ({
@@ -108,7 +148,21 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.descriptionUI=descriptionUI;
 
+    Form.infoPanel1=infoPanel1;
+
     Form.infoPanel2=infoPanel2;
+
+    Form.photoPathUI=photoPathUI;
+
+    Form.photosUI=photosUI;
+
+    Form.photoUILabel=photoUILabel;
+
+    Form.uploadFile=uploadFile;
+
+    Form.infoPanel3=infoPanel3;
+
+    Form.htmlDescUI=htmlDescUI;
 
     Form.okbtn=okbtn;
 
@@ -136,7 +190,21 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.descriptionUI=descriptionUI;
 
+    Form.infoPanel1=infoPanel1;
+
     Form.infoPanel2=infoPanel2;
+
+    Form.photoPathUI=photoPathUI;
+
+    Form.photosUI=photosUI;
+
+    Form.photoUILabel=photoUILabel;
+
+    Form.uploadFile=uploadFile;
+
+    Form.infoPanel3=infoPanel3;
+
+    Form.htmlDescUI=htmlDescUI;
 
     Form.actionPanel=actionPanel;
 

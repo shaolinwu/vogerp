@@ -1,12 +1,17 @@
 package org.shaolin.vogerp.productmodel.util;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 import org.shaolin.bmdp.i18n.LocaleContext;
 import org.shaolin.bmdp.utils.DateParser;
+import org.shaolin.bmdp.utils.ImageUtil;
+import org.shaolin.uimaster.page.WebConfig;
 import org.shaolin.uimaster.page.exception.FormatException;
 import org.shaolin.uimaster.page.od.formats.FormatUtil;
+import org.shaolin.vogerp.commonmodel.internal.LifeServiceProviderImpl;
 import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
 import org.shaolin.vogerp.productmodel.be.IProduct;
 import org.shaolin.vogerp.productmodel.be.IProductCharacteristic;
@@ -14,6 +19,7 @@ import org.shaolin.vogerp.productmodel.be.IProductPrice;
 import org.shaolin.vogerp.productmodel.be.IProductTemplate;
 import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
 import org.shaolin.vogerp.productmodel.dao.ProductModel;
+import org.slf4j.LoggerFactory;
 
 public class ProductUtil {
 
@@ -61,4 +67,31 @@ public class ProductUtil {
 		return sb.toString();
 	}
 	
+	public static void genProductThumbnail(IProductTemplate template) {
+		if (template.getPhotos() != null && !template.getPhotos().trim().isEmpty()) {
+			File image = null;
+			File directory = new File(WebConfig.getResourcePath() + template.getPhotos());
+			if (directory.isDirectory()) {
+				File[] files = directory.listFiles();
+				for (File f : files) {
+					if (f.getName().indexOf("-thumbnail.") == -1) {
+						image = f;
+						break;
+					}
+				}
+			} else {
+				image = directory;
+			}
+			if (image != null) {
+				File dest = new File(image.getAbsolutePath().substring(0, image.getAbsolutePath().lastIndexOf(File.separatorChar)), 
+						image.getName().replace(".", "-thumbnail."));
+				try {
+					ImageUtil.createThumbnail(image, 100, dest);
+					template.setIcon(dest.getAbsolutePath().replace(WebConfig.getResourcePath(), ""));
+				} catch (IOException e) {
+					LoggerFactory.getLogger(ProductUtil.class).info("Failed to create the thumbnail for product: " + e.getMessage(), e);
+				}
+			}
+        }
+	}
 }

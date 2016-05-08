@@ -83,18 +83,6 @@
             <bediagram:name>createDateEnd</bediagram:name>
             <bediagram:type xsi:type="bediagram:DateTimeType" />
         </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>saleEndDate</bediagram:name>
-            <bediagram:type xsi:type="bediagram:DateTimeType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>saleEndDateStart</bediagram:name>
-            <bediagram:type xsi:type="bediagram:DateTimeType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>saleEndDateEnd</bediagram:name>
-            <bediagram:type xsi:type="bediagram:DateTimeType" />
-        </bediagram:member>
 		<bediagram:member>
 			<bediagram:name>description</bediagram:name>
 			<bediagram:type xsi:type="bediagram:StringType" />

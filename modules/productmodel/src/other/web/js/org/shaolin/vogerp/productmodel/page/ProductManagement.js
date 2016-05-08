@@ -98,6 +98,26 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
     function org_shaolin_vogerp_productmodel_page_ProductManagement_deleteProduct(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_page_ProductManagement_deleteProduct */
         var o = this;
         var UIEntity = this;
+
+		         {
+		          new UIMaster.ui.dialog({
+		              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
+		              message:'Are you sure delete this product?',
+		              messageType:UIMaster.ui.dialog.Warning,
+		              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+		              title:'\u5220\u9664\u8282\u70B9?',
+		              height:150,
+		              width:300,
+		              handler: function() {
+		                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteProduct-20160502-1824",UIMaster.getValue(eventsource),o.__entityName);
+		              }
+		          }).open();
+		          return;
+		         }
+		         
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteProduct-20160502-1824",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_page_ProductManagement_deleteProduct */
 
 
