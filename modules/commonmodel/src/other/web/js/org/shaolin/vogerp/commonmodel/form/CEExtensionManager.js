@@ -3,6 +3,11 @@
 function org_shaolin_vogerp_commonmodel_form_CEExtensionManager(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var reloadBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "reloadBtn"]
+    });
+
     var CENameUI = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "CENameUI"]
@@ -25,8 +30,10 @@ function org_shaolin_vogerp_commonmodel_form_CEExtensionManager(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [CENameUI,entityTypes,typeUI,constantInfoPanel]
+        ,items: [reloadBtn,CENameUI,entityTypes,typeUI,constantInfoPanel]
     });
+
+    Form.reloadBtn=reloadBtn;
 
     Form.CENameUI=CENameUI;
 
@@ -45,6 +52,8 @@ function org_shaolin_vogerp_commonmodel_form_CEExtensionManager(json)
     };
 
     Form.selectEntity = org_shaolin_vogerp_commonmodel_form_CEExtensionManager_selectEntity;
+
+    Form.reloadAllConstants = org_shaolin_vogerp_commonmodel_form_CEExtensionManager_reloadAllConstants;
 
     Form.deleteUser = org_shaolin_vogerp_commonmodel_form_CEExtensionManager_deleteUser;
 
@@ -69,6 +78,17 @@ function org_shaolin_vogerp_commonmodel_form_CEExtensionManager(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectEntity-20160228-2322",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEExtensionManager_selectEntity */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_CEExtensionManager_reloadAllConstants(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEExtensionManager_reloadAllConstants */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"reloadAllConstants-2016054-2222",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEExtensionManager_reloadAllConstants */
 
 
     /* auto generated eventlistener function declaration */

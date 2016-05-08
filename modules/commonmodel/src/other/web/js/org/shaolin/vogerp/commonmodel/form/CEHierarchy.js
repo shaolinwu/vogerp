@@ -53,6 +53,10 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchy(json)
 
     Form.createItem = org_shaolin_vogerp_commonmodel_form_CEHierarchy_createItem;
 
+    Form.addChild = org_shaolin_vogerp_commonmodel_form_CEHierarchy_addChild;
+
+    Form.selectFreeCE = org_shaolin_vogerp_commonmodel_form_CEHierarchy_selectFreeCE;
+
     Form.openItem = org_shaolin_vogerp_commonmodel_form_CEHierarchy_openItem;
 
     Form.deleteItem = org_shaolin_vogerp_commonmodel_form_CEHierarchy_deleteItem;
@@ -80,6 +84,17 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchy(json)
         var o = this;
         var UIEntity = this;
 
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_20151104",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchy_createItem */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_CEHierarchy_addChild(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchy_addChild */
+        var o = this;
+        var UIEntity = this;
+
          {
           var o = this;
 	      if (o.ceTree._selectedNodeName == null || o.ceTree._selectedNodeName == "") {
@@ -98,7 +113,7 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchy(json)
                      return;
                  }
                  o.ceTree.sync();
-                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_20151104",UIMaster.getValue(eventsource),o.__entityName);
+                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"addChild_20151104",UIMaster.getValue(eventsource),o.__entityName);
               }
           }).open();
           return;
@@ -106,8 +121,19 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchy(json)
          
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_20151104",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchy_createItem */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"addChild_20151104",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchy_addChild */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_CEHierarchy_selectFreeCE(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchy_selectFreeCE */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectFreeCE_20151104",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchy_selectFreeCE */
 
 
     /* auto generated eventlistener function declaration */
@@ -115,10 +141,10 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchy(json)
         var o = this;
         var UIEntity = this;
 
-			         {
-			            this.ceTree.sync();
-			         }
-			         
+	        {
+	           this.ceTree.sync();
+	        }
+	        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openItem_20151104",UIMaster.getValue(eventsource),o.__entityName);

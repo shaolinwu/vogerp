@@ -109,7 +109,7 @@
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-      <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -121,8 +121,8 @@
 	      <ns2:layout xsi:type="ns2:TableLayoutType">
 	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-	        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
-	        <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+	        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+	        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 	      </ns2:layout>
 	      <ns2:component xsi:type="ns2:UITextFieldType" UIID="ceNameUI">
 	          <ns2:title xsi:type="ns2:StringPropertyType">
@@ -132,8 +132,8 @@
 	              <ns2:value>Constant Name</ns2:value>
 	          </ns2:widgetLabel>
 	          <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
-			            <ns2:value>false</ns2:value>
-			        </ns2:allowBlank>
+	            <ns2:value>false</ns2:value>
+	          </ns2:allowBlank>
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UILabelType" UIID="parentCEUI">
           <ns2:secure><value>true</value></ns2:secure>
@@ -316,11 +316,11 @@
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-						<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-						<ns2:UIComponent componentPath="ceNameUI" paramName="UIWidgetType"></ns2:UIComponent>
-						<ns2:DataComponent xsi:type="ns2:ComponentParamType"	componentPath="ceName" paramName="StringData"></ns2:DataComponent>
-				</ns2:ComponentMapping>
-				<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+		<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+		<ns2:UIComponent componentPath="ceNameUI" paramName="UIWidgetType"></ns2:UIComponent>
+		<ns2:DataComponent xsi:type="ns2:ComponentParamType"	componentPath="ceName" paramName="StringData"></ns2:DataComponent>
+	</ns2:ComponentMapping>
+	<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="parentCEUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="parentCE" paramName="StringData"></ns2:DataComponent>

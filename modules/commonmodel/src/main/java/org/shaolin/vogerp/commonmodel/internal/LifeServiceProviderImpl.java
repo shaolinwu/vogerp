@@ -47,50 +47,9 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 					LoggerFactory.getLogger(Registry.class).info("Read Registry item: " + item.getPath() + "=" + item.getValue());
 				}
 				
-				CEHierarchyImpl condition = new CEHierarchyImpl();
-				condition.setParentCeItem(-1);
-				List<ICEHierarchy> hierarchy = ModularityModel.INSTANCE.searchCEHierarchy(condition, null, 0, -1);
-				
-				List<ICEExtension> ceItems = ModularityModel.INSTANCE.searchCEExtension(
-						new CEExtensionImpl(), null, 0, -1);
-				ConstantServiceImpl constantService = (ConstantServiceImpl) IServerServiceManager.INSTANCE.getConstantService();
-				constantService.reloadData(CEOperationUtil.convertC2D(ceItems));
-				constantService.reloadHierarchy(hierarchy);
-				constantService.setHierarchyAccessor(new HierarchyAccessor() {
-					@Override
-					public IConstantEntity getChild(List hierarchy, String ceName,
-							int intValue) {
-						for (Object i : hierarchy) {
-							ICEHierarchy c = (ICEHierarchy)i;
-							if (ceName.equals(c.getParentCeName()) && intValue == c.getParentCeItem()) {
-								return IServerServiceManager.INSTANCE.getConstantService().getConstantEntity(c.getCeName());
-							}
-						}
-						return null;
-					}
-					@Override
-					public boolean hasParent(List hierarchy, String ceName){
-						for (Object i : hierarchy) {
-							ICEHierarchy c = (ICEHierarchy)i;
-							if (ceName.equals(c.getCeName())) {
-								return true;
-							}
-						}
-						return false;
-					}
-				});
+				loadConstants();
 			} catch (Exception e) {
 				throw new IllegalStateException("Failed to parse CE items: " + e.getMessage(), e);
-			}
-			List<ICEEntityInfo> ceInfos = ModularityModel.INSTANCE.searchCEInfo(new CEEntityInfoImpl(), null, 0, -1);
-			for (ICEEntityInfo ceInfo : ceInfos) {
-				try {
-					AbstractConstant ce = (AbstractConstant)IServerServiceManager.INSTANCE.getConstantService().
-							getConstantEntity(ceInfo.getCeName());
-					ce.setEntityInfo(ceInfo.getDescription(), ceInfo.getI18nKey(), ceInfo.getIcon());
-				} catch (EntityNotFoundException ex) {
-					LoggerFactory.getLogger(LifeServiceProviderImpl.class).info("Unable to find this constant: " + ex.getMessage());
-				}
 			}
 			
 			CaptchaImpl condition = new CaptchaImpl();
@@ -138,6 +97,62 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 			serviceManger.register(resourceManager);
 		} finally {
 			HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
+		}
+	}
+
+	public void loadConstants() throws Exception {
+		CEHierarchyImpl condition = new CEHierarchyImpl();
+		condition.setParentCeItem(-1);
+		List<ICEHierarchy> hierarchy = ModularityModel.INSTANCE.searchCEHierarchy(condition, null, 0, -1);
+		
+		List<ICEExtension> ceItems = ModularityModel.INSTANCE.searchCEExtension(
+				new CEExtensionImpl(), null, 0, -1);
+		ConstantServiceImpl constantService = (ConstantServiceImpl) IServerServiceManager.INSTANCE.getConstantService();
+		constantService.startService();
+		constantService.reloadData(CEOperationUtil.convertC2D(ceItems));
+		constantService.reloadHierarchy(hierarchy);
+		constantService.setHierarchyAccessor(new HierarchyAccessor() {
+			@Override
+			public IConstantEntity getChild(List hierarchy, String ceName,
+					int intValue) {
+				for (Object i : hierarchy) {
+					ICEHierarchy c = (ICEHierarchy)i;
+					if (ceName.equals(c.getParentCeName()) && intValue == c.getParentCeItem()) {
+						return IServerServiceManager.INSTANCE.getConstantService().getConstantEntity(c.getCeName());
+					}
+				}
+				return null;
+			}
+			@Override
+			public boolean hasParent(List hierarchy, String ceName){
+				for (Object i : hierarchy) {
+					ICEHierarchy c = (ICEHierarchy)i;
+					if (ceName.equals(c.getCeName())) {
+						return true;
+					}
+				}
+				return false;
+			}
+		});
+		constantService.setReloadFunction(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					loadConstants();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		List<ICEEntityInfo> ceInfos = ModularityModel.INSTANCE.searchCEInfo(new CEEntityInfoImpl(), null, 0, -1);
+		for (ICEEntityInfo ceInfo : ceInfos) {
+			try {
+				AbstractConstant ce = (AbstractConstant)IServerServiceManager.INSTANCE.getConstantService().
+						getConstantEntity(ceInfo.getCeName());
+				ce.setEntityInfo(ceInfo.getDescription(), ceInfo.getI18nKey(), ceInfo.getIcon());
+			} catch (EntityNotFoundException ex) {
+				LoggerFactory.getLogger(LifeServiceProviderImpl.class).info("Unable to find this constant: " + ex.getMessage());
+			}
 		}
 	}
 	

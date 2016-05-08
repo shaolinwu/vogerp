@@ -3,6 +3,32 @@
   <entityName>org.shaolin.vogerp.commonmodel.form.CEHierarchy</entityName>
   <systemVersion>0</systemVersion>
   <ns2:eventHandler functionName="createItem">
+        <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createItem_20151104">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import java.util.ArrayList;
+                import org.shaolin.bmdp.runtime.AppContext;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+                import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+                {
+                    HashMap input = new HashMap();
+                    input.put("list", new ArrayList());
+                    input.put("ceName", "");
+                    input.put("parentCE", "");
+                    input.put("parentIntValue", new Integer(0));
+                    input.put("editable", new Boolean(true));
+                    RefForm form = new RefForm("userForm1", "org.shaolin.vogerp.commonmodel.form.CEExtension", input);
+                    @page.addElement(form);
+                    form.openInWindows("Open Item", null, 600, 400);
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
+  <ns2:eventHandler functionName="addChild">
         <ns2:ops xsi:type="ns2:OpExecuteScriptType">
          <ns2:expressionString><![CDATA[
          {
@@ -23,14 +49,14 @@
                      return;
                  }
                  o.ceTree.sync();
-                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_20151104",UIMaster.getValue(eventsource),o.__entityName);
+                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"addChild_20151104",UIMaster.getValue(eventsource),o.__entityName);
               }
           }).open();
           return;
          }
          ]]></ns2:expressionString>
      </ns2:ops>
-       <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createItem_20151104">
+       <ns2:ops xsi:type="ns2:OpCallAjaxType" name="addChild_20151104">
             <ns2:exp>
                 <ns2:expressionString><![CDATA[
                 import java.util.HashMap;
@@ -61,20 +87,72 @@
                        HashMap input = new HashMap();
                        input.put("beObject", item);
                        input.put("editable", new Boolean(true));
-                       RefForm form = new RefForm("userForm1", "org.shaolin.vogerp.commonmodel.form.CEItem", input);
+                       RefForm form = new RefForm("ceItemForm", "org.shaolin.vogerp.commonmodel.form.CEItem", input);
                        @page.addElement(form);
                        form.openInWindows("Open Item", null, 500, 300);
                     } else {
-	                   HashMap input = new HashMap();
-	                   input.put("list", new ArrayList());
-	                   input.put("ceName", "");
-	                   input.put("parentCE", entityName);
-                       input.put("parentIntValue", new Integer(parentIntValue));
-                       input.put("editable", new Boolean(true));
-                       RefForm form = new RefForm("userForm1", "org.shaolin.vogerp.commonmodel.form.CEExtension", input);
+                       String prefix =  @page.getEntityUiid();
+	                   int lastDot = @page.getEntityUiid().lastIndexOf('.');
+	                   if (lastDot != -1) {
+	                      prefix = @page.getEntityUiid().substring(0, lastDot + 1);
+	                   } else {
+	                      prefix = prefix + ".";
+	                   }
+                       HashMap input = new HashMap();
+                       input.put(RefForm.RECONFIG_ORIGINAL, "selectItem");
+                       input.put(RefForm.RECONFIG_OVERRIDE, prefix + "typeUI.selectFreeCE");
+                       RefForm form = new RefForm("ceItemForm", "org.shaolin.vogerp.commonmodel.form.CERootList", input);
                        @page.addElement(form);
-                       form.openInWindows("Open Item", null, 600, 400);
+                       form.openInWindows("Open Item", null, 300, 200);
                     }
+                }
+                ]]></ns2:expressionString>
+            </ns2:exp>
+        </ns2:ops>
+    </ns2:eventHandler>
+    <ns2:eventHandler functionName="selectFreeCE">
+        <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectFreeCE_20151104">
+            <ns2:exp>
+                <ns2:expressionString><![CDATA[
+                import java.util.HashMap;
+                import java.util.List;
+                import org.shaolin.bmdp.runtime.AppContext;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+                import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+                import org.shaolin.vogerp.commonmodel.be.ICEHierarchy;
+                import org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl;
+                import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+                import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+                import org.shaolin.bmdp.runtime.ce.ConstantServiceImpl;
+                {
+                   String formId = "";
+                   String entityName = ((Tree)@page.getElementByAbsoluteId("ceentityPanel.typeUI.ceTree")).getSelectedItemId();
+                   if (entityName == null || entityName.trim().isEmpty()) {
+                       return;
+                   }
+                   String format = entityName.replace('_', '.');
+                   entityName = format.substring(0, format.lastIndexOf("."));
+                   int parentIntValue = Integer.parseInt(format.substring(format.lastIndexOf(".") + 1));
+                   ComboBox ceList = @page.getComboBox("typeUI");
+                   String selectedCE = ceList.getSelectedDisplayValue();
+                   
+                   CEHierarchyImpl hierarchy = new CEHierarchyImpl();
+                   hierarchy.setParentCeName(entityName);
+                   hierarchy.setParentCeItem(parentIntValue);
+                   hierarchy.setCeName(selectedCE);
+                   ModularityModel.INSTANCE.create(hierarchy);
+                   
+                   CEHierarchyImpl condition = new CEHierarchyImpl();
+			       condition.setParentCeItem(-1);
+			       List hierarchies = ModularityModel.INSTANCE.searchCEHierarchy(condition, null, 0, -1);
+                   ConstantServiceImpl constantService = (ConstantServiceImpl) IServerServiceManager.INSTANCE.getConstantService();
+                   constantService.reloadHierarchy(hierarchies);
+                   
+                   RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+                   form.closeIfinWindows(true);
+                   @page.removeForm(@page.getEntityUiid()); 
                 }
                 ]]></ns2:expressionString>
             </ns2:exp>
@@ -82,12 +160,12 @@
     </ns2:eventHandler>
     <ns2:eventHandler functionName="openItem">
         <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-			         <ns2:expressionString><![CDATA[
-			         {
-			            this.ceTree.sync();
-			         }
-			         ]]></ns2:expressionString>
-			     </ns2:ops>
+	        <ns2:expressionString><![CDATA[
+	        {
+	           this.ceTree.sync();
+	        }
+	        ]]></ns2:expressionString>
+	    </ns2:ops>
         <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openItem_20151104">
             <ns2:exp>
                 <ns2:expressionString><![CDATA[
@@ -276,25 +354,33 @@
               </ns2:expression>
           </ns2:expandExpression>
 	      <ns2:action>
-              <ns2:uiid>openItem</ns2:uiid>
-              <ns2:title xsi:type="ns2:StringPropertyType">
-                  <ns2:value>Open</ns2:value>
-              </ns2:title>
-              <ns2:icon>ui-icon-note</ns2:icon>
-              <ns2:function>openItem</ns2:function>
-          </ns2:action>
-	      <ns2:action>
               <ns2:uiid>createItem</ns2:uiid>
               <ns2:title xsi:type="ns2:StringPropertyType">
-                  <ns2:value>Add</ns2:value>
+                  <ns2:value>新建</ns2:value>
               </ns2:title>
               <ns2:icon>ui-icon-note</ns2:icon>
               <ns2:function>createItem</ns2:function>
           </ns2:action>
+	      <ns2:action>
+              <ns2:uiid>openItem</ns2:uiid>
+              <ns2:title xsi:type="ns2:StringPropertyType">
+                  <ns2:value>编辑</ns2:value>
+              </ns2:title>
+              <ns2:icon>ui-icon-note</ns2:icon>
+              <ns2:function>openItem</ns2:function>
+          </ns2:action>
+          <ns2:action>
+              <ns2:uiid>addChild</ns2:uiid>
+              <ns2:title xsi:type="ns2:StringPropertyType">
+                  <ns2:value>添加子节点</ns2:value>
+              </ns2:title>
+              <ns2:icon>ui-icon-note</ns2:icon>
+              <ns2:function>addChild</ns2:function>
+          </ns2:action>
           <ns2:action>
               <ns2:uiid>deleteItem</ns2:uiid>
               <ns2:title xsi:type="ns2:StringPropertyType">
-                  <ns2:value>Remove</ns2:value>
+                  <ns2:value>删除</ns2:value>
               </ns2:title>
               <ns2:icon>ui-icon-note</ns2:icon>
               <ns2:function>deleteItem</ns2:function>
@@ -302,7 +388,7 @@
           <ns2:action>
               <ns2:uiid>refreshItem</ns2:uiid>
               <ns2:title xsi:type="ns2:StringPropertyType">
-                  <ns2:value>Refresh</ns2:value>
+                  <ns2:value>刷新</ns2:value>
               </ns2:title>
               <ns2:icon>ui-icon-note</ns2:icon>
               <ns2:function>refreshItem</ns2:function>
