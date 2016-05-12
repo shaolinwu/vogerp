@@ -64,8 +64,6 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
         ,items: []
         ,subComponents: [prefix + "currentStatusPanel"]
     });
-    var currentStatusPanel = new org_shaolin_bmdp_adminconsole_form_CurrentStatus({"prefix":prefix + "currentStatusPanel."});
-
 
     var bottomPanelInfo = new UIMaster.ui.label
     ({
@@ -174,8 +172,6 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
     Form.functionsTab=functionsTab;
 
-    Form.currentStatusPanel=currentStatusPanel;
-
     Form.bottomPanelInfo=bottomPanelInfo;
 
     Form.userFormContent=userFormContent;
@@ -258,8 +254,6 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
     Form.functionsTab=functionsTab;
 
-    Form.currentStatusPanel=currentStatusPanel;
-
     Form.treePanel=treePanel;
 
     Form.functionTree=functionTree;
@@ -267,8 +261,6 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     Form.pagePanel=pagePanel;
 
     Form.functionsTab=functionsTab;
-
-    Form.currentStatusPanel=currentStatusPanel;
 
     Form.bottomPanel=bottomPanel;
 
