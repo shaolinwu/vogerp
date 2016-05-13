@@ -44,22 +44,11 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 		init();
 	}
 	
-	private void createApps(List<IModuleGroup> all) {
-		// build application context.
-        for (IModuleGroup module: all) {
-        	if (module.getParentId() == 0 && !module.getName().equals(IServerServiceManager.INSTANCE.getMasterNodeName())) {
-        		ApplicationInitializer appInitizlier = new ApplicationInitializer(module.getName());
-        		appInitizlier.start();
-        	}
-        }
-	}
-	
 	private void init() {
 		ModuleGroupImpl condition = new ModuleGroupImpl();
 		condition.setEnabled(true);
         List<IModuleGroup> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
         if (!this.initialized) {
-        	createApps(all);
         	this.initialized = true;
         }
         
