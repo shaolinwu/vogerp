@@ -14,13 +14,17 @@ import org.shaolin.vogerp.commonmodel.be.IModuleGroup;
  */
 public interface IModuleService {
 
+	public final static String ADMIN_MODULES = "uimaster";
+	
+	public final static String DEFAULT_USER_MODULES = "jounioruser";
+	
 	public void reload();
 
-	public void newAppModules(String appName, String reference, Long orgId);
+	public void newAppModules(String reference, Long orgId, String orgCode);
 
 	public long getModuleId(String chunkName, String nodeName);
 
-	public List<IModuleGroup> getModuleGroupTree(String appName);
+	public List<IModuleGroup> getModuleGroupTree(String orgCode);
 	
 	public IModuleGroup getModule(long id);
 	
@@ -28,5 +32,5 @@ public interface IModuleService {
 
 	public ArrayList[] getModuleListInOptions();
 
-	public List<List<DataMode>> getModulesInMatrix(String appName, int columns);
+	public List<List<DataMode>> getModulesInMatrix(String orgCode, int columns);
 }

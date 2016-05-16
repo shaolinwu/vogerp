@@ -305,85 +305,9 @@
                  <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
                  <ns2:key>org.shaolin.vogerp.productmodel.form.ProductTemplate.infoPanel1</ns2:key>
              </ns2:title>
-             <ns2:panel UIID="infoPanel2">
-               <ns2:layout xsi:type="ns2:TableLayoutType">
-                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                 <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-                 <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-               </ns2:layout>
-               <ns2:component xsi:type="ns2:UILabelType" UIID="photoPathUI">
-                  <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-                  <ns2:text xsi:type="ns2:StringPropertyType">
-                    <ns2:value> </ns2:value>
-                  </ns2:text>
-                </ns2:component>
-                <ns2:component xsi:type="ns2:UIImageType" UIID="photosUI">
-                  <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-                  <ns2:isGallery xsi:type="ns2:BooleanPropertyType">
-                      <ns2:value>true</ns2:value>
-                  </ns2:isGallery>
-                  <ns2:Property name="width">
-                        <ns2:value xsi:type="ns2:StringPropertyType">
-                            <value>100%</value>
-                        </ns2:value>
-                    </ns2:Property>
-                    <ns2:Property name="height">
-                        <ns2:value xsi:type="ns2:StringPropertyType">
-                            <value>320px</value>
-                        </ns2:value>
-                    </ns2:Property>
-                    <ns2:Property name="mobheight">
-                       <ns2:value xsi:type="ns2:StringPropertyType">
-                           <value>220px</value>
-                       </ns2:value>
-                    </ns2:Property>
-                </ns2:component>
-                <ns2:component xsi:type="ns2:UILabelType" UIID="photoUILabel">
-                  <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-                  <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-                    <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-                    <ns2:key>org.shaolin.vogerp.productmodel.be.ProductCharacteristic.photoPath</ns2:key>
-                  </ns2:text>
-                </ns2:component>
-                <ns2:component xsi:type="ns2:UIFileType" UIID="uploadFile">
-                  <ns2:text xsi:type="ns2:StringPropertyType">
-                   <ns2:value></ns2:value>
-                  </ns2:text>
-                  <ns2:suffix xsi:type="ns2:StringPropertyType">
-                   <ns2:value>*.jpg;*.jpeg;*.png;*.gif</ns2:value>
-                  </ns2:suffix>
-                  <ns2:isMultiple xsi:type="ns2:BooleanPropertyType">
-                   <ns2:value>true</ns2:value>
-                  </ns2:isMultiple>
-                  <ns2:storedPath xsi:type="ns2:ExpressionPropertyType">
-                   <ns2:expression>
-                     <expressionString>
-                     import org.shaolin.bmdp.runtime.AppContext;
-                     import org.shaolin.bmdp.runtime.Registry;
-                     import org.shaolin.uimaster.page.WebConfig;
-                     { return WebConfig.getResourcePath() + $beObject.getPhotos(); 
-                     }</expressionString>
-                   </ns2:expression>
-                  </ns2:storedPath>
-                </ns2:component>
-                <ns2:layoutConstraint>
-                  <ns2:componentId>photoPathUI</ns2:componentId>
-                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-                </ns2:layoutConstraint>
-                <ns2:layoutConstraint>
-                  <ns2:componentId>photosUI</ns2:componentId>
-                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIStyle="width:100%;" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-                </ns2:layoutConstraint>
-                <ns2:layoutConstraint>
-                  <ns2:componentId>photoUILabel</ns2:componentId>
-                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-                </ns2:layoutConstraint>
-                <ns2:layoutConstraint>
-                  <ns2:componentId>uploadFile</ns2:componentId>
-                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-                </ns2:layoutConstraint>
-             </ns2:panel>
+             <ns2:refEntity UIID="infoPanel2">
+                <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.ImageUploader" />
+             </ns2:refEntity>
          </ns2:tab>
          <ns2:tab uiid="infoPanel3">
              <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
@@ -507,9 +431,24 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject" paramName="beObject"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping7">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="photosUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.photos" paramName="StringData"></ns2:DataComponent>
+      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.ImageUploader"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="infoPanel2" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.photos" paramName="imagePath"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="allowNumber">
+         <ns2:expression>
+          <expressionString>{return 5;}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="imageWsize">
+         <ns2:expression>
+          <expressionString>{return 300;}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="imageHsize">
+         <ns2:expression>
+          <expressionString>{return 300;}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping8">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>

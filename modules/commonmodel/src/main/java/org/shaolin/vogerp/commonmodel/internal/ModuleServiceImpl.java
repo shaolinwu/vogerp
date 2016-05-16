@@ -9,18 +9,15 @@ import org.shaolin.bmdp.datamodel.common.TargetEntityType;
 import org.shaolin.bmdp.datamodel.pagediagram.PageNodeType;
 import org.shaolin.bmdp.datamodel.pagediagram.WebChunk;
 import org.shaolin.bmdp.runtime.AppContext;
-import org.shaolin.bmdp.runtime.be.IPersistentEntity;
 import org.shaolin.bmdp.runtime.cache.CacheManager;
 import org.shaolin.bmdp.runtime.cache.ICache;
-import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.javacc.exception.ParsingException;
 import org.shaolin.uimaster.page.cache.UIFlowCacheManager;
-import org.shaolin.uimaster.page.flow.ApplicationInitializer;
 import org.shaolin.uimaster.page.widgets.HTMLMatrixType.DataMode;
 import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.be.IModuleGroup;
-import org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl;
 import org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl;
 import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
 import org.slf4j.Logger;
@@ -37,9 +34,9 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	private boolean initialized = false;
 	
 	public ModuleServiceImpl() {
-		modules = CacheManager.getInstance().getCache(AppContext.get().getAppName() 
+		modules = CacheManager.getInstance().getCache(IModuleService.ADMIN_MODULES 
 				+ "_modules_cache", Long.class, IModuleGroup.class);
-		moduleLinks = CacheManager.getInstance().getCache(AppContext.get().getAppName() 
+		moduleLinks = CacheManager.getInstance().getCache(IModuleService.ADMIN_MODULES
 				+ "_modules_link_cache", String.class, Long.class);
 		init();
 	}
@@ -118,62 +115,15 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	}
 	
 	@Override
-	public synchronized void newAppModules(String appName, String reference, Long orgId) {
-		if (appName == null || appName.trim().length() == 0) {
-			throw new IllegalArgumentException("Application must not be null!");
+	public void newAppModules(String modulesReference, Long orgId, String orgCode) {
+		if (modulesReference.equals(IModuleService.DEFAULT_USER_MODULES)) {
+			// all registered organizations shared the same modules and the same permissions.
+			// IModuleService.DEFAULT_USER_MODULES is managed by the admin user in the back end console.
+		} else if (modulesReference.equals(IModuleService.ADMIN_MODULES)) {
+			// unsupported registering an admin user.
+		} else {
+			throw new IllegalArgumentException("Unsupported user type for registration: " + modulesReference);
 		}
-		if (reference == null || reference.trim().length() == 0) {
-			throw new IllegalArgumentException("Application's reference must not be null!");
-		}
-		if (getModule(appName) != null) {
-			throw new IllegalArgumentException("Application has already existed!");
-		}
-		
-		List<IModuleGroup> refModules = getModuleGroupTree(reference);
-		
-		ModuleGroupImpl newGroup = new ModuleGroupImpl();
-		newGroup.setName(appName);
-		newGroup.setAccessURL("#");
-		newGroup.setDescription("Customer Org Code: " + appName);
-		ModularityModel.INSTANCE.create(newGroup);
-		
-		List<IPersistentEntity> newSubNodes = new ArrayList<IPersistentEntity>();
-		for (IModuleGroup node : refModules) {
-			ModuleGroupImpl item = new ModuleGroupImpl();
-			item.setParentId(newGroup.getId());
-			item.setName(node.getName());
-			String accessUrl = node.getAccessURL();
-			accessUrl = accessUrl.replace("{orgid}", String.valueOf(orgId));
-			item.setAccessURL(escapeTNR(accessUrl));
-			item.setDescription(node.getDescription());
-			item.setBigIcon(node.getBigIcon());
-			item.setSmallIcon(node.getSmallIcon());
-			item.setAdditionNodes(node.getAdditionNodes());
-			item.setIsDisplay(node.getIsDisplay());
-			item.setIsFrontend(node.getIsFrontend());
-			newSubNodes.add(item);
-		}
-		ModularityModel.INSTANCE.batchInsert(newSubNodes);
-		
-		List<IPersistentEntity> modulePermissions = new ArrayList<IPersistentEntity>();
-		for (IPersistentEntity node : newSubNodes) {
-			ModuleGroupImpl m = (ModuleGroupImpl)node;
-			ModelPermissionImpl permission = new ModelPermissionImpl();
-			permission.setModuleId(m.getId());
-			permission.setPartyType("org.shaolin.vogerp.commonmodel.ce.GenericOrganizationType,0");
-			modulePermissions.add(permission);
-			//If this node is frontend, need configure [org.shaolin.vogerp.commonmodel.ce.PermissionType,-1]
-			if (m.getIsFrontend()) {
-				ModelPermissionImpl permission1 = new ModelPermissionImpl();
-				permission1.setModuleId(m.getId());
-				permission1.setPartyType("org.shaolin.vogerp.commonmodel.ce.PermissionType,-1");
-				modulePermissions.add(permission1);
-			}
-		}
-		ModularityModel.INSTANCE.batchInsert(modulePermissions);
-		
-		ApplicationInitializer appInitizlier = new ApplicationInitializer(appName);
-		appInitizlier.start();
 	}
 	
 	@Override
@@ -195,15 +145,19 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	}
 	
 	@Override
-	public List<IModuleGroup> getModuleGroupTree(String appName) {
+	public List<IModuleGroup> getModuleGroupTree(final String orgCode) {
 		ModuleGroupImpl condition = new ModuleGroupImpl();
 		condition.setEnabled(true);
         List<IModuleGroup> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
         
+        String moduleType = IModuleService.DEFAULT_USER_MODULES;
+        if (orgCode.equals(IModuleService.ADMIN_MODULES)) {
+        	moduleType = IModuleService.ADMIN_MODULES;
+        }
         ModuleGroupImpl root = null;
 		for (int i = 0; i < all.size(); i++) {
 			ModuleGroupImpl mg = (ModuleGroupImpl) all.get(i);
-			if (appName.equals(mg.getName())) {
+			if (moduleType.equals(mg.getName())) {
 				root = mg;
 				break;
 			}
@@ -232,9 +186,9 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	}
 	
 	@Override
-	public List<List<DataMode>> getModulesInMatrix(String appName, int columns) {
+	public List<List<DataMode>> getModulesInMatrix(String orgCode, int columns) {
 		List<List<DataMode>> result = new ArrayList<List<DataMode>>();
-		List<IModuleGroup> a = getModuleGroupTree(appName);
+		List<IModuleGroup> a = getModuleGroupTree(orgCode);
 		List<IModuleGroup> modules = new ArrayList<IModuleGroup>();
 		for (int i = 0; i < a.size(); i++) {
 			IModuleGroup m = a.get(i);
@@ -259,10 +213,17 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 			if ("#".equals(m.getAccessURL())) {
 				continue;
 			}
+			
 			DataMode item = new DataMode();
 			item.name = m.getName();
 			item.css = m.getSmallIcon();
-			item.link = escapeTNR(m.getAccessURL());
+			if (UserContext.getUserContext() != null) {
+				String accessUrl = m.getAccessURL();
+				accessUrl = accessUrl.replace("{orgid}", String.valueOf(UserContext.getUserContext().getOrgId()));
+				item.link = escapeTNR(accessUrl);
+			} else {
+				item.link = escapeTNR(m.getAccessURL());
+			}
 			result.get(i/columns).add(item);
 		}
 		return result;
@@ -280,11 +241,14 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	}
 	
 	void updateWebFlowLinks(List<IModuleGroup> all) throws ParsingException {
-        // find AppContext.get().getAppName()
+		String moduleType = IModuleService.DEFAULT_USER_MODULES;
+        if (AppContext.get().getAppName().equals(IModuleService.ADMIN_MODULES)) {
+        	moduleType = IModuleService.ADMIN_MODULES;
+        }
         ModuleGroupImpl root = null;
         for (int i=0;i<all.size();i++) {
         	ModuleGroupImpl mg = (ModuleGroupImpl)all.get(i);
-        	if (mg.getName().equals(AppContext.get().getAppName())) {
+        	if (mg.getName().equals(moduleType)) {
         		root = mg;
         		modules.put(mg.getId(), mg);
         	    break;
@@ -374,9 +338,8 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
         chunk.getWebNodes().addAll(webNodes);
         AppContext.get().getEntityManager().appendEntity(chunk);
         
-        UIFlowCacheManager.addFlowCacheIfAbsent(AppContext.get().getAppName());
         UIFlowCacheManager.getInstance().removeAppChunk(webFlowEntity);
-		UIFlowCacheManager.getInstance().addChunk(chunk, AppContext.get().getAppName());
+		UIFlowCacheManager.getInstance().addChunk(chunk);
 	}
 	
 	private static String escapeTNR(String line)

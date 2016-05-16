@@ -52,6 +52,16 @@
             <ns2:isGallery xsi:type="ns2:BooleanPropertyType">
                 <ns2:value>true</ns2:value>
             </ns2:isGallery>
+            <ns2:Property name="thumbnails">
+              <ns2:value xsi:type="ns2:BooleanPropertyType">
+                 <value>false</value>
+              </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="hideThumbnailsOnInit">
+              <ns2:value xsi:type="ns2:BooleanPropertyType">
+                 <value>true</value>
+              </ns2:value>
+            </ns2:Property>
             <ns2:Property name="width">
                <ns2:value xsi:type="ns2:StringPropertyType">
                    <value>100%</value>
@@ -59,7 +69,7 @@
             </ns2:Property>
             <ns2:Property name="height">
                <ns2:value xsi:type="ns2:StringPropertyType">
-                   <value>220px</value>
+                   <value>300px</value>
                </ns2:value>
             </ns2:Property>
             <ns2:Property name="mobheight">
@@ -85,7 +95,7 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UIFileType" UIID="uploadFile">
 	        <ns2:text xsi:type="ns2:StringPropertyType">
-	         <ns2:value></ns2:value>
+	         <ns2:value>只能上传后缀为：*.jpg;*.jpeg;*.png;*.gif的图片文件，且以拼音命名。</ns2:value>
 	        </ns2:text>
 	        <ns2:suffix xsi:type="ns2:StringPropertyType">
 	         <ns2:value>*.jpg;*.jpeg;*.png;*.gif</ns2:value>
@@ -111,6 +121,26 @@
                      </ns2:expression>
                 </ns2:value>
             </ns2:Property>
+            <ns2:Property name="photoWidth">
+               <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                     <ns2:expression>
+                       <expressionString><![CDATA[
+                       { 
+                           return $imageWsize; 
+                       }]]></expressionString>
+                     </ns2:expression>
+                </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="photoHeight">
+               <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                     <ns2:expression>
+                       <expressionString><![CDATA[
+                       { 
+                           return $imageHsize; 
+                       }]]></expressionString>
+                     </ns2:expression>
+                </ns2:value>
+           </ns2:Property>
       </ns2:component>
       <ns2:layoutConstraint>
           <ns2:componentId>photoPanel</ns2:componentId>
@@ -141,8 +171,17 @@
     <ns2:DataEntity scope="InOut" name="imagePath" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="imageWsize" category="JavaPrimitive">
+      <type entityName="java.lang.Integer"></type>
+      <default><expressionString><![CDATA[new Integer(-1)]]></expressionString></default>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="imageHsize" category="JavaPrimitive">
+      <type entityName="java.lang.Integer"></type>
+      <default><expressionString><![CDATA[new Integer(-1)]]></expressionString></default>
+    </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="allowNumber" category="JavaPrimitive">
       <type entityName="java.lang.Integer"></type>
+      <default><expressionString><![CDATA[new Integer(-1)]]></expressionString></default>
     </ns2:DataEntity>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>

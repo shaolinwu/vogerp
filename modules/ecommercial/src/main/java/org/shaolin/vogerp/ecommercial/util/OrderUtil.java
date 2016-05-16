@@ -16,7 +16,7 @@ public class OrderUtil {
 	
 	private static LockManager<Long> lockManager = new LockManager<Long>();
 	
-	public static String genSerialNumber() {
+	public synchronized static String genSerialNumber() {
 		DateParser parse = new DateParser(new Date());
 		return "GOSN-" + parse.getCNDateString() + "-"
 				+ parse.format(parse.getHours(), 2) + ""

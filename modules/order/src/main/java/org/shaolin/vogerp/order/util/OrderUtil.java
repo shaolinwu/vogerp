@@ -6,7 +6,7 @@ import org.shaolin.bmdp.utils.DateParser;
 
 public class OrderUtil {
 
-	public static String genSaleOrderSerialNumber() {
+	public synchronized static String genSaleOrderSerialNumber() {
 		DateParser parse = new DateParser(new Date());
 		return "SOSN-" + parse.getCNDateString() 
 				+ "-" + parse.format(parse.getHours(), 2) 
@@ -14,7 +14,7 @@ public class OrderUtil {
 				+ "-" + parse.getMilliSeconds();
 	}
 	
-	public static String genPurchaseOrderSerialNumber() {
+	public synchronized static String genPurchaseOrderSerialNumber() {
 		DateParser parse = new DateParser(new Date());
 		return "PCOSN-" + parse.getCNDateString() 
 				+ "-" + parse.format(parse.getHours(), 2) 

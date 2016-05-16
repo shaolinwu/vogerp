@@ -11,8 +11,10 @@ function org_shaolin_vogerp_commonmodel_form_ImageUploader(json)
     var photoUI = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "photoUI"]
+        ,thumbnails: false
+        ,hideThumbnailsOnInit: true
         ,width: "100%"
-        ,height: "220px"
+        ,height: "300px"
         ,mobheight: "220px"
     });
 

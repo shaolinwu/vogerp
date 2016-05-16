@@ -16,6 +16,7 @@ import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.uimaster.page.ajax.TreeItem;
+import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.productmodel.IProductService;
 import org.shaolin.vogerp.productmodel.be.IProduct;
@@ -41,7 +42,7 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	}
 	
 	public ProductServiceImpl() {
-		cache = CacheManager.getInstance().getCache(AppContext.get().getAppName() + CACHE_NAME, Long.class, 
+		cache = CacheManager.getInstance().getCache(IModuleService.ADMIN_MODULES + CACHE_NAME, Long.class, 
 				PriceCostCache.class);
 	}
 	

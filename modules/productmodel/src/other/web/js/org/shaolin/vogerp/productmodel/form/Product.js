@@ -57,35 +57,8 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     });
     var infoPanel1 = new org_shaolin_vogerp_productmodel_form_ProductPriceTable({"prefix":prefix + "infoPanel1."});
 
-    var photoPathUI = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "photoPathUI"]
-    });
+    var infoPanel2 = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "infoPanel2."});
 
-    var photosUI = new UIMaster.ui.image
-    ({
-        ui: elementList[prefix + "photosUI"]
-        ,width: "100%"
-        ,height: "320px"
-        ,mobheight: "220px"
-    });
-
-    var photoUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "photoUILabel"]
-    });
-
-    var uploadFile = new UIMaster.ui.file
-    ({
-        ui: elementList[prefix + "uploadFile"]
-    });
-
-    var infoPanel2 = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "infoPanel2"]
-        ,items: []
-        ,subComponents: [prefix + "photoPathUI",prefix + "photosUI",prefix + "photoUILabel",prefix + "uploadFile"]
-    });
     var htmlDescUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "htmlDescUI"]
@@ -152,14 +125,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.infoPanel2=infoPanel2;
 
-    Form.photoPathUI=photoPathUI;
-
-    Form.photosUI=photosUI;
-
-    Form.photoUILabel=photoUILabel;
-
-    Form.uploadFile=uploadFile;
-
     Form.infoPanel3=infoPanel3;
 
     Form.htmlDescUI=htmlDescUI;
@@ -193,14 +158,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     Form.infoPanel1=infoPanel1;
 
     Form.infoPanel2=infoPanel2;
-
-    Form.photoPathUI=photoPathUI;
-
-    Form.photosUI=photosUI;
-
-    Form.photoUILabel=photoUILabel;
-
-    Form.uploadFile=uploadFile;
 
     Form.infoPanel3=infoPanel3;
 

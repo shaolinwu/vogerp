@@ -23,14 +23,14 @@ import org.slf4j.LoggerFactory;
 
 public class ProductUtil {
 
-	public static String genSerialNumber() {
+	public synchronized static String genSerialNumber() {
 		DateParser parse = new DateParser(new Date());
 		return "PSN-" + parse.getCNDateString() 
 				+ "-" + parse.format(parse.getHours(), 2) 
 				+ "" + parse.format(parse.getSeconds(), 2);
 	}
 
-	public static String genProductCode() {
+	public synchronized static String genProductCode() {
 		return "PPC-" + System.currentTimeMillis();
 	}
 	

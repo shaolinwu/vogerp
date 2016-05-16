@@ -335,6 +335,7 @@
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="MODULEID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="ORGID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="PARTYTYPE" type="VARCHAR" length="100" isNull="false" default="-1"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
@@ -345,6 +346,7 @@
       <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.ModelPermission"></ns2:businessEntity>
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="moduleId" columnName="MODULEID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="orgId" columnName="ORGID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="partyType" columnName="PARTYTYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>

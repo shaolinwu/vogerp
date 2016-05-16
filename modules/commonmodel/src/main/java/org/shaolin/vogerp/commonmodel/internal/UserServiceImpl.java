@@ -50,7 +50,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 		this.listeners.add(listener);
 	}
 
-	public static String genOrgCode() {
+	public static synchronized String genOrgCode() {
 		DateParser parse = new DateParser(new Date());
 		return "ORGCode-" + parse.getCNDateString() 
 				+ "-" + parse.format(parse.getHours(), 2) 
@@ -117,13 +117,13 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 		
 		// assign modules
 		IModuleService moduleService = AppContext.get().getService(IModuleService.class);
-		moduleService.newAppModules(org.getOrgCode(), "jounioruser", org.getId());
+		moduleService.newAppModules(IModuleService.DEFAULT_USER_MODULES, org.getId(), org.getOrgCode());
 		
 		for (UserActionListener listener: listeners) {
 			listener.registered(userInfo);
 		}
 		
-		// manual commit the transaction.
+		// manually commit the transaction.
 		HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
 		// the rollback operation is performed outside.
 		

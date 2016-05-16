@@ -449,17 +449,22 @@
 						        import org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute;
 								import org.shaolin.uimaster.page.ajax.TreeConditions;
 								import org.shaolin.bmdp.runtime.AppContext;
+								import org.shaolin.vogerp.commonmodel.IModuleService;
 								{
 									ModuleGroupImpl condition = new ModuleGroupImpl();
 							        List all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
 							        if (all.size() == 0) {
 							            throw new Exception("AdminConsoleTree data is not initialized!");
 							        } 
+							        String moduleType = IModuleService.DEFAULT_USER_MODULES;
+							        if (AppContext.get().getAppName().equals(IModuleService.ADMIN_MODULES)) {
+							            moduleType = IModuleService.ADMIN_MODULES;
+							        }
 							        // find root
 							        ModuleGroupImpl root = null;
 							        for (int i=0;i<all.size();i++) {
 							        	ModuleGroupImpl mg = (ModuleGroupImpl)all.get(i);
-							        	if (AppContext.get().getAppName().equals(mg.getName())) {
+							        	if (moduleType.equals(mg.getName())) {
 							        		   root = mg;
 							        	    break;
 							        	}

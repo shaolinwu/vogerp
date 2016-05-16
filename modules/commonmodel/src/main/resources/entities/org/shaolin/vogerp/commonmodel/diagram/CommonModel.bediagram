@@ -534,6 +534,10 @@
             <bediagram:name>moduleId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>orgId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
     </bediagram:beEntity>
     <bediagram:beEntity needPersist="true" needUIEntity="true">
         <common:entityName>UIWidgetPermission</common:entityName>

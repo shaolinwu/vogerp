@@ -3,7 +3,6 @@ package org.shaolin.vogerp.commonmodel.internal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.cache.CacheManager;
 import org.shaolin.bmdp.runtime.cache.ICache;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
@@ -31,7 +30,7 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 	
 	public PermissionServiceImpl(IModuleService moduleService) {
 		this.moduleService = moduleService;
-		this.rolePermissions = CacheManager.getInstance().getCache(AppContext.get().getAppName() 
+		this.rolePermissions = CacheManager.getInstance().getCache(IModuleService.ADMIN_MODULES
 				+ "_rolepermission_cache", IConstantEntity.class, SingleRolePermission.class);
 	}
 	
@@ -40,7 +39,7 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 	 * 
 	 * @param role
 	 */
-	synchronized void prepareUserPermissions(IConstantEntity partyType) {
+	synchronized void prepareDefaultOrgPermissions(IConstantEntity partyType) {
 		String strValue = CEUtil.getValue(partyType);
 		if (!rolePermissions.containsKey(partyType)) {
         	List<IModelPermission> modelPermissions = new ArrayList<IModelPermission>();
@@ -73,33 +72,12 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 	
 	@Override
 	public int checkModule(String chunkName, String nodeName, IConstantEntity role) {
-		prepareUserPermissions(role);
+		prepareDefaultOrgPermissions(role);
 		long moduleId = moduleService.getModuleId(chunkName, nodeName);
 		if (moduleId == -1) {
 			return PermissionType.NOT_SPECIFIED.getIntValue(); 
 		}
 		return rolePermissions.get(role).hasModuleId(moduleId).getIntValue();
-	}
-	
-	@Override
-	public int checkUIWidget(String pageName, String widgetId, IConstantEntity role) {
-		prepareUserPermissions(role);
-		
-		return rolePermissions.get(role).hasUIWidget(pageName, widgetId).getIntValue();
-	}
-	
-	@Override
-	public int checkUITableWidget(String pageName, String widgetId, String columnId, IConstantEntity role) {
-		prepareUserPermissions(role);
-		
-		return rolePermissions.get(role).hasUIWidget(pageName, widgetId).getIntValue();
-	}
-	
-	@Override
-	public int checkBEDate(String beName, String field, IConstantEntity role) {
-		prepareUserPermissions(role);
-		
-		return rolePermissions.get(role).hasBEField(beName, field).getIntValue();
 	}
 	
 	@Override
@@ -120,7 +98,39 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 		}
 		return PermissionType.NOT_SPECIFIED.getIntValue();
 	}
-
+	
+	@Override
+	public int checkModule(String chunkName, String nodeName, String orgId, List<IConstantEntity> roles) {
+		if (roles == null) {
+			int matched = checkModule(chunkName, nodeName, PermissionType.NOT_SPECIFIED);//empty rule
+			if (matched != PermissionType.NOT_SPECIFIED.getIntValue()) {
+				return matched;
+			}
+			if (orgId != null) {
+				//TODO: search for this specific org id.
+			}
+			return PermissionType.NOT_SPECIFIED.getIntValue();
+		}
+		
+		for (IConstantEntity role : roles) {
+			int matched = checkModule(chunkName, nodeName, role);
+			if (matched != PermissionType.NOT_SPECIFIED.getIntValue()) {
+				return matched;
+			}
+		}
+		if (orgId != null) {
+			//TODO: search for this specific org id.
+		}
+		return PermissionType.NOT_SPECIFIED.getIntValue();
+	}
+	
+	@Override
+	public int checkUIWidget(String pageName, String widgetId, IConstantEntity role) {
+		prepareDefaultOrgPermissions(role);
+		
+		return rolePermissions.get(role).hasUIWidget(pageName, widgetId).getIntValue();
+	}
+	
 	@Override
 	public int checkUIWidget(String pageName, String widgetId, List<IConstantEntity> roles) {
 		if (roles == null) {
@@ -134,6 +144,13 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 			}
 		}
 		return PermissionType.NOT_SPECIFIED.getIntValue();
+	}
+	
+	@Override
+	public int checkUITableWidget(String pageName, String widgetId, String columnId, IConstantEntity role) {
+		prepareDefaultOrgPermissions(role);
+		
+		return rolePermissions.get(role).hasUIWidget(pageName, widgetId).getIntValue();
 	}
 
 	@Override
@@ -151,7 +168,14 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 		}
 		return PermissionType.NOT_SPECIFIED.getIntValue();
 	}
-
+	
+	@Override
+	public int checkBEDate(String beName, String field, IConstantEntity role) {
+		prepareDefaultOrgPermissions(role);
+		
+		return rolePermissions.get(role).hasBEField(beName, field).getIntValue();
+	}
+	
 	@Override
 	public int checkBEDate(String beName, String field, List<IConstantEntity> roles) {
 		if (roles == null) {
