@@ -116,6 +116,16 @@ function org_shaolin_vogerp_coupon_form_DiscountProduct(json)
         ui: elementList[prefix + "validityUI"]
     });
 
+    var storeNameUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "storeNameUILabel"]
+    });
+
+    var storeNameUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "storeNameUI"]
+    });
+
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
@@ -137,13 +147,13 @@ function org_shaolin_vogerp_coupon_form_DiscountProduct(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "selectedOrgId",prefix + "idUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "iconUILabel",prefix + "iconUI",prefix + "couponTypeTreeUILabel",prefix + "couponTypeTreeUI",prefix + "discountUILabel",prefix + "discountUI",prefix + "isSharedUILabel",prefix + "isSharedUI",prefix + "superiorityMessageUILabel",prefix + "superiorityMessageUI",prefix + "limitMessageUILabel",prefix + "limitMessageUI",prefix + "validityUILabel",prefix + "validityUI"]
+        ,subComponents: [prefix + "selectedOrgId",prefix + "idUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "iconUILabel",prefix + "iconUI",prefix + "couponTypeTreeUILabel",prefix + "couponTypeTreeUI",prefix + "discountUILabel",prefix + "discountUI",prefix + "isSharedUILabel",prefix + "isSharedUI",prefix + "superiorityMessageUILabel",prefix + "superiorityMessageUI",prefix + "limitMessageUILabel",prefix + "limitMessageUI",prefix + "validityUILabel",prefix + "validityUI",prefix + "storeNameUILabel",prefix + "storeNameUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [selectedOrgId,idUI,nameUILabel,nameUI,iconUILabel,iconUI,couponTypeTreeUILabel,couponTypeTreeUI,discountUILabel,discountUI,isSharedUILabel,isSharedUI,superiorityMessageUILabel,superiorityMessageUI,limitMessageUILabel,limitMessageUI,validityUILabel,validityUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [selectedOrgId,idUI,nameUILabel,nameUI,iconUILabel,iconUI,couponTypeTreeUILabel,couponTypeTreeUI,discountUILabel,discountUI,isSharedUILabel,isSharedUI,superiorityMessageUILabel,superiorityMessageUI,limitMessageUILabel,limitMessageUI,validityUILabel,validityUI,storeNameUILabel,storeNameUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.selectedOrgId=selectedOrgId;
@@ -181,6 +191,10 @@ function org_shaolin_vogerp_coupon_form_DiscountProduct(json)
     Form.validityUILabel=validityUILabel;
 
     Form.validityUI=validityUI;
+
+    Form.storeNameUILabel=storeNameUILabel;
+
+    Form.storeNameUI=storeNameUI;
 
     Form.okbtn=okbtn;
 
@@ -223,6 +237,10 @@ function org_shaolin_vogerp_coupon_form_DiscountProduct(json)
     Form.validityUILabel=validityUILabel;
 
     Form.validityUI=validityUI;
+
+    Form.storeNameUILabel=storeNameUILabel;
+
+    Form.storeNameUI=storeNameUI;
 
     Form.actionPanel=actionPanel;
 

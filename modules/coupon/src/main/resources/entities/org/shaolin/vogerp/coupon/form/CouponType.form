@@ -80,7 +80,7 @@
            input.put("imagePath", "/images/coupon/front/couponIcon/" + selectedOrgId);
            RefForm form = new RefForm("selectImageForm", "org.shaolin.vogerp.commonmodel.form.ImageViewer", input);
            @page.addElement(form);
-           form.openInWindows("Image Viewer", null, 700, 450);
+           form.openInWindows("Image Viewer", null);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>

@@ -31,12 +31,40 @@ div#couponPanel {
 
 div#div-couponPanel-0_0 {
     background-size: cover;
-    background-image: url(/uimaster/images/coupon/front/couponSerialNumBox.png);
-    margin: 3% 2% 7% 2%;
-    width: 96%;
-    color: black;
-    font-size: 1em;
+    background-image: url(/uimaster/images/coupon/front/couponInfoBackground.jpg);
+    color: white;
+    font-size: 0.8em;
+    width: 100%;
+    margin-bottom: 5%;
 }
+#div-exchangePanel-0_0{
+	width: 60%;
+    margin: 0 0 0 5%;
+}
+#div-contactPanel-0_0, #div-contactPanel-0_1{
+	width:10%;
+}
+#div-contactPanel-0_0 img, #div-contactPanel-0_1 img{
+	width:100%;
+}
+div#div-contactPanel-0_1, #div-contactPanel-1_1 {
+    margin-top: 0;
+}
+
+div#div-exchangePanel-1_0 {
+    width: 35%;
+    text-align: center;
+}
+
+div#div-exchangeInfoPanel-0_0 {
+    width: 30%;
+    margin-top: 7%;
+}
+
+#div-exchangeInfoPanel-0_0 img {
+    width: 100%;
+}
+
 
 div#div-serialNumPanel-0_0 {
     width: 27%;
@@ -162,4 +190,59 @@ span {
 }
 #div-bottomLeftPanel-0_1 {
 	font-size: 0.9em;
+}
+#ui-mask-shadow{display:none;}
+
+div#div-Form-0_2 {
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+div#exchangeClickInfoPanel {
+    width: 60%;
+    margin: 65% 0 0 20%;
+    min-height: 10%;
+    max-height: 10%;
+    background: black;
+    border: solid white 1px;
+    border-radius: 15px;
+}
+
+div#div-exchangeClickInfoPanel-0_0 {
+    margin: 7% 0 0 5%;
+    width: 15%;
+}
+
+div#div-exchangeClickInfoPanel-1_0 {
+    width: 65%;
+    margin: 4% 0 0 0;
+    padding-top: 6%;
+    font-size: 1em;
+}
+
+#div-exchangeClickInfoPanel-0_0 img {
+    width: 100%;
+}
+
+div#div-exchangeClickInfoPanel-2_0 {
+    float: right;
+    margin: -3%;
+}
+#div-couponImageLeftPanel-0_1{
+	margin: 0 0 0 20%;
+    font-size: 0.8em;
+}
+#div-couponImageLeftPanel-0_0{
+	margin: 0;
+}
+#div-exchangeTextPanel-0_0{
+	margin: 20% 0 0 0;
+}
+#div-exchangeTextPanel-0_1{
+	margin : 0;
 }

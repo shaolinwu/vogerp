@@ -32,7 +32,7 @@
                         RefForm form = new RefForm("couponForm", "org.shaolin.vogerp.coupon.form.CouponType", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Create Coupon Type", new TableCallBack("couponTypeTable"), 690, 500);
+                        form.openInWindows("Create Coupon Type", new TableCallBack("couponTypeTable"));
                     }
                     ]]></ns2:expressionString>
 				</ns2:exp>
@@ -65,7 +65,7 @@
                         RefForm form = new RefForm("couponForm", "org.shaolin.vogerp.coupon.form.CouponType", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Open Coupon Type", new TableCallBack("couponTypeTable"), 690, 500);
+                        form.openInWindows("Open Coupon Type", new TableCallBack("couponTypeTable"));
                     }
                     ]]></ns2:expressionString>
 				</ns2:exp>
@@ -86,12 +86,10 @@
                         }
                         CouponTypeImpl defaultUser = (CouponTypeImpl)couponTypeTable.getSelectedRow();
                         try {
-	                        CouponModel.INSTANCE.delete(defaultUser);
+                        	defaultUser.setEnabled(false);
+	                        CouponModel.INSTANCE.update(defaultUser);
 	                        
 	                        couponTypeTable.refresh();
-                        } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-                        	e.printStackTrace();
-                        	@page.executeJavaScript("alert('请先删除该奖项下的优惠产品')");
                         }
                     }
                     ]]></ns2:expressionString>
@@ -146,7 +144,7 @@
                         RefForm form = new RefForm("discountForm", "org.shaolin.vogerp.coupon.form.DiscountProduct", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Create Discount Product", new TableCallBack("discountProductTable"), 690, 500);
+                        form.openInWindows("Create Discount Product", new TableCallBack("discountProductTable"));
                     }
                     ]]></ns2:expressionString>
 				</ns2:exp>
@@ -200,7 +198,7 @@
                         RefForm form = new RefForm("discountForm", "org.shaolin.vogerp.coupon.form.DiscountProduct", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Open Discount Product", new TableCallBack("discountProductTable"), 690, 500);
+                        form.openInWindows("Open Discount Product", new TableCallBack("discountProductTable"));
                     }
                     ]]></ns2:expressionString>
 				</ns2:exp>
@@ -220,7 +218,8 @@
                             return;
                         }
                         DiscountProductImpl defaultUser = (DiscountProductImpl)discountProductTable.getSelectedRow();
-                        CouponModel.INSTANCE.delete(defaultUser);
+                        defaultUser.setEnabled(false);
+                        CouponModel.INSTANCE.update(defaultUser);
                         
                         discountProductTable.refresh();
                     }
@@ -655,6 +654,15 @@
 									<ns2:value>有效期</ns2:value>
 								</ns2:title>
 								<ns2:beFieldId>rowBE.validity</ns2:beFieldId>
+								<ns2:uiType xsi:type="ns2:UITableColHTMLType">
+									<ns2:type>Label</ns2:type>
+								</ns2:uiType>
+							</ns2:column>
+							<ns2:column xsi:type="ns2:UITableColumnType">
+								<ns2:title xsi:type="ns2:StringPropertyType">
+									<ns2:value>店铺名称</ns2:value>
+								</ns2:title>
+								<ns2:beFieldId>rowBE.storeName</ns2:beFieldId>
 								<ns2:uiType xsi:type="ns2:UITableColHTMLType">
 									<ns2:type>Label</ns2:type>
 								</ns2:uiType>

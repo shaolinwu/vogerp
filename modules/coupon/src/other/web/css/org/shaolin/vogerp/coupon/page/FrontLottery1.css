@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+}
+
+div#div-Form-0_0 {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+div#div-Form-0_0 img, #div-Form-0_2 img {
+    width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+}
+
+div#div-Form-0_2 {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+div#div-Form-0_1 {
+    width : 100%;
+    margin : 0;
+    background-image : url(/uimaster/images/coupon/front/border_new.png);
+    background-repeat : no-repeat;
+    background-size : 100% 100%;
+    -moz-background-size : 100% 100%;
+    -webkit-background-size : 100% 100%;
+}
+#rollPanel img {
+	float: left;
+}
+#rollImage1 {
+	width : 22%;
+	margin : 2.5% 0 0 9%;
+}
+#rollImage2 {
+	width : 22%;
+	margin: 2.5% 0 0 8%;
+}
+#rollImage3 {
+	width : 22%;
+	margin: 2.5% 0 0 8%;
+}

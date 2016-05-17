@@ -94,14 +94,14 @@ function org_shaolin_vogerp_coupon_page_ViewOrderCoupon(json)
         var constraint_result = true;
         var UIEntity = this;
 {
-				var bottomImage = $("input[name='bottomAdvertImage']").val();
+				/* var bottomImage = $("input[name='bottomAdvertImage']").val();
 				if ($("#advertBottomImage").length < 1) {
 					$("#Form").append("<div id=\"advertBottomImage\" style=\"width:100%;position:fixed;bottom:-1%;\"><img style=\"width:100%\" src=\"" + bottomImage + "\"></div>");
-				}
+				} */
 				
-				$("#couponPanel").height($("#couponPanel").height() + $("#advertBottomImage").height());
+				//$("#couponPanel").height($("#couponPanel").height() + $("#advertBottomImage").height());
 				var winHeight = $(window).height();
-				$("#couponPanel").css("min-height", winHeight - $("#advertBottomImage").height() - $("#div-Form-0_0").height() + "px" );
+				$("#couponPanel").css("min-height", winHeight - $("#div-Form-0_0").height() + "px" );
 			}
     }/* Gen_Last:org_shaolin_vogerp_coupon_page_ViewOrderCoupon_initPageJs */
 

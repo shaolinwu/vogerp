@@ -40,11 +40,11 @@
 						} else {
 							CouponImpl coupon = (CouponImpl)coupons.get(0);
 							//已发出或已兑换状态
-							if (StatusType.EXCHANGED.equals(coupon.getStatus()) && !coupon.getDiscountProduct().getIsShared()) {
+							if (StatusType.EXCHANGED.equals(coupon.getStatus()) && !coupon.getIsShared()) {
 								validateResultText.setDisplayValue("优惠券" + coupon.getName() + "(券号" + couponNumber + ")不可重复兑换!!!");
 								validateResultText.addStyle("color", "red");
 							} else if (StatusType.SENDOUT.equals(coupon.getStatus()) 
-								|| (StatusType.EXCHANGED.equals(coupon.getStatus()) && coupon.getDiscountProduct().getIsShared())) {
+								|| (StatusType.EXCHANGED.equals(coupon.getStatus()) && coupon.getIsShared())) {
 								
 								//更新优惠券状态为已兑换并生成兑换记录
 								coupon.setStatus(StatusType.EXCHANGED);

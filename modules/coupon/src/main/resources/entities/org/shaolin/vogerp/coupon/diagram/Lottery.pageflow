@@ -56,6 +56,35 @@
     </ns2:out>
   </ns2:webNode>
   
+  <!-- Lottery1Page -->
+  <ns2:webNode xsi:type="ns2:PageNodeType" name="FrontLottery1">
+  	<ns2:variables name="openId" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+    </ns2:variables>
+    <ns2:variables name="luckyImageUrlText" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:sourceEntity entityName="org.shaolin.vogerp.coupon.page.FrontLottery1"></ns2:sourceEntity>
+    <ns2:out xsi:type="ns2:DisplayOutType" name="ChoiceDiscountProductLogic">
+      <ns2:next>
+        <ns2:destNode>ChoiceDiscountProductLogic</ns2:destNode>
+        <ns2:outDataMappingToNode name="openId">
+          <expression>
+            <expressionString><![CDATA[$openId]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="luckyImageUrlText">
+          <expression>
+            <expressionString><![CDATA[$luckyImageUrlText]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+      </ns2:next>
+    </ns2:out>
+  </ns2:webNode>
+  
   <!-- ChoiceDiscountProduct -->
   <ns2:webNode xsi:type="ns2:PageNodeType" name="ChoiceDiscountProduct">
   	<ns2:variables name="openId" category="JavaClass">
@@ -129,24 +158,6 @@
   	<ns2:variables name="openId" category="JavaClass">
       <type entityName="java.lang.String"></type>
     </ns2:variables>
-    <ns2:variables name="phoneNumText" category="JavaClass">
-      <type entityName="java.lang.String"></type>
-      <default>
-        <expressionString><![CDATA[""]]></expressionString>
-      </default>
-    </ns2:variables>
-    <ns2:variables name="couponType" category="JavaClass">
-      <type entityName="org.shaolin.vogerp.coupon.be.CouponTypeImpl"></type>
-      <default>
-        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.CouponTypeImpl();]]></expressionString>
-      </default>
-    </ns2:variables>
-    <ns2:variables name="discountProduct" category="JavaClass">
-      <type entityName="org.shaolin.vogerp.coupon.be.DiscountProductImpl"></type>
-      <default>
-        <expressionString><![CDATA[new org.shaolin.vogerp.coupon.be.DiscountProductImpl();]]></expressionString>
-      </default>
-    </ns2:variables>
     <ns2:variables name="coupon" category="JavaClass">
       <type entityName="org.shaolin.vogerp.coupon.be.CouponImpl"></type>
       <default>
@@ -154,16 +165,6 @@
       </default>
     </ns2:variables>
     <ns2:sourceEntity entityName="org.shaolin.vogerp.coupon.page.CouponInfo"></ns2:sourceEntity>
-    <ns2:out xsi:type="ns2:DisplayOutType" name="ViewOrderCouponLogic">
-      <ns2:next>
-        <ns2:destNode>ViewOrderCouponLogic</ns2:destNode>
-        <ns2:outDataMappingToNode name="openId">
-          <expression>
-            <expressionString><![CDATA[$openId]]></expressionString>
-          </expression>
-        </ns2:outDataMappingToNode>
-      </ns2:next>
-    </ns2:out>
   </ns2:webNode>
   
   <!-- Thanks -->
@@ -331,7 +332,7 @@
    			couponOperation.setOperateDate(current);
    			couponOperation.setCreateDate(current);
        		
-       		if (null != discountProducts &&  (couponType.getIsImmediate() || discountProducts.size() == 1)) {
+       		if (null != discountProducts && discountProducts.size() > 0 && (couponType.getIsImmediate() || discountProducts.size() == 1)) {
        			System.out.println("lucky !!!  " + couponType.getName());
        			DiscountProductImpl discountProduct = (DiscountProductImpl)discountProducts.get(0);
        			$discountProduct = discountProduct;
@@ -340,8 +341,16 @@
        			Long orgId = (Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID);
        			CouponImpl coupon = (CouponImpl)CouponUtil.genCoupon(discountProduct, orgId);
        			coupon.setOrgId(orgId);
+       			coupon.setName(discountProduct.getName());
        			coupon.setOpenId(openId);
        			coupon.setPhoneNum(phoneNum);
+       			coupon.setIsImmediate(couponType.getIsImmediate());
+       			coupon.setIcon(discountProduct.getIcon());
+       			coupon.setDiscount(discountProduct.getDiscount());
+       			coupon.setIsShared(discountProduct.getIsShared());
+       			coupon.setSuperiorityMessage(discountProduct.getSuperiorityMessage());
+       			coupon.setLimitMessage(discountProduct.getLimitMessage());
+       			coupon.setStoreName(discountProduct.getStoreName());
        			CouponModel.INSTANCE.create(coupon);
        			$coupon = coupon;
        			
@@ -398,21 +407,6 @@
         <ns2:outDataMappingToNode name="openId">
           <expression>
             <expressionString><![CDATA[$openId]]></expressionString>
-          </expression>
-        </ns2:outDataMappingToNode>
-        <ns2:outDataMappingToNode name="phoneNumText">
-          <expression>
-            <expressionString><![CDATA[$phoneNumText]]></expressionString>
-          </expression>
-        </ns2:outDataMappingToNode>
-        <ns2:outDataMappingToNode name="couponType">
-          <expression>
-            <expressionString><![CDATA[$couponType]]></expressionString>
-          </expression>
-        </ns2:outDataMappingToNode>
-        <ns2:outDataMappingToNode name="discountProduct">
-          <expression>
-            <expressionString><![CDATA[$discountProduct]]></expressionString>
           </expression>
         </ns2:outDataMappingToNode>
         <ns2:outDataMappingToNode name="coupon">
@@ -504,8 +498,16 @@
 	       		Long orgId = (Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID);
        			CouponImpl coupon = (CouponImpl)CouponUtil.genCoupon($discountProduct, orgId);
        			coupon.setOrgId(orgId);
+       			coupon.setName($discountProduct.getName());
        			coupon.setOpenId($openId);
        			coupon.setPhoneNum($phoneNumText);
+       			coupon.setIsImmediate($discountProduct.getCouponType().getIsImmediate());
+       			coupon.setIcon($discountProduct.getIcon());
+       			coupon.setDiscount($discountProduct.getDiscount());
+       			coupon.setIsShared($discountProduct.getIsShared());
+       			coupon.setSuperiorityMessage($discountProduct.getSuperiorityMessage());
+       			coupon.setLimitMessage($discountProduct.getLimitMessage());
+       			coupon.setStoreName($discountProduct.getStoreName());
        			CouponModel.INSTANCE.create(coupon);
        			
        			$coupon = coupon;
@@ -527,21 +529,6 @@
         <ns2:outDataMappingToNode name="openId">
           <expression>
             <expressionString><![CDATA[$openId]]></expressionString>
-          </expression>
-        </ns2:outDataMappingToNode>
-        <ns2:outDataMappingToNode name="phoneNumText">
-          <expression>
-            <expressionString><![CDATA[$phoneNumText]]></expressionString>
-          </expression>
-        </ns2:outDataMappingToNode>
-        <ns2:outDataMappingToNode name="couponType">
-          <expression>
-            <expressionString><![CDATA[$couponType]]></expressionString>
-          </expression>
-        </ns2:outDataMappingToNode>
-        <ns2:outDataMappingToNode name="discountProduct">
-          <expression>
-            <expressionString><![CDATA[$discountProduct]]></expressionString>
           </expression>
         </ns2:outDataMappingToNode>
         <ns2:outDataMappingToNode name="coupon">
@@ -678,9 +665,6 @@
       	
       	if (coupons != null && coupons.size() > 0) {
       		$coupon = (CouponImpl)coupons.get(0);
-      		$phoneNumText = $coupon.getPhoneNum();
-      		$discountProduct = $coupon.getDiscountProduct();
-      		$couponType = $discountProduct.getCouponType();
       	}
       }]]></expressionString>
     </ns2:operation>
@@ -693,21 +677,6 @@
         <ns2:outDataMappingToNode name="openId">
           <expression>
             <expressionString><![CDATA[$openId]]></expressionString>
-          </expression>
-        </ns2:outDataMappingToNode>
-        <ns2:outDataMappingToNode name="phoneNumText">
-          <expression>
-            <expressionString><![CDATA[$phoneNumText]]></expressionString>
-          </expression>
-        </ns2:outDataMappingToNode>
-        <ns2:outDataMappingToNode name="couponType">
-          <expression>
-            <expressionString><![CDATA[$couponType]]></expressionString>
-          </expression>
-        </ns2:outDataMappingToNode>
-        <ns2:outDataMappingToNode name="discountProduct">
-          <expression>
-            <expressionString><![CDATA[$discountProduct]]></expressionString>
           </expression>
         </ns2:outDataMappingToNode>
         <ns2:outDataMappingToNode name="coupon">

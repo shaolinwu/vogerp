@@ -24,7 +24,7 @@ public class CouponUtil {
 	public static final char[] CHAR_ARR = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 
 		'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
-	public static Map<Long, CouponUserInfoImpl> orgMap;
+	public static Map<Long, CouponUserInfoImpl> orgMap = new HashMap<Long, CouponUserInfoImpl>();
 	
 	/**
 	 * Generate coupon serial number
@@ -59,7 +59,7 @@ public class CouponUtil {
 		coupon.setName(discountProduct.getName());
 		coupon.setSerialNumber(genCouponSerialNumber(orgId));
 		coupon.setDiscountProductId(discountProduct.getId());
-		coupon.setExpiredDate(addDays(new Date(), discountProduct.getValidity()));
+		coupon.setExpiredDate(addHours(new Date(), discountProduct.getValidity()));
 		if (discountProduct.getCouponType().getIsImmediate()) {
 			//TODO if add share function, need change to CREATE
 			coupon.setStatus(StatusType.SENDOUT);
@@ -80,6 +80,13 @@ public class CouponUtil {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		cal.add(Calendar.DAY_OF_MONTH, day);
+		return cal.getTime();
+	}
+	
+	public static Date addHours(Date date, int day) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.HOUR_OF_DAY, day);
 		return cal.getTime();
 	}
 	
@@ -158,19 +165,26 @@ public class CouponUtil {
 	}
 	
 	public static CouponUserInfoImpl getCouponUserInfoByOrgId(long orgId) {
-		if (null == orgMap) {
-			orgMap = new HashMap();
+		if (null == orgMap.get(orgId)) {
 			CouponUserInfoImpl cond = new CouponUserInfoImpl();
+			cond.setOrgId(orgId);
 			List userInfos = CouponModel.INSTANCE.searchCouponUserInfo(cond, null, 0, 0);
 			if (null != userInfos && userInfos.size() > 0) {
 				for (int i = 0; i < userInfos.size(); i++) {
 					CouponUserInfoImpl userInfo = (CouponUserInfoImpl) userInfos.get(i);
-					orgMap.put(userInfo.getOrgId(), userInfo);
+					orgMap.put(orgId, userInfo);
 				}
+			} else {
+				orgMap.put(orgId, null);
 			}
 		}
 		
 		return orgMap.get(orgId);
 	}
 	
+	public static void clearOrgMapByOrgId(Long orgId) {
+		if (orgMap.containsKey(orgId)) {
+			orgMap.remove(orgId);
+		}
+	}
 }

@@ -13,34 +13,64 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
         ui: elementList[prefix + "openId"]
     });
 
+    var serialNumber = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "serialNumber"]
+    });
+
+    var isExchanged = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "isExchanged"]
+    });
+
     var wechatSign = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "wechatSign"]
     });
 
-    var serialLabeText = new UIMaster.ui.label
+    var locationImage = new UIMaster.ui.image
     ({
-        ui: elementList[prefix + "serialLabeText"]
+        ui: elementList[prefix + "locationImage"]
     });
 
-    var serialNumText = new UIMaster.ui.label
+    var locationText = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "serialNumText"]
+        ui: elementList[prefix + "locationText"]
     });
 
-    var orderLabelText = new UIMaster.ui.label
+    var phoneImage = new UIMaster.ui.image
     ({
-        ui: elementList[prefix + "orderLabelText"]
+        ui: elementList[prefix + "phoneImage"]
     });
 
-    var phoneNumText = new UIMaster.ui.label
+    var phoneText = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "phoneNumText"]
+        ui: elementList[prefix + "phoneText"]
+    });
+
+    var exchangeBtnImage = new UIMaster.ui.image
+    ({
+        ui: elementList[prefix + "exchangeBtnImage"]
+    });
+
+    var exchange1Text = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "exchange1Text"]
+    });
+
+    var exchange2Text = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "exchange2Text"]
     });
 
     var couponImage = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "couponImage"]
+    });
+
+    var storeNameText = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "storeNameText"]
     });
 
     var couponNameText = new UIMaster.ui.label
@@ -103,6 +133,28 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
         ui: elementList[prefix + "fingerPrintImage"]
     });
 
+    var clickInfoImage = new UIMaster.ui.image
+    ({
+        ui: elementList[prefix + "clickInfoImage"]
+    });
+
+    var clickInfoText = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "clickInfoText"]
+    });
+
+    var closeImage = new UIMaster.ui.image
+    ({
+        ui: elementList[prefix + "closeImage"]
+    });
+
+    var exchangeClickInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "exchangeClickInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "clickInfoImage",prefix + "clickInfoText",prefix + "closeImage"]
+    });
+
     var bottom3LeftPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "bottom3LeftPanel"]
@@ -138,48 +190,88 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
         ,subComponents: [prefix + "couponNameText",prefix + "couponDiscountText",prefix + "couponMsgText"]
     });
 
+    var couponImageLeftPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "couponImageLeftPanel"]
+        ,items: []
+        ,subComponents: [prefix + "couponImage",prefix + "storeNameText"]
+    });
+
     var couponImagePanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "couponImagePanel"]
         ,items: []
-        ,subComponents: [prefix + "couponImage",prefix + "couponImageRightPanel"]
+        ,subComponents: [prefix + "couponImageLeftPanel",prefix + "couponImageRightPanel"]
     });
 
-    var serialNumPanel = new UIMaster.ui.panel
+    var exchangeTextPanel = new UIMaster.ui.panel
     ({
-        ui: elementList[prefix + "serialNumPanel"]
+        ui: elementList[prefix + "exchangeTextPanel"]
         ,items: []
-        ,subComponents: [prefix + "serialLabeText",prefix + "serialNumText",prefix + "orderLabelText",prefix + "phoneNumText"]
+        ,subComponents: [prefix + "exchange1Text",prefix + "exchange2Text"]
+    });
+
+    var exchangeInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "exchangeInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "exchangeBtnImage",prefix + "exchangeTextPanel"]
+    });
+
+    var contactPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "contactPanel"]
+        ,items: []
+        ,subComponents: [prefix + "locationImage",prefix + "locationText",prefix + "phoneImage",prefix + "phoneText"]
+    });
+
+    var exchangePanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "exchangePanel"]
+        ,items: []
+        ,subComponents: [prefix + "contactPanel",prefix + "exchangeInfoPanel"]
     });
 
     var couponPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "couponPanel"]
         ,items: []
-        ,subComponents: [prefix + "openId",prefix + "wechatSign",prefix + "serialNumPanel",prefix + "couponImagePanel",prefix + "advertImage",prefix + "bottomPanel"]
+        ,subComponents: [prefix + "openId",prefix + "serialNumber",prefix + "isExchanged",prefix + "wechatSign",prefix + "exchangePanel",prefix + "couponImagePanel",prefix + "advertImage",prefix + "bottomPanel"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [logoImage,openId,wechatSign,serialLabeText,serialNumText,orderLabelText,phoneNumText,couponImage,couponNameText,couponDiscountText,couponMsgText,advertImage,bottom1Text,bottom2Text,bottom3Text,bottom5Text,bottom40Text,bottom41Text,fingerImage,fingerPrintImage,couponPanel,serialNumPanel,couponImagePanel,couponImageRightPanel,bottomPanel,bottomLeftPanel,bottom3Panel,bottom3LeftPanel]
+        ,items: [logoImage,openId,serialNumber,isExchanged,wechatSign,locationImage,locationText,phoneImage,phoneText,exchangeBtnImage,exchange1Text,exchange2Text,couponImage,storeNameText,couponNameText,couponDiscountText,couponMsgText,advertImage,bottom1Text,bottom2Text,bottom3Text,bottom5Text,bottom40Text,bottom41Text,fingerImage,fingerPrintImage,clickInfoImage,clickInfoText,closeImage,couponPanel,exchangePanel,contactPanel,exchangeInfoPanel,exchangeTextPanel,couponImagePanel,couponImageLeftPanel,couponImageRightPanel,bottomPanel,bottomLeftPanel,bottom3Panel,bottom3LeftPanel,exchangeClickInfoPanel]
     });
 
     Form.logoImage=logoImage;
 
     Form.openId=openId;
 
+    Form.serialNumber=serialNumber;
+
+    Form.isExchanged=isExchanged;
+
     Form.wechatSign=wechatSign;
 
-    Form.serialLabeText=serialLabeText;
+    Form.locationImage=locationImage;
 
-    Form.serialNumText=serialNumText;
+    Form.locationText=locationText;
 
-    Form.orderLabelText=orderLabelText;
+    Form.phoneImage=phoneImage;
 
-    Form.phoneNumText=phoneNumText;
+    Form.phoneText=phoneText;
+
+    Form.exchangeBtnImage=exchangeBtnImage;
+
+    Form.exchange1Text=exchange1Text;
+
+    Form.exchange2Text=exchange2Text;
 
     Form.couponImage=couponImage;
+
+    Form.storeNameText=storeNameText;
 
     Form.couponNameText=couponNameText;
 
@@ -204,26 +296,52 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
     Form.fingerImage=fingerImage;
 
     Form.fingerPrintImage=fingerPrintImage;
+
+    Form.clickInfoImage=clickInfoImage;
+
+    Form.clickInfoText=clickInfoText;
+
+    Form.closeImage=closeImage;
 
     Form.couponPanel=couponPanel;
 
     Form.openId=openId;
 
+    Form.serialNumber=serialNumber;
+
+    Form.isExchanged=isExchanged;
+
     Form.wechatSign=wechatSign;
 
-    Form.serialNumPanel=serialNumPanel;
+    Form.exchangePanel=exchangePanel;
 
-    Form.serialLabeText=serialLabeText;
+    Form.contactPanel=contactPanel;
 
-    Form.serialNumText=serialNumText;
+    Form.locationImage=locationImage;
 
-    Form.orderLabelText=orderLabelText;
+    Form.locationText=locationText;
 
-    Form.phoneNumText=phoneNumText;
+    Form.phoneImage=phoneImage;
+
+    Form.phoneText=phoneText;
+
+    Form.exchangeInfoPanel=exchangeInfoPanel;
+
+    Form.exchangeBtnImage=exchangeBtnImage;
+
+    Form.exchangeTextPanel=exchangeTextPanel;
+
+    Form.exchange1Text=exchange1Text;
+
+    Form.exchange2Text=exchange2Text;
 
     Form.couponImagePanel=couponImagePanel;
 
+    Form.couponImageLeftPanel=couponImageLeftPanel;
+
     Form.couponImage=couponImage;
+
+    Form.storeNameText=storeNameText;
 
     Form.couponImageRightPanel=couponImageRightPanel;
 
@@ -259,19 +377,61 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 
     Form.fingerPrintImage=fingerPrintImage;
 
-    Form.serialNumPanel=serialNumPanel;
+    Form.exchangePanel=exchangePanel;
 
-    Form.serialLabeText=serialLabeText;
+    Form.contactPanel=contactPanel;
 
-    Form.serialNumText=serialNumText;
+    Form.locationImage=locationImage;
 
-    Form.orderLabelText=orderLabelText;
+    Form.locationText=locationText;
 
-    Form.phoneNumText=phoneNumText;
+    Form.phoneImage=phoneImage;
+
+    Form.phoneText=phoneText;
+
+    Form.exchangeInfoPanel=exchangeInfoPanel;
+
+    Form.exchangeBtnImage=exchangeBtnImage;
+
+    Form.exchangeTextPanel=exchangeTextPanel;
+
+    Form.exchange1Text=exchange1Text;
+
+    Form.exchange2Text=exchange2Text;
+
+    Form.contactPanel=contactPanel;
+
+    Form.locationImage=locationImage;
+
+    Form.locationText=locationText;
+
+    Form.phoneImage=phoneImage;
+
+    Form.phoneText=phoneText;
+
+    Form.exchangeInfoPanel=exchangeInfoPanel;
+
+    Form.exchangeBtnImage=exchangeBtnImage;
+
+    Form.exchangeTextPanel=exchangeTextPanel;
+
+    Form.exchange1Text=exchange1Text;
+
+    Form.exchange2Text=exchange2Text;
+
+    Form.exchangeTextPanel=exchangeTextPanel;
+
+    Form.exchange1Text=exchange1Text;
+
+    Form.exchange2Text=exchange2Text;
 
     Form.couponImagePanel=couponImagePanel;
 
+    Form.couponImageLeftPanel=couponImageLeftPanel;
+
     Form.couponImage=couponImage;
+
+    Form.storeNameText=storeNameText;
 
     Form.couponImageRightPanel=couponImageRightPanel;
 
@@ -280,6 +440,12 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
     Form.couponDiscountText=couponDiscountText;
 
     Form.couponMsgText=couponMsgText;
+
+    Form.couponImageLeftPanel=couponImageLeftPanel;
+
+    Form.couponImage=couponImage;
+
+    Form.storeNameText=storeNameText;
 
     Form.couponImageRightPanel=couponImageRightPanel;
 
@@ -348,6 +514,14 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
     Form.bottom40Text=bottom40Text;
 
     Form.bottom41Text=bottom41Text;
+
+    Form.exchangeClickInfoPanel=exchangeClickInfoPanel;
+
+    Form.clickInfoImage=clickInfoImage;
+
+    Form.clickInfoText=clickInfoText;
+
+    Form.closeImage=closeImage;
 
     Form.user_constructor = function()
     {
@@ -355,17 +529,17 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
         /* Construct_LAST:org_shaolin_vogerp_coupon_page_CouponInfo */
     };
 
-    Form.viewCoupon = org_shaolin_vogerp_coupon_page_CouponInfo_viewCoupon;
-
     Form.effectCoupon = org_shaolin_vogerp_coupon_page_CouponInfo_effectCoupon;
 
-    Form.ViewOrderCouponLogic = org_shaolin_vogerp_coupon_page_CouponInfo_ViewOrderCouponLogic;
+    Form.toggleExchangeInfo = org_shaolin_vogerp_coupon_page_CouponInfo_toggleExchangeInfo;
+
+    Form.exchangeCoupon = org_shaolin_vogerp_coupon_page_CouponInfo_exchangeCoupon;
+
+    Form.exchangeSuccess = org_shaolin_vogerp_coupon_page_CouponInfo_exchangeSuccess;
 
     Form.initPageJs = org_shaolin_vogerp_coupon_page_CouponInfo_initPageJs;
 
     Form.finalizePageJs = org_shaolin_vogerp_coupon_page_CouponInfo_finalizePageJs;
-
-    Form.ViewOrderCouponLogic_OutFunctionName = org_shaolin_vogerp_coupon_page_CouponInfo_ViewOrderCouponLogic_OutFunctionName;
 
     Form.__AJAXSubmit = false;
     
@@ -380,17 +554,6 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 /* Other_Func_LAST:org_shaolin_vogerp_coupon_page_CouponInfo */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_coupon_page_CouponInfo_viewCoupon(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_page_CouponInfo_viewCoupon */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"viewCoupon-20160112-232035",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponInfo_viewCoupon */
-
-
-    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_coupon_page_CouponInfo_effectCoupon(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_page_CouponInfo_effectCoupon */
         var o = this;
         var UIEntity = this;
@@ -402,12 +565,35 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_coupon_page_CouponInfo_ViewOrderCouponLogic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_page_CouponInfo_ViewOrderCouponLogic */
+    function org_shaolin_vogerp_coupon_page_CouponInfo_toggleExchangeInfo(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_page_CouponInfo_toggleExchangeInfo */
         var o = this;
         var UIEntity = this;
 
-        o.ViewOrderCouponLogic_OutFunctionName(eventsource);
-    }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponInfo_ViewOrderCouponLogic */
+				{
+					$("#div-Form-0_2").toggle();
+				}    }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponInfo_toggleExchangeInfo */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_page_CouponInfo_exchangeCoupon(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_page_CouponInfo_exchangeCoupon */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"exchageCoupon-20160112-232035",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponInfo_exchangeCoupon */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_coupon_page_CouponInfo_exchangeSuccess(eventsource,event) {/* Gen_First:org_shaolin_vogerp_coupon_page_CouponInfo_exchangeSuccess */
+        var o = this;
+        var UIEntity = this;
+
+				{
+					$("#div-Form-0_2").hide();
+					$("#exchangeInfoPanel").html("<div style=\"margin: 15% 0 0 20%;border: solid 1px white;width: 50%;\">\u5DF2\u5151\u6362</div>");
+				}    }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponInfo_exchangeSuccess */
 
 
     function org_shaolin_vogerp_coupon_page_CouponInfo_initPageJs(){/* Gen_First:org_shaolin_vogerp_coupon_page_CouponInfo_initPageJs */
@@ -469,6 +655,10 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 					$("#couponPanel").height(windowHeight - $("#div-Form-0_0").height() - 4 + "px");
 				}
 				
+				if ("true" == $("input[name='isExchanged']").val()) {
+					$("#exchangeInfoPanel").html("<div style=\"margin: 15% 0 0 20%;border: solid 1px white;width: 50%;\">\u5DF2\u5151\u6362</div>");
+				}
+				
 			}
     }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponInfo_initPageJs */
 
@@ -477,35 +667,5 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 
     }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponInfo_finalizePageJs */
 
-
-    function org_shaolin_vogerp_coupon_page_CouponInfo_ViewOrderCouponLogic_OutFunctionName(eventsource) {/* Gen_First:org_shaolin_vogerp_coupon_page_CouponInfo_ViewOrderCouponLogic_OutFunctionName */
-        var constraint_result = true;
-        var myForm;
-        if (this.formName != undefined)
-        {
-            myForm = document.forms[this.formName];
-        }
-        else
-        {
-            var p = this.Form.parentNode;
-            while(p.tagName != "FORM")
-                p = p.parentNode;
-            myForm = p;//document.forms[0];
-        }
-
-        var UIEntity = this;
-
-        constraint_result = this.Form.validate();
-{
-			// hello, my first js.
-			}        
-        myForm._outname.value = "ViewOrderCouponLogic";
-        myForm.target = "_self";
-             
-        if ( (constraint_result == true || constraint_result == null) && (!ajax_execute_onerror) ) {
-          myForm.submit();
-        }
-        return constraint_result;
-    }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponInfo_ViewOrderCouponLogic_OutFunctionName */
 
 

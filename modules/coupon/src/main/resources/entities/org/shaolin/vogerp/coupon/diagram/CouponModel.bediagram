@@ -136,6 +136,11 @@
 	    	<bediagram:name>limitMessage</bediagram:name>
 	    	<bediagram:type xsi:type="bediagram:StringType" />
 	    </bediagram:member>
+	    <!-- 店铺名称 -->
+	    <bediagram:member>
+	    	<bediagram:name>storeName</bediagram:name>
+	    	<bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
 	    <!-- 有效期时间，单位为天 -->
 	    <bediagram:member>
 	    	<bediagram:name>validity</bediagram:name>
@@ -172,13 +177,6 @@
 			<bediagram:name>discountProductId</bediagram:name>
 			<bediagram:type xsi:type="bediagram:LongType" />
 		</bediagram:member>
-		<bediagram:member>
-			<!-- what kind of the party, the contact info from the party and etc. -->
-			<bediagram:name>discountProduct</bediagram:name>
-			<bediagram:type xsi:type="bediagram:BEObjRefType">
-		        <bediagram:targetEntity entityName="org.shaolin.vogerp.coupon.be.DiscountProduct" />
-		    </bediagram:type>
-		</bediagram:member>
 		<!-- 微信openid-->
 		<bediagram:member>
 			<bediagram:name>openId</bediagram:name>
@@ -189,6 +187,41 @@
 			<bediagram:name>phoneNum</bediagram:name>
 			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
+		<!-- 是否为即刻优惠券类型 -->
+		<bediagram:member>
+			<bediagram:name>isImmediate</bediagram:name>
+			<bediagram:type xsi:type="bediagram:BooleanType" />
+		</bediagram:member>
+		<!-- 图标地址 -->
+	    <bediagram:member>
+	        <bediagram:name>icon</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+		<!-- 优惠力度 -->
+	    <bediagram:member>
+	    	<bediagram:name>discount</bediagram:name>
+	    	<bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 是否可以被分享 -->
+		<bediagram:member>
+			<bediagram:name>isShared</bediagram:name>
+			<bediagram:type xsi:type="bediagram:BooleanType" />
+		</bediagram:member>
+		<!-- 优势信息 -->
+	    <bediagram:member>
+	    	<bediagram:name>superiorityMessage</bediagram:name>
+	    	<bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 限制信息 -->
+	    <bediagram:member>
+	    	<bediagram:name>limitMessage</bediagram:name>
+	    	<bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 店铺名称 -->
+	    <bediagram:member>
+	    	<bediagram:name>storeName</bediagram:name>
+	    	<bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
 		<!-- 券失效时间 -->
 		<bediagram:member>
             <bediagram:name>expiredDate</bediagram:name>
@@ -338,13 +371,17 @@
 	        <bediagram:name>brand</bediagram:name>
 	        <bediagram:type xsi:type="bediagram:StringType" />
 	    </bediagram:member>
-	    <!-- 抽奖页标题 -->
+	    <!-- 是否需要抽奖输入页 -->
 	    <bediagram:member>
-	        <bediagram:name>lotteryTitle</bediagram:name>
+	        <bediagram:name>needLotteryInput</bediagram:name>
+	        <bediagram:type xsi:type="bediagram:StringType" />
+	    </bediagram:member>
+	    <!-- 电话号码 -->
+	    <bediagram:member>
+	        <bediagram:name>phone</bediagram:name>
 	        <bediagram:type xsi:type="bediagram:StringType" />
 	    </bediagram:member>
     </bediagram:beEntity>
-    
     
     
     <!-- 状态 1-创建 2-已发出 3-已兑换 -->

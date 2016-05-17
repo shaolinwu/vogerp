@@ -68,7 +68,7 @@ function org_shaolin_vogerp_coupon_page_CouponSystem(json)
 
 					{
 						if ("Î¬»¤ÏµÍ³" == $("input[name='maintainBtn']").val()) {
-							$("input[name='maintainBtn']").val("\u6062\u590D\u7CFB\u7EDF");
+							$("input[name='maintainBtn']").val("\u6062\u590D\u6B63\u5E38");
 						} else {
 							$("input[name='maintainBtn']").val("\u7EF4\u62A4\u7CFB\u7EDF");
 						}

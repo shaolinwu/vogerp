@@ -18,7 +18,15 @@
                     <item name="commoncss" value="/css/common.css" />
                     <item name="skipCommonCss" value="skipCommonCss" />
                 </node>
+                <node name="org.shaolin.vogerp.coupon.page.FrontLottery1">
+                    <item name="commoncss" value="/css/common.css" />
+                    <item name="skipCommonCss" value="skipCommonCss" />
+                </node>
                 <node name="org.shaolin.vogerp.coupon.page.Thanks">
+                    <item name="commoncss" value="/css/common.css" />
+                    <item name="skipCommonCss" value="skipCommonCss" />
+                </node>
+                <node name="org.shaolin.vogerp.coupon.page.Thanks_new">
                     <item name="commoncss" value="/css/common.css" />
                     <item name="skipCommonCss" value="skipCommonCss" />
                 </node>
@@ -52,6 +60,10 @@
                 	<item name="commonjs" value="/js/common.js" />
                     <item name="skipCommonJs" value="skipCommonJs" />
                 </node>
+                <node name="org.shaolin.vogerp.coupon.page.FrontLottery1">
+                	<item name="commonjs" value="/js/common.js" />
+                    <item name="skipCommonJs" value="skipCommonJs" />
+                </node>
                 <node name="org.shaolin.vogerp.coupon.page.ChoiceDiscountProduct">
 					<item name="commonjs" value="/js/common.js" />
                     <item name="skipCommonJs" value="skipCommonJs" />
@@ -67,6 +79,10 @@
                 </node>
                 <node name="org.shaolin.vogerp.coupon.page.ViewOrderCoupon">
                     <item name="commonjs" value="/js/org/shaolin/vogerp/coupon/coupon-common.js" />
+                    <item name="skipCommonJs" value="skipCommonJs" />
+                </node>
+                <node name="org.shaolin.vogerp.coupon.page.Thanks_new">
+                    <item name="commonjs" value="/js/common.js" />
                     <item name="skipCommonJs" value="skipCommonJs" />
                 </node>
             </node>

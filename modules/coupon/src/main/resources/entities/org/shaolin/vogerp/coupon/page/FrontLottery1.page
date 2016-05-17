@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.coupon.page.FrontLottery1</entityName>
+	<systemVersion>0</systemVersion>
+	<description>买单先生</description>
+
+	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<!-- 后台生成优惠券 -->
+		<ns2:eventHandler functionName="genCoupon">
+			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="genCoupon-20160112-232035">
+				<ns2:exp>
+					<expressionString><![CDATA[
+					{
+						@page.executeJavaScript("defaultname.ChoiceDiscountProductLogic()");
+					}
+					]]></expressionString>
+				</ns2:exp>
+			</ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="ChoiceDiscountProductLogic"></ns2:eventHandler>
+		
+		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UIHiddenType" UIID="luckyImageUrlText" />
+			<ns2:component xsi:type="ns2:UIHiddenType" UIID="showImages" />
+			<ns2:component xsi:type="ns2:UIHiddenType" UIID="openId"></ns2:component>
+			<ns2:component xsi:type="ns2:UIImageType" UIID="advertTopImage">
+				<ns2:Property name="src">
+		            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+				         <ns2:expression>
+				           <expressionString>
+				           { 
+				               return $topAdvertImage.substring($topAdvertImage.indexOf("/", "/uimaster/images".length()));
+				           }</expressionString>
+				         </ns2:expression>
+			        </ns2:value>
+	            </ns2:Property>
+			</ns2:component>
+			<ns2:component xsi:type="ns2:UIPanelType" UIID="rollPanel">
+			</ns2:component>
+			<ns2:component xsi:type="ns2:UIImageType" UIID="advertBottomImage">
+				<ns2:Property name="src">
+		            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+				         <ns2:expression>
+				           <expressionString>
+				           { 
+				               return $bottomAdvertImage.substring($bottomAdvertImage.indexOf("/", "/uimaster/images".length()));
+				           }</expressionString>
+				         </ns2:expression>
+			        </ns2:value>
+	            </ns2:Property>
+			</ns2:component>
+			<ns2:layoutConstraint>
+				<ns2:componentId>advertTopImage</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+			<ns2:layoutConstraint>
+				<ns2:componentId>rollPanel</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+			<ns2:layoutConstraint>
+				<ns2:componentId>advertBottomImage</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+		</ns2:body>
+	</ns2:UIEntity>
+	<ns2:ODMapping>
+		<ns2:DataEntity category="JavaClass" name="openId" scope="InOut">
+            <ns2:type entityName="java.lang.String" />
+        </ns2:DataEntity>
+        <ns2:DataEntity category="JavaClass" name="luckyImageUrlText" scope="InOut">
+            <ns2:type entityName="java.lang.String" />
+        </ns2:DataEntity>
+        <ns2:DataEntity category="JavaClass" name="showImages" scope="InOut">
+            <ns2:type entityName="java.lang.String" />
+        </ns2:DataEntity>
+        <ns2:DataEntity category="JavaClass" name="topAdvertImage" scope="InOut">
+            <ns2:type entityName="java.lang.String" />
+        </ns2:DataEntity>
+        <ns2:DataEntity category="JavaClass" name="bottomAdvertImage" scope="InOut">
+            <ns2:type entityName="java.lang.String" />
+        </ns2:DataEntity>
+        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+			<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+			<ns2:UIComponent componentPath="luckyImageUrlText" paramName="UIWidgetType"></ns2:UIComponent>
+			<ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="luckyImageUrlText" paramName="StringData"></ns2:DataComponent>
+		</ns2:ComponentMapping>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+			<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+			<ns2:UIComponent componentPath="showImages" paramName="UIWidgetType"></ns2:UIComponent>
+			<ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="showImages" paramName="StringData"></ns2:DataComponent>
+		</ns2:ComponentMapping>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+			<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+			<ns2:UIComponent componentPath="openId" paramName="UIWidgetType"></ns2:UIComponent>
+			<ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="openId" paramName="StringData"></ns2:DataComponent>
+		</ns2:ComponentMapping>
+	</ns2:ODMapping>
+	<ns2:in>
+		<ns2:serverOperation xsi:type="ns2:ExpressionType">
+            <ns2:expressionString><![CDATA[
+            import org.shaolin.vogerp.coupon.util.WechatUtil;
+            import org.shaolin.uimaster.page.ajax.*;
+            import org.shaolin.bmdp.runtime.security.UserContext;
+            import org.shaolin.vogerp.coupon.be.*;
+            import org.shaolin.vogerp.coupon.dao.CouponModel;
+            import java.util.List;
+            import java.util.Random;
+            {
+            	$openId = (String)@odContext.getRequest().getSession().getAttribute(WechatUtil.OPEN_ID);
+            	System.out.println("\n\nFrontLottery page  openId=" + $openId + "\n\n");
+            	
+            	CouponUserInfoImpl couponUserCond = new CouponUserInfoImpl();
+            	long orgId = (Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID);
+            	couponUserCond.setOrgId(orgId);
+            	List couponUsers = CouponModel.INSTANCE.searchCouponUserInfo(couponUserCond, null, 0, 0);
+            	if (null == couponUsers || couponUsers.size() <= 0) {
+	            	$topAdvertImage = "/uimaster/images/coupon/front/advert_top.jpg";
+            		$bottomAdvertImage = "/uimaster/images/coupon/front/advert_bottom.jpg";
+            	} else {
+            		CouponUserInfoImpl couponUser = (CouponUserInfoImpl) couponUsers.get(0);
+            		$topAdvertImage = couponUser.getTopAdvertImage();
+            		$bottomAdvertImage = couponUser.getBottomAdvertImage();
+            	}
+            	
+            	@odContext.getRequest().getSession().setAttribute("TopAdvertImage", $topAdvertImage);
+            	@odContext.getRequest().getSession().setAttribute("BottomAdvertImage", $bottomAdvertImage);
+            	
+            	
+            	System.out.println("=========genLuckyCouponType==============");
+				String luckyImageUrl = "";//中奖的图标url
+				String showImages = "";//滚动结束最后显示的3个图标
+				
+               	// 后台生成中奖的奖项图标Url
+               	CouponTypeImpl condition = new CouponTypeImpl();
+               	condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+               	List couponTypes = CouponModel.INSTANCE.searchCouponType(condition, null, 0, 0);
+               	if (null != couponTypes) {
+               		//计算所有奖项总数量
+               		int allTotalNum = 0;
+               		for (int k = 0; k < couponTypes.size(); k++) {
+               			CouponTypeImpl couponType = (CouponTypeImpl)couponTypes.get(k);
+               			allTotalNum += couponType.getTotalNum();
+               		}
+               		
+               		String[] numArr = new String[allTotalNum];
+               		int index = 0;
+               		for (int i = 0; i < couponTypes.size(); i++) {
+               			CouponTypeImpl couponType = (CouponTypeImpl)couponTypes.get(i);
+               			//排除谢谢惠顾,且剩余数量大于1
+               			if (!couponType.getIsThanks() && null != couponType.getIcon() && couponType.getRestNum() > 1) {
+               				Integer totalNum = couponType.getTotalNum();
+               				for (int j = 0; j < totalNum; j++) {
+               					numArr[j + index] = couponType.getIcon();
+               				}
+               				index += totalNum;
+               			}
+               		}
+               		for (int m = index; m < allTotalNum; m++) {
+               			numArr[m] = "";
+               		}
+               		
+               		//随机从数组中抽一项,表示中奖的图标
+               		Random ran = new Random();
+               		int luckyIndex = ran.nextInt(allTotalNum);
+               		System.out.println(numArr[luckyIndex]);
+               		luckyImageUrl =numArr[luckyIndex];
+               		
+               		if (null != luckyImageUrl && luckyImageUrl.length() > 0) {
+	               		showImages= luckyImageUrl + "," + luckyImageUrl + "," + luckyImageUrl;
+	               	} else {
+	               		Random r = new Random();
+	               		int m = 0;
+	               		String lastIcon = "";
+	               		while (m < 3) {
+	               			int index1 = r.nextInt(couponTypes.size());
+	               			CouponTypeImpl c = (CouponTypeImpl)couponTypes.get(index1);
+	               			String icon = c.getIcon();
+	               			if (null != icon && icon.length() > 0 && !icon.equals(lastIcon)) {
+	               				lastIcon = icon;
+	               				showImages = showImages + icon + ",";
+	               				m++;
+	               			}
+	               		}
+	               		
+	               		if (showImages.length() > 0) {
+	               			showImages = showImages.substring(0, showImages.length() - 1);
+	               		}
+	               	}
+               	}
+               	$luckyImageUrlText = luckyImageUrl;
+               	$showImages = showImages;
+            	
+            	
+            	@odContext.executeAllMappings();
+            }]]></ns2:expressionString>
+        </ns2:serverOperation>
+        <ns2:clientAction xsi:type="ns2:ExpressionType">
+			<ns2:expressionString><![CDATA[
+			{
+				var windowHeight = $(window).height();
+				var showImages = $("input[name='showImages']").val();
+				$("#div-Form-0_0").height(windowHeight * 0.6353).show();
+	        	$("#div-Form-0_2").height(windowHeight * 0.2118).show();
+				$("#rollPanel").append("<img id=\"rollImage1\" src=\"/uimaster/images/coupon/front/lotteryRoll_a.gif\" /><img id=\"rollImage2\"  src=\"/uimaster/images/coupon/front/lotteryRoll_b.gif\" /><img id=\"rollImage3\"  src=\"/uimaster/images/coupon/front/lotteryRoll_c.gif\" />");
+				$("#div-Form-0_1").height(windowHeight * 0.1529).css("top" , windowHeight * 0.6353 + "px").show();
+				$("#div-Form-0_1 img").css({"height":windowHeight * 0.1329 + "px", "margin-top":windowHeight * 0.01 + "px"});
+				
+				var showIcons = showImages.split(",");
+				
+				setTimeout(function(){
+					$("#rollImage1").attr("src", showIcons[0]);
+				}, 7800);
+				setTimeout(function(){
+					$("#rollImage2").attr("src", showIcons[1]);
+				}, 9000);
+				setTimeout(function(){
+					$("#rollImage3").attr("src", showIcons[2]);
+				}, 10200);
+				
+				var othis = this;
+				var eventsource = $("#rollPanel");
+				setTimeout(function(){
+       				UIMaster.triggerServerEvent("rollPanel","genCoupon-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);
+       			}, 13000);
+			}
+			]]></ns2:expressionString>
+		</ns2:clientAction>
+	</ns2:in>
+	<ns2:out name="ChoiceDiscountProductLogic" functionName="ChoiceDiscountProductLogic" validate="true">
+		<ns2:clientAction xsi:type="ns2:ExpressionType">
+			<ns2:expressionString><![CDATA[{
+			// hello, my first js.
+			}]]></ns2:expressionString>
+		</ns2:clientAction>
+		<ns2:serverOperation xsi:type="ns2:ExpressionType" />
+	</ns2:out>
+</ns2:UIPage>
+ 

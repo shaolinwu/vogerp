@@ -12,20 +12,22 @@
         import org.shaolin.vogerp.coupon.be.CouponUserInfoImpl;
         import java.util.Date;
         import org.shaolin.vogerp.coupon.dao.CouponModel;
+        import org.shaolin.vogerp.coupon.util.CouponUtil;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             HashMap out = (HashMap)form.ui2Data();
 
+            String orgId = @page.getHidden("orgIdHidden").getValue();
             CouponUserInfoImpl defaultUser = (CouponUserInfoImpl)out.get("beObject");
             System.out.println(defaultUser);
             if (defaultUser.getId() == 0) {
                 System.out.println("created object: " + defaultUser);
-                String orgId = @page.getHidden("orgIdHidden").getValue();
                 defaultUser.setOrgId(Long.valueOf(orgId));
                 defaultUser.setCreateDate(new Date());
             } else {
                 System.out.println("updated object: " + defaultUser);
                 CouponModel.INSTANCE.update(defaultUser);
+                CouponUtil.clearOrgMapByOrgId(Long.valueOf(orgId));
             }
 
             form.closeIfinWindows();
@@ -121,6 +123,7 @@
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -293,6 +296,16 @@
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="brandUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="phoneUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>org_shaolin_vogerp_coupon_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.coupon.be.CouponUserInfo.phone</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="phoneUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+      </ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>lotteryLinkUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
@@ -396,6 +409,14 @@
       <ns2:layoutConstraint>
         <ns2:componentId>brandUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="12" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>phoneUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="13" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>phoneUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="13" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
@@ -530,16 +551,11 @@
       <ns2:UIComponent componentPath="orgIdHidden" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="orgId" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
-    <!-- <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping13">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="industryTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="industryType" paramName="CEValue"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
-        <ns2:expression>
-          <expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
-    </ns2:ComponentMapping> -->
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping12">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="phoneUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.phone" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>{
 @odContext.executeAllMappings();
