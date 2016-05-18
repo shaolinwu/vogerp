@@ -10,6 +10,7 @@
 			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="openPage">
 				<ns2:exp>
 					<ns2:expressionString><![CDATA[
+					import org.shaolin.uimaster.page.ajax.*;
 					import org.shaolin.uimaster.page.AjaxContext;
 					import org.shaolin.bmdp.runtime.AppContext;
 					import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
@@ -24,6 +25,7 @@
 						IDynamicUIService service = (IDynamicUIService)AppContext.get().getService(IDynamicUIService.class);
 						service.reloadAllItems();
 						
+						Dialog.showMessageDialog("Finished", "Information", Dialog.INFORMATION_MESSAGE, null);
                         @page.getButton("reloadBtn").setWidgetLabel("Reloaded.");
 					}
 					]]></ns2:expressionString>
