@@ -72,6 +72,10 @@
             <bediagram:name>isDisplay</bediagram:name>
             <bediagram:type xsi:type="bediagram:BooleanType" />
         </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>displayIndex</bediagram:name>
+            <bediagram:type xsi:type="bediagram:IntType" />
+        </bediagram:member>
 	</bediagram:beEntity>
 
 	<bediagram:beEntity needPersist="true" needUIEntity="true">

@@ -73,6 +73,9 @@ function org_shaolin_vogerp_commonmodel_form_ImageUploader(json)
        this.uploadFile.cleanAll = function() {
            othis.clean(othis.uploadFile);
        }
+       this.uploadFile.onlineSearch = function() {
+           othis.search(othis.uploadFile);
+       }
     
     
             /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_ImageUploader */
@@ -81,6 +84,8 @@ function org_shaolin_vogerp_commonmodel_form_ImageUploader(json)
     Form.refresh = org_shaolin_vogerp_commonmodel_form_ImageUploader_refresh;
 
     Form.clean = org_shaolin_vogerp_commonmodel_form_ImageUploader_clean;
+
+    Form.search = org_shaolin_vogerp_commonmodel_form_ImageUploader_search;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_ImageUploader_invokeDynamicFunction;
 
@@ -114,6 +119,17 @@ function org_shaolin_vogerp_commonmodel_form_ImageUploader(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"clean-20151227-172647",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ImageUploader_clean */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_ImageUploader_search(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ImageUploader_search */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"search-20160520-172647",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ImageUploader_search */
 
 
     /* auto generated eventlistener function declaration */

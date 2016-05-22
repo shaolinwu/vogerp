@@ -1,0 +1,274 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.commonmodel.form.ImageSearcher</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="searchFunc">
+      <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+         <ns2:expressionString><![CDATA[
+         {
+            if (this.loading == undefined) {
+               this.loading = $("<div>\u52A0\u8F7D\u4E2D\u3002\u3002\u3002</div>");
+               $(this.aframePanel).append(this.loading);
+            }
+            this.loading.css("display", "block");
+            if (this.fc != undefined) {
+                $(this.fc).remove();
+            }
+            var frameId = "onlinesearchFrame";
+	        var src = "http://image.baidu.com/search/index?tn=baiduimage&ipn=r&ct=201326592&cl=2&lm=-1&st=-1&fm=index&fr=&sf=1&fmq=&pv=&ic=0&nc=1&z=&se=1&showtab=0&fb=0&width=&height=&face=0&istype=2&ie=utf-8&word=" + encodeURI(this.reloadPathText.getValue()) + "&f=3&oq=&rsp=2";
+            var fc = $("<iframe id=\""+frameId+"\" name=\""+frameId+"\" src=\""+src+"\" needsrc=\"true\" frameborder=\"0\" style=\"display:none;min-width:100%;min-height:100%;-webkit-transform: translateZ(0);\"></iframe>");
+            this.fc = fc;
+            $(this.aframePanel).append(fc);
+            
+            var othis = this;
+            var checkF = function(){
+               othis.loading.css("display", "none");
+            };
+            setTimeout(checkF, 5000);
+            setTimeout(function() {
+	            othis.emtpyLabel.setValue(src);
+	            UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),
+                   "analysis-20160522-100447",UIMaster.getValue(eventsource),othis.__entityName);
+            }, 3000);
+         }
+        ]]></ns2:expressionString>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="analysis">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="analysis-20160522-100447">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.List;
+        import org.shaolin.bmdp.utils.ImageUtil;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.uimaster.page.AjaxContext;
+        { 
+           String value = @page.getHidden("emtpyLabel").getValue();
+           List links = ImageUtil.searchImageOnInternet(value);
+           @page.getImage("photoUI").updateCustLinks(links);
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Cancel">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20151227-172647">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            form.closeIfinWindows(true);
+            @page.removeForm(@page.getEntityUiid()); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="refresh">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="refresh-20160522-172647">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            @page.getImage("photoUI").refresh(); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+	    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIPanelType" UIID="searchPanel">
+        <ns2:layout xsi:type="ns2:TableLayoutType">
+            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+            <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+            <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        </ns2:layout>
+        <ns2:component xsi:type="ns2:UITextFieldType" UIID="reloadPathText">
+            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+            <ns2:title xsi:type="ns2:StringPropertyType">
+                <ns2:value>请输入搜索条件</ns2:value>
+            </ns2:title>
+            <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+                <ns2:value>false</ns2:value>
+            </ns2:allowBlank>
+        </ns2:component>
+        <ns2:component xsi:type="ns2:UIButtonType" UIID="searchBtn">
+            <ns2:text xsi:type="ns2:StringPropertyType">
+                <ns2:value>搜索</ns2:value>
+            </ns2:text>
+            <ns2:EventListener xsi:type="ns2:ClickListenerType">
+                <ns2:handler functionName="searchFunc" />
+            </ns2:EventListener>
+        </ns2:component>
+        <ns2:layoutConstraint>
+            <ns2:componentId>reloadPathText</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                x="0" y="0" align="FULL"></ns2:constraint>
+        </ns2:layoutConstraint>
+        <ns2:layoutConstraint>
+            <ns2:componentId>searchBtn</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                x="1" y="0" align="FULL"></ns2:constraint>
+        </ns2:layoutConstraint>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIPanelType" UIID="photoPanel">
+          <ns2:layout xsi:type="ns2:TableLayoutType">
+            <ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
+            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+          </ns2:layout>
+          <ns2:component xsi:type="ns2:UIImageType" UIID="photoUI">
+            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+            <ns2:isGallery xsi:type="ns2:BooleanPropertyType">
+                <ns2:value>true</ns2:value>
+            </ns2:isGallery>
+            <ns2:Property name="thumbnails">
+              <ns2:value xsi:type="ns2:BooleanPropertyType">
+                 <value>true</value>
+              </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="hideThumbnailsOnInit">
+              <ns2:value xsi:type="ns2:BooleanPropertyType">
+                 <value>false</value>
+              </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="width">
+               <ns2:value xsi:type="ns2:StringPropertyType">
+                   <value>100%</value>
+               </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="height">
+               <ns2:value xsi:type="ns2:StringPropertyType">
+                   <value>400px</value>
+               </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="mobheight">
+               <ns2:value xsi:type="ns2:StringPropertyType">
+                   <value>220px</value>
+               </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="value">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           { 
+			               return $imagePath; 
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+            </ns2:Property>
+          </ns2:component>
+          <ns2:layoutConstraint>
+            <ns2:componentId>photoUI</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+          </ns2:layoutConstraint>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIPanelType" UIID="aframePanel">
+        <ns2:layout xsi:type="ns2:TableLayoutType">
+            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+        </ns2:layout>
+        <ns2:component xsi:type="ns2:UIHiddenType" UIID="emtpyLabel">
+        </ns2:component>
+      </ns2:component>  
+      <ns2:layoutConstraint>
+          <ns2:componentId>searchPanel</ns2:componentId>
+          <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIStyle="width:100%;"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+          <ns2:componentId>photoPanel</ns2:componentId>
+          <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIStyle="width:100%;"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+          <ns2:componentId>aframePanel</ns2:componentId>
+          <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIStyle="width:100%;"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="refreshbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="refresh"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>刷新</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Save"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>OKbtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Cancel"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>Cancelbtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>refreshbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>okbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="2" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:constructorCode><![CDATA[
+       var othis = this;
+    ]]>
+    </ns2:constructorCode>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="imagePath" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:DataToUIMappingOperation>
+      <expressionString><![CDATA[{
+      $imagePath = "/images/search/tmp";
+      @odContext.executeAllMappings();
+      }]]></expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>{
+@odContext.executeAllMappings();
+}</expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

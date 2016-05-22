@@ -43,6 +43,16 @@ function org_shaolin_vogerp_commonmodel_form_ModuleGroup(json)
         ui: elementList[prefix + "accessURLUI"]
     });
 
+    var displayIndexUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "displayIndexUILabel"]
+    });
+
+    var displayIndexUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "displayIndexUI"]
+    });
+
     var smallIconUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "smallIconUILabel"]
@@ -101,13 +111,13 @@ function org_shaolin_vogerp_commonmodel_form_ModuleGroup(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "parentIdUI",prefix + "selectFromAnotherUILabel",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "accessURLUILabel",prefix + "accessURLUI",prefix + "smallIconUILabel",prefix + "smallIconUI",prefix + "bigIconUILabel",prefix + "bigIconUI",prefix + "additionNodesLabel",prefix + "additionNodesUI",prefix + "roleUILabel",prefix + "roleUI"]
+        ,subComponents: [prefix + "parentIdUI",prefix + "selectFromAnotherUILabel",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "accessURLUILabel",prefix + "accessURLUI",prefix + "displayIndexUILabel",prefix + "displayIndexUI",prefix + "smallIconUILabel",prefix + "smallIconUI",prefix + "bigIconUILabel",prefix + "bigIconUI",prefix + "additionNodesLabel",prefix + "additionNodesUI",prefix + "roleUILabel",prefix + "roleUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentIdUI,selectFromAnotherUILabel,nameUILabel,nameUI,descriptionUILabel,descriptionUI,accessURLUILabel,accessURLUI,smallIconUILabel,smallIconUI,bigIconUILabel,bigIconUI,additionNodesLabel,additionNodesUI,roleUILabel,okbtn,cancelbtn,roleUI,fieldPanel,actionPanel]
+        ,items: [parentIdUI,selectFromAnotherUILabel,nameUILabel,nameUI,descriptionUILabel,descriptionUI,accessURLUILabel,accessURLUI,displayIndexUILabel,displayIndexUI,smallIconUILabel,smallIconUI,bigIconUILabel,bigIconUI,additionNodesLabel,additionNodesUI,roleUILabel,okbtn,cancelbtn,roleUI,fieldPanel,actionPanel]
     });
 
     Form.parentIdUI=parentIdUI;
@@ -125,6 +135,10 @@ function org_shaolin_vogerp_commonmodel_form_ModuleGroup(json)
     Form.accessURLUILabel=accessURLUILabel;
 
     Form.accessURLUI=accessURLUI;
+
+    Form.displayIndexUILabel=displayIndexUILabel;
+
+    Form.displayIndexUI=displayIndexUI;
 
     Form.smallIconUILabel=smallIconUILabel;
 
@@ -163,6 +177,10 @@ function org_shaolin_vogerp_commonmodel_form_ModuleGroup(json)
     Form.accessURLUILabel=accessURLUILabel;
 
     Form.accessURLUI=accessURLUI;
+
+    Form.displayIndexUILabel=displayIndexUILabel;
+
+    Form.displayIndexUI=displayIndexUI;
 
     Form.smallIconUILabel=smallIconUILabel;
 

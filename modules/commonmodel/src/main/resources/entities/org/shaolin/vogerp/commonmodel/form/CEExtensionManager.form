@@ -40,6 +40,7 @@
                 {
                     IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
                     ((ConstantServiceImpl)cs).reload();
+                    Dialog.showMessageDialog("Finished", "Information", Dialog.INFORMATION_MESSAGE, null);
                 }
                 ]]></ns2:expressionString>
             </ns2:exp>

@@ -19,21 +19,11 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
         ui: elementList[prefix + "reloadBtn"]
     });
 
-    var reloadCECacheText = new UIMaster.ui.textarea
-    ({
-        ui: elementList[prefix + "reloadCECacheText"]
-    });
-
-    var reloadCECacheBtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "reloadCECacheBtn"]
-    });
-
     var reloadPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "reloadPanel"]
         ,items: []
-        ,subComponents: [prefix + "reloadPathText",prefix + "reloadBtn",prefix + "reloadCECacheText",prefix + "reloadCECacheBtn"]
+        ,subComponents: [prefix + "reloadPathText",prefix + "reloadBtn"]
     });
     var ceentityPanel = new org_shaolin_vogerp_commonmodel_form_CEExtensionManager({"prefix":prefix + "ceentityPanel."});
 
@@ -56,10 +46,6 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
     Form.reloadPathText=reloadPathText;
 
     Form.reloadBtn=reloadBtn;
-
-    Form.reloadCECacheText=reloadCECacheText;
-
-    Form.reloadCECacheBtn=reloadCECacheBtn;
 
     Form.ceentityPanel=ceentityPanel;
 

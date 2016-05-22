@@ -52,35 +52,8 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
         ,items: []
         ,subComponents: [prefix + "typeUILabel",prefix + "typeUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI"]
     });
-    var photoPathUI = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "photoPathUI"]
-    });
+    var infoPanel1 = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "infoPanel1."});
 
-    var photosUI = new UIMaster.ui.image
-    ({
-        ui: elementList[prefix + "photosUI"]
-        ,width: "100%"
-        ,height: "320px"
-        ,mobheight: "220px"
-    });
-
-    var photoUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "photoUILabel"]
-    });
-
-    var uploadFile = new UIMaster.ui.file
-    ({
-        ui: elementList[prefix + "uploadFile"]
-    });
-
-    var infoPanel1 = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "infoPanel1"]
-        ,items: []
-        ,subComponents: [prefix + "photoPathUI",prefix + "photosUI",prefix + "photoUILabel",prefix + "uploadFile"]
-    });
     var htmlDescUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "htmlDescUI"]
@@ -145,14 +118,6 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
 
     Form.infoPanel1=infoPanel1;
 
-    Form.photoPathUI=photoPathUI;
-
-    Form.photosUI=photosUI;
-
-    Form.photoUILabel=photoUILabel;
-
-    Form.uploadFile=uploadFile;
-
     Form.infoPanel2=infoPanel2;
 
     Form.htmlDescUI=htmlDescUI;
@@ -184,14 +149,6 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
     Form.estimatedPriceUI=estimatedPriceUI;
 
     Form.infoPanel1=infoPanel1;
-
-    Form.photoPathUI=photoPathUI;
-
-    Form.photosUI=photosUI;
-
-    Form.photoUILabel=photoUILabel;
-
-    Form.uploadFile=uploadFile;
 
     Form.infoPanel2=infoPanel2;
 
