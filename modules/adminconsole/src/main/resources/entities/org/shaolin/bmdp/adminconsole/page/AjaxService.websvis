@@ -4,20 +4,45 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.bmdp.adminconsole.page.AjaxService</entityName>
 	<systemVersion>0</systemVersion>
+	<ns2:service name="userPreLogin">
+        <ns2:exp>
+            <expressionString><![CDATA[
+      import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.vogerp.commonmodel.IUserService;
+      import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
+      {
+       IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
+       return service.preLogin(@request);
+      }
+     ]]></expressionString>
+        </ns2:exp>
+    </ns2:service>
 	<ns2:service name="userLogin">
 		<ns2:exp>
 			<expressionString><![CDATA[
       import org.shaolin.bmdp.runtime.AppContext;
       import org.shaolin.vogerp.commonmodel.IUserService;
       import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
+      import org.shaolin.uimaster.page.ajax.json.JSONObject;
       {
        IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
-       
+       if (!service.checkVerifiAnswer(@request.getParameter("verifyCode"), @request)) {
+          JSONObject json = new JSONObject();
+          json.put("verifyCode.error", "1");
+          return json;//don't to string.
+       }
        PersonalAccountImpl loginAccount = new PersonalAccountImpl();
        loginAccount.setUserName(@request.getParameter("username"));
        loginAccount.setPassword(@request.getParameter("pwd"));
-       
-       return service.login(loginAccount, @request);
+       //TODO: verification code.
+       String result = service.login(loginAccount, @request);
+       if (result != null && result.length() == 0) {
+           return service.getOnlineUserAsJSON();
+       } else {
+           JSONObject json = new JSONObject();
+           json.put("authfail", result);
+           return json;
+       }
       }
      ]]></expressionString>
 		</ns2:exp>

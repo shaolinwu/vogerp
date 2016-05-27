@@ -24,6 +24,12 @@ public interface IModuleService {
 
 	public long getModuleId(String chunkName, String nodeName);
 
+	/**
+	 * Get the main page modules.
+	 * @return
+	 */
+	public List getModuleGroupToJson();
+	
 	public List<IModuleGroup> getModuleGroupTree(String orgCode);
 	
 	public IModuleGroup getModule(long id);

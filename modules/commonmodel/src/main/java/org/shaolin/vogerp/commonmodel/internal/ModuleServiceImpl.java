@@ -14,6 +14,7 @@ import org.shaolin.bmdp.runtime.cache.ICache;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.javacc.exception.ParsingException;
+import org.shaolin.uimaster.page.ajax.TreeItem;
 import org.shaolin.uimaster.page.cache.UIFlowCacheManager;
 import org.shaolin.uimaster.page.widgets.HTMLMatrixType.DataMode;
 import org.shaolin.vogerp.commonmodel.IModuleService;
@@ -142,6 +143,69 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 		condition.setEnabled(true);
         List<IModuleGroup> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
         return all.size() > 0 ? all.get(0) : null;
+	}
+	
+	public List getModuleGroupToJson() {
+		ModuleGroupImpl condition = new ModuleGroupImpl();
+        List all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
+        if (all.size() == 0) {
+        	logger.warn("AdminConsoleTree data is not initialized!");
+            return Collections.emptyList();
+        } 
+        String moduleType = IModuleService.DEFAULT_USER_MODULES;
+        if (AppContext.get().getAppName().equals(IModuleService.ADMIN_MODULES)) {
+            moduleType = IModuleService.ADMIN_MODULES;
+        }
+        // find root
+        ModuleGroupImpl root = null;
+        for (int i=0;i<all.size();i++) {
+        	ModuleGroupImpl mg = (ModuleGroupImpl)all.get(i);
+        	if (moduleType.equals(mg.getName())) {
+        		   root = mg;
+        	    break;
+        	}
+        }
+        if (root == null) {
+            logger.warn("Please give an empty name as the application root node!");
+            return Collections.emptyList();
+        }
+        
+        // list the nodes under the root node.
+		ArrayList result = new ArrayList();
+		for (int i = 0; i < all.size(); i++) {
+			ModuleGroupImpl mg = (ModuleGroupImpl) all.get(i);
+			if (mg.getParentId() != root.getId()) {
+				continue;
+			}
+			if (!mg.getIsDisplay()) {
+				continue;
+			}
+			TreeItem gitem = new TreeItem();
+			gitem.setId("mg_" + mg.getId());
+			gitem.setText(mg.getName());
+			gitem.setIcon(mg.getSmallIcon());
+			gitem.setState(new org.shaolin.uimaster.page.ajax.TreeItem.State());
+			gitem.setA_attr(new org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute(
+					mg.getAccessURL()));
+			result.add(gitem);
+
+			// find children
+			for (int j = 0; j < all.size(); j++) {
+				if (mg.getId() == ((ModuleGroupImpl) all.get(j)).getParentId()) {
+					ModuleGroupImpl m = (ModuleGroupImpl) all.get(j);
+					TreeItem item = new TreeItem();
+					item.setId("mg_" + m.getId());
+					item.setText(m.getName());
+					item.setA_attr(new org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute(
+							m.getAccessURL()));
+					item.setState(new org.shaolin.uimaster.page.ajax.TreeItem.State());
+					item.setIcon(m.getSmallIcon());
+
+					gitem.getChildren().add(item);
+				}
+			}
+		}
+		return result;
 	}
 	
 	@Override

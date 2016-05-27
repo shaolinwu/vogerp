@@ -20,6 +20,7 @@ import org.shaolin.bmdp.utils.DateParser;
 import org.shaolin.bmdp.utils.HttpUserUtil;
 import org.shaolin.uimaster.page.MobilitySupport;
 import org.shaolin.uimaster.page.WebConfig;
+import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.uimaster.page.flow.WebflowConstants;
 import org.shaolin.vogerp.commonmodel.ICaptcherService;
 import org.shaolin.vogerp.commonmodel.IModuleService;
@@ -150,7 +151,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 	
 	@Override
 	public boolean checkVerifiAnswer(String answer, HttpServletRequest request) {
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession();
 		Object value = session.getAttribute(WebflowConstants.USER_TOKEN);
 		if (value == null) {
 			return false;
@@ -275,6 +276,18 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 	@Override
 	public long getUserId() {
 		return ((UserContext)UserContext.getUserData(WebflowConstants.USER_SESSION_KEY)).getUserId();
+	}
+	
+	@Override
+	public JSONObject getOnlineUserAsJSON() {
+		try {
+			JSONObject json = new JSONObject();
+			json.put("orgName", UserContext.getUserContext().getOrgName());
+			json.put("userName", UserContext.getUserContext().getUserName());
+			return json;
+		} catch (Exception e) {
+			return new JSONObject();
+		}
 	}
 	
 	@Override

@@ -443,70 +443,12 @@
 								<ns2:expressionString><![CDATA[
 								import java.util.List;
 								import java.util.ArrayList;
-								import org.shaolin.vogerp.commonmodel.be.ModuleGroupImpl;
 						        import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
-						        import org.shaolin.uimaster.page.ajax.TreeItem;
-						        import org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute;
-								import org.shaolin.uimaster.page.ajax.TreeConditions;
 								import org.shaolin.bmdp.runtime.AppContext;
 								import org.shaolin.vogerp.commonmodel.IModuleService;
 								{
-									ModuleGroupImpl condition = new ModuleGroupImpl();
-							        List all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
-							        if (all.size() == 0) {
-							            throw new Exception("AdminConsoleTree data is not initialized!");
-							        } 
-							        String moduleType = IModuleService.DEFAULT_USER_MODULES;
-							        if (AppContext.get().getAppName().equals(IModuleService.ADMIN_MODULES)) {
-							            moduleType = IModuleService.ADMIN_MODULES;
-							        }
-							        // find root
-							        ModuleGroupImpl root = null;
-							        for (int i=0;i<all.size();i++) {
-							        	ModuleGroupImpl mg = (ModuleGroupImpl)all.get(i);
-							        	if (moduleType.equals(mg.getName())) {
-							        		   root = mg;
-							        	    break;
-							        	}
-							        }
-							        if (root == null) {
-							            throw new Exception("Please give an empty name as the application root node!");
-							        }
-							        
-							        // list the nodes under the root node.
-									      ArrayList result = new ArrayList();
-							        for (int i=0;i<all.size();i++) {
-						                ModuleGroupImpl mg = (ModuleGroupImpl)all.get(i);
-						                if (mg.getParentId() != root.getId()) {
-						                	continue;
-						                }
-						                if (!mg.getIsDisplay()) {
-											continue;
-										}
-					                TreeItem gitem = new TreeItem();
-					                gitem.setId("mg_" + mg.getId());
-					                gitem.setText(mg.getName());
-					                gitem.setIcon(mg.getSmallIcon());
-					                gitem.setState(new org.shaolin.uimaster.page.ajax.TreeItem.State());
-													        gitem.setA_attr(new org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute(mg.getAccessURL()));
-					                result.add(gitem);
-					                
-					                // find children
-					                for (int j=0;j<all.size();j++) {
-					                	  if (mg.getId() == ((ModuleGroupImpl)all.get(j)).getParentId()) {
-					                		   ModuleGroupImpl m = (ModuleGroupImpl)all.get(j);
-									            TreeItem item = new TreeItem();
-									            item.setId("mg_" + m.getId());
-									            item.setText(m.getName());
-									            item.setA_attr(new org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute(m.getAccessURL()));
-									            item.setState(new org.shaolin.uimaster.page.ajax.TreeItem.State());
-									            item.setIcon(m.getSmallIcon());
-									            
-									            gitem.getChildren().add(item);
-					                    }
-					                 }
-							       }
-									return result;
+								    IModuleService service = (IModuleService)AppContext.get().getService(IModuleService.class);
+									return service.getModuleGroupToJson();
 								}]]></ns2:expressionString>
 							</ns2:expression>
 						</ns2:initExpression>

@@ -3,6 +3,7 @@ package org.shaolin.vogerp.commonmodel;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 import org.shaolin.vogerp.commonmodel.be.IRegisterInfo;
@@ -66,6 +67,8 @@ public interface IUserService {
 	 * @return
 	 */
 	public long getUserId();
+	
+	public JSONObject getOnlineUserAsJSON();
 	
 	public interface UserActionListener {
 		void loggedIn(IPersonalInfo userInfo);
