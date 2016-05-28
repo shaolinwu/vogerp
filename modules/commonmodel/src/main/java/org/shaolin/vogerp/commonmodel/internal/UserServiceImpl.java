@@ -240,7 +240,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 			String userAgent = request.getHeader("user-agent");
 			boolean isMobile = MobilitySupport.isMobileRequest(userAgent);
 			//add user-context thread bind
-            UserContext.registerCurrentUserContext(session, userContext, userLocale, userRoles, isMobile);
+            UserContext.register(session, userContext, userLocale, userRoles, isMobile);
             for (UserActionListener listener: listeners) {
     			listener.loggedIn(matchedUser.getInfo());
     		}

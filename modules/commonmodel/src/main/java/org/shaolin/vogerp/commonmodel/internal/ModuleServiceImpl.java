@@ -153,7 +153,8 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
             return Collections.emptyList();
         } 
         String moduleType = IModuleService.DEFAULT_USER_MODULES;
-        if (AppContext.get().getAppName().equals(IModuleService.ADMIN_MODULES)) {
+        if (UserContext.getUserContext() != null && UserContext.getUserContext().getUserId() > 0 
+        		&& AppContext.get().getAppName().equals(IModuleService.ADMIN_MODULES)) {
             moduleType = IModuleService.ADMIN_MODULES;
         }
         // find root
