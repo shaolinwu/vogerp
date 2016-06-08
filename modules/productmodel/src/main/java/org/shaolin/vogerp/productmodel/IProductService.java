@@ -31,6 +31,13 @@ public interface IProductService {
 	public List<List> getProductTemplateInComboBox(String productType);
 	
 	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public List<List> getProductTemplatesByName(String name);
+	
+	/**
 	 * Get the constant name of user product root.
 	 * 
 	 * @return

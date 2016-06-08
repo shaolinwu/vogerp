@@ -7,12 +7,13 @@ import java.util.List;
 
 import org.shaolin.bmdp.i18n.LocaleContext;
 import org.shaolin.bmdp.utils.DateParser;
+import org.shaolin.bmdp.utils.FileUtil;
 import org.shaolin.bmdp.utils.ImageUtil;
 import org.shaolin.uimaster.page.WebConfig;
 import org.shaolin.uimaster.page.exception.FormatException;
 import org.shaolin.uimaster.page.od.formats.FormatUtil;
-import org.shaolin.vogerp.commonmodel.internal.LifeServiceProviderImpl;
 import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+import org.shaolin.vogerp.productmodel.be.IAbstractProduct;
 import org.shaolin.vogerp.productmodel.be.IProduct;
 import org.shaolin.vogerp.productmodel.be.IProductCharacteristic;
 import org.shaolin.vogerp.productmodel.be.IProductPrice;
@@ -34,10 +35,44 @@ public class ProductUtil {
 		return "PPC-" + System.currentTimeMillis();
 	}
 	
+	public synchronized static String genResourceId() {
+		return "p" + System.nanoTime();
+	}
+	
 	public static String getProductSummary(IProduct product) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(product.getTemplate().getName()).append("(").append(product.getSerialNumber()).append(")");
+		sb.append(product.getName()).append("(").append(product.getSerialNumber()).append(")");
 		return sb.toString();
+	}
+	
+	public static void copyTemplate(IProductTemplate template, IProduct product) {
+		product.setName(template.getName());
+		product.setDescription(template.getDescription());
+		product.setIcon(template.getIcon());
+		if (product.getHtmlDesc() == null) {
+			String resId = ProductUtil.genResourceId();
+			product.setHtmlDesc("/product/" + resId + "/desc.html");
+			product.setPhotos("/product/" + resId + "/images");
+		}
+		if (template.getHtmlDesc() != null) {
+			try {
+				FileUtil.copyFile(new File(WebConfig.getRealPath(template.getHtmlDesc())), 
+						new File(WebConfig.getRealPath(product.getHtmlDesc())));
+			} catch (IOException e) {
+				LoggerFactory.getLogger(ProductUtil.class).warn("Error to copy template's html content", e);
+			}
+		}
+		if (template.getPhotos() != null) {
+			try {
+				FileUtil.copyFolder(new File(WebConfig.getRealPath(template.getPhotos())), 
+						new File(WebConfig.getRealPath(product.getPhotos())));
+			} catch (IOException e) {
+				LoggerFactory.getLogger(ProductUtil.class).warn("Error to copy template's images", e);
+			}
+		}
+		product.setEstimatedPrice(template.getEstimatedPrice());
+		product.setType(template.getType());
+		product.setAttributes(template.getAttributes());
 	}
 	
 	public static String getProductCharacter(IProductTemplate product) {
@@ -67,7 +102,7 @@ public class ProductUtil {
 		return sb.toString();
 	}
 	
-	public static void genProductThumbnail(IProductTemplate template) {
+	public static void genProductThumbnail(IAbstractProduct template) {
 		if (template.getPhotos() != null && !template.getPhotos().trim().isEmpty()) {
 			File image = null;
 			File directory = new File(WebConfig.getResourcePath() + template.getPhotos());

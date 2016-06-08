@@ -62,10 +62,10 @@ public class ProductModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getId()));
             }
             if (scFlow.getName() != null && scFlow.getName().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.name", scFlow.getName()));
+                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.name", scFlow.getName()));
             }
             if (scFlow.getDescription() != null && scFlow.getDescription().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.description", scFlow.getDescription()));
+                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.description", scFlow.getDescription()));
             }
             if (scFlow.getType() != null && scFlow.getType().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.type", scFlow.getType()));
@@ -87,10 +87,10 @@ public class ProductModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getId()));
             }
             if (scFlow.getName() != null && scFlow.getName().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.name", scFlow.getName()));
+                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.name", scFlow.getName()));
             }
             if (scFlow.getDescription() != null && scFlow.getDescription().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.description", scFlow.getDescription()));
+                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.description", scFlow.getDescription()));
             }
             if (scFlow.getType() != null && scFlow.getType().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.type", scFlow.getType()));
@@ -119,7 +119,7 @@ public class ProductModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));
             }
             if (scFlow.getDescription() != null && scFlow.getDescription().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.description", scFlow.getDescription()));
+                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.description", scFlow.getDescription()));
             }
 
         inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
@@ -141,7 +141,7 @@ public class ProductModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));
             }
             if (scFlow.getDescription() != null && scFlow.getDescription().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.description", scFlow.getDescription()));
+                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.description", scFlow.getDescription()));
             }
 
         inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
@@ -235,36 +235,6 @@ public class ProductModel extends BEEntityDaoObject {
 
     public long searchProductCharacteristicCount(org.shaolin.vogerp.productmodel.be.ProductTemplateImpl scFlow) {
             Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.productmodel.be.ProductCharacteristicImpl.class, "inFlow");
-
-            if (scFlow.getId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.productId", scFlow.getId()));
-            }
-
-        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
-
-        return this._count(inFlowCriteria);
-    }
-
-    public List<org.shaolin.vogerp.productmodel.be.ISupplierProduct> searchProductSupplier(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow,
-           List<Order> orders, int offset, int count) {
-            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.productmodel.be.SupplierProductImpl.class, "inFlow");
-            if (orders == null) {
-            } else {
-                this._addOrders(inFlowCriteria, orders);
-            }
-
-            if (scFlow.getId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.productId", scFlow.getId()));
-            }
-
-        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
-
-        List result = this._list(offset, count, inFlowCriteria);
-        return result;
-    }
-
-    public long searchProductSupplierCount(org.shaolin.vogerp.productmodel.be.ProductImpl scFlow) {
-            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.productmodel.be.SupplierProductImpl.class, "inFlow");
 
             if (scFlow.getId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.productId", scFlow.getId()));

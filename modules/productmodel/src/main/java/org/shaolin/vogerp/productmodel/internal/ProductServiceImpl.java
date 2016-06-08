@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.exception.SQLGrammarException;
-import org.shaolin.bmdp.persistence.HibernateUtil;
+import org.hibernate.criterion.Order;
 import org.shaolin.bmdp.runtime.AppContext;
-import org.shaolin.bmdp.runtime.cache.CacheManager;
-import org.shaolin.bmdp.runtime.cache.ICache;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
@@ -16,7 +13,6 @@ import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.uimaster.page.ajax.TreeItem;
-import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.productmodel.IProductService;
 import org.shaolin.vogerp.productmodel.be.IProduct;
@@ -28,88 +24,68 @@ import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
 import org.shaolin.vogerp.productmodel.dao.CustProductModel;
 import org.shaolin.vogerp.productmodel.dao.ProductModel;
 import org.shaolin.vogerp.productmodel.util.ProductUtil;
-import org.slf4j.LoggerFactory;
 
 public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider, IProductService {
 
-	private final String CACHE_NAME = "_product_tree";
-	
-	private final ICache<Long, PriceCostCache> cache;
-	
-	private static class PriceCostCache {
+	public static class PriceCostCache {
 		ArrayList priceResult;
 		java.util.Map priceDataModel;
 	}
 	
-	public ProductServiceImpl() {
-		cache = CacheManager.getInstance().getCache(IModuleService.ADMIN_MODULES + CACHE_NAME, Long.class, 
-				PriceCostCache.class);
-	}
-	
-	private void reloadPriceTree(Long orgId) {
-		try {
-	        ProductImpl criteria = new ProductImpl();
-			criteria.setParentId(0);
-			criteria.setOrgId(orgId);
-			List[] types = CustProductModel.INSTANCE.getProductRootTypeGroup();
-			if (types[0].size() == 0) {
-				return;
-			}
+	private PriceCostCache reloadPriceTree(Long orgId) {
+        ProductImpl criteria = new ProductImpl();
+		criteria.setParentId(0);
+		criteria.setOrgId(orgId);
+		List[] types = CustProductModel.INSTANCE.getProductRootTypeGroup();
+		if (types[0].size() == 0) {
+			return null;
+		}
+		
+		List<IProduct> all = ProductModel.INSTANCE.searchProductParent(criteria, null, 0, -1);
+		
+		java.util.Map dataModel = new java.util.HashMap();
+		// categoried by the types
+		ArrayList result = new ArrayList();
+		for (int i = 0; i < types[0].size(); i++) {
+			String ptype = String.valueOf(types[0].get(i));
+			TreeItem gitem = new TreeItem();
+			gitem.setId("mg_" + types[0].get(i));
+			gitem.setText("" + types[1].get(i));
+			result.add(gitem);
 			
-			List<IProduct> all = ProductModel.INSTANCE.searchProductParent(criteria, null, 0, -1);
-			
-			java.util.Map dataModel = new java.util.HashMap();
-			// categoried by the types
-			ArrayList result = new ArrayList();
-			for (int i = 0; i < types[0].size(); i++) {
-				String ptype = String.valueOf(types[0].get(i));
-				TreeItem gitem = new TreeItem();
-				gitem.setId("mg_" + types[0].get(i));
-				gitem.setText("" + types[1].get(i));
-				result.add(gitem);
+			// list the nodes under the root node.
+			for (int j = 0; j < all.size(); j++) {
+				ProductImpl mg = (ProductImpl) all.get(j);
+				if (!mg.getType().equals(ptype)) {
+					continue;
+				}
 				
-				// list the nodes under the root node.
-				for (int j = 0; j < all.size(); j++) {
-					ProductImpl mg = (ProductImpl) all.get(j);
-					if (!mg.getTemplate().getType().equals(ptype)) {
-						continue;
-					}
-					
-					List<IProductPrice> priceItems = mg.getPriceList();
-					if (priceItems.size() == 0) {
-						continue;
-					}
-					for (int f = 0; f < priceItems.size(); f++) {
-						IProductPrice price = priceItems.get(f);
-						price.setProduct(mg);
-						dataModel.put("pg_" + price.getId(), price);
-					
-						TreeItem pitem = new TreeItem();
-						pitem.setId("pg_" + price.getId());
-						pitem.setText(ProductUtil.getProductSummary(mg) + 
-									"--" + ProductUtil.getPriceFormat(price.getPrice()) + 
-									"--" + ProductUtil.getPricePackage(price));
-						gitem.getChildren().add(pitem);
-					}
+				List<IProductPrice> priceItems = mg.getPriceList();
+				if (priceItems.size() == 0) {
+					continue;
+				}
+				for (int f = 0; f < priceItems.size(); f++) {
+					IProductPrice price = priceItems.get(f);
+					price.setProduct(mg);
+					dataModel.put("pg_" + price.getId(), price);
+				
+					TreeItem pitem = new TreeItem();
+					pitem.setId("pg_" + price.getId());
+					pitem.setText(ProductUtil.getProductSummary(mg) + 
+								"--" + ProductUtil.getPriceFormat(price.getPrice()) + 
+								"--" + ProductUtil.getPricePackage(price));
+					gitem.getChildren().add(pitem);
 				}
 			}
-			if (cache.containsKey(UserContext.getUserContext().getOrgId())) {
-				PriceCostCache pcCache = cache.get(UserContext.getUserContext().getOrgId());
-				pcCache.priceResult = result;
-				pcCache.priceDataModel = dataModel;
-			} else {
-				PriceCostCache pcCache = new PriceCostCache();
-				pcCache.priceResult = result;
-				pcCache.priceDataModel = dataModel;
-				cache.put(UserContext.getUserContext().getOrgId(), pcCache);
-			}
-		} finally {
 		}
+		PriceCostCache pcCache = new PriceCostCache();
+		pcCache.priceResult = result;
+		pcCache.priceDataModel = dataModel;
+		return pcCache;
 	}
 	
 	public List getProductTemplateInComboBox(String productType) {
 		List<IProductTemplate> list = getProductTemplates(productType);
-		
 		ArrayList displays = new ArrayList();
 		ArrayList options = new ArrayList();
 		for (IProductTemplate temp : list) {
@@ -123,17 +99,27 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		return result;
 	}
 	
-	public List<IProductTemplate> getProductTemplates(String productType) {
-		IAppServiceManager masterApp = IServerServiceManager.INSTANCE.getApplication(
-				IServerServiceManager.INSTANCE.getMasterNodeName());
-		IProductService pservce = masterApp.getService(IProductService.class);
-		IAppServiceManager currentContext = AppContext.get();
-		try {
-			AppContext.register(masterApp);
-			return ((ProductServiceImpl)pservce).getProductTemplate0(productType);
-		} finally {
-			AppContext.register(currentContext);
+	public List<List> getProductTemplatesByName(String name) {
+		List orders = new ArrayList();
+        orders.add(Order.desc("createDate"));
+        ProductTemplateImpl condition = new ProductTemplateImpl();
+        condition.setName(name);
+        List<IProductTemplate> list = ProductModel.INSTANCE.searchProductTemplate(condition, orders, 0, 50);
+        ArrayList displays = new ArrayList();
+		ArrayList options = new ArrayList();
+		for (IProductTemplate temp : list) {
+			options.add(temp.getId() + "");
+			displays.add(temp.getName());
 		}
+		
+		ArrayList result = new ArrayList(2);
+		result.add(displays);
+		result.add(options);
+		return result;
+	}
+	
+	public List<IProductTemplate> getProductTemplates(String productType) {
+		return this.getProductTemplate0(productType);
 	}
 	
 	private List<IProductTemplate> getProductTemplate0(String productType) {
@@ -157,34 +143,16 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	
 	@Override
 	public List getPriceTree() {
-		if (!cache.containsKey(UserContext.getUserContext().getOrgId()) 
-				|| cache.get(UserContext.getUserContext().getOrgId()).priceResult == null) {
-			try {
-					reloadPriceTree(UserContext.getUserContext().getOrgId());
-					HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
-			} catch(SQLGrammarException e) {
-				HibernateUtil.releaseSession(HibernateUtil.getSession(), false);
-				LoggerFactory.getLogger(ProductServiceImpl.class).warn("Disable the product module due to " + e.getMessage());
-			} 
-		}
-		ArrayList result = new ArrayList(cache.get(UserContext.getUserContext().getOrgId()).priceResult);
-		result.add(cache.get(UserContext.getUserContext().getOrgId()).priceDataModel);
+		PriceCostCache item = reloadPriceTree(UserContext.getUserContext().getOrgId());
+		ArrayList result = new ArrayList(item.priceResult);
+		result.add(item.priceDataModel);
 		return result;
 	}
 	
 	@Override
 	public Map getPriceTreeMap() {
-		if (!cache.containsKey(UserContext.getUserContext().getOrgId()) 
-				|| cache.get(UserContext.getUserContext().getOrgId()).priceResult == null) {
-			try {
-					reloadPriceTree(UserContext.getUserContext().getOrgId());
-					HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
-			} catch(SQLGrammarException e) {
-				HibernateUtil.releaseSession(HibernateUtil.getSession(), false);
-				LoggerFactory.getLogger(ProductServiceImpl.class).warn("Disable the product module due to " + e.getMessage());
-			} 
-		}
-		return cache.get(UserContext.getUserContext().getOrgId()).priceDataModel;
+		PriceCostCache item = reloadPriceTree(UserContext.getUserContext().getOrgId());
+		return item.priceDataModel;
 	}
 	
 	public IProductPrice getPricePackage(long priceId) {
@@ -229,12 +197,10 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 
 	@Override
 	public void stopService() {
-		cache.clear();
 	}
 
 	@Override
 	public void reload() {
-		cache.clear();
 	}
 
 	@Override

@@ -10,6 +10,7 @@
             if (constraint_result != true && constraint_result != null) {
                 return false;
             }
+            this.htmlDescUI.saveBtn.trigger("click");
         }
         ]]></ns2:expressionString>
     </ns2:ops>
@@ -95,15 +96,6 @@
                         ProductTemplateImpl defaultUser = (ProductTemplateImpl)input.get("beObject");
                         if (defaultUser.getId() == 0) {
                             ProductModel.INSTANCE.create(defaultUser);
-                            
-                            defaultUser.setHtmlDesc("/product/uimaster_templates/" + defaultUser.getId() + "/desc.html");
-                            defaultUser.setPhotos("/product/uimaster_templates/" + defaultUser.getId() + "/images");
-                            ProductModel.INSTANCE.update(defaultUser);
-                            
-                            AFile file = (AFile)@page.getElement("uploadFile");
-                            file.setStoredPath(WebConfig.getResourcePath() + defaultUser.getPhotos());
-                            TextArea htmlDescUI = (TextArea)@page.getElement("htmlDescUI");
-                            htmlDescUI.setValue(defaultUser.getHtmlDesc());
                         }
                     }
                  }]]></ns2:expressionString>
@@ -155,9 +147,6 @@
 		      </ns2:component>
 		      <ns2:component xsi:type="ns2:UITextAreaType" UIID="descriptionUI">
 		        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-		        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
-                   <ns2:value>false</ns2:value>
-                </ns2:allowBlank>
 		      </ns2:component>
 		      <ns2:component xsi:type="ns2:UILabelType" UIID="estimatedPriceUILabel">
 		        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -330,12 +319,12 @@
       </ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="imageWsize">
          <ns2:expression>
-          <expressionString>{return 300;}</expressionString>
+          <expressionString>{return 400;}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="imageHsize">
          <ns2:expression>
-          <expressionString>{return 300;}</expressionString>
+          <expressionString>{return 400;}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
@@ -361,10 +350,7 @@
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString>{
-@odContext.executeMapping("simpleMapping1");
-@odContext.executeMapping("simpleMapping2");
-@odContext.executeMapping("simpleMapping3");
-@odContext.executeMapping("simpleMapping7");
+@odContext.executeAllMappings();
 }</expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>

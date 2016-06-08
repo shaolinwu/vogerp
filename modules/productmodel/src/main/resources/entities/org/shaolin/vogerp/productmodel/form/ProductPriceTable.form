@@ -15,12 +15,10 @@
             IProduct product = (IProduct)form.getInputParameter("beObject");//input parameter is coming from the parent form
             
             ProductCharacteristicImpl charac = new ProductCharacteristicImpl();
-            charac.setTemplateId(product.getTemplateId());
-            charac.setTemplate(product.getTemplate());
             
             HashMap input = new HashMap();
             input.put("beObject", charac);
-            input.put("pType", product.getTemplate().getType());
+            input.put("pType", product.getType());
             input.put("editable", new Boolean(false));
             input.put(RefForm.RECONFIG_ORIGINAL, "Selected");
             
@@ -48,7 +46,7 @@
             
             ProductPriceImpl newCost = new ProductPriceImpl();
             newCost.setPackages(defaultUser.getCeValues());
-            String formId = "productInfoForm.infoPanel2.";
+            String formId = "productInfoForm.infoPanel1.";
             Table tableWidget = (Table)@page.getElementByAbsoluteId(formId+ "itemTable");
             tableWidget.addRow(newCost);
             

@@ -13,6 +13,12 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
         ui: elementList[prefix + "selectPTemplateIdUI"]
     });
 
+    var searchTemplateUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "searchTemplateUI"]
+        ,placeholder: "ËÑË÷²úÆ·Ä£°å"
+    });
+
     var pTemplateListUI = new UIMaster.ui.list
     ({
         ui: elementList[prefix + "pTemplateListUI"]
@@ -54,7 +60,7 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
     ({
         ui: elementList[prefix + "firstPanel"]
         ,items: []
-        ,subComponents: [prefix + "selectProductTypeUI",prefix + "selectPTemplateIdUI",prefix + "productTypeTree",prefix + "pTemplateListUI"]
+        ,subComponents: [prefix + "selectProductTypeUI",prefix + "selectPTemplateIdUI",prefix + "searchTemplateUI",prefix + "productTypeTree",prefix + "pTemplateListUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -67,12 +73,14 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [selectProductTypeUI,selectPTemplateIdUI,pTemplateListUI,addTemplateBtn,okbtn,cancelbtn,productTypeTree,fieldPanel,firstPanel,secondPanel,actionPanel]
+        ,items: [selectProductTypeUI,selectPTemplateIdUI,searchTemplateUI,pTemplateListUI,addTemplateBtn,okbtn,cancelbtn,productTypeTree,fieldPanel,firstPanel,secondPanel,actionPanel]
     });
 
     Form.selectProductTypeUI=selectProductTypeUI;
 
     Form.selectPTemplateIdUI=selectPTemplateIdUI;
+
+    Form.searchTemplateUI=searchTemplateUI;
 
     Form.pTemplateListUI=pTemplateListUI;
 
@@ -92,6 +100,8 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
 
     Form.selectPTemplateIdUI=selectPTemplateIdUI;
 
+    Form.searchTemplateUI=searchTemplateUI;
+
     Form.productTypeTree=productTypeTree;
 
     Form.pTemplateListUI=pTemplateListUI;
@@ -103,6 +113,8 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
     Form.selectProductTypeUI=selectProductTypeUI;
 
     Form.selectPTemplateIdUI=selectPTemplateIdUI;
+
+    Form.searchTemplateUI=searchTemplateUI;
 
     Form.productTypeTree=productTypeTree;
 
@@ -139,6 +151,8 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
     Form.selectPTemplate = org_shaolin_vogerp_productmodel_form_ProductTemplateSelector_selectPTemplate;
 
     Form.addTemplate = org_shaolin_vogerp_productmodel_form_ProductTemplateSelector_addTemplate;
+
+    Form.searchTemplate = org_shaolin_vogerp_productmodel_form_ProductTemplateSelector_searchTemplate;
 
     Form.Cancel = org_shaolin_vogerp_productmodel_form_ProductTemplateSelector_Cancel;
 
@@ -188,6 +202,17 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"addTemplate-20160109-2247",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductTemplateSelector_addTemplate */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector_searchTemplate(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductTemplateSelector_searchTemplate */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"searchTemplate-20160109-2247",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductTemplateSelector_searchTemplate */
 
 
     /* auto generated eventlistener function declaration */

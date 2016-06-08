@@ -357,7 +357,7 @@
 		                                <ns2:expressionString><![CDATA[
 		                                import org.shaolin.bmdp.runtime.AppContext;
 		                                {
-		                                	return $rowBE.getProduct().getTemplate().getName();
+		                                	return $rowBE.getProduct().getName();
 		                                }]]></ns2:expressionString>
 		                            </ns2:expression>
 		                        </ns2:rowExpression>

@@ -109,7 +109,7 @@
 						// list the nodes under the root node.
 						for (int j = 0; j < all.size(); j++) {
 									ProductImpl mg = (ProductImpl) all.get(j);
-									if (!mg.getTemplate().getType().equals(ptype)) {
+									if (!mg.getType().equals(ptype)) {
 										   continue;
 									}
 									

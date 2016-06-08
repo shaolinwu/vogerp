@@ -46,11 +46,7 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
 
     Form.deleteProduct = org_shaolin_vogerp_productmodel_page_ProductManagement_deleteProduct;
 
-    Form.openProductSupplier = org_shaolin_vogerp_productmodel_page_ProductManagement_openProductSupplier;
-
     Form.openProductPrice = org_shaolin_vogerp_productmodel_page_ProductManagement_openProductPrice;
-
-    Form.openProductCost = org_shaolin_vogerp_productmodel_page_ProductManagement_openProductCost;
 
     Form.expandTreeNode = org_shaolin_vogerp_productmodel_page_ProductManagement_expandTreeNode;
 
@@ -122,17 +118,6 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_productmodel_page_ProductManagement_openProductSupplier(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_page_ProductManagement_openProductSupplier */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openProductSupplier5673456",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_productmodel_page_ProductManagement_openProductSupplier */
-
-
-    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_productmodel_page_ProductManagement_openProductPrice(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_page_ProductManagement_openProductPrice */
         var o = this;
         var UIEntity = this;
@@ -141,17 +126,6 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openProductPrice5673456",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_page_ProductManagement_openProductPrice */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_productmodel_page_ProductManagement_openProductCost(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_page_ProductManagement_openProductCost */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openProductCost5673456",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_productmodel_page_ProductManagement_openProductCost */
 
 
     /* auto generated eventlistener function declaration */

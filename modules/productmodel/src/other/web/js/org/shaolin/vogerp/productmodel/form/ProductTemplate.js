@@ -192,6 +192,7 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
             if (constraint_result != true && constraint_result != null) {
                 return false;
             }
+            this.htmlDescUI.saveBtn.trigger("click");
         }
         
         // cal ajax function. 

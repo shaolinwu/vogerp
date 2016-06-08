@@ -15,11 +15,18 @@
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.AjaxActionHelper;
                     import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
                     import org.shaolin.vogerp.productmodel.be.ProductImpl;
                     import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
+                    import org.shaolin.vogerp.productmodel.util.ProductUtil;
                     {
                         ProductImpl defaultUser = new ProductImpl();
-                        defaultUser.setTemplate(new ProductTemplateImpl());
+                        defaultUser.setSerialNumber(ProductUtil.genSerialNumber());
+                        defaultUser.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+                        String resId = ProductUtil.genResourceId();
+                        defaultUser.setHtmlDesc("/product/" + resId + "/desc.html");
+                        defaultUser.setPhotos("/product/" + resId + "/images");
+                        
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
                         input.put("costList", new ArrayList());
@@ -108,42 +115,6 @@
                 </ns2:exp>
             </ns2:ops>
 		</ns2:eventHandler>
-        <ns2:eventHandler functionName="openProductSupplier">
-            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openProductSupplier5673456">
-                <ns2:exp>
-                    <ns2:expressionString><![CDATA[
-                    import java.util.HashMap;
-                    import java.util.List;
-                    import org.shaolin.uimaster.page.AjaxContext;
-                    import org.shaolin.uimaster.page.ajax.*;
-                    import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
-                    import org.shaolin.vogerp.productmodel.be.SupplierProductImpl;
-                    import org.shaolin.vogerp.productmodel.be.ProductImpl;
-                    import org.shaolin.vogerp.productmodel.dao.ProductModel;
-                    {
-                        Table personalInfoTable = (Table)@page.getElement("productInfoTable");
-                        if (personalInfoTable.getSelectedRow() == null) {
-                            return;
-                        }
-                        ProductImpl defaultUser = (ProductImpl)personalInfoTable.getSelectedRow();
-                        SupplierProductImpl codeInfo = new SupplierProductImpl();
-                        codeInfo.setProductId(defaultUser.getId());
-                        List result = ProductModel.INSTANCE.searchProductSupplier(defaultUser, null, 0, 1);
-                        if (result != null && result.size() > 0) {
-                        	codeInfo = (SupplierProductImpl)result.get(0);
-                        }
-                        HashMap input = new HashMap();
-                        input.put("beObject", codeInfo);
-                        input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("supplierForm", "org.shaolin.vogerp.productmodel.form.SupplierProduct", input);
-                        @page.addElement(form);
-                        
-                        form.openInWindows("Modify Product Supplier Information", new TableCallBack("productInfoTable"));
-                    }
-                    ]]></ns2:expressionString>
-                </ns2:exp>
-            </ns2:ops>
-        </ns2:eventHandler>
         <ns2:eventHandler functionName="openProductPrice">
             <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openProductPrice5673456">
                 <ns2:exp>
@@ -178,28 +149,6 @@
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
-        <ns2:eventHandler functionName="openProductCost">
-            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openProductCost5673456">
-                <ns2:exp>
-                    <ns2:expressionString><![CDATA[
-                    import java.util.HashMap;
-                    import java.util.List;
-                    import org.shaolin.uimaster.page.AjaxContext;
-                    import org.shaolin.uimaster.page.ajax.*;
-                    import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
-                    import org.shaolin.vogerp.productmodel.be.ProductCostImpl;
-                    import org.shaolin.vogerp.productmodel.be.ProductImpl;
-                    import org.shaolin.vogerp.productmodel.dao.ProductModel;
-                    {
-                        Table personalInfoTable = (Table)@page.getElement("productInfoTable");
-                        if (personalInfoTable.getSelectedRow() == null) {
-                            return;
-                        }
-                    }
-                    ]]></ns2:expressionString>
-                </ns2:exp>
-            </ns2:ops>
-        </ns2:eventHandler>
         <ns2:eventHandler functionName="expandTreeNode">
 	      <ns2:ops xsi:type="ns2:OpCallAjaxType" name="expandTreeNode3534543">
 	           <ns2:exp>
@@ -228,7 +177,7 @@
 				                       ProductImpl m = (ProductImpl)subgroups.get(i);
 				                       TreeItem item = new TreeItem();
 				                       item.setId("p_"+m.getId());
-						                     item.setText(m.getTemplate().getName());
+						                     item.setText(m.getName());
 				                       item.setHasChildren(true);
 				                       result.add(item);
 				                   }
@@ -338,7 +287,7 @@
 	                                <ns2:expression xsi:type="ns2:ExpressionType">
 	                                    <ns2:expressionString><![CDATA[
 	                                    {
-	                                        return $rowBE.getTemplate().getIcon();
+	                                        return $rowBE.getIcon();
 	                                    }
 	                                    ]]></ns2:expressionString>
 	                                </ns2:expression>
@@ -354,7 +303,7 @@
 		                                <ns2:expressionString><![CDATA[
 		                                import org.shaolin.bmdp.runtime.AppContext;
 		                                {
-		                                	return $rowBE.getTemplate().getName() + "(" + $rowBE.getSerialNumber() +")";
+		                                	return $rowBE.getName() + "(" + $rowBE.getSerialNumber() +")";
 		                                }]]></ns2:expressionString>
 		                            </ns2:expression>
 		                        </ns2:rowExpression>
@@ -388,7 +337,7 @@
 		                                <ns2:expressionString><![CDATA[
 		                                import org.shaolin.bmdp.runtime.AppContext;
 		                                {
-		                                	return org.shaolin.bmdp.runtime.ce.CEUtil.getValue($rowBE.getTemplate().getType());
+		                                	return org.shaolin.bmdp.runtime.ce.CEUtil.getValue($rowBE.getType());
 		                                }]]></ns2:expressionString>
 		                            </ns2:expression>
 		                        </ns2:rowExpression>
@@ -399,13 +348,10 @@
 		                                import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 		                                import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
 		                                {
-		                                    if ($rowBE.getTemplate() == null) {
-		                                        $rowBE.setTemplate(new ProductTemplateImpl());
-		                                    }
 		                                	if ("-1".equals($value)) {
-		                                		$rowBE.getTemplate().setType(null);
+		                                		$rowBE.setType(null);
 		                                	} else {
-		                                    	$rowBE.getTemplate().setType($value);
+		                                    	$rowBE.setType($value);
 		                                    }
 		                                }]]></ns2:expressionString>
 		                            </ns2:expression>

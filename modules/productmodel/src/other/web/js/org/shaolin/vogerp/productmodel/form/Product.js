@@ -7,18 +7,21 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     ({
         ui: elementList[prefix + "funcsPanel"]
         ,items: []
-        ,subComponents: [prefix + "infoPanel0",prefix + "infoPanel1",prefix + "infoPanel2",prefix + "infoPanel3"]
+        ,subComponents: [prefix + "infoPanel0",prefix + "infoPanel1"]
     });
-    var productTypeUI = new UIMaster.ui.hidden
-    ({
-        ui: elementList[prefix + "productTypeUI"]
-    });
-
     var templateIdUI = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "templateIdUI"]
     });
 
+    var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
+
+    var photoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "photoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "photoUI"]
+    });
     var serialNumberUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "serialNumberUILabel"]
@@ -34,9 +37,16 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         ui: elementList[prefix + "typeUILabel"]
     });
 
-    var typeUI = new UIMaster.ui.textfield
+    var typeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "typeUI."});
+
+    var nameUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "typeUI"]
+        ui: elementList[prefix + "nameUILabel"]
+    });
+
+    var nameUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "nameUI"]
     });
 
     var descriptionUILabel = new UIMaster.ui.label
@@ -49,26 +59,35 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         ui: elementList[prefix + "descriptionUI"]
     });
 
-    var infoPanel0 = new UIMaster.ui.panel
+    var attributePanel = new UIMaster.ui.panel
     ({
-        ui: elementList[prefix + "infoPanel0"]
+        ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "productTypeUI",prefix + "templateIdUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI"]
     });
-    var infoPanel1 = new org_shaolin_vogerp_productmodel_form_ProductPriceTable({"prefix":prefix + "infoPanel1."});
-
-    var infoPanel2 = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "infoPanel2."});
-
     var htmlDescUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "htmlDescUI"]
     });
 
-    var infoPanel3 = new UIMaster.ui.panel
+    var htmlPanel = new UIMaster.ui.panel
     ({
-        ui: elementList[prefix + "infoPanel3"]
+        ui: elementList[prefix + "htmlPanel"]
         ,items: []
         ,subComponents: [prefix + "htmlDescUI"]
+    });
+    var infoPanel0 = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "infoPanel0"]
+        ,items: []
+        ,subComponents: [prefix + "templateIdUI",prefix + "photoPanel",prefix + "attributePanel",prefix + "htmlPanel"]
+    });
+    var infoPanel1 = new org_shaolin_vogerp_productmodel_form_ProductPriceTable({"prefix":prefix + "infoPanel1."});
+
+
+    var importTemplate = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "importTemplate"]
     });
 
     var okbtn = new UIMaster.ui.button
@@ -85,7 +104,7 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "closebtn"]
+        ,subComponents: [prefix + "importTemplate",prefix + "okbtn",prefix + "closebtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -98,16 +117,20 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [funcsPanel,okbtn,closebtn,fieldPanel,actionPanel]
+        ,items: [funcsPanel,importTemplate,okbtn,closebtn,fieldPanel,actionPanel]
     });
 
     Form.funcsPanel=funcsPanel;
 
     Form.infoPanel0=infoPanel0;
 
-    Form.productTypeUI=productTypeUI;
-
     Form.templateIdUI=templateIdUI;
+
+    Form.photoPanel=photoPanel;
+
+    Form.photoUI=photoUI;
+
+    Form.attributePanel=attributePanel;
 
     Form.serialNumberUILabel=serialNumberUILabel;
 
@@ -117,17 +140,21 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.typeUI=typeUI;
 
+    Form.nameUILabel=nameUILabel;
+
+    Form.nameUI=nameUI;
+
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
 
-    Form.infoPanel1=infoPanel1;
-
-    Form.infoPanel2=infoPanel2;
-
-    Form.infoPanel3=infoPanel3;
+    Form.htmlPanel=htmlPanel;
 
     Form.htmlDescUI=htmlDescUI;
+
+    Form.infoPanel1=infoPanel1;
+
+    Form.importTemplate=importTemplate;
 
     Form.okbtn=okbtn;
 
@@ -139,9 +166,13 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.infoPanel0=infoPanel0;
 
-    Form.productTypeUI=productTypeUI;
-
     Form.templateIdUI=templateIdUI;
+
+    Form.photoPanel=photoPanel;
+
+    Form.photoUI=photoUI;
+
+    Form.attributePanel=attributePanel;
 
     Form.serialNumberUILabel=serialNumberUILabel;
 
@@ -151,19 +182,23 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.typeUI=typeUI;
 
+    Form.nameUILabel=nameUILabel;
+
+    Form.nameUI=nameUI;
+
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
 
-    Form.infoPanel1=infoPanel1;
-
-    Form.infoPanel2=infoPanel2;
-
-    Form.infoPanel3=infoPanel3;
+    Form.htmlPanel=htmlPanel;
 
     Form.htmlDescUI=htmlDescUI;
 
+    Form.infoPanel1=infoPanel1;
+
     Form.actionPanel=actionPanel;
+
+    Form.importTemplate=importTemplate;
 
     Form.okbtn=okbtn;
 
@@ -205,7 +240,8 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
             if (constraint_result != true && constraint_result != null) {
                 return false;
             }
-            this.infoPanel2.itemTable.syncBodyDataToServer();
+            this.infoPanel1.itemTable.syncBodyDataToServer();
+            this.htmlDescUI.saveBtn.trigger("click");
         }
         
         // cal ajax function. 
