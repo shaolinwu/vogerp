@@ -444,7 +444,19 @@
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>province</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>city</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>district</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>xian</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>

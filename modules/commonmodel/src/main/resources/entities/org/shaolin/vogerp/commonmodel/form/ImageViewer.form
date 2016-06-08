@@ -166,6 +166,16 @@
 	           }]]></expressionString>
 	         </ns2:expression>
 	        </ns2:storedPath>
+	        <ns2:Property name="allowedNumbers">
+               <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                     <ns2:expression>
+                       <expressionString><![CDATA[
+                       { 
+                           return 10; 
+                       }]]></expressionString>
+                     </ns2:expression>
+                </ns2:value>
+            </ns2:Property>
       </ns2:component>
       <ns2:layoutConstraint>
           <ns2:componentId>photoPanel</ns2:componentId>

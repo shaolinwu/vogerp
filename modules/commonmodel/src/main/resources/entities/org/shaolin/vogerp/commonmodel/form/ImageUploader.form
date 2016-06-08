@@ -120,7 +120,7 @@
 	         <ns2:value>*.jpg;*.jpeg;*.png;*.gif</ns2:value>
 	        </ns2:suffix>
 	        <ns2:isMultiple xsi:type="ns2:BooleanPropertyType">
-	         <ns2:value>false</ns2:value>
+	         <ns2:value>true</ns2:value>
 	        </ns2:isMultiple>
 	        <ns2:storedPath xsi:type="ns2:ExpressionPropertyType">
 	         <ns2:expression>
@@ -203,7 +203,7 @@
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="allowNumber" category="JavaPrimitive">
       <type entityName="java.lang.Integer"></type>
-      <default><expressionString><![CDATA[new Integer(-1)]]></expressionString></default>
+      <default><expressionString><![CDATA[new Integer(10)]]></expressionString></default>
     </ns2:DataEntity>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
@@ -219,7 +219,7 @@
           $imagePath = "/tempImages/" + i;
       }
       if ($allowNumber == null) {
-          $allowNumber = -1;
+          $allowNumber = 10;
       }
       
       @odContext.executeAllMappings();

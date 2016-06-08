@@ -76,6 +76,8 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfoTable(json)
 
     Form.verifyAddress = org_shaolin_vogerp_commonmodel_form_AddressInfoTable_verifyAddress;
 
+    Form.selectProvince = org_shaolin_vogerp_commonmodel_form_AddressInfoTable_selectProvince;
+
     Form.Save = org_shaolin_vogerp_commonmodel_form_AddressInfoTable_Save;
 
     Form.Cancel = org_shaolin_vogerp_commonmodel_form_AddressInfoTable_Cancel;
@@ -123,6 +125,17 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfoTable(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifyAddress-20151229-1148",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_AddressInfoTable_verifyAddress */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_AddressInfoTable_selectProvince(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_AddressInfoTable_selectProvince */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectProvince-201605102011",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_AddressInfoTable_selectProvince */
 
 
     /* auto generated eventlistener function declaration */
