@@ -372,6 +372,11 @@
       <ns2:mappingRule entityName="org.shaolin.vogerp.order.form.OrderItemTable"></ns2:mappingRule>
       <ns2:UIComponent componentPath="orderItemTable" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.items" paramName="list"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
+        <ns2:expression>
+          <expressionString>{return $editable;}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[

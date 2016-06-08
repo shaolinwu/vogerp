@@ -6,6 +6,47 @@
 	<systemVersion>0</systemVersion>
 	<description>抢单管理</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+	    <ns2:eventHandler functionName="createGOrder">
+          <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createGOrder-20160602">
+              <ns2:exp>
+                  <ns2:expressionString><![CDATA[
+                  import java.util.HashMap;
+                  import org.shaolin.uimaster.page.AjaxContext;
+                  import org.shaolin.uimaster.page.ajax.*;
+                  import org.shaolin.bmdp.runtime.AppContext;
+                  import org.shaolin.bmdp.runtime.security.UserContext;
+                  import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                  import org.shaolin.vogerp.commonmodel.IUserService; 
+                  import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                  import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                  import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+                  import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+                  {
+                      IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+                      GoldenOrderImpl order = new GoldenOrderImpl();
+                      order.setOrgId(UserContext.getUserContext().getOrgId());
+                      order.setSerialNumber(OrderUtil.genSerialNumber());
+                      order.setStatus(OrderStatusType.CREATED);
+                      order.setPublishedCustomerId(service.getUserId());
+                      order.setPublishedCustomer((PersonalInfoImpl)service.getPersonalInfo(service.getUserId()));
+                      String resourceId = OrderUtil.genResourceId();
+                      order.setHtmlDesc("/product/" + resourceId + "/desc.html");
+                      order.setPhotos("/product/" + resourceId + "/images");
+                      order.setCreateDate(new java.util.Date());
+                      order.setIsPurchaseOrder(true);
+                      
+                      HashMap input = new HashMap();
+                      input.put("beObject", order);
+                      input.put("editable", new Boolean(true));
+                      RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor", input);
+                      @page.addElement(form);
+                      
+                      form.openInWindows("新建抢购订单", new TableCallBack("goldenOrderTable"), 690, 450);
+                  }
+                  ]]></ns2:expressionString>
+              </ns2:exp>
+          </ns2:ops>
+        </ns2:eventHandler>
 		<ns2:eventHandler functionName="openGoldenOrder">
 		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openGoldenOrder-2016-0124-1351">
                 <ns2:exp>
@@ -24,10 +65,10 @@
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
                         input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GoldenOrder", input);
+                        RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("订单详情", new TableCallBack("goldenOrderTable"), 690, 450);
+                        form.openInWindows("抢购订单详情", new TableCallBack("goldenOrderTable"), 690, 450);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -55,7 +96,7 @@
                         RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GOOfferPriceTable", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("接受价格", new TableCallBack("goldenOrderTable"), 690, 450);
+                        form.openInWindows("接受出价", new TableCallBack("goldenOrderTable"), 690, 450);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -82,15 +123,114 @@
                       HashMap input = new HashMap();
                       input.put("sessionId", service.getSessionId(defaultUser.getTaskId()));
                       input.put("editable", new Boolean(true));
-                      RefForm form = new RefForm("saleOrder", "org.shaolin.bmdp.workflow.form.SessionTracker", input);
+                      RefForm form = new RefForm("goldenOrderForm", "org.shaolin.bmdp.workflow.form.SessionTracker", input);
                       @page.addElement(form);
                       
-                      form.openInWindows("Order Tracker", null, 690, 380);
+                      form.openInWindows("订单跟踪", null, 690, 450);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>
           </ns2:ops>
       </ns2:eventHandler>
+      <ns2:eventHandler functionName="createRentOrder">
+          <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createRentOrder-20160602">
+              <ns2:exp>
+                  <ns2:expressionString><![CDATA[
+                  import java.util.HashMap;
+                  import org.shaolin.uimaster.page.AjaxContext;
+                  import org.shaolin.uimaster.page.ajax.*;
+                  import org.shaolin.bmdp.runtime.AppContext;
+                  import org.shaolin.bmdp.runtime.security.UserContext;
+                  import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                  import org.shaolin.vogerp.commonmodel.IUserService; 
+                  import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                  import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                  import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+                  import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+                  {
+                      IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+                      RentOrLoanOrderImpl order = new RentOrLoanOrderImpl();
+                      order.setOrgId(UserContext.getUserContext().getOrgId());
+                      order.setSerialNumber(OrderUtil.genSerialNumber());
+                      order.setStatus(OrderStatusType.CREATED);
+                      order.setPublishedCustomerId(service.getUserId());
+                      order.setPublishedCustomer((PersonalInfoImpl)service.getPersonalInfo(service.getUserId()));
+                      String resourceId = OrderUtil.genResourceId();
+                      order.setHtmlDesc("/product/" + resourceId + "/desc.html");
+                      order.setPhotos("/product/" + resourceId + "/images");
+                      order.setCreateDate(new java.util.Date());
+                      
+                      HashMap input = new HashMap();
+                      input.put("beObject", order);
+                      input.put("editable", new Boolean(true));
+                      RefForm form = new RefForm("rentOrLoanOrder", "org.shaolin.vogerp.ecommercial.form.RentOrLoanOrderEditor", input);
+                      @page.addElement(form);
+                      
+                      form.openInWindows("新建租赁订单", new TableCallBack("rentOrderTable"), 690, 450);
+                  }
+                  ]]></ns2:expressionString>
+              </ns2:exp>
+          </ns2:ops>
+      </ns2:eventHandler>
+      <ns2:eventHandler functionName="openRentOrder">
+          <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openRentOrder-20160602">
+              <ns2:exp>
+                  <ns2:expressionString><![CDATA[
+                  import java.util.HashMap;
+                  import org.shaolin.uimaster.page.AjaxContext;
+                  import org.shaolin.uimaster.page.ajax.*;
+                  import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                  import org.shaolin.bmdp.runtime.AppContext;
+                  import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                  {
+                      Table personalInfoTable = (Table)@page.getElement("rentOrderTable");
+                      if (personalInfoTable.getSelectedRow() == null) {
+                          return;
+                      }
+                      RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)personalInfoTable.getSelectedRow();
+                      
+                      HashMap input = new HashMap();
+                      input.put("beObject", defaultUser);
+                      input.put("editable", new Boolean(true));
+                      RefForm form = new RefForm("rentOrLoanOrder", "org.shaolin.vogerp.ecommercial.form.RentOrLoanOrderEditor", input);
+                      @page.addElement(form);
+                      
+                      form.openInWindows("租赁订单详情", new TableCallBack("rentOrderTable"), 690, 450);
+                  }
+                  ]]></ns2:expressionString>
+              </ns2:exp>
+          </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="openRentOrderTracker">
+          <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openRentOrderTracker-20150614">
+              <ns2:exp>
+                  <ns2:expressionString><![CDATA[
+                  import java.util.HashMap;
+                  import org.shaolin.uimaster.page.AjaxContext;
+                  import org.shaolin.uimaster.page.ajax.*;
+                  import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                  import org.shaolin.bmdp.runtime.AppContext;
+                  import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                  {
+                      Table personalInfoTable = (Table)@page.getElement("rentOrderTable");
+                      if (personalInfoTable.getSelectedRow() == null) {
+                          return;
+                      }
+                      RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)personalInfoTable.getSelectedRow();
+                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+                      
+                      HashMap input = new HashMap();
+                      input.put("sessionId", service.getSessionId(defaultUser.getTaskId()));
+                      input.put("editable", new Boolean(true));
+                      RefForm form = new RefForm("goldenOrderForm", "org.shaolin.bmdp.workflow.form.SessionTracker", input);
+                      @page.addElement(form);
+                      
+                      form.openInWindows("订单跟踪", null, 690, 450);
+                  }
+                  ]]></ns2:expressionString>
+              </ns2:exp>
+          </ns2:ops>
+        </ns2:eventHandler>
         <ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 		   <ns2:UISkin xsi:type="ns2:UISkinType">
 		     <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
@@ -283,6 +423,7 @@
 		                        </ns2:updateCondition>
 		                    </ns2:column>
 		                    <ns2:defaultActions>
+		                        <ns2:defaultNewAction>createGOrder</ns2:defaultNewAction>
 		                        <ns2:defaultOpenAction>openGoldenOrder</ns2:defaultOpenAction>
 		                        <ns2:defaultDisableAction>disableProduct</ns2:defaultDisableAction>
 		                    </ns2:defaultActions>
@@ -315,7 +456,7 @@
                   </ns2:tab>
                   <ns2:tab uiid="rentOrderInfoPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
-                        <ns2:value>租赁单</ns2:value>
+                        <ns2:value>租赁订单</ns2:value>
                     </ns2:title>
                     <ns2:panel UIID="rentOrderInfoPanel">
                         <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -469,26 +610,27 @@
                                 </ns2:updateCondition>
                             </ns2:column>
                             <ns2:defaultActions>
-                                <ns2:defaultOpenAction>openGoldenOrder</ns2:defaultOpenAction>
-                                <ns2:defaultDisableAction>disableProduct</ns2:defaultDisableAction>
+                                <ns2:defaultNewAction>createRentOrder</ns2:defaultNewAction>
+                                <ns2:defaultOpenAction>openRentOrder</ns2:defaultOpenAction>
+                                <ns2:defaultDisableAction>disableRentOrder</ns2:defaultDisableAction>
                             </ns2:defaultActions>
                             <ns2:actionGroup>
                                 <ns2:type>radio</ns2:type>
                                 <ns2:action>
-                                    <ns2:uiid>acceptGoldenOrder</ns2:uiid>
+                                    <ns2:uiid>acceptRentOrder</ns2:uiid>
                                     <ns2:title xsi:type="ns2:StringPropertyType">
                                         <ns2:value>成交订单</ns2:value>
                                     </ns2:title>
                                     <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>acceptGoldenOrder</ns2:function>
+                                    <ns2:function>acceptRentOrder</ns2:function>
                                 </ns2:action>
                                 <ns2:action>
-                                    <ns2:uiid>openGOrderTracker</ns2:uiid>
+                                    <ns2:uiid>openRentOrderTracker</ns2:uiid>
                                     <ns2:title xsi:type="ns2:StringPropertyType">
                                         <ns2:value>状态跟踪</ns2:value>
                                     </ns2:title>
                                     <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>openGOrderTracker</ns2:function>
+                                    <ns2:function>openRentOrderTracker</ns2:function>
                                 </ns2:action>
                              </ns2:actionGroup>
                         </ns2:component>

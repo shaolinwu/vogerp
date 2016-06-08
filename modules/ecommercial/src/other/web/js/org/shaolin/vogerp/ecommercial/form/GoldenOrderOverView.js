@@ -8,9 +8,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView(json)
         ui: elementList[prefix + "photoUI"]
         ,width: "250px"
         ,height: "200px"
-        ,mobheight: "200px"
-        ,thumbnails: false
-        ,enableSelectSync: false
     });
 
     var expiratedDateUI = new UIMaster.ui.countdown

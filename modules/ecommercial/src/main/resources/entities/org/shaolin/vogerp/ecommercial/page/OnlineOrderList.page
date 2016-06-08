@@ -6,9 +6,7 @@
 	<systemVersion>0</systemVersion>
 	<description>抢单达人主页</description>
 	<descriptionExpr>
-	   <expressionString><![CDATA[
-	       return "抢单达人主页";
-	   ]]></expressionString>
+	   <expressionString><![CDATA[{return "抢单达人主页";}]]></expressionString>
 	</descriptionExpr>
 	<ns2:eventHandler functionName="toRentOrder"></ns2:eventHandler>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
@@ -40,7 +38,7 @@
                         RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GoldenOrder", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, 500, 400);
+                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, 700, 400);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -80,7 +78,7 @@
                         RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GOOfferPrice", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Offer Price", null, 500, 400);
+                        form.openInWindows("Offer Price", null, 700, 400);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>

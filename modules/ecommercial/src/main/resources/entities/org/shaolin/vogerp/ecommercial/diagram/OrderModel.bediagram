@@ -7,131 +7,9 @@
 	<cePackage>org.shaolin.vogerp.ecommercial.ce</cePackage>
 	<diagramPackage>org.shaolin.vogerp.ecommercial.diagram</diagramPackage>
 	
-	<!-- an purchase order defined on our e-commercial site.
-	     all customers are able to see this order in the competition mode.
-	     so, we name it as the golden order.
-	-->
-	<bediagram:beEntity needPersist="true" needOrgId="true" needTask="true" needUIEntity="true">
-		<common:entityName>GoldenOrder</common:entityName>
-		<bediagram:member pk="true">
-			<bediagram:name>id</bediagram:name>
-			<bediagram:type xsi:type="bediagram:LongType" />
-		</bediagram:member>
-		<bediagram:member>
-			<bediagram:name>serialNumber</bediagram:name>
-			<bediagram:type xsi:type="bediagram:StringType" />
-		</bediagram:member>
-		<bediagram:member>
-			<bediagram:name>description</bediagram:name>
-			<bediagram:type xsi:type="bediagram:StringType" />
-		</bediagram:member>
-		<bediagram:member>
-            <bediagram:name>estimatedPrice</bediagram:name>
-            <bediagram:type xsi:type="bediagram:DoubleType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>endPrice</bediagram:name>
-            <bediagram:type xsi:type="bediagram:DoubleType" />
-        </bediagram:member>
-		<bediagram:member>
-		    <!-- the order published by the customer. -->
-            <bediagram:name>publishedCustomerId</bediagram:name>
-            <bediagram:type xsi:type="bediagram:LongType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>publishedCustomer</bediagram:name>
-            <bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo" />
-            </bediagram:type>
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>purchaseOrderId</bediagram:name>
-            <bediagram:type xsi:type="bediagram:LongType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>purchaseOrder</bediagram:name>
-            <bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="org.shaolin.vogerp.order.be.PurchaseOrder" />
-            </bediagram:type>
-        </bediagram:member>
-        <bediagram:member>
-            <!-- the golden order is taken by the customer. -->
-            <bediagram:name>takenCustomerId</bediagram:name>
-            <bediagram:type xsi:type="bediagram:LongType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>takenCustomer</bediagram:name>
-            <bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo" />
-            </bediagram:type>
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>saleOrderId</bediagram:name>
-            <bediagram:type xsi:type="bediagram:LongType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>startCreateDate</bediagram:name>
-            <bediagram:type xsi:type="bediagram:DateTimeType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>endCreateDate</bediagram:name>
-            <bediagram:type xsi:type="bediagram:DateTimeType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>expiredDate</bediagram:name>
-            <bediagram:type xsi:type="bediagram:DateTimeType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>photos</bediagram:name>
-            <bediagram:type xsi:type="bediagram:StringType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>htmlDesc</bediagram:name>
-            <bediagram:type xsi:type="bediagram:StringType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>status</bediagram:name>
-            <bediagram:type xsi:type="bediagram:CEObjRefType">
-                <bediagram:targetEntity entityName="OrderStatusType" />
-            </bediagram:type>
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>offerPrices</bediagram:name>
-            <bediagram:type xsi:type="bediagram:BEListType">
-                <bediagram:elementType xsi:type="bediagram:BEObjRefType">
-                    <bediagram:targetEntity entityName="GOOfferPrice" />
-                </bediagram:elementType>
-            </bediagram:type>
-        </bediagram:member>
-	</bediagram:beEntity>
-	
-	<!-- Rent or Loan order  -->
-	<bediagram:beEntity needPersist="true" needTask="true" needUIEntity="true">
-        <common:entityName>RentOrLoanOrder</common:entityName>
-        <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
-            <bediagram:targetEntity entityName="GoldenOrder" />
-        </bediagram:parentObject>
-        <bediagram:member>
-            <bediagram:name>type</bediagram:name>
-            <bediagram:type xsi:type="bediagram:CEObjRefType">
-                <bediagram:targetEntity entityName="RentOrLoanOrderType" />
-            </bediagram:type>
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>dateType</bediagram:name>
-            <bediagram:type xsi:type="bediagram:CEObjRefType">
-                <bediagram:targetEntity entityName="RentDateType" />
-            </bediagram:type>
-        </bediagram:member>
-        <bediagram:member>
-            <!-- the number of date type. -->
-            <bediagram:name>dateCount</bediagram:name>
-            <bediagram:type xsi:type="bediagram:IntType" />
-        </bediagram:member>
-    </bediagram:beEntity>    
-	
-	<bediagram:beEntity needPersist="true" needOrgId="true" needTask="true" needUIEntity="true">
-        <common:entityName>GoldenOrderHistory</common:entityName>
+	<!-- EOrder is an e-commercial order. -->
+	<bediagram:beEntity>
+        <common:entityName>EOrder</common:entityName>
         <bediagram:member pk="true">
             <bediagram:name>id</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
@@ -164,10 +42,6 @@
             </bediagram:type>
         </bediagram:member>
         <bediagram:member>
-            <bediagram:name>purchaseOrderId</bediagram:name>
-            <bediagram:type xsi:type="bediagram:LongType" />
-        </bediagram:member>
-        <bediagram:member>
             <!-- the golden order is taken by the customer. -->
             <bediagram:name>takenCustomerId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
@@ -176,20 +50,6 @@
             <bediagram:name>takenCustomer</bediagram:name>
             <bediagram:type xsi:type="bediagram:BEObjRefType">
                 <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo" />
-            </bediagram:type>
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>saleOrderId</bediagram:name>
-            <bediagram:type xsi:type="bediagram:LongType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>accVoucherId</bediagram:name>
-            <bediagram:type xsi:type="bediagram:LongType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>accVoucher</bediagram:name>
-            <bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="org.shaolin.vogerp.accounting.be.AccountVoucher" />
             </bediagram:type>
         </bediagram:member>
         <bediagram:member>
@@ -219,6 +79,83 @@
             </bediagram:type>
         </bediagram:member>
     </bediagram:beEntity>
+	
+	<!-- an purchase order defined on our e-commercial site.
+	     all customers are able to see this order in the competition mode.
+	     so, we name it as the golden order.
+	-->
+	<bediagram:beEntity needPersist="true" needOrgId="true" needTask="true" needUIEntity="true">
+		<common:entityName>GoldenOrder</common:entityName>
+		<bediagram:parentObject xsi:type="bediagram:BEObjRefType">
+            <bediagram:targetEntity entityName="EOrder" />
+        </bediagram:parentObject>
+        <bediagram:member>
+            <bediagram:name>isPurchaseOrder</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BooleanType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>purchaseOrderId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>purchaseOrder</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.order.be.PurchaseOrder" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>saleOrderId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>offerPrices</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEListType">
+                <bediagram:elementType xsi:type="bediagram:BEObjRefType">
+                    <bediagram:targetEntity entityName="GOOfferPrice" />
+                </bediagram:elementType>
+            </bediagram:type>
+        </bediagram:member>
+	</bediagram:beEntity>
+	
+	<bediagram:beEntity needPersist="true" needOrgId="true" needTask="true" needUIEntity="true">
+        <common:entityName>GoldenOrderHistory</common:entityName>
+        <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
+            <bediagram:targetEntity entityName="GoldenOrder" />
+        </bediagram:parentObject>
+    </bediagram:beEntity>
+	
+	<!-- Rent or Loan order  -->
+	<bediagram:beEntity needPersist="true" needOrgId="true" needTask="true" needUIEntity="true">
+        <common:entityName>RentOrLoanOrder</common:entityName>
+        <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
+            <bediagram:targetEntity entityName="EOrder" />
+        </bediagram:parentObject>
+        <bediagram:member>
+            <bediagram:name>type</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="RentOrLoanOrderType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>dateType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="RentDateType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <!-- the number of date type. -->
+            <bediagram:name>dateCount</bediagram:name>
+            <bediagram:type xsi:type="bediagram:IntType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>offerPrices</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEListType">
+                <bediagram:elementType xsi:type="bediagram:BEObjRefType">
+                    <bediagram:targetEntity entityName="GOOfferPrice" />
+                </bediagram:elementType>
+            </bediagram:type>
+        </bediagram:member>
+    </bediagram:beEntity>    
 	
 	<bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
         <common:entityName>GOOfferPrice</common:entityName>
@@ -254,23 +191,33 @@
 	<bediagram:ceEntity>
         <common:entityName>OrderStatusType</common:entityName>
         <bediagram:constantValue>
-            <bediagram:value>Published</bediagram:value>
+            <bediagram:value>Created</bediagram:value>
             <bediagram:intValue>0</bediagram:intValue>
+            <bediagram:description>建立</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Published</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
             <bediagram:description>发布</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Taken</bediagram:value>
-            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:intValue>2</bediagram:intValue>
             <bediagram:description>拍下</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Payed</bediagram:value>
-            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:intValue>3</bediagram:intValue>
             <bediagram:description>已支付</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
+            <bediagram:value>Rollback</bediagram:value>
+            <bediagram:intValue>4</bediagram:intValue>
+            <bediagram:description>退款中</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
             <bediagram:value>Cancelled</bediagram:value>
-            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:intValue>5</bediagram:intValue>
             <bediagram:description>取消</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
@@ -292,18 +239,28 @@
     <bediagram:ceEntity>
         <common:entityName>RentDateType</common:entityName>
         <bediagram:constantValue>
-            <bediagram:value>Monthly</bediagram:value>
+            <bediagram:value>Daily</bediagram:value>
             <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>天</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Weekly</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>周</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Monthly</bediagram:value>
+            <bediagram:intValue>3</bediagram:intValue>
             <bediagram:description>月</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
-            <bediagram:value>Season</bediagram:value>
-            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:value>Seasonly</bediagram:value>
+            <bediagram:intValue>4</bediagram:intValue>
             <bediagram:description>季</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
-            <bediagram:value>Year</bediagram:value>
-            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:value>Yearly</bediagram:value>
+            <bediagram:intValue>5</bediagram:intValue>
             <bediagram:description>年</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>

@@ -13,6 +13,7 @@
     <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="ESTIMATEDPRICE" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="ENDPRICE" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="ISPURCHASEORDER" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="PUBLISHEDCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="PURCHASEORDERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="TAKENCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
@@ -37,8 +38,9 @@
       <ns2:fieldMapping beFieldName="estimatedPrice" columnName="ESTIMATEDPRICE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="endPrice" columnName="ENDPRICE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="publishedCustomerId" columnName="PUBLISHEDCUSTOMERID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="purchaseOrderId" columnName="PURCHASEORDERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="takenCustomerId" columnName="TAKENCUSTOMERID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="isPurchaseOrder" columnName="ISPURCHASEORDER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="purchaseOrderId" columnName="PURCHASEORDERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="saleOrderId" columnName="SALEORDERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="expiredDate" columnName="EXPIREDDATE"></ns2:fieldMapping>
@@ -62,13 +64,14 @@
     <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="ESTIMATEDPRICE" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="ENDPRICE" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="ISPURCHASEORDER" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="PUBLISHEDCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="PURCHASEORDERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="TAKENCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="SALEORDERID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="ACCVOUCHERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="EXPIREDDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="STATE" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="PHOTOS" type="VARCHAR" default="1"></ns2:column>
     <ns2:column name="HTMLDESC" type="VARCHAR" length="255" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
@@ -85,15 +88,16 @@
       <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="estimatedPrice" columnName="ESTIMATEDPRICE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="endPrice" columnName="ENDPRICE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="isPurchaseOrder" columnName="ISPURCHASEORDER"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="publishedCustomerId" columnName="PUBLISHEDCUSTOMERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="purchaseOrderId" columnName="PURCHASEORDERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="takenCustomerId" columnName="TAKENCUSTOMERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="saleOrderId" columnName="SALEORDERID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="accVoucherId" columnName="ACCVOUCHERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="expiredDate" columnName="EXPIREDDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="photos" columnName="PHOTOS"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="htmlDesc" columnName="HTMLDESC"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="status" columnName="STATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_taskId" columnName="_taskId"></ns2:fieldMapping>
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_GOLDENORDER_HISTORY0" mappingType="One-to-One" beFieldName="publishedCustomer" columnName="PUBLISHEDCUSTOMERID"></ns2:fieldMapping>
@@ -110,12 +114,11 @@
     <ns2:column name="ESTIMATEDPRICE" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="ENDPRICE" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="PUBLISHEDCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="PURCHASEORDERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="TAKENCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="SALEORDERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="EXPIREDDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="PHOTOS" type="VARCHAR" default="1"></ns2:column>
+    <ns2:column name="HTMLDESC" type="VARCHAR" length="255" isNull="true"></ns2:column>
     <ns2:column name="STATE" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="TYPE" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="DATETYPE" type="INTEGER" length="2" default="1"></ns2:column>
@@ -135,22 +138,21 @@
       <ns2:fieldMapping beFieldName="estimatedPrice" columnName="ESTIMATEDPRICE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="endPrice" columnName="ENDPRICE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="publishedCustomerId" columnName="PUBLISHEDCUSTOMERID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="purchaseOrderId" columnName="PURCHASEORDERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="takenCustomerId" columnName="TAKENCUSTOMERID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="saleOrderId" columnName="SALEORDERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="expiredDate" columnName="EXPIREDDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="photos" columnName="PHOTOS"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="htmlDesc" columnName="HTMLDESC"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="status" columnName="STATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="dateType" columnName="DATETYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="dateCount" columnName="DATECOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_taskId" columnName="_taskId"></ns2:fieldMapping>
-      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_RENTORDER0" mappingType="One-to-One" beFieldName="publishedCustomer" columnName="PUBLISHEDCUSTOMERID"></ns2:fieldMapping>
-      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_RENTORDER1" mappingType="One-to-One" beFieldName="purchaseOrder" columnName="PURCHASEORDERID"></ns2:fieldMapping>
-      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_RENTORDER_ITEMS" collectionElement="org.shaolin.vogerp.ecommercial.be.GOOfferPrice" mappingType="One-to-Many" beFieldName="offerPrices"></ns2:fieldMapping>
-      <!-- the taken customer is optional in this case. -->
+      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_RENTORDER1" mappingType="One-to-One" beFieldName="publishedCustomer" columnName="PUBLISHEDCUSTOMERID"></ns2:fieldMapping>
+      <!-- 
+      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_RENTORDER2" mappingType="One-to-One" beFieldName="takenCustomer" columnName="TAKENCUSTOMERID"></ns2:fieldMapping>
+       -->
     </ns2:mapping>
   </ns2:table>
   <ns2:table>

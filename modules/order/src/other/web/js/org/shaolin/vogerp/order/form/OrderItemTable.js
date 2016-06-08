@@ -11,7 +11,6 @@ function org_shaolin_vogerp_order_form_OrderItemTable(json)
     var itemTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "itemTable"]
-        ,editable: true
     });
 
     var fieldPanel = new UIMaster.ui.panel

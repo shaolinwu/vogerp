@@ -46,10 +46,8 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
+      <!-- DON'T use gallery feature for images in table widget! -->
       <ns2:component xsi:type="ns2:UIImageType" UIID="photoUI">
-         <ns2:isGallery xsi:type="ns2:BooleanPropertyType">
-             <ns2:value>true</ns2:value>
-         </ns2:isGallery>
          <ns2:Property name="width">
             <ns2:value xsi:type="ns2:StringPropertyType">
                 <value>250px</value>
@@ -60,30 +58,16 @@
                 <value>200px</value>
             </ns2:value>
          </ns2:Property>
-         <ns2:Property name="mobheight">
-            <ns2:value xsi:type="ns2:StringPropertyType">
-                <value>200px</value>
-            </ns2:value>
-         </ns2:Property>
-         <ns2:Property name="thumbnails">
-            <ns2:value xsi:type="ns2:BooleanPropertyType">
-                <value>false</value>
-            </ns2:value>
-         </ns2:Property>
-         <ns2:Property name="enableSelectSync">
-            <ns2:value xsi:type="ns2:BooleanPropertyType">
-                <value>false</value>
-            </ns2:value>
-         </ns2:Property>
-         <ns2:Property name="value">
+         <ns2:Property name="src">
              <ns2:value xsi:type="ns2:ExpressionPropertyType">
                   <ns2:expression>
                     <expressionString><![CDATA[
                     import org.shaolin.bmdp.runtime.AppContext;
                     import org.shaolin.bmdp.runtime.Registry;
                     import org.shaolin.uimaster.page.WebConfig;
+                    import org.shaolin.uimaster.page.widgets.HTMLImageType;
                     { 
-                        return $beObject.getPhotos(); 
+                        return HTMLImageType.getFirst($beObject.getPhotos()); 
                     }]]></expressionString>
                   </ns2:expression>
              </ns2:value>

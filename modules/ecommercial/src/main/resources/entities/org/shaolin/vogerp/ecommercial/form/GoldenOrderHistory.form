@@ -14,13 +14,6 @@
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             HashMap out = (HashMap)form.ui2Data();
 
-            GoldenOrderHistoryImpl defaultUser = (GoldenOrderHistoryImpl)out.get("beObject");
-            if (defaultUser.getId() == 0) {
-                System.out.println("created object: " + defaultUser);
-            } else {
-                System.out.println("updated object: " + defaultUser);
-            }
-
             form.closeIfinWindows();
             @page.removeForm(@page.getEntityUiid()); 
         }]]></expressionString>

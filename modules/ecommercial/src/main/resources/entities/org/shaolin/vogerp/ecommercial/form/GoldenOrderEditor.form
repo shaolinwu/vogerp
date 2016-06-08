@@ -1,7 +1,45 @@
 <?xml version="1.0" ?>
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
-  <entityName>org.shaolin.vogerp.ecommercial.form.RentOrLoanOrder</entityName>
+  <entityName>org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor</entityName>
   <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="Save">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+            var constraint_result = this.Form.validate();
+            if (constraint_result != true && constraint_result != null) {
+                return false;
+            }
+            //this.infoPanel2.itemTable.syncBodyDataToServer();
+            this.htmlDescUI.saveBtn.trigger("click");
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveDetail-20160416-173334">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+        import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            HashMap out = (HashMap)form.ui2Data();
+
+            GoldenOrderImpl defaultUser = (GoldenOrderImpl)out.get("beObject");
+            if (defaultUser.getId() == 0) {
+                OrderModel.INSTANCE.create(defaultUser);
+            } else {
+                OrderModel.INSTANCE.update(defaultUser);
+            }
+
+            form.closeIfinWindows();
+            @page.removeForm(@page.getEntityUiid()); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
   <ns2:eventHandler functionName="Cancel">
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20160416-173334">
       <ns2:exp>
@@ -20,7 +58,7 @@
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-      <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -34,54 +72,8 @@
           <ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
           <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
         </ns2:layout>
-        <ns2:component xsi:type="ns2:UIImageType" UIID="photoUI">
-          <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-          <ns2:isGallery xsi:type="ns2:BooleanPropertyType">
-              <ns2:value>true</ns2:value>
-          </ns2:isGallery>
-          <ns2:Property name="width">
-             <ns2:value xsi:type="ns2:StringPropertyType">
-                 <value>100%</value>
-             </ns2:value>
-          </ns2:Property>
-          <ns2:Property name="height">
-             <ns2:value xsi:type="ns2:StringPropertyType">
-                 <value>300px</value>
-             </ns2:value>
-          </ns2:Property>
-          <ns2:Property name="mobheight">
-             <ns2:value xsi:type="ns2:StringPropertyType">
-                 <value>220px</value>
-             </ns2:value>
-          </ns2:Property>
-          <ns2:Property name="thumbnails">
-           <ns2:value xsi:type="ns2:BooleanPropertyType">
-              <value>false</value>
-           </ns2:value>
-         </ns2:Property>
-         <ns2:Property name="hideThumbnailsOnInit">
-           <ns2:value xsi:type="ns2:BooleanPropertyType">
-              <value>true</value>
-           </ns2:value>
-         </ns2:Property>
-         <ns2:Property name="enableSelectSync">
-            <ns2:value xsi:type="ns2:BooleanPropertyType">
-                <value>false</value>
-            </ns2:value>
-         </ns2:Property>
-         <ns2:Property name="value">
-             <ns2:value xsi:type="ns2:ExpressionPropertyType">
-                  <ns2:expression>
-                    <expressionString><![CDATA[
-                    import org.shaolin.bmdp.runtime.AppContext;
-                    import org.shaolin.bmdp.runtime.Registry;
-                    import org.shaolin.uimaster.page.WebConfig;
-                    { 
-                        return $beObject.getPhotos(); 
-                    }]]></expressionString>
-                  </ns2:expression>
-             </ns2:value>
-         </ns2:Property>
+        <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="photoUI">
+          <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.ImageUploader" />
         </ns2:component>
         <ns2:layoutConstraint>
           <ns2:componentId>photoUI</ns2:componentId>
@@ -90,6 +82,7 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UIPanelType" UIID="attributePanel">
           <ns2:layout xsi:type="ns2:TableLayoutType">
+            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -106,17 +99,39 @@
             </ns2:text>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="serialNumberUI">
-            <ns2:UIStyle></ns2:UIStyle>
+            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
           </ns2:component>
-          <ns2:component xsi:type="ns2:UILabelType" UIID="descriptionUILabel">
+          <ns2:component xsi:type="ns2:UILabelType" UIID="isPurchaseOrderUILabel">
+            <ns2:UIStyle></ns2:UIStyle>
+            <ns2:text xsi:type="ns2:StringPropertyType">
+              <ns2:value>抢单类型</ns2:value>
+            </ns2:text>
+          </ns2:component>
+          <ns2:component xsi:type="ns2:UICheckBoxType" UIID="isPurchaseOrderUI">
+            <ns2:UIStyle></ns2:UIStyle>
+            <ns2:label xsi:type="ns2:StringPropertyType">
+              <ns2:value>(采购单为选中，销售单为不选中)</ns2:value>
+            </ns2:label>
+          </ns2:component>
+          <ns2:component xsi:type="ns2:UILabelType" UIID="rentTypeUILabel">
             <ns2:UIStyle></ns2:UIStyle>
             <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
               <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
-              <ns2:key>org.shaolin.vogerp.ecommercial.be.GoldenOrder.description</ns2:key>
+              <ns2:key>org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder.type</ns2:key>
             </ns2:text>
           </ns2:component>
-          <ns2:component xsi:type="ns2:UILabelType" UIID="descriptionUI">
+          <ns2:component xsi:type="ns2:UIComboBoxType" UIID="rentTypeUI">
+            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+          </ns2:component>
+          <ns2:component xsi:type="ns2:UILabelType" UIID="rentDateTypeUILabel">
             <ns2:UIStyle></ns2:UIStyle>
+            <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+              <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
+              <ns2:key>org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder.dateType</ns2:key>
+            </ns2:text>
+          </ns2:component>
+          <ns2:component xsi:type="ns2:UIComboBoxType" UIID="rentDateTypeUI">
+            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="estimatedPriceUILabel">
             <ns2:UIStyle></ns2:UIStyle>
@@ -125,8 +140,8 @@
               <ns2:key>org.shaolin.vogerp.ecommercial.be.GoldenOrder.estimatedPrice</ns2:key>
             </ns2:text>
           </ns2:component>
-          <ns2:component xsi:type="ns2:UILabelType" UIID="estimatedPriceUI">
-            <ns2:UIStyle></ns2:UIStyle>
+          <ns2:component xsi:type="ns2:UITextFieldType" UIID="estimatedPriceUI">
+            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="publishedCustomerIdUILabel">
             <ns2:UIStyle></ns2:UIStyle>
@@ -136,7 +151,7 @@
             </ns2:text>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="publishedCustomerIdUI">
-            <ns2:UIStyle></ns2:UIStyle>
+            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="createDateUILabel">
             <ns2:UIStyle></ns2:UIStyle>
@@ -146,7 +161,7 @@
             </ns2:text>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="createDateUI">
-            <ns2:UIStyle></ns2:UIStyle>
+            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
           </ns2:component>
           <ns2:layoutConstraint>
             <ns2:componentId>serialNumberUILabel</ns2:componentId>
@@ -157,11 +172,11 @@
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>descriptionUILabel</ns2:componentId>
+            <ns2:componentId>isPurchaseOrderUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>descriptionUI</ns2:componentId>
+            <ns2:componentId>isPurchaseOrderUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
@@ -209,17 +224,12 @@
             </ns2:htmlSupport>
             <ns2:Property name="hiddenToolbar" >
                 <ns2:value xsi:type="ns2:BooleanPropertyType">
-                    <value>true</value>
+                    <value>false</value>
                 </ns2:value>
             </ns2:Property>
             <ns2:Property name="persistable" >
                 <ns2:value xsi:type="ns2:BooleanPropertyType">
-                    <value>false</value>
-                </ns2:value>
-            </ns2:Property>
-            <ns2:Property name="disabled" >
-                <ns2:value xsi:type="ns2:StringPropertyType">
-                    <value>disabled</value>
+                    <value>true</value>
                 </ns2:value>
             </ns2:Property>
           </ns2:component>
@@ -245,7 +255,22 @@
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Save"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:editable xsi:type="ns2:ExpressionPropertyType">
+          <ns2:expression>
+            <expressionString>{return $editable;}</expressionString>
+          </ns2:expression>
+        </ns2:editable>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>OKbtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="Cancel"></ns2:handler>
@@ -256,8 +281,12 @@
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:componentId>okbtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
@@ -272,11 +301,31 @@
   <ns2:mapping>
     <systemVersion>0</systemVersion>
     <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder"></type>
+      <type entityName="org.shaolin.vogerp.ecommercial.be.GoldenOrder"></type>
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.ImageUploader"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="photoUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.photos" paramName="imagePath"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="allowNumber">
+         <ns2:expression>
+          <expressionString>{return 5;}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="imageWsize">
+         <ns2:expression>
+          <expressionString>{return 400;}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="imageHsize">
+         <ns2:expression>
+          <expressionString>{return 400;}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="serialNumberUI" paramName="UIWidgetType"></ns2:UIComponent>
@@ -285,11 +334,6 @@
              <expressionString>$beObject.getSerialNumber() + "(" +$beObject.getStatus().getDisplayName() + ")"</expressionString>
          </ns2:expression>
       </ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="descriptionUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.description" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithCurrency"></ns2:mappingRule>
@@ -310,10 +354,15 @@
       <ns2:UIComponent componentPath="createDateUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.createDate" paramName="Date"></ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping7">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping6">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="htmlDescUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.htmlDesc" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping7">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISelect"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="isPurchaseOrderUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.isPurchaseOrder" paramName="Value"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>{

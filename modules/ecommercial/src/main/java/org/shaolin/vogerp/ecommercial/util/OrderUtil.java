@@ -23,6 +23,10 @@ public class OrderUtil {
 				+ parse.format(parse.getSeconds(), 2);
 	}
 	
+	public synchronized static String genResourceId() {
+		return "r" + System.nanoTime();
+	}
+	
 	public static boolean compareAPrice(IGoldenOrder gorder,
 			IGOOfferPrice newPrice) {
 		if (gorder.getId() == 0) {

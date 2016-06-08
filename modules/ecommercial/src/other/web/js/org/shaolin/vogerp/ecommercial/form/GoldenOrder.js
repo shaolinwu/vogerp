@@ -9,6 +9,9 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
         ,width: "100%"
         ,height: "300px"
         ,mobheight: "220px"
+        ,thumbnails: false
+        ,hideThumbnailsOnInit: true
+        ,enableSelectSync: false
     });
 
     var serialNumberUILabel = new UIMaster.ui.label
