@@ -36,46 +36,34 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
         ProductImpl criteria = new ProductImpl();
 		criteria.setParentId(0);
 		criteria.setOrgId(orgId);
-		List[] types = CustProductModel.INSTANCE.getProductRootTypeGroup();
-		if (types[0].size() == 0) {
-			return null;
-		}
-		
 		List<IProduct> all = ProductModel.INSTANCE.searchProductParent(criteria, null, 0, -1);
 		
-		java.util.Map dataModel = new java.util.HashMap();
+		java.util.Map<String, IProductPrice> dataModel = new java.util.HashMap<String, IProductPrice>();
 		// categoried by the types
 		ArrayList result = new ArrayList();
-		for (int i = 0; i < types[0].size(); i++) {
-			String ptype = String.valueOf(types[0].get(i));
+		// list the nodes under the root node.
+		for (int i = 0; i < all.size(); i++) {
+			ProductImpl mg = (ProductImpl) all.get(i);
 			TreeItem gitem = new TreeItem();
-			gitem.setId("mg_" + types[0].get(i));
-			gitem.setText("" + types[1].get(i));
+			gitem.setId("mg_" + i);
+			gitem.setText(mg.getName());
 			result.add(gitem);
 			
-			// list the nodes under the root node.
-			for (int j = 0; j < all.size(); j++) {
-				ProductImpl mg = (ProductImpl) all.get(j);
-				if (!mg.getType().equals(ptype)) {
-					continue;
-				}
-				
-				List<IProductPrice> priceItems = mg.getPriceList();
-				if (priceItems.size() == 0) {
-					continue;
-				}
-				for (int f = 0; f < priceItems.size(); f++) {
-					IProductPrice price = priceItems.get(f);
-					price.setProduct(mg);
-					dataModel.put("pg_" + price.getId(), price);
-				
-					TreeItem pitem = new TreeItem();
-					pitem.setId("pg_" + price.getId());
-					pitem.setText(ProductUtil.getProductSummary(mg) + 
-								"--" + ProductUtil.getPriceFormat(price.getPrice()) + 
-								"--" + ProductUtil.getPricePackage(price));
-					gitem.getChildren().add(pitem);
-				}
+			List<IProductPrice> priceItems = mg.getPriceList();
+			if (priceItems.size() == 0) {
+				continue;
+			}
+			for (int j = 0; j < priceItems.size(); j++) {
+				IProductPrice price = priceItems.get(j);
+				price.setProduct(mg);
+				dataModel.put("pg_" + price.getId(), price);
+			
+				TreeItem pitem = new TreeItem();
+				pitem.setId("pg_" + price.getId());
+				pitem.setText(ProductUtil.getProductSummary(mg) + 
+							"--" + ProductUtil.getPriceFormat(price.getPrice()) + 
+							"--" + ProductUtil.getPricePackage(price));
+				gitem.getChildren().add(pitem);
 			}
 		}
 		PriceCostCache pcCache = new PriceCostCache();

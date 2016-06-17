@@ -62,7 +62,7 @@ public class ProductModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getId()));
             }
             if (scFlow.getName() != null && scFlow.getName().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.name", scFlow.getName()));
+                inFlowCriteria.add(createCriterion(Operator.START_WITH, "inFlow.name", scFlow.getName()));
             }
             if (scFlow.getDescription() != null && scFlow.getDescription().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.description", scFlow.getDescription()));
@@ -87,7 +87,7 @@ public class ProductModel extends BEEntityDaoObject {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getId()));
             }
             if (scFlow.getName() != null && scFlow.getName().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.name", scFlow.getName()));
+                inFlowCriteria.add(createCriterion(Operator.START_WITH, "inFlow.name", scFlow.getName()));
             }
             if (scFlow.getDescription() != null && scFlow.getDescription().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.description", scFlow.getDescription()));
@@ -115,6 +115,9 @@ public class ProductModel extends BEEntityDaoObject {
             if (scFlow.getParentId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getId()));
             }
+            if (scFlow.getName() != null && scFlow.getName().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.START_WITH, "inFlow.name", scFlow.getName()));
+            }
             if (scFlow.getOrgId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));
             }
@@ -136,6 +139,9 @@ public class ProductModel extends BEEntityDaoObject {
             }
             if (scFlow.getParentId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.parentId", scFlow.getId()));
+            }
+            if (scFlow.getName() != null && scFlow.getName().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.START_WITH, "inFlow.name", scFlow.getName()));
             }
             if (scFlow.getOrgId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));

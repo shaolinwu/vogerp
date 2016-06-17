@@ -48,6 +48,7 @@
     <ns2:column name="NAME" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="SERIALNUMBER" type="VARCHAR" length="50" isNull="true"></ns2:column>
+    <ns2:column name="ICON" type="VARCHAR" length="255" isNull="true"></ns2:column>
     <ns2:column name="PHOTOS" type="VARCHAR" length="255" isNull="true"></ns2:column>
     <ns2:column name="HTMLDESC" type="VARCHAR" length="255" isNull="true"></ns2:column>
     <ns2:column name="TYPE" type="VARCHAR" length="64" isNull="true"></ns2:column>
@@ -265,7 +266,7 @@
         <ns2:toDataFieldPath>inFlow.name</ns2:toDataFieldPath>
         <ns2:conditionValue>
           <ns2:operator xsi:type="ns2:StarLikeOperatorType" isReverse="false">
-            <ns2:type>LIKE %*</ns2:type>
+            <ns2:type>LIKE %%</ns2:type>
           </ns2:operator>
           <ns2:value xsi:type="ns2:SimpleFieldValueType">
             <ns2:valueFieldPath>scFlow.name</ns2:valueFieldPath>
@@ -309,7 +310,6 @@
     </ns2:searchConditionMapping>
   </ns2:query>
   
-  
   <ns2:query queryName="searchProductInfo">
     <ns2:searchResult name="outFlow" notes="" category="BusinessEntity" searchable="false">
       <type entityName="org.shaolin.vogerp.productmodel.be.Product" systemVersion="0"></type>
@@ -351,6 +351,20 @@
           </ns2:value>
           <ns2:condition>
             <expressionString><![CDATA[scFlow.getParentId() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inFlow.name</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:StarLikeOperatorType" isReverse="false">
+            <ns2:type>LIKE %%</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scFlow.name</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scFlow.getName() != null && scFlow.getName().length() > 0]]></expressionString>
           </ns2:condition>
         </ns2:conditionValue>
       </ns2:fieldMapping>

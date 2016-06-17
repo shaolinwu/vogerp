@@ -119,7 +119,7 @@ function org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector(json)
         var UIEntity = this;
 
         {   
-            $(this.okbtn).trigger("click");
+            //$(this.okbtn).trigger("click");
         }
             }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector_dblclickTreeNode */
 

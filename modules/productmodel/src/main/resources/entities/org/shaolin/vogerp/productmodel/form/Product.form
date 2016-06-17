@@ -93,26 +93,27 @@
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.bmdp.runtime.ce.CEUtil;
+        import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
         import org.shaolin.vogerp.productmodel.be.ProductImpl;
+        import org.shaolin.vogerp.productmodel.util.ProductUtil;
+        import org.shaolin.vogerp.productmodel.dao.ProductModel;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid());
             HashMap input = (HashMap)form.ui2Data();
             String selectPTempalteId = (String)input.get("selectPTempalteId");
-            String selectProductType = (String)input.get("selectProductType");
             
-            String formId = "productInfoForm.";
-            // because this is a reconfigurable function, we have to get the right form id.
-            ComboBox productTypeUI = @page.getComboBox(formId + "typeUI.typeUI");
-            productTypeUI.setValue(selectProductType);
-            
-            if (selectPTempalteId != null) {
-                Hidden templateIdUI = @page.getHidden(formId + "templateIdUI");
-                templateIdUI.setValue(selectPTempalteId);
-            } else {
-            }
+            RefForm productForm = (RefForm)@page.getElement("productInfoForm");
+            HashMap output = (HashMap)productForm.ui2Data();
+            ProductImpl product = (ProductImpl)output.get("beObject");
             
             form.closeIfinWindows(true);
             @page.removeForm(@page.getEntityUiid()); 
+            
+            ProductTemplateImpl tempInstance = (ProductTemplateImpl)ProductModel.INSTANCE
+                .get(Long.valueOf(selectPTempalteId), ProductTemplateImpl.class);
+            ProductUtil.copyTemplate(tempInstance, product);
+            productForm.refresh();
+            
         }
         </expressionString>
       </ns2:exp>

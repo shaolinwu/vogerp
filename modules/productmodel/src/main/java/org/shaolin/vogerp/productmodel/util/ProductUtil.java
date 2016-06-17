@@ -103,30 +103,29 @@ public class ProductUtil {
 	}
 	
 	public static void genProductThumbnail(IAbstractProduct template) {
-		if (template.getPhotos() != null && !template.getPhotos().trim().isEmpty()) {
-			File image = null;
+		if ((template.getIcon() == null || template.getIcon().trim().length() == 0) && template.getPhotos() != null) {
+			File firstImage = null;
 			File directory = new File(WebConfig.getResourcePath() + template.getPhotos());
 			if (directory.isDirectory()) {
 				File[] files = directory.listFiles();
 				for (File f : files) {
-					if (f.getName().indexOf("-thumbnail.") == -1) {
-						image = f;
-						break;
-					}
+					firstImage = f;
+					break;
 				}
 			} else {
-				image = directory;
+				firstImage = directory;
 			}
-			if (image != null) {
-				File dest = new File(image.getAbsolutePath().substring(0, image.getAbsolutePath().lastIndexOf(File.separatorChar)), 
-						image.getName().replace(".", "-thumbnail."));
+			if (firstImage != null) {
 				try {
-					ImageUtil.createThumbnail(image, 100, dest);
+					File destPath = new File(WebConfig.getResourcePath() + template.getPhotos() + "/thumbnail");
+					destPath.mkdir();
+					File dest = new File(destPath, firstImage.getName());
+					ImageUtil.createThumbnail(firstImage, 100, dest);
 					template.setIcon(dest.getAbsolutePath().replace(WebConfig.getResourcePath(), ""));
 				} catch (IOException e) {
 					LoggerFactory.getLogger(ProductUtil.class).info("Failed to create the thumbnail for product: " + e.getMessage(), e);
 				}
-			}
+			} 
         }
 	}
 }

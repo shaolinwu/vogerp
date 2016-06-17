@@ -42,7 +42,7 @@
      <ns2:ops xsi:type="ns2:OpExecuteScriptType">
         <ns2:expressionString><![CDATA[
         {   
-            $(this.okbtn).trigger("click");
+            //$(this.okbtn).trigger("click");
         }
         ]]></ns2:expressionString>
     </ns2:ops>

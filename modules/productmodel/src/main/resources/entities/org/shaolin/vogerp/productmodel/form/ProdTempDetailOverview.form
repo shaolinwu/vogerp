@@ -19,25 +19,25 @@
   </ns2:eventHandler>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
-      <ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
-      <ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
-        <ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
-        <ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIPanelType" UIID="attributePanel">
 	      <ns2:layout xsi:type="ns2:TableLayoutType">
-	        <ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
-	        <ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
+	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 	        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 	      </ns2:layout>
 	      <ns2:component xsi:type="ns2:UIPanelType" UIID="photoPanel">
 		      <ns2:layout xsi:type="ns2:TableLayoutType">
-		        <ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
+		        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 		        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 		      </ns2:layout>
 		      <ns2:component xsi:type="ns2:UIImageType" UIID="photoUI">
@@ -249,6 +249,9 @@
       <expressionString>
       import java.util.ArrayList;{
          $list = new ArrayList();
+         if ($beObject.getHtmlDesc() == null) {
+            $beObject.setHtmlDesc("/product/pdefault.html");
+         }
          @odContext.executeAllMappings();
       }</expressionString>
     </ns2:DataToUIMappingOperation>
