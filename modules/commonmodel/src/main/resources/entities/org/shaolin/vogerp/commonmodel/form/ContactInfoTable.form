@@ -158,6 +158,26 @@
         <ns2:column>
           <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
             <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+            <ns2:key>org.shaolin.vogerp.commonmodel.be.ContactInfo.qq</ns2:key>
+          </ns2:title>
+          <ns2:beFieldId>rowBE.qq</ns2:beFieldId>
+          <ns2:uiType>
+            <ns2:type>Text</ns2:type>
+          </ns2:uiType>
+        </ns2:column>
+        <ns2:column>
+          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+            <ns2:key>org.shaolin.vogerp.commonmodel.be.ContactInfo.weixin</ns2:key>
+          </ns2:title>
+          <ns2:beFieldId>rowBE.weixin</ns2:beFieldId>
+          <ns2:uiType>
+            <ns2:type>Text</ns2:type>
+          </ns2:uiType>
+        </ns2:column>
+        <ns2:column>
+          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
             <ns2:key>org.shaolin.vogerp.commonmodel.be.ContactInfo.email</ns2:key>
           </ns2:title>
           <ns2:beFieldId>rowBE.email</ns2:beFieldId>
