@@ -62,6 +62,33 @@ public class CustCommonModel extends BEEntityDaoObject {
     	return new List[] {valueResult, displayResult};
     }
     
+    public void updateAddresse(long customerId, IAddressInfo item) {
+    	PersonalInfoImpl custCriteria = new PersonalInfoImpl();
+    	custCriteria.setId(customerId);
+    	List values = CommonModel.INSTANCE.searchPersonInfo(custCriteria, null, 0, 1);
+		PersonalInfoImpl customer = (PersonalInfoImpl)values.get(0);
+		List<IAddressInfo> existing = customer.getAddresses();
+		if (item.getId() == 0) {
+			customer.getAddresses().add(item);
+		} else {
+			for (IAddressInfo b: existing) {
+				if (b.getId() == item.getId()) {
+					b.setCountry(item.getCountry());
+					b.setProvince(item.getProvince());
+					b.setCity(item.getCity());
+					b.setDistrict(item.getDistrict());
+					b.setXian(item.getXian());
+					b.setStreet(item.getStreet());
+					b.setBlock(item.getBlock());
+					b.setDescription(item.getDescription());
+					b.setZipcode(item.getZipcode());
+					break;
+				}
+			}
+		}
+		CommonModel.INSTANCE.update(customer);
+    }
+    
     public void updateAddresses(long customerId, List<IAddressInfo> list) {
     	PersonalInfoImpl custCriteria = new PersonalInfoImpl();
     	custCriteria.setId(customerId);
@@ -93,8 +120,7 @@ public class CustCommonModel extends BEEntityDaoObject {
     				}
     			}
     		}
-    		Session session = HibernateUtil.getSession();
-    		session.update(customer);
+    		CommonModel.INSTANCE.update(customer);
     	}
     }
     
@@ -127,8 +153,7 @@ public class CustCommonModel extends BEEntityDaoObject {
     				}
     			}
     		}
-    		Session session = HibernateUtil.getSession();
-    		session.update(customer);
+    		CommonModel.INSTANCE.update(customer);
     	}
     }
     

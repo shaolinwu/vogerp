@@ -3,6 +3,8 @@ package org.shaolin.vogerp.commonmodel.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.shaolin.bmdp.runtime.ce.CEUtil;
+import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
 import org.shaolin.vogerp.commonmodel.be.IContactInfo;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
@@ -46,22 +48,26 @@ public class CustomerInfoUtil {
     	ArrayList<String> displayResult = new ArrayList<String>();
     	for (IContactInfo contact : list) {
     		valueResult.add(String.valueOf(contact.getId()));
-    		displayResult.add(contact.getTelephone() + " " + contact.getEmail());
+    		displayResult.add(contact.getTelephone() + "/" + contact.getEmail());
     	}
     	return new List[] {valueResult, displayResult};
     }
     
     public static String addressToString(IAddressInfo address) {
     	StringBuffer sb = new StringBuffer();
-    	sb.append(address.getCountry()).append(" ");
-    	sb.append(address.getCity()).append(" ");
+    	sb.append(CEUtil.toCEValue(address.getProvince()).getValue()).append(" ");
+    	sb.append(CEUtil.toCEValue(address.getCity()).getValue()).append(" ");
+    	if (address.getDistrict() != null && address.getDistrict().length() > 0
+    			&& !address.getDistrict().equals(""+IConstantEntity.CONSTANT_DEFAULT_INT_VALUE)) {
+    		sb.append(CEUtil.toCEValue(address.getDistrict()).getValue()).append(" ");
+    	}
     	sb.append(address.getStreet()).append(" ");
     	if (address.getBlock() != null) {
     		sb.append(address.getBlock()).append(" ");
     	}
-    	if (address.getZipcode() != null) {
-    		sb.append(address.getZipcode()).append(" ");
-    	}    	
+    	if (address.getDescription() != null && address.getDescription().length() > 0) {
+    		sb.append("(").append(address.getDescription()).append(")");
+    	}
     	return sb.toString();
     }
 }

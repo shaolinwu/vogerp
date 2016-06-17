@@ -286,7 +286,6 @@
     <ns2:column name="PROVENCE" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="CITY" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="DISTRICT" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="XIAN" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="STREET" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="BLOCK" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="ZIPCODE" type="VARCHAR" isNull="true"></ns2:column>
@@ -303,7 +302,6 @@
       <ns2:fieldMapping beFieldName="province" columnName="PROVENCE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="city" columnName="CITY"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="district" columnName="DISTRICT"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="xian" columnName="XIAN"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="street" columnName="STREET"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="block" columnName="BLOCK"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="zipcode" columnName="ZIPCODE"></ns2:fieldMapping>

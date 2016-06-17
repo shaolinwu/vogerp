@@ -31,6 +31,7 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
+        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: [partyUI,addressUI,contactUI,fieldPanel]
     });
 

@@ -60,18 +60,7 @@
         import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
         { 
             Table tableWidget = @page.getTable("constantItemTable");
-            if (tableWidget.getAddItems() != null && tableWidget.getAddItems().size() > 0) {
-		            	List items = tableWidget.getAddItems();
-		            	ModularityModel.INSTANCE.batchInsert(items);
-            }
-            if (tableWidget.getUpdateItems() != null && tableWidget.getUpdateItems().size() > 0) {
-		            	List items = tableWidget.getUpdateItems();
-		            	ModularityModel.INSTANCE.batchUpdate(items);
-            }
-            if (tableWidget.getDeleteItems() != null && tableWidget.getDeleteItems().size() > 0) {
-		            	List items = tableWidget.getDeleteItems();
-		            	ModularityModel.INSTANCE.batchDelete(items);
-            }
+            ModularityModel.INSTANCE.batchUpdate(tableWidget.getListData());
             
             String parentCe = @page.getLabel("parentCEUI").getValue();
             if (parentCe != null && !"null".equals(parentCe)) {

@@ -8,6 +8,11 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfo(json)
         ui: elementList[prefix + "idUI"]
     });
 
+    var parentIdUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "parentIdUI"]
+    });
+
     var countryUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "countryUILabel"]
@@ -18,14 +23,34 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfo(json)
         ui: elementList[prefix + "countryUI"]
     });
 
+    var provinceUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "provinceUILabel"]
+    });
+
+    var provinceUI = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "provinceUI"]
+    });
+
     var cityUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "cityUILabel"]
     });
 
-    var cityUI = new UIMaster.ui.textfield
+    var cityUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "cityUI"]
+    });
+
+    var districtUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "districtUILabel"]
+    });
+
+    var districtUI = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "districtUI"]
     });
 
     var streetUILabel = new UIMaster.ui.label
@@ -63,7 +88,7 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfo(json)
         ui: elementList[prefix + "descriptionUILabel"]
     });
 
-    var descriptionUI = new UIMaster.ui.textfield
+    var descriptionUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "descriptionUI"]
     });
@@ -89,24 +114,34 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfo(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "countryUILabel",prefix + "countryUI",prefix + "cityUILabel",prefix + "cityUI",prefix + "streetUILabel",prefix + "streetUI",prefix + "blockUILabel",prefix + "blockUI",prefix + "zipcodeUILabel",prefix + "zipcodeUI",prefix + "descriptionUILabel",prefix + "descriptionUI"]
+        ,subComponents: [prefix + "idUI",prefix + "parentIdUI",prefix + "countryUILabel",prefix + "countryUI",prefix + "provinceUILabel",prefix + "provinceUI",prefix + "cityUILabel",prefix + "cityUI",prefix + "districtUILabel",prefix + "districtUI",prefix + "streetUILabel",prefix + "streetUI",prefix + "blockUILabel",prefix + "blockUI",prefix + "zipcodeUILabel",prefix + "zipcodeUI",prefix + "descriptionUILabel",prefix + "descriptionUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,countryUILabel,countryUI,cityUILabel,cityUI,streetUILabel,streetUI,blockUILabel,blockUI,zipcodeUILabel,zipcodeUI,descriptionUILabel,descriptionUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,parentIdUI,countryUILabel,countryUI,provinceUILabel,provinceUI,cityUILabel,cityUI,districtUILabel,districtUI,streetUILabel,streetUI,blockUILabel,blockUI,zipcodeUILabel,zipcodeUI,descriptionUILabel,descriptionUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
+
+    Form.parentIdUI=parentIdUI;
 
     Form.countryUILabel=countryUILabel;
 
     Form.countryUI=countryUI;
 
+    Form.provinceUILabel=provinceUILabel;
+
+    Form.provinceUI=provinceUI;
+
     Form.cityUILabel=cityUILabel;
 
     Form.cityUI=cityUI;
+
+    Form.districtUILabel=districtUILabel;
+
+    Form.districtUI=districtUI;
 
     Form.streetUILabel=streetUILabel;
 
@@ -132,13 +167,23 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfo(json)
 
     Form.idUI=idUI;
 
+    Form.parentIdUI=parentIdUI;
+
     Form.countryUILabel=countryUILabel;
 
     Form.countryUI=countryUI;
 
+    Form.provinceUILabel=provinceUILabel;
+
+    Form.provinceUI=provinceUI;
+
     Form.cityUILabel=cityUILabel;
 
     Form.cityUI=cityUI;
+
+    Form.districtUILabel=districtUILabel;
+
+    Form.districtUI=districtUI;
 
     Form.streetUILabel=streetUILabel;
 
@@ -172,6 +217,10 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfo(json)
 
     Form.Cancel = org_shaolin_vogerp_commonmodel_form_AddressInfo_Cancel;
 
+    Form.selectProvince = org_shaolin_vogerp_commonmodel_form_AddressInfo_selectProvince;
+
+    Form.selectCity = org_shaolin_vogerp_commonmodel_form_AddressInfo_selectCity;
+
     Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_AddressInfo_invokeDynamicFunction;
 
     Form.__entityName="org.shaolin.vogerp.commonmodel.form.AddressInfo";
@@ -191,7 +240,7 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfo(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail946006518",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20160615-215501",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_AddressInfo_Save */
 
 
@@ -202,8 +251,30 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfo(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail1136099838",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160615-215501",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_AddressInfo_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_AddressInfo_selectProvince(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_AddressInfo_selectProvince */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectProvince-201604102211",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_AddressInfo_selectProvince */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_AddressInfo_selectCity(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_AddressInfo_selectCity */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectCity-201604152311",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_AddressInfo_selectCity */
 
 
     /* auto generated eventlistener function declaration */

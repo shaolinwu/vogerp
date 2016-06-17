@@ -14,23 +14,6 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfoTable(json)
         ,editable: true
     });
 
-    var okbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "okbtn"]
-    });
-
-    var cancelbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "cancelbtn"]
-    });
-
-    var actionPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "actionPanel"]
-        ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
-    });
-
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
@@ -41,28 +24,18 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfoTable(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentIdUI,itemTable,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [parentIdUI,itemTable,fieldPanel]
     });
 
     Form.parentIdUI=parentIdUI;
 
     Form.itemTable=itemTable;
 
-    Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
-
     Form.fieldPanel=fieldPanel;
 
     Form.parentIdUI=parentIdUI;
 
     Form.itemTable=itemTable;
-
-    Form.actionPanel=actionPanel;
-
-    Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {
@@ -72,13 +45,13 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfoTable(json)
 
     Form.createItem = org_shaolin_vogerp_commonmodel_form_AddressInfoTable_createItem;
 
+    Form.openItem = org_shaolin_vogerp_commonmodel_form_AddressInfoTable_openItem;
+
     Form.deleteItem = org_shaolin_vogerp_commonmodel_form_AddressInfoTable_deleteItem;
 
     Form.verifyAddress = org_shaolin_vogerp_commonmodel_form_AddressInfoTable_verifyAddress;
 
     Form.selectProvince = org_shaolin_vogerp_commonmodel_form_AddressInfoTable_selectProvince;
-
-    Form.Save = org_shaolin_vogerp_commonmodel_form_AddressInfoTable_Save;
 
     Form.Cancel = org_shaolin_vogerp_commonmodel_form_AddressInfoTable_Cancel;
 
@@ -106,10 +79,37 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfoTable(json)
 
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_AddressInfoTable_openItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_AddressInfoTable_openItem */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openItem-1416511085",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_AddressInfoTable_openItem */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_AddressInfoTable_deleteItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_AddressInfoTable_deleteItem */
         var o = this;
         var UIEntity = this;
 
+         {
+          new UIMaster.ui.dialog({
+              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
+              message:'\u786E\u5B9A\u5220\u9664\u5730\u5740\u5417',
+              messageType:UIMaster.ui.dialog.Information,
+              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+              title:'',
+              height:150,
+              width:300,
+              handler: function() {
+                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_1667539263",UIMaster.getValue(eventsource),o.__entityName);
+              }
+          }).open();
+          return;
+         }
+         
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_1667539263",UIMaster.getValue(eventsource),o.__entityName);
@@ -136,21 +136,6 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfoTable(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectProvince-201605102011",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_AddressInfoTable_selectProvince */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_AddressInfoTable_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_AddressInfoTable_Save */
-        var o = this;
-        var UIEntity = this;
-
-        {
-            this.itemTable.syncBodyDataToServer();
-        }
-        
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveItem_201507111935",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_AddressInfoTable_Save */
 
 
     /* auto generated eventlistener function declaration */

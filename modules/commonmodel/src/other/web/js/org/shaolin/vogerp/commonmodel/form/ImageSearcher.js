@@ -33,11 +33,6 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
         ui: elementList[prefix + "refreshbtn"]
     });
 
-    var okbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "okbtn"]
-    });
-
     var cancelbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "cancelbtn"]
@@ -47,7 +42,7 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "refreshbtn",prefix + "okbtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "refreshbtn",prefix + "cancelbtn"]
     });
 
     var aframePanel = new UIMaster.ui.panel
@@ -81,7 +76,7 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [reloadPathText,searchBtn,photoUI,emtpyLabel,refreshbtn,okbtn,cancelbtn,fieldPanel,searchPanel,photoPanel,aframePanel,actionPanel]
+        ,items: [reloadPathText,searchBtn,photoUI,emtpyLabel,refreshbtn,cancelbtn,fieldPanel,searchPanel,photoPanel,aframePanel,actionPanel]
     });
 
     Form.reloadPathText=reloadPathText;
@@ -93,8 +88,6 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
     Form.emtpyLabel=emtpyLabel;
 
     Form.refreshbtn=refreshbtn;
-
-    Form.okbtn=okbtn;
 
     Form.cancelbtn=cancelbtn;
 
@@ -131,8 +124,6 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
     Form.actionPanel=actionPanel;
 
     Form.refreshbtn=refreshbtn;
-
-    Form.okbtn=okbtn;
 
     Form.cancelbtn=cancelbtn;
 

@@ -27,7 +27,7 @@ public class CEOperationUtil {
 	public static void syncTable(List<CEExtensionImpl> data, Table table) {
 		for (CEExtensionImpl v : data) { 
 			if (v.getId() == 0) {
-				table.getAddItems().add(v);
+				table.getListData().add(v);
 			} 
 		}
 	}

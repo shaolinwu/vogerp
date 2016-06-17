@@ -40,6 +40,7 @@ function org_shaolin_vogerp_commonmodel_form_ImageUploader(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
+        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: [imagePathUI,photoUI,uploadFile,fieldPanel,photoPanel]
     });
 
