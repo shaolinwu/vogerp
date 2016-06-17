@@ -16,6 +16,33 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
+  <ns2:eventHandler functionName="OfferPrice">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="OfferPrice-20160106-214008">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            HashMap out = (HashMap)form.ui2Data();
+            GoldenOrderImpl beObject = (GoldenOrderImpl)out.get("beObject");
+            form.closeIfinWindows(true);
+            @page.removeForm(@page.getEntityUiid()); 
+            
+            HashMap input = new HashMap();
+            input.put("beObject", beObject);
+            input.put("editable", new Boolean(true));
+            RefForm form1 = new RefForm("gorderForm1", "org.shaolin.vogerp.ecommercial.form.GOOfferPrice", input);
+            @page.addElement(form1);
+            
+            form1.openInWindows("竟价", null, 700, 400);
+            
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -200,12 +227,8 @@
            </ns2:UISkin>
           <ns2:layout xsi:type="ns2:TableLayoutType">
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
           </ns2:layout>
-          <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="orderItemTable">
-            <ns2:referenceEntity entityName="org.shaolin.vogerp.order.form.PurchaseItemTable" />
-	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UITextAreaType" UIID="htmlDescUI">
             <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
             <ns2:htmlSupport xsi:type="ns2:BooleanPropertyType">
@@ -228,10 +251,6 @@
             </ns2:Property>
           </ns2:component>
 	      <ns2:layoutConstraint>
-	        <ns2:componentId>orderItemTable</ns2:componentId>
-	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
-	      </ns2:layoutConstraint>
-	      <ns2:layoutConstraint>
             <ns2:componentId>htmlDescUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
           </ns2:layoutConstraint>
@@ -253,7 +272,16 @@
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="offerPriceBtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="OfferPrice"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>竟价</ns2:value>
+        </ns2:text>
+      </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="Cancel"></ns2:handler>
@@ -264,8 +292,12 @@
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:componentId>offerPriceBtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
@@ -318,16 +350,6 @@
       <ns2:UIComponent componentPath="createDateUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.createDate" paramName="Date"></ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping6">
-      <ns2:mappingRule entityName="org.shaolin.vogerp.order.form.PurchaseItemTable"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="orderItemTable" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.purchaseOrder.items" paramName="list"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
-        <ns2:expression>
-          <expressionString>{return false;}</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
-    </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping7">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="htmlDescUI" paramName="UIWidgetType"></ns2:UIComponent>
@@ -340,7 +362,6 @@
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString>{
-@odContext.executeMapping("simpleMapping2");
 }</expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>

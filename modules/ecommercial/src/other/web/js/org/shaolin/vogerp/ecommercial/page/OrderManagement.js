@@ -7,7 +7,7 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "goldenOrderInfoPanel",prefix + "rentOrderInfoPanel"]
+        ,subComponents: [prefix + "goldenOrderInfoPanel",prefix + "takenGOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "takenROrderInfoPanel"]
     });
     var goldenOrderTable = new UIMaster.ui.objectlist
     ({
@@ -20,6 +20,17 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         ,items: []
         ,subComponents: [prefix + "goldenOrderTable"]
     });
+    var takengGOrderTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "takengGOrderTable"]
+    });
+
+    var takenGOrderInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "takenGOrderInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "takengGOrderTable"]
+    });
     var rentOrderTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "rentOrderTable"]
@@ -30,6 +41,17 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         ui: elementList[prefix + "rentOrderInfoPanel"]
         ,items: []
         ,subComponents: [prefix + "rentOrderTable"]
+    });
+    var takenROrderTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "takenROrderTable"]
+    });
+
+    var takenROrderInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "takenROrderInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "takenROrderTable"]
     });
 
     var Form = new UIMaster.ui.panel
@@ -45,9 +67,17 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
     Form.goldenOrderTable=goldenOrderTable;
 
+    Form.takenGOrderInfoPanel=takenGOrderInfoPanel;
+
+    Form.takengGOrderTable=takengGOrderTable;
+
     Form.rentOrderInfoPanel=rentOrderInfoPanel;
 
     Form.rentOrderTable=rentOrderTable;
+
+    Form.takenROrderInfoPanel=takenROrderInfoPanel;
+
+    Form.takenROrderTable=takenROrderTable;
 
     Form.user_constructor = function()
     {
@@ -147,7 +177,7 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openRentOrder-20160602",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openRentOrder-201606023543",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_openRentOrder */
 
 

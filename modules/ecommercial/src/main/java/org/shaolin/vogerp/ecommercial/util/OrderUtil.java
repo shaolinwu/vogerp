@@ -5,11 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 import org.shaolin.bmdp.persistence.HibernateUtil;
+import org.shaolin.bmdp.runtime.be.IPersistentEntity;
 import org.shaolin.bmdp.utils.DateParser;
 import org.shaolin.bmdp.utils.LockManager;
 import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
-import org.shaolin.vogerp.ecommercial.be.IGOOfferPrice;
+import org.shaolin.vogerp.ecommercial.be.IEOrder;
 import org.shaolin.vogerp.ecommercial.be.IGoldenOrder;
+import org.shaolin.vogerp.ecommercial.be.IOfferPrice;
 import org.shaolin.vogerp.ecommercial.dao.OrderModel;
 
 public class OrderUtil {
@@ -27,8 +29,8 @@ public class OrderUtil {
 		return "r" + System.nanoTime();
 	}
 	
-	public static boolean compareAPrice(IGoldenOrder gorder,
-			IGOOfferPrice newPrice) {
+	public static boolean compareAPrice(IEOrder gorder,
+			IOfferPrice newPrice) {
 		if (gorder.getId() == 0) {
 			return false;
 		}
@@ -44,13 +46,13 @@ public class OrderUtil {
 				return false;
 			}
 			if (gorder.getOfferPrices() == null) {
-				gorder.setOfferPrices(new ArrayList<IGOOfferPrice>());
+				gorder.setOfferPrices(new ArrayList());
 			}
 			if (getLowestOfferPrice(gorder) < newPrice.getPrice()) {
 				return false;
 			}
 			gorder.getOfferPrices().add(newPrice);
-			OrderModel.INSTANCE.update(gorder);
+			OrderModel.INSTANCE.update((IPersistentEntity)gorder);
 			// commit the update.
 			HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
 			return true;
@@ -59,7 +61,7 @@ public class OrderUtil {
 		}
 	}
 	
-	public static double getLowestOfferPrice(IGoldenOrder gorder, boolean reload) {
+	public static double getLowestOfferPrice(IEOrder gorder, boolean reload) {
 		GoldenOrderImpl condition = new GoldenOrderImpl();
 		condition.setId(gorder.getId());
 		List<IGoldenOrder> result = OrderModel.INSTANCE.searchGoldenOrder(
@@ -68,11 +70,11 @@ public class OrderUtil {
 		return getLowestOfferPrice(gorder);
 	}
 	
-	public static double getLowestOfferPrice(IGoldenOrder gorder) {
+	public static double getLowestOfferPrice(IEOrder gorder) {
 		double lowestPrice = gorder.getEstimatedPrice();
 		if (gorder.getOfferPrices() != null) {
-			List<IGOOfferPrice> offerPrices = gorder.getOfferPrices();
-			for (IGOOfferPrice p : offerPrices) {
+			List<IOfferPrice> offerPrices = gorder.getOfferPrices();
+			for (IOfferPrice p : offerPrices) {
 				if (lowestPrice > p.getPrice()) {
 					lowestPrice = p.getPrice();
 				}
@@ -81,12 +83,12 @@ public class OrderUtil {
 		return lowestPrice;
 	}
 	
-	public static long getLowestOfferPriceCustId(IGoldenOrder gorder) {
+	public static long getLowestOfferPriceCustId(IEOrder gorder) {
 		long custId = 0;
 		double lowestPrice = gorder.getEstimatedPrice();
 		if (gorder.getOfferPrices() != null) {
-			List<IGOOfferPrice> offerPrices = gorder.getOfferPrices();
-			for (IGOOfferPrice p : offerPrices) {
+			List<IOfferPrice> offerPrices = gorder.getOfferPrices();
+			for (IOfferPrice p : offerPrices) {
 				if (lowestPrice > p.getPrice()) {
 					lowestPrice = p.getPrice();
 					custId = p.getTakenCustomerId();

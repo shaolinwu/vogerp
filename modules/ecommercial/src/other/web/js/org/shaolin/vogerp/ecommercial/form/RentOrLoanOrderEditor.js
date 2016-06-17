@@ -13,6 +13,16 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
         ui: elementList[prefix + "serialNumberUI"]
     });
 
+    var descriptionUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "descriptionUILabel"]
+    });
+
+    var descriptionUI = new UIMaster.ui.textarea
+    ({
+        ui: elementList[prefix + "descriptionUI"]
+    });
+
     var rentTypeUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "rentTypeUILabel"]
@@ -73,14 +83,9 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
         ui: elementList[prefix + "publishedCustomerIdUI"]
     });
 
-    var createDateUILabel = new UIMaster.ui.label
+    var deliveryInfoLabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "createDateUILabel"]
-    });
-
-    var createDateUI = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "createDateUI"]
+        ui: elementList[prefix + "deliveryInfoLabel"]
     });
 
     var htmlDescUI = new UIMaster.ui.textarea
@@ -102,6 +107,8 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
 
     var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
 
+    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo({"prefix":prefix + "deliveryInfoUI."});
+
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
@@ -121,7 +128,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "rentTypeUILabel",prefix + "rentTypeUI",prefix + "rentDateTypeUILabel",prefix + "rentDateTypeUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "finalPriceUILabel",prefix + "finalPriceUI",prefix + "expiredDateUILabel",prefix + "expiredDateUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "createDateUILabel",prefix + "createDateUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "rentTypeUILabel",prefix + "rentTypeUI",prefix + "rentDateTypeUILabel",prefix + "rentDateTypeUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "finalPriceUILabel",prefix + "finalPriceUI",prefix + "expiredDateUILabel",prefix + "expiredDateUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "deliveryInfoLabel",prefix + "deliveryInfoUI"]
     });
 
     var photoPanel = new UIMaster.ui.panel
@@ -141,12 +148,16 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [serialNumberUILabel,serialNumberUI,rentTypeUILabel,rentTypeUI,rentDateTypeUILabel,rentDateTypeUI,estimatedPriceUILabel,estimatedPriceUI,finalPriceUILabel,finalPriceUI,expiredDateUILabel,expiredDateUI,publishedCustomerIdUILabel,publishedCustomerIdUI,createDateUILabel,createDateUI,htmlDescUI,okbtn,cancelbtn,photoUI,fieldPanel,photoPanel,attributePanel,prodcutInfoPanel,actionPanel]
+        ,items: [serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,rentTypeUILabel,rentTypeUI,rentDateTypeUILabel,rentDateTypeUI,estimatedPriceUILabel,estimatedPriceUI,finalPriceUILabel,finalPriceUI,expiredDateUILabel,expiredDateUI,publishedCustomerIdUILabel,publishedCustomerIdUI,deliveryInfoLabel,htmlDescUI,okbtn,cancelbtn,photoUI,deliveryInfoUI,fieldPanel,photoPanel,attributePanel,prodcutInfoPanel,actionPanel]
     });
 
     Form.serialNumberUILabel=serialNumberUILabel;
 
     Form.serialNumberUI=serialNumberUI;
+
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
 
     Form.rentTypeUILabel=rentTypeUILabel;
 
@@ -172,9 +183,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.createDateUILabel=createDateUILabel;
-
-    Form.createDateUI=createDateUI;
+    Form.deliveryInfoLabel=deliveryInfoLabel;
 
     Form.htmlDescUI=htmlDescUI;
 
@@ -183,6 +192,8 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
     Form.cancelbtn=cancelbtn;
 
     Form.photoUI=photoUI;
+
+    Form.deliveryInfoUI=deliveryInfoUI;
 
     Form.fieldPanel=fieldPanel;
 
@@ -196,6 +207,10 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
 
     Form.serialNumberUI=serialNumberUI;
 
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
     Form.rentTypeUILabel=rentTypeUILabel;
 
     Form.rentTypeUI=rentTypeUI;
@@ -220,9 +235,9 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.createDateUILabel=createDateUILabel;
+    Form.deliveryInfoLabel=deliveryInfoLabel;
 
-    Form.createDateUI=createDateUI;
+    Form.deliveryInfoUI=deliveryInfoUI;
 
     Form.prodcutInfoPanel=prodcutInfoPanel;
 
@@ -238,6 +253,10 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
 
     Form.serialNumberUI=serialNumberUI;
 
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
     Form.rentTypeUILabel=rentTypeUILabel;
 
     Form.rentTypeUI=rentTypeUI;
@@ -262,9 +281,9 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.createDateUILabel=createDateUILabel;
+    Form.deliveryInfoLabel=deliveryInfoLabel;
 
-    Form.createDateUI=createDateUI;
+    Form.deliveryInfoUI=deliveryInfoUI;
 
     Form.prodcutInfoPanel=prodcutInfoPanel;
 

@@ -23,36 +23,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         ui: elementList[prefix + "isPurchaseOrderUI"]
     });
 
-    var rentTypeUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "rentTypeUILabel"]
-    });
-
-    var rentTypeUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "rentTypeUI"]
-    });
-
-    var rentDateTypeUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "rentDateTypeUILabel"]
-    });
-
-    var rentDateTypeUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "rentDateTypeUI"]
-    });
-
-    var estimatedPriceUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "estimatedPriceUILabel"]
-    });
-
-    var estimatedPriceUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "estimatedPriceUI"]
-    });
-
     var publishedCustomerIdUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "publishedCustomerIdUILabel"]
@@ -63,14 +33,39 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         ui: elementList[prefix + "publishedCustomerIdUI"]
     });
 
-    var createDateUILabel = new UIMaster.ui.label
+    var deliveryInfoLabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "createDateUILabel"]
+        ui: elementList[prefix + "deliveryInfoLabel"]
     });
 
-    var createDateUI = new UIMaster.ui.label
+    var descriptionUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "createDateUI"]
+        ui: elementList[prefix + "descriptionUILabel"]
+    });
+
+    var descriptionUI = new UIMaster.ui.textarea
+    ({
+        ui: elementList[prefix + "descriptionUI"]
+    });
+
+    var countUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "countUILabel"]
+    });
+
+    var countUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "countUI"]
+    });
+
+    var estimatedPriceUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "estimatedPriceUILabel"]
+    });
+
+    var estimatedPriceUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "estimatedPriceUI"]
     });
 
     var htmlDescUI = new UIMaster.ui.textarea
@@ -92,6 +87,8 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
 
+    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo({"prefix":prefix + "deliveryInfoUI."});
+
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
@@ -111,7 +108,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "isPurchaseOrderUILabel",prefix + "isPurchaseOrderUI",prefix + "rentTypeUILabel",prefix + "rentTypeUI",prefix + "rentDateTypeUILabel",prefix + "rentDateTypeUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "createDateUILabel",prefix + "createDateUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "isPurchaseOrderUILabel",prefix + "isPurchaseOrderUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "deliveryInfoLabel",prefix + "deliveryInfoUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI"]
     });
 
     var photoPanel = new UIMaster.ui.panel
@@ -131,7 +128,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [serialNumberUILabel,serialNumberUI,isPurchaseOrderUILabel,isPurchaseOrderUI,rentTypeUILabel,rentTypeUI,rentDateTypeUILabel,rentDateTypeUI,estimatedPriceUILabel,estimatedPriceUI,publishedCustomerIdUILabel,publishedCustomerIdUI,createDateUILabel,createDateUI,htmlDescUI,okbtn,cancelbtn,photoUI,fieldPanel,photoPanel,attributePanel,prodcutInfoPanel,actionPanel]
+        ,items: [serialNumberUILabel,serialNumberUI,isPurchaseOrderUILabel,isPurchaseOrderUI,publishedCustomerIdUILabel,publishedCustomerIdUI,deliveryInfoLabel,descriptionUILabel,descriptionUI,countUILabel,countUI,estimatedPriceUILabel,estimatedPriceUI,htmlDescUI,okbtn,cancelbtn,photoUI,deliveryInfoUI,fieldPanel,photoPanel,attributePanel,prodcutInfoPanel,actionPanel]
     });
 
     Form.serialNumberUILabel=serialNumberUILabel;
@@ -142,25 +139,23 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.isPurchaseOrderUI=isPurchaseOrderUI;
 
-    Form.rentTypeUILabel=rentTypeUILabel;
-
-    Form.rentTypeUI=rentTypeUI;
-
-    Form.rentDateTypeUILabel=rentDateTypeUILabel;
-
-    Form.rentDateTypeUI=rentDateTypeUI;
-
-    Form.estimatedPriceUILabel=estimatedPriceUILabel;
-
-    Form.estimatedPriceUI=estimatedPriceUI;
-
     Form.publishedCustomerIdUILabel=publishedCustomerIdUILabel;
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.createDateUILabel=createDateUILabel;
+    Form.deliveryInfoLabel=deliveryInfoLabel;
 
-    Form.createDateUI=createDateUI;
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
+    Form.countUILabel=countUILabel;
+
+    Form.countUI=countUI;
+
+    Form.estimatedPriceUILabel=estimatedPriceUILabel;
+
+    Form.estimatedPriceUI=estimatedPriceUI;
 
     Form.htmlDescUI=htmlDescUI;
 
@@ -169,6 +164,8 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     Form.cancelbtn=cancelbtn;
 
     Form.photoUI=photoUI;
+
+    Form.deliveryInfoUI=deliveryInfoUI;
 
     Form.fieldPanel=fieldPanel;
 
@@ -186,25 +183,25 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.isPurchaseOrderUI=isPurchaseOrderUI;
 
-    Form.rentTypeUILabel=rentTypeUILabel;
-
-    Form.rentTypeUI=rentTypeUI;
-
-    Form.rentDateTypeUILabel=rentDateTypeUILabel;
-
-    Form.rentDateTypeUI=rentDateTypeUI;
-
-    Form.estimatedPriceUILabel=estimatedPriceUILabel;
-
-    Form.estimatedPriceUI=estimatedPriceUI;
-
     Form.publishedCustomerIdUILabel=publishedCustomerIdUILabel;
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.createDateUILabel=createDateUILabel;
+    Form.deliveryInfoLabel=deliveryInfoLabel;
 
-    Form.createDateUI=createDateUI;
+    Form.deliveryInfoUI=deliveryInfoUI;
+
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
+    Form.countUILabel=countUILabel;
+
+    Form.countUI=countUI;
+
+    Form.estimatedPriceUILabel=estimatedPriceUILabel;
+
+    Form.estimatedPriceUI=estimatedPriceUI;
 
     Form.prodcutInfoPanel=prodcutInfoPanel;
 
@@ -224,25 +221,25 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.isPurchaseOrderUI=isPurchaseOrderUI;
 
-    Form.rentTypeUILabel=rentTypeUILabel;
-
-    Form.rentTypeUI=rentTypeUI;
-
-    Form.rentDateTypeUILabel=rentDateTypeUILabel;
-
-    Form.rentDateTypeUI=rentDateTypeUI;
-
-    Form.estimatedPriceUILabel=estimatedPriceUILabel;
-
-    Form.estimatedPriceUI=estimatedPriceUI;
-
     Form.publishedCustomerIdUILabel=publishedCustomerIdUILabel;
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.createDateUILabel=createDateUILabel;
+    Form.deliveryInfoLabel=deliveryInfoLabel;
 
-    Form.createDateUI=createDateUI;
+    Form.deliveryInfoUI=deliveryInfoUI;
+
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
+    Form.countUILabel=countUILabel;
+
+    Form.countUI=countUI;
+
+    Form.estimatedPriceUILabel=estimatedPriceUILabel;
+
+    Form.estimatedPriceUI=estimatedPriceUI;
 
     Form.prodcutInfoPanel=prodcutInfoPanel;
 
@@ -286,7 +283,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
             if (constraint_result != true && constraint_result != null) {
                 return false;
             }
-            //this.infoPanel2.itemTable.syncBodyDataToServer();
             this.htmlDescUI.saveBtn.trigger("click");
         }
         

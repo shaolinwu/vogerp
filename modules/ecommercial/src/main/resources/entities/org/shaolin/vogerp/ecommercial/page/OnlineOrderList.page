@@ -35,7 +35,41 @@
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
                         input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GoldenOrder", input);
+                        RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrder", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, 700, 400);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="openRentOrder">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openRentOrder-20160124-1333">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
+                    {
+                        IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+                        if (!userService.checkUserOnline(@page.getRequest().getSession())) {
+                            @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\");");
+                            return;
+                        }
+                        
+                        Table orderInfoTable = (Table)@page.getElement("rentOrderTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)orderInfoTable.getSelectedRow();
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.RentOrLoanOrder", input);
                         @page.addElement(form);
                         
                         form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, 700, 400);
@@ -75,15 +109,55 @@
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
                         input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GOOfferPrice", input);
+                        RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.GOOfferPrice", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Offer Price", null, 700, 400);
+                        form.openInWindows("竟价", null, 700, 400);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
             </ns2:ops>
 		</ns2:eventHandler>
+		<ns2:eventHandler functionName="takeRentOrder">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="takeRentOrder-20160124-1333">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
+                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    {
+                        IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+                        if (!userService.checkUserOnline(@page.getRequest().getSession())) {
+                            @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\");");
+                            return;
+                        }
+                     
+                        Table orderInfoTable = (Table)@page.getElement("rentOrderTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)orderInfoTable.getSelectedRow();
+                        if (defaultUser.getStatus() != OrderStatusType.PUBLISHED) {
+                           @page.executeJavaScript("alert(\"\u8BE5\u8BA2\u5355\u4E0D\u53EF\u7ADF\u4EF7\");");
+                           return;
+                        }
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.ROOfferPrice", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("竟价", null, 700, 400);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
 		<ns2:eventHandler functionName="publishOrder">
             <ns2:ops xsi:type="ns2:OpCallAjaxType" name="publishOrder-20160124-1333">
                 <ns2:exp>
@@ -166,6 +240,7 @@
 		                            import org.shaolin.bmdp.runtime.AppContext;
 									import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
 									import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+									import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
@@ -180,6 +255,7 @@
 								          try {
 								              AppContext.register(masterApp);
 			                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
+			                                  condition.setStatus(OrderStatusType.PUBLISHED);
 			                                  return OrderModel.INSTANCE.searchGoldenOrder(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 
@@ -236,14 +312,6 @@
 		                    </ns2:defaultActions>
 		                    <ns2:actionGroup>
 		                        <ns2:type>radio</ns2:type>
-		                        <ns2:action>
-		                            <ns2:uiid>publishOrder</ns2:uiid>
-		                            <ns2:title xsi:type="ns2:StringPropertyType">
-		                                <ns2:value>发单</ns2:value>
-		                            </ns2:title>
-		                            <ns2:icon>ui-icon-note</ns2:icon>
-		                            <ns2:function>publishOrder</ns2:function>
-		                        </ns2:action>
 		                        <ns2:action>
 		                            <ns2:uiid>takeGoldenOrder</ns2:uiid>
 		                            <ns2:title xsi:type="ns2:StringPropertyType">
@@ -331,8 +399,8 @@
 		                                {
 		                                    HashMap input = new HashMap();
 		                                    input.put("beObject", $rowBE);
-		                                    RefForm form = new RefForm("gOrderForm"+$rowBE.getId(), 
-		                                      "org.shaolin.vogerp.ecommercial.form.GoldenOrderOverView", input);
+		                                    RefForm form = new RefForm("rOrderForm"+$rowBE.getId(), 
+		                                      "org.shaolin.vogerp.ecommercial.form.RentOrderOverView", input);
 		                                    StringBuffer sb = new StringBuffer();
 		                                    sb.append(form.generateHTML());
 		                                    sb.append("<script type=\"text/javascript\">UIMaster.pageInitFunctions.push(function(){");
@@ -359,14 +427,6 @@
 		                    </ns2:defaultActions>
 		                    <ns2:actionGroup>
 		                        <ns2:type>radio</ns2:type>
-		                        <ns2:action>
-		                            <ns2:uiid>publishRentOrder</ns2:uiid>
-		                            <ns2:title xsi:type="ns2:StringPropertyType">
-		                                <ns2:value>发单</ns2:value>
-		                            </ns2:title>
-		                            <ns2:icon>ui-icon-note</ns2:icon>
-		                            <ns2:function>publishRentOrder</ns2:function>
-		                        </ns2:action>
 		                        <ns2:action>
 		                            <ns2:uiid>takeRentOrder</ns2:uiid>
 		                            <ns2:title xsi:type="ns2:StringPropertyType">
@@ -454,8 +514,8 @@
                                         {
                                             HashMap input = new HashMap();
                                             input.put("beObject", $rowBE);
-                                            RefForm form = new RefForm("gOrderForm"+$rowBE.getId(), 
-                                              "org.shaolin.vogerp.ecommercial.form.GoldenOrderOverView", input);
+                                            RefForm form = new RefForm("rrOrderForm"+$rowBE.getId(), 
+                                              "org.shaolin.vogerp.ecommercial.form.RentOrderOverView", input);
                                             StringBuffer sb = new StringBuffer();
                                             sb.append(form.generateHTML());
                                             sb.append("<script type=\"text/javascript\">UIMaster.pageInitFunctions.push(function(){");

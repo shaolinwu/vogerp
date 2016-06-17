@@ -72,18 +72,21 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
         ,disabled: "disabled"
     });
 
+    var offerPriceBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "offerPriceBtn"]
+    });
+
     var cancelbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "cancelbtn"]
     });
 
-    var orderItemTable = new org_shaolin_vogerp_order_form_PurchaseItemTable({"prefix":prefix + "orderItemTable."});
-
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "cancelbtn"]
+        ,subComponents: [prefix + "offerPriceBtn",prefix + "cancelbtn"]
     });
 
     var prodcutInfoPanel = new UIMaster.ui.panel
@@ -91,7 +94,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
         ui: elementList[prefix + "prodcutInfoPanel"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
-        ,subComponents: [prefix + "orderItemTable",prefix + "htmlDescUI"]
+        ,subComponents: [prefix + "htmlDescUI"]
     });
 
     var attributePanel = new UIMaster.ui.panel
@@ -118,7 +121,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [photoUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,estimatedPriceUILabel,estimatedPriceUI,publishedCustomerIdUILabel,publishedCustomerIdUI,createDateUILabel,createDateUI,htmlDescUI,cancelbtn,orderItemTable,fieldPanel,photoPanel,attributePanel,prodcutInfoPanel,actionPanel]
+        ,items: [photoUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,estimatedPriceUILabel,estimatedPriceUI,publishedCustomerIdUILabel,publishedCustomerIdUI,createDateUILabel,createDateUI,htmlDescUI,offerPriceBtn,cancelbtn,fieldPanel,photoPanel,attributePanel,prodcutInfoPanel,actionPanel]
     });
 
     Form.photoUI=photoUI;
@@ -145,9 +148,9 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
 
     Form.htmlDescUI=htmlDescUI;
 
-    Form.cancelbtn=cancelbtn;
+    Form.offerPriceBtn=offerPriceBtn;
 
-    Form.orderItemTable=orderItemTable;
+    Form.cancelbtn=cancelbtn;
 
     Form.fieldPanel=fieldPanel;
 
@@ -179,8 +182,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
 
     Form.prodcutInfoPanel=prodcutInfoPanel;
 
-    Form.orderItemTable=orderItemTable;
-
     Form.htmlDescUI=htmlDescUI;
 
     Form.photoPanel=photoPanel;
@@ -211,11 +212,11 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
 
     Form.prodcutInfoPanel=prodcutInfoPanel;
 
-    Form.orderItemTable=orderItemTable;
-
     Form.htmlDescUI=htmlDescUI;
 
     Form.actionPanel=actionPanel;
+
+    Form.offerPriceBtn=offerPriceBtn;
 
     Form.cancelbtn=cancelbtn;
 
@@ -226,6 +227,8 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
     };
 
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_GoldenOrder_Cancel;
+
+    Form.OfferPrice = org_shaolin_vogerp_ecommercial_form_GoldenOrder_OfferPrice;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_GoldenOrder_invokeDynamicFunction;
 
@@ -248,6 +251,17 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160106-214008",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrder_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_GoldenOrder_OfferPrice(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrder_OfferPrice */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"OfferPrice-20160106-214008",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrder_OfferPrice */
 
 
     /* auto generated eventlistener function declaration */

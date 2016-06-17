@@ -56,7 +56,7 @@
             OrderItemImpl item = (OrderItemImpl)tableWidget.getSelectedRow();
             item.setPricePackage(price);
             item.setProductId(price.getProduct().getId());
-            tableWidget.refresh();
+            tableWidget.refresh(tableWidget.getListData());
             
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid());
             form.closeIfinWindows(true);

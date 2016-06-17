@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
-  <entityName>org.shaolin.vogerp.ecommercial.form.GOOfferPriceTable</entityName>
+  <entityName>org.shaolin.vogerp.ecommercial.form.ROOfferPriceTable</entityName>
   <systemVersion>0</systemVersion>
   <ns2:eventHandler functionName="Cancel">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20160325-112849">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20160615-112849">
       <ns2:exp>
         <expressionString><![CDATA[
         import org.shaolin.uimaster.page.AjaxContext;
@@ -17,7 +17,7 @@
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="chat">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="chat-20160325-112849">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="chat-20160615-112849">
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
@@ -34,10 +34,10 @@
                 return;
             }
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            IGOOfferPrice offer = (IGOOfferPrice)orderInfoTable.getSelectedRow();
+            IROOfferPrice offer = (IROOfferPrice)orderInfoTable.getSelectedRow();
             
             ChatHistoryImpl defaultUser = new ChatHistoryImpl();
-            defaultUser.setTaskId(((IGoldenOrder)form.getInputParameter("beObject")).getTaskId());
+            defaultUser.setTaskId(((IRentOrLoanOrder)form.getInputParameter("beObject")).getTaskId());
             defaultUser.setSentPartyId((Long)UserContext.getUserData("CurrentUserId"));
             defaultUser.setReceivedPartyId(offer.getTakenCustomerId());
             defaultUser.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
@@ -73,7 +73,7 @@
         </ns2:secure>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITableType" UIID="itemTable">
-        <ns2:beElement>org.shaolin.vogerp.ecommercial.be.GOOfferPrice</ns2:beElement>
+        <ns2:beElement>org.shaolin.vogerp.ecommercial.be.ROOfferPrice</ns2:beElement>
         <ns2:defaultRowSize>20</ns2:defaultRowSize>
         <ns2:showBigItem>false</ns2:showBigItem>
         <ns2:showActionBar>true</ns2:showActionBar>
@@ -223,27 +223,27 @@
       <type entityName="java.util.List"></type>
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.ecommercial.be.GoldenOrder"></type>
+      <type entityName="org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder"></type>
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="selectedPrice" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.ecommercial.be.GOOfferPrice"></type>
+      <type entityName="org.shaolin.vogerp.ecommercial.be.ROOfferPrice"></type>
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
     <ns2:DataToUIMappingOperation>
       <expressionString>{
-@odContext.executeAllMappings();
-}</expressionString>
+		@odContext.executeAllMappings();
+		}</expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString><![CDATA[
-      import org.shaolin.vogerp.ecommercial.be.GOOfferPriceImpl;
+      import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
       {
 		@odContext.executeAllMappings();
-		$selectedPrice = (GOOfferPriceImpl)@page.getTable("itemTable").getSelectedRow();
+		$selectedPrice = (ROOfferPriceImpl)@page.getTable("itemTable").getSelectedRow();
       }
-     ]]></expressionString>
+    ]]></expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>
 </ns2:UIEntity>

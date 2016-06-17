@@ -56,6 +56,9 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+            if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.ecommercial.ce.OrderStatusType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -86,6 +89,9 @@ public class OrderModel extends BEEntityDaoObject {
             }
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
+            }
+            if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.ecommercial.ce.OrderStatusType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
@@ -125,6 +131,9 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+            if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.ecommercial.ce.OrderStatusType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -159,6 +168,9 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+            if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.ecommercial.ce.OrderStatusType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -188,6 +200,9 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
             }
+            if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.ecommercial.ce.OrderStatusType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -212,6 +227,9 @@ public class OrderModel extends BEEntityDaoObject {
             }
             if (scObject.getEndCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
+            }
+            if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.ecommercial.ce.OrderStatusType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));

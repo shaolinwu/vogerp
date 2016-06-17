@@ -200,6 +200,11 @@
 						<ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
 					</ns2:layout>
 					<ns2:component xsi:type="ns2:UITextFieldType" UIID="searchContext">
+					    <ns2:Property name="placeholder" >
+			                <ns2:value xsi:type="ns2:StringPropertyType">
+			                    <value>搜索功能模块及数据</value>
+			                </ns2:value>
+			            </ns2:Property>
 					</ns2:component>
 					<ns2:component xsi:type="ns2:UIButtonType" UIID="searchButton">
 						<ns2:text xsi:type="ns2:StringPropertyType">
