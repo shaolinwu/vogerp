@@ -31,6 +31,7 @@
             Tree tree = @page.getTree("priceSelector.productTree");
             ProductPriceImpl price = (ProductPriceImpl)tree.getSelectedObject();
             if (price == null) {
+                Dialog.showMessageDialog("请配制或者选择一个产品价格包。", "Information", Dialog.INFORMATION_MESSAGE, null);
                 return;
             }
             
