@@ -1,0 +1,82 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.commonmodel.form.OrganizationStatsByProvince</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="showCityStats">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showCityStats-20160626-1139">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.commonmodel.be.IOrganization;
+        import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+        import org.shaolin.bmdp.runtime.spi.IConstantService;
+        import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+        { 
+           IConstantService ceService = AppContext.get().getConstantService();
+           Map map = (Map)@page.getElement("mapUI");
+           String city = map.getSelectedNode();
+           IConstantEntity ce = ceService.getChildren("CityList", Integer.parseInt(city.substring(1)));
+           HashMap input = new HashMap();
+           input.put("city", ce.getEntityName());
+           RefForm form = new RefForm("StatsByCityForm", "org.shaolin.vogerp.commonmodel.form.OrganizationStatsByCity", input);
+           @page.addElement(form);
+           String displayName = ceService.getConstantItem("CityList", Integer.parseInt(city.substring(1))).getDisplayName();
+           form.openInWindows("城市统计("+displayName+")", null, 400, 400);
+        }
+        ]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIMapType" UIID="mapUI">
+        <ns2:Property name="value">
+            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                 <ns2:expression>
+                   <expressionString><![CDATA[
+                   { 
+                      return org.shaolin.vogerp.commonmodel.util.StatisticUtil.queryTotalOrgByProvince();
+                   }]]></expressionString>
+                 </ns2:expression>
+            </ns2:value>
+        </ns2:Property>
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="showCityStats"></ns2:handler>
+        </ns2:EventListener>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>mapUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataToUIMappingOperation>
+      <expressionString>{
+@odContext.executeAllMappings();
+}</expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>{
+@odContext.executeAllMappings();
+}</expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

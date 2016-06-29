@@ -135,6 +135,18 @@
             <bediagram:name>description</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>addressId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <!-- 
+        <bediagram:member>
+            <bediagram:name>address</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="AddressInfo" />
+            </bediagram:type>
+        </bediagram:member>
+         -->
     </bediagram:beEntity>
 	<bediagram:beEntity needOrgId="true" needPersist="true" needUIEntity="true">
 		<common:entityName>LegalOrganizationInfo</common:entityName>

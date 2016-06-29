@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.commonmodel.page.GlobalStatistic</entityName>
+	<systemVersion>0</systemVersion>
+	<description>全站业务数据分析</description>
+	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+		    <ns2:UISkin xsi:type="ns2:UISkinType">
+                <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
+                <ns2:param name="text">
+                    <ns2:value xsi:type="ns2:StringPropertyType">
+                        <ns2:value></ns2:value>
+                    </ns2:value>
+                </ns2:param>
+            </ns2:UISkin>
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
+			    <ns2:ajaxLoad>false</ns2:ajaxLoad>
+                <ns2:tab uiid="personalInfoPanel">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>全国客户分布图</ns2:value>
+                    </ns2:title>
+                    <ns2:refEntity UIID="orgStatsByProvince">
+                       <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.OrganizationStatsByProvince" />
+                    </ns2:refEntity>
+                </ns2:tab>
+                <ns2:tab uiid="personalInfoPanel1">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>全国订单分布图</ns2:value>
+                    </ns2:title>
+                    <ns2:refEntity UIID="orgStatsByProvince1">
+                       <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.OrganizationStatsByProvince" />
+                    </ns2:refEntity>
+                </ns2:tab>
+                <ns2:tab uiid="personalInfoPanel2">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>全国成交分布图</ns2:value>
+                    </ns2:title>
+                    <ns2:refEntity UIID="orgStatsByProvince2">
+                       <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.OrganizationStatsByProvince" />
+                    </ns2:refEntity>
+                </ns2:tab>
+            </ns2:component>
+			<ns2:layoutConstraint>
+                <ns2:componentId>functionsTab</ns2:componentId>
+                <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                    x="0" y="0" align="FULL"></ns2:constraint>
+            </ns2:layoutConstraint>
+		</ns2:body>
+	</ns2:UIEntity>
+	<ns2:ODMapping>
+	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.OrganizationStatsByProvince"></ns2:mappingRule>
+          <ns2:UIComponent componentPath="orgStatsByProvince" paramName="UIWidgetType"></ns2:UIComponent>
+        </ns2:ComponentMapping>
+        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.OrganizationStatsByProvince"></ns2:mappingRule>
+          <ns2:UIComponent componentPath="orgStatsByProvince1" paramName="UIWidgetType"></ns2:UIComponent>
+        </ns2:ComponentMapping>
+        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.OrganizationStatsByProvince"></ns2:mappingRule>
+          <ns2:UIComponent componentPath="orgStatsByProvince2" paramName="UIWidgetType"></ns2:UIComponent>
+        </ns2:ComponentMapping>
+	</ns2:ODMapping>
+	<ns2:in>
+        <ns2:serverOperation xsi:type="ns2:ExpressionType">
+            <ns2:expressionString><![CDATA[
+            import org.shaolin.bmdp.runtime.AppContext;
+            {
+              @odContext.executeAllMappings();
+            }]]></ns2:expressionString>
+        </ns2:serverOperation>
+    </ns2:in>
+</ns2:UIPage>
