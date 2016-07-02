@@ -12,6 +12,7 @@
 #div-treePanel-0_1 {border-top: 1px solid #8DB9DB;}
 #div-userForm-0_2 {width: 100%; border-top: 1px solid #8DB9DB;}
 #div-userForm-0_2 img{float: right; margin-right: 10px; cursor: pointer;}
+#advImagesUI{height:150px;}
 .advImagesUICss{
 	float: none;
     clear: none;
@@ -47,4 +48,7 @@
     top: 0;
     left: 0;
     outline: 0;
+}
+.uimaster_container_cell{
+	float:none;
 }

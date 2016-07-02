@@ -159,7 +159,7 @@
                     <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
                         <ns2:value>false</ns2:value>
                     </ns2:allowBlank>
-                    <ns2:EventListener xsi:type="ns2:KeyPressListenerType">
+                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
                         <ns2:handler functionName="verifiCode" />
                     </ns2:EventListener>
                 </ns2:component>
@@ -177,7 +177,7 @@
 							<ns2:handler functionName="verifiCode" />
 						</ns2:EventListener>
 					</ns2:component>
-					<ns2:component xsi:type="ns2:UILabelType" UIID="registerBtn">
+					<ns2:component xsi:type="ns2:UIButtonType" UIID="registerBtn">
 	                    <ns2:text xsi:type="ns2:StringPropertyType">
 	                        <ns2:value>注册</ns2:value>
 	                    </ns2:text>

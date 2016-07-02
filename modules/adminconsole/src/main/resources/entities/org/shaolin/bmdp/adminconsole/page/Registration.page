@@ -147,7 +147,7 @@
 	                    <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
 	                        <ns2:value>false</ns2:value>
 	                    </ns2:allowBlank>
-	                    <ns2:EventListener xsi:type="ns2:KeyPressListenerType">
+	                    <ns2:EventListener xsi:type="ns2:BlurListenerType">
 	                        <ns2:handler functionName="verifiCode" />
 	                    </ns2:EventListener>
 	                </ns2:component>
@@ -155,7 +155,7 @@
                         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
                         <ns2:Property name="label">
 				            <ns2:value xsi:type="ns2:StringPropertyType">
-				                <value>用户注册协议书</value>
+				                <value>接受用户注册协议书</value>
 				            </ns2:value>
 				        </ns2:Property>
                         <ns2:text xsi:type="ns2:StringPropertyType">

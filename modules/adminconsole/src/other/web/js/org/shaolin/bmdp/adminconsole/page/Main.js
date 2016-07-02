@@ -17,6 +17,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var searchContext = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "searchContext"]
+        ,placeholder: "搜索功能模块及数据"
     });
 
     var searchButton = new UIMaster.ui.button

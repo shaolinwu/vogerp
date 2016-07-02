@@ -38,7 +38,7 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         ui: elementList[prefix + "loginBtn"]
     });
 
-    var registerBtn = new UIMaster.ui.label
+    var registerBtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "registerBtn"]
     });

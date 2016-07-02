@@ -46,9 +46,9 @@
       import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
       {
         IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
-        if (service.register($registerInfo)) {
+        if (service.register($registerInfo, $getRequest())) {
             PersonalAccountImpl loginAccount = new PersonalAccountImpl();
-            loginAccount.setUserName($registerInfo.getEmail());
+            loginAccount.setUserName($registerInfo.getPhoneNumber());
             loginAccount.setPassword($registerInfo.getPassword());
             
             $errorCode = service.login(loginAccount, $getRequest());
@@ -84,7 +84,6 @@
       </ns2:next>
     </ns2:out>
   </ns2:webNode>
-  
   
   <ns2:webNode xsi:type="ns2:StartNodeType" name="Start">
     <ns2:variables name="str" category="JavaClass">

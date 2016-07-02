@@ -164,6 +164,11 @@
 	                        <value>/images/adv/mainpage</value>
 	                    </ns2:value>
 	                </ns2:Property>
+	                <ns2:Property name="thumbnails">
+                      <ns2:value xsi:type="ns2:BooleanPropertyType">
+                         <value>false</value>
+                      </ns2:value>
+                    </ns2:Property>
 	                <ns2:Property name="height">
                         <ns2:value xsi:type="ns2:NumericPropertyType">
 			              <value>150</value>
