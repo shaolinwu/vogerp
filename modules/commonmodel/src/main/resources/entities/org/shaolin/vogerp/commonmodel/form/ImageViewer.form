@@ -94,6 +94,11 @@
             <ns2:isGallery xsi:type="ns2:BooleanPropertyType">
                 <ns2:value>true</ns2:value>
             </ns2:isGallery>
+            <ns2:Property name="thumbnails">
+              <ns2:value xsi:type="ns2:BooleanPropertyType">
+                 <value>true</value>
+              </ns2:value>
+            </ns2:Property>
             <ns2:Property name="width">
                <ns2:value xsi:type="ns2:StringPropertyType">
                    <value>100%</value>

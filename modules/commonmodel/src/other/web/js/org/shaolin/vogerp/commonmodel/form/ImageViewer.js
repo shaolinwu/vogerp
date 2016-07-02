@@ -11,6 +11,7 @@ function org_shaolin_vogerp_commonmodel_form_ImageViewer(json)
     var photoUI = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "photoUI"]
+        ,thumbnails: true
         ,width: "100%"
         ,height: "400px"
         ,mobheight: "250px"

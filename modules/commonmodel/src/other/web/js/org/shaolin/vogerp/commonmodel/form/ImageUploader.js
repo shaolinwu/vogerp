@@ -11,8 +11,6 @@ function org_shaolin_vogerp_commonmodel_form_ImageUploader(json)
     var photoUI = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "photoUI"]
-        ,thumbnails: false
-        ,hideThumbnailsOnInit: true
         ,width: "100%"
         ,height: "300px"
         ,mobheight: "220px"
@@ -72,7 +70,19 @@ function org_shaolin_vogerp_commonmodel_form_ImageUploader(json)
            othis.refresh(othis.uploadFile);
        }
        this.uploadFile.cleanAll = function() {
-           othis.clean(othis.uploadFile);
+           new UIMaster.ui.dialog({
+              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
+              message:'\u786E\u8BA4\u5220\u9664\u6240\u6709\u56FE\u7247\u5417\uFF1F',
+              messageType:UIMaster.ui.dialog.Warning,
+              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+              title:'',
+              height:150,
+              width:300,
+              handler: function() {
+                 othis.clean(othis.uploadFile);
+              }
+          }).open();
+           
        }
        this.uploadFile.onlineSearch = function() {
            othis.search(othis.uploadFile);

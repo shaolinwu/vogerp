@@ -17,10 +17,14 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
     ({
         ui: elementList[prefix + "photoUI"]
         ,thumbnails: true
-        ,hideThumbnailsOnInit: false
         ,width: "100%"
         ,height: "400px"
         ,mobheight: "220px"
+    });
+
+    var hintUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "hintUI"]
     });
 
     var emtpyLabel = new UIMaster.ui.hidden
@@ -56,7 +60,7 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
     ({
         ui: elementList[prefix + "photoPanel"]
         ,items: []
-        ,subComponents: [prefix + "photoUI"]
+        ,subComponents: [prefix + "photoUI",prefix + "hintUI"]
     });
 
     var searchPanel = new UIMaster.ui.panel
@@ -76,7 +80,7 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [reloadPathText,searchBtn,photoUI,emtpyLabel,refreshbtn,cancelbtn,fieldPanel,searchPanel,photoPanel,aframePanel,actionPanel]
+        ,items: [reloadPathText,searchBtn,photoUI,hintUI,emtpyLabel,refreshbtn,cancelbtn,fieldPanel,searchPanel,photoPanel,aframePanel,actionPanel]
     });
 
     Form.reloadPathText=reloadPathText;
@@ -84,6 +88,8 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
     Form.searchBtn=searchBtn;
 
     Form.photoUI=photoUI;
+
+    Form.hintUI=hintUI;
 
     Form.emtpyLabel=emtpyLabel;
 
@@ -103,6 +109,8 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
 
     Form.photoUI=photoUI;
 
+    Form.hintUI=hintUI;
+
     Form.aframePanel=aframePanel;
 
     Form.emtpyLabel=emtpyLabel;
@@ -116,6 +124,8 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
     Form.photoPanel=photoPanel;
 
     Form.photoUI=photoUI;
+
+    Form.hintUI=hintUI;
 
     Form.aframePanel=aframePanel;
 

@@ -79,16 +79,6 @@
             <ns2:isGallery xsi:type="ns2:BooleanPropertyType">
                 <ns2:value>true</ns2:value>
             </ns2:isGallery>
-            <ns2:Property name="thumbnails">
-              <ns2:value xsi:type="ns2:BooleanPropertyType">
-                 <value>false</value>
-              </ns2:value>
-            </ns2:Property>
-            <ns2:Property name="hideThumbnailsOnInit">
-              <ns2:value xsi:type="ns2:BooleanPropertyType">
-                 <value>true</value>
-              </ns2:value>
-            </ns2:Property>
             <ns2:Property name="width">
                <ns2:value xsi:type="ns2:StringPropertyType">
                    <value>100%</value>
@@ -188,7 +178,19 @@
            othis.refresh(othis.uploadFile);
        }
        this.uploadFile.cleanAll = function() {
-           othis.clean(othis.uploadFile);
+           new UIMaster.ui.dialog({
+              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
+              message:'\u786E\u8BA4\u5220\u9664\u6240\u6709\u56FE\u7247\u5417\uFF1F',
+              messageType:UIMaster.ui.dialog.Warning,
+              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+              title:'',
+              height:150,
+              width:300,
+              handler: function() {
+                 othis.clean(othis.uploadFile);
+              }
+          }).open();
+           
        }
        this.uploadFile.onlineSearch = function() {
            othis.search(othis.uploadFile);

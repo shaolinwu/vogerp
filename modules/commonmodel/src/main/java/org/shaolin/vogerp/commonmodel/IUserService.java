@@ -21,7 +21,9 @@ public interface IUserService {
 	
 	public void addListener(UserActionListener listener);
 	
-	public boolean register(IRegisterInfo info);
+	public boolean checkNewAccount(String userAccount);
+	
+	public boolean register(IRegisterInfo info, HttpServletRequest request);
 	
 	public PasswordCheckResult checkPasswordPattern(String password);
 	

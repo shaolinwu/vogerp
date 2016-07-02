@@ -14,6 +14,7 @@ import org.shaolin.bmdp.i18n.ResourceUtil;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.security.UserContext;
+import org.shaolin.bmdp.runtime.spi.IConstantService;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.bmdp.utils.DateParser;
@@ -59,18 +60,36 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 				+ "-" + (((int)(Math.random() * 1000)) + 1);
 	}
 	
+	public boolean checkNewAccount(String userAccount) {
+		if (userAccount == null || userAccount.trim().length() == 0) {
+			return false;
+		}
+		PersonalAccountImpl account = new PersonalAccountImpl();
+		account.setUserName(userAccount);
+		try {
+			List<IPersonalAccount> result = CommonModel.INSTANCE.searchUserAccount(account, null, 0, 1);
+			if (result.size() > 0) {
+				return false;
+			}
+		return true;
+		} catch (Exception e) {
+			logger.warn(e.getMessage(), e);
+			return false;
+		}
+	}
+	
 	/**
 	 * this method must be synchronized!
 	 * 
 	 * @param registerInfo
 	 */
-	public synchronized boolean register(IRegisterInfo registerInfo) {
-		if (registerInfo.getEmail() == null ||
-				registerInfo.getEmail().trim().length() == 0) {
+	public synchronized boolean register(IRegisterInfo registerInfo, HttpServletRequest request) {
+		if (registerInfo.getPhoneNumber() == null ||
+				registerInfo.getPhoneNumber().trim().length() == 0) {
 			return false;
 		}
 		PersonalAccountImpl account = new PersonalAccountImpl();
-		account.setUserName(registerInfo.getEmail());
+		account.setUserName(registerInfo.getPhoneNumber());
 		List<IPersonalAccount> result = CommonModel.INSTANCE.searchUserAccount(account, null, 0, 1);
 		if (result.size() > 0) {
 			return false;
@@ -108,12 +127,14 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 		// create account.
 		PersonalAccountImpl newAccount = new PersonalAccountImpl();
 		newAccount.setPersonalId(userInfo.getId());
-		newAccount.setUserName(registerInfo.getEmail());
+		newAccount.setUserName(registerInfo.getPhoneNumber());
 		try {
 			newAccount.setPassword(PasswordVerifier.getPasswordHash(registerInfo.getPassword()));
 		} catch (NoSuchAlgorithmException e) {
 			return false;
 		}
+		newAccount.setLoginIP(HttpUserUtil.getIP(request));
+		this.setLocationInfo(newAccount);
 		CommonModel.INSTANCE.create(newAccount);
 		
 		// assign modules
@@ -133,6 +154,21 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 		
 		// send notification.
 		return true;
+	}
+
+	private void setLocationInfo(PersonalAccountImpl newAccount) {
+		try {//could be slow.
+			String jsonStr = HttpUserUtil.getRealLocationInfo(newAccount.getLoginIP(), "UTF-8");
+			JSONObject json = new JSONObject(jsonStr);
+			String regionId = json.getJSONObject("data").getString("region_id");
+			String cityId = json.getJSONObject("data").getString("city_id");
+			if (regionId != null && regionId.trim().length() > 0) {
+				IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
+				String entityName = cs.getChildren("CityList", Integer.parseInt(regionId)).getByIntValue(Integer.parseInt(cityId)).getEntityName();
+				newAccount.setLocationInfo(entityName +","+cityId);
+			}
+		} catch (Exception e) {
+		}
 	}
 	
 	public PasswordCheckResult checkPasswordPattern(String password) {
@@ -200,10 +236,8 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 			if (matchedUser.getLoginIP() == null ||
 					!matchedUser.getLoginIP().equals(userIP)) {
 				matchedUser.setLoginIP(userIP);
-				try {//could be slow.
-					matchedUser.setLocationInfo(HttpUserUtil.getRealLocationInfo(matchedUser.getLoginIP(), "UTF-8"));
-				} catch (Exception e) {
-				}
+				this.setLocationInfo((PersonalAccountImpl)matchedUser);
+				CommonModel.INSTANCE.update(matchedUser);
 			}
 			matchedUser.setLastLogin(new Date());
 			matchedUser.setAttempt(0);
@@ -217,6 +251,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 			userContext.setUserAccount(matchedUser.getUserName());
 			userContext.setUserName(matchedUser.getInfo().getFirstName() + matchedUser.getInfo().getLastName());
 			userContext.setUserLocale(matchedUser.getLocale());
+			userContext.setUserLocation(matchedUser.getLocationInfo());
 			userContext.setUserRoles(CEOperationUtil.toCElist(matchedUser.getInfo().getType()));
 			if (matchedUser.getLastLogin() != null) {
 				DateParser parse = new DateParser(matchedUser.getLastLogin());
