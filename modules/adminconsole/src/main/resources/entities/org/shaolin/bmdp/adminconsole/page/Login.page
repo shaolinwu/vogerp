@@ -115,7 +115,7 @@
 						<ns2:value>用户名</ns2:value>
 					</ns2:title>
 					<ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-						<ns2:value>用户名</ns2:value>
+						<ns2:value>用户名/手机号</ns2:value>
 					</ns2:widgetLabel>
 					<ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
 						<ns2:value>false</ns2:value>

@@ -8,6 +8,11 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
         ui: elementList[prefix + "tempSentPartyIdUI"]
     });
 
+    var tempSessionIdUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "tempSessionIdUI"]
+    });
+
     var vogerplogo = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "vogerplogo"]
@@ -148,10 +153,12 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [tempSentPartyIdUI,vogerplogo,searchContext,searchButton,userIcon,userLogout,taskIcon,notificationIcon,helpIcon,functionTree,functionsTab,bottomPanelInfo,userFormContent,notificationFormContent,topPanel,topMiddlePanel,topRightPanel,userForm,notificationForm,middlePanel,treePanel,pagePanel,bottomPanel]
+        ,items: [tempSentPartyIdUI,tempSessionIdUI,vogerplogo,searchContext,searchButton,userIcon,userLogout,taskIcon,notificationIcon,helpIcon,functionTree,functionsTab,bottomPanelInfo,userFormContent,notificationFormContent,topPanel,topMiddlePanel,topRightPanel,userForm,notificationForm,middlePanel,treePanel,pagePanel,bottomPanel]
     });
 
     Form.tempSentPartyIdUI=tempSentPartyIdUI;
+
+    Form.tempSessionIdUI=tempSessionIdUI;
 
     Form.vogerplogo=vogerplogo;
 
@@ -418,6 +425,9 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 		        if (!isNaN(toPartyId)) {
 		           this.tempSentPartyIdUI.setValue(toPartyId);
 		        }
+		        if (arguments.length > 2) {
+                   this.tempSessionIdUI.setValue(arguments[2]);
+                }
 		        if ($("#div-topRightPanel-4_0").css("display") == "block") {
 		            $("#div-topRightPanel-4_0").slideUp("fast");
 		        }

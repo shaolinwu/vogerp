@@ -113,6 +113,9 @@
 		        if (!isNaN(toPartyId)) {
 		           this.tempSentPartyIdUI.setValue(toPartyId);
 		        }
+		        if (arguments.length > 2) {
+                   this.tempSessionIdUI.setValue(arguments[2]);
+                }
 		        if ($("#div-topRightPanel-4_0").css("display") == "block") {
 		            $("#div-topRightPanel-4_0").slideUp("fast");
 		        }
@@ -131,6 +134,7 @@
                 import org.shaolin.bmdp.workflow.be.ChatHistoryImpl;
                 {
                      Hidden tempSentPartyIdUI = @page.getHidden("tempSentPartyIdUI");
+                     Hidden tempSessionIdUI = @page.getHidden("tempSessionIdUI");
                      
                      ChatHistoryImpl defaultUser = new ChatHistoryImpl();
                      defaultUser.setSentPartyId((Long)UserContext.getUserData("CurrentUserId"));
@@ -145,6 +149,7 @@
                         defaultUser.setReceivedPartyId(1);//admin
                      }
                      defaultUser.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+                     defaultUser.setSessionId(tempSessionIdUI.getValue());
                      
                      IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
                      HashMap input = new HashMap();
@@ -169,6 +174,8 @@
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			</ns2:layout>
 			<ns2:component xsi:type="ns2:UIHiddenType" UIID="tempSentPartyIdUI">
+            </ns2:component>
+            <ns2:component xsi:type="ns2:UIHiddenType" UIID="tempSessionIdUI">
             </ns2:component>
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="topPanel">
 				<ns2:UISkin xsi:type="ns2:UISkinType">

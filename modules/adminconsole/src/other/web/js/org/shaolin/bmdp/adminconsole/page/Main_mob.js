@@ -3,6 +3,16 @@
 function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var tempSentPartyIdUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "tempSentPartyIdUI"]
+    });
+
+    var tempSessionIdUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "tempSessionIdUI"]
+    });
+
     var searchContext = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "searchContext"]
@@ -108,8 +118,12 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [searchContext,userIcon,notificationIcon,advImagesUI,matrixUI,collapseLabel1,userLogout,userFormContent,notificationFormContent,topPanel,searchPanel,middlePanel,pagePanel,bottomPanel,userForm,notificationForm]
+        ,items: [tempSentPartyIdUI,tempSessionIdUI,searchContext,userIcon,notificationIcon,advImagesUI,matrixUI,collapseLabel1,userLogout,userFormContent,notificationFormContent,topPanel,searchPanel,middlePanel,pagePanel,bottomPanel,userForm,notificationForm]
     });
+
+    Form.tempSentPartyIdUI=tempSentPartyIdUI;
+
+    Form.tempSessionIdUI=tempSessionIdUI;
 
     Form.searchContext=searchContext;
 
@@ -202,6 +216,8 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     Form.showStartMenu = org_shaolin_bmdp_adminconsole_page_Main_mob_showStartMenu;
 
     Form.showNotification = org_shaolin_bmdp_adminconsole_page_Main_mob_showNotification;
+
+    Form.showHelp = org_shaolin_bmdp_adminconsole_page_Main_mob_showHelp;
 
     Form.initPageJs = org_shaolin_bmdp_adminconsole_page_Main_mob_initPageJs;
 
@@ -305,6 +321,27 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
                 }
                }
                  }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_showNotification */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Main_mob_showHelp(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_mob_showHelp */
+        var o = this;
+        var UIEntity = this;
+
+              {
+                var toPartyId = parseInt(event);
+                if (!isNaN(toPartyId)) {
+                   this.tempSentPartyIdUI.setValue(toPartyId);
+                }
+                if (arguments.length > 2) {
+                   this.tempSessionIdUI.setValue(arguments[2]);
+                }
+              }
+              
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showHelp-201506102211",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_showHelp */
 
 
     function org_shaolin_bmdp_adminconsole_page_Main_mob_initPageJs(){/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_mob_initPageJs */
