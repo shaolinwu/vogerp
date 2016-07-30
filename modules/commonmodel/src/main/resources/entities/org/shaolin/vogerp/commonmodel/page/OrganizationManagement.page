@@ -17,14 +17,14 @@
                     import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
                     {
                         OrganizationImpl defaultUser = new OrganizationImpl();
-                        
+                        defaultUser.setParentId(org.shaolin.bmdp.runtime.security.UserContext.getUserContext().getOrgId());
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
                         input.put("editable", new Boolean(true));
                         RefForm form = new RefForm("organizationForm", "org.shaolin.vogerp.commonmodel.form.Organization", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Create Organization Information", new TableCallBack("organizationInfoTable"));
+                        form.openInWindows("Create Organization Information", new TableCallBack("organizationInfoTable"), 600, 400);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -51,7 +51,7 @@
                         RefForm form = new RefForm("organizationForm", "org.shaolin.vogerp.commonmodel.form.Organization", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Modify Organization Information", new TableCallBack("organizationInfoTable"));
+                        form.openInWindows("Modify Organization Information", new TableCallBack("organizationInfoTable"), 600, 400);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -78,13 +78,110 @@
                         RefForm form = new RefForm("organizationTreeForm", "org.shaolin.vogerp.commonmodel.form.OrganizationTreeEditor", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Modify Organization Information", new TableCallBack("organizationInfoTable"), 690, 380, true);
+                        form.openInWindows("Modify Organization Information", new TableCallBack("organizationInfoTable"), 600, 400);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
-        <ns2:eventHandler functionName="deleteOrg"></ns2:eventHandler>
+        <ns2:eventHandler functionName="createUser">
+           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createUser-20160728-2343">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+                    {
+                        PersonalInfoImpl defaultUser = new PersonalInfoImpl();
+                        defaultUser.setOrgId(org.shaolin.bmdp.runtime.security.UserContext.getUserContext().getOrgId());
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("organizationForm", "org.shaolin.vogerp.commonmodel.form.PersonalInfo", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("新增员工", new TableCallBack("employeeInfoTablel"), 600, 400);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="openUserDetail">
+           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openUserDetail-20160728-2343">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+                    {
+                        Table personalInfoTable = (Table)@page.getElement("employeeInfoTablel");
+                        if (personalInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        PersonalInfoImpl defaultUser = (PersonalInfoImpl)personalInfoTable.getSelectedRow();
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("organizationForm", "org.shaolin.vogerp.commonmodel.form.PersonalInfo", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("员工信息", new TableCallBack("employeeInfoTablel"), 600, 400);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+         <ns2:eventHandler functionName="deleteUser">
+           <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+		         <ns2:expressionString><![CDATA[
+		         {
+		          var o = this;
+		          new UIMaster.ui.dialog({
+		              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
+		              message:'Are you sure delete this employee?',
+		              messageType:UIMaster.ui.dialog.Information,
+		              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+		              title:'',
+		              height:150,
+		              width:300,
+		              handler: function() {
+		                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteUser-2015-08140714",UIMaster.getValue(eventsource),o.__entityName);
+		              }
+		          }).open();
+		          return;
+		         }
+		         ]]></ns2:expressionString>
+	       </ns2:ops>
+           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deleteUser-2015-08140714">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
+                    import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+                    import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                    {
+                        Table personalInfoTable = (Table)@page.getElement("employeeInfoTablel");
+                        if (personalInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        PersonalInfoImpl defaultUser = (PersonalInfoImpl)personalInfoTable.getSelectedRow();
+                        defaultUser.setEnabled(false);
+                        CommonModel.INSTANCE.update(defaultUser);
+                        
+                        personalInfoTable.refresh();
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <!-- consider moving this action to Organization Type Tab. -->
         <ns2:eventHandler functionName="assignRoles">
            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="assignRoles-2015-08140714">
                 <ns2:exp>
@@ -108,7 +205,46 @@
                         RefForm form = new RefForm("partyRelationForm", "org.shaolin.vogerp.commonmodel.form.ModelPermission", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Roles Assignment", null, 552, 322);
+                        form.openInWindows("Roles Assignment", null, 600, 400);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="assignAccount">
+           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="assignAccount-20160718-2342">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
+                    import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+                    import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
+                    import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                    {
+                        Table personalInfoTable = (Table)@page.getElement("employeeInfoTablel");
+                        if (personalInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        PersonalInfoImpl defaultUser = (PersonalInfoImpl)personalInfoTable.getSelectedRow();
+                        PersonalAccountImpl account = new PersonalAccountImpl();
+                        account.setPersonalId(defaultUser.getId());
+                        account.setInfo(defaultUser);
+                        if (CommonModel.INSTANCE.searchUserAccountCount(account) > 0) {
+                            Dialog.showMessageDialog("帐号已经存在!", "Information", Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", account);
+                        input.put("userId", new Long(defaultUser.getId()));
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("partyRelationForm", "org.shaolin.vogerp.commonmodel.form.PersonalNewAccount", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("添加登录帐号", null, 600, 400);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -129,14 +265,130 @@
 			</ns2:layout>
 			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
 			    <ns2:ajaxLoad>true</ns2:ajaxLoad>
-         <ns2:tab uiid="organizationInfoPanel">
+             <ns2:tab uiid="organizationInfoPanel">
              <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
                  <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
                  <ns2:key>org.shaolin.vogerp.commonmodel.page.OrganizationManagement.organizationInfoPanel</ns2:key>
              </ns2:title>
-           		<ns2:refEntity UIID="organizationInfoPanel">
-		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.OrganizationTreeEditor" />
-		            </ns2:refEntity>  
+           	 <ns2:panel UIID="organizationInfoPanel">
+                 <ns2:layout xsi:type="ns2:TableLayoutType">
+                     <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                     <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+                 </ns2:layout>
+                 <ns2:component xsi:type="ns2:UITableType" UIID="organizationInfoTable">
+                     <ns2:beElement>org.shaolin.vogerp.commonmodel.be.Organization</ns2:beElement>
+                     <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+                     <ns2:defaultRowSize>10</ns2:defaultRowSize>
+                     <ns2:showActionBar>true</ns2:showActionBar>
+                     <ns2:showFilter>true</ns2:showFilter>
+                     <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                         <ns2:expression xsi:type="ns2:ExpressionType">
+                             <ns2:expressionString><![CDATA[
+                             import java.util.List;
+                             import org.shaolin.bmdp.runtime.AppContext;
+                             import org.shaolin.uimaster.page.ajax.TableConditions;
+                             import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+				             import org.shaolin.vogerp.commonmodel.IOrganizationService;
+				             import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+				             import org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl;
+				             import org.shaolin.uimaster.page.flow.WebflowConstants;
+                             {
+					               IOrganizationService orgService = (IOrganizationService)
+					               AppContext.get().getService(IOrganizationService.class);
+                                   if ($tableCondition == null) {
+                                      $tableCondition = TableConditions.createCondition(new OrganizationImpl());
+                                      $tableCondition.setCount(10);
+                                      $tableCondition.addOrder("createDate", false);
+                                   }
+                                   OrganizationImpl condition = (OrganizationImpl)$tableCondition.getCondition();
+                                   condition.setParentId(org.shaolin.bmdp.runtime.security.UserContext.getUserContext().getOrgId());
+                                   return CommonModel.INSTANCE.searchSubOrganizationInfo(condition,
+                                                 $tableCondition.getOrders(),
+                                                 $tableCondition.getOffset(), 
+                                                 $tableCondition.getCount());
+                             }]]></ns2:expressionString>
+                         </ns2:expression>
+                     </ns2:query>
+                     <ns2:column xsi:type="ns2:UITableColumnType">
+                         <ns2:title xsi:type="ns2:StringPropertyType">
+                             <ns2:value>组织ID</ns2:value>
+                         </ns2:title>
+                         <ns2:beFieldId>rowBE.orgCode</ns2:beFieldId>
+                         <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                     </ns2:column>
+                     <ns2:column xsi:type="ns2:UITableColumnType">
+                         <ns2:title xsi:type="ns2:StringPropertyType">
+                             <ns2:value>公司名称</ns2:value>
+                         </ns2:title>
+                         <ns2:beFieldId>rowBE.name</ns2:beFieldId>
+                         <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                     </ns2:column>
+                     <ns2:column xsi:type="ns2:UITableColumnType">
+                         <ns2:title xsi:type="ns2:StringPropertyType">
+                             <ns2:value>行业类型</ns2:value>
+                         </ns2:title>
+                         <ns2:beFieldId>rowBE.type</ns2:beFieldId>
+                         <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
+                         <ns2:comboxExpression xsi:type="ns2:ExpressionPropertyType">
+                             <ns2:expression xsi:type="ns2:ExpressionType">
+                                 <ns2:expressionString><![CDATA[
+                                 import java.util.List;
+                                 import org.shaolin.bmdp.runtime.AppContext;
+                                 import org.shaolin.bmdp.runtime.ce.CEUtil;
+                                 {
+                                     List[] list = new List[2];
+                                     list[0] = (CEUtil.listCEValues("org.shaolin.vogerp.productmodel.ce.ProductType", true));
+                                     list[1] = (CEUtil.listCEDisplayValues("org.shaolin.vogerp.productmodel.ce.ProductType", true));
+                                     return list;
+                                 }]]></ns2:expressionString>
+                             </ns2:expression>
+                         </ns2:comboxExpression>
+                         <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                             <ns2:expression xsi:type="ns2:ExpressionType">
+                                 <ns2:expressionString><![CDATA[
+                                 import org.shaolin.bmdp.runtime.AppContext;
+                                 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+                                 import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
+                                 {
+                                     if ("-1".equals($value)) {
+                                         $rowBE.setType(null);
+                                     } else {
+                                         $rowBE.setType($value);
+                                     }
+                                 }]]></ns2:expressionString>
+                             </ns2:expression>
+                         </ns2:updateCondition>
+                         <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                              <ns2:expression xsi:type="ns2:ExpressionType">
+                                 <ns2:expressionString><![CDATA[
+                                 import org.shaolin.bmdp.runtime.AppContext;
+                                 {
+                                    return org.shaolin.bmdp.runtime.ce.CEUtil.getValue($rowBE.getType());
+                                 }]]></ns2:expressionString>
+                             </ns2:expression>
+                         </ns2:rowExpression>
+                     </ns2:column>
+                     <ns2:column xsi:type="ns2:UITableColumnType">
+                         <ns2:title xsi:type="ns2:StringPropertyType">
+                             <ns2:value>建立时间</ns2:value>
+                         </ns2:title>
+                         <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+                         <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                           <ns2:type>Label</ns2:type>
+                         </ns2:uiType>
+                     </ns2:column>
+                     <ns2:defaultActions>
+                         <ns2:defaultNewAction>createOrg</ns2:defaultNewAction>
+                         <ns2:defaultOpenAction>openOrgDetail</ns2:defaultOpenAction>
+                         <!-- can be default actions. -->
+                     </ns2:defaultActions>
+                 </ns2:component>
+                 <ns2:layoutConstraint>
+                     <ns2:componentId>organizationInfoTable</ns2:componentId>
+                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                         x="0" y="0" align="FULL"></ns2:constraint>
+                 </ns2:layoutConstraint>
+             </ns2:panel>
          </ns2:tab>
          <ns2:tab uiid="organizationTypePanel">
              <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
@@ -175,8 +427,10 @@
 		                             if ($tableCondition == null) {
 		                                $tableCondition = TableConditions.createCondition(new PersonalInfoImpl());
 		                                $tableCondition.setCount(10);
+		                                $tableCondition.addOrder("createDate", false);
 		                             }
 		                             PersonalInfoImpl condition = (PersonalInfoImpl)$tableCondition.getCondition();
+		                             condition.setOrgId(org.shaolin.bmdp.runtime.security.UserContext.getUserContext().getOrgId());
 		                             return CommonModel.INSTANCE.searchPersonInfo(condition,
 		                                           $tableCondition.getOrders(),
 		                                           $tableCondition.getOffset(), 
@@ -190,63 +444,6 @@
 		                   </ns2:title>
 		                   <ns2:beFieldId>rowBE.empId</ns2:beFieldId>
 		                   <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-		               </ns2:column>
-		               <ns2:column xsi:type="ns2:UITableColumnType">
-		                   <ns2:title xsi:type="ns2:StringPropertyType">
-		                       <ns2:value>Organization Code</ns2:value>
-		                   </ns2:title>
-		                   <ns2:beFieldId>rowBE.orgCode</ns2:beFieldId>
-		                   <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
-                     <ns2:comboxExpression xsi:type="ns2:ExpressionPropertyType">
-                     	<ns2:expression xsi:type="ns2:ExpressionType">
-                             <ns2:expressionString><![CDATA[
-                             import org.shaolin.bmdp.runtime.AppContext;
-                             import org.shaolin.vogerp.commonmodel.dao.CustCommonModel;
-                             {
-                             	return CustCommonModel.INSTANCE.getOrgEmployeeGroup();
-                             }]]></ns2:expressionString>
-                         </ns2:expression>
-                     </ns2:comboxExpression>
-                     <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-                     	  <ns2:expression xsi:type="ns2:ExpressionType">
-                             <ns2:expressionString><![CDATA[
-                             import org.shaolin.bmdp.runtime.AppContext;
-                             {
-                             	return $rowBE.getOrgCode();
-                             }]]></ns2:expressionString>
-                         </ns2:expression>
-                     </ns2:rowExpression>
-                     <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                         <ns2:expression xsi:type="ns2:ExpressionType">
-                             <ns2:expressionString><![CDATA[
-                             import org.shaolin.bmdp.runtime.AppContext;
-                             import org.shaolin.bmdp.runtime.ce.IConstantEntity;
-                             {
-                             	if ("-1".equals($value)) {
-                             		   $rowBE.setOrgCode(null);
-                             	} else {
-                                 	$rowBE.setOrgCode($value);
-                                 }
-                             }]]></ns2:expressionString>
-                         </ns2:expression>
-                     </ns2:updateCondition>
-		               </ns2:column>
-		               <ns2:column xsi:type="ns2:UITableColumnType">
-		                   <ns2:title xsi:type="ns2:StringPropertyType">
-		                       <ns2:value>Employee Level</ns2:value>
-		                   </ns2:title>
-		                   <ns2:beFieldId>rowBE.empLevel</ns2:beFieldId>
-		                   <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
-		                   <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                         <ns2:expression xsi:type="ns2:ExpressionType">
-                             <ns2:expressionString><![CDATA[
-                             import org.shaolin.vogerp.commonmodel.ce.EmployeeLevel;
-                             import org.shaolin.bmdp.runtime.AppContext;
-                             {
-                                 $rowBE.setEmpLevel((EmployeeLevel)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.commonmodel.ce.EmployeeLevel").getByIntValue(Integer.valueOf($value).intValue()));
-                             }]]></ns2:expressionString>
-                         </ns2:expression>
-                     </ns2:updateCondition>
 		               </ns2:column>
 		               <ns2:column xsi:type="ns2:UITableColumnType">
 		                   <ns2:title xsi:type="ns2:StringPropertyType">
@@ -281,7 +478,10 @@
 		                       <ns2:value>Type</ns2:value>
 		                   </ns2:title>
 		                   <ns2:beFieldId>rowBE.type</ns2:beFieldId>
-		                   <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+		                   <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+		                      <ns2:type>ComBox</ns2:type>
+		                      <ns2:cetype>org.shaolin.vogerp.commonmodel.ce.GenericOrganizationType</ns2:cetype>
+		                   </ns2:uiType>
 		                   <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
 		                       <ns2:expression xsi:type="ns2:ExpressionType">
 		                           <ns2:expressionString><![CDATA[
@@ -289,19 +489,29 @@
 		                           import org.shaolin.bmdp.runtime.AppContext;
 		                           import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 		                           {
+		                              $rowBE.setType($value);
 		                           }]]></ns2:expressionString>
 		                       </ns2:expression>
 		                   </ns2:updateCondition>
 		                   <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-                     	  <ns2:expression xsi:type="ns2:ExpressionType">
-                             <ns2:expressionString><![CDATA[
-                             import org.shaolin.bmdp.runtime.AppContext;
-                             {
-                             	return org.shaolin.bmdp.runtime.ce.CEUtil.getValue($rowBE.getType());
-                             }]]></ns2:expressionString>
-                         </ns2:expression>
-                     </ns2:rowExpression>
+	                     	  <ns2:expression xsi:type="ns2:ExpressionType">
+	                             <ns2:expressionString><![CDATA[
+	                             import org.shaolin.bmdp.runtime.AppContext;
+	                             {
+	                             	return org.shaolin.bmdp.runtime.ce.CEUtil.getValue($rowBE.getType());
+	                             }]]></ns2:expressionString>
+	                         </ns2:expression>
+	                       </ns2:rowExpression>
 		               </ns2:column>
+		               <ns2:column xsi:type="ns2:UITableColumnType">
+                         <ns2:title xsi:type="ns2:StringPropertyType">
+                             <ns2:value>建立时间</ns2:value>
+                         </ns2:title>
+                         <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+                         <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                           <ns2:type>Label</ns2:type>
+                         </ns2:uiType>
+                     </ns2:column>
 		               <ns2:defaultActions>
 		                   <ns2:defaultNewAction>createUser</ns2:defaultNewAction>
 		                   <ns2:defaultOpenAction>openUserDetail</ns2:defaultOpenAction>
@@ -311,9 +521,17 @@
 		               <ns2:actionGroup>
 		                   <ns2:type>radio</ns2:type>
 		                   <ns2:action>
+                               <ns2:uiid>assignAccount</ns2:uiid>
+                               <ns2:title xsi:type="ns2:StringPropertyType">
+                                   <ns2:value>分配登录帐号</ns2:value>
+                               </ns2:title>
+                               <ns2:icon>ui-icon-note</ns2:icon>
+                               <ns2:function>assignAccount</ns2:function>
+                           </ns2:action>
+		                   <ns2:action>
 		                       <ns2:uiid>assignRoles</ns2:uiid>
 		                       <ns2:title xsi:type="ns2:StringPropertyType">
-		                           <ns2:value>Assign Roles</ns2:value>
+		                           <ns2:value>分配权限</ns2:value>
 		                       </ns2:title>
 		                       <ns2:icon>ui-icon-note</ns2:icon>
 		                       <ns2:function>assignRoles</ns2:function>
@@ -339,11 +557,6 @@
 	   <ns2:DataEntity scope="InOut" name="orgObject" category="BusinessEntity">
       <type entityName="org.shaolin.vogerp.commonmodel.be.Organization"></type>
     </ns2:DataEntity>
-				<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-       <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.OrganizationTreeEditor"></ns2:mappingRule>
-       <ns2:UIComponent componentPath="organizationInfoPanel" paramName="UIWidgetType"></ns2:UIComponent>
-       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="orgObject" paramName="beObject"></ns2:DataComponent>
-     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
        <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy"></ns2:mappingRule>
        <ns2:UIComponent componentPath="organizationTypePanel" paramName="UIWidgetType"></ns2:UIComponent>
@@ -355,18 +568,18 @@
      </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
-					<ns2:serverOperation xsi:type="ns2:ExpressionType">
-						<ns2:expressionString><![CDATA[
-						import org.shaolin.bmdp.runtime.AppContext;
+		<ns2:serverOperation xsi:type="ns2:ExpressionType">
+			<ns2:expressionString><![CDATA[
+			import org.shaolin.bmdp.runtime.AppContext;
 		    import org.shaolin.vogerp.commonmodel.IOrganizationService;
 		    import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
 		    import org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl;
 		    import org.shaolin.uimaster.page.flow.WebflowConstants;
-						{
-						  IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
-						  $orgObject = (OrganizationImpl)orgService.getOrganizationInfo();
-						  @odContext.executeAllMappings();
-						}]]></ns2:expressionString>
-					</ns2:serverOperation>
+			{
+			  IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
+			  $orgObject = (OrganizationImpl)orgService.getOrganizationInfo();
+			  @odContext.executeAllMappings();
+			}]]></ns2:expressionString>
+		</ns2:serverOperation>
 	</ns2:in>
 </ns2:UIPage>

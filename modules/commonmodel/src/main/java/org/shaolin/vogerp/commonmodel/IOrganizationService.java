@@ -8,7 +8,13 @@ import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 
 public interface IOrganizationService {
 
-	public List[] getAllOrganizations();
+	/**
+	 * 
+	 * @param offset
+	 * @param count
+	 * @return
+	 */
+	public List[] getAllOrganizations(int offset, int count);
 	
 	/**
 	 * Get organization information of current login user.

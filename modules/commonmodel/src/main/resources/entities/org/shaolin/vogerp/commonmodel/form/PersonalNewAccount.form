@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
-  <entityName>org.shaolin.vogerp.commonmodel.form.PersonalAccount</entityName>
+  <entityName>org.shaolin.vogerp.commonmodel.form.PersonalNewAccount</entityName>
   <systemVersion>0</systemVersion>
   <ns2:eventHandler functionName="Save">
     <ns2:ops xsi:type="ns2:OpExecuteScriptType">
@@ -27,44 +27,21 @@
         import org.shaolin.vogerp.commonmodel.internal.PasswordCheckResult;
         import org.shaolin.vogerp.commonmodel.internal.PasswordVerifier;
         { 
-           
-        }
-        ]]></expressionString>
-      </ns2:exp>
-    </ns2:ops>
-  </ns2:eventHandler>
-  <ns2:eventHandler functionName="ResetPassword">
-    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-        <ns2:expressionString><![CDATA[
-        {   
-            var constraint_result = this.Form.validate();
-            if (constraint_result != true && constraint_result != null) {
-                return false;
-            }
-        }
-        ]]></ns2:expressionString>
-    </ns2:ops>
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="resetPassword-201604052212-2342">
-      <ns2:exp>
-        <expressionString><![CDATA[
-        import java.util.HashMap;
-        import org.shaolin.uimaster.page.AjaxContext;
-        import org.shaolin.uimaster.page.ajax.*;
-        import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
-        import org.shaolin.vogerp.commonmodel.be.PersonInfoImpl;
-        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
-        import org.shaolin.bmdp.runtime.AppContext;
-        import org.shaolin.vogerp.commonmodel.IUserService;
-        import org.shaolin.vogerp.commonmodel.internal.PasswordCheckResult;
-        import org.shaolin.vogerp.commonmodel.internal.PasswordVerifier;
-        { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             HashMap input = (HashMap)form.ui2Data();
             PersonalAccountImpl defaultUser = (PersonalAccountImpl)input.get("beObject");
+            defaultUser.setPersonalId(Integer.valueOf(@page.getHidden("idUI").getValue()));
             defaultUser.setPassword(PasswordVerifier.getPasswordHash(defaultUser.getPassword()));
-            CommonModel.INSTANCE.update(defaultUser);
+            defaultUser.setEnabled(true);
+            if (CommonModel.INSTANCE.authenticateUserInfoCount(defaultUser) > 0) {
+                Dialog.showMessageDialog("帐号已经存在!", "Information", Dialog.WARNING_MESSAGE, null);
+                return;
+            }
             
-            Dialog.showMessageDialog("更新成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
+            CommonModel.INSTANCE.create(defaultUser);
+            
+            form.closeIfinWindows();
+            @page.removeForm(@page.getEntityUiid()); 
         }
         ]]></expressionString>
       </ns2:exp>
@@ -99,7 +76,6 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
@@ -113,7 +89,7 @@
           <ns2:key>org.shaolin.vogerp.commonmodel.be.PersonalAccount.userName</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="userNameUI">
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="userNameUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
         <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
             <ns2:value>false</ns2:value>
@@ -238,24 +214,6 @@
             </ns2:validator>
         </ns2:validator>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="localeUILabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.commonmodel.be.PersonalAccount.locale</ns2:key>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="localeUI">
-        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="lastLoginUILabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.commonmodel.be.PersonalAccount.lastLogin</ns2:key>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UIDateType" UIID="lastLoginUI"></ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>userNameUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
@@ -280,39 +238,36 @@
         <ns2:componentId>password1UI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>localeUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>localeUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>lastLoginUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>lastLoginUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="resetPasswordbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="ResetPassword"></ns2:handler>
+          <ns2:handler functionName="Save"></ns2:handler>
         </ns2:EventListener>
         <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>重置密码</ns2:value>
+          <ns2:value>确定</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Cancel"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>取消</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>resetPasswordbtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
@@ -329,67 +284,34 @@
     <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
       <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalAccount"></type>
     </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="userId" category="JavaPrimitive">
+      <type entityName="java.lang.Long"></type>
+    </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
-    <ns2:DataEntity scope="InOut" name="isNewAccount" category="JavaPrimitive">
-      <type entityName="java.lang.Boolean"></type>
-    </ns2:DataEntity>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping_0">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
       <ns2:UIComponent componentPath="idUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Number">
         <ns2:expression>
-          <expressionString>$beObject.getId()</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="userNameUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
-        <ns2:expression>
-          <expressionString>$beObject.getUserName()</expressionString>
+          <expressionString>$userId</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="passwordUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
-        <ns2:expression>
-          <expressionString>"******"</expressionString>
-        </ns2:expression>
-        <ns2:uiToDataExpression>
-           <ns2:expression>
-             <expressionString>$beObject.setPassword(@StringData)</expressionString>
-           </ns2:expression>
-        </ns2:uiToDataExpression>
-      </ns2:DataComponent>
+      <ns2:UIComponent componentPath="userNameUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.userName" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping11">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="password1UI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
-        <ns2:expression>
-          <expressionString>"******"</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
+      <ns2:UIComponent componentPath="passwordUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.password" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="localeUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.locale" paramName="StringData"></ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithDate"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="lastLoginUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.lastLogin" paramName="Date"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="IsDateOnly">
-        <ns2:expression>
-          <expressionString>"true"</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
+      <ns2:UIComponent componentPath="password1UI" paramName="UIWidgetType"></ns2:UIComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
@@ -399,9 +321,11 @@
       ]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
-      <expressionString>{
-@odContext.executeAllMappings();
-}</expressionString>
+      <expressionString>
+      {
+		@odContext.executeAllMappings();
+	  }
+      </expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>
 </ns2:UIEntity>

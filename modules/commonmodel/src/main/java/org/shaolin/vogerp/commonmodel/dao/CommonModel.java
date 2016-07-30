@@ -159,6 +159,9 @@ public class CommonModel extends BEEntityDaoObject {
             if (scFlow.getLastName() != null && scFlow.getLastName().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.lastName", scFlow.getLastName()));
             }
+            if (scFlow.getType() != null && scFlow.getType().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.type", scFlow.getType()));
+            }
             if (scFlow.getBirthdayStart() != null) {
                 inFlowCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inFlow.birthday", scFlow.getBirthdayStart()));
             }
@@ -189,6 +192,9 @@ public class CommonModel extends BEEntityDaoObject {
             }
             if (scFlow.getLastName() != null && scFlow.getLastName().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.lastName", scFlow.getLastName()));
+            }
+            if (scFlow.getType() != null && scFlow.getType().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.type", scFlow.getType()));
             }
             if (scFlow.getBirthdayStart() != null) {
                 inFlowCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inFlow.birthday", scFlow.getBirthdayStart()));
@@ -282,6 +288,12 @@ public class CommonModel extends BEEntityDaoObject {
             if (scFlow.getOrgCode() != null && scFlow.getOrgCode().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.orgCode", scFlow.getOrgCode()));
             }
+            if (scFlow.getName() != null && scFlow.getName().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.name", scFlow.getName()));
+            }
+            if (scFlow.getType() != null && scFlow.getType().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.type", scFlow.getType()));
+            }
 
         inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
@@ -300,6 +312,12 @@ public class CommonModel extends BEEntityDaoObject {
             }
             if (scFlow.getOrgCode() != null && scFlow.getOrgCode().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.orgCode", scFlow.getOrgCode()));
+            }
+            if (scFlow.getName() != null && scFlow.getName().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.name", scFlow.getName()));
+            }
+            if (scFlow.getType() != null && scFlow.getType().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.type", scFlow.getType()));
             }
 
         inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));

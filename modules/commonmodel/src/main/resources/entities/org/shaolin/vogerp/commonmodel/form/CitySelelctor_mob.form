@@ -50,6 +50,7 @@
                      ((Label)textWidget).setValue(citySubListUI.getValue());
                      ((Label)textWidget).setDisplayValue(cityListUI.getSelectedDisplayValue() + "-" + citySubListUI.getSelectedDisplayValue());
                   }
+                  @page.executeJavaScript(@page.getHidden("clickEventUI").getValue());
                   
                   RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                   form.closeIfinWindows();
@@ -66,10 +67,15 @@
       <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIHiddenType" UIID="parentUI">
-        <ns2:secure>
-          <ns2:value>true</ns2:value>
-        </ns2:secure>
-      </ns2:component>
+      <ns2:secure>
+        <ns2:value>true</ns2:value>
+      </ns2:secure>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIHiddenType" UIID="clickEventUI">
+      <ns2:secure>
+        <ns2:value>true</ns2:value>
+      </ns2:secure>
+    </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="cityListPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -149,6 +155,9 @@
     <ns2:DataEntity scope="InOut" name="parentUIID" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="clickEventUI" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="selectedCity" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
@@ -169,13 +178,18 @@
       <ns2:UIComponent componentPath="parentUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="parentUIID" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="clickEventUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="clickEventUI" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIMultipleChoice"></ns2:mappingRule>
       <ns2:UIComponent componentPath="cityListUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values" paramName="OptionValues"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIMultipleChoice"></ns2:mappingRule>
       <ns2:UIComponent componentPath="citySubListUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values1" paramName="OptionValues"></ns2:DataComponent>

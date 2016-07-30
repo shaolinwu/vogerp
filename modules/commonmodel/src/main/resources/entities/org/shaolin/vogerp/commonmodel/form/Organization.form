@@ -52,13 +52,19 @@
         import org.shaolin.vogerp.commonmodel.be.*;
         import org.shaolin.vogerp.commonmodel.IOrganizationService;
         { 
+           RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+           HashMap input = (HashMap)form.ui2Data();
+           OrganizationImpl defaultUser = (OrganizationImpl)input.get("beObject");
            IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
-           LegalOrganizationInfoImpl defaultUser = (LegalOrganizationInfoImpl)orgService.getLegalInfo();
-           
-           HashMap input = new HashMap();
-           input.put("beObject", defaultUser);
+           ILegalOrganizationInfo legalInfo = orgService.getLegalInfo(defaultUser.getId());
+           if (legalInfo == null) {
+               legalInfo = new LegalOrganizationInfoImpl();
+               legalInfo.setOrgId(defaultUser.getId());
+           }
+           input = new HashMap();
+           input.put("beObject", legalInfo);
            input.put("editable", new Boolean(true));
-           RefForm form = new RefForm("illegalInfo", "org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo", input);
+           form = new RefForm("illegalInfo", "org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo", input);
            @page.addElement(form);
                         
            form.openInWindows("公司法人信息", null, 600, 400);
@@ -164,7 +170,7 @@
           <ns2:key>org.shaolin.vogerp.commonmodel.be.Organization.description</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="descriptionUI">
+      <ns2:component xsi:type="ns2:UITextAreaType" UIID="descriptionUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="moreUILabel">

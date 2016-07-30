@@ -589,14 +589,19 @@
         <ns2:serverOperation xsi:type="ns2:ExpressionType">
             <ns2:expressionString><![CDATA[
             import java.util.List;
+            import java.util.ArrayList;
             import org.shaolin.bmdp.runtime.AppContext;
             import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
             import org.shaolin.vogerp.commonmodel.IOrganizationService;
+            import org.shaolin.vogerp.commonmodel.IModuleService;
             {
                IOrganizationService moduleService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
-               List[] result = moduleService.getAllOrganizations();
-               $values1 = result[0];
-               $displayItems1 = result[1];
+               $values1 = new ArrayList();
+               $values1.add(IModuleService.ADMIN_MODULES);
+               $values1.add(IModuleService.DEFAULT_USER_MODULES);
+               $displayItems1 = new ArrayList();
+               $displayItems1.add("系统管理员模块");
+               $displayItems1.add("客户模块");
                
                @odContext.executeAllMappings();
             }]]></ns2:expressionString>

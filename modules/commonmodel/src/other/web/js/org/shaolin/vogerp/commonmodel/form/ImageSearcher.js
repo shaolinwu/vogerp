@@ -3,9 +3,9 @@
 function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var reloadPathText = new UIMaster.ui.textfield
+    var searchWordUI = new UIMaster.ui.textfield
     ({
-        ui: elementList[prefix + "reloadPathText"]
+        ui: elementList[prefix + "searchWordUI"]
     });
 
     var searchBtn = new UIMaster.ui.button
@@ -67,7 +67,7 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
     ({
         ui: elementList[prefix + "searchPanel"]
         ,items: []
-        ,subComponents: [prefix + "reloadPathText",prefix + "searchBtn"]
+        ,subComponents: [prefix + "searchWordUI",prefix + "searchBtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -80,10 +80,10 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [reloadPathText,searchBtn,photoUI,hintUI,emtpyLabel,refreshbtn,cancelbtn,fieldPanel,searchPanel,photoPanel,aframePanel,actionPanel]
+        ,items: [searchWordUI,searchBtn,photoUI,hintUI,emtpyLabel,refreshbtn,cancelbtn,fieldPanel,searchPanel,photoPanel,aframePanel,actionPanel]
     });
 
-    Form.reloadPathText=reloadPathText;
+    Form.searchWordUI=searchWordUI;
 
     Form.searchBtn=searchBtn;
 
@@ -101,7 +101,7 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
 
     Form.searchPanel=searchPanel;
 
-    Form.reloadPathText=reloadPathText;
+    Form.searchWordUI=searchWordUI;
 
     Form.searchBtn=searchBtn;
 
@@ -117,7 +117,7 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
 
     Form.searchPanel=searchPanel;
 
-    Form.reloadPathText=reloadPathText;
+    Form.searchWordUI=searchWordUI;
 
     Form.searchBtn=searchBtn;
 
@@ -183,7 +183,7 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
                 $(this.fc).remove();
             }
             var frameId = "onlinesearchFrame";
-	        var src = "http://image.baidu.com/search/index?tn=baiduimage&ipn=r&ct=201326592&cl=2&lm=-1&st=-1&fm=index&fr=&sf=1&fmq=&pv=&ic=0&nc=1&z=&se=1&showtab=0&fb=0&width=&height=&face=0&istype=2&ie=utf-8&word=" + encodeURI(this.reloadPathText.getValue()) + "&f=3&oq=&rsp=2";
+	        var src = "http://image.baidu.com/search/index?tn=baiduimage&ipn=r&ct=201326592&cl=2&lm=-1&st=-1&fm=index&fr=&sf=1&fmq=&pv=&ic=0&nc=1&z=&se=1&showtab=0&fb=0&width=&height=&face=0&istype=2&ie=utf-8&word=" + encodeURI(this.searchWordUI.getValue()) + "&f=3&oq=&rsp=2";
             var fc = $("<iframe id=\""+frameId+"\" name=\""+frameId+"\" src=\""+src+"\" needsrc=\"true\" frameborder=\"0\" style=\"display:none;min-width:100%;min-height:100%;-webkit-transform: translateZ(0);\"></iframe>");
             this.fc = fc;
             $(this.aframePanel).append(fc);

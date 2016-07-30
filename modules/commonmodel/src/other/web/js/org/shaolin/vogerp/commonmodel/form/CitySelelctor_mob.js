@@ -8,6 +8,11 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
         ui: elementList[prefix + "parentUI"]
     });
 
+    var clickEventUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "clickEventUI"]
+    });
+
     var cityListUI = new UIMaster.ui.list
     ({
         ui: elementList[prefix + "cityListUI"]
@@ -40,10 +45,12 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentUI,cityListUI,citySubListUI,cityListPanel,citySubListPanel]
+        ,items: [parentUI,clickEventUI,cityListUI,citySubListUI,cityListPanel,citySubListPanel]
     });
 
     Form.parentUI=parentUI;
+
+    Form.clickEventUI=clickEventUI;
 
     Form.cityListUI=cityListUI;
 

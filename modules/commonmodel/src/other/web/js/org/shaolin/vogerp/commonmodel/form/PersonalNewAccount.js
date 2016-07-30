@@ -1,6 +1,6 @@
 /* null */
 /* auto generated constructor */
-function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
+function org_shaolin_vogerp_commonmodel_form_PersonalNewAccount(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
     var idUI = new UIMaster.ui.hidden
@@ -13,10 +13,32 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
         ui: elementList[prefix + "userNameUILabel"]
     });
 
-    var userNameUI = new UIMaster.ui.label
+    var userNameUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "userNameUI"]
-    });
+        ,validators:[
+        {
+            func: function() {
+                if (this.value.length > 0) {
+        return !/[¡£~!@#$%\^\+\*&\\\/\?\|:\.<>{}()';="]/.test(this.value);
+    }
+    return true;
+            }
+            ,msg: "Please input only alphabets and digits."
+        }
+,
+        {
+            func: function() {
+                
+                    if (this.value.length > 0) {
+				        return true;
+				    }
+				    return true;
+                    
+            }
+            ,msg: "This user name has existed! Please reenter new one."
+        }
+]    });
 
     var passwordUILabel = new UIMaster.ui.label
     ({
@@ -93,49 +115,34 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
         }
 ]    });
 
-    var localeUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "localeUILabel"]
-    });
-
-    var localeUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "localeUI"]
-    });
-
-    var lastLoginUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "lastLoginUILabel"]
-    });
-
-    var lastLoginUI = new UIMaster.ui.calendar
-    ({
-        ui: elementList[prefix + "lastLoginUI"]
-    });
-
     var resetPasswordbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "resetPasswordbtn"]
+    });
+
+    var cancelbtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "cancelbtn"]
     });
 
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "resetPasswordbtn"]
+        ,subComponents: [prefix + "resetPasswordbtn",prefix + "cancelbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "userNameUILabel",prefix + "userNameUI",prefix + "passwordUILabel",prefix + "passwordUI",prefix + "password1UILabel",prefix + "password1UI",prefix + "localeUILabel",prefix + "localeUI",prefix + "lastLoginUILabel",prefix + "lastLoginUI"]
+        ,subComponents: [prefix + "idUI",prefix + "userNameUILabel",prefix + "userNameUI",prefix + "passwordUILabel",prefix + "passwordUI",prefix + "password1UILabel",prefix + "password1UI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,userNameUILabel,userNameUI,passwordUILabel,passwordUI,password1UILabel,password1UI,localeUILabel,localeUI,lastLoginUILabel,lastLoginUI,resetPasswordbtn,fieldPanel,actionPanel]
+        ,items: [idUI,userNameUILabel,userNameUI,passwordUILabel,passwordUI,password1UILabel,password1UI,resetPasswordbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -152,15 +159,9 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
 
     Form.password1UI=password1UI;
 
-    Form.localeUILabel=localeUILabel;
-
-    Form.localeUI=localeUI;
-
-    Form.lastLoginUILabel=lastLoginUILabel;
-
-    Form.lastLoginUI=lastLoginUI;
-
     Form.resetPasswordbtn=resetPasswordbtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.fieldPanel=fieldPanel;
 
@@ -178,44 +179,36 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
 
     Form.password1UI=password1UI;
 
-    Form.localeUILabel=localeUILabel;
-
-    Form.localeUI=localeUI;
-
-    Form.lastLoginUILabel=lastLoginUILabel;
-
-    Form.lastLoginUI=lastLoginUI;
-
     Form.actionPanel=actionPanel;
 
     Form.resetPasswordbtn=resetPasswordbtn;
 
+    Form.cancelbtn=cancelbtn;
+
     Form.user_constructor = function()
     {
-        /* Construct_FIRST:org_shaolin_vogerp_commonmodel_form_PersonalAccount */
-        /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_PersonalAccount */
+        /* Construct_FIRST:org_shaolin_vogerp_commonmodel_form_PersonalNewAccount */
+        /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_PersonalNewAccount */
     };
 
-    Form.Save = org_shaolin_vogerp_commonmodel_form_PersonalAccount_Save;
+    Form.Save = org_shaolin_vogerp_commonmodel_form_PersonalNewAccount_Save;
 
-    Form.ResetPassword = org_shaolin_vogerp_commonmodel_form_PersonalAccount_ResetPassword;
+    Form.Cancel = org_shaolin_vogerp_commonmodel_form_PersonalNewAccount_Cancel;
 
-    Form.Cancel = org_shaolin_vogerp_commonmodel_form_PersonalAccount_Cancel;
+    Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_PersonalNewAccount_invokeDynamicFunction;
 
-    Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_PersonalAccount_invokeDynamicFunction;
-
-    Form.__entityName="org.shaolin.vogerp.commonmodel.form.PersonalAccount";
+    Form.__entityName="org.shaolin.vogerp.commonmodel.form.PersonalNewAccount";
 
     Form.init();
     return Form;
 };
 
     /* EventHandler Functions */
-/* Other_Func_FIRST:org_shaolin_vogerp_commonmodel_form_PersonalAccount */
-/* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_PersonalAccount */
+/* Other_Func_FIRST:org_shaolin_vogerp_commonmodel_form_PersonalNewAccount */
+/* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_PersonalNewAccount */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_PersonalAccount_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_PersonalAccount_Save */
+    function org_shaolin_vogerp_commonmodel_form_PersonalNewAccount_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_PersonalNewAccount_Save */
         var o = this;
         var UIEntity = this;
 
@@ -229,40 +222,22 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-201604052212-2342",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_PersonalAccount_Save */
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_PersonalNewAccount_Save */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_PersonalAccount_ResetPassword(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_PersonalAccount_ResetPassword */
-        var o = this;
-        var UIEntity = this;
-
-        {   
-            var constraint_result = this.Form.validate();
-            if (constraint_result != true && constraint_result != null) {
-                return false;
-            }
-        }
-        
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"resetPassword-201604052212-2342",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_PersonalAccount_ResetPassword */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_PersonalAccount_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_PersonalAccount_Cancel */
+    function org_shaolin_vogerp_commonmodel_form_PersonalNewAccount_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_PersonalNewAccount_Cancel */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail1310282081",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_PersonalAccount_Cancel */
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_PersonalNewAccount_Cancel */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_PersonalAccount_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_PersonalAccount_invokeDynamicFunction */
+    function org_shaolin_vogerp_commonmodel_form_PersonalNewAccount_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_PersonalNewAccount_invokeDynamicFunction */
         var o = this;
         var UIEntity = this;
 
@@ -275,7 +250,7 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
         
         }
         }).open();
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_PersonalAccount_invokeDynamicFunction */
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_PersonalNewAccount_invokeDynamicFunction */
 
 
 

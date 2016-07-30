@@ -8,6 +8,11 @@ function org_shaolin_vogerp_commonmodel_form_ImageUploader(json)
         ui: elementList[prefix + "imagePathUI"]
     });
 
+    var searchWordsUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "searchWordsUI"]
+    });
+
     var photoUI = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "photoUI"]
@@ -39,10 +44,12 @@ function org_shaolin_vogerp_commonmodel_form_ImageUploader(json)
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [imagePathUI,photoUI,uploadFile,fieldPanel,photoPanel]
+        ,items: [imagePathUI,searchWordsUI,photoUI,uploadFile,fieldPanel,photoPanel]
     });
 
     Form.imagePathUI=imagePathUI;
+
+    Form.searchWordsUI=searchWordsUI;
 
     Form.photoUI=photoUI;
 

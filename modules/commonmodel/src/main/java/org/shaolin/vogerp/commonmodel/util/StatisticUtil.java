@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
@@ -11,14 +12,29 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
 import org.shaolin.bmdp.persistence.HibernateUtil;
+import org.shaolin.bmdp.utils.DateUtil;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.slf4j.LoggerFactory;
 
 public class StatisticUtil {
-
-	public static void sumOrgStatsPerDayByCity() {
+ 
+	public static void sumOrgStatsPerDayFromByCity(final String startFrom) throws ParseException {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String day = simpleDateFormat.format(new java.util.Date());
+		java.util.Date today = new java.util.Date();
+		java.util.Date start = simpleDateFormat.parse(startFrom);
+		while (start.getTime() <= today.getTime()) {
+			sumOrgStatsPerDayByCity(start);
+			DateUtil.increaseOneDay(start);
+		}
+	}
+	
+	public static void sumOrgStatsPerDayByCity() {
+		sumOrgStatsPerDayByCity(new java.util.Date());
+	}
+	
+	public static void sumOrgStatsPerDayByCity(java.util.Date today) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String day = simpleDateFormat.format(today);
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("SELECT COUNT(b.CITY) as ORGCOUNT, b.CITY FROM comm_organization a, comm_addressinfo b where a.ADDRESSID=b.ID and CREATEDATE between '").append(day).append(" 00-00-00' and '");
@@ -36,10 +52,13 @@ public class StatisticUtil {
 				public void execute(Connection connection)
 						throws SQLException {
 					for (Object[] row : rows) {
+						if (((Number)row[0]).intValue() == 0) {
+							continue;
+						}
 						PreparedStatement ps = connection.prepareStatement(insertSQL0);
 						ps.setDate(1, new Date(System.currentTimeMillis()));
-						ps.setInt(2, ((Number)row[0]).intValue());
-						ps.setString(3, row[1].toString());
+						ps.setString(2, row[1].toString());
+						ps.setInt(3, ((Number)row[0]).intValue());
 						ps.executeUpdate();
 					}
 				}
@@ -51,9 +70,23 @@ public class StatisticUtil {
 		} 
 	}
 	
-	public static void sumOrgStatsPerDayByProvince(String tableName) {
+	public static void sumOrgStatsPerDayFromByProvince(final String startFrom) throws ParseException {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String day = simpleDateFormat.format(new java.util.Date());
+		java.util.Date today = new java.util.Date();
+		java.util.Date start = simpleDateFormat.parse(startFrom);
+		while (start.getTime() <= today.getTime()) {
+			sumOrgStatsPerDayByProvince(start);
+			DateUtil.increaseOneDay(start);
+		}
+	}
+	
+	public static void sumOrgStatsPerDayByProvince() {
+		sumOrgStatsPerDayByProvince(new java.util.Date());
+	}
+	
+	public static void sumOrgStatsPerDayByProvince(java.util.Date today) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String day = simpleDateFormat.format(today);
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("SELECT COUNT(b.PROVENCE) as ORGCOUNT, b.PROVENCE FROM comm_organization a, comm_addressinfo b where a.ADDRESSID=b.ID and CREATEDATE between '").append(day).append(" 00-00-00' and '");
@@ -71,10 +104,13 @@ public class StatisticUtil {
 				public void execute(Connection connection)
 						throws SQLException {
 					for (Object[] row : rows) {
+						if (((Number)row[0]).intValue() == 0) {
+							continue;
+						}
 						PreparedStatement ps = connection.prepareStatement(insertSQL0);
 						ps.setDate(1, new Date(System.currentTimeMillis()));
-						ps.setInt(2, ((Number)row[0]).intValue());
-						ps.setString(3, row[1].toString());
+						ps.setString(2, row[1].toString());
+						ps.setInt(3, ((Number)row[0]).intValue());
 						ps.executeUpdate();
 					}
 				}

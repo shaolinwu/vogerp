@@ -587,6 +587,20 @@
             </ns2:conditionValue>
         </ns2:fieldMapping>
         <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.type</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.type</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getType() != null && scFlow.getType().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:fieldMapping>
             <ns2:toDataFieldPath>inFlow.birthday</ns2:toDataFieldPath>
             <ns2:conditionValue>
                 <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
@@ -761,6 +775,34 @@
                 </ns2:value>
                 <ns2:condition>
                     <expressionString><![CDATA[scFlow.getOrgCode() != null && scFlow.getOrgCode().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.name</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:StarLikeOperatorType">
+                    <ns2:type>LIKE %*</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.name</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getName() != null && scFlow.getName().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.type</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.type</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getType() != null && scFlow.getType().length() > 0]]></expressionString>
                 </ns2:condition>
             </ns2:conditionValue>
         </ns2:fieldMapping>

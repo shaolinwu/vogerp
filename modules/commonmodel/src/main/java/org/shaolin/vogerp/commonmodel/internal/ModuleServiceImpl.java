@@ -11,11 +11,14 @@ import org.shaolin.bmdp.datamodel.pagediagram.WebChunk;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.cache.CacheManager;
 import org.shaolin.bmdp.runtime.cache.ICache;
+import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+import org.shaolin.bmdp.runtime.security.IPermissionService;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.javacc.exception.ParsingException;
 import org.shaolin.uimaster.page.ajax.TreeItem;
 import org.shaolin.uimaster.page.cache.UIFlowCacheManager;
+import org.shaolin.uimaster.page.flow.WebflowConstants;
 import org.shaolin.uimaster.page.widgets.HTMLMatrixType.DataMode;
 import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.be.IModuleGroup;
@@ -102,16 +105,53 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 		return -1;
 	}
 	
+	/**
+	 * only admin user is able to have it.
+	 */
 	@Override
 	public ArrayList[] getModuleListInOptions() {
+		String moduleType = IModuleService.DEFAULT_USER_MODULES;
+		if (UserContext.getUserContext() != null && UserContext.getUserContext().getUserId() > 0 
+        		&& UserContext.getUserContext().getOrgCode().equals(IModuleService.ADMIN_MODULES)) {
+            moduleType = IModuleService.ADMIN_MODULES;
+        }
+		
+		IModuleGroup root = null;
 		ArrayList<String> optionsValues = new ArrayList<String>();
 		ArrayList<String> displayItems = new ArrayList<String>();
 		Iterator<IModuleGroup> i = modules.getValues().iterator();
 		while(i.hasNext()) {
 			IModuleGroup module = i.next();
-			optionsValues.add(module.getId() + "");
-			displayItems.add(module.getName());
+			if (moduleType.equals(module.getName())) {
+     		   root = module;
+	     	   break;
+	     	}
 		} 
+		i = modules.getValues().iterator();
+		while(i.hasNext()) {
+			IModuleGroup module = i.next();
+			if (module.getParentId() != root.getId()) {
+				continue;
+			}
+			if (!module.getIsDisplay()) {
+				continue;
+			}
+			
+			optionsValues.add(module.getId() + "");
+			if ("#".equals(module.getAccessURL())) {
+				displayItems.add("#" + module.getName());
+			} else {
+				displayItems.add(module.getName());
+			}
+			// find children
+			for (Object item: modules.getValues()) {
+				if (module.getId() == ((ModuleGroupImpl) item).getParentId()) {
+					optionsValues.add(((ModuleGroupImpl) item).getId() + "");
+					displayItems.add("--"+((ModuleGroupImpl) item).getName());
+				}
+			}
+		}
+		
 		return new ArrayList[]{optionsValues, displayItems};
 	}
 	
@@ -127,13 +167,21 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 		}
 	}
 	
+	/**
+	 * Get module root.
+	 */
 	@Override
-	public IModuleGroup getModule(String name) {
-		ModuleGroupImpl condition = new ModuleGroupImpl();
-		condition.setName(name);
-		condition.setEnabled(true);
-        List<IModuleGroup> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
-        return all.size() > 0 ? all.get(0) : null;
+	public IModuleGroup getModule(String moduleType) {
+		IModuleGroup root = null;
+		Iterator<IModuleGroup> i = modules.getValues().iterator();
+		while(i.hasNext()) {
+			IModuleGroup module = i.next();
+			if (moduleType.equals(module.getName())) {
+     		   root = module;
+	     	   break;
+	     	}
+		} 
+        return root;
 	}
 	
 	@Override
@@ -154,7 +202,7 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
         } 
         String moduleType = IModuleService.DEFAULT_USER_MODULES;
         if (UserContext.getUserContext() != null && UserContext.getUserContext().getUserId() > 0 
-        		&& AppContext.get().getAppName().equals(IModuleService.ADMIN_MODULES)) {
+        		&& UserContext.getUserContext().getOrgCode().equals(IModuleService.ADMIN_MODULES)) {
             moduleType = IModuleService.ADMIN_MODULES;
         }
         // find root
@@ -170,12 +218,13 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
             logger.warn("Please give an empty name as the application root node!");
             return Collections.emptyList();
         }
+        List<IConstantEntity> roleIds = (List<IConstantEntity>)UserContext.getUserData(WebflowConstants.USER_ROLE_KEY);
         
         // list the nodes under the root node.
 		ArrayList result = new ArrayList();
 		for (int i = 0; i < all.size(); i++) {
 			ModuleGroupImpl mg = (ModuleGroupImpl) all.get(i);
-			if (mg.getParentId() != root.getId()) {
+			if (mg.getParentId() != root.getId() || !checkPermission(mg, roleIds)) {
 				continue;
 			}
 			if (!mg.getIsDisplay()) {
@@ -191,8 +240,10 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 			result.add(gitem);
 
 			// find children
+			boolean addedChild = false;
 			for (int j = 0; j < all.size(); j++) {
-				if (mg.getId() == ((ModuleGroupImpl) all.get(j)).getParentId()) {
+				if (mg.getId() == ((ModuleGroupImpl) all.get(j)).getParentId()
+						&& checkPermission((ModuleGroupImpl) all.get(j), roleIds)) {
 					ModuleGroupImpl m = (ModuleGroupImpl) all.get(j);
 					TreeItem item = new TreeItem();
 					item.setId("mg_" + m.getId());
@@ -203,20 +254,25 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 					item.setIcon(m.getSmallIcon());
 
 					gitem.getChildren().add(item);
+					addedChild = true;
 				}
+			}
+			if (all.size() > 0 && !addedChild && "#".equals(mg.getAccessURL())) {
+				result.remove(result.size() -1);
 			}
 		}
 		return result;
 	}
 	
 	@Override
-	public List<IModuleGroup> getModuleGroupTree(final String orgCode) {
+	public List<IModuleGroup> getModuleGroupTree(final String type) {
+		List<IConstantEntity> roleIds = (List<IConstantEntity>)UserContext.getUserData(WebflowConstants.USER_ROLE_KEY);
 		ModuleGroupImpl condition = new ModuleGroupImpl();
 		condition.setEnabled(true);
         List<IModuleGroup> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
         
         String moduleType = IModuleService.DEFAULT_USER_MODULES;
-        if (orgCode.equals(IModuleService.ADMIN_MODULES)) {
+        if (type.equals(IModuleService.ADMIN_MODULES)) {
         	moduleType = IModuleService.ADMIN_MODULES;
         }
         ModuleGroupImpl root = null;
@@ -234,17 +290,23 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 		ArrayList<IModuleGroup> result = new ArrayList<IModuleGroup>();
 		for (int i = 0; i < all.size(); i++) {
 			ModuleGroupImpl mg = (ModuleGroupImpl) all.get(i);
-			if (mg.getParentId() != root.getId()) {
+			if (mg.getParentId() != root.getId() || !checkPermission(mg, roleIds)) {
 				continue;
 			}
 			result.add(mg);
 
 			// find children
+			boolean addedChild = false;
 			for (int j = 0; j < all.size(); j++) {
-				if (mg.getId() == ((ModuleGroupImpl) all.get(j)).getParentId()) {
+				if (mg.getId() == ((ModuleGroupImpl) all.get(j)).getParentId() 
+						&& checkPermission((ModuleGroupImpl) all.get(j), roleIds)) {
 					ModuleGroupImpl m = (ModuleGroupImpl) all.get(j);
 					result.add(m);
+					addedChild = true;
 				}
+			}
+			if (all.size() > 0 && !addedChild && "#".equals(mg.getAccessURL())) {
+				result.remove(result.size() -1);
 			}
 		}
 		return result;
@@ -252,12 +314,14 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	
 	@Override
 	public List<List<DataMode>> getModulesInMatrix(String orgCode, int columns) {
+		List<IConstantEntity> roleIds = (List<IConstantEntity>)UserContext.getUserData(WebflowConstants.USER_ROLE_KEY);
+		
 		List<List<DataMode>> result = new ArrayList<List<DataMode>>();
 		List<IModuleGroup> a = getModuleGroupTree(orgCode);
 		List<IModuleGroup> modules = new ArrayList<IModuleGroup>();
 		for (int i = 0; i < a.size(); i++) {
 			IModuleGroup m = a.get(i);
-			if ("#".equals(m.getAccessURL())) {
+			if ("#".equals(m.getAccessURL()) || !checkPermission(m, roleIds)) {
 				continue;
 			}
 			if (!m.getIsDisplay()) {
@@ -275,7 +339,7 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 		}
 		for (int i = 0; i < modules.size(); i++) {
 			IModuleGroup m = modules.get(i);
-			if ("#".equals(m.getAccessURL())) {
+			if ("#".equals(m.getAccessURL()) || !checkPermission(m, roleIds)) {
 				continue;
 			}
 			
@@ -294,6 +358,27 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 		return result;
 	}
 	
+	private boolean checkPermission(IModuleGroup module, List<IConstantEntity> roleIds) {
+		String accessURL = escapeTNR(module.getAccessURL());
+		if (accessURL != null && !"#".equals(accessURL)) {
+			int chunkNameIndex = accessURL.indexOf("_chunkname=");
+        	int _nodenameIndex = accessURL.indexOf("_nodename=");
+        	int _framenameIndex = accessURL.indexOf("_framename=");
+        	String chunkName = accessURL.substring(chunkNameIndex + "_chunkname=".length(), _nodenameIndex - 1);
+        	String nodenName = accessURL.substring(_nodenameIndex + "_nodename=".length());
+        	if (_framenameIndex >= 0) {
+        		nodenName = accessURL.substring(_nodenameIndex + "_nodename=".length(), _framenameIndex -1);
+        	}
+        	if (nodenName.indexOf('&') != -1) {
+        		nodenName = nodenName.substring(0, nodenName.indexOf('&'));
+        	}
+	     	IPermissionService permiService = AppContext.get().getService(IPermissionService.class);
+	     	int decision = permiService.checkModule(chunkName, nodenName, roleIds);
+	     	return IPermissionService.ACCEPTABLE == decision;
+		}
+		return true;
+	}
+	
 	@Override
 	public Class<?> getServiceInterface() {
 		return IModuleService.class;
@@ -301,35 +386,16 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	
 	void updateWebFlowLinks() throws ParsingException {
 		ModuleGroupImpl condition = new ModuleGroupImpl();
+		condition.setEnabled(true);
         List<IModuleGroup> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
         updateWebFlowLinks(all);
 	}
 	
 	void updateWebFlowLinks(List<IModuleGroup> all) throws ParsingException {
-		String moduleType = IModuleService.DEFAULT_USER_MODULES;
-        if (AppContext.get().getAppName().equals(IModuleService.ADMIN_MODULES)) {
-        	moduleType = IModuleService.ADMIN_MODULES;
-        }
-        ModuleGroupImpl root = null;
-        for (int i=0;i<all.size();i++) {
-        	ModuleGroupImpl mg = (ModuleGroupImpl)all.get(i);
-        	if (mg.getName().equals(moduleType)) {
-        		root = mg;
-        		modules.put(mg.getId(), mg);
-        	    break;
-        	}
-        }
-        if (root == null) {
-        	return; // no root being configured!
-        }
-        
 		// list the nodes under the root node.
         List<PageNodeType> webNodes = new ArrayList<PageNodeType>();
         for (int i=0;i<all.size();i++) {
             ModuleGroupImpl mg = (ModuleGroupImpl)all.get(i);
-            if (mg.getParentId() != root.getId()) {
-            	continue;
-            }
             modules.put(mg.getId(), mg);
             // webflow.do?_chunkname=org.shaolin.bmdp.adminconsole.diagram.MainFunctions&_nodename=ModuleManager&_framename=moduleManager&_framePrefix=
             String accessURL = escapeTNR(mg.getAccessURL());
@@ -358,37 +424,6 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
             		if (UIFlowCacheManager.getInstance().findWebNode(path, webNode.getName()) == null) {
             			webNodes.add(webNode);
             		}
-            	}
-            }
-            // find children
-            for (int j=0;j<all.size();j++) {
-            	if (mg.getId() == ((ModuleGroupImpl)all.get(j)).getParentId()) {
-            		ModuleGroupImpl m = (ModuleGroupImpl)all.get(j);
-            		modules.put(m.getId(), m);
-                    
-            		accessURL = m.getAccessURL();
-        			if (accessURL != null && !"#".equals(accessURL)) {
-                    	int chunkNameIndex = accessURL.indexOf("_chunkname=");
-                    	int _nodenameIndex = accessURL.indexOf("_nodename=");
-                    	int _pageIndex = accessURL.indexOf("_page=");
-                    	int _framenameIndex = accessURL.indexOf("_framename=");
-                    	if (chunkNameIndex != -1) {
-                    		String path = accessURL.substring(chunkNameIndex + "_chunkname=".length(), _nodenameIndex - 1);
-                    		PageNodeType webNode = new PageNodeType();
-                    		webNode.setName(accessURL.substring(_nodenameIndex + "_nodename=".length(), _pageIndex -1));
-                    		TargetEntityType tarEntityName = new TargetEntityType();
-                    		String entityName = accessURL.substring(_pageIndex + "_page=".length());
-                    		if (_framenameIndex >= 0) {
-                    			entityName = accessURL.substring(_pageIndex + "_page=".length(), _framenameIndex - 1);
-                    		}
-                    		tarEntityName.setEntityName(entityName);
-                    		webNode.setSourceEntity(tarEntityName);
-                    		
-                    		if (UIFlowCacheManager.getInstance().findWebNode(path, webNode.getName()) == null) {
-                    			webNodes.add(webNode);
-                    		}
-                    	}
-                    }
             	}
             }
         }

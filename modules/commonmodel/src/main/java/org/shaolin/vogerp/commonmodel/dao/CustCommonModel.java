@@ -158,7 +158,7 @@ public class CustCommonModel extends BEEntityDaoObject {
     }
     
     public List<ArrayList<String>>[] getOrgEmployeeGroup() {
-    	String sql = "SELECT count(p.id), b.name, b.orgid FROM comm_personinfo p, comm_organization b where p.orgid=b.id and p.orgid=? group by b.id;";
+    	String sql = "SELECT count(p.id), b.name, b.id FROM comm_personinfo p, comm_organization b where p.orgid=b.id and p.orgid=? group by b.id;";
     	Session session = HibernateUtil.getSession();
     	SQLQuery sqlQuery = session.createSQLQuery(sql);
     	sqlQuery.setLong(0, UserContext.getUserContext().getOrgId());

@@ -10,31 +10,36 @@
         import java.util.HashMap;
         import java.util.ArrayList;
         import java.util.List;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.bmdp.runtime.ce.CEUtil;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl;
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+        import org.shaolin.bmdp.runtime.security.IPermissionService;
         { 
-												RefForm form = (RefForm)@page.getElement(@page.getEntityUiid());
-												HashMap input = (HashMap)form.ui2Data();
-												
-												ArrayList selectedModules = (ArrayList)input.get("selectedModelList");
-												System.out.println("all: " + input);
-												
-												ModelPermissionImpl permission = new ModelPermissionImpl();
-												permission.setPartyType((String)input.get("type"));
-												List all = CommonModel.INSTANCE.searchModelPermission(permission, null, 0, -1);
-												CommonModel.INSTANCE.batchDelete(all);
-												
-												ArrayList newPermissionList = new ArrayList();
-												for (int i=0;i<selectedModules.size();i++) {
-															ModelPermissionImpl p = new ModelPermissionImpl();
-															p.setPartyType((String)input.get("type"));
-															p.setModuleId(Long.valueOf((String)selectedModules.get(i)));
-															newPermissionList.add(p);
-												}
-												CommonModel.INSTANCE.batchInsert(newPermissionList);
-												
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid());
+            HashMap input = (HashMap)form.ui2Data();
+            
+            ArrayList selectedModules = (ArrayList)input.get("selectedModelList");
+            
+            ModelPermissionImpl permission = new ModelPermissionImpl();
+            permission.setPartyType((String)input.get("type"));
+            List all = CommonModel.INSTANCE.searchModelPermission(permission, null, 0, -1);
+            CommonModel.INSTANCE.batchDelete(all, true);
+            
+            ArrayList newPermissionList = new ArrayList();
+            for (int i=0;i<selectedModules.size();i++) {
+                ModelPermissionImpl p = new ModelPermissionImpl();
+                p.setPartyType((String)input.get("type"));
+                p.setModuleId(Long.valueOf((String)selectedModules.get(i)));
+                newPermissionList.add(p);
+            }
+            CommonModel.INSTANCE.batchInsert(newPermissionList, true);
+
+            IPermissionService service = (IPermissionService) AppContext.get().getService(IPermissionService.class);
+            service.reloadRolePermissions(CEUtil.toCEValue(permission.getPartyType()));
+            
             form.closeIfinWindows();
             @page.removeForm(@page.getEntityUiid()); 
         }]]></expressionString>
@@ -192,11 +197,11 @@
       import java.util.ArrayList;
       import java.util.List;
       import org.shaolin.bmdp.runtime.AppContext;
-      import org.shaolin.vogerp.commonmodel.internal.ModuleServiceImpl;
+      import org.shaolin.vogerp.commonmodel.IModuleService;
       import org.shaolin.vogerp.commonmodel.be.*;
       import org.shaolin.vogerp.commonmodel.dao.CommonModel;
       {
-         ModuleServiceImpl service = (ModuleServiceImpl) AppContext.get().getService(ModuleServiceImpl.class);
+         IModuleService service = (IModuleService) AppContext.get().getService(IModuleService.class);
          ArrayList[] options = service.getModuleListInOptions();
          $moduleIdList = options[0];
          $moduleNameList = options[1];

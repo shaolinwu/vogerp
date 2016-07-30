@@ -9,8 +9,17 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
         ,items: []
         ,subComponents: [prefix + "organizationInfoPanel",prefix + "organizationTypePanel",prefix + "employeeInfoPanel"]
     });
-    var organizationInfoPanel = new org_shaolin_vogerp_commonmodel_form_OrganizationTreeEditor({"prefix":prefix + "organizationInfoPanel."});
+    var organizationInfoTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "organizationInfoTable"]
+    });
 
+    var organizationInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "organizationInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "organizationInfoTable"]
+    });
     var organizationTypePanel = new org_shaolin_vogerp_commonmodel_form_CEHierarchy({"prefix":prefix + "organizationTypePanel."});
 
     var employeeInfoTablel = new UIMaster.ui.objectlist
@@ -36,6 +45,8 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
 
     Form.organizationInfoPanel=organizationInfoPanel;
 
+    Form.organizationInfoTable=organizationInfoTable;
+
     Form.organizationTypePanel=organizationTypePanel;
 
     Form.employeeInfoPanel=employeeInfoPanel;
@@ -54,9 +65,15 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
 
     Form.openOrgTreeDetail = org_shaolin_vogerp_commonmodel_page_OrganizationManagement_openOrgTreeDetail;
 
-    Form.deleteOrg = org_shaolin_vogerp_commonmodel_page_OrganizationManagement_deleteOrg;
+    Form.createUser = org_shaolin_vogerp_commonmodel_page_OrganizationManagement_createUser;
+
+    Form.openUserDetail = org_shaolin_vogerp_commonmodel_page_OrganizationManagement_openUserDetail;
+
+    Form.deleteUser = org_shaolin_vogerp_commonmodel_page_OrganizationManagement_deleteUser;
 
     Form.assignRoles = org_shaolin_vogerp_commonmodel_page_OrganizationManagement_assignRoles;
+
+    Form.assignAccount = org_shaolin_vogerp_commonmodel_page_OrganizationManagement_assignAccount;
 
     Form.initPageJs = org_shaolin_vogerp_commonmodel_page_OrganizationManagement_initPageJs;
 
@@ -108,10 +125,53 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_page_OrganizationManagement_deleteOrg(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_deleteOrg */
+    function org_shaolin_vogerp_commonmodel_page_OrganizationManagement_createUser(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_createUser */
         var o = this;
         var UIEntity = this;
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_deleteOrg */
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createUser-20160728-2343",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_createUser */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_page_OrganizationManagement_openUserDetail(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_openUserDetail */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openUserDetail-20160728-2343",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_openUserDetail */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_page_OrganizationManagement_deleteUser(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_deleteUser */
+        var o = this;
+        var UIEntity = this;
+
+		         {
+		          var o = this;
+		          new UIMaster.ui.dialog({
+		              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
+		              message:'Are you sure delete this employee?',
+		              messageType:UIMaster.ui.dialog.Information,
+		              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+		              title:'',
+		              height:150,
+		              width:300,
+		              handler: function() {
+		                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteUser-2015-08140714",UIMaster.getValue(eventsource),o.__entityName);
+		              }
+		          }).open();
+		          return;
+		         }
+		         
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteUser-2015-08140714",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_deleteUser */
 
 
     /* auto generated eventlistener function declaration */
@@ -123,6 +183,17 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"assignRoles-2015-08140714",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_assignRoles */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_page_OrganizationManagement_assignAccount(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_assignAccount */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"assignAccount-20160718-2342",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_assignAccount */
 
 
     function org_shaolin_vogerp_commonmodel_page_OrganizationManagement_initPageJs(){/* Gen_First:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_initPageJs */

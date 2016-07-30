@@ -21,17 +21,51 @@ import org.shaolin.vogerp.commonmodel.be.UIWidgetPermissionImpl;
 import org.shaolin.vogerp.commonmodel.ce.PermissionType;
 import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PermissionServiceImpl implements IServiceProvider, IPermissionService {
 
-	private final ICache<IConstantEntity, SingleRolePermission> rolePermissions;
+	private static final Logger logger = LoggerFactory.getLogger(PermissionServiceImpl.class);
+	
+	private final ICache<String, SingleRolePermission> rolePermissions;
 	
 	private final IModuleService moduleService;
 	
 	public PermissionServiceImpl(IModuleService moduleService) {
 		this.moduleService = moduleService;
 		this.rolePermissions = CacheManager.getInstance().getCache(IModuleService.ADMIN_MODULES
-				+ "_rolepermission_cache", IConstantEntity.class, SingleRolePermission.class);
+				+ "_rolepermission_cache", String.class, SingleRolePermission.class);
+	}
+	
+	public void reloadRolePermissions(IConstantEntity partyType) {
+		logger.info("Reload the role permissions: " + partyType);
+		
+		String strValue = CEUtil.getValue(partyType);
+		List<IModelPermission> modelPermissions = new ArrayList<IModelPermission>();
+		ModelPermissionImpl model = new ModelPermissionImpl();
+    	model.setPartyType(strValue);
+    	modelPermissions = CommonModel.INSTANCE.searchModelPermission(model, null, 0, -1);
+    	if (modelPermissions.size() == 0) {
+        	CEHierarchyImpl condition = new CEHierarchyImpl();
+        	condition.setCeName(partyType.getEntityName());
+			List<ICEHierarchy> hierarchy = ModularityModel.INSTANCE.searchCEHierarchy(condition, null, 0, 1);
+        	if (hierarchy.size() > 0) {
+        		// user's module role points to the parent item.
+	        	model = new ModelPermissionImpl();
+	        	model.setPartyType(hierarchy.get(0).getParentCeName() + "," + hierarchy.get(0).getParentCeItem());
+	        	modelPermissions = CommonModel.INSTANCE.searchModelPermission(model, null, 0, -1);
+        	}
+    	}
+		BEPermissionImpl bePermission = new BEPermissionImpl();
+		bePermission.setPartyType(strValue);
+		List<IBEPermission> bePermissions = CommonModel.INSTANCE.searchBEPermission(bePermission, null, 0, -1);
+		
+		UIWidgetPermissionImpl uiwidget = new UIWidgetPermissionImpl();
+		uiwidget.setPartyType(strValue);
+		List<IUIWidgetPermission> uiwidgetPermissions = CommonModel.INSTANCE.searchUIWidgetPermission(uiwidget, null, 0, -1);
+		
+		rolePermissions.put(strValue, new SingleRolePermission(strValue, bePermissions, modelPermissions, uiwidgetPermissions));
 	}
 	
 	/**
@@ -40,33 +74,8 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 	 * @param role
 	 */
 	synchronized void prepareDefaultOrgPermissions(IConstantEntity partyType) {
-		String strValue = CEUtil.getValue(partyType);
-		if (!rolePermissions.containsKey(partyType)) {
-        	List<IModelPermission> modelPermissions = new ArrayList<IModelPermission>();
-        	if (PermissionType.NOT_SPECIFIED == partyType) {
-        		ModelPermissionImpl model = new ModelPermissionImpl();
-	        	model.setPartyType(strValue);
-	        	modelPermissions = CommonModel.INSTANCE.searchModelPermission(model, null, 0, -1);
-        	} else {
-	        	CEHierarchyImpl condition = new CEHierarchyImpl();
-	        	condition.setCeName(partyType.getEntityName());
-				List<ICEHierarchy> hierarchy = ModularityModel.INSTANCE.searchCEHierarchy(condition, null, 0, 1);
-	        	if (hierarchy.size() > 0) {
-	        		// user's module role points to the parent item.
-		        	ModelPermissionImpl model = new ModelPermissionImpl();
-		        	model.setPartyType(hierarchy.get(0).getParentCeName() + "," + hierarchy.get(0).getParentCeItem());
-		        	modelPermissions = CommonModel.INSTANCE.searchModelPermission(model, null, 0, -1);
-	        	}
-        	}
-			BEPermissionImpl bePermission = new BEPermissionImpl();
-			bePermission.setPartyType(strValue);
-			List<IBEPermission> bePermissions = CommonModel.INSTANCE.searchBEPermission(bePermission, null, 0, -1);
-			
-			UIWidgetPermissionImpl uiwidget = new UIWidgetPermissionImpl();
-			uiwidget.setPartyType(strValue);
-			List<IUIWidgetPermission> uiwidgetPermissions = CommonModel.INSTANCE.searchUIWidgetPermission(uiwidget, null, 0, -1);
-			
-			rolePermissions.put(partyType, new SingleRolePermission(strValue, bePermissions, modelPermissions, uiwidgetPermissions));
+		if (!rolePermissions.containsKey(CEUtil.getValue(partyType))) {
+			reloadRolePermissions(partyType);
 		}
 	}
 	
@@ -77,7 +86,7 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 		if (moduleId == -1) {
 			return PermissionType.NOT_SPECIFIED.getIntValue(); 
 		}
-		return rolePermissions.get(role).hasModuleId(moduleId).getIntValue();
+		return rolePermissions.get(CEUtil.getValue(role)).hasModuleId(moduleId).getIntValue();
 	}
 	
 	@Override
@@ -128,7 +137,7 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 	public int checkUIWidget(String pageName, String widgetId, IConstantEntity role) {
 		prepareDefaultOrgPermissions(role);
 		
-		return rolePermissions.get(role).hasUIWidget(pageName, widgetId).getIntValue();
+		return rolePermissions.get(CEUtil.getValue(role)).hasUIWidget(pageName, widgetId).getIntValue();
 	}
 	
 	@Override
@@ -150,7 +159,7 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 	public int checkUITableWidget(String pageName, String widgetId, String columnId, IConstantEntity role) {
 		prepareDefaultOrgPermissions(role);
 		
-		return rolePermissions.get(role).hasUIWidget(pageName, widgetId).getIntValue();
+		return rolePermissions.get(CEUtil.getValue(role)).hasUIWidget(pageName, widgetId).getIntValue();
 	}
 
 	@Override
@@ -173,7 +182,7 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 	public int checkBEDate(String beName, String field, IConstantEntity role) {
 		prepareDefaultOrgPermissions(role);
 		
-		return rolePermissions.get(role).hasBEField(beName, field).getIntValue();
+		return rolePermissions.get(CEUtil.getValue(role)).hasBEField(beName, field).getIntValue();
 	}
 	
 	@Override

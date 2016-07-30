@@ -251,7 +251,7 @@
                         
                         OrganizationImpl subCondition = new OrganizationImpl();
                         subCondition.setParentId(root.getId());
-                        List categories = CommonModel.INSTANCE.searchSubOrganizationInfo(subCondition, null, 0, -1);
+                        List categories = CommonModel.INSTANCE.searchSubOrganizationInfo(subCondition, null, 0, 10);
                         for (int j=0;j<categories.size();j++) {
                             OrganizationImpl m = (OrganizationImpl)categories.get(j);
                             TreeItem item = new TreeItem();

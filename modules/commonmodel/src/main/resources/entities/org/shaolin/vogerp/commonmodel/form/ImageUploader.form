@@ -37,6 +37,7 @@
             @page.getImage("photoUI"); 
                         
             HashMap input = new HashMap();
+            input.put("searchWords", @page.getHidden("searchWordsUI").getValue());
             RefForm form = new RefForm("onlineSearchForm", "org.shaolin.vogerp.commonmodel.form.ImageSearcher", input);
             @page.addElement(form);
             
@@ -63,6 +64,11 @@
           <ns2:value>true</ns2:value>
         </ns2:secure>
       </ns2:component>
+    <ns2:component xsi:type="ns2:UIHiddenType" UIID="searchWordsUI">
+       <ns2:secure>
+         <ns2:value>true</ns2:value>
+       </ns2:secure>
+     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -200,6 +206,9 @@
   </ns2:body>
   <ns2:mapping>
     <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="searchWords" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="imagePath" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
@@ -219,6 +228,11 @@
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="imagePathUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="imagePath" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="searchWordsUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="searchWords" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[

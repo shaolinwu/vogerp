@@ -181,7 +181,7 @@
           <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="orgInfo" paramName="beObject"></ns2:DataComponent>
           <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
             <ns2:expression>
-              <expressionString>Boolean.TRUE</expressionString>
+              <expressionString>Boolean.FALSE</expressionString>
             </ns2:expression>
           </ns2:DataComponent>
         </ns2:ComponentMapping>

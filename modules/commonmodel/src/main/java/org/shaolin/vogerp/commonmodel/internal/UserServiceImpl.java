@@ -14,6 +14,7 @@ import org.shaolin.bmdp.i18n.ResourceUtil;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.security.UserContext;
+import org.shaolin.bmdp.runtime.security.UserContext.OnlineUserChecker;
 import org.shaolin.bmdp.runtime.spi.IConstantService;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
@@ -40,13 +41,19 @@ import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UserServiceImpl implements IServiceProvider, IUserService {
+public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUserChecker {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	
 	private static Localizer LOCALIZER = new Localizer("org_shaolin_vogerp_commonmodel_i18n");
 	
 	private List<UserActionListener> listeners = new ArrayList<UserActionListener>();
+	
+	private static List<Long> onlineUserIds = new ArrayList<Long>();
+	
+	public UserServiceImpl() {
+		UserContext.setOnlineUserChecker(this);
+	}
 	
 	public void addListener(UserActionListener listener) {
 		this.listeners.add(listener);
@@ -192,11 +199,17 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 		if (value == null) {
 			return false;
 		}
+		//allows the first try has no verified code. its quite useful for App login and tolerated.
+		if (session.getAttribute("has_first_token") == null) {
+			session.setAttribute("has_first_token", "");
+			return true;
+		}
 		return value.toString().equalsIgnoreCase(answer);
 	}
 	
 	@Override
 	public String login(IPersonalAccount user, HttpServletRequest request) {
+		user.setEnabled(true);
 		List<IPersonalAccount> result = CommonModel.INSTANCE.authenticateUserInfo((PersonalAccountImpl)user, null, 0, -1);
 		if (result.size() == 1) {
 			IPersonalAccount matchedUser = result.get(0);
@@ -214,11 +227,12 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 		        	return USER_LOGIN_PASSWORDRULES_ACCOUNTLOCKED;
 		        }
 				
-				if (matchedUser.getAttempt() > 5)
+				if (matchedUser.getAttempt() >= 5)
 				{
 					matchedUser.setIsLocked(true);
 					matchedUser.setAttempt( matchedUser.getAttempt() + 1);
 					CommonModel.INSTANCE.update(matchedUser);
+					onlineUserIds.remove(matchedUser.getInfo().getId());
 					return USER_LOGIN_PASSWORDRULES_ACCOUNTLOCKED;
 				}
 			}
@@ -226,6 +240,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 				if (!PasswordVerifier.getPasswordHash(user.getPassword()).equals(matchedUser.getPassword())) {
 					matchedUser.setAttempt( matchedUser.getAttempt() + 1);
 					CommonModel.INSTANCE.update(matchedUser);
+					onlineUserIds.remove(matchedUser.getInfo().getId());
 					return USER_LOGIN_PASSWORDRULES_PASSWORDINCORRECT;
 				}
 			} catch (NoSuchAlgorithmException e) {
@@ -237,15 +252,18 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 					!matchedUser.getLoginIP().equals(userIP)) {
 				matchedUser.setLoginIP(userIP);
 				this.setLocationInfo((PersonalAccountImpl)matchedUser);
-				CommonModel.INSTANCE.update(matchedUser);
 			}
 			matchedUser.setLastLogin(new Date());
 			matchedUser.setAttempt(0);
 			matchedUser.setIsLocked(false);
+			CommonModel.INSTANCE.update(matchedUser);
 			
 			HttpSession session = request.getSession(true);
 			session.removeAttribute(WebflowConstants.USER_TOKEN);
-			
+			session.removeAttribute("has_first_token");
+			if (!onlineUserIds.contains(matchedUser.getInfo().getId())) {
+				onlineUserIds.add(matchedUser.getInfo().getId());
+			}
 			UserContext userContext = new UserContext();
 			userContext.setUserId(matchedUser.getInfo().getId());
 			userContext.setUserAccount(matchedUser.getUserName());
@@ -304,6 +322,11 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 	}
 	
 	@Override
+	public boolean isOnline(long userId) {
+		return onlineUserIds.contains(userId);
+	}
+	
+	@Override
 	public String getUserOrganizationType() {
 		return ((UserContext)UserContext.getUserData(WebflowConstants.USER_SESSION_KEY)).getOrgType();
 	}
@@ -336,6 +359,10 @@ public class UserServiceImpl implements IServiceProvider, IUserService {
 	
 	@Override
 	public void logout(HttpSession session) {
+		Object userContext = session.getAttribute(WebflowConstants.USER_SESSION_KEY);
+		if (userContext != null) {
+			onlineUserIds.remove(((UserContext)userContext).getUserId());
+		}
 		session.removeAttribute(WebflowConstants.USER_SESSION_KEY);
 		session.removeAttribute(WebflowConstants.USER_LOCALE_KEY);
 		session.removeAttribute(WebflowConstants.USER_ROLE_KEY);

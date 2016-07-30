@@ -15,7 +15,7 @@
                 $(this.fc).remove();
             }
             var frameId = "onlinesearchFrame";
-	        var src = "http://image.baidu.com/search/index?tn=baiduimage&ipn=r&ct=201326592&cl=2&lm=-1&st=-1&fm=index&fr=&sf=1&fmq=&pv=&ic=0&nc=1&z=&se=1&showtab=0&fb=0&width=&height=&face=0&istype=2&ie=utf-8&word=" + encodeURI(this.reloadPathText.getValue()) + "&f=3&oq=&rsp=2";
+	        var src = "http://image.baidu.com/search/index?tn=baiduimage&ipn=r&ct=201326592&cl=2&lm=-1&st=-1&fm=index&fr=&sf=1&fmq=&pv=&ic=0&nc=1&z=&se=1&showtab=0&fb=0&width=&height=&face=0&istype=2&ie=utf-8&word=" + encodeURI(this.searchWordUI.getValue()) + "&f=3&oq=&rsp=2";
             var fc = $("<iframe id=\""+frameId+"\" name=\""+frameId+"\" src=\""+src+"\" needsrc=\"true\" frameborder=\"0\" style=\"display:none;min-width:100%;min-height:100%;-webkit-transform: translateZ(0);\"></iframe>");
             this.fc = fc;
             $(this.aframePanel).append(fc);
@@ -95,7 +95,7 @@
             <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
             <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         </ns2:layout>
-        <ns2:component xsi:type="ns2:UITextFieldType" UIID="reloadPathText">
+        <ns2:component xsi:type="ns2:UITextFieldType" UIID="searchWordUI">
             <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
             <ns2:title xsi:type="ns2:StringPropertyType">
                 <ns2:value>请输入搜索条件</ns2:value>
@@ -113,7 +113,7 @@
             </ns2:EventListener>
         </ns2:component>
         <ns2:layoutConstraint>
-            <ns2:componentId>reloadPathText</ns2:componentId>
+            <ns2:componentId>searchWordUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                 x="0" y="0" align="FULL"></ns2:constraint>
         </ns2:layoutConstraint>
@@ -251,6 +251,14 @@
     <ns2:DataEntity scope="InOut" name="imagePath" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="searchWords" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="searchWordUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="searchWords" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[{
       $imagePath = "/images/search/tmp";

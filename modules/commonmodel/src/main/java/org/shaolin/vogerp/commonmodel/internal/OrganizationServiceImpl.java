@@ -23,11 +23,11 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 	}
 	
 	@Override
-	public List[] getAllOrganizations() {
+	public List[] getAllOrganizations(int offset, int count) {
 		OrganizationImpl scFlow = new OrganizationImpl();
 		scFlow.setEnabled(true);
 		scFlow.setParentId(1);
-		List<IOrganization> list = CommonModel.INSTANCE.searchSubOrganizationInfo(scFlow, null, 0, -1);
+		List<IOrganization> list = CommonModel.INSTANCE.searchSubOrganizationInfo(scFlow, null, offset, count);
 		
 		List[] result = new List[2];
 		List<String> nameList = new ArrayList<String>();
@@ -61,7 +61,10 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 		OrganizationImpl scFlow = new OrganizationImpl();
 		scFlow.setId(result.get(0).getOrgId());
 		List<IOrganization> list = CommonModel.INSTANCE.searchOrganization(scFlow, null, 0, -1);
-		return list.get(0);
+		if (list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
 	}
 	
 	@Override
@@ -69,7 +72,10 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 		OrganizationImpl scFlow = new OrganizationImpl();
 		scFlow.setId(UserContext.getUserContext().getOrgId());
 		List<IOrganization> list = CommonModel.INSTANCE.searchOrganization(scFlow, null, 0, -1);
-		return list.get(0);
+		if (list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
 	}
 	
 	@Override
@@ -77,7 +83,10 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 		LegalOrganizationInfoImpl scFlow = new LegalOrganizationInfoImpl();
 		scFlow.setOrgId(UserContext.getUserContext().getOrgId());
 		List<ILegalOrganizationInfo> list = CommonModel.INSTANCE.searchOrgaLegalInfo(scFlow, null, 0, -1);
-		return list.get(0);
+		if (list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
 	}
 
 	@Override
@@ -85,7 +94,10 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 		LegalOrganizationInfoImpl scFlow = new LegalOrganizationInfoImpl();
 		scFlow.setOrgId(orgId);
 		List<ILegalOrganizationInfo> list = CommonModel.INSTANCE.searchOrgaLegalInfo(scFlow, null, 0, -1);
-		return list.get(0);
+		if (list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
 	}
 
 	@Override

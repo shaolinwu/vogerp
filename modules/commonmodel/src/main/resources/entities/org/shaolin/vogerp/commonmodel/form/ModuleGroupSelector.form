@@ -165,7 +165,7 @@
       import org.shaolin.vogerp.commonmodel.IOrganizationService;
       {
       	  IOrganizationService moduleService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
-          List[] result = moduleService.getAllOrganizations();
+          List[] result = moduleService.getAllOrganizations(0, 50);
           $optionValues = result[0];
           $displayItems = result[1];
       	  

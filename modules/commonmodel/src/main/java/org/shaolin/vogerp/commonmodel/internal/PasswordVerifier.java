@@ -9,7 +9,7 @@ import java.util.Random;
 import org.shaolin.bmdp.i18n.LocaleContext;
 import org.shaolin.bmdp.i18n.ResourceUtil;
 
-class PasswordVerifier {
+public class PasswordVerifier {
 	
 	private static final char[] CHARS = { '0', '1', '2', '3', '4', '5', '6',
 		'7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',

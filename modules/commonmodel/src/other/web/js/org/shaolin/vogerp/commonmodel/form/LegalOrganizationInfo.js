@@ -13,7 +13,7 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         ui: elementList[prefix + "orgIdUILabel"]
     });
 
-    var orgIdUI = new UIMaster.ui.textfield
+    var orgIdUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "orgIdUI"]
     });
