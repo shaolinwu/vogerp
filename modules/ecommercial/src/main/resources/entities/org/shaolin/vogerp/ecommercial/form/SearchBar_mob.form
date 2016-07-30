@@ -14,8 +14,10 @@
           import org.shaolin.uimaster.page.AjaxContext;
           import org.shaolin.uimaster.page.ajax.*;
           {
+              String parentId = @page.getEntityUiid() + ".citiesCbx";
               HashMap input = new HashMap();
-              input.put("parentUIID", @page.getEntityUiid() + ".citiesCbx");
+              input.put("parentUIID", parentId);
+              input.put("clickEventUI", "javascript:" + @page.getEntityUiid() + ".search("+parentId+");");//TODO:
               input.put("editable", new Boolean(true));
               RefForm form = new RefForm("cityListForm", "org.shaolin.vogerp.commonmodel.form.CitySelelctor_mob", input);
               @page.addElement(form);

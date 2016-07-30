@@ -181,8 +181,16 @@
 			        }
                     ]]></expressionString>
                 </ns2:expression>
+                <ns2:filter><expressionString><![CDATA[
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    {
+                       return UserContext.hasRole("GenericOrganizationType.Director,0") 
+                              && $beObject.getOrgId() != UserContext.getUserContext().getOrgId();
+                    }
+                ]]></expressionString></ns2:filter>
             </ns2:uiAction>
-            <ns2:participant partyType="GenericOrganizationType.Director,0" onlyOwner="false"/>
+            <ns2:participant partyType="GenericOrganizationType.Director,0"/>
             <ns2:process>
                 <ns2:var name="goldenOrder" category="BusinessEntity" scope="InOut">
                     <type entityName="org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder"></type>
@@ -300,6 +308,7 @@
                     import org.shaolin.vogerp.order.be.OrderItemImpl;
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                     import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.vogerp.commonmodel.IUserService;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
@@ -329,6 +338,12 @@
                          IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class); 
                          IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
                          IPayOrder payOrder = accountingService.createPayOrder(PayBusinessType.GOLDENORDERBUSI, $gorder.getId(), $gorder.getEndPrice());
+                         payOrder.setOrgId(orgService.getOrgIdByPartyId($gorder.getTakenCustomerId()));
+                         if ($gorder.getType() == RentOrLoanOrderType.RENT) {
+                            payOrder.setCustomerBPayAccount((String)UserContext.getUserData("CustAccountId"));
+                         } else {
+                            payOrder.setCustomerAPayAccount((String)UserContext.getUserData("CustAccountId"));
+                         }
                          @flowContext.save(payOrder);
                          
                          String description = $gorder.getDescription();
@@ -340,66 +355,6 @@
                          
                          ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
                          service.addNotification(message, true);
-                    }
-                     ]]></expressionString>
-                </ns2:expression>
-            </ns2:process>
-            <ns2:dest name="makePaymentToCustomer"></ns2:dest>
-        </ns2:mission-node>
-        <ns2:mission-node name="makePaymentToCustomer" expiredDays="0" expiredHours="1" autoTrigger="false">
-            <ns2:description>支付预付款项</ns2:description>
-            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.RentOrLoanOrderEditor"
-                actionName="prepaid" actionText="支付预付款项">
-                <ns2:expression>
-                    <expressionString><![CDATA[
-                    import java.util.HashMap;
-                    import java.util.Date;
-                    import java.util.ArrayList;
-                    import org.shaolin.uimaster.page.AjaxContext;
-                    import org.shaolin.uimaster.page.ajax.*;
-                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                    import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
-                    import org.shaolin.vogerp.ecommercial.dao.*;
-                    import org.shaolin.bmdp.runtime.AppContext; 
-                    import org.shaolin.vogerp.commonmodel.IUserService; 
-                    { 
-                        RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-                        HashMap out = (HashMap)form.ui2Data();
-                        
-                        form.closeIfinWindows();
-                        @page.removeForm(@page.getEntityUiid()); 
-                        
-                        HashMap result = new HashMap();
-                        result.put("gorder", out.get("beObject"));
-                        return result;
-                    }
-                    ]]></expressionString>
-                </ns2:expression>
-            </ns2:uiAction>
-            <ns2:participant partyType="GenericOrganizationType.Director,0" />
-            <ns2:process>
-                <ns2:var name="gorder" category="BusinessEntity" scope="InOut">
-                    <type entityName="org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder"></type>
-                </ns2:var>
-                <ns2:expression>
-                    <expressionString><![CDATA[
-                    import java.util.List;
-                    import java.util.ArrayList;
-                    import java.util.Date;
-                    import java.util.HashMap;
-                    import org.shaolin.bmdp.utils.DateUtil;
-                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
-                    import org.shaolin.vogerp.order.be.IPurchaseOrder;
-                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                    import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
-                    import org.shaolin.bmdp.runtime.AppContext; 
-                    import org.shaolin.vogerp.commonmodel.IUserService;
-                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
-                    import org.shaolin.bmdp.runtime.AppContext; 
-                    import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
-                    import org.shaolin.bmdp.workflow.be.NotificationImpl;
-                    {
                     }
                      ]]></expressionString>
                 </ns2:expression>
@@ -425,6 +380,11 @@
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
+                        RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)out.get("beObject");
+                        if (gorder.getTakenCustomerId() > 0) {
+                            @page.executeJavaScript("alert(\"此订单所被客户拍下，不能取消！\");");
+                            return;
+                        }
                         
                         form.closeIfinWindows();
                         @page.removeForm(@page.getEntityUiid()); 
@@ -459,20 +419,23 @@
                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                     {
-                         // TODO: check condition before cancelling the order.
-                         
-                         $gorder.setStatus(OrderStatusType.CANCELLED);
-                         OrderModel.INSTANCE.update($gorder);
-                         
-                         if ($gorder.getTakenCustomerId() > 0) {
-	                         NotificationImpl message = new NotificationImpl();
-	                         message.setPartyId($gorder.getTakenCustomerId());
-	                         message.setSubject($gorder.getSerialNumber() + "租赁单取消");
-	                         message.setDescription($gorder.getDescription());
-	                         message.setCreateDate(new Date());
-	                         
-	                         ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
-	                         service.addNotification(message, true);
+                         if ($gorder.getId() == 0) {
+                            return;
+                         }
+                         if ($gorder.getStatus() == OrderStatusType.CREATED || $gorder.getStatus() == OrderStatusType.PUBLISHED) {
+                             $gorder.setStatus(OrderStatusType.CANCELLED);
+                             OrderModel.INSTANCE.update($gorder);
+                             
+                             if ($gorder.getTakenCustomerId() > 0) {
+                                 NotificationImpl message = new NotificationImpl();
+                                 message.setPartyId($gorder.getTakenCustomerId());
+                                 message.setSubject($gorder.getSerialNumber() + "租赁单取消");
+                                 message.setDescription($gorder.getDescription());
+                                 message.setCreateDate(new Date());
+                                 
+                                 ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+                                 service.addNotification(message, true);
+                             }
                          }
                     }
                     ]]></expressionString>

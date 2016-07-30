@@ -93,6 +93,12 @@
             </bediagram:type>
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>paymentState</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="PaymentStatusType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>offerPrices</bediagram:name>
             <bediagram:type xsi:type="bediagram:BEListType">
                 <bediagram:elementType xsi:type="bediagram:BEObjRefType">
@@ -112,15 +118,13 @@
             <bediagram:targetEntity entityName="EOrder" />
         </bediagram:parentObject>
         <bediagram:member>
-            <bediagram:name>isPurchaseOrder</bediagram:name>
-            <bediagram:type xsi:type="bediagram:BooleanType" />
+            <bediagram:name>type</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="GoldenOrderType" />
+            </bediagram:type>
         </bediagram:member>
         <bediagram:member>
-            <bediagram:name>purchaseOrderId</bediagram:name>
-            <bediagram:type xsi:type="bediagram:LongType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>saleOrderId</bediagram:name>
+            <bediagram:name>orderId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
 	</bediagram:beEntity>
@@ -150,8 +154,18 @@
 	<bediagram:beEntity needPersist="true" needOrgId="true" needTask="true" needUIEntity="true">
         <common:entityName>GoldenOrderHistory</common:entityName>
         <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
-            <bediagram:targetEntity entityName="GoldenOrder" />
+            <bediagram:targetEntity entityName="EOrder" />
         </bediagram:parentObject>
+        <bediagram:member>
+            <bediagram:name>type</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="GoldenOrderType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>orderId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
     </bediagram:beEntity>
 	
 	<!-- Rent or Loan order  -->
@@ -242,19 +256,28 @@
             <bediagram:description>拍下</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
-            <bediagram:value>Payed</bediagram:value>
+            <bediagram:value>Cancelled</bediagram:value>
             <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:description>取消</bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
+    
+    <bediagram:ceEntity>
+        <common:entityName>PaymentStatusType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>Unpayed</bediagram:value>
+            <bediagram:intValue>0</bediagram:intValue>
+            <bediagram:description>未支付</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Payed</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
             <bediagram:description>已支付</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
-            <bediagram:value>Rollback</bediagram:value>
-            <bediagram:intValue>4</bediagram:intValue>
+            <bediagram:value>Refound</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
             <bediagram:description>退款中</bediagram:description>
-        </bediagram:constantValue>
-        <bediagram:constantValue>
-            <bediagram:value>Cancelled</bediagram:value>
-            <bediagram:intValue>5</bediagram:intValue>
-            <bediagram:description>取消</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
     
@@ -269,6 +292,20 @@
             <bediagram:value>Rent</bediagram:value>
             <bediagram:intValue>1</bediagram:intValue>
             <bediagram:description>租出订单</bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
+    
+    <bediagram:ceEntity>
+        <common:entityName>GoldenOrderType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>Purchase</bediagram:value>
+            <bediagram:intValue>0</bediagram:intValue>
+            <bediagram:description>采购订单</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Sale</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>销售订单</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
     

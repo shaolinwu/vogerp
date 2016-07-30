@@ -12,7 +12,7 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "goldenOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "loanOrderInfoPanel"]
+        ,subComponents: [prefix + "goldenOrderInfoPanel",prefix + "gsaleOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "loanOrderInfoPanel"]
     });
     var goldenOrderTable = new UIMaster.ui.objectlist
     ({
@@ -24,6 +24,17 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList(json)
         ui: elementList[prefix + "goldenOrderInfoPanel"]
         ,items: []
         ,subComponents: [prefix + "goldenOrderTable"]
+    });
+    var gsaleOrderTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "gsaleOrderTable"]
+    });
+
+    var gsaleOrderInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "gsaleOrderInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "gsaleOrderTable"]
     });
     var rentOrderTable = new UIMaster.ui.objectlist
     ({
@@ -72,6 +83,10 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList(json)
 
     Form.goldenOrderTable=goldenOrderTable;
 
+    Form.gsaleOrderInfoPanel=gsaleOrderInfoPanel;
+
+    Form.gsaleOrderTable=gsaleOrderTable;
+
     Form.rentOrderInfoPanel=rentOrderInfoPanel;
 
     Form.rentOrderTable=rentOrderTable;
@@ -94,9 +109,13 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList(json)
 
     Form.openGoldenOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openGoldenOrder;
 
+    Form.openGoldenSaleOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openGoldenSaleOrder;
+
     Form.openRentOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openRentOrder;
 
     Form.takeGoldenOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_takeGoldenOrder;
+
+    Form.takeGSaleOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_takeGSaleOrder;
 
     Form.takeRentOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_takeRentOrder;
 
@@ -130,6 +149,17 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList(json)
 
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openGoldenSaleOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openGoldenSaleOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openGoldenSaleOrder-20160124-1333",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openGoldenSaleOrder */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openRentOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openRentOrder */
         var o = this;
         var UIEntity = this;
@@ -149,6 +179,17 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"takeGoldenOrder-20160124-1333",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_takeGoldenOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_takeGSaleOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_takeGSaleOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"takeGSaleOrder-20160524-1333",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_takeGSaleOrder */
 
 
     /* auto generated eventlistener function declaration */

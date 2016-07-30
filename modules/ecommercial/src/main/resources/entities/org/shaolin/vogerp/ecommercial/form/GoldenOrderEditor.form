@@ -115,11 +115,8 @@
               <ns2:value>抢单类型</ns2:value>
             </ns2:text>
           </ns2:component>
-          <ns2:component xsi:type="ns2:UICheckBoxType" UIID="isPurchaseOrderUI">
-            <ns2:UIStyle></ns2:UIStyle>
-            <ns2:label xsi:type="ns2:StringPropertyType">
-              <ns2:value>(采购单为选中，销售单为不选中)</ns2:value>
-            </ns2:label>
+          <ns2:component xsi:type="ns2:UIComboBoxType" UIID="typeUI">
+            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="publishedCustomerIdUILabel">
             <ns2:UIStyle></ns2:UIStyle>
@@ -188,7 +185,7 @@
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>isPurchaseOrderUI</ns2:componentId>
+            <ns2:componentId>typeUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
@@ -354,12 +351,12 @@
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="descriptionUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.description" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="serialNumberUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
@@ -368,17 +365,17 @@
          </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
       <ns2:UIComponent componentPath="countUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.count" paramName="Number"></ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithCurrency"></ns2:mappingRule>
       <ns2:UIComponent componentPath="estimatedPriceUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.estimatedPrice" paramName="Currency"></ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="publishedCustomerIdUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
@@ -400,9 +397,19 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.htmlDesc" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping7">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISelect"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="isPurchaseOrderUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.isPurchaseOrder" paramName="Value"></ns2:DataComponent>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.type" paramName="CEValue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
+        <ns2:expression>
+          <expressionString>"org.shaolin.vogerp.ecommercial.ce.GoldenOrderType"</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ContainsNotSpecified">
+        <ns2:expression>
+          <expressionString>false</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping8">
       <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithDeliveryInfo"></ns2:mappingRule>

@@ -59,6 +59,9 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.ecommercial.ce.OrderStatusType.NOT_SPECIFIED) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
             }
+            if (scObject.getType() != null && scObject.getType() != org.shaolin.vogerp.ecommercial.ce.GoldenOrderType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.typeInt", scObject.getType().getIntValue()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -92,6 +95,9 @@ public class OrderModel extends BEEntityDaoObject {
             }
             if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.ecommercial.ce.OrderStatusType.NOT_SPECIFIED) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
+            }
+            if (scObject.getType() != null && scObject.getType() != org.shaolin.vogerp.ecommercial.ce.GoldenOrderType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.typeInt", scObject.getType().getIntValue()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));

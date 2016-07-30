@@ -18,18 +18,22 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar(json)
         ui: elementList[prefix + "searchButton"]
     });
 
+    var moreConditionsUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "moreConditionsUI"]
+    });
+
     var root = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "root"]
-        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
-        ,subComponents: [prefix + "citiesCbx",prefix + "searchContext",prefix + "searchButton"]
+        ,subComponents: [prefix + "citiesCbx",prefix + "searchContext",prefix + "searchButton",prefix + "moreConditionsUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [citiesCbx,searchContext,searchButton,root]
+        ,items: [citiesCbx,searchContext,searchButton,moreConditionsUI,root]
     });
 
     Form.citiesCbx=citiesCbx;
@@ -37,6 +41,8 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar(json)
     Form.searchContext=searchContext;
 
     Form.searchButton=searchButton;
+
+    Form.moreConditionsUI=moreConditionsUI;
 
     Form.root=root;
 
@@ -46,6 +52,8 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar(json)
 
     Form.searchButton=searchButton;
 
+    Form.moreConditionsUI=moreConditionsUI;
+
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_SearchBar */
@@ -53,6 +61,8 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar(json)
     };
 
     Form.selectCity = org_shaolin_vogerp_ecommercial_form_SearchBar_selectCity;
+
+    Form.openMoreConditions = org_shaolin_vogerp_ecommercial_form_SearchBar_openMoreConditions;
 
     Form.search = org_shaolin_vogerp_ecommercial_form_SearchBar_search;
 
@@ -80,6 +90,17 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar(json)
 
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_SearchBar_openMoreConditions(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_SearchBar_openMoreConditions */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openMoreConditions-201604102211",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_SearchBar_openMoreConditions */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_form_SearchBar_search(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_SearchBar_search */
         var o = this;
         var UIEntity = this;
@@ -95,7 +116,7 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar(json)
         var o = this;
         var UIEntity = this;
 
-        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Continue?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing? ^_^',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 

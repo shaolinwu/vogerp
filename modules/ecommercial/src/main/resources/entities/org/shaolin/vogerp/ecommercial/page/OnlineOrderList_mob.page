@@ -113,6 +113,46 @@
                 </ns2:exp>
             </ns2:ops>
 		</ns2:eventHandler>
+		<ns2:eventHandler functionName="takeGSaleOrder">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="takeGSaleOrder-20160524-1333768">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
+                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    {
+                        IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+                        if (!userService.checkUserOnline(@page.getRequest().getSession())) {
+                            @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\");");
+                            return;
+                        }
+                     
+                        Table orderInfoTable = (Table)@page.getElement("gsaleOrderTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
+                        if (defaultUser.getStatus() != OrderStatusType.PUBLISHED) {
+                           @page.executeJavaScript("alert(\"\u8BE5\u8BA2\u5355\u4E0D\u53EF\u7ADF\u4EF7\");");
+                           return;
+                        }
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.GOOfferPrice", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("竟价", null, 700, 400);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
 		<ns2:eventHandler functionName="publishOrder">
             <ns2:ops xsi:type="ns2:OpCallAjaxType" name="publishOrder-20160124-1333654">
                 <ns2:exp>
@@ -194,7 +234,7 @@
 		                            import org.shaolin.bmdp.runtime.AppContext;
 									import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
 									import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
-									import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+									import org.shaolin.vogerp.ecommercial.ce.*;
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
@@ -210,6 +250,7 @@
 								              AppContext.register(masterApp);
 			                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
 			                                  condition.setStatus(OrderStatusType.PUBLISHED);
+			                                  condition.setType(GoldenOrderType.PURCHASE);
 			                                  return OrderModel.INSTANCE.searchGoldenOrder(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 
@@ -264,31 +305,117 @@
 		                    <ns2:defaultActions>
 		                       <ns2:defaultOpenAction>openGoldenOrder</ns2:defaultOpenAction>
 		                    </ns2:defaultActions>
-		                    <ns2:actionGroup>
-		                        <ns2:type>radio</ns2:type>
-		                        <ns2:action>
-		                            <ns2:uiid>publishOrder</ns2:uiid>
-		                            <ns2:title xsi:type="ns2:StringPropertyType">
-		                                <ns2:value>发单</ns2:value>
-		                            </ns2:title>
-		                            <ns2:icon>ui-icon-note</ns2:icon>
-		                            <ns2:function>publishOrder</ns2:function>
-		                        </ns2:action>
-		                        <ns2:action>
-		                            <ns2:uiid>takeGoldenOrder</ns2:uiid>
-		                            <ns2:title xsi:type="ns2:StringPropertyType">
-		                                <ns2:value>抢购</ns2:value>
-		                            </ns2:title>
-		                            <ns2:icon>ui-icon-note</ns2:icon>
-		                            <ns2:function>takeGoldenOrder</ns2:function>
-		                        </ns2:action>
-		                     </ns2:actionGroup>
 		                </ns2:component>
 		                <ns2:layoutConstraint>
 		                    <ns2:componentId>goldenOrderTable</ns2:componentId>
 		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 		                        x="0" y="0" align="FULL"></ns2:constraint>
 		                </ns2:layoutConstraint>
+                    </ns2:panel>
+                </ns2:tab>
+                
+                <ns2:tab uiid="gsaleOrderInfoPanel">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>销售订单</ns2:value>
+                    </ns2:title>
+                    <ns2:panel UIID="gsaleOrderInfoPanel">
+                        <ns2:layout xsi:type="ns2:TableLayoutType">
+                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+                        </ns2:layout>
+                        <ns2:component xsi:type="ns2:UITableType" UIID="gsaleOrderTable">
+                            <ns2:beElement>org.shaolin.vogerp.ecommercial.be.GoldenOrder</ns2:beElement>
+                            <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+                            <ns2:defaultRowSize>10</ns2:defaultRowSize>
+                            <ns2:showActionBar>true</ns2:showActionBar>
+                            <ns2:showFilter>true</ns2:showFilter>
+                            <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                                <ns2:expression xsi:type="ns2:ExpressionType">
+                                    <ns2:expressionString><![CDATA[
+                                    import java.util.List;
+                                    import org.shaolin.uimaster.page.ajax.TableConditions;
+                                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.bmdp.runtime.AppContext;
+                                    import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
+                                    import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+                                    import org.shaolin.vogerp.ecommercial.ce.*;
+                                    {
+                                          if ($tableCondition == null) {
+                                             $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
+                                             $tableCondition.setCount(10);
+                                             $tableCondition.addOrder("statusInt", true);
+                                             $tableCondition.addOrder("createDate", false);
+                                          }
+                                          // switch to uimaster node.
+                                          IAppServiceManager masterApp = (IAppServiceManager)IServerServiceManager.INSTANCE.getApplication(
+                                                                      IServerServiceManager.INSTANCE.getMasterNodeName());
+                                          IAppServiceManager currentContext = AppContext.get();
+                                          try {
+                                              AppContext.register(masterApp);
+                                              GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
+                                              condition.setStatus(OrderStatusType.PUBLISHED);
+                                              condition.setType(GoldenOrderType.SALE);
+                                              return OrderModel.INSTANCE.searchGoldenOrder(condition,
+                                                        $tableCondition.getOrders(),
+                                                        $tableCondition.getOffset(), 
+                                                        $tableCondition.getCount());
+                                          } finally {
+                                              AppContext.register(currentContext);
+                                          }
+                                    }]]></ns2:expressionString>
+                                </ns2:expression>
+                            </ns2:query>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>订单详情</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.id</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>HTMLItem</ns2:type></ns2:uiType>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import java.util.HashMap;
+                                        import org.shaolin.uimaster.page.AjaxContext;
+                                        import org.shaolin.uimaster.page.AjaxActionHelper;
+                                        import org.shaolin.uimaster.page.ajax.*;
+                                        import org.shaolin.uimaster.page.ajax.json.IDataItem;
+                                        import org.shaolin.vogerp.productmodel.be.ProductImpl;
+                                        {
+                                            HashMap input = new HashMap();
+                                            input.put("beObject", $rowBE);
+                                            RefForm form = new RefForm("gsOrderForm"+$rowBE.getId(), 
+                                              "org.shaolin.vogerp.ecommercial.form.GoldenOrderOverView", input);
+                                            StringBuffer sb = new StringBuffer();
+                                            sb.append(form.generateHTML());
+                                            sb.append("<script type=\"text/javascript\">UIMaster.pageInitFunctions.push(function(){");
+                                            sb.append("getElementListSingle(document.getElementById(\"productBasicForm");
+                                            sb.append($rowBE.getId());
+                                            sb.append(".Form\"));\n");
+                                            sb.append(form.generateJS());
+                                            sb.append("});</script>");
+                                            return sb.toString();
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:rowExpression>
+                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.runtime.AppContext;
+                                        {
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:updateCondition>
+                            </ns2:column>
+                            <ns2:defaultActions>
+                                <ns2:defaultOpenAction>openGoldenOrder</ns2:defaultOpenAction>
+                            </ns2:defaultActions>
+                        </ns2:component>
+                        <ns2:layoutConstraint>
+                            <ns2:componentId>gsaleOrderTable</ns2:componentId>
+                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                                x="0" y="0" align="FULL"></ns2:constraint>
+                        </ns2:layoutConstraint>
                     </ns2:panel>
                 </ns2:tab>
                 
@@ -387,25 +514,6 @@
                             <ns2:defaultActions>
                                <ns2:defaultOpenAction>openRentOrder</ns2:defaultOpenAction>
                             </ns2:defaultActions>
-                            <ns2:actionGroup>
-                                <ns2:type>radio</ns2:type>
-                                <ns2:action>
-                                    <ns2:uiid>publishRentOrder</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>发单</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>publishRentOrder</ns2:function>
-                                </ns2:action>
-                                <ns2:action>
-                                    <ns2:uiid>takeRentOrder</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>抢单</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>takeRentOrder</ns2:function>
-                                </ns2:action>
-                             </ns2:actionGroup>
                         </ns2:component>
                         <ns2:layoutConstraint>
                             <ns2:componentId>rentOrderTable</ns2:componentId>
@@ -510,25 +618,6 @@
                             <ns2:defaultActions>
                                 <ns2:defaultOpenAction>openLoanOrder</ns2:defaultOpenAction>
                             </ns2:defaultActions>
-                            <ns2:actionGroup>
-                                <ns2:type>radio</ns2:type>
-                                <ns2:action>
-                                    <ns2:uiid>publishLoanOrder</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>发单</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>publishLoanOrder</ns2:function>
-                                </ns2:action>
-                                <ns2:action>
-                                    <ns2:uiid>takeLoanOrder</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>抢单</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>takeLoanOrder</ns2:function>
-                                </ns2:action>
-                             </ns2:actionGroup>
                         </ns2:component>
                         <ns2:layoutConstraint>
                             <ns2:componentId>loanOrderTable</ns2:componentId>
