@@ -9,13 +9,13 @@
             <expressionString><![CDATA[
         import java.util.List;
         import java.util.ArrayList;
-        import org.shaolin.uimaster.page.AjaxContext
+        import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.bmdp.runtime.AppContext;
         import org.shaolin.uimaster.page.ajax.json.JSONArray;
         import org.shaolin.uimaster.page.ajax.json.JSONObject;
         {
-            String word = @page.getRequest().getParameter("word");
-            if (word == null || word.length == 0) {return;}
+            String word = @request.getParameter("word");
+            if (word == null || word.length() == 0) {return;}
             
             JSONObject item = new JSONObject();
             item.put("name", "项目1");
