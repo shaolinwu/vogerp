@@ -1,13 +1,8 @@
 package org.shaolin.vogerp.commonmodel.dao;
 
 import org.junit.Test;
-
-import org.shaolin.vogerp.commonmodel.be.IPartyRelationship;
-import org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl;
-import org.shaolin.vogerp.commonmodel.be.IPartyEvent;
-import org.shaolin.vogerp.commonmodel.be.PartyEventImpl;
-import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
-import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
+import org.shaolin.uimaster.page.ajax.json.JSONArray;
+import org.shaolin.uimaster.page.ajax.json.JSONObject;
 
 public class CommonModelTest {
 
@@ -18,7 +13,35 @@ public class CommonModelTest {
     }
 
     @Test
-    public void testauthenticateUserInfo() {
+    public void testauthenticateUserInfo() throws Exception {
+    	JSONObject item = new JSONObject();
+    	item.put("name", " 主页");
+    	item.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
+    	item.put("_nodename", "OnlineOrderList");
+    	item.put("_page", "org.shaolin.vogerp.ecommercial.page.OnlineOrderList");
+    	item.put("_framename", "onlineOrderList");
+    	
+    	JSONObject item1 = new JSONObject();
+    	item1.put("name", "订单");
+    	item1.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
+    	item1.put("_nodename", "OrderManagement");
+    	item1.put("_page", "org.shaolin.vogerp.ecommercial.page.OrderManagement");
+    	item1.put("_framename", "goldenOrderManager");
+    	
+    	JSONObject item2 = new JSONObject();
+    	item2.put("name", "产品");
+    	item2.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
+    	item2.put("_nodename", "ProductManagement");
+    	item2.put("_page", "org.shaolin.vogerp.productmodel.page.ProductManagement");
+    	item2.put("_framename", "productManager");
+    	item2.put("_framePrefix", "");
+    	
+    	JSONArray array = new JSONArray();
+    	array.put(item);
+    	array.put(item1);
+    	array.put(item2);
+    	String result = array.toString();
+    	System.out.println(result);
     }
 
     @Test

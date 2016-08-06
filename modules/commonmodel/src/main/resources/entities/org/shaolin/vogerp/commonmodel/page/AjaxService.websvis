@@ -4,6 +4,42 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.commonmodel.page.AjaxService</entityName>
 	<systemVersion>0</systemVersion>
+	<ns2:service name="onlineSearch">
+        <ns2:exp>
+            <expressionString><![CDATA[
+        import java.util.List;
+        import java.util.ArrayList;
+        import org.shaolin.uimaster.page.AjaxContext
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.uimaster.page.ajax.json.JSONArray;
+        import org.shaolin.uimaster.page.ajax.json.JSONObject;
+        {
+            String word = @page.getRequest().getParameter("word");
+            if (word == null || word.length == 0) {return;}
+            
+            JSONObject item = new JSONObject();
+            item.put("name", "项目1");
+            item.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
+            item.put("_nodename", "OrgAnalysisReport");
+            item.put("_page", "org.shaolin.bmdp.analyzer.page.OrgAnalysisReport");
+            item.put("_framename", "orgAnalysisReport");
+            
+            JSONObject item1 = new JSONObject();
+            item1.put("name", "项目2");
+            item1.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
+            item1.put("_nodename", "ProductManagement");
+            item1.put("_page", "org.shaolin.vogerp.productmodel.page.ProductManagement");
+            item1.put("_framename", "productManager");
+            
+            JSONArray array = new JSONArray();
+            array.put(item);
+            array.put(item1);
+            String result = array.toString();
+            return result;
+        }
+     ]]></expressionString>
+        </ns2:exp>
+    </ns2:service>
 	<ns2:service name="functionList">
 		<ns2:exp>
 			<expressionString><![CDATA[
@@ -25,10 +61,70 @@
         import java.util.ArrayList;
         import org.shaolin.bmdp.runtime.AppContext;
         import org.shaolin.vogerp.commonmodel.IModuleService;
+        import org.shaolin.uimaster.page.ajax.json.JSONArray;
+        import org.shaolin.uimaster.page.ajax.json.JSONObject;
         {
-           //TODO:
-           //IModuleService moduleService = (IModuleService)AppContext.get().getService(IModuleService.class);
-           return "";
+           JSONObject item = new JSONObject();
+	        item.put("name", " 主页");
+	        item.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
+	        item.put("_nodename", "OnlineOrderList");
+	        item.put("_page", "org.shaolin.vogerp.ecommercial.page.OnlineOrderList");
+	        item.put("_framename", "onlineOrderList");
+	        
+	        JSONObject item1 = new JSONObject();
+	        item1.put("name", "订单");
+	        item1.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
+	        item1.put("_nodename", "OrderManagement");
+	        item1.put("_page", "org.shaolin.vogerp.ecommercial.page.OrderManagement");
+	        item1.put("_framename", "goldenOrderManager");
+	        
+	        JSONObject item2 = new JSONObject();
+	        item2.put("name", "产品");
+	        item2.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
+	        item2.put("_nodename", "ProductManagement");
+	        item2.put("_page", "org.shaolin.vogerp.productmodel.page.ProductManagement");
+	        item2.put("_framename", "productManager");
+	        
+	        JSONArray array = new JSONArray();
+	        array.put(item);
+	        array.put(item1);
+	        array.put(item2);
+	        String result = array.toString();
+	        return result;
+        }
+     ]]></expressionString>
+        </ns2:exp>
+    </ns2:service>
+    <ns2:service name="userPageItems">
+        <ns2:exp>
+            <expressionString><![CDATA[
+        import java.util.List;
+        import java.util.ArrayList;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.vogerp.commonmodel.IModuleService;
+        import org.shaolin.uimaster.page.ajax.json.JSONArray;
+        import org.shaolin.uimaster.page.ajax.json.JSONObject;
+        {
+            JSONObject item = new JSONObject();
+	        item.put("name", "消息");
+	        item.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
+	        item.put("_nodename", "OrgAnalysisReport");
+	        item.put("_page", "org.shaolin.bmdp.analyzer.page.OrgAnalysisReport");
+	        item.put("_framename", "orgAnalysisReport");
+	        
+	        JSONObject item1 = new JSONObject();
+	        item1.put("name", "团队");
+	        item1.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
+	        item1.put("_nodename", "ProductManagement");
+	        item1.put("_page", "org.shaolin.vogerp.productmodel.page.ProductManagement");
+	        item1.put("_framename", "productManager");
+	        
+	        JSONArray array = new JSONArray();
+	        array.put(item);
+	        array.put(item1);
+	        String result = array.toString();
+           
+           return result;
         }
      ]]></expressionString>
         </ns2:exp>
