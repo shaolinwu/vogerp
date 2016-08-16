@@ -73,7 +73,7 @@ public interface IUserService {
 	public JSONObject getOnlineUserAsJSON();
 	
 	public interface UserActionListener {
-		void loggedIn(IPersonalInfo userInfo);
+		void loggedIn(IPersonalAccount account, IPersonalInfo userInfo);
 		void registered(IPersonalInfo userInfo);
 	}
 }

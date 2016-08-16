@@ -42,8 +42,11 @@
             defaultUser.setSentPartyId((Long)UserContext.getUserData("CurrentUserId"));
             defaultUser.setReceivedPartyId(offer.getTakenCustomerId());
             defaultUser.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-            ICoordinatorService coorService = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
-            defaultUser.setSessionId(coorService.getSessionId(defaultUser.getTaskId()));
+            defaultUser.setSessionId(offer.getSessionId());
+            if (defaultUser.getSessionId() == null || defaultUser.getSessionId().length() == 0) {
+                //throw new java.lang.IllegalArgumentException("Chat session id must be specified!");
+                return;
+            }
             
             IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
             HashMap input = new HashMap();

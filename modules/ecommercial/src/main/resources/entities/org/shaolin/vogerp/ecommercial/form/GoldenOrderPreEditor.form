@@ -39,7 +39,8 @@
             HashMap out = (HashMap)form.ui2Data();
             GoldenOrderImpl beObject = (GoldenOrderImpl)out.get("beObject");
             
-            beObject.setDescription(price.getProduct().getDescription() + "\n" + ProductUtil.getPricePackage(price));
+            beObject.setProductId(price.getProduct().getId());
+            beObject.setDescription(price.getProduct().getName() + "\n" + ProductUtil.getPricePackage(price));
             beObject.setHtmlDesc(price.getProduct().getHtmlDesc());
             beObject.setPhotos(price.getProduct().getPhotos());
             beObject.setEstimatedPrice(price.getPrice());

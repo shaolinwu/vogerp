@@ -98,7 +98,7 @@
 	     </ns2:component>
 	     <ns2:component xsi:type="ns2:UILabelType" UIID="moreLabel">
 	       <ns2:text xsi:type="ns2:StringPropertyType">
-	           <ns2:value>更多条件...</ns2:value>
+	           <ns2:value>选择类型</ns2:value>
 	        </ns2:text>
 	       <ns2:EventListener xsi:type="ns2:ClickListenerType">
 	         <ns2:handler functionName="moreCondition"></ns2:handler>

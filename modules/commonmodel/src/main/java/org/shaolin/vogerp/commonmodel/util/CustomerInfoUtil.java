@@ -24,6 +24,13 @@ public class CustomerInfoUtil {
 		}
 	}
 	
+	public static String getCustomerCity(IPersonalInfo customer) {
+		if (customer.getAddresses() != null && customer.getAddresses().size() > 0) {
+			return CEUtil.getValue(customer.getAddresses().get(0).getCity());
+		}
+		return "";
+	}
+	
 	public static List<ArrayList<String>>[] getAddressInfo(List<IAddressInfo> list) {
     	if (list == null || list.isEmpty()) {
     		return new List[] {new ArrayList<String>(), new ArrayList<String>()};

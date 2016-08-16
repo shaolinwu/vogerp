@@ -22,6 +22,7 @@
             <bediagram:name>description</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
+        <!-- numbers of the good -->
         <bediagram:member>
             <bediagram:name>count</bediagram:name>
             <bediagram:type xsi:type="bediagram:IntType" />
@@ -33,6 +34,10 @@
         <bediagram:member>
             <bediagram:name>endPrice</bediagram:name>
             <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>productId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
             <!-- the order published by the customer. -->
@@ -108,6 +113,40 @@
         </bediagram:member>
     </bediagram:beEntity>
 	
+	<bediagram:beEntity>
+        <common:entityName>OrderSearchCriteria</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>orderId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- the golden order is taken by the customer. -->
+            <bediagram:name>city</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>productType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+    </bediagram:beEntity>
+    
+    <bediagram:beEntity needPersist="true">
+        <common:entityName>GOrderSearchCriteria</common:entityName>
+        <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
+            <bediagram:targetEntity entityName="OrderSearchCriteria" />
+        </bediagram:parentObject>
+    </bediagram:beEntity>
+    <bediagram:beEntity needPersist="true">
+        <common:entityName>ROrderSearchCriteria</common:entityName>
+        <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
+            <bediagram:targetEntity entityName="OrderSearchCriteria" />
+        </bediagram:parentObject>
+    </bediagram:beEntity>
+    
 	<!-- an purchase order defined on our e-commercial site.
 	     all customers are able to see this order in the competition mode.
 	     so, we name it as the golden order.
@@ -222,8 +261,13 @@
             <bediagram:name>leaveWords</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
+        <bediagram:member>
+            <!-- for order conversation -->
+            <bediagram:name>sessionId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
     </bediagram:beEntity>
-	
+    
 	<bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
         <common:entityName>GOOfferPrice</common:entityName>
         <bediagram:parentObject xsi:type="bediagram:BEObjRefType">

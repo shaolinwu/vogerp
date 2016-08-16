@@ -68,9 +68,6 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	}
 	
 	public boolean checkNewAccount(String userAccount) {
-		if (userAccount == null || userAccount.trim().length() == 0) {
-			return false;
-		}
 		PersonalAccountImpl account = new PersonalAccountImpl();
 		account.setUserName(userAccount);
 		try {
@@ -78,7 +75,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			if (result.size() > 0) {
 				return false;
 			}
-		return true;
+			return true;
 		} catch (Exception e) {
 			logger.warn(e.getMessage(), e);
 			return false;
@@ -256,6 +253,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			matchedUser.setLastLogin(new Date());
 			matchedUser.setAttempt(0);
 			matchedUser.setIsLocked(false);
+			matchedUser.setLoginedCount(matchedUser.getLoginedCount());
 			CommonModel.INSTANCE.update(matchedUser);
 			
 			HttpSession session = request.getSession(true);
@@ -295,7 +293,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			//add user-context thread bind
             UserContext.register(session, userContext, userLocale, userRoles, isMobile);
             for (UserActionListener listener: listeners) {
-    			listener.loggedIn(matchedUser.getInfo());
+    			listener.loggedIn(matchedUser, matchedUser.getInfo());
     		}
             
 			boolean hasCookie = false;

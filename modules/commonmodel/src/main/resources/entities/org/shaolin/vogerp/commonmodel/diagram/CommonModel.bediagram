@@ -407,6 +407,10 @@
             <bediagram:name>lastLogin</bediagram:name>
             <bediagram:type xsi:type="bediagram:DateTimeType" />
         </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>loginedCount</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
     </bediagram:beEntity>
 
     <bediagram:beEntity needPersist="true" needUIEntity="true">

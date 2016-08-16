@@ -243,5 +243,89 @@ public class OrderModel extends BEEntityDaoObject {
         return this._count(inObjectCriteria);
     }
 
+    public List<org.shaolin.vogerp.ecommercial.be.IGOrderSearchCriteria> gorderSearchCriteria(org.shaolin.vogerp.ecommercial.be.GOrderSearchCriteriaImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.ecommercial.be.GOrderSearchCriteriaImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+            if (scObject.getOrderId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orderId", scObject.getOrderId()));
+            }
+            if (scObject.getCity() != null && scObject.getCity().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
+            }
+            if (scObject.getProductType() != null && scObject.getProductType().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.productType", scObject.getProductType()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long gorderSearchCriteriaCount(org.shaolin.vogerp.ecommercial.be.GOrderSearchCriteriaImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.ecommercial.be.GOrderSearchCriteriaImpl.class, "inObject");
+
+            if (scObject.getOrderId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orderId", scObject.getOrderId()));
+            }
+            if (scObject.getCity() != null && scObject.getCity().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
+            }
+            if (scObject.getProductType() != null && scObject.getProductType().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.productType", scObject.getProductType()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
+    }
+
+    public List<org.shaolin.vogerp.ecommercial.be.IROrderSearchCriteria> rorderSearchCriteria(org.shaolin.vogerp.ecommercial.be.ROrderSearchCriteriaImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.ecommercial.be.ROrderSearchCriteriaImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+            if (scObject.getOrderId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orderId", scObject.getOrderId()));
+            }
+            if (scObject.getCity() != null && scObject.getCity().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
+            }
+            if (scObject.getProductType() != null && scObject.getProductType().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.productType", scObject.getProductType()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long rorderSearchCriteriaCount(org.shaolin.vogerp.ecommercial.be.ROrderSearchCriteriaImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.ecommercial.be.ROrderSearchCriteriaImpl.class, "inObject");
+
+            if (scObject.getOrderId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orderId", scObject.getOrderId()));
+            }
+            if (scObject.getCity() != null && scObject.getCity().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
+            }
+            if (scObject.getProductType() != null && scObject.getProductType().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.productType", scObject.getProductType()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
+    }
+
 }
 

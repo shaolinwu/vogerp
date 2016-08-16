@@ -40,6 +40,40 @@
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
+        <ns2:eventHandler functionName="openSaleGoldenOrder">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openSaleGoldenOrder-20160124-6546">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
+                    {
+                        IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+                        if (!userService.checkUserOnline(@page.getRequest().getSession())) {
+                            @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\");");
+                            return;
+                        }
+                        
+                        Table orderInfoTable = (Table)@page.getElement("gsaleOrderTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GoldenOrder", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, 500, 400);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
         <ns2:eventHandler functionName="openRentOrder">
             <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openRentOrder-20160124-15435">
                 <ns2:exp>
@@ -58,6 +92,40 @@
                         }
                         
                         Table orderInfoTable = (Table)@page.getElement("rentOrderTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)orderInfoTable.getSelectedRow();
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.RentOrLoanOrder", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, 700, 400);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="openLoanOrder">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openLoanOrder-20160124-15435">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
+                    {
+                        IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+                        if (!userService.checkUserOnline(@page.getRequest().getSession())) {
+                            @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\");");
+                            return;
+                        }
+                        
+                        Table orderInfoTable = (Table)@page.getElement("loanOrderTable");
                         if (orderInfoTable.getSelectedRow() == null) {
                             return;
                         }
@@ -262,6 +330,28 @@
 		                        </ns2:expression>
 		                    </ns2:query>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>小图标</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.photos</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Image</ns2:type>
+                                </ns2:uiType>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.runtime.AppContext;
+					                    import org.shaolin.bmdp.runtime.Registry;
+					                    import org.shaolin.uimaster.page.WebConfig;
+					                    import org.shaolin.uimaster.page.widgets.HTMLImageType;
+					                    { 
+					                        return HTMLImageType.getFirst($rowBE.getPhotos()); 
+					                    }
+                                        ]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:rowExpression>
+                            </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
 			                    <ns2:title xsi:type="ns2:StringPropertyType">
 			                        <ns2:value>订单详情</ns2:value>
 			                    </ns2:title>
@@ -368,6 +458,28 @@
                             </ns2:query>
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>小图标</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.photos</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Image</ns2:type>
+                                </ns2:uiType>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.runtime.AppContext;
+                                        import org.shaolin.bmdp.runtime.Registry;
+                                        import org.shaolin.uimaster.page.WebConfig;
+                                        import org.shaolin.uimaster.page.widgets.HTMLImageType;
+                                        { 
+                                            return HTMLImageType.getFirst($rowBE.getPhotos()); 
+                                        }
+                                        ]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:rowExpression>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
                                     <ns2:value>订单详情</ns2:value>
                                 </ns2:title>
                                 <ns2:beFieldId>rowBE.id</ns2:beFieldId>
@@ -385,7 +497,7 @@
                                             HashMap input = new HashMap();
                                             input.put("beObject", $rowBE);
                                             RefForm form = new RefForm("gsOrderForm"+$rowBE.getId(), 
-                                              "org.shaolin.vogerp.ecommercial.form.GoldenOrderOverView", input);
+                                              "org.shaolin.vogerp.ecommercial.form.GoldenOrderOverView_mob", input);
                                             StringBuffer sb = new StringBuffer();
                                             sb.append(form.generateHTML());
                                             sb.append("<script type=\"text/javascript\">UIMaster.pageInitFunctions.push(function(){");
@@ -408,7 +520,7 @@
                                 </ns2:updateCondition>
                             </ns2:column>
                             <ns2:defaultActions>
-                                <ns2:defaultOpenAction>openGoldenOrder</ns2:defaultOpenAction>
+                                <ns2:defaultOpenAction>openSaleGoldenOrder</ns2:defaultOpenAction>
                             </ns2:defaultActions>
                         </ns2:component>
                         <ns2:layoutConstraint>
@@ -472,6 +584,28 @@
                             </ns2:query>
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>小图标</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.photos</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Image</ns2:type>
+                                </ns2:uiType>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.runtime.AppContext;
+                                        import org.shaolin.bmdp.runtime.Registry;
+                                        import org.shaolin.uimaster.page.WebConfig;
+                                        import org.shaolin.uimaster.page.widgets.HTMLImageType;
+                                        { 
+                                            return HTMLImageType.getFirst($rowBE.getPhotos()); 
+                                        }
+                                        ]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:rowExpression>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
                                     <ns2:value>订单详情</ns2:value>
                                 </ns2:title>
                                 <ns2:beFieldId>rowBE.id</ns2:beFieldId>
@@ -489,7 +623,7 @@
                                             HashMap input = new HashMap();
                                             input.put("beObject", $rowBE);
                                             RefForm form = new RefForm("rOrderForm"+$rowBE.getId(), 
-                                              "org.shaolin.vogerp.ecommercial.form.RentOrderOverView", input);
+                                              "org.shaolin.vogerp.ecommercial.form.RentOrderOverView_mob", input);
                                             StringBuffer sb = new StringBuffer();
                                             sb.append(form.generateHTML());
                                             sb.append("<script type=\"text/javascript\">UIMaster.pageInitFunctions.push(function(){");
@@ -576,6 +710,28 @@
                             </ns2:query>
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>小图标</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.photos</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Image</ns2:type>
+                                </ns2:uiType>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.runtime.AppContext;
+                                        import org.shaolin.bmdp.runtime.Registry;
+                                        import org.shaolin.uimaster.page.WebConfig;
+                                        import org.shaolin.uimaster.page.widgets.HTMLImageType;
+                                        { 
+                                            return HTMLImageType.getFirst($rowBE.getPhotos()); 
+                                        }
+                                        ]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:rowExpression>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
                                     <ns2:value>订单详情</ns2:value>
                                 </ns2:title>
                                 <ns2:beFieldId>rowBE.id</ns2:beFieldId>
@@ -593,7 +749,7 @@
                                             HashMap input = new HashMap();
                                             input.put("beObject", $rowBE);
                                             RefForm form = new RefForm("rrOrderForm"+$rowBE.getId(), 
-                                              "org.shaolin.vogerp.ecommercial.form.RentOrderOverView", input);
+                                              "org.shaolin.vogerp.ecommercial.form.RentOrderOverView_mob", input);
                                             StringBuffer sb = new StringBuffer();
                                             sb.append(form.generateHTML());
                                             sb.append("<script type=\"text/javascript\">UIMaster.pageInitFunctions.push(function(){");

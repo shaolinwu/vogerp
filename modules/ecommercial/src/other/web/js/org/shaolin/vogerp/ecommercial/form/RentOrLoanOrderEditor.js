@@ -3,6 +3,14 @@
 function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var funcsPanel = new UIMaster.ui.prenextpanel
+    ({
+        ui: elementList[prefix + "funcsPanel"]
+        ,items: []
+        ,subComponents: [prefix + "photoPanel",prefix + "prodcutInfoPanel"]
+    });
+    var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
+
     var serialNumberUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "serialNumberUILabel"]
@@ -88,11 +96,32 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
         ui: elementList[prefix + "deliveryInfoLabel"]
     });
 
+    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo({"prefix":prefix + "deliveryInfoUI."});
+
+    var attributePanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "attributePanel"]
+        ,items: []
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "rentTypeUILabel",prefix + "rentTypeUI",prefix + "rentDateTypeUILabel",prefix + "rentDateTypeUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "finalPriceUILabel",prefix + "finalPriceUI",prefix + "expiredDateUILabel",prefix + "expiredDateUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "deliveryInfoLabel",prefix + "deliveryInfoUI"]
+    });
+    var photoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "photoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "photoUI",prefix + "attributePanel"]
+    });
     var htmlDescUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "htmlDescUI"]
         ,hiddenToolbar: false
         ,persistable: true
+    });
+
+    var prodcutInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "prodcutInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "htmlDescUI"]
     });
 
     var okbtn = new UIMaster.ui.button
@@ -105,10 +134,6 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
         ui: elementList[prefix + "cancelbtn"]
     });
 
-    var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
-
-    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo({"prefix":prefix + "deliveryInfoUI."});
-
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
@@ -116,86 +141,20 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
         ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
     });
 
-    var prodcutInfoPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "prodcutInfoPanel"]
-        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: []
-        ,subComponents: [prefix + "htmlDescUI"]
-    });
-
-    var attributePanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "attributePanel"]
-        ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "rentTypeUILabel",prefix + "rentTypeUI",prefix + "rentDateTypeUILabel",prefix + "rentDateTypeUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "finalPriceUILabel",prefix + "finalPriceUI",prefix + "expiredDateUILabel",prefix + "expiredDateUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "deliveryInfoLabel",prefix + "deliveryInfoUI"]
-    });
-
-    var photoPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "photoPanel"]
-        ,items: []
-        ,subComponents: [prefix + "photoUI"]
-    });
-
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "photoPanel",prefix + "attributePanel",prefix + "prodcutInfoPanel"]
+        ,subComponents: [prefix + "funcsPanel"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,rentTypeUILabel,rentTypeUI,rentDateTypeUILabel,rentDateTypeUI,estimatedPriceUILabel,estimatedPriceUI,finalPriceUILabel,finalPriceUI,expiredDateUILabel,expiredDateUI,publishedCustomerIdUILabel,publishedCustomerIdUI,deliveryInfoLabel,htmlDescUI,okbtn,cancelbtn,photoUI,deliveryInfoUI,fieldPanel,photoPanel,attributePanel,prodcutInfoPanel,actionPanel]
+        ,items: [funcsPanel,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
-    Form.serialNumberUILabel=serialNumberUILabel;
-
-    Form.serialNumberUI=serialNumberUI;
-
-    Form.descriptionUILabel=descriptionUILabel;
-
-    Form.descriptionUI=descriptionUI;
-
-    Form.rentTypeUILabel=rentTypeUILabel;
-
-    Form.rentTypeUI=rentTypeUI;
-
-    Form.rentDateTypeUILabel=rentDateTypeUILabel;
-
-    Form.rentDateTypeUI=rentDateTypeUI;
-
-    Form.estimatedPriceUILabel=estimatedPriceUILabel;
-
-    Form.estimatedPriceUI=estimatedPriceUI;
-
-    Form.finalPriceUILabel=finalPriceUILabel;
-
-    Form.finalPriceUI=finalPriceUI;
-
-    Form.expiredDateUILabel=expiredDateUILabel;
-
-    Form.expiredDateUI=expiredDateUI;
-
-    Form.publishedCustomerIdUILabel=publishedCustomerIdUILabel;
-
-    Form.publishedCustomerIdUI=publishedCustomerIdUI;
-
-    Form.deliveryInfoLabel=deliveryInfoLabel;
-
-    Form.htmlDescUI=htmlDescUI;
-
-    Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
-
-    Form.photoUI=photoUI;
-
-    Form.deliveryInfoUI=deliveryInfoUI;
-
-    Form.fieldPanel=fieldPanel;
+    Form.funcsPanel=funcsPanel;
 
     Form.photoPanel=photoPanel;
 
@@ -242,6 +201,14 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
     Form.prodcutInfoPanel=prodcutInfoPanel;
 
     Form.htmlDescUI=htmlDescUI;
+
+    Form.okbtn=okbtn;
+
+    Form.cancelbtn=cancelbtn;
+
+    Form.fieldPanel=fieldPanel;
+
+    Form.funcsPanel=funcsPanel;
 
     Form.photoPanel=photoPanel;
 

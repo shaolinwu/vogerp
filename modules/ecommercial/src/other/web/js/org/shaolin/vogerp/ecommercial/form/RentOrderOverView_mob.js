@@ -1,6 +1,6 @@
 /* null */
 /* auto generated constructor */
-function org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob(json)
+function org_shaolin_vogerp_ecommercial_form_RentOrderOverView_mob(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
     var idUI = new UIMaster.ui.hidden
@@ -71,24 +71,24 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob(json)
 
     Form.user_constructor = function()
     {
-        /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob */
-        /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob */
+        /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_RentOrderOverView_mob */
+        /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_RentOrderOverView_mob */
     };
 
-    Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob_invokeDynamicFunction;
+    Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_RentOrderOverView_mob_invokeDynamicFunction;
 
-    Form.__entityName="org.shaolin.vogerp.ecommercial.form.GoldenOrderOverView_mob";
+    Form.__entityName="org.shaolin.vogerp.ecommercial.form.RentOrderOverView_mob";
 
     Form.init();
     return Form;
 };
 
     /* EventHandler Functions */
-/* Other_Func_FIRST:org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob */
-/* Other_Func_LAST:org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob */
+/* Other_Func_FIRST:org_shaolin_vogerp_ecommercial_form_RentOrderOverView_mob */
+/* Other_Func_LAST:org_shaolin_vogerp_ecommercial_form_RentOrderOverView_mob */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob_invokeDynamicFunction */
+    function org_shaolin_vogerp_ecommercial_form_RentOrderOverView_mob_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_RentOrderOverView_mob_invokeDynamicFunction */
         var o = this;
         var UIEntity = this;
 
@@ -101,7 +101,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob(json)
         
         }
         }).open();
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob_invokeDynamicFunction */
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RentOrderOverView_mob_invokeDynamicFunction */
 
 
 

@@ -197,15 +197,9 @@
             <expressionString><![CDATA[
             import org.shaolin.bmdp.runtime.AppContext;
             import org.shaolin.bmdp.runtime.security.UserContext;
-            import org.shaolin.vogerp.commonmodel.IUserService;
-            import org.shaolin.vogerp.commonmodel.be.*;
-            import org.shaolin.uimaster.page.flow.WebflowConstants;
-            import org.shaolin.vogerp.commonmodel.IOrganizationService;
+            import java.util.ArrayList;
             {
-              UserContext userContext = UserContext.getUserContext();
-              IUserService moduleService = (IUserService)AppContext.get().getService(IUserService.class);
-              PersonalAccountImpl personalAccount = (PersonalAccountImpl)moduleService.getPersonalAccount(userContext.getUserId());
-              return personalAccount.getInfo().getAddresses();
+              return new ArrayList();
             }]]></expressionString>
           </ns2:expression>
         </ns2:query>

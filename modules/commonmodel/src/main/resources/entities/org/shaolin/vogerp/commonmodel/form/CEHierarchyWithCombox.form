@@ -3,6 +3,74 @@
   <entityName>org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox</entityName>
   <systemVersion>0</systemVersion>
   <ns2:eventHandler functionName="selectItem">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectItem_20160804_5433">
+       <ns2:exp>
+           <ns2:expressionString><![CDATA[
+           import java.util.HashMap;
+           import java.util.ArrayList;
+           import org.shaolin.bmdp.runtime.AppContext;
+           import org.shaolin.uimaster.page.AjaxContext;
+           import org.shaolin.uimaster.page.ajax.*;
+           import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+           import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+           {
+               ComboBox typeUI = @page.getComboBox("typeUI");
+               String value = typeUI.getValue();
+               if ("more".equals(value)) {
+                   ArrayList values = new ArrayList();
+                   ArrayList displayItems = new ArrayList();
+                   int startFrom = typeUI.getOptionValues().size();
+                   CEOperationUtil.getCEComboBox(new java.util.concurrent.atomic.AtomicInteger(startFrom), "", values, displayItems, 
+                        AppContext.get().getConstantService().getConstantEntity(@page.getHidden("ceNameUI").getValue()));
+                   
+                   for (int i=0; i<values.size(); i++) {
+                      typeUI.addOption(displayItems.get(i).toString(), values.get(i).toString());
+                   }
+                   @page.executeJavaScript("{var i=0;}");//Don't remove
+               }
+           }
+           ]]></ns2:expressionString>
+       </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="showFilter">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+         <ns2:expressionString><![CDATA[
+         {
+          var o = this;
+          new UIMaster.ui.dialog({
+              dialogType: UIMaster.ui.dialog.INPUT_DIALOG,
+              message:'\u8BF7\u8F93\u5165\u8FC7\u6EE4\u6761\u4EF6\uFF1A',
+              messageType:UIMaster.ui.dialog.Information,
+              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+              title:'',
+              height:150,
+              width:300,
+              handler: function(v) {
+                 if (this.value == null || this.value == "") return;
+                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showFilter_20160806_23423",UIMaster.getValue(eventsource),o.__entityName);
+              }
+          }).open();
+          return;
+         }
+         ]]></ns2:expressionString>
+     </ns2:ops>
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showFilter_20160806_23423">
+       <ns2:exp>
+           <ns2:expressionString><![CDATA[
+           import java.util.HashMap;
+           import java.util.ArrayList;
+           import org.shaolin.bmdp.runtime.AppContext;
+           import org.shaolin.uimaster.page.AjaxContext;
+           import org.shaolin.uimaster.page.ajax.*;
+           import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+           import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+           {
+              
+           }
+           ]]></ns2:expressionString>
+       </ns2:exp>
+    </ns2:ops>
   </ns2:eventHandler>
   <ns2:reconfigurableProperty functionName="selectItem" xsi:type="ns2:ReconfigurableFunctionType"/>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
@@ -13,17 +81,43 @@
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.8</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>30</ns2:columnWidthWeight>
       </ns2:layout>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="ceNameUI" />
       <ns2:component xsi:type="ns2:UIComboBoxType" UIID="typeUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
         <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
           <ns2:handler functionName="selectItem"></ns2:handler>
         </ns2:EventListener>
       </ns2:component>
+      <ns2:component xsi:type="ns2:UIImageType" UIID="filterUI">
+        <ns2:Property name="width">
+            <ns2:value xsi:type="ns2:StringPropertyType">
+                <value>30px</value>
+            </ns2:value>
+         </ns2:Property>
+         <ns2:Property name="height">
+            <ns2:value xsi:type="ns2:StringPropertyType">
+                <value>30px</value>
+            </ns2:value>
+         </ns2:Property>
+         <ns2:Property name="src">
+             <ns2:value xsi:type="ns2:StringPropertyType">
+                  <ns2:value>cefilter.png</ns2:value>
+             </ns2:value>
+         </ns2:Property>
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="showFilter"></ns2:handler>
+        </ns2:EventListener>
+      </ns2:component>
 	  <ns2:layoutConstraint>
         <ns2:componentId>typeUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="cehierarchy_combox_typeui"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>filterUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="cehierarchy_combox_filterui"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
@@ -54,6 +148,11 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="value" paramName="Value"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values" paramName="OptionValues"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="ceNameUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="ceName" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[

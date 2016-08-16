@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.shaolin.bmdp.runtime.ce.AbstractConstant;
 import org.shaolin.bmdp.runtime.ce.DynamicConstant;
@@ -263,6 +264,23 @@ public class CEOperationUtil {
 	public static void getCEComboBox(String space, 
 			ArrayList<String> values, ArrayList<String> displayItems, 
 			IConstantEntity ce) {
+		getCEComboBox(new AtomicInteger(-1), space, values, displayItems, ce);
+	}
+	
+	public static void getCEComboBox(AtomicInteger startItem, String space, 
+			ArrayList<String> values, ArrayList<String> displayItems, 
+			IConstantEntity ce) {
+		if (startItem.get() == values.size()) {
+			values.clear();
+			displayItems.clear();
+			startItem.set(-1);
+		}
+		if (values.size() > 60 && startItem.get() == -1) {
+			// reach to the limit to prevent too much items on UI widget.
+			values.add("more");
+			displayItems.add("显示更多...");
+			return;
+		}
 		// ce node.
 		String nodeId = ce.getEntityName();
 		if (space.isEmpty()) { // root.
@@ -277,11 +295,27 @@ public class CEOperationUtil {
 			if (item.getIntValue() == -1) {
 				continue;
 			}
-			values.add(nodeId + "," + item.getIntValue());
+			String option = nodeId + "," + item.getIntValue();
+			values.add(option);
 			displayItems.add(space + item.getDisplayName());
+			if (startItem.get() == values.size()) {
+				values.clear();
+				displayItems.clear();
+				startItem.set(-1);
+			}
+			if (values.size() > 60 && startItem.get() == -1) {
+				// reach to the limit to prevent too much items on UI widget.
+				values.add("more");
+				displayItems.add("显示更多...");
+				return;
+			}
+			
 			IConstantEntity kid = cs.getChildren(item);
 			if (kid != null){
-				getCEComboBox(space + "--", values, displayItems, cs.getConstantEntity(kid.getEntityName()));
+				getCEComboBox(startItem, space + "--", values, displayItems, cs.getConstantEntity(kid.getEntityName()));
+				if (values.size() > 0 && values.get(values.size()-1).equals("more")) {
+					return;
+				}
 			}
 		}
 	}

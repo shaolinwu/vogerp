@@ -85,9 +85,19 @@
                     import org.shaolin.bmdp.utils.DateUtil;
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.vogerp.commonmodel.IUserService; 
-                    import org.shaolin.vogerp.productmodel.IProductService;
+                    import org.shaolin.vogerp.productmodel.be.ProductImpl;
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.be.ROrderSearchCriteriaImpl;
+                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                     {
+                       // add the search criteria.
+                       ROrderSearchCriteriaImpl sc = new ROrderSearchCriteriaImpl();
+                       sc.setOrderId($gOrder.getId());
+                       sc.setCity($gOrder.getDeliveryInfo().getAddress().getCity());
+                       if ($gOrder.getProductId() > 0) {
+                          sc.setProductType(((ProductImpl)OrderModel.INSTANCE.get($gOrder.getProductId(), ProductImpl.class)).getType());
+                       }
+                       OrderModel.INSTANCE.create(sc);
                     }
                      ]]></expressionString>
                 </ns2:expression>
@@ -165,6 +175,7 @@
 			            offerPrice.setCreateDate(new Date());
 			            offerPrice.setSamplePhoto(@page.getHidden("samplePhotoUI.imagePathUI").getValue());
 			            offerPrice.setLeaveWords(@page.getTextArea("leaveWordUI").getValue());
+			            offerPrice.setSessionId(OrderUtil.genConversationId());
 			            
 			            // compare the prices.
 			            if (!OrderUtil.compareAPrice(order, offerPrice)) {

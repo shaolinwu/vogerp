@@ -93,26 +93,6 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
         }
 ]    });
 
-    var localeUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "localeUILabel"]
-    });
-
-    var localeUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "localeUI"]
-    });
-
-    var lastLoginUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "lastLoginUILabel"]
-    });
-
-    var lastLoginUI = new UIMaster.ui.calendar
-    ({
-        ui: elementList[prefix + "lastLoginUI"]
-    });
-
     var resetPasswordbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "resetPasswordbtn"]
@@ -129,13 +109,13 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "userNameUILabel",prefix + "userNameUI",prefix + "passwordUILabel",prefix + "passwordUI",prefix + "password1UILabel",prefix + "password1UI",prefix + "localeUILabel",prefix + "localeUI",prefix + "lastLoginUILabel",prefix + "lastLoginUI"]
+        ,subComponents: [prefix + "idUI",prefix + "userNameUILabel",prefix + "userNameUI",prefix + "passwordUILabel",prefix + "passwordUI",prefix + "password1UILabel",prefix + "password1UI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,userNameUILabel,userNameUI,passwordUILabel,passwordUI,password1UILabel,password1UI,localeUILabel,localeUI,lastLoginUILabel,lastLoginUI,resetPasswordbtn,fieldPanel,actionPanel]
+        ,items: [idUI,userNameUILabel,userNameUI,passwordUILabel,passwordUI,password1UILabel,password1UI,resetPasswordbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -151,14 +131,6 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
     Form.password1UILabel=password1UILabel;
 
     Form.password1UI=password1UI;
-
-    Form.localeUILabel=localeUILabel;
-
-    Form.localeUI=localeUI;
-
-    Form.lastLoginUILabel=lastLoginUILabel;
-
-    Form.lastLoginUI=lastLoginUI;
 
     Form.resetPasswordbtn=resetPasswordbtn;
 
@@ -177,14 +149,6 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
     Form.password1UILabel=password1UILabel;
 
     Form.password1UI=password1UI;
-
-    Form.localeUILabel=localeUILabel;
-
-    Form.localeUI=localeUI;
-
-    Form.lastLoginUILabel=lastLoginUILabel;
-
-    Form.lastLoginUI=lastLoginUI;
 
     Form.actionPanel=actionPanel;
 

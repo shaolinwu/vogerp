@@ -25,6 +25,10 @@ public class OrderUtil {
 				+ parse.format(parse.getSeconds(), 2);
 	}
 	
+	public synchronized static String genConversationId() {
+		return "TALKID-" + System.nanoTime();
+	}
+	
 	public synchronized static String genResourceId() {
 		return "r" + System.nanoTime();
 	}
