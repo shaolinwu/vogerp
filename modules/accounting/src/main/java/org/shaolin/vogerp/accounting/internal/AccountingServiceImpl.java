@@ -30,6 +30,7 @@ import org.shaolin.vogerp.accounting.dao.AccountingModel;
 import org.shaolin.vogerp.accounting.util.PaymentUtil;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.IUserService.UserActionListener;
+import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +42,7 @@ import org.slf4j.LoggerFactory;
 public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvider, IAccountingService, UserActionListener {
 
 	@Override
-	public void loggedIn(IPersonalInfo userInfo) {
+	public void loggedIn(IPersonalAccount account, IPersonalInfo userInfo) {
 		CustomerAccountImpl scObject = new CustomerAccountImpl();
 		scObject.setOrgId(userInfo.getOrgId());
 		List<ICustomerAccount> result = AccountingModel.INSTANCE.searchAccount(scObject, null, 0, 1);

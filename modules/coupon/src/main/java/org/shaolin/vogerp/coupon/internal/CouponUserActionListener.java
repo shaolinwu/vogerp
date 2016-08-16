@@ -1,12 +1,13 @@
 package org.shaolin.vogerp.coupon.internal;
 
 import org.shaolin.vogerp.commonmodel.IUserService.UserActionListener;
+import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 
 public class CouponUserActionListener implements UserActionListener {
 	
 	@Override
-	public void loggedIn(IPersonalInfo userInfo) {
+	public void loggedIn(IPersonalAccount account, IPersonalInfo userInfo) {
 		
 	}
 

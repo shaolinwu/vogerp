@@ -35,7 +35,7 @@
                         RefForm form = new RefForm("productInfoForm", "org.shaolin.vogerp.productmodel.form.Product", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("\u6DFB\u52A0\u4EA7\u54C1", new TableCallBack("productInfoTable"), 750, 550);
+                        form.openInWindows("\u6DFB\u52A0\u4EA7\u54C1", new TableCallBack("productInfoTable"), 690, 450);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -65,7 +65,7 @@
                         RefForm form = new RefForm("productInfoForm", "org.shaolin.vogerp.productmodel.form.Product", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("\u7F16\u8F91\u4EA7\u54C1\u4FE1\u606F", new TableCallBack("productInfoTable"), 750, 550);
+                        form.openInWindows("\u7F16\u8F91\u4EA7\u54C1\u4FE1\u606F", new TableCallBack("productInfoTable"), 690, 450);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -143,7 +143,7 @@
                         RefForm form = new RefForm("priceForm", "org.shaolin.vogerp.productmodel.form.ProductPriceTable", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Product Price Information", new TableCallBack("productInfoTable"), 690, 380);
+                        form.openInWindows("Product Price Information", new TableCallBack("productInfoTable"), 690, 450);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>

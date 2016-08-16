@@ -23,9 +23,9 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         ui: elementList[prefix + "userIcon"]
     });
 
-    var notificationIcon = new UIMaster.ui.image
+    var helpIcon = new UIMaster.ui.image
     ({
-        ui: elementList[prefix + "notificationIcon"]
+        ui: elementList[prefix + "helpIcon"]
         ,text: ""
     });
 
@@ -88,7 +88,6 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     var pagePanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "pagePanel"]
-        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
         ,subComponents: [prefix + "matrixUI"]
     });
@@ -104,7 +103,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     ({
         ui: elementList[prefix + "searchPanel"]
         ,items: []
-        ,subComponents: [prefix + "searchContext",prefix + "userIcon",prefix + "notificationIcon"]
+        ,subComponents: [prefix + "searchContext",prefix + "userIcon",prefix + "helpIcon"]
     });
 
     var topPanel = new UIMaster.ui.panel
@@ -118,7 +117,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [tempSentPartyIdUI,tempSessionIdUI,searchContext,userIcon,notificationIcon,advImagesUI,matrixUI,collapseLabel1,userLogout,userFormContent,notificationFormContent,topPanel,searchPanel,middlePanel,pagePanel,bottomPanel,userForm,notificationForm]
+        ,items: [tempSentPartyIdUI,tempSessionIdUI,searchContext,userIcon,helpIcon,advImagesUI,matrixUI,collapseLabel1,userLogout,userFormContent,notificationFormContent,topPanel,searchPanel,middlePanel,pagePanel,bottomPanel,userForm,notificationForm]
     });
 
     Form.tempSentPartyIdUI=tempSentPartyIdUI;
@@ -129,7 +128,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
     Form.userIcon=userIcon;
 
-    Form.notificationIcon=notificationIcon;
+    Form.helpIcon=helpIcon;
 
     Form.advImagesUI=advImagesUI;
 
@@ -151,7 +150,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
     Form.userIcon=userIcon;
 
-    Form.notificationIcon=notificationIcon;
+    Form.helpIcon=helpIcon;
 
     Form.advImagesUI=advImagesUI;
 
@@ -161,7 +160,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
     Form.userIcon=userIcon;
 
-    Form.notificationIcon=notificationIcon;
+    Form.helpIcon=helpIcon;
 
     Form.middlePanel=middlePanel;
 
@@ -336,6 +335,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
                 if (arguments.length > 2) {
                    this.tempSessionIdUI.setValue(arguments[2]);
                 }
+                this.showNotification();
               }
               
         // cal ajax function. 
@@ -349,6 +349,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         var UIEntity = this;
 
 			{
+			   /**
 			   $("#pagePanel").height($(document.body).height()-180);
 			   $("#pagePanel").css("overflow", "scroll");
 			   
@@ -356,7 +357,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 			      $("#pagePanel").height($(document.body).height()-180);
                   $("#pagePanel").css("overflow", "scroll");
 			   }, 800);
-			   
+			   */
 			}
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_initPageJs */
 

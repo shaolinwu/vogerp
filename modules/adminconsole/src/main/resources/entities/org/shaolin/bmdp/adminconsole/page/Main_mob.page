@@ -97,6 +97,7 @@
                 if (arguments.length > 2) {
                    this.tempSessionIdUI.setValue(arguments[2]);
                 }
+                this.showNotification();
               }
               ]]></ns2:expressionString>
             </ns2:ops>
@@ -184,7 +185,8 @@
 	                         <ns2:handler functionName="showUserInfo" />
 	                     </ns2:EventListener>
 	                </ns2:component>
-	                <ns2:component xsi:type="ns2:UIImageType" UIID="notificationIcon">
+	                <!-- please keep helpIcon no change for notifications -->
+	                <ns2:component xsi:type="ns2:UIImageType" UIID="helpIcon">
                         <ns2:Property name="text" >
                             <ns2:value xsi:type="ns2:StringPropertyType">
                                  <value></value>
@@ -211,7 +213,7 @@
                              x="1" y="0" align="FULL"></ns2:constraint>
                     </ns2:layoutConstraint>
                     <ns2:layoutConstraint>
-                        <ns2:componentId>notificationIcon</ns2:componentId>
+                        <ns2:componentId>helpIcon</ns2:componentId>
                         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                              x="2" y="0" align="FULL"></ns2:constraint>
                     </ns2:layoutConstraint>
@@ -284,14 +286,6 @@
 					<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 				</ns2:layout>
 				<ns2:component xsi:type="ns2:UIPanelType" UIID="pagePanel">
-					<ns2:UISkin xsi:type="ns2:UISkinType">
-						<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
-						<ns2:param name="text">
-							<ns2:value xsi:type="ns2:StringPropertyType">
-								<ns2:value></ns2:value>
-							</ns2:value>
-						</ns2:param>
-					</ns2:UISkin>
 					<ns2:layout xsi:type="ns2:TableLayoutType">
 						<ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
 						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
@@ -457,7 +451,7 @@
           <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="notificator" paramName="beObject"></ns2:DataComponent>
           <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="countUIId">
               <ns2:expression>
-                   <expressionString>"div-searchPanel-2_0"</expressionString><!-- indicates the notificationIcon parent.-->
+                   <expressionString>"div-searchPanel-2_0"</expressionString><!-- indicates the helpIcon parent.-->
                </ns2:expression>
           </ns2:DataComponent>
         </ns2:ComponentMapping>
@@ -481,6 +475,7 @@
 		<ns2:clientAction xsi:type="ns2:ExpressionType">
 			<ns2:expressionString><![CDATA[
 			{
+			   /**
 			   $("#pagePanel").height($(document.body).height()-180);
 			   $("#pagePanel").css("overflow", "scroll");
 			   
@@ -488,7 +483,7 @@
 			      $("#pagePanel").height($(document.body).height()-180);
                   $("#pagePanel").css("overflow", "scroll");
 			   }, 800);
-			   
+			   */
 			}]]></ns2:expressionString>
 		</ns2:clientAction>
 	</ns2:in>

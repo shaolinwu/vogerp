@@ -192,7 +192,6 @@
                <ns2:layout xsi:type="ns2:TableLayoutType">
                  <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
                  <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
                  <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
                </ns2:layout>
                <ns2:component xsi:type="ns2:UIHiddenType" UIID="templateIdUI" />
@@ -276,7 +275,7 @@
 	               </ns2:layoutConstraint>
 	               <ns2:layoutConstraint>
 	                 <ns2:componentId>typeUI</ns2:componentId>
-	                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+	                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell product_typeui"></ns2:constraint>
 	               </ns2:layoutConstraint>
 	               <ns2:layoutConstraint>
 	                 <ns2:componentId>nameUILabel</ns2:componentId>
@@ -295,22 +294,6 @@
 	                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
 	               </ns2:layoutConstraint>
                </ns2:component>
-               <ns2:component xsi:type="ns2:UIPanelType" UIID="htmlPanel">
-	               <ns2:layout xsi:type="ns2:TableLayoutType">
-	                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-	                 <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-	               </ns2:layout>
-	                <ns2:component xsi:type="ns2:UITextAreaType" UIID="htmlDescUI">
-	                  <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-	                  <ns2:htmlSupport xsi:type="ns2:BooleanPropertyType">
-	                      <value>true</value>
-	                  </ns2:htmlSupport>
-	                </ns2:component>
-	                <ns2:layoutConstraint>
-	                  <ns2:componentId>htmlDescUI</ns2:componentId>
-	                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
-	                </ns2:layoutConstraint>
-	           </ns2:component>
                <ns2:layoutConstraint>
                  <ns2:componentId>photoPanel</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
@@ -318,10 +301,6 @@
                <ns2:layoutConstraint>
                  <ns2:componentId>attributePanel</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-               </ns2:layoutConstraint>
-               <ns2:layoutConstraint>
-                 <ns2:componentId>htmlPanel</ns2:componentId>
-                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
             </ns2:panel>
          </ns2:tab>
@@ -333,6 +312,27 @@
              <ns2:refEntity UIID="infoPanel1">
                 <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductPriceTable" />
              </ns2:refEntity>
+         </ns2:tab>
+         <ns2:tab uiid="htmlPanel">
+             <ns2:title xsi:type="ns2:StringPropertyType">
+                 <ns2:value>详细介绍</ns2:value>
+             </ns2:title>
+             <ns2:panel UIID="htmlPanel">
+                <ns2:layout xsi:type="ns2:TableLayoutType">
+                  <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                  <ns2:columnWidthWeight>200</ns2:columnWidthWeight>
+                </ns2:layout>
+                 <ns2:component xsi:type="ns2:UITextAreaType" UIID="htmlDescUI">
+                   <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+                   <ns2:htmlSupport xsi:type="ns2:BooleanPropertyType">
+                       <value>true</value>
+                   </ns2:htmlSupport>
+                 </ns2:component>
+                 <ns2:layoutConstraint>
+                   <ns2:componentId>htmlDescUI</ns2:componentId>
+                   <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+                 </ns2:layoutConstraint>
+            </ns2:panel>
          </ns2:tab>
       </ns2:component>
       <ns2:layoutConstraint>

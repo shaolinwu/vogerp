@@ -9,6 +9,10 @@
             //if(event.keyCode != 13 || event.keyCode != 9) {
                //return;
             //}
+            var constraint_result = this.phoneNumberUI.validate();
+            if (constraint_result != true && constraint_result != null) {
+                return false;
+            }
         }
         ]]></ns2:expressionString>
     </ns2:ops>
@@ -23,11 +27,19 @@
             TextField p = @page.getTextField("phoneNumberUI");
             String phoneNumber = p.getValue();
             IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
-            if (!userService.checkNewAccount(phoneNumber)) {
+            if (phoneNumber == null || phoneNumber.trim().length() == 0) {
                 p.addStyle("background-image", "none");
                 p.addStyle("background-color", "red");
-            } else {
+	            return;
+	        }
+            if (userService.checkNewAccount(phoneNumber)) {
                 p.addStyle("background-color", "greenyellow");
+                p.removeConstraint();
+            } else {
+                p.addStyle("background-image", "none");
+                p.addStyle("background-color", "red");
+                p.showConstraint("该手机号已存在，请您登录使用。");
+                //TODO: 发短信到手机，关于初始密码.
             }
         }]]></expressionString>
       </ns2:exp>

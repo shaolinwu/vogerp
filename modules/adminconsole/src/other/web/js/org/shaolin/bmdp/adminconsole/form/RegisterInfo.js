@@ -194,6 +194,10 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
             //if(event.keyCode != 13 || event.keyCode != 9) {
                //return;
             //}
+            var constraint_result = this.phoneNumberUI.validate();
+            if (constraint_result != true && constraint_result != null) {
+                return false;
+            }
         }
         
         // cal ajax function. 

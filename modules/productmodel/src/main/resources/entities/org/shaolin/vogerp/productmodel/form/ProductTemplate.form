@@ -167,7 +167,7 @@
 		      </ns2:layoutConstraint>
 		      <ns2:layoutConstraint>
 		        <ns2:componentId>typeUI</ns2:componentId>
-		        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+		        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="uimaster_rightform_cell product_typeui"></ns2:constraint>
 		      </ns2:layoutConstraint>
 		      <ns2:layoutConstraint>
 		        <ns2:componentId>nameUILabel</ns2:componentId>

@@ -7,7 +7,7 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     ({
         ui: elementList[prefix + "funcsPanel"]
         ,items: []
-        ,subComponents: [prefix + "infoPanel0",prefix + "infoPanel1"]
+        ,subComponents: [prefix + "infoPanel0",prefix + "infoPanel1",prefix + "htmlPanel"]
     });
     var templateIdUI = new UIMaster.ui.hidden
     ({
@@ -65,6 +65,14 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         ,items: []
         ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI"]
     });
+    var infoPanel0 = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "infoPanel0"]
+        ,items: []
+        ,subComponents: [prefix + "templateIdUI",prefix + "photoPanel",prefix + "attributePanel"]
+    });
+    var infoPanel1 = new org_shaolin_vogerp_productmodel_form_ProductPriceTable({"prefix":prefix + "infoPanel1."});
+
     var htmlDescUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "htmlDescUI"]
@@ -76,14 +84,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         ,items: []
         ,subComponents: [prefix + "htmlDescUI"]
     });
-    var infoPanel0 = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "infoPanel0"]
-        ,items: []
-        ,subComponents: [prefix + "templateIdUI",prefix + "photoPanel",prefix + "attributePanel",prefix + "htmlPanel"]
-    });
-    var infoPanel1 = new org_shaolin_vogerp_productmodel_form_ProductPriceTable({"prefix":prefix + "infoPanel1."});
-
 
     var importTemplate = new UIMaster.ui.button
     ({
@@ -148,11 +148,11 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.descriptionUI=descriptionUI;
 
+    Form.infoPanel1=infoPanel1;
+
     Form.htmlPanel=htmlPanel;
 
     Form.htmlDescUI=htmlDescUI;
-
-    Form.infoPanel1=infoPanel1;
 
     Form.importTemplate=importTemplate;
 
@@ -190,11 +190,11 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.descriptionUI=descriptionUI;
 
+    Form.infoPanel1=infoPanel1;
+
     Form.htmlPanel=htmlPanel;
 
     Form.htmlDescUI=htmlDescUI;
-
-    Form.infoPanel1=infoPanel1;
 
     Form.actionPanel=actionPanel;
 
@@ -288,7 +288,7 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         var o = this;
         var UIEntity = this;
 
-        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Continue?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing? ^_^',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 
