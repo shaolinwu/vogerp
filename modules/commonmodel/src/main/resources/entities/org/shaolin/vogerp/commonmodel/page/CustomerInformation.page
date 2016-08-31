@@ -120,6 +120,15 @@
                        <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.Organization" />
                     </ns2:refEntity>
                 </ns2:tab>
+                <ns2:tab uiid="certifyForm">
+                    <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+                        <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+                        <ns2:key>org.shaolin.vogerp.commonmodel.page.CustomerInformation.verifyForm</ns2:key>
+                    </ns2:title>
+                    <ns2:refEntity UIID="certifyForm">
+                       <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo" />
+                    </ns2:refEntity>
+                </ns2:tab>
                 <ns2:tab uiid="personalAccountForm">
                     <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
                         <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
@@ -216,6 +225,37 @@
 	          <expressionString>Boolean.TRUE</expressionString>
 	        </ns2:expression>
 	      </ns2:DataComponent>
+        </ns2:ComponentMapping>
+        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
+          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo"></ns2:mappingRule>
+          <ns2:UIComponent componentPath="certifyForm" paramName="UIWidgetType"></ns2:UIComponent>
+          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="beObject">
+            <ns2:expression>
+              <expressionString><![CDATA[
+                import java.util.HashMap;
+		        import org.shaolin.uimaster.page.AjaxContext;
+		        import org.shaolin.uimaster.page.ajax.*;
+		        import org.shaolin.bmdp.runtime.AppContext;
+		        import org.shaolin.bmdp.runtime.security.UserContext;
+		        import org.shaolin.vogerp.commonmodel.be.*;
+		        import org.shaolin.vogerp.commonmodel.IOrganizationService;
+		        { 
+		           IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
+		           ILegalOrganizationInfo legalInfo = orgService.getLegalInfo(UserContext.getUserContext().getOrgId());
+		           if (legalInfo == null) {
+		               legalInfo = new LegalOrganizationInfoImpl();
+		               legalInfo.setOrgId(UserContext.getUserContext().getOrgId());
+		           }
+		           return legalInfo;
+		        } 
+              ]]></expressionString>
+            </ns2:expression>
+          </ns2:DataComponent>
+          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
+            <ns2:expression>
+              <expressionString>Boolean.TRUE</expressionString>
+            </ns2:expression>
+          </ns2:DataComponent>
         </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>

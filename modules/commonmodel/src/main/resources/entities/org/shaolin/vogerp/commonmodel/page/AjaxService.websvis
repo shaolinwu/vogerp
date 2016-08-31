@@ -15,7 +15,7 @@
         import org.shaolin.uimaster.page.ajax.json.JSONObject;
         {
             String word = @request.getParameter("word");
-            if (word == null || word.length() == 0) {return;}
+            if (word == null || word.length() == 0) {return "";}
             
             JSONObject item = new JSONObject();
             item.put("name", "项目1");
@@ -34,8 +34,7 @@
             JSONArray array = new JSONArray();
             array.put(item);
             array.put(item1);
-            String result = array.toString();
-            return result;
+            return array;
         }
      ]]></expressionString>
         </ns2:exp>
@@ -89,8 +88,7 @@
 	        array.put(item);
 	        array.put(item1);
 	        array.put(item2);
-	        String result = array.toString();
-	        return result;
+	        return array;
         }
      ]]></expressionString>
         </ns2:exp>
@@ -122,9 +120,8 @@
 	        JSONArray array = new JSONArray();
 	        array.put(item);
 	        array.put(item1);
-	        String result = array.toString();
            
-           return result;
+            return array;
         }
      ]]></expressionString>
         </ns2:exp>

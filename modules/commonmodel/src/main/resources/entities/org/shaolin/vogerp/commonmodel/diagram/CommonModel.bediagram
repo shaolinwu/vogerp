@@ -148,7 +148,7 @@
         </bediagram:member>
          -->
     </bediagram:beEntity>
-	<bediagram:beEntity needOrgId="true" needPersist="true" needUIEntity="true">
+	<bediagram:beEntity needOrgId="true" needPersist="true" needUIEntity="true" needTask="true">
 		<common:entityName>LegalOrganizationInfo</common:entityName>
 		<bediagram:member pk="true">
 			<bediagram:name>id</bediagram:name>
@@ -210,6 +210,18 @@
             <bediagram:type xsi:type="bediagram:CEObjRefType">
                 <bediagram:targetEntity entityName="BankType" />
             </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 验证状态-->
+            <bediagram:name>veriState</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="OrgVerifyStatusType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 验证人-->
+            <bediagram:name>verifierId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
 	</bediagram:beEntity>
 
@@ -892,4 +904,27 @@
 		</bediagram:constantValue>
 	</bediagram:ceEntity>
 	
+	<bediagram:ceEntity>
+        <common:entityName>OrgVerifyStatusType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>Unverified</bediagram:value>
+            <bediagram:intValue>0</bediagram:intValue>
+            <bediagram:description>未验证</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Verifying</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>验证审核中</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Verified</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>验证通过</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Failed</bediagram:value>
+            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:description>验证未通过</bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
 </bediagram:BEDiagram>

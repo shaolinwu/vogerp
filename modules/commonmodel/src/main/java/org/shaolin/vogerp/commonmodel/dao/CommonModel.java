@@ -79,7 +79,7 @@ public class CommonModel extends BEEntityDaoObject {
                 this._addOrders(inFlowCriteria, orders);
             }
 
-            if (scFlow.getUserName() != null && scFlow.getUserName().length() > 0) {
+            if (scFlow.getUserName() != null && scFlow.getUserName().trim().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.userName", scFlow.getUserName()));
             }
 
@@ -92,7 +92,7 @@ public class CommonModel extends BEEntityDaoObject {
     public long authenticateUserInfoCount(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow) {
             Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl.class, "inFlow");
 
-            if (scFlow.getUserName() != null && scFlow.getUserName().length() > 0) {
+            if (scFlow.getUserName() != null && scFlow.getUserName().trim().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.userName", scFlow.getUserName()));
             }
 
@@ -109,7 +109,7 @@ public class CommonModel extends BEEntityDaoObject {
                 this._addOrders(inFlowCriteria, orders);
             }
 
-            if (scFlow.getUserName() != null && scFlow.getUserName().length() > 0) {
+            if (scFlow.getUserName() != null && scFlow.getUserName().trim().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.userName", scFlow.getUserName()));
             }
             if (scFlow.getInfo() != null && scFlow.getInfo().getId() > 0) {
@@ -125,7 +125,7 @@ public class CommonModel extends BEEntityDaoObject {
     public long searchUserAccountCount(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl scFlow) {
             Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl.class, "inFlow");
 
-            if (scFlow.getUserName() != null && scFlow.getUserName().length() > 0) {
+            if (scFlow.getUserName() != null && scFlow.getUserName().trim().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.userName", scFlow.getUserName()));
             }
             if (scFlow.getInfo() != null && scFlow.getInfo().getId() > 0) {

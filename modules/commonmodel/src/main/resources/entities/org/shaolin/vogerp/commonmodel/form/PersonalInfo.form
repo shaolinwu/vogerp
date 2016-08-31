@@ -34,7 +34,7 @@
                 CommonModel.INSTANCE.update(defaultUser);
             }
 
-            if (form.isInWindows()) {
+            if (form != null && form.isInWindows()) {
                 form.closeIfinWindows();
                 @page.removeForm(@page.getEntityUiid());
             }

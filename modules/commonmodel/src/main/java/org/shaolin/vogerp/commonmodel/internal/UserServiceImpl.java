@@ -26,8 +26,10 @@ import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.uimaster.page.flow.WebflowConstants;
 import org.shaolin.vogerp.commonmodel.ICaptcherService;
 import org.shaolin.vogerp.commonmodel.IModuleService;
+import org.shaolin.vogerp.commonmodel.IOrganizationService;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.ICaptcha;
+import org.shaolin.vogerp.commonmodel.be.ILegalOrganizationInfo;
 import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 import org.shaolin.vogerp.commonmodel.be.IRegisterInfo;
@@ -35,6 +37,7 @@ import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
 import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
 import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
 import org.shaolin.vogerp.commonmodel.ce.EmployeeLevel;
+import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
 import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
 import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
@@ -206,6 +209,12 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	
 	@Override
 	public String login(IPersonalAccount user, HttpServletRequest request) {
+		if (user.getUserName() == null || user.getUserName().trim().length() == 0) {
+			return USER_LOGIN_PASSWORDRULES_PASSWORDINCORRECT;
+		}
+		if (user.getPassword() == null || user.getPassword().trim().length() == 0) {
+			return USER_LOGIN_PASSWORDRULES_PASSWORDINCORRECT;
+		}
 		user.setEnabled(true);
 		List<IPersonalAccount> result = CommonModel.INSTANCE.authenticateUserInfo((PersonalAccountImpl)user, null, 0, -1);
 		if (result.size() == 1) {
@@ -281,7 +290,12 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			userContext.setOrgType(organization.getType());
 			userContext.setOrgName(organization.getName());
 			userContext.setIsAdmin("uimaster".equals(organization.getOrgCode()));
-			
+			IOrganizationService orgService = AppContext.get().getService(IOrganizationService.class);
+	        ILegalOrganizationInfo legalInfo = orgService.getLegalInfo(userContext.getOrgId());
+	        if (legalInfo != null) {
+	        	userContext.setVerified(legalInfo.getVeriState() == OrgVerifyStatusType.VERIFIED);
+	        }
+	        
 			session.setAttribute(WebflowConstants.USER_SESSION_KEY, userContext);
 			session.setAttribute(WebflowConstants.USER_LOCALE_KEY, matchedUser.getLocale());
 			session.setAttribute(WebflowConstants.USER_ROLE_KEY, CEOperationUtil.toCElist(matchedUser.getInfo().getType()));

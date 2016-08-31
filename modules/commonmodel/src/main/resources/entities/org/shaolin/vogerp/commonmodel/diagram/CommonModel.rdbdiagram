@@ -133,7 +133,10 @@
     <ns2:column name="BANKACCOUNT" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="BANKTYPE" type="INTEGER" length="2" isNull="true" default="-1"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="VERISTATE" type="INTEGER" length="2" default="0"></ns2:column>
+    <ns2:column name="VERIFIER" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:column name="_taskId" type="BIGINT" length="38" default="0"></ns2:column>
     <ns2:primaryKey>
       <ns2:columnName>ID</ns2:columnName>
     </ns2:primaryKey>
@@ -154,7 +157,10 @@
       <ns2:fieldMapping beFieldName="bankAccount" columnName="BANKACCOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="bankType" columnName="BANKTYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="veriState" columnName="VERISTATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="verifierId" columnName="VERIFIER"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_taskId" columnName="_taskId"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
   <ns2:table>
@@ -457,7 +463,7 @@
                     <ns2:valueFieldPath>scFlow.userName</ns2:valueFieldPath>
                 </ns2:value>
                 <ns2:condition>
-                    <expressionString><![CDATA[scFlow.getUserName() != null && scFlow.getUserName().length() > 0]]></expressionString>
+                    <expressionString><![CDATA[scFlow.getUserName() != null && scFlow.getUserName().trim().length() > 0]]></expressionString>
                 </ns2:condition>
             </ns2:conditionValue>
         </ns2:fieldMapping>
@@ -492,7 +498,7 @@
                     <ns2:valueFieldPath>scFlow.userName</ns2:valueFieldPath>
                 </ns2:value>
                 <ns2:condition>
-                    <expressionString><![CDATA[scFlow.getUserName() != null && scFlow.getUserName().length() > 0]]></expressionString>
+                    <expressionString><![CDATA[scFlow.getUserName() != null && scFlow.getUserName().trim().length() > 0]]></expressionString>
                 </ns2:condition>
             </ns2:conditionValue>
         </ns2:fieldMapping>

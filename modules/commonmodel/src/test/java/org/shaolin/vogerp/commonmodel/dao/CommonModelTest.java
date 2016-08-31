@@ -10,6 +10,9 @@ public class CommonModelTest {
     @Test
     public void testsearchCEExtension() {
     	System.out.println("a: " + ((int)(Math.random()*5)));
+    	if ("".equals(null)) {
+    		System.out.println("a: " + ((int)(Math.random()*5)));
+    	}
     }
 
     @Test

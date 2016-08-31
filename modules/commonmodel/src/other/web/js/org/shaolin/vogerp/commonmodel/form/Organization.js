@@ -53,11 +53,6 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
         ui: elementList[prefix + "descriptionUI"]
     });
 
-    var moreUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "moreUILabel"]
-    });
-
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
@@ -81,13 +76,13 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "parentIdUI",prefix + "idUILabel",prefix + "idUI",prefix + "orgCodeUILabel",prefix + "orgCodeUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "moreUILabel"]
+        ,subComponents: [prefix + "parentIdUI",prefix + "idUILabel",prefix + "idUI",prefix + "orgCodeUILabel",prefix + "orgCodeUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentIdUI,idUILabel,idUI,orgCodeUILabel,orgCodeUI,nameUILabel,nameUI,typeUILabel,descriptionUILabel,descriptionUI,moreUILabel,okbtn,cancelbtn,typeUI,fieldPanel,actionPanel]
+        ,items: [parentIdUI,idUILabel,idUI,orgCodeUILabel,orgCodeUI,nameUILabel,nameUI,typeUILabel,descriptionUILabel,descriptionUI,okbtn,cancelbtn,typeUI,fieldPanel,actionPanel]
     });
 
     Form.parentIdUI=parentIdUI;
@@ -109,8 +104,6 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
-
-    Form.moreUILabel=moreUILabel;
 
     Form.okbtn=okbtn;
 
@@ -141,8 +134,6 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
-
-    Form.moreUILabel=moreUILabel;
 
     Form.actionPanel=actionPanel;
 

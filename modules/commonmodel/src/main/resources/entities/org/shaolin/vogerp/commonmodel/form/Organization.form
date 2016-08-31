@@ -33,8 +33,10 @@
                 CommonModel.INSTANCE.update(defaultUser);
             }
             
-            form.closeIfinWindows();
-            @page.removeForm(@page.getEntityUiid()); 
+            if (form != null && form.isInWindows()) {
+               form.closeIfinWindows();
+               @page.removeForm(@page.getEntityUiid()); 
+            }
         }
         ]]></expressionString>
       </ns2:exp>
@@ -43,7 +45,7 @@
   <ns2:eventHandler functionName="ShowIllegalInfo">
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showIllegalInfo-1509902581">
       <ns2:exp>
-        <expressionString>
+        <expressionString><![CDATA[
         import java.util.HashMap;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
@@ -69,23 +71,24 @@
                         
            form.openInWindows("公司法人信息", null, 600, 400);
         }
-        </expressionString>
+        ]]></expressionString>
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="Cancel">
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-1509902581">
       <ns2:exp>
-        <expressionString>
+        <expressionString><![CDATA[
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            form.closeIfinWindows(true);
-            
-            @page.removeForm(@page.getEntityUiid()); 
+            if (form != null && form.isInWindows()) {
+               form.closeIfinWindows(true);
+               @page.removeForm(@page.getEntityUiid()); 
+            }
         }
-        </expressionString>
+        ]]></expressionString>
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
@@ -97,7 +100,6 @@
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -173,15 +175,6 @@
       <ns2:component xsi:type="ns2:UITextAreaType" UIID="descriptionUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="moreUILabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>法人信息...</ns2:value>
-        </ns2:text>
-        <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="ShowIllegalInfo"></ns2:handler>
-        </ns2:EventListener>
-      </ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>idUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
@@ -221,10 +214,6 @@
       <ns2:layoutConstraint>
         <ns2:componentId>descriptionUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>moreUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">

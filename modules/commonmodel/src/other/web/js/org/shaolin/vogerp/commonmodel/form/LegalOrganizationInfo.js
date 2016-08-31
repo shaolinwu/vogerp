@@ -8,6 +8,11 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         ui: elementList[prefix + "idUI"]
     });
 
+    var verifiedUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "verifiedUI"]
+    });
+
     var orgIdUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "orgIdUILabel"]
@@ -56,46 +61,6 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     var busiLicenseDateUI = new UIMaster.ui.calendar
     ({
         ui: elementList[prefix + "busiLicenseDateUI"]
-    });
-
-    var taxRegistrationNumberUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "taxRegistrationNumberUILabel"]
-    });
-
-    var taxRegistrationNumberUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "taxRegistrationNumberUI"]
-    });
-
-    var taxRegistrationDateUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "taxRegistrationDateUILabel"]
-    });
-
-    var taxRegistrationDateUI = new UIMaster.ui.calendar
-    ({
-        ui: elementList[prefix + "taxRegistrationDateUI"]
-    });
-
-    var localTaxRegistrationNumberUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "localTaxRegistrationNumberUILabel"]
-    });
-
-    var localTaxRegistrationNumberUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "localTaxRegistrationNumberUI"]
-    });
-
-    var localTaxRegistrationDateUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "localTaxRegistrationDateUILabel"]
-    });
-
-    var localTaxRegistrationDateUI = new UIMaster.ui.calendar
-    ({
-        ui: elementList[prefix + "localTaxRegistrationDateUI"]
     });
 
     var enterpriseCodeUILabel = new UIMaster.ui.label
@@ -149,16 +114,18 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "orgIdUILabel",prefix + "orgIdUI",prefix + "legalPersonUILabel",prefix + "legalPersonUI",prefix + "tradeLicenseNumberUILabel",prefix + "tradeLicenseNumberUI",prefix + "busiLicenseNumberUILabel",prefix + "busiLicenseNumberUI",prefix + "busiLicenseDateUILabel",prefix + "busiLicenseDateUI",prefix + "taxRegistrationNumberUILabel",prefix + "taxRegistrationNumberUI",prefix + "taxRegistrationDateUILabel",prefix + "taxRegistrationDateUI",prefix + "localTaxRegistrationNumberUILabel",prefix + "localTaxRegistrationNumberUI",prefix + "localTaxRegistrationDateUILabel",prefix + "localTaxRegistrationDateUI",prefix + "enterpriseCodeUILabel",prefix + "enterpriseCodeUI",prefix + "bankAccountUILabel",prefix + "bankAccountUI",prefix + "bankTypeUILabel",prefix + "bankTypeUI"]
+        ,subComponents: [prefix + "idUI",prefix + "verifiedUI",prefix + "orgIdUILabel",prefix + "orgIdUI",prefix + "legalPersonUILabel",prefix + "legalPersonUI",prefix + "tradeLicenseNumberUILabel",prefix + "tradeLicenseNumberUI",prefix + "busiLicenseNumberUILabel",prefix + "busiLicenseNumberUI",prefix + "busiLicenseDateUILabel",prefix + "busiLicenseDateUI",prefix + "enterpriseCodeUILabel",prefix + "enterpriseCodeUI",prefix + "bankAccountUILabel",prefix + "bankAccountUI",prefix + "bankTypeUILabel",prefix + "bankTypeUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,orgIdUILabel,orgIdUI,legalPersonUILabel,legalPersonUI,tradeLicenseNumberUILabel,tradeLicenseNumberUI,busiLicenseNumberUILabel,busiLicenseNumberUI,busiLicenseDateUILabel,busiLicenseDateUI,taxRegistrationNumberUILabel,taxRegistrationNumberUI,taxRegistrationDateUILabel,taxRegistrationDateUI,localTaxRegistrationNumberUILabel,localTaxRegistrationNumberUI,localTaxRegistrationDateUILabel,localTaxRegistrationDateUI,enterpriseCodeUILabel,enterpriseCodeUI,bankAccountUILabel,bankAccountUI,bankTypeUILabel,bankTypeUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,verifiedUI,orgIdUILabel,orgIdUI,legalPersonUILabel,legalPersonUI,tradeLicenseNumberUILabel,tradeLicenseNumberUI,busiLicenseNumberUILabel,busiLicenseNumberUI,busiLicenseDateUILabel,busiLicenseDateUI,enterpriseCodeUILabel,enterpriseCodeUI,bankAccountUILabel,bankAccountUI,bankTypeUILabel,bankTypeUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
+
+    Form.verifiedUI=verifiedUI;
 
     Form.orgIdUILabel=orgIdUILabel;
 
@@ -179,22 +146,6 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     Form.busiLicenseDateUILabel=busiLicenseDateUILabel;
 
     Form.busiLicenseDateUI=busiLicenseDateUI;
-
-    Form.taxRegistrationNumberUILabel=taxRegistrationNumberUILabel;
-
-    Form.taxRegistrationNumberUI=taxRegistrationNumberUI;
-
-    Form.taxRegistrationDateUILabel=taxRegistrationDateUILabel;
-
-    Form.taxRegistrationDateUI=taxRegistrationDateUI;
-
-    Form.localTaxRegistrationNumberUILabel=localTaxRegistrationNumberUILabel;
-
-    Form.localTaxRegistrationNumberUI=localTaxRegistrationNumberUI;
-
-    Form.localTaxRegistrationDateUILabel=localTaxRegistrationDateUILabel;
-
-    Form.localTaxRegistrationDateUI=localTaxRegistrationDateUI;
 
     Form.enterpriseCodeUILabel=enterpriseCodeUILabel;
 
@@ -216,6 +167,8 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.idUI=idUI;
 
+    Form.verifiedUI=verifiedUI;
+
     Form.orgIdUILabel=orgIdUILabel;
 
     Form.orgIdUI=orgIdUI;
@@ -235,22 +188,6 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     Form.busiLicenseDateUILabel=busiLicenseDateUILabel;
 
     Form.busiLicenseDateUI=busiLicenseDateUI;
-
-    Form.taxRegistrationNumberUILabel=taxRegistrationNumberUILabel;
-
-    Form.taxRegistrationNumberUI=taxRegistrationNumberUI;
-
-    Form.taxRegistrationDateUILabel=taxRegistrationDateUILabel;
-
-    Form.taxRegistrationDateUI=taxRegistrationDateUI;
-
-    Form.localTaxRegistrationNumberUILabel=localTaxRegistrationNumberUILabel;
-
-    Form.localTaxRegistrationNumberUI=localTaxRegistrationNumberUI;
-
-    Form.localTaxRegistrationDateUILabel=localTaxRegistrationDateUILabel;
-
-    Form.localTaxRegistrationDateUI=localTaxRegistrationDateUI;
 
     Form.enterpriseCodeUILabel=enterpriseCodeUILabel;
 
@@ -273,7 +210,20 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo */
-        /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo */
+
+        
+       if (this.verifiedUI.value== "2") {
+           $("<div style=\"background-color:greenyellow;\">\u8EAB\u4EFD\u9A8C\u8BC1\u901A\u8FC7\u3002</div>").prependTo($(this.fieldPanel));
+       } else if (this.verifiedUI.value == "3") {
+           $("<div style=\"background-color:red;\">\u8EAB\u4EFD\u9A8C\u8BC1\u672A\u901A\u8FC7\uFF01\u8BF7\u4FEE\u6539\u4FE1\u606F\u540E\u91CD\u65B0\u7533\u8BF7\u3002</div>").prependTo($(this.fieldPanel));
+       } else if (this.verifiedUI.value == "1") {
+           $("<div style=\"background-color:yellow;\">\u8EAB\u4EFD\u9A8C\u8BC1\u5BA1\u6838\u4E2D\u3002\u3002\u3002</div>").prependTo($(this.fieldPanel));
+       } else {
+           $("<div style=\"background-color:darkgrey;\">\u8EAB\u4EFD\u672A\u9A8C\u8BC1\uFF01</div>").prependTo($(this.fieldPanel));
+       }
+    
+    
+            /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo */
     };
 
     Form.Save = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Save;

@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.shaolin.bmdp.runtime.ce.AbstractConstant;
+import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.ce.DynamicConstant;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.bmdp.runtime.spi.IConstantService;
@@ -355,12 +356,13 @@ public class CEOperationUtil {
 						ceValues.add(constantEntity.getByIntValue(Integer.valueOf(values)));
 					}
 				}
-			} else {
-				String[] vs= value.split(",");
-				if (vs.length < 2) {
-					throw new Exception();
+			} else if (value.indexOf(";") != -1) {
+				String[] items = value.split(";");
+				for (String ce: items) {
+					ceValues.add(CEUtil.toCEValue(ce));
 				}
-				ceValues.add(cs.getConstantEntity(vs[0]).getByIntValue(Integer.valueOf(vs[1])));
+			} else {
+				ceValues.add(CEUtil.toCEValue(value));
 			}
 			return ceValues;
 		} catch (Exception e) {
