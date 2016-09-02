@@ -10,3 +10,8 @@ sql
 .settings
 hbm
 /modules/accounting/src/main/java/org/shaolin/vogerp/accounting/ce
+
+.idea
+*.iml
+*/target/*
+
