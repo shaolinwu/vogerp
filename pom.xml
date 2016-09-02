@@ -105,6 +105,28 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- resolve property from out file -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0-alpha-2</version>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <outputFile />
+                    <properties />
+                    <files>
+                        <file>/uimaster/data/maven.properties</file>
+                    </files>
+                    <quiet>true</quiet>
+                </configuration>
+            </plugin>
         </plugins>
 
         <pluginManagement>
