@@ -134,6 +134,36 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 				}
 				return false;
 			}
+			@Override
+			public boolean hasChild(List hierarchy, String ceName, int intValue) {
+				for (Object i : hierarchy) {
+					ICEHierarchy c = (ICEHierarchy)i;
+					if (ceName.equals(c.getParentCeName()) && intValue == c.getParentCeItem()) {
+						return IServerServiceManager.INSTANCE.getConstantService().getConstantEntity(c.getCeName()) != null;
+					}
+				}
+				return false;
+			}
+			@Override
+			public IConstantEntity getParent(List hierarchy, String ceName) {
+				for (Object i : hierarchy) {
+					ICEHierarchy c = (ICEHierarchy)i;
+					if (ceName.equals(c.getCeName())) {
+						return IServerServiceManager.INSTANCE.getConstantService().getConstantEntity(c.getParentCeName());
+					}
+				}
+				return null;
+			}
+			@Override
+			public int getParentsIntValue(List hierarchy, String ceName) {
+				for (Object i : hierarchy) {
+					ICEHierarchy c = (ICEHierarchy)i;
+					if (ceName.equals(c.getCeName())) {
+						return c.getParentCeItem();
+					}
+				}
+				return -1;
+			}
 		});
 		constantService.setReloadFunction(new Runnable() {
 			@Override

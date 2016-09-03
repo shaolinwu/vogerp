@@ -134,6 +134,36 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
+  <ns2:eventHandler functionName="openProductOverview">
+     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openProductOverview-20160317-454353">
+         <ns2:exp>
+             <ns2:expressionString><![CDATA[
+             import java.util.HashMap;
+             import java.util.List;
+             import org.shaolin.uimaster.page.AjaxContext;
+             import org.shaolin.uimaster.page.ajax.*;
+             import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+             import org.shaolin.vogerp.productmodel.be.ProductCostImpl;
+             import org.shaolin.vogerp.productmodel.be.ProductImpl;
+             import org.shaolin.vogerp.productmodel.dao.ProductModel;
+             import org.shaolin.vogerp.productmodel.util.ProductUtil;
+             {
+                 RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+                 HashMap output = (HashMap)form.ui2Data();
+                 ProductImpl defaultUser = (ProductImpl)output.get("beObject");
+                 HashMap input = new HashMap();
+                 input.put("list", defaultUser.getPriceList());
+                 input.put("beObject", defaultUser);
+                 input.put("editable", new Boolean(false));
+                 form = new RefForm("costForm", "org.shaolin.vogerp.productmodel.form.ProductDetailOverview", input);
+                 @page.addElement(form);
+                 
+                 form.openInWindows("Product Overview", null, true);
+             }
+             ]]></ns2:expressionString>
+         </ns2:exp>
+     </ns2:ops>
+ </ns2:eventHandler>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -146,6 +176,13 @@
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIPreNextPanelType" UIID="funcsPanel">
+         <ns2:ajaxLoad>false</ns2:ajaxLoad>
+         <ns2:Property name="vertical">
+            <ns2:value xsi:type="ns2:BooleanPropertyType">
+                <value>true</value>
+            </ns2:value>
+         </ns2:Property>
+         <!-- 
          <ns2:previousAction xsi:type="ns2:ExpressionPropertyType">
              <ns2:expression xsi:type="ns2:ExpressionType">
                  <ns2:expressionString><![CDATA[
@@ -183,6 +220,7 @@
                  }]]></ns2:expressionString>
              </ns2:expression>
          </ns2:nextAction>
+          -->
          <ns2:tab uiid="infoPanel0">
              <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
                  <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
@@ -191,24 +229,10 @@
              <ns2:panel UIID="infoPanel0">
                <ns2:layout xsi:type="ns2:TableLayoutType">
                  <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
                  <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
                </ns2:layout>
                <ns2:component xsi:type="ns2:UIHiddenType" UIID="templateIdUI" />
-               <ns2:component xsi:type="ns2:UIPanelType" UIID="photoPanel">
-					<ns2:layout xsi:type="ns2:TableLayoutType">
-					  <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-					  <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-					</ns2:layout>
-					<ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="photoUI">
-					  <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.ImageUploader" />
-					</ns2:component>
-					<ns2:layoutConstraint>
-					  <ns2:componentId>photoUI</ns2:componentId>
-					  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
-					</ns2:layoutConstraint>
-		      </ns2:component>
-		      <ns2:component xsi:type="ns2:UIPanelType" UIID="attributePanel">
+		       <ns2:component xsi:type="ns2:UIPanelType" UIID="attributePanel">
 			      <ns2:layout xsi:type="ns2:TableLayoutType">
 	                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 	                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -236,7 +260,7 @@
 	              </ns2:component>
 	              <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="typeUI">
 	                 <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-	                 <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox" />
+	                 <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductHierarchySelector" />
 	              </ns2:component>
 	               <ns2:component xsi:type="ns2:UILabelType" UIID="nameUILabel">
 	                <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -260,6 +284,9 @@
 	               </ns2:component>
 	               <ns2:component xsi:type="ns2:UITextAreaType" UIID="descriptionUI">
 	                 <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+	                 <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+                       <ns2:value>false</ns2:value>
+                     </ns2:allowBlank>
 	               </ns2:component>
 	               <ns2:layoutConstraint>
 	                 <ns2:componentId>serialNumberUILabel</ns2:componentId>
@@ -295,12 +322,8 @@
 	               </ns2:layoutConstraint>
                </ns2:component>
                <ns2:layoutConstraint>
-                 <ns2:componentId>photoPanel</ns2:componentId>
-                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-               </ns2:layoutConstraint>
-               <ns2:layoutConstraint>
                  <ns2:componentId>attributePanel</ns2:componentId>
-                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
             </ns2:panel>
          </ns2:tab>
@@ -320,17 +343,40 @@
              <ns2:panel UIID="htmlPanel">
                 <ns2:layout xsi:type="ns2:TableLayoutType">
                   <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                  <ns2:columnWidthWeight>200</ns2:columnWidthWeight>
+                  <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                  <ns2:columnWidthWeight>1</ns2:columnWidthWeight>
                 </ns2:layout>
+                <ns2:component xsi:type="ns2:UIPanelType" UIID="photoPanel">
+                    <ns2:layout xsi:type="ns2:TableLayoutType">
+                      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+                    </ns2:layout>
+                    <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="photoUI">
+                      <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.ImageUploader" />
+                    </ns2:component>
+                    <ns2:layoutConstraint>
+                      <ns2:componentId>photoUI</ns2:componentId>
+                      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+                    </ns2:layoutConstraint>
+                 </ns2:component>
                  <ns2:component xsi:type="ns2:UITextAreaType" UIID="htmlDescUI">
                    <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
                    <ns2:htmlSupport xsi:type="ns2:BooleanPropertyType">
                        <value>true</value>
                    </ns2:htmlSupport>
+                   <ns2:Property name="height">
+		               <ns2:value xsi:type="ns2:StringPropertyType">
+		                   <value>300px</value>
+		               </ns2:value>
+		           </ns2:Property>
                  </ns2:component>
                  <ns2:layoutConstraint>
-                   <ns2:componentId>htmlDescUI</ns2:componentId>
+                   <ns2:componentId>photoPanel</ns2:componentId>
                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+                 </ns2:layoutConstraint>
+                 <ns2:layoutConstraint>
+                   <ns2:componentId>htmlDescUI</ns2:componentId>
+                   <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
                  </ns2:layoutConstraint>
             </ns2:panel>
          </ns2:tab>
@@ -346,15 +392,24 @@
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="importTemplate">
         <ns2:UIStyle>productInfoForm_typeUI_Label</ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
-           <ns2:value>从产品模样导入...</ns2:value>
+           <ns2:value>从模板导入</ns2:value>
         </ns2:text>
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="openProductTempSelector"></ns2:handler>
         </ns2:EventListener>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="previewbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="openProductOverview"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>预览</ns2:value>
+        </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
@@ -384,12 +439,16 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>okbtn</ns2:componentId>
+        <ns2:componentId>previewbtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>closebtn</ns2:componentId>
+        <ns2:componentId>okbtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="2" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>closebtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="3" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
@@ -410,7 +469,7 @@
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductHierarchySelector"></ns2:mappingRule>
       <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.type" paramName="value"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">

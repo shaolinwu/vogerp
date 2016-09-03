@@ -60,6 +60,14 @@
         <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
             <bediagram:targetEntity entityName="AbstractProduct" />
         </bediagram:parentObject>
+        <bediagram:member>
+            <bediagram:name>priceList</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEListType">
+                <bediagram:elementType xsi:type="bediagram:BEObjRefType">
+                    <bediagram:targetEntity entityName="ProductPrice" />
+                </bediagram:elementType>
+            </bediagram:type>
+        </bediagram:member>
     </bediagram:beEntity>
     
 	<bediagram:beEntity needOrgId="true" needPersist="true" needUIEntity="true">

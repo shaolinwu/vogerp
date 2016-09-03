@@ -108,17 +108,17 @@
 						
 						// list the nodes under the root node.
 						for (int j = 0; j < all.size(); j++) {
-									ProductImpl mg = (ProductImpl) all.get(j);
-									if (!mg.getType().equals(ptype)) {
-										   continue;
-									}
-									
-									dataModel.put("pg_" + mg.getId(), mg);
-									TreeItem pitem = new TreeItem();
-									pitem.setId("pg_" + mg.getId());
-									pitem.setText(ProductUtil.getProductSummary(mg));
-									
-									gitem.getChildren().add(pitem);
+							ProductImpl mg = (ProductImpl) all.get(j);
+							if (mg.getType() == null || !mg.getType().equals(ptype)) {
+								   continue;
+							}
+							
+							dataModel.put("pg_" + mg.getId(), mg);
+							TreeItem pitem = new TreeItem();
+							pitem.setId("pg_" + mg.getId());
+							pitem.setText(ProductUtil.getProductSummary(mg));
+							
+							gitem.getChildren().add(pitem);
 						}
 						
 					}

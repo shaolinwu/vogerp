@@ -6,6 +6,7 @@ function org_shaolin_vogerp_productmodel_form_ProductPriceTable(json)
     var itemTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "itemTable"]
+        ,disableScrollY: true
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -35,7 +36,7 @@ function org_shaolin_vogerp_productmodel_form_ProductPriceTable(json)
 
     Form.createItem = org_shaolin_vogerp_productmodel_form_ProductPriceTable_createItem;
 
-    Form.createItem0 = org_shaolin_vogerp_productmodel_form_ProductPriceTable_createItem0;
+    Form.openItem = org_shaolin_vogerp_productmodel_form_ProductPriceTable_openItem;
 
     Form.deleteItem = org_shaolin_vogerp_productmodel_form_ProductPriceTable_deleteItem;
 
@@ -67,14 +68,14 @@ function org_shaolin_vogerp_productmodel_form_ProductPriceTable(json)
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_productmodel_form_ProductPriceTable_createItem0(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductPriceTable_createItem0 */
+    function org_shaolin_vogerp_productmodel_form_ProductPriceTable_openItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductPriceTable_openItem */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem0-201603142211",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductPriceTable_createItem0 */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openItem-201603142210",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductPriceTable_openItem */
 
 
     /* auto generated eventlistener function declaration */
@@ -94,7 +95,6 @@ function org_shaolin_vogerp_productmodel_form_ProductPriceTable(json)
         var UIEntity = this;
 
         {
-            this.itemTable.syncBodyDataToServer();
         }
         
         // cal ajax function. 

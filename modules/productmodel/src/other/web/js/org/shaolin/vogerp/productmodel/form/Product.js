@@ -6,6 +6,7 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     var funcsPanel = new UIMaster.ui.prenextpanel
     ({
         ui: elementList[prefix + "funcsPanel"]
+        ,vertical: true
         ,items: []
         ,subComponents: [prefix + "infoPanel0",prefix + "infoPanel1",prefix + "htmlPanel"]
     });
@@ -14,14 +15,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         ui: elementList[prefix + "templateIdUI"]
     });
 
-    var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
-
-    var photoPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "photoPanel"]
-        ,items: []
-        ,subComponents: [prefix + "photoUI"]
-    });
     var serialNumberUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "serialNumberUILabel"]
@@ -37,7 +30,7 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
         ui: elementList[prefix + "typeUILabel"]
     });
 
-    var typeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "typeUI."});
+    var typeUI = new org_shaolin_vogerp_productmodel_form_ProductHierarchySelector({"prefix":prefix + "typeUI."});
 
     var nameUILabel = new UIMaster.ui.label
     ({
@@ -69,25 +62,39 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     ({
         ui: elementList[prefix + "infoPanel0"]
         ,items: []
-        ,subComponents: [prefix + "templateIdUI",prefix + "photoPanel",prefix + "attributePanel"]
+        ,subComponents: [prefix + "templateIdUI",prefix + "attributePanel"]
     });
     var infoPanel1 = new org_shaolin_vogerp_productmodel_form_ProductPriceTable({"prefix":prefix + "infoPanel1."});
 
+    var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
+
+    var photoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "photoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "photoUI"]
+    });
     var htmlDescUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "htmlDescUI"]
+        ,height: "300px"
     });
 
     var htmlPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "htmlPanel"]
         ,items: []
-        ,subComponents: [prefix + "htmlDescUI"]
+        ,subComponents: [prefix + "photoPanel",prefix + "htmlDescUI"]
     });
 
     var importTemplate = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "importTemplate"]
+    });
+
+    var previewbtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "previewbtn"]
     });
 
     var okbtn = new UIMaster.ui.button
@@ -104,7 +111,7 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "importTemplate",prefix + "okbtn",prefix + "closebtn"]
+        ,subComponents: [prefix + "importTemplate",prefix + "previewbtn",prefix + "okbtn",prefix + "closebtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -117,7 +124,7 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [funcsPanel,importTemplate,okbtn,closebtn,fieldPanel,actionPanel]
+        ,items: [funcsPanel,importTemplate,previewbtn,okbtn,closebtn,fieldPanel,actionPanel]
     });
 
     Form.funcsPanel=funcsPanel;
@@ -125,10 +132,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     Form.infoPanel0=infoPanel0;
 
     Form.templateIdUI=templateIdUI;
-
-    Form.photoPanel=photoPanel;
-
-    Form.photoUI=photoUI;
 
     Form.attributePanel=attributePanel;
 
@@ -152,9 +155,15 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.htmlPanel=htmlPanel;
 
+    Form.photoPanel=photoPanel;
+
+    Form.photoUI=photoUI;
+
     Form.htmlDescUI=htmlDescUI;
 
     Form.importTemplate=importTemplate;
+
+    Form.previewbtn=previewbtn;
 
     Form.okbtn=okbtn;
 
@@ -168,10 +177,6 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.templateIdUI=templateIdUI;
 
-    Form.photoPanel=photoPanel;
-
-    Form.photoUI=photoUI;
-
     Form.attributePanel=attributePanel;
 
     Form.serialNumberUILabel=serialNumberUILabel;
@@ -194,11 +199,17 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
     Form.htmlPanel=htmlPanel;
 
+    Form.photoPanel=photoPanel;
+
+    Form.photoUI=photoUI;
+
     Form.htmlDescUI=htmlDescUI;
 
     Form.actionPanel=actionPanel;
 
     Form.importTemplate=importTemplate;
+
+    Form.previewbtn=previewbtn;
 
     Form.okbtn=okbtn;
 
@@ -217,6 +228,8 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
     Form.SaveSelectedTemplate = org_shaolin_vogerp_productmodel_form_Product_SaveSelectedTemplate;
 
     Form.Cancel = org_shaolin_vogerp_productmodel_form_Product_Cancel;
+
+    Form.openProductOverview = org_shaolin_vogerp_productmodel_form_Product_openProductOverview;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_productmodel_form_Product_invokeDynamicFunction;
 
@@ -281,6 +294,17 @@ function org_shaolin_vogerp_productmodel_form_Product(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-201504121132",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_Product_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_productmodel_form_Product_openProductOverview(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_Product_openProductOverview */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openProductOverview-20160317-454353",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_productmodel_form_Product_openProductOverview */
 
 
     /* auto generated eventlistener function declaration */

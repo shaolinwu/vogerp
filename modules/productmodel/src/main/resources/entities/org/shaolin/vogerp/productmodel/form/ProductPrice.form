@@ -1,29 +1,35 @@
 <?xml version="1.0" ?>
-<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns7="http://bmdp.shaolin.org/datamodel/FlowDiagram" xmlns:ns6="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns5="http://bmdp.shaolin.org/datamodel/Workflow" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
   <entityName>org.shaolin.vogerp.productmodel.form.ProductPrice</entityName>
   <systemVersion>0</systemVersion>
   <ns2:eventHandler functionName="Save">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveDetail-1031867168">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+            var constraint_result = this.Form.validate();
+            if (constraint_result != true && constraint_result != null) {
+                return false;
+            }
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveDetail-20160828-213158">
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
+        import org.shaolin.vogerp.productmodel.dao.ProductModel;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            HashMap input = (HashMap)form.ui2Data();
+            HashMap out = (HashMap)form.ui2Data();
 
-            ProductPriceImpl defaultUser = (ProductPriceImpl)input.get("beObject");
-            String v = @page.getHidden("idUI").getValue();
-            if (v != null && v.length() > 0) {
-            	   Long objectId = Long.valueOf(v);
-            	   defaultUser.setId(objectId.longValue());
-            }
+            ProductPriceImpl defaultUser = (ProductPriceImpl)out.get("beObject");
             if (defaultUser.getId() == 0) {
-                System.out.println("created object: " + defaultUser);
+                ProductModel.INSTANCE.create(defaultUser);
             } else {
-                System.out.println("updated object: " + defaultUser);
+                ProductModel.INSTANCE.update(defaultUser);
             }
 
             form.closeIfinWindows();
@@ -31,10 +37,60 @@
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
-    <ns2:ops></ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="selectPricePackage">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectPricePackage-201603142210">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.*;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.productmodel.be.*;
+        { 
+            ProductCharacteristicImpl charac = new ProductCharacteristicImpl();
+            charac.setCeValues(@page.getHidden("packagesValueUI").getValue());
+            
+            HashMap input = new HashMap();
+            input.put("beObject", charac);
+            input.put("pType", @page.getHidden("productTypeUI").getValue());
+            input.put("editable", new Boolean(false));
+            input.put(RefForm.RECONFIG_ORIGINAL, "Selected");
+            
+            String prefix =  @page.getEntityUiid();
+            input.put(RefForm.RECONFIG_OVERRIDE, prefix + ".createItem0");
+            RefForm newForm = new RefForm("pCharacForm", "org.shaolin.vogerp.productmodel.form.ProductCharacteristic", input);
+            @page.addElement(newForm);
+            newForm.openInWindows("选择属性包", null, 690, 500);
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="createItem0">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createItem0-201603142211">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.*;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.productmodel.be.*;
+        import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            HashMap output = (HashMap)form.ui2Data();
+            ProductCharacteristicImpl defaultUser = (ProductCharacteristicImpl)output.get("beObject");
+            
+            String formId = "priceForm.";//an potential bug here without this productInfoForm.infoPanel1.
+            ((Label)@page.getElementByAbsoluteId(formId + "packagesUI")).setValue(CEOperationUtil.toHTMLString(defaultUser.getCeValues()));
+            ((Hidden)@page.getElementByAbsoluteId(formId + "packagesValueUI")).setValue(defaultUser.getCeValues());
+            
+            form.closeIfinWindows();
+            @page.removeForm(@page.getEntityUiid()); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="Cancel">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-1144004672">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20160828-213158">
       <ns2:exp>
         <expressionString><![CDATA[
         import org.shaolin.uimaster.page.AjaxContext;
@@ -62,55 +118,33 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="idUI">
         <ns2:secure>
           <ns2:value>true</ns2:value>
         </ns2:secure>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="productIdUILabel">
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="packagesValueUI">
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="productTypeUI">
+        <ns2:secure>
+          <ns2:value>true</ns2:value>
+        </ns2:secure>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="costUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
           <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.productmodel.be.ProductPrice.productId</ns2:key>
+          <ns2:key>org.shaolin.vogerp.productmodel.be.ProductPrice.cost</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="productIdUI">
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="costUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="productUILabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.productmodel.be.ProductPrice.product</ns2:key>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="productUI">
-        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="packagesUILabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.productmodel.be.ProductPrice.packages</ns2:key>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="packagesUI">
-        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="partyIdUILabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.productmodel.be.ProductPrice.partyId</ns2:key>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="partyIdUI">
-        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+           <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="priceUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -121,6 +155,9 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="priceUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+           <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="exceedAmountUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -142,104 +179,68 @@
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="discountUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="commentsUILabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="packagesUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget pricepackagelabel</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
           <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.productmodel.be.ProductPrice.comments</ns2:key>
+          <ns2:key>org.shaolin.vogerp.productmodel.be.ProductPrice.packages</ns2:key>
         </ns2:text>
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="selectPricePackage"></ns2:handler>
+        </ns2:EventListener>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="commentsUI">
-        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="typeUILabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.productmodel.be.ProductPrice.type</ns2:key>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="typeUI">
-        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="packagesUI">
+        <ns2:UIStyle>uimaster_rightform_widget pricepackage</ns2:UIStyle>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+           <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>productIdUILabel</ns2:componentId>
+        <ns2:componentId>costUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>productIdUI</ns2:componentId>
+        <ns2:componentId>costUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>productUILabel</ns2:componentId>
+        <ns2:componentId>priceUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>productUI</ns2:componentId>
+        <ns2:componentId>priceUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>packagesUILabel</ns2:componentId>
+        <ns2:componentId>exceedAmountUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>packagesUI</ns2:componentId>
+        <ns2:componentId>exceedAmountUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>partyIdUILabel</ns2:componentId>
+        <ns2:componentId>discountUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>partyIdUI</ns2:componentId>
+        <ns2:componentId>discountUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>priceUILabel</ns2:componentId>
+        <ns2:componentId>packagesUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>priceUI</ns2:componentId>
+        <ns2:componentId>packagesUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>exceedAmountUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>exceedAmountUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>discountUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>discountUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>commentsUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="7" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>commentsUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="7" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>typeUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="8" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>typeUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="8" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+        <ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
@@ -298,6 +299,49 @@
           <expressionString>$beObject.getId()</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="packagesUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
+         <ns2:expression>
+            <expressionString>org.shaolin.vogerp.commonmodel.util.CEOperationUtil.toHTMLString($beObject.getPackages())</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="packagesValueUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.packages" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="productTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
+         <ns2:expression>
+            <expressionString>$beObject.getProduct().getType()</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithFloatNumber"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="costUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.cost" paramName="FloatNumber"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithFloatNumber"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="priceUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.price" paramName="FloatNumber"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping6">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="exceedAmountUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.exceedAmount" paramName="Number"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping7">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithFloatNumber"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="discountUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.discount" paramName="FloatNumber"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>{

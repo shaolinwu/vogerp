@@ -66,6 +66,7 @@
           <ns2:value>true</ns2:value>
         </ns2:secure>
       </ns2:component>
+      <!-- 
       <ns2:component xsi:type="ns2:UILabelType" UIID="productIdUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -76,6 +77,7 @@
       <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="productIdUI">
          <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductSelector" />
       </ns2:component>
+       -->
       <ns2:component xsi:type="ns2:UILabelType" UIID="warehouseIdUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -134,6 +136,7 @@
         <ns2:componentId>warehouseIdUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
+      <!-- 
       <ns2:layoutConstraint>
         <ns2:componentId>productIdUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
@@ -142,6 +145,7 @@
         <ns2:componentId>productIdUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
+      -->
       <ns2:layoutConstraint>
         <ns2:componentId>coordinateUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
@@ -242,6 +246,7 @@
     <ns2:DataEntity scope="InOut" name="displayItems1" category="JavaClass">
       <type entityName="java.util.List"></type>
     </ns2:DataEntity>
+    <!-- 
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductSelector"></ns2:mappingRule>
       <ns2:UIComponent componentPath="productIdUI" paramName="UIWidgetType"></ns2:UIComponent>
@@ -256,6 +261,7 @@
         </ns2:uiToDataExpression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
+     -->
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
       <ns2:UIComponent componentPath="warehouseIdUI" paramName="UIWidgetType"></ns2:UIComponent>

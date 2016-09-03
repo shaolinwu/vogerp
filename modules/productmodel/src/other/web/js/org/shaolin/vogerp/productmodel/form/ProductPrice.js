@@ -8,44 +8,24 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
         ui: elementList[prefix + "idUI"]
     });
 
-    var productIdUILabel = new UIMaster.ui.label
+    var packagesValueUI = new UIMaster.ui.hidden
     ({
-        ui: elementList[prefix + "productIdUILabel"]
+        ui: elementList[prefix + "packagesValueUI"]
     });
 
-    var productIdUI = new UIMaster.ui.textfield
+    var productTypeUI = new UIMaster.ui.hidden
     ({
-        ui: elementList[prefix + "productIdUI"]
+        ui: elementList[prefix + "productTypeUI"]
     });
 
-    var productUILabel = new UIMaster.ui.label
+    var costUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "productUILabel"]
+        ui: elementList[prefix + "costUILabel"]
     });
 
-    var productUI = new UIMaster.ui.label
+    var costUI = new UIMaster.ui.textfield
     ({
-        ui: elementList[prefix + "productUI"]
-    });
-
-    var packagesUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "packagesUILabel"]
-    });
-
-    var packagesUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "packagesUI"]
-    });
-
-    var partyIdUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "partyIdUILabel"]
-    });
-
-    var partyIdUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "partyIdUI"]
+        ui: elementList[prefix + "costUI"]
     });
 
     var priceUILabel = new UIMaster.ui.label
@@ -78,24 +58,14 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
         ui: elementList[prefix + "discountUI"]
     });
 
-    var commentsUILabel = new UIMaster.ui.label
+    var packagesUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "commentsUILabel"]
+        ui: elementList[prefix + "packagesUILabel"]
     });
 
-    var commentsUI = new UIMaster.ui.textfield
+    var packagesUI = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "commentsUI"]
-    });
-
-    var typeUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "typeUILabel"]
-    });
-
-    var typeUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "typeUI"]
+        ui: elementList[prefix + "packagesUI"]
     });
 
     var okbtn = new UIMaster.ui.button
@@ -119,32 +89,24 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "productIdUILabel",prefix + "productIdUI",prefix + "productUILabel",prefix + "productUI",prefix + "packagesUILabel",prefix + "packagesUI",prefix + "partyIdUILabel",prefix + "partyIdUI",prefix + "priceUILabel",prefix + "priceUI",prefix + "exceedAmountUILabel",prefix + "exceedAmountUI",prefix + "discountUILabel",prefix + "discountUI",prefix + "commentsUILabel",prefix + "commentsUI",prefix + "typeUILabel",prefix + "typeUI"]
+        ,subComponents: [prefix + "idUI",prefix + "packagesValueUI",prefix + "productTypeUI",prefix + "costUILabel",prefix + "costUI",prefix + "priceUILabel",prefix + "priceUI",prefix + "exceedAmountUILabel",prefix + "exceedAmountUI",prefix + "discountUILabel",prefix + "discountUI",prefix + "packagesUILabel",prefix + "packagesUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,productIdUILabel,productIdUI,productUILabel,productUI,packagesUILabel,packagesUI,partyIdUILabel,partyIdUI,priceUILabel,priceUI,exceedAmountUILabel,exceedAmountUI,discountUILabel,discountUI,commentsUILabel,commentsUI,typeUILabel,typeUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,packagesValueUI,productTypeUI,costUILabel,costUI,priceUILabel,priceUI,exceedAmountUILabel,exceedAmountUI,discountUILabel,discountUI,packagesUILabel,packagesUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
 
-    Form.productIdUILabel=productIdUILabel;
+    Form.packagesValueUI=packagesValueUI;
 
-    Form.productIdUI=productIdUI;
+    Form.productTypeUI=productTypeUI;
 
-    Form.productUILabel=productUILabel;
+    Form.costUILabel=costUILabel;
 
-    Form.productUI=productUI;
-
-    Form.packagesUILabel=packagesUILabel;
-
-    Form.packagesUI=packagesUI;
-
-    Form.partyIdUILabel=partyIdUILabel;
-
-    Form.partyIdUI=partyIdUI;
+    Form.costUI=costUI;
 
     Form.priceUILabel=priceUILabel;
 
@@ -158,13 +120,9 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
 
     Form.discountUI=discountUI;
 
-    Form.commentsUILabel=commentsUILabel;
+    Form.packagesUILabel=packagesUILabel;
 
-    Form.commentsUI=commentsUI;
-
-    Form.typeUILabel=typeUILabel;
-
-    Form.typeUI=typeUI;
+    Form.packagesUI=packagesUI;
 
     Form.okbtn=okbtn;
 
@@ -174,21 +132,13 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
 
     Form.idUI=idUI;
 
-    Form.productIdUILabel=productIdUILabel;
+    Form.packagesValueUI=packagesValueUI;
 
-    Form.productIdUI=productIdUI;
+    Form.productTypeUI=productTypeUI;
 
-    Form.productUILabel=productUILabel;
+    Form.costUILabel=costUILabel;
 
-    Form.productUI=productUI;
-
-    Form.packagesUILabel=packagesUILabel;
-
-    Form.packagesUI=packagesUI;
-
-    Form.partyIdUILabel=partyIdUILabel;
-
-    Form.partyIdUI=partyIdUI;
+    Form.costUI=costUI;
 
     Form.priceUILabel=priceUILabel;
 
@@ -202,13 +152,9 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
 
     Form.discountUI=discountUI;
 
-    Form.commentsUILabel=commentsUILabel;
+    Form.packagesUILabel=packagesUILabel;
 
-    Form.commentsUI=commentsUI;
-
-    Form.typeUILabel=typeUILabel;
-
-    Form.typeUI=typeUI;
+    Form.packagesUI=packagesUI;
 
     Form.actionPanel=actionPanel;
 
@@ -223,6 +169,10 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
     };
 
     Form.Save = org_shaolin_vogerp_productmodel_form_ProductPrice_Save;
+
+    Form.selectPricePackage = org_shaolin_vogerp_productmodel_form_ProductPrice_selectPricePackage;
+
+    Form.createItem0 = org_shaolin_vogerp_productmodel_form_ProductPrice_createItem0;
 
     Form.Cancel = org_shaolin_vogerp_productmodel_form_ProductPrice_Cancel;
 
@@ -243,10 +193,39 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
         var o = this;
         var UIEntity = this;
 
+        {   
+            var constraint_result = this.Form.validate();
+            if (constraint_result != true && constraint_result != null) {
+                return false;
+            }
+        }
+        
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-1031867168",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20160828-213158",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductPrice_Save */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_productmodel_form_ProductPrice_selectPricePackage(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductPrice_selectPricePackage */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectPricePackage-201603142210",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductPrice_selectPricePackage */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_productmodel_form_ProductPrice_createItem0(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductPrice_createItem0 */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem0-201603142211",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductPrice_createItem0 */
 
 
     /* auto generated eventlistener function declaration */
@@ -256,7 +235,7 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-1144004672",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160828-213158",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductPrice_Cancel */
 
 

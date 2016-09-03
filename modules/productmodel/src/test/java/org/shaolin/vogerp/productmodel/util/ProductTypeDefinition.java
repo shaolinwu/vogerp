@@ -865,7 +865,7 @@ public class ProductTypeDefinition {
 //		System.setProperty("http.proxyHost", "web-proxy.cup.hp.com");
 //		System.setProperty("http.proxyPort", "8080");
 		
-		itemCounter = 29679;
+		itemCounter = 0;
 		String productType = "jsondata-机械制造行业";
 		File file = new File("C:\\uimaster\\release\\made-in-china\\"+productType+".txt");
 		File productFile = new File("C:\\uimaster\\release\\made-in-china\\productdetail-机械制造行业.txt");
@@ -891,7 +891,7 @@ public class ProductTypeDefinition {
 					companyNameList.add(productObject.getLink());
 					
 					// break point
-					if (exitFlag && !productObject.getCompany().startsWith("汕头市腾捷机电科技有限公司")) {
+					if (exitFlag && !productObject.getCompany().startsWith("吸塑包装机|杭州中意自动化设备有限公司")) {
 						continue;
 					}
 					exitFlag = false;
@@ -979,9 +979,96 @@ public class ProductTypeDefinition {
 		}
 	}
 	
+	public static void validateProductDetail() {
+		System.setProperty("http.proxyHost", "web-proxy.cup.hp.com");
+		System.setProperty("http.proxyPort", "8080");
+//		
+		itemCounter=0;
+		String productType = "productdetail-仪器仪表行业";
+		File file = new File("C:\\uimaster\\release\\made-in-china\\"+productType+".txt");
+		File productFile = new File("C:\\uimaster\\release\\made-in-china\\productdetail-仪器仪表行业-new.txt");
+		logger.info("parsing file: " + file);
+		try {
+			BufferedWriter writer  = new BufferedWriter(new FileWriter(productFile,true)); 
+			BufferedReader br= new BufferedReader(new FileReader(file));
+			String line = null;
+			while((line = br.readLine())!=null){
+				JSONObject object = new JSONObject(line);
+				ProductDetail productObject = new ProductDetail(); 
+				productObject.setCompany(object.getString("company"));
+				productObject.setName(object.getString("name"));
+				productObject.setLink(object.getString("link"));
+				productObject.setType(object.getString("type"));
+				productObject.setImages(object.getString("images"));
+				productObject.setPrice(object.getDouble("price"));
+				productObject.setIcon(null);
+				productObject.setDetails(object.getString("details"));
+//				if (itemCounter <= 18709) {
+//					itemCounter ++ ;
+//					continue;
+//				}
+				if ((productObject.getDetails() != null && !"null".equals(productObject.getDetails())
+						&& !"".equals(productObject.getDetails()))) {
+					JSONObject json = new JSONObject(productObject);
+					//logger.info(itemCounter+ "json: " + json.toString());
+			        writer.write(json.toString());  
+			        writer.write("\n");
+				    writer.flush();  
+					itemCounter ++ ;
+					continue;
+				}
+				
+				Document doc = getDocument(productObject.getLink());
+				
+				Elements result = doc.select(".proDetail_box");
+				Iterator<Element> ii = result.iterator();
+				if (ii.hasNext()) {
+					Element p = ii.next();
+					Element e = p.child(1);
+					if (!e.hasClass("description")) {
+						e = p.child(2);
+					}
+					StringBuffer sb = new StringBuffer();
+					sb.append("<HTML>\n<HEAD>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
+					sb.append("<link href=\"/uimaster/product/product.css\" rel=\"stylesheet\" type=\"text/css\">\n</HEAD>\n<BODY>\n");
+					sb.append(e.html());
+					sb.append("\n</BODY></HTML>");
+					FileUtil.write("C:\\uimaster\\release\\made-in-china\\"+productType+"\\product\\uimaster\\eee"+(++itemCounter), "desc.html", sb.toString());
+					productObject.setDetails("/product/uimaster/eee"+(itemCounter)+"/desc.html");
+				} else {
+					result = doc.select(".marketdet");
+					ii = result.iterator();
+					if (ii.hasNext()) {
+						Element e = ii.next();
+						StringBuffer sb = new StringBuffer();
+						sb.append("<HTML>\n<HEAD>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
+						sb.append("<link href=\"/uimaster/product/product.css\" rel=\"stylesheet\" type=\"text/css\">\n</HEAD>\n<BODY>\n");
+						sb.append(e.html());
+						sb.append("\n</BODY></HTML>");
+						FileUtil.write("C:\\uimaster\\release\\made-in-china\\"+productType+"\\product\\uimaster\\eee"+(++itemCounter), "desc.html", sb.toString());
+						productObject.setDetails("/product/uimaster/eee"+(itemCounter)+"/desc.html");
+					} else {
+						logger.warn("Unable to get the details from :" + productObject.getLink());
+						itemCounter ++ ;
+					}
+				}
+				
+				JSONObject json = new JSONObject(productObject);
+				logger.info(itemCounter+ "json: " + json.toString());
+		        writer.write(json.toString());  
+		        writer.write("\n");
+			    writer.flush();  
+			}
+			br.close();
+			writer.close();
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+	}
+	
 	public static void main(String[] argus) {
 		try {
-			ProductTypeDefinition.parseProductDetail();
+			ProductTypeDefinition.validateProductDetail();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

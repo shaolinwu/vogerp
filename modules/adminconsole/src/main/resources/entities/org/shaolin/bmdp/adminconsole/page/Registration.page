@@ -66,7 +66,7 @@
 		<ns2:eventHandler functionName="Register"></ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:layout xsi:type="ns2:TableLayoutType">
-				<ns2:rowHeightWeight>200</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>350</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>80</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
@@ -81,7 +81,7 @@
                         <ns2:value>Vogue Enterprise Service</ns2:value>
                     </ns2:title>
                     <ns2:src xsi:type="ns2:ImagePropertyType">
-                        <ns2:location>/vogerp.jpg</ns2:location>
+                        <ns2:location>/qd-logo.png</ns2:location>
                     </ns2:src>
                 </ns2:component>
                 <ns2:layoutConstraint>

@@ -94,7 +94,7 @@ public class CustProductModel extends BEEntityDaoObject {
     }
     
     public List<ArrayList<String>>[] getStorageItemProductTypeGroup() {
-    	String sql = "SELECT p.productid, count(p.productid), b.name FROM test.prod_storageitem p, test.prod_product b where p.productid=b.id group by p.productid;";
+    	String sql = "SELECT p.productid, count(p.productid), b.name FROM prod_storageitem p, prod_product b where p.productid=b.id group by p.productid;";
     	Session session = HibernateUtil.getSession();
     	SQLQuery sqlQuery = session.createSQLQuery(sql);
     	List<Object[]> list = sqlQuery.list();

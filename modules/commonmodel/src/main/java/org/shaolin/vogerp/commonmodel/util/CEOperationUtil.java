@@ -276,10 +276,10 @@ public class CEOperationUtil {
 			displayItems.clear();
 			startItem.set(-1);
 		}
-		if (values.size() > 60 && startItem.get() == -1) {
+		if (values.size() > 100 && startItem.get() == -1) {
 			// reach to the limit to prevent too much items on UI widget.
 			values.add("more");
-			displayItems.add("显示更多...");
+			displayItems.add("More...");
 			return;
 		}
 		// ce node.
@@ -304,10 +304,10 @@ public class CEOperationUtil {
 				displayItems.clear();
 				startItem.set(-1);
 			}
-			if (values.size() > 60 && startItem.get() == -1) {
+			if (values.size() > 100 && startItem.get() == -1) {
 				// reach to the limit to prevent too much items on UI widget.
 				values.add("more");
-				displayItems.add("显示更多...");
+				displayItems.add("More...");
 				return;
 			}
 			

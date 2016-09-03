@@ -28,7 +28,6 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
     var root = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "root"]
-        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
         ,subComponents: [prefix + "firstRow",prefix + "searchContext"]
     });
