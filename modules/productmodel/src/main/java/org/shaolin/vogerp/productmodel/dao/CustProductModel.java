@@ -9,6 +9,7 @@ import org.shaolin.bmdp.persistence.BEEntityDaoObject;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+import org.shaolin.bmdp.runtime.security.UserContext;
 
 public class CustProductModel extends BEEntityDaoObject {
 	
@@ -74,9 +75,10 @@ public class CustProductModel extends BEEntityDaoObject {
     }
     
     public List<ArrayList<String>>[] getStorageItemWarehouseTypeGroup() {
-    	String sql = "SELECT p.warehouseid, count(p.warehouseid), b.name FROM prod_storageitem p, prod_warehouse b where p.warehouseid=b.id group by p.warehouseid;";
+    	String sql = "SELECT p.warehouseid, count(p.warehouseid), b.name FROM prod_storageitem p, prod_warehouse b where p.warehouseid=b.id and b.orgid=? group by p.warehouseid;";
     	Session session = HibernateUtil.getSession();
     	SQLQuery sqlQuery = session.createSQLQuery(sql);
+    	sqlQuery.setLong(0, UserContext.getUserContext().getOrgId());
     	List<Object[]> list = sqlQuery.list();
     	
     	ArrayList<String> valueResult = new ArrayList<String>();
@@ -94,9 +96,10 @@ public class CustProductModel extends BEEntityDaoObject {
     }
     
     public List<ArrayList<String>>[] getStorageItemProductTypeGroup() {
-    	String sql = "SELECT p.productid, count(p.productid), b.name FROM prod_storageitem p, prod_product b where p.productid=b.id group by p.productid;";
+    	String sql = "SELECT p.productid, count(p.productid), b.name FROM prod_storageitem p, prod_product b where p.productid=b.id and b.orgid=? group by p.productid;";
     	Session session = HibernateUtil.getSession();
     	SQLQuery sqlQuery = session.createSQLQuery(sql);
+    	sqlQuery.setLong(0, UserContext.getUserContext().getOrgId());
     	List<Object[]> list = sqlQuery.list();
     	
     	ArrayList<String> valueResult = new ArrayList<String>();

@@ -30,6 +30,13 @@ function org_shaolin_vogerp_productmodel_form_ImportProducts(json)
         ,subComponents: [prefix + "okbtn",prefix + "closebtn"]
     });
 
+    var resultPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "resultPanel"]
+        ,items: []
+        ,subComponents: []
+    });
+
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
@@ -40,7 +47,7 @@ function org_shaolin_vogerp_productmodel_form_ImportProducts(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [searchWordUI,searchBtn,okbtn,closebtn,fieldPanel,actionPanel]
+        ,items: [searchWordUI,searchBtn,okbtn,closebtn,fieldPanel,resultPanel,actionPanel]
     });
 
     Form.searchWordUI=searchWordUI;
@@ -56,6 +63,8 @@ function org_shaolin_vogerp_productmodel_form_ImportProducts(json)
     Form.searchWordUI=searchWordUI;
 
     Form.searchBtn=searchBtn;
+
+    Form.resultPanel=resultPanel;
 
     Form.actionPanel=actionPanel;
 

@@ -214,7 +214,7 @@
                         RefForm form = new RefForm("costForm", "org.shaolin.vogerp.productmodel.form.ProductDetailOverview", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Product Overview", null, true);
+                        form.openInWindows("产品预览", new TableCallBack("productInfoTable"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -236,7 +236,7 @@
                         RefForm form = new RefForm("importProductForm", "org.shaolin.vogerp.productmodel.form.ImportProducts", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Product Overview", null, true);
+                        form.openInWindows("快速导入产品", new TableCallBack("productInfoTable"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -290,6 +290,28 @@
                         @page.addElement(form);
                         
                         form.openInWindows("Open Item", new TableCallBack("storageItemTable"));
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="disableStorageItem">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="disableStorageItem-20160904-2344">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.productmodel.be.StorageItemImpl;
+                    import org.shaolin.vogerp.productmodel.dao.ProductModel;
+                    {
+                        Table productInfoTable = (Table)@page.getElement("storageItemTable");
+                        if (productInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        StorageItemImpl defaultUser = (StorageItemImpl)productInfoTable.getSelectedRow();
+                        ProductModel.INSTANCE.delete(defaultUser);
+                        productInfoTable.refresh();
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -518,50 +540,17 @@
                             </ns2:query>
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>产品</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.productId</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
-                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        {
-                                            return $rowBE.getProduct().getName();
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:rowExpression>
-                                <ns2:comboxExpression xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        import org.shaolin.vogerp.productmodel.dao.CustProductModel;
-                                        {
-                                            return CustProductModel.INSTANCE.getStorageItemProductTypeGroup();
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:comboxExpression>
-                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        import org.shaolin.bmdp.runtime.ce.IConstantEntity;
-                                        {
-                                            if ("-1".equals($value)) {
-                                                $rowBE.setProductId(-1);
-                                            } else {
-                                                $rowBE.setProductId(Long.valueOf($value).longValue());
-                                            }
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                 </ns2:updateCondition>
-                            </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
                                     <ns2:value>序列号</ns2:value>
                                 </ns2:title>
                                 <ns2:beFieldId>rowBE.serialNumber</ns2:beFieldId>
                                 <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>产品</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.product.name</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
                             </ns2:column>
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
@@ -572,27 +561,17 @@
                             </ns2:column>
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>位置坐标</ns2:value>
+                                    <ns2:value>已卖出数量</ns2:value>
                                 </ns2:title>
-                                <ns2:beFieldId>rowBE.coordinate</ns2:beFieldId>
+                                <ns2:beFieldId>rowBE.soldNumbers</ns2:beFieldId>
                                 <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
                             </ns2:column>
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>状态</ns2:value>
+                                    <ns2:value>位置坐标</ns2:value>
                                 </ns2:title>
-                                <ns2:beFieldId>rowBE.itemStatus</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
-                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        import org.shaolin.vogerp.productmodel.ce.StorageItemStatusType;
-                                        {
-                                            $rowBE.setItemStatus((StorageItemStatusType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.productmodel.ce.StorageItemStatusType").getByIntValue(Integer.valueOf($value).intValue()));
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
+                                <ns2:beFieldId>rowBE.coordinate</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
                             </ns2:column>
                             <ns2:defaultActions>
                                 <ns2:defaultNewAction>createStorageItem</ns2:defaultNewAction>

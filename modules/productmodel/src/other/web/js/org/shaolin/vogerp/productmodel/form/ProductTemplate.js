@@ -14,7 +14,7 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplate(json)
         ui: elementList[prefix + "typeUILabel"]
     });
 
-    var typeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "typeUI."});
+    var typeUI = new org_shaolin_vogerp_productmodel_form_ProductHierarchySelector({"prefix":prefix + "typeUI."});
 
     var nameUILabel = new UIMaster.ui.label
     ({
