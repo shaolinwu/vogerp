@@ -338,6 +338,10 @@
             <bediagram:name>name</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>price</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
         <!-- for data range search query solution -->
         <bediagram:member>
             <bediagram:name>imageLink</bediagram:name>

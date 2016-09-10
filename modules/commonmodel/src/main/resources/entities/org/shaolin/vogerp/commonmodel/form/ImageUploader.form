@@ -164,6 +164,21 @@
                      </ns2:expression>
                 </ns2:value>
            </ns2:Property>
+           <ns2:Property name="editable">
+               <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                     <ns2:expression>
+                       <expressionString><![CDATA[
+                       { 
+                           return $editable; 
+                       }]]></expressionString>
+                     </ns2:expression>
+                </ns2:value>
+           </ns2:Property>
+           <ns2:editable xsi:type="ns2:ExpressionPropertyType">
+	          <ns2:expression>
+	            <expressionString>{return $editable;}</expressionString>
+	          </ns2:expression>
+	       </ns2:editable>
       </ns2:component>
       <ns2:layoutConstraint>
           <ns2:componentId>photoPanel</ns2:componentId>
@@ -223,6 +238,10 @@
     <ns2:DataEntity scope="InOut" name="allowNumber" category="JavaPrimitive">
       <type entityName="java.lang.Integer"></type>
       <default><expressionString><![CDATA[new Integer(10)]]></expressionString></default>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+      <default><expressionString><![CDATA[Boolean.TRUE]]></expressionString></default>
     </ns2:DataEntity>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>

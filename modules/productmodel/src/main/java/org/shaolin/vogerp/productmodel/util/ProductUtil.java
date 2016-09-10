@@ -43,7 +43,7 @@ public class ProductUtil {
 	}
 	
 	public synchronized static String genResourceId() {
-		return "p" + System.nanoTime();
+		return "p" + System.currentTimeMillis();
 	}
 	
 	public static String getProductSummary(IProduct product) {
@@ -122,13 +122,13 @@ public class ProductUtil {
 			} else {
 				firstImage = directory;
 			}
-			if (firstImage != null) {
+			if (firstImage != null && firstImage.isFile()) {
 				try {
 					File destPath = new File(WebConfig.getResourcePath() + template.getPhotos() + "/thumbnail");
 					destPath.mkdir();
 					File dest = new File(destPath, firstImage.getName());
 					ImageUtil.createThumbnail(firstImage, 100, dest);
-					template.setIcon(dest.getAbsolutePath().replace(WebConfig.getResourcePath(), ""));
+					template.setIcon(dest.getAbsolutePath().replace(WebConfig.getResourcePath(), "").replace("\\", "/"));
 				} catch (IOException e) {
 					LoggerFactory.getLogger(ProductUtil.class).info("Failed to create the thumbnail for product: " + e.getMessage(), e);
 				}

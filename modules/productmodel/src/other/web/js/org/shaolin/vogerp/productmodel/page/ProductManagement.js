@@ -121,7 +121,7 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
 		         {
 		          new UIMaster.ui.dialog({
 		              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
-		              message:'Are you sure delete this product?',
+		              message:'\u60A8\u786E\u5B9A\u5220\u9664\u8FD9\u4E2A\u4EA7\u54C1\u5417\uFF1F',
 		              messageType:UIMaster.ui.dialog.Warning,
 		              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
 		              title:'\u5220\u9664\u8282\u70B9?',

@@ -4,6 +4,16 @@
   <systemVersion>0</systemVersion>
   <description>Import products from specified site.</description>
   <ns2:eventHandler functionName="analysis">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+            var constraint_result = this.Form.validate();
+            if (constraint_result != true && constraint_result != null) {
+                return false;
+            }
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="analysis-20160822-100447">
       <ns2:exp>
         <expressionString><![CDATA[
@@ -14,16 +24,58 @@
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.vogerp.productmodel.internal.PSearcher;
         { 
-           if (@page.existElement("productInfoForm")) {
-              @page.getRefForm("productInfoForm").remove();
-           }
            List list = PSearcher.getInstance().execute(@page.getTextField("searchWordUI").getValue());
            HashMap input = new HashMap();
            input.put("list", list);
-           RefForm form = new RefForm("productInfoForm", "org.shaolin.vogerp.productmodel.form.ImportProductsResult", input);
+           if (@page.getRefForm("importProductResultForm") != null) {
+              @page.getRefForm("importProductResultForm").remove();
+           }
+           RefForm form = new RefForm("importProductResultForm", "org.shaolin.vogerp.productmodel.form.ImportProductsResult", input);
            @page.getPanel("resultPanel").append(form);
         }]]></expressionString>
       </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Save">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="Save-20160904-172647">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.List;
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.productmodel.internal.PSearcher;
+        import org.shaolin.vogerp.productmodel.dao.ProductModel;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            RefForm form0 = (RefForm)@page.getElement("importProductResultForm"); 
+            HashMap output = (HashMap)form0.ui2Data();
+            List productList = (List)output.get("list");
+            List list = PSearcher.getInstance().downloadDetail(productList);
+            ProductModel.INSTANCE.batchInsert(list);
+            
+            form.closeIfinWindows();
+            @page.removeForm(@page.getEntityUiid()); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+            //保存过程中可能会需要些时间，请您稍等片刻！
+            new UIMaster.ui.dialog({
+                dialogType: UIMaster.ui.dialog.MESSAGE_DIALOG,
+                message:'\u4FDD\u5B58\u8FC7\u7A0B\u4E2D\u53EF\u80FD\u4F1A\u9700\u8981\u4E9B\u65F6\u95F4\uFF0C\u8BF7\u60A8\u7A0D\u7B49\u7247\u523B\uFF01',
+                messageType:UIMaster.ui.dialog.Information,
+                optionType:UIMaster.ui.dialog.OK_OPTION,
+                title:'',
+                height:150,
+                width:300,
+                handler: function() {
+                }
+            }).open();
+        }
+        ]]></ns2:expressionString>
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="Cancel">

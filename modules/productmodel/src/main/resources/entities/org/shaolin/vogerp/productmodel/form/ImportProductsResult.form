@@ -3,16 +3,22 @@
   <entityName>org.shaolin.vogerp.productmodel.form.ImportProductsResult</entityName>
   <systemVersion>0</systemVersion>
   <description>Import products from specified site.</description>
-  <ns2:eventHandler functionName="analysis">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="analysis-20160822-100447">
+  <ns2:eventHandler functionName="deleteItem">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deleteItem-20160828-100447">
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.List;
+        import java.util.HashMap;
         import org.shaolin.bmdp.utils.ImageUtil;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.vogerp.productmodel.internal.PSearcher;
         { 
-        
+           Table constantTable = (Table)@page.getElement("itemTable");
+           if (constantTable.getSelectedRow() == null) {
+               return;
+           }
+           constantTable.deleteRow(constantTable.getSelectedIndex());
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -119,6 +125,7 @@
       import org.shaolin.vogerp.productmodel.be.ProductImpl;
       {
 	     @odContext.executeAllMappings();
+	     $list = @page.getTable("itemTable").getListData();
       }
 	  ]]></expressionString>
     </ns2:UIToDataMappingOperation>
