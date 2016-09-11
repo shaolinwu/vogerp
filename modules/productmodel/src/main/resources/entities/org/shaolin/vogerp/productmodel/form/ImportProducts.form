@@ -51,8 +51,7 @@
             RefForm form0 = (RefForm)@page.getElement("importProductResultForm"); 
             HashMap output = (HashMap)form0.ui2Data();
             List productList = (List)output.get("list");
-            List list = PSearcher.getInstance().downloadDetail(productList);
-            ProductModel.INSTANCE.batchInsert(list);
+            PSearcher.getInstance().downloadDetail(productList);
             
             form.closeIfinWindows();
             @page.removeForm(@page.getEntityUiid()); 

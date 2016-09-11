@@ -30,7 +30,10 @@
             ProductTemplateImpl defaultUser = (ProductTemplateImpl)out.get("beObject");
             if (defaultUser.getId() > 0) {
                 ProductUtil.genProductThumbnail(defaultUser);
-                ProductModel.INSTANCE.update(defaultUser);
+                ProductModel.INSTANCE.update(defaultUser, true);
+            } else {
+                ProductUtil.genProductThumbnail(defaultUser);
+                ProductModel.INSTANCE.create(defaultUser, true);
             }
             form.closeIfinWindows();
             @page.removeForm(@page.getEntityUiid()); 

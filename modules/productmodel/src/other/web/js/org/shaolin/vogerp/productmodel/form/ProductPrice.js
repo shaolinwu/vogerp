@@ -68,6 +68,16 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
         ui: elementList[prefix + "packagesUI"]
     });
 
+    var commentUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "commentUILabel"]
+    });
+
+    var commentUI = new UIMaster.ui.textarea
+    ({
+        ui: elementList[prefix + "commentUI"]
+    });
+
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
@@ -89,13 +99,13 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "packagesValueUI",prefix + "productTypeUI",prefix + "costUILabel",prefix + "costUI",prefix + "priceUILabel",prefix + "priceUI",prefix + "exceedAmountUILabel",prefix + "exceedAmountUI",prefix + "discountUILabel",prefix + "discountUI",prefix + "packagesUILabel",prefix + "packagesUI"]
+        ,subComponents: [prefix + "idUI",prefix + "packagesValueUI",prefix + "productTypeUI",prefix + "costUILabel",prefix + "costUI",prefix + "priceUILabel",prefix + "priceUI",prefix + "exceedAmountUILabel",prefix + "exceedAmountUI",prefix + "discountUILabel",prefix + "discountUI",prefix + "packagesUILabel",prefix + "packagesUI",prefix + "commentUILabel",prefix + "commentUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,packagesValueUI,productTypeUI,costUILabel,costUI,priceUILabel,priceUI,exceedAmountUILabel,exceedAmountUI,discountUILabel,discountUI,packagesUILabel,packagesUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,packagesValueUI,productTypeUI,costUILabel,costUI,priceUILabel,priceUI,exceedAmountUILabel,exceedAmountUI,discountUILabel,discountUI,packagesUILabel,packagesUI,commentUILabel,commentUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -123,6 +133,10 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
     Form.packagesUILabel=packagesUILabel;
 
     Form.packagesUI=packagesUI;
+
+    Form.commentUILabel=commentUILabel;
+
+    Form.commentUI=commentUI;
 
     Form.okbtn=okbtn;
 
@@ -155,6 +169,10 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
     Form.packagesUILabel=packagesUILabel;
 
     Form.packagesUI=packagesUI;
+
+    Form.commentUILabel=commentUILabel;
+
+    Form.commentUI=commentUI;
 
     Form.actionPanel=actionPanel;
 
@@ -199,11 +217,7 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
                 return false;
             }
         }
-        
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20160828-213158",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductPrice_Save */
+            }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductPrice_Save */
 
 
     /* auto generated eventlistener function declaration */

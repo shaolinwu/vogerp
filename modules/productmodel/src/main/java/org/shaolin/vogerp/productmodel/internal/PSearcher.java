@@ -8,6 +8,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,8 +30,12 @@ import org.shaolin.uimaster.page.WebConfig;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.vogerp.productmodel.be.IImprotProductItem;
 import org.shaolin.vogerp.productmodel.be.IProduct;
+import org.shaolin.vogerp.productmodel.be.IProductPrice;
 import org.shaolin.vogerp.productmodel.be.ImprotProductItemImpl;
 import org.shaolin.vogerp.productmodel.be.ProductImpl;
+import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
+import org.shaolin.vogerp.productmodel.ce.PriceType;
+import org.shaolin.vogerp.productmodel.dao.ProductModel;
 import org.shaolin.vogerp.productmodel.util.ProductUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,7 +110,7 @@ public class PSearcher {
 	}
 	
 	public List<IProduct> downloadDetail(List<IImprotProductItem> items) {
-		ArrayList<IProduct> resultJsonItems = new ArrayList<IProduct>();
+		List resultJsonItems = new ArrayList();
 		for (IImprotProductItem item: items) {
 			ProductImpl product = new ProductImpl();
 			product.setOrgId(UserContext.getUserContext().getOrgId());
@@ -128,10 +133,25 @@ public class PSearcher {
 					}
 				}
 			}
+			
+			ProductPriceImpl price = new ProductPriceImpl();
+			price.setProduct(product);
+			price.setType(PriceType.BASE);
+			price.setPrice(product.getEstimatedPrice());
+			price.setCost(product.getEstimatedPrice());
+			price.setCreateDate(new Date());
+			price.setPackages("");
+			price.setEnabled(true);
+			
+			ArrayList<IProductPrice> priceItems = new ArrayList<IProductPrice>();
+			priceItems.add(price);
+			product.setPriceList(priceItems);
+			
 			resultJsonItems.add(product);
 			// after downloading
 			ProductUtil.genProductThumbnail(product);
 		}
+		ProductModel.INSTANCE.batchInsert(resultJsonItems, true);
 		return resultJsonItems;
 	}
 	

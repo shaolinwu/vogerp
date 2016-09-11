@@ -21,9 +21,9 @@
             if (defaultUser.getId() == 0) {
                 defaultUser.setSerialNumber(ProductUtil.genStorageSerialNumber());
                 defaultUser.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-                ProductModel.INSTANCE.create(defaultUser);
+                ProductModel.INSTANCE.create(defaultUser, true);
             } else {
-                ProductModel.INSTANCE.update(defaultUser);
+                ProductModel.INSTANCE.update(defaultUser, true);
             }
 
             form.closeIfinWindows();
@@ -103,6 +103,9 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="numberUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+           <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
       </ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>warehouseIdUILabel</ns2:componentId>

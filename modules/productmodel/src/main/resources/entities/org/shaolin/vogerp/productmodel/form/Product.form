@@ -34,9 +34,9 @@
             defaultUser.setPriceList(constantTable.getListData());
             ProductUtil.genProductThumbnail(defaultUser);
             if (defaultUser.getId() == 0) {
-                ProductModel.INSTANCE.create(defaultUser);
+                ProductModel.INSTANCE.create(defaultUser, true);
             } else {
-	            ProductModel.INSTANCE.update(defaultUser);
+	            ProductModel.INSTANCE.update(defaultUser, true);
             }
             
             form.closeIfinWindows();

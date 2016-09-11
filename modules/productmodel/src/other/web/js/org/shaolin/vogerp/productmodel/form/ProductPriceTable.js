@@ -7,6 +7,7 @@ function org_shaolin_vogerp_productmodel_form_ProductPriceTable(json)
     ({
         ui: elementList[prefix + "itemTable"]
         ,disableScrollY: true
+        ,disableRefreshClear: true
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -35,6 +36,10 @@ function org_shaolin_vogerp_productmodel_form_ProductPriceTable(json)
     };
 
     Form.createItem = org_shaolin_vogerp_productmodel_form_ProductPriceTable_createItem;
+
+    Form.SavePrice = org_shaolin_vogerp_productmodel_form_ProductPriceTable_SavePrice;
+
+    Form.SavePriceUpdate = org_shaolin_vogerp_productmodel_form_ProductPriceTable_SavePriceUpdate;
 
     Form.openItem = org_shaolin_vogerp_productmodel_form_ProductPriceTable_openItem;
 
@@ -68,10 +73,36 @@ function org_shaolin_vogerp_productmodel_form_ProductPriceTable(json)
 
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_productmodel_form_ProductPriceTable_SavePrice(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductPriceTable_SavePrice */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"savePrice-20160911-01258",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductPriceTable_SavePrice */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_productmodel_form_ProductPriceTable_SavePriceUpdate(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductPriceTable_SavePriceUpdate */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"savePriceUpdate-20160911-01258",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductPriceTable_SavePriceUpdate */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_productmodel_form_ProductPriceTable_openItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductPriceTable_openItem */
         var o = this;
         var UIEntity = this;
 
+        {
+           this.itemTable.sync();
+        }
+        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openItem-201603142210",UIMaster.getValue(eventsource),o.__entityName);
@@ -83,6 +114,10 @@ function org_shaolin_vogerp_productmodel_form_ProductPriceTable(json)
         var o = this;
         var UIEntity = this;
 
+        {
+           this.itemTable.sync();
+        }
+        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteConstantItem",UIMaster.getValue(eventsource),o.__entityName);
@@ -95,6 +130,7 @@ function org_shaolin_vogerp_productmodel_form_ProductPriceTable(json)
         var UIEntity = this;
 
         {
+           this.itemTable.sync();
         }
         
         // cal ajax function. 

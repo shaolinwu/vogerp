@@ -77,7 +77,7 @@
 	          <ns2:component xsi:type="ns2:UILabelType" UIID="pricePackageUILabel">
                 <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
                 <ns2:text xsi:type="ns2:StringPropertyType">
-                  <ns2:value>Price Packages</ns2:value>
+                  <ns2:value>价格包</ns2:value>
                 </ns2:text>
               </ns2:component>
               <ns2:component xsi:type="ns2:UIMatrixType" UIID="pricePackageUI">
@@ -92,7 +92,8 @@
 		                 {
 		                    ArrayList row = new ArrayList();
 		                    for (int i=0;i<$list.size();i++) {
-		                        row.add(ProductUtil.getPricePackage((IProductPrice)$list.get(i)));
+		                        IProductPrice price = (IProductPrice)$list.get(i);
+		                        row.add(ProductUtil.getPriceFormat(price.getPrice()) +"--"+ ProductUtil.getPricePackage(price));
 		                    }
 		                    ArrayList allRows = new ArrayList();
 		                    allRows.add(row);
@@ -117,7 +118,7 @@
               <ns2:component xsi:type="ns2:UILabelType" UIID="amountUILabel">
                 <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
                 <ns2:text xsi:type="ns2:StringPropertyType">
-                  <ns2:value>Amount</ns2:value>
+                  <ns2:value>数量</ns2:value>
                 </ns2:text>
               </ns2:component>
               <ns2:component xsi:type="ns2:UITextFieldType" UIID="amountUI">
