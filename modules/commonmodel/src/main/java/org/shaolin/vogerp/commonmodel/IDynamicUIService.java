@@ -30,4 +30,11 @@ public interface IDynamicUIService {
 	 * @return values, display values
 	 */
 	public List[] getAllEntities();
+	
+	/**
+	 * 
+	 * @param name
+	 * @param arentCE
+	 */
+	public void createCE(String name, String arentCE);
 }
