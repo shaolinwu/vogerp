@@ -175,6 +175,7 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchy(json)
 		         }
 		         o.ceTree.sync();
                  UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_2040990210",UIMaster.getValue(eventsource),o.__entityName);
+                 o.ceTree._treeObj.delete_node(o.ceTree._treeObj.get_selected());
               }
           }).open();
           return;

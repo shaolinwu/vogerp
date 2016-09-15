@@ -37,7 +37,7 @@
                         RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrder", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, 700, 400);
+                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -71,7 +71,7 @@
                         RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrder", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, 700, 400);
+                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -105,7 +105,7 @@
                         RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.RentOrLoanOrder", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, 700, 400);
+                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -145,7 +145,7 @@
                         RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.GOOfferPrice", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("竟价", null, 700, 400);
+                        form.openInWindows("竟价", null, true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -185,7 +185,7 @@
                         RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.GOOfferPrice", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("竟价", null, 700, 400);
+                        form.openInWindows("竟价", null, true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -225,7 +225,7 @@
                         RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.ROOfferPrice", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("竟价", null, 700, 400);
+                        form.openInWindows("竟价", null, true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -282,7 +282,7 @@
                         RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.RentOrLoanOrder", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, 700, 400);
+                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>

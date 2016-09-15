@@ -75,9 +75,9 @@
                     if (entityName == null || entityName.trim().isEmpty()) {
                         return;
                     }
-                    String format = entityName.replace('_', '.');
-                    entityName = format.substring(0, format.lastIndexOf("."));
-                    int parentIntValue = Integer.parseInt(format.substring(format.lastIndexOf(".") + 1));
+                    String format = entityName.replace('-', '.');
+                    entityName = format.substring(0, format.lastIndexOf("_"));
+                    int parentIntValue = Integer.parseInt(format.substring(format.lastIndexOf("_") + 1));
                     
                     IConstantEntity c = AppContext.get().getConstantService().getChildren(entityName, parentIntValue);
                     if (c != null) {
@@ -132,9 +132,9 @@
                    if (entityName == null || entityName.trim().isEmpty()) {
                        return;
                    }
-                   String format = entityName.replace('_', '.');
-                   entityName = format.substring(0, format.lastIndexOf("."));
-                   int parentIntValue = Integer.parseInt(format.substring(format.lastIndexOf(".") + 1));
+                   String format = entityName.replace('-', '.');
+                   entityName = format.substring(0, format.lastIndexOf("_"));
+                   int parentIntValue = Integer.parseInt(format.substring(format.lastIndexOf("_") + 1));
                    ComboBox ceList = @page.getComboBox("typeUI");
                    String selectedCE = ceList.getSelectedDisplayValue();
                    
@@ -181,11 +181,11 @@
                     if (entityName == null || entityName.trim().isEmpty()) {
                         return;
                     }
-                    if (entityName.indexOf('_') != -1) {
-	                    String format = entityName.replace('_', '.');
-	                    entityName = format.substring(0, format.lastIndexOf("."));
+                    if (entityName.indexOf('-') != -1) {
+	                    String format = entityName.replace('-', '.');
+	                    entityName = format.substring(0, format.lastIndexOf("_"));
 	                    try {
-		                    int parentIntValue = Integer.parseInt(format.substring(format.lastIndexOf(".") + 1));
+		                    int parentIntValue = Integer.parseInt(format.substring(format.lastIndexOf("_") + 1));
 		                    IConstantEntity c = AppContext.get().getConstantService().getConstantItem(entityName, parentIntValue);
 		                    HashMap input = new HashMap();
 		                    input.put("beObject", CEOperationUtil.convertSingD2C(c));
@@ -223,6 +223,7 @@
 		         }
 		         o.ceTree.sync();
                  UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_2040990210",UIMaster.getValue(eventsource),o.__entityName);
+                 o.ceTree._treeObj.delete_node(o.ceTree._treeObj.get_selected());
               }
           }).open();
           return;
@@ -242,7 +243,24 @@
         import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
         import org.shaolin.bmdp.runtime.ce.ConstantServiceImpl;
         import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
+        import org.shaolin.vogerp.commonmodel.IDynamicUIService;
         { 
+          String entityName = @page.getTree("ceTree").getSelectedItemId();
+          if (entityName == null || entityName.trim().isEmpty()) {
+              return;
+          }
+          String format = "";
+          if (entityName.indexOf('-') != -1) {
+              format = entityName.replace('-', '.');
+              entityName = format.substring(0, format.lastIndexOf("_"));
+          } else {
+              format = entityName;
+              entityName = format.substring(0, format.lastIndexOf("_"));
+          }
+          int intValue = Integer.parseInt(format.substring(format.lastIndexOf("_") + 1));
+          IDynamicUIService service=(IDynamicUIService)AppContext.get().getService(IDynamicUIService.class); 
+          service.deleteCENode(entityName, intValue);
+        
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -329,12 +347,12 @@
                   import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
                   import org.shaolin.bmdp.runtime.ce.IConstantEntity;
                   {
-                      if ($selectedNode.indexOf('_') != -1) {
-	                      String format = $selectedNode.replace('_', '.');
-	                      String parentCe = format.substring(0, format.lastIndexOf("."));
+                      if ($selectedNode.indexOf('-') != -1) {
+	                      String format = $selectedNode.replace('-', '.');
+	                      String parentCe = format.substring(0, format.lastIndexOf("_"));
 	                      int parentIntValue = 0;
 	                      try {
-	                          parentIntValue = Integer.parseInt(format.substring(format.lastIndexOf(".") + 1));
+	                          parentIntValue = Integer.parseInt(format.substring(format.lastIndexOf("_") + 1));
 	                          IConstantEntity kid = AppContext.get().getConstantService().getChildren(parentCe, parentIntValue);
 		                      ArrayList result = new ArrayList();
 		                      CEOperationUtil.getCEChildren(result, kid);

@@ -9,16 +9,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
         ,items: []
         ,subComponents: [prefix + "photoPanel",prefix + "prodcutInfoPanel"]
     });
-    var photoUI = new UIMaster.ui.image
-    ({
-        ui: elementList[prefix + "photoUI"]
-        ,width: "100%"
-        ,height: "300px"
-        ,mobheight: "220px"
-        ,thumbnails: false
-        ,hideThumbnailsOnInit: true
-        ,enableSelectSync: false
-    });
+    var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
 
     var serialNumberUILabel = new UIMaster.ui.label
     ({

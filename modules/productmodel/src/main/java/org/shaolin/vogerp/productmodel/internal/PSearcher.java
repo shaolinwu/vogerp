@@ -117,7 +117,8 @@ public class PSearcher {
 			product.setName(item.getName());
 			product.setDescription(item.getName());
 			product.setSerialNumber(ProductUtil.genSerialNumber());
-			product.setType("OtherProductType,1");//TODO: how to determine it?
+			product.setType("Furnitures,19");//temporary type.
+			product.setSubType("OtherProductType,1");//TODO: how to determine it?
 			String resId = ProductUtil.genResourceId();
 			product.setHtmlDesc("/product/" + resId + "/desc.html");
 			product.setPhotos("/product/" + resId + "/images");

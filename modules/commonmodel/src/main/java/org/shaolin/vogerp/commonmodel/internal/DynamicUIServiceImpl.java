@@ -21,6 +21,7 @@ import org.shaolin.uimaster.page.widgets.HTMLDynamicUIItem;
 import org.shaolin.vogerp.commonmodel.IDynamicUIService;
 import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
 import org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl;
+import org.shaolin.vogerp.commonmodel.be.ICEExtension;
 import org.shaolin.vogerp.commonmodel.be.IUIDyanimcItem;
 import org.shaolin.vogerp.commonmodel.be.IUIDyanimcPageLink;
 import org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl;
@@ -205,6 +206,18 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
         	((ConstantServiceImpl)cs).addHierarchy(hierarchy);
         }
         HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
+	}
+	
+	public void deleteCENode(String ceName, int intValue) {
+		CEExtensionImpl sc = new CEExtensionImpl();
+		sc.setCeName(ceName);
+		sc.setIntValue(intValue);
+		List<ICEExtension> items = ModularityModel.INSTANCE.searchCEExtension(sc, null, 0, -1);
+		if (items != null && items.size() > 0) {
+			ModularityModel.INSTANCE.delete(items.get(0));
+		}
+		HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
+		IServerServiceManager.INSTANCE.getConstantService().removeConstantItem(ceName, intValue);
 	}
 	
 	@Override

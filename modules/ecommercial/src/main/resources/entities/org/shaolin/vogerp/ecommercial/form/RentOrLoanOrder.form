@@ -38,54 +38,8 @@
           <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
           <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
         </ns2:layout>
-        <ns2:component xsi:type="ns2:UIImageType" UIID="photoUI">
-          <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-          <ns2:isGallery xsi:type="ns2:BooleanPropertyType">
-              <ns2:value>true</ns2:value>
-          </ns2:isGallery>
-          <ns2:Property name="width">
-             <ns2:value xsi:type="ns2:StringPropertyType">
-                 <value>100%</value>
-             </ns2:value>
-          </ns2:Property>
-          <ns2:Property name="height">
-             <ns2:value xsi:type="ns2:StringPropertyType">
-                 <value>300px</value>
-             </ns2:value>
-          </ns2:Property>
-          <ns2:Property name="mobheight">
-             <ns2:value xsi:type="ns2:StringPropertyType">
-                 <value>220px</value>
-             </ns2:value>
-          </ns2:Property>
-          <ns2:Property name="thumbnails">
-           <ns2:value xsi:type="ns2:BooleanPropertyType">
-              <value>false</value>
-           </ns2:value>
-         </ns2:Property>
-         <ns2:Property name="hideThumbnailsOnInit">
-           <ns2:value xsi:type="ns2:BooleanPropertyType">
-              <value>true</value>
-           </ns2:value>
-         </ns2:Property>
-         <ns2:Property name="enableSelectSync">
-            <ns2:value xsi:type="ns2:BooleanPropertyType">
-                <value>false</value>
-            </ns2:value>
-         </ns2:Property>
-         <ns2:Property name="value">
-             <ns2:value xsi:type="ns2:ExpressionPropertyType">
-                  <ns2:expression>
-                    <expressionString><![CDATA[
-                    import org.shaolin.bmdp.runtime.AppContext;
-                    import org.shaolin.bmdp.runtime.Registry;
-                    import org.shaolin.uimaster.page.WebConfig;
-                    { 
-                        return $beObject.getPhotos(); 
-                    }]]></expressionString>
-                  </ns2:expression>
-             </ns2:value>
-         </ns2:Property>
+        <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="photoUI">
+          <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.ImageUploader" />
         </ns2:component>
         <ns2:component xsi:type="ns2:UIPanelType" UIID="attributePanel">
           <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -251,7 +205,7 @@
         </ns2:EventListener>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
           <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>Cancelbtn</ns2:key>
+          <ns2:key>Closebtn</ns2:key>
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
@@ -276,6 +230,31 @@
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.ImageUploader"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="photoUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.photos" paramName="imagePath"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="allowNumber">
+         <ns2:expression>
+          <expressionString>{return 5;}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="imageWsize">
+         <ns2:expression>
+          <expressionString>{return 400;}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="imageHsize">
+         <ns2:expression>
+          <expressionString>{return 400;}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
+         <ns2:expression>
+          <expressionString>{return false;}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="serialNumberUI" paramName="UIWidgetType"></ns2:UIComponent>

@@ -45,6 +45,10 @@
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>subType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
             <!-- ProductCharacteristic the dynamic values implementation that all values will be stored as JSON pattern.-->
             <bediagram:name>attributes</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />

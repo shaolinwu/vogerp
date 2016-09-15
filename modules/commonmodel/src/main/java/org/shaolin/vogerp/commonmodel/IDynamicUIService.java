@@ -37,4 +37,6 @@ public interface IDynamicUIService {
 	 * @param arentCE
 	 */
 	public void createCE(String name, String arentCE);
+	
+	public void deleteCENode(String ceName, int intValue);
 }

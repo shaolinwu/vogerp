@@ -37,9 +37,9 @@
 	            defaultUser.setDeliveryInfoId(defaultUser.getDeliveryInfo().getId());
             }
             if (defaultUser.getId() == 0) {
-                OrderModel.INSTANCE.create(defaultUser);
+                OrderModel.INSTANCE.create(defaultUser, true);
             } else {
-                OrderModel.INSTANCE.update(defaultUser);
+                OrderModel.INSTANCE.update(defaultUser, true);
             }
 
             form.closeIfinWindows();
@@ -74,6 +74,12 @@
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIPreNextPanelType" UIID="funcsPanel">
+      <ns2:ajaxLoad>false</ns2:ajaxLoad>
+      <ns2:Property name="vertical">
+         <ns2:value xsi:type="ns2:BooleanPropertyType">
+             <value>true</value>
+         </ns2:value>
+      </ns2:Property>
       <ns2:tab uiid="photoPanel">
       <ns2:title xsi:type="ns2:StringPropertyType">
           <ns2:value>基本信息</ns2:value>
@@ -89,7 +95,6 @@
         </ns2:component>
         <ns2:component xsi:type="ns2:UIPanelType" UIID="attributePanel">
           <ns2:layout xsi:type="ns2:TableLayoutType">
-            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -183,16 +188,6 @@
           <ns2:component xsi:type="ns2:UILabelType" UIID="publishedCustomerIdUI">
             <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
           </ns2:component>
-          <ns2:component xsi:type="ns2:UILabelType" UIID="deliveryInfoLabel">
-            <ns2:UIStyle></ns2:UIStyle>
-            <ns2:text xsi:type="ns2:StringPropertyType">
-              <ns2:value>寄送地址</ns2:value>
-            </ns2:text>
-          </ns2:component>
-          <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="deliveryInfoUI">
-             <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithDeliveryInfo" />
-            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-          </ns2:component>
           <ns2:layoutConstraint>
             <ns2:componentId>serialNumberUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
@@ -257,14 +252,6 @@
             <ns2:componentId>publishedCustomerIdUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="7" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
-          <ns2:layoutConstraint>
-            <ns2:componentId>deliveryInfoLabel</ns2:componentId>
-            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="8" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-          </ns2:layoutConstraint>
-          <ns2:layoutConstraint>
-            <ns2:componentId>deliveryInfoUI</ns2:componentId>
-            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="8" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-          </ns2:layoutConstraint>
         </ns2:component>
         <ns2:layoutConstraint>
           <ns2:componentId>photoUI</ns2:componentId>
@@ -274,6 +261,25 @@
           <ns2:componentId>attributePanel</ns2:componentId>
           <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass=""></ns2:constraint>
         </ns2:layoutConstraint>
+      </ns2:panel>
+      </ns2:tab>
+      <ns2:tab uiid="deliveryInfoPanel">
+      <ns2:title xsi:type="ns2:StringPropertyType">
+          <ns2:value>寄送地址信息</ns2:value>
+      </ns2:title>
+      <ns2:panel UIID="deliveryInfoPanel">
+          <ns2:layout xsi:type="ns2:TableLayoutType">
+            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+          </ns2:layout>
+          <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="deliveryInfoUI">
+             <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithDeliveryInfo" />
+            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+          </ns2:component>
+          <ns2:layoutConstraint>
+            <ns2:componentId>deliveryInfoUI</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+          </ns2:layoutConstraint>
       </ns2:panel>
       </ns2:tab>
       <ns2:tab uiid="prodcutInfoPanel">
@@ -298,6 +304,11 @@
             <ns2:Property name="persistable" >
                 <ns2:value xsi:type="ns2:BooleanPropertyType">
                     <value>true</value>
+                </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="height">
+                <ns2:value xsi:type="ns2:StringPropertyType">
+                    <value>300px</value>
                 </ns2:value>
             </ns2:Property>
           </ns2:component>

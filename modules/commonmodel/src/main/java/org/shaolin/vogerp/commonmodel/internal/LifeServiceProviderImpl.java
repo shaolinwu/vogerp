@@ -146,6 +146,9 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 			}
 			@Override
 			public IConstantEntity getParent(List hierarchy, String ceName) {
+				if (ceName == null) {
+					return null;
+				}
 				for (Object i : hierarchy) {
 					ICEHierarchy c = (ICEHierarchy)i;
 					if (ceName.equals(c.getCeName())) {

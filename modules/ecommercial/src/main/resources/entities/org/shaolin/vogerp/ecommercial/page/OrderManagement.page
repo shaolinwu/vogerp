@@ -40,7 +40,7 @@
                       RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrderPreEditor", input);
                       @page.addElement(form);
                       
-                      form.openInWindows("新建抢购订单", new TableCallBack("goldenOrderTable"), 690, 450);
+                      form.openInWindows("新建抢购订单", new TableCallBack("goldenOrderTable"), true);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>
@@ -67,7 +67,7 @@
                         RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("抢购订单详情", new TableCallBack("goldenOrderTable"), 690, 450);
+                        form.openInWindows("抢购订单详情", new TableCallBack("goldenOrderTable"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -94,7 +94,7 @@
                         RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("抢购订单详情", new TableCallBack("takengGOrderTable"), 690, 450);
+                        form.openInWindows("抢购订单详情", new TableCallBack("takengGOrderTable"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -122,7 +122,7 @@
                         RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GOOfferPriceTable", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("接受出价", new TableCallBack("goldenOrderTable"), 690, 450);
+                        form.openInWindows("接受出价", new TableCallBack("goldenOrderTable"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -152,7 +152,7 @@
                       RefForm form = new RefForm("goldenOrderForm", "org.shaolin.bmdp.workflow.form.SessionTracker", input);
                       @page.addElement(form);
                       
-                      form.openInWindows("订单跟踪", null, 690, 450);
+                      form.openInWindows("订单跟踪", null, true);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>
@@ -192,7 +192,7 @@
                       RefForm form = new RefForm("rentOrLoanOrder", "org.shaolin.vogerp.ecommercial.form.RentOrLoanOrderEditor", input);
                       @page.addElement(form);
                       
-                      form.openInWindows("新建租赁订单", new TableCallBack("rentOrderTable"), 690, 450);
+                      form.openInWindows("新建租赁订单", new TableCallBack("rentOrderTable"), true);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>
@@ -221,7 +221,7 @@
                       RefForm form = new RefForm("rentOrLoanOrder", "org.shaolin.vogerp.ecommercial.form.RentOrLoanOrderEditor", input);
                       @page.addElement(form);
                       
-                      form.openInWindows("租赁订单详情", new TableCallBack("rentOrderTable"), 690, 450);
+                      form.openInWindows("租赁订单详情", new TableCallBack("rentOrderTable"), true);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>
@@ -251,7 +251,7 @@
                       RefForm form = new RefForm("goldenOrderForm", "org.shaolin.bmdp.workflow.form.SessionTracker", input);
                       @page.addElement(form);
                       
-                      form.openInWindows("订单跟踪", null, 690, 450);
+                      form.openInWindows("订单跟踪", null, true);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>
@@ -279,7 +279,7 @@
                       RefForm form = new RefForm("goldenOrderForm", "org.shaolin.bmdp.workflow.form.SessionTracker", input);
                       @page.addElement(form);
                       
-                      form.openInWindows("订单支付", null, 690, 450);
+                      form.openInWindows("订单支付", null, true);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>
@@ -307,7 +307,7 @@
                       RefForm form = new RefForm("goldenOrderForm", "org.shaolin.bmdp.workflow.form.SessionTracker", input);
                       @page.addElement(form);
                       
-                      form.openInWindows("订单支付", null, 690, 450);
+                      form.openInWindows("订单支付", null, true);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>
