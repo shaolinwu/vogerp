@@ -185,7 +185,7 @@ public class CEOperationUtil {
 		}
 
 		// ce node.
-		String nodeId = ce.getEntityName().replace('.', '_');
+		String nodeId = ce.getEntityName().replace('.', '-');
 		if (parentNode == null) {
 			// create the root node for the first time.
 			TreeItem ceNode = new TreeItem();
@@ -225,7 +225,7 @@ public class CEOperationUtil {
 		}
 
 		// ce node.
-		String nodeId = ce.getEntityName().replace('.', '_');
+		String nodeId = ce.getEntityName().replace('.', '-');
 		IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
 		List<IConstantEntity> items = ce.getConstantList();
 		for (IConstantEntity item: items) {

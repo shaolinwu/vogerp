@@ -71,6 +71,127 @@
        </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
+  <ns2:eventHandler functionName="addSubType">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+         <ns2:expressionString><![CDATA[
+         {
+          var o = this;
+          new UIMaster.ui.dialog({
+              dialogType: UIMaster.ui.dialog.INPUT_DIALOG,
+              message:'\u8BF7\u8F93\u5165\u4EA7\u54C1\u7C7B\u578B\u540D\u79F0',
+              messageType:UIMaster.ui.dialog.Information,
+              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+              title:'',
+              height:150,
+              width:300,
+              handler: function(v) {
+                 if (this.value == null || this.value == "") return;
+                 o.productNameUI.setValue(this.value);
+                 o.Form.sync();
+                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"addSubType_20160904_5433",UIMaster.getValue(eventsource),o.__entityName);
+              }
+          }).open();
+          return;
+         }
+         ]]></ns2:expressionString>
+     </ns2:ops>
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="addSubType_20160904_5433">
+       <ns2:exp>
+           <ns2:expressionString><![CDATA[
+           import java.util.HashMap;
+           import java.util.ArrayList;
+           import org.shaolin.bmdp.runtime.AppContext;
+           import org.shaolin.uimaster.page.AjaxContext;
+           import org.shaolin.uimaster.page.ajax.*;
+           import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+           import org.shaolin.bmdp.runtime.ce.CEUtil;
+           import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+           import org.shaolin.vogerp.commonmodel.be.CEEntityInfoImpl;
+           import org.shaolin.vogerp.commonmodel.IDynamicUIService;
+           {
+              ComboBox typeUI = @page.getComboBox("typeUI");
+              ComboBox subtypeUI = @page.getComboBox("subtypeUI");
+              String newItem = @page.getHidden("productNameUI").getValue();
+              
+              IDynamicUIService service=(IDynamicUIService)AppContext.get().getService(IDynamicUIService.class); 
+              service.createCE(newItem, typeUI.getValue());
+              
+              ArrayList values = new ArrayList();
+              ArrayList displayItems = new ArrayList();
+              IConstantEntity ce = AppContext.get().getConstantService().getChildren(CEUtil.toCEValue(typeUI.getValue()));
+              if (ce != null) {
+                  CEOperationUtil.getCEComboBox(values, displayItems, ce);
+              }
+              subtypeUI.removeAllOptions();
+              for (int i=0; i<values.size(); i++) {
+                 subtypeUI.addOption(displayItems.get(i).toString(), values.get(i).toString());
+              }
+              Dialog.showMessageDialog("添加成功", "Information", Dialog.INFORMATION_MESSAGE, null);
+           }
+           ]]></ns2:expressionString>
+       </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="addSub2Type">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+         <ns2:expressionString><![CDATA[
+         {
+          var o = this;
+          new UIMaster.ui.dialog({
+              dialogType: UIMaster.ui.dialog.INPUT_DIALOG,
+              message:'\u8BF7\u8F93\u5165\u5B50\u4EA7\u54C1\u7C7B\u578B\u540D\u79F0',
+              messageType:UIMaster.ui.dialog.Information,
+              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+              title:'',
+              height:150,
+              width:300,
+              handler: function(v) {
+                 if (this.value == null || this.value == "") return;
+                 o.productNameUI.setValue(this.value);
+                 o.Form.sync();
+                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"addSub2Type_20160904_5433",UIMaster.getValue(eventsource),o.__entityName);
+              }
+          }).open();
+          return;
+         }
+         ]]></ns2:expressionString>
+     </ns2:ops>
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="addSub2Type_20160904_5433">
+       <ns2:exp>
+           <ns2:expressionString><![CDATA[
+           import java.util.HashMap;
+           import java.util.ArrayList;
+           import org.shaolin.bmdp.runtime.AppContext;
+           import org.shaolin.uimaster.page.AjaxContext;
+           import org.shaolin.uimaster.page.ajax.*;
+           import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+           import org.shaolin.bmdp.runtime.ce.CEUtil;
+           import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+           import org.shaolin.vogerp.commonmodel.be.CEEntityInfoImpl;
+           import org.shaolin.vogerp.commonmodel.IDynamicUIService;
+           {
+              ComboBox subtypeUI = @page.getComboBox("subtypeUI");
+              ComboBox sub2typeUI = @page.getComboBox("sub2typeUI");
+              String newItem = @page.getHidden("productNameUI").getValue();
+              IDynamicUIService service=(IDynamicUIService)AppContext.get().getService(IDynamicUIService.class); 
+              service.createCE(newItem, subtypeUI.getValue());
+              
+              ArrayList values = new ArrayList();
+              ArrayList displayItems = new ArrayList();
+              IConstantEntity ce = AppContext.get().getConstantService().getChildren(CEUtil.toCEValue(subtypeUI.getValue()));
+              if (ce != null) {
+                  CEOperationUtil.getCEComboBox(values, displayItems, ce);
+              }
+              sub2typeUI.removeAllOptions();
+              for (int i=0; i<values.size(); i++) {
+                 sub2typeUI.addOption(displayItems.get(i).toString(), values.get(i).toString());
+              }
+              Dialog.showMessageDialog("添加成功", "Information", Dialog.INFORMATION_MESSAGE, null);
+           }
+           ]]></ns2:expressionString>
+       </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
   <ns2:eventHandler functionName="selectItem">
   </ns2:eventHandler>
   <ns2:reconfigurableProperty functionName="selectItem" xsi:type="ns2:ReconfigurableFunctionType"/>
@@ -84,8 +205,10 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="productNameUI" />
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="ceNameUI" />
       <ns2:component xsi:type="ns2:UIComboBoxType" UIID="typeUI">
         <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
@@ -95,6 +218,9 @@
         <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
           <ns2:handler functionName="selectSubItem"></ns2:handler>
         </ns2:EventListener>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+          <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIComboBoxType" UIID="subtypeUI">
         <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
@@ -103,6 +229,17 @@
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
         <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
           <ns2:handler functionName="selectSub2Item"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+          <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="addSubtypeUI">
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>添加一个产品大类型...</ns2:value>
+        </ns2:text>
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="addSubType"></ns2:handler>
         </ns2:EventListener>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIComboBoxType" UIID="sub2typeUI">
@@ -113,9 +250,14 @@
         <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
           <ns2:handler functionName="selectItem"></ns2:handler>
         </ns2:EventListener>
-        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
-          <ns2:value>false</ns2:value>
-        </ns2:allowBlank>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="addSub2typeUI">
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>添加一个产品子类型...</ns2:value>
+        </ns2:text>
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="addSub2Type"></ns2:handler>
+        </ns2:EventListener>
       </ns2:component>
 	  <ns2:layoutConstraint>
         <ns2:componentId>typeUI</ns2:componentId>
@@ -126,8 +268,16 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="cehierarchy_combox_typeui"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
+        <ns2:componentId>addSubtypeUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="cehierarchy_combox_typeui"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
         <ns2:componentId>sub2typeUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="cehierarchy_combox_typeui"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>addSub2typeUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="cehierarchy_combox_typeui"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
@@ -143,10 +293,10 @@
     <ns2:DataEntity scope="InOut" name="value" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
-    <ns2:DataEntity scope="Internal" name="pvalue" category="JavaPrimitive">
+    <ns2:DataEntity scope="InOut" name="pvalue" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
-    <ns2:DataEntity scope="Internal" name="subvalue" category="JavaPrimitive">
+    <ns2:DataEntity scope="InOut" name="subvalue" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="pvalues" category="JavaClass">

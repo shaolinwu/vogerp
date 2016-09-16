@@ -8,7 +8,7 @@ function org_shaolin_vogerp_productmodel_form_ProductSelector(json)
         ui: elementList[prefix + "selectProductNodeUI"]
     });
 
-    var productTree = new UIMaster.ui.webtree
+    var productTree = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "productTree"]
     });
@@ -44,8 +44,6 @@ function org_shaolin_vogerp_productmodel_form_ProductSelector(json)
 
     Form.SelectProduct = org_shaolin_vogerp_productmodel_form_ProductSelector_SelectProduct;
 
-    Form.expandTreeNode = org_shaolin_vogerp_productmodel_form_ProductSelector_expandTreeNode;
-
     Form.invokeDynamicFunction = org_shaolin_vogerp_productmodel_form_ProductSelector_invokeDynamicFunction;
 
     Form.__entityName="org.shaolin.vogerp.productmodel.form.ProductSelector";
@@ -62,22 +60,7 @@ function org_shaolin_vogerp_productmodel_form_ProductSelector(json)
     function org_shaolin_vogerp_productmodel_form_ProductSelector_SelectProduct(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductSelector_SelectProduct */
         var o = this;
         var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"SelectProduct_20250604847",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductSelector_SelectProduct */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_productmodel_form_ProductSelector_expandTreeNode(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductSelector_expandTreeNode */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"expandTreeNode_2040990210",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductSelector_expandTreeNode */
 
 
     /* auto generated eventlistener function declaration */

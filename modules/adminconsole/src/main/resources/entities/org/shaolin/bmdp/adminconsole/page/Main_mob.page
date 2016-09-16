@@ -179,7 +179,7 @@
 	                        <ns2:value>用户中心</ns2:value>
 	                    </ns2:title>
 	                    <ns2:src xsi:type="ns2:ImagePropertyType">
-	                        <ns2:location>admin/tree/manager.png</ns2:location>
+	                        <ns2:location>/admin/tree/manager.png</ns2:location>
 	                    </ns2:src>
 	                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
 	                         <ns2:handler functionName="showUserInfo" />
@@ -193,7 +193,7 @@
                             </ns2:value>
                         </ns2:Property>
                         <ns2:src xsi:type="ns2:ImagePropertyType">
-                            <ns2:location>ring.png</ns2:location>
+                            <ns2:location>/ring.png</ns2:location>
                         </ns2:src>
                         <ns2:EventListener xsi:type="ns2:ClickListenerType">
                             <ns2:handler functionName="showNotification" />
@@ -357,7 +357,7 @@
                             <ns2:value>Logout</ns2:value>
                         </ns2:title>
                         <ns2:src xsi:type="ns2:ImagePropertyType">
-                            <ns2:location>admin/logout.png</ns2:location>
+                            <ns2:location>/admin/logout.png</ns2:location>
                         </ns2:src>
                         <ns2:EventListener xsi:type="ns2:ClickListenerType">
                             <ns2:handler functionName="logout" />

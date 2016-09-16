@@ -2,6 +2,7 @@ package org.shaolin.vogerp.commonmodel.internal;
 
 import java.util.Date;
 
+import org.shaolin.bmdp.i18n.ResourceUtil;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.workflow.be.NotificationImpl;
 import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
@@ -18,8 +19,8 @@ public class NewUserListener implements UserActionListener{
 					IServerServiceManager.INSTANCE.getService(ICoordinatorService.class);
 			NotificationImpl welcomeNew = new NotificationImpl();
 			welcomeNew.setPartyId(userInfo.getId());
-			welcomeNew.setSubject("欢迎您成为抢单达人注册新用户！");
-			welcomeNew.setDescription("欢迎您成为抢单达人注册新用户，我们竭诚为您提供最满意的服务。");
+			welcomeNew.setSubject(ResourceUtil.getResource("org_shaolin_vogerp_commonmodel_i18n", "WelcomeNewUser"));
+			welcomeNew.setDescription(ResourceUtil.getResource("org_shaolin_vogerp_commonmodel_i18n", "WelcomeNewUserDetail"));
 			welcomeNew.setCreateDate(new Date());
 			service.addNotification(welcomeNew, false);
 		}

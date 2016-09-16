@@ -4,16 +4,77 @@
   <systemVersion>0</systemVersion>
   <description>Import products from specified site.</description>
   <ns2:eventHandler functionName="analysis">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+            var constraint_result = this.Form.validate();
+            if (constraint_result != true && constraint_result != null) {
+                return false;
+            }
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="analysis-20160822-100447">
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.List;
+        import java.util.HashMap;
         import org.shaolin.bmdp.utils.ImageUtil;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.vogerp.productmodel.internal.PSearcher;
         { 
+           List list = PSearcher.getInstance().execute(@page.getTextField("searchWordUI").getValue());
+           HashMap input = new HashMap();
+           input.put("list", list);
+           if (@page.getRefForm("importProductResultForm") != null) {
+              @page.getRefForm("importProductResultForm").remove();
+           }
+           RefForm form = new RefForm("importProductResultForm", "org.shaolin.vogerp.productmodel.form.ImportProductsResult", input);
+           @page.getPanel("resultPanel").append(form);
         }]]></expressionString>
       </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Save">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="Save-20160904-172647">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.List;
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.productmodel.internal.PSearcher;
+        import org.shaolin.vogerp.productmodel.dao.ProductModel;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            RefForm form0 = (RefForm)@page.getElement("importProductResultForm"); 
+            HashMap output = (HashMap)form0.ui2Data();
+            List productList = (List)output.get("list");
+            PSearcher.getInstance().downloadDetail(productList);
+            
+            form.closeIfinWindows();
+            @page.removeForm(@page.getEntityUiid()); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+            //保存过程中可能会需要些时间，请您稍等片刻！
+            new UIMaster.ui.dialog({
+                dialogType: UIMaster.ui.dialog.MESSAGE_DIALOG,
+                message:'\u4FDD\u5B58\u8FC7\u7A0B\u4E2D\u53EF\u80FD\u4F1A\u9700\u8981\u4E9B\u65F6\u95F4\uFF0C\u8BF7\u60A8\u7A0D\u7B49\u7247\u523B\uFF01',
+                messageType:UIMaster.ui.dialog.Information,
+                optionType:UIMaster.ui.dialog.OK_OPTION,
+                title:'',
+                height:150,
+                width:300,
+                handler: function() {
+                }
+            }).open();
+        }
+        ]]></ns2:expressionString>
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="Cancel">
@@ -34,6 +95,7 @@
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
@@ -45,7 +107,7 @@
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="searchWordUI">
           <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
           <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-             <ns2:value>请输入您的网店地址连接</ns2:value>
+             <ns2:value>请输入您网店中可以显示所有产品的地址连接，比如：“产品主页”或者“产品分类”再或“所有宝贝”等。</ns2:value>
           </ns2:widgetLabel>
           <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
               <ns2:value>false</ns2:value>
@@ -69,6 +131,12 @@
           <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
               x="1" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="resultPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+          <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+          <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+      </ns2:layout>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -108,8 +176,12 @@
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
     <ns2:layoutConstraint>
-      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:componentId>resultPanel</ns2:componentId>
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
   </ns2:body>
   <ns2:mapping>

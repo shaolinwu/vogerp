@@ -73,6 +73,8 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
 
     Form.openStorageItem = org_shaolin_vogerp_productmodel_page_ProductManagement_openStorageItem;
 
+    Form.disableStorageItem = org_shaolin_vogerp_productmodel_page_ProductManagement_disableStorageItem;
+
     Form.initPageJs = org_shaolin_vogerp_productmodel_page_ProductManagement_initPageJs;
 
     Form.finalizePageJs = org_shaolin_vogerp_productmodel_page_ProductManagement_finalizePageJs;
@@ -119,7 +121,7 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
 		         {
 		          new UIMaster.ui.dialog({
 		              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
-		              message:'Are you sure delete this product?',
+		              message:'\u60A8\u786E\u5B9A\u5220\u9664\u8FD9\u4E2A\u4EA7\u54C1\u5417\uFF1F',
 		              messageType:UIMaster.ui.dialog.Warning,
 		              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
 		              title:'\u5220\u9664\u8282\u70B9?',
@@ -202,6 +204,17 @@ function org_shaolin_vogerp_productmodel_page_ProductManagement(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openStorageItem-45332",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_page_ProductManagement_openStorageItem */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_productmodel_page_ProductManagement_disableStorageItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_page_ProductManagement_disableStorageItem */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"disableStorageItem-20160904-2344",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_productmodel_page_ProductManagement_disableStorageItem */
 
 
     function org_shaolin_vogerp_productmodel_page_ProductManagement_initPageJs(){/* Gen_First:org_shaolin_vogerp_productmodel_page_ProductManagement_initPageJs */

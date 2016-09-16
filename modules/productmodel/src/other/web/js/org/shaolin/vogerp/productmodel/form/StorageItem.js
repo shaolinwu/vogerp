@@ -8,6 +8,11 @@ function org_shaolin_vogerp_productmodel_form_StorageItem(json)
         ui: elementList[prefix + "idUI"]
     });
 
+    var productIdUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "productIdUILabel"]
+    });
+
     var warehouseIdUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "warehouseIdUILabel"]
@@ -28,16 +33,6 @@ function org_shaolin_vogerp_productmodel_form_StorageItem(json)
         ui: elementList[prefix + "coordinateUI"]
     });
 
-    var itemStatusUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "itemStatusUILabel"]
-    });
-
-    var itemStatusUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "itemStatusUI"]
-    });
-
     var numberUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "numberUILabel"]
@@ -46,16 +41,6 @@ function org_shaolin_vogerp_productmodel_form_StorageItem(json)
     var numberUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "numberUI"]
-    });
-
-    var serialNumberUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "serialNumberUILabel"]
-    });
-
-    var serialNumberUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "serialNumberUI"]
     });
 
     var okbtn = new UIMaster.ui.button
@@ -68,6 +53,8 @@ function org_shaolin_vogerp_productmodel_form_StorageItem(json)
         ui: elementList[prefix + "cancelbtn"]
     });
 
+    var productIdUI = new org_shaolin_vogerp_productmodel_form_ProductSelector({"prefix":prefix + "productIdUI."});
+
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
@@ -79,16 +66,18 @@ function org_shaolin_vogerp_productmodel_form_StorageItem(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "warehouseIdUILabel",prefix + "warehouseIdUI",prefix + "coordinateUILabel",prefix + "coordinateUI",prefix + "itemStatusUILabel",prefix + "itemStatusUI",prefix + "numberUILabel",prefix + "numberUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI"]
+        ,subComponents: [prefix + "idUI",prefix + "productIdUILabel",prefix + "productIdUI",prefix + "warehouseIdUILabel",prefix + "warehouseIdUI",prefix + "coordinateUILabel",prefix + "coordinateUI",prefix + "numberUILabel",prefix + "numberUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,warehouseIdUILabel,warehouseIdUI,coordinateUILabel,coordinateUI,itemStatusUILabel,itemStatusUI,numberUILabel,numberUI,serialNumberUILabel,serialNumberUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,productIdUILabel,warehouseIdUILabel,warehouseIdUI,coordinateUILabel,coordinateUI,numberUILabel,numberUI,okbtn,cancelbtn,productIdUI,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
+
+    Form.productIdUILabel=productIdUILabel;
 
     Form.warehouseIdUILabel=warehouseIdUILabel;
 
@@ -98,25 +87,23 @@ function org_shaolin_vogerp_productmodel_form_StorageItem(json)
 
     Form.coordinateUI=coordinateUI;
 
-    Form.itemStatusUILabel=itemStatusUILabel;
-
-    Form.itemStatusUI=itemStatusUI;
-
     Form.numberUILabel=numberUILabel;
 
     Form.numberUI=numberUI;
-
-    Form.serialNumberUILabel=serialNumberUILabel;
-
-    Form.serialNumberUI=serialNumberUI;
 
     Form.okbtn=okbtn;
 
     Form.cancelbtn=cancelbtn;
 
+    Form.productIdUI=productIdUI;
+
     Form.fieldPanel=fieldPanel;
 
     Form.idUI=idUI;
+
+    Form.productIdUILabel=productIdUILabel;
+
+    Form.productIdUI=productIdUI;
 
     Form.warehouseIdUILabel=warehouseIdUILabel;
 
@@ -126,17 +113,9 @@ function org_shaolin_vogerp_productmodel_form_StorageItem(json)
 
     Form.coordinateUI=coordinateUI;
 
-    Form.itemStatusUILabel=itemStatusUILabel;
-
-    Form.itemStatusUI=itemStatusUI;
-
     Form.numberUILabel=numberUILabel;
 
     Form.numberUI=numberUI;
-
-    Form.serialNumberUILabel=serialNumberUILabel;
-
-    Form.serialNumberUI=serialNumberUI;
 
     Form.actionPanel=actionPanel;
 

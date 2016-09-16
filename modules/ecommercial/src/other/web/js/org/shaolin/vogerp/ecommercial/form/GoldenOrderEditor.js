@@ -6,8 +6,9 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     var funcsPanel = new UIMaster.ui.prenextpanel
     ({
         ui: elementList[prefix + "funcsPanel"]
+        ,vertical: true
         ,items: []
-        ,subComponents: [prefix + "photoPanel",prefix + "prodcutInfoPanel"]
+        ,subComponents: [prefix + "photoPanel",prefix + "deliveryInfoPanel",prefix + "prodcutInfoPanel"]
     });
     var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
 
@@ -40,13 +41,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     ({
         ui: elementList[prefix + "publishedCustomerIdUI"]
     });
-
-    var deliveryInfoLabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "deliveryInfoLabel"]
-    });
-
-    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo({"prefix":prefix + "deliveryInfoUI."});
 
     var descriptionUILabel = new UIMaster.ui.label
     ({
@@ -82,7 +76,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "isPurchaseOrderUILabel",prefix + "typeUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "deliveryInfoLabel",prefix + "deliveryInfoUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "isPurchaseOrderUILabel",prefix + "typeUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI"]
     });
     var photoPanel = new UIMaster.ui.panel
     ({
@@ -90,11 +84,20 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         ,items: []
         ,subComponents: [prefix + "photoUI",prefix + "attributePanel"]
     });
+    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo({"prefix":prefix + "deliveryInfoUI."});
+
+    var deliveryInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "deliveryInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "deliveryInfoUI"]
+    });
     var htmlDescUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "htmlDescUI"]
         ,hiddenToolbar: false
         ,persistable: true
+        ,height: "300px"
     });
 
     var prodcutInfoPanel = new UIMaster.ui.panel
@@ -154,10 +157,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.deliveryInfoLabel=deliveryInfoLabel;
-
-    Form.deliveryInfoUI=deliveryInfoUI;
-
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
@@ -169,6 +168,10 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     Form.estimatedPriceUILabel=estimatedPriceUILabel;
 
     Form.estimatedPriceUI=estimatedPriceUI;
+
+    Form.deliveryInfoPanel=deliveryInfoPanel;
+
+    Form.deliveryInfoUI=deliveryInfoUI;
 
     Form.prodcutInfoPanel=prodcutInfoPanel;
 
@@ -200,10 +203,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.deliveryInfoLabel=deliveryInfoLabel;
-
-    Form.deliveryInfoUI=deliveryInfoUI;
-
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
@@ -215,6 +214,10 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     Form.estimatedPriceUILabel=estimatedPriceUILabel;
 
     Form.estimatedPriceUI=estimatedPriceUI;
+
+    Form.deliveryInfoPanel=deliveryInfoPanel;
+
+    Form.deliveryInfoUI=deliveryInfoUI;
 
     Form.prodcutInfoPanel=prodcutInfoPanel;
 

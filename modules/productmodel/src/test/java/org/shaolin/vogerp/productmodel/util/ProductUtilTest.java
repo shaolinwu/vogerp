@@ -1,8 +1,15 @@
 package org.shaolin.vogerp.productmodel.util;
 
-import static org.junit.Assert.*;
+import java.util.List;
 
 import org.junit.Test;
+import org.shaolin.bmdp.runtime.AppContext;
+import org.shaolin.bmdp.runtime.internal.AppServiceManagerImpl;
+import org.shaolin.bmdp.runtime.security.UserContext;
+import org.shaolin.uimaster.page.WebConfig;
+import org.shaolin.vogerp.productmodel.be.IImprotProductItem;
+import org.shaolin.vogerp.productmodel.be.IProduct;
+import org.shaolin.vogerp.productmodel.internal.PSearcher;
 
 public class ProductUtilTest {
 
@@ -17,13 +24,34 @@ public class ProductUtilTest {
 	@Test
 	public void test() throws Exception {
 		
+		AppContext.register(new AppServiceManagerImpl("test", this.getClass().getClassLoader()));
+		UserContext.register(null, new UserContext(), "zh_CN", null, false);
+		WebConfig.setResourcePath("C:\\uimaster\\apps\\vogerp\\modules\\productmodel\\src\\test\\resources");
 //		InstallCert.main(new String[]{"shop71466087.taobao.com"});
 		
 //		System.setProperty("http.proxyHost", "web-proxy.cup.hp.com");
 //		System.setProperty("http.proxyPort", "8080");
-		System.setProperty("javax.net.ssl.trustStore", "C:\\uimaster\\apps\\vogerp\\modules\\productmodel\\src\\test\\resources\\taobao.jks");
+		//System.setProperty("javax.net.ssl.trustStore", "C:\\uimaster\\apps\\vogerp\\modules\\productmodel\\src\\test\\resources\\taobao.jks");
 		
-		ProductUtil.loadProduceFromURL("https://shop71466087.taobao.com/search.htm?spm=2013.1.w5002-6328487533.1.NnvOl1&search=y");
+		List<IImprotProductItem> result = PSearcher.getInstance().execute("https://hongyudaopian.taobao.com/search.htm?spm=a1z10.1-c.w5002-11600989054.1.FiHlmf&search=y");
+		for (IImprotProductItem item: result) {
+			System.out.println(item.toString());
+		}
+		//List<IProduct> products = PSearcher.getInstance().downloadDetail(result);
+		
+		System.out.println("\n\n\n");
+		result = PSearcher.getInstance().execute("https://plandoohb.tmall.com/search.htm?spm=a220m.1000858.1000725.17.uhpOjG&rn=fa84254cb8c885e0d5eb2bd87ed3c09b&keyword=%D0%D4%B8%D0%C0%D9%CB%BF&user_number_id=1751089811");
+		for (IImprotProductItem item: result) {
+			System.out.println(item.toString());
+		}
+		List<IProduct> products = PSearcher.getInstance().downloadDetail(result);
+		
+		System.out.println("\n\n\n");
+		result = PSearcher.getInstance().execute("http://cn.made-in-china.com/showroom/dgfuyao-product-list-1.html");
+		for (IImprotProductItem item: result) {
+			System.out.println(item.toString());
+		}
+		//products = PSearcher.getInstance().downloadDetail(result);
 		
 	}
 

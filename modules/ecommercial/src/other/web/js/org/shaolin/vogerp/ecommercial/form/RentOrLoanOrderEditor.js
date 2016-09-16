@@ -6,8 +6,9 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
     var funcsPanel = new UIMaster.ui.prenextpanel
     ({
         ui: elementList[prefix + "funcsPanel"]
+        ,vertical: true
         ,items: []
-        ,subComponents: [prefix + "photoPanel",prefix + "prodcutInfoPanel"]
+        ,subComponents: [prefix + "photoPanel",prefix + "deliveryInfoPanel",prefix + "prodcutInfoPanel"]
     });
     var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
 
@@ -91,18 +92,11 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
         ui: elementList[prefix + "publishedCustomerIdUI"]
     });
 
-    var deliveryInfoLabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "deliveryInfoLabel"]
-    });
-
-    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo({"prefix":prefix + "deliveryInfoUI."});
-
     var attributePanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "rentTypeUILabel",prefix + "rentTypeUI",prefix + "rentDateTypeUILabel",prefix + "rentDateTypeUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "finalPriceUILabel",prefix + "finalPriceUI",prefix + "expiredDateUILabel",prefix + "expiredDateUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "deliveryInfoLabel",prefix + "deliveryInfoUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "rentTypeUILabel",prefix + "rentTypeUI",prefix + "rentDateTypeUILabel",prefix + "rentDateTypeUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "finalPriceUILabel",prefix + "finalPriceUI",prefix + "expiredDateUILabel",prefix + "expiredDateUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI"]
     });
     var photoPanel = new UIMaster.ui.panel
     ({
@@ -110,11 +104,20 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
         ,items: []
         ,subComponents: [prefix + "photoUI",prefix + "attributePanel"]
     });
+    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo({"prefix":prefix + "deliveryInfoUI."});
+
+    var deliveryInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "deliveryInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "deliveryInfoUI"]
+    });
     var htmlDescUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "htmlDescUI"]
         ,hiddenToolbar: false
         ,persistable: true
+        ,height: "300px"
     });
 
     var prodcutInfoPanel = new UIMaster.ui.panel
@@ -194,7 +197,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.deliveryInfoLabel=deliveryInfoLabel;
+    Form.deliveryInfoPanel=deliveryInfoPanel;
 
     Form.deliveryInfoUI=deliveryInfoUI;
 
@@ -248,7 +251,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.deliveryInfoLabel=deliveryInfoLabel;
+    Form.deliveryInfoPanel=deliveryInfoPanel;
 
     Form.deliveryInfoUI=deliveryInfoUI;
 

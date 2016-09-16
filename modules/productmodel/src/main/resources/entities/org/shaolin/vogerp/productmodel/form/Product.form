@@ -34,9 +34,9 @@
             defaultUser.setPriceList(constantTable.getListData());
             ProductUtil.genProductThumbnail(defaultUser);
             if (defaultUser.getId() == 0) {
-                ProductModel.INSTANCE.create(defaultUser);
+                ProductModel.INSTANCE.create(defaultUser, true);
             } else {
-	            ProductModel.INSTANCE.update(defaultUser);
+	            ProductModel.INSTANCE.update(defaultUser, true);
             }
             
             form.closeIfinWindows();
@@ -471,7 +471,8 @@
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
       <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductHierarchySelector"></ns2:mappingRule>
       <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.type" paramName="value"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.type" paramName="subvalue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.subType" paramName="value"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
         <ns2:expression>
           <expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString>

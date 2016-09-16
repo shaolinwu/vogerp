@@ -39,7 +39,10 @@ function org_shaolin_vogerp_productmodel_form_ProdTempDetailOverview(json)
         ui: elementList[prefix + "typeUILabel"]
     });
 
-    var typeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "typeUI."});
+    var typeUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "typeUI"]
+    });
 
     var attrPanel = new UIMaster.ui.panel
     ({
@@ -53,6 +56,7 @@ function org_shaolin_vogerp_productmodel_form_ProdTempDetailOverview(json)
         ,hiddenToolbar: true
         ,persistable: false
         ,viewMode: true
+        ,height: "300px"
     });
 
     var detailPanel = new UIMaster.ui.panel

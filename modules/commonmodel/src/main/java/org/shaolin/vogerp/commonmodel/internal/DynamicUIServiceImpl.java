@@ -4,7 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.shaolin.bmdp.persistence.HibernateUtil;
+import org.shaolin.bmdp.runtime.AppContext;
+import org.shaolin.bmdp.runtime.ce.CEUtil;
+import org.shaolin.bmdp.runtime.ce.ConstantServiceImpl;
+import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.bmdp.runtime.entity.EntityNotFoundException;
+import org.shaolin.bmdp.runtime.spi.IConstantService;
+import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.javacc.exception.ParsingException;
 import org.shaolin.uimaster.page.cache.PageCacheManager;
@@ -12,11 +19,16 @@ import org.shaolin.uimaster.page.cache.UIFormObject;
 import org.shaolin.uimaster.page.cache.UIPageObject;
 import org.shaolin.uimaster.page.widgets.HTMLDynamicUIItem;
 import org.shaolin.vogerp.commonmodel.IDynamicUIService;
+import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
+import org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl;
+import org.shaolin.vogerp.commonmodel.be.ICEExtension;
 import org.shaolin.vogerp.commonmodel.be.IUIDyanimcItem;
 import org.shaolin.vogerp.commonmodel.be.IUIDyanimcPageLink;
 import org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl;
 import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl;
+import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
 
 /**
  * All dynamic UI relevant operations
@@ -158,6 +170,54 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
 			displayValues.add(all.get(i).toString());
 		}
 		return new List[] { values, displayValues };
+	}
+	
+	public void createCE(String name, String parentCE) {
+		IConstantEntity parent = CEUtil.toCEValue(parentCE);
+		IConstantEntity ce = AppContext.get().getConstantService().getChildren(parent);
+        if (ce != null) {
+        	CEExtensionImpl item = new CEExtensionImpl();
+        	item.setCeName(ce.getEntityName());
+        	item.setIntValue(ce.getConstantList().size());
+        	item.setStringValue(name);
+        	item.setDescription(name);
+        	item.setEnabled(true);
+        	CommonModel.INSTANCE.create(item);
+        	IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
+        	((ConstantServiceImpl)cs).addConstantItem(CEOperationUtil.convertSingD2C(item));
+        } else {
+        	CEExtensionImpl item = new CEExtensionImpl();
+        	item.setCeName(parent.getEntityName() + "_Sub" + System.currentTimeMillis());
+        	item.setIntValue(0);
+        	item.setStringValue(name);
+        	item.setDescription(name);
+        	item.setEnabled(true);
+        	CEHierarchyImpl hierarchy = new CEHierarchyImpl();
+        	hierarchy.setCeName(item.getCeName());
+        	hierarchy.setParentCeItem(parent.getIntValue());
+        	hierarchy.setParentCeName(parent.getEntityName());
+        	hierarchy.setEnabled(true);
+        	CommonModel.INSTANCE.create(item);
+        	CommonModel.INSTANCE.create(hierarchy);
+        	IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
+        	IConstantEntity ceObject = CEOperationUtil.convertSingD2C(item);
+			((ConstantServiceImpl)cs).reloadData(ceObject);
+        	((ConstantServiceImpl)cs).addConstantItem(ceObject);
+        	((ConstantServiceImpl)cs).addHierarchy(hierarchy);
+        }
+        HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
+	}
+	
+	public void deleteCENode(String ceName, int intValue) {
+		CEExtensionImpl sc = new CEExtensionImpl();
+		sc.setCeName(ceName);
+		sc.setIntValue(intValue);
+		List<ICEExtension> items = ModularityModel.INSTANCE.searchCEExtension(sc, null, 0, -1);
+		if (items != null && items.size() > 0) {
+			ModularityModel.INSTANCE.delete(items.get(0));
+		}
+		HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
+		IServerServiceManager.INSTANCE.getConstantService().removeConstantItem(ceName, intValue);
 	}
 	
 	@Override

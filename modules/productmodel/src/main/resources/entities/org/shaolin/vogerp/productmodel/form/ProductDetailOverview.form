@@ -77,7 +77,7 @@
 	          <ns2:component xsi:type="ns2:UILabelType" UIID="pricePackageUILabel">
                 <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
                 <ns2:text xsi:type="ns2:StringPropertyType">
-                  <ns2:value>Price Packages</ns2:value>
+                  <ns2:value>价格包</ns2:value>
                 </ns2:text>
               </ns2:component>
               <ns2:component xsi:type="ns2:UIMatrixType" UIID="pricePackageUI">
@@ -92,7 +92,8 @@
 		                 {
 		                    ArrayList row = new ArrayList();
 		                    for (int i=0;i<$list.size();i++) {
-		                        row.add(ProductUtil.getPricePackage((IProductPrice)$list.get(i)));
+		                        IProductPrice price = (IProductPrice)$list.get(i);
+		                        row.add(ProductUtil.getPriceFormat(price.getPrice()) +"--"+ ProductUtil.getPricePackage(price));
 		                    }
 		                    ArrayList allRows = new ArrayList();
 		                    allRows.add(row);
@@ -117,7 +118,7 @@
               <ns2:component xsi:type="ns2:UILabelType" UIID="amountUILabel">
                 <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
                 <ns2:text xsi:type="ns2:StringPropertyType">
-                  <ns2:value>Amount</ns2:value>
+                  <ns2:value>数量</ns2:value>
                 </ns2:text>
               </ns2:component>
               <ns2:component xsi:type="ns2:UITextFieldType" UIID="amountUI">
@@ -238,8 +239,8 @@
 		                  <ns2:key>org.shaolin.vogerp.productmodel.be.Product.type</ns2:key>
 		                </ns2:text>
 		              </ns2:component>
-		              <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="typeUI">
-		                 <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox" />
+		              <ns2:component xsi:type="ns2:UILabelType" UIID="typeUI">
+		                <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
 		              </ns2:component>
 		              <ns2:layoutConstraint>
 		                <ns2:componentId>nameUILabel</ns2:componentId>
@@ -286,6 +287,11 @@
 		                     <value>true</value>
 		                 </ns2:value>
 		             </ns2:Property>
+		             <ns2:Property name="height">
+                       <ns2:value xsi:type="ns2:StringPropertyType">
+                           <value>300px</value>
+                       </ns2:value>
+                   </ns2:Property>
 		           </ns2:component>
 		           <ns2:layoutConstraint>
                       <ns2:componentId>attrPanel</ns2:componentId>
@@ -319,7 +325,7 @@
         </ns2:EventListener>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
           <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>Cancelbtn</ns2:key>
+          <ns2:key>Closebtn</ns2:key>
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
@@ -358,12 +364,11 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.description" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping6">
-      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.type" paramName="value"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
         <ns2:expression>
-          <expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString>
+          <expressionString>org.shaolin.bmdp.runtime.ce.CEUtil.getValue($beObject.getType())</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
@@ -384,10 +389,5 @@
          @odContext.executeAllMappings();
       }</expressionString>
     </ns2:DataToUIMappingOperation>
-    <ns2:UIToDataMappingOperation>
-      <expressionString>{
-	     @odContext.executeAllMappings();
-	  }</expressionString>
-    </ns2:UIToDataMappingOperation>
   </ns2:mapping>
 </ns2:UIEntity>
