@@ -153,6 +153,21 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
         var constraint_result = true;
         var UIEntity = this;
 
+			{
+				BC.err = function(data) {
+                    //注册错误信息接受
+                    alert(data["ERROR"]);
+                }
+                /**
+                 * click调用错误返回：默认行为console.log(err)
+                 */
+                BC.err = function(err) {
+                    //err 为object, 例 ｛”ERROR“ : "xxxx"｝;
+                    console.log(err);
+                    alert(err["ERROR"]);
+                }
+			}
+			
     }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_initPageJs */
 
 

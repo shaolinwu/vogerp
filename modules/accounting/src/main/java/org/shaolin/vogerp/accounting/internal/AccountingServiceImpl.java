@@ -149,7 +149,7 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 			String title = "(" + order.getPayBusinessType().getDescription() + ")" + order.getDescription();
 			attributes.put("title", title);
 			attributes.put("amount", ((int)(order.getAmount() * 100)) + "");//it's fen unit.
-			String sign = PaymentUtil.sign(attributes.get("app_id"), 
+			String sign = PaymentUtil.beeCloudSign(attributes.get("app_id"),
 					attributes.get("title"), 
 					attributes.get("amount"), 
 					order.getSerialNumber(), 
