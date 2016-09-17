@@ -74,7 +74,6 @@
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveDetail-2134807383">
       <ns2:exp>
         <expressionString><![CDATA[
-        import java.util.Map;
         import java.util.HashMap;
         import java.util.List;
         import java.util.ArrayList;
@@ -86,7 +85,7 @@
         import org.shaolin.vogerp.commonmodel.be.ModelPermissionImpl;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            Map out = (Map)form.ui2Data();
+            HashMap out = (HashMap)form.ui2Data();
             ArrayList values = (ArrayList)out.get("values");
             ModuleGroupImpl defaultUser = (ModuleGroupImpl)out.get("beObject");
             

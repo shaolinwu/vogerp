@@ -23,6 +23,31 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         ui: elementList[prefix + "orgIdUI"]
     });
 
+    var nameUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "nameUILabel"]
+    });
+
+    var nameUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "nameUI"]
+    });
+
+    var typeUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "typeUILabel"]
+    });
+
+    var descriptionUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "descriptionUILabel"]
+    });
+
+    var descriptionUI = new UIMaster.ui.textarea
+    ({
+        ui: elementList[prefix + "descriptionUI"]
+    });
+
     var legalPersonUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "legalPersonUILabel"]
@@ -33,16 +58,6 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         ui: elementList[prefix + "legalPersonUI"]
     });
 
-    var tradeLicenseNumberUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "tradeLicenseNumberUILabel"]
-    });
-
-    var tradeLicenseNumberUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "tradeLicenseNumberUI"]
-    });
-
     var busiLicenseNumberUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "busiLicenseNumberUILabel"]
@@ -51,26 +66,6 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     var busiLicenseNumberUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "busiLicenseNumberUI"]
-    });
-
-    var busiLicenseDateUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "busiLicenseDateUILabel"]
-    });
-
-    var busiLicenseDateUI = new UIMaster.ui.calendar
-    ({
-        ui: elementList[prefix + "busiLicenseDateUI"]
-    });
-
-    var enterpriseCodeUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "enterpriseCodeUILabel"]
-    });
-
-    var enterpriseCodeUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "enterpriseCodeUI"]
     });
 
     var bankAccountUILabel = new UIMaster.ui.label
@@ -93,6 +88,21 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         ui: elementList[prefix + "bankTypeUI"]
     });
 
+    var personalPhotoLabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "personalPhotoLabel"]
+    });
+
+    var personalIdentifierPhotoLabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "personalIdentifierPhotoLabel"]
+    });
+
+    var busiLicensePhotoLabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "busiLicensePhotoLabel"]
+    });
+
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
@@ -102,6 +112,14 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     ({
         ui: elementList[prefix + "cancelbtn"]
     });
+
+    var typeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "typeUI."});
+
+    var personalPhoto = new org_shaolin_vogerp_commonmodel_form_SingleImageUploader({"prefix":prefix + "personalPhoto."});
+
+    var personalIdentifierPhoto = new org_shaolin_vogerp_commonmodel_form_SingleImageUploader({"prefix":prefix + "personalIdentifierPhoto."});
+
+    var busiLicensePhoto = new org_shaolin_vogerp_commonmodel_form_SingleImageUploader({"prefix":prefix + "busiLicensePhoto."});
 
     var actionPanel = new UIMaster.ui.panel
     ({
@@ -114,13 +132,13 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "verifiedUI",prefix + "orgIdUILabel",prefix + "orgIdUI",prefix + "legalPersonUILabel",prefix + "legalPersonUI",prefix + "tradeLicenseNumberUILabel",prefix + "tradeLicenseNumberUI",prefix + "busiLicenseNumberUILabel",prefix + "busiLicenseNumberUI",prefix + "busiLicenseDateUILabel",prefix + "busiLicenseDateUI",prefix + "enterpriseCodeUILabel",prefix + "enterpriseCodeUI",prefix + "bankAccountUILabel",prefix + "bankAccountUI",prefix + "bankTypeUILabel",prefix + "bankTypeUI"]
+        ,subComponents: [prefix + "idUI",prefix + "verifiedUI",prefix + "orgIdUILabel",prefix + "orgIdUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "legalPersonUILabel",prefix + "legalPersonUI",prefix + "busiLicenseNumberUILabel",prefix + "busiLicenseNumberUI",prefix + "bankAccountUILabel",prefix + "bankAccountUI",prefix + "bankTypeUILabel",prefix + "bankTypeUI",prefix + "personalPhotoLabel",prefix + "personalPhoto",prefix + "personalIdentifierPhotoLabel",prefix + "personalIdentifierPhoto",prefix + "busiLicensePhotoLabel",prefix + "busiLicensePhoto"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,verifiedUI,orgIdUILabel,orgIdUI,legalPersonUILabel,legalPersonUI,tradeLicenseNumberUILabel,tradeLicenseNumberUI,busiLicenseNumberUILabel,busiLicenseNumberUI,busiLicenseDateUILabel,busiLicenseDateUI,enterpriseCodeUILabel,enterpriseCodeUI,bankAccountUILabel,bankAccountUI,bankTypeUILabel,bankTypeUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,verifiedUI,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,bankAccountUILabel,bankAccountUI,bankTypeUILabel,bankTypeUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,okbtn,cancelbtn,typeUI,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -131,25 +149,23 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.orgIdUI=orgIdUI;
 
+    Form.nameUILabel=nameUILabel;
+
+    Form.nameUI=nameUI;
+
+    Form.typeUILabel=typeUILabel;
+
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
     Form.legalPersonUILabel=legalPersonUILabel;
 
     Form.legalPersonUI=legalPersonUI;
 
-    Form.tradeLicenseNumberUILabel=tradeLicenseNumberUILabel;
-
-    Form.tradeLicenseNumberUI=tradeLicenseNumberUI;
-
     Form.busiLicenseNumberUILabel=busiLicenseNumberUILabel;
 
     Form.busiLicenseNumberUI=busiLicenseNumberUI;
-
-    Form.busiLicenseDateUILabel=busiLicenseDateUILabel;
-
-    Form.busiLicenseDateUI=busiLicenseDateUI;
-
-    Form.enterpriseCodeUILabel=enterpriseCodeUILabel;
-
-    Form.enterpriseCodeUI=enterpriseCodeUI;
 
     Form.bankAccountUILabel=bankAccountUILabel;
 
@@ -159,9 +175,23 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.bankTypeUI=bankTypeUI;
 
+    Form.personalPhotoLabel=personalPhotoLabel;
+
+    Form.personalIdentifierPhotoLabel=personalIdentifierPhotoLabel;
+
+    Form.busiLicensePhotoLabel=busiLicensePhotoLabel;
+
     Form.okbtn=okbtn;
 
     Form.cancelbtn=cancelbtn;
+
+    Form.typeUI=typeUI;
+
+    Form.personalPhoto=personalPhoto;
+
+    Form.personalIdentifierPhoto=personalIdentifierPhoto;
+
+    Form.busiLicensePhoto=busiLicensePhoto;
 
     Form.fieldPanel=fieldPanel;
 
@@ -173,25 +203,25 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.orgIdUI=orgIdUI;
 
+    Form.nameUILabel=nameUILabel;
+
+    Form.nameUI=nameUI;
+
+    Form.typeUILabel=typeUILabel;
+
+    Form.typeUI=typeUI;
+
+    Form.descriptionUILabel=descriptionUILabel;
+
+    Form.descriptionUI=descriptionUI;
+
     Form.legalPersonUILabel=legalPersonUILabel;
 
     Form.legalPersonUI=legalPersonUI;
 
-    Form.tradeLicenseNumberUILabel=tradeLicenseNumberUILabel;
-
-    Form.tradeLicenseNumberUI=tradeLicenseNumberUI;
-
     Form.busiLicenseNumberUILabel=busiLicenseNumberUILabel;
 
     Form.busiLicenseNumberUI=busiLicenseNumberUI;
-
-    Form.busiLicenseDateUILabel=busiLicenseDateUILabel;
-
-    Form.busiLicenseDateUI=busiLicenseDateUI;
-
-    Form.enterpriseCodeUILabel=enterpriseCodeUILabel;
-
-    Form.enterpriseCodeUI=enterpriseCodeUI;
 
     Form.bankAccountUILabel=bankAccountUILabel;
 
@@ -200,6 +230,18 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     Form.bankTypeUILabel=bankTypeUILabel;
 
     Form.bankTypeUI=bankTypeUI;
+
+    Form.personalPhotoLabel=personalPhotoLabel;
+
+    Form.personalPhoto=personalPhoto;
+
+    Form.personalIdentifierPhotoLabel=personalIdentifierPhotoLabel;
+
+    Form.personalIdentifierPhoto=personalIdentifierPhoto;
+
+    Form.busiLicensePhotoLabel=busiLicensePhotoLabel;
+
+    Form.busiLicensePhoto=busiLicensePhoto;
 
     Form.actionPanel=actionPanel;
 
@@ -213,13 +255,13 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
         
        if (this.verifiedUI.value== "2") {
-           $("<div style=\"background-color:greenyellow;\">\u8EAB\u4EFD\u9A8C\u8BC1\u901A\u8FC7\u3002</div>").prependTo($(this.fieldPanel));
+           $("<div style=\"background-color:greenyellow;font-size: x-large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u901A\u8FC7\u3002</div>").prependTo($(this.fieldPanel));
        } else if (this.verifiedUI.value == "3") {
-           $("<div style=\"background-color:red;\">\u8EAB\u4EFD\u9A8C\u8BC1\u672A\u901A\u8FC7\uFF01\u8BF7\u4FEE\u6539\u4FE1\u606F\u540E\u91CD\u65B0\u7533\u8BF7\u3002</div>").prependTo($(this.fieldPanel));
+           $("<div style=\"background-color:red;font-size: x-large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u672A\u901A\u8FC7\uFF01\u8BF7\u4FEE\u6539\u4FE1\u606F\u540E\u91CD\u65B0\u7533\u8BF7\u3002</div>").prependTo($(this.fieldPanel));
        } else if (this.verifiedUI.value == "1") {
-           $("<div style=\"background-color:yellow;\">\u8EAB\u4EFD\u9A8C\u8BC1\u5BA1\u6838\u4E2D\u3002\u3002\u3002</div>").prependTo($(this.fieldPanel));
+           $("<div style=\"background-color:yellow;font-size: x-large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u5BA1\u6838\u4E2D\u3002\u3002\u3002</div>").prependTo($(this.fieldPanel));
        } else {
-           $("<div style=\"background-color:darkgrey;\">\u8EAB\u4EFD\u672A\u9A8C\u8BC1\uFF01</div>").prependTo($(this.fieldPanel));
+           $("<div style=\"background-color:darkgrey;font-size: x-large;\">\u8EAB\u4EFD\u672A\u9A8C\u8BC1\uFF01</div>").prependTo($(this.fieldPanel));
        }
     
     

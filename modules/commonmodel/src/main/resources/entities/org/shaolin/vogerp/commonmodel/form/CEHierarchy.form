@@ -181,7 +181,7 @@
                     if (entityName == null || entityName.trim().isEmpty()) {
                         return;
                     }
-                    if (entityName.indexOf('-') != -1) {
+                    if (entityName.indexOf('_') != -1) {
 	                    String format = entityName.replace('-', '.');
 	                    entityName = format.substring(0, format.lastIndexOf("_"));
 	                    try {
@@ -347,7 +347,7 @@
                   import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
                   import org.shaolin.bmdp.runtime.ce.IConstantEntity;
                   {
-                      if ($selectedNode.indexOf('-') != -1) {
+                      if ($selectedNode.lastIndexOf('_') != -1) {
 	                      String format = $selectedNode.replace('-', '.');
 	                      String parentCe = format.substring(0, format.lastIndexOf("_"));
 	                      int parentIntValue = 0;

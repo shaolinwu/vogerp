@@ -104,7 +104,7 @@
          </ns2:Property>
          <ns2:Property name="src">
              <ns2:value xsi:type="ns2:StringPropertyType">
-                  <ns2:value>cefilter.png</ns2:value>
+                  <ns2:value>/cefilter.png</ns2:value>
              </ns2:value>
          </ns2:Property>
         <ns2:EventListener xsi:type="ns2:ClickListenerType">

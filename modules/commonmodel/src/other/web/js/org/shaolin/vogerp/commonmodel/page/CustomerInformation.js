@@ -7,13 +7,11 @@ function org_shaolin_vogerp_commonmodel_page_CustomerInformation(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "personalInfoForm",prefix + "orgInfoForm",prefix + "certifyForm",prefix + "personalAccountForm",prefix + "contractForm",prefix + "addressForm"]
+        ,subComponents: [prefix + "certifyForm",prefix + "personalInfoForm",prefix + "personalAccountForm",prefix + "contractForm",prefix + "addressForm"]
     });
-    var personalInfoForm = new org_shaolin_vogerp_commonmodel_form_PersonalInfo({"prefix":prefix + "personalInfoForm."});
-
-    var orgInfoForm = new org_shaolin_vogerp_commonmodel_form_Organization({"prefix":prefix + "orgInfoForm."});
-
     var certifyForm = new org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo({"prefix":prefix + "certifyForm."});
+
+    var personalInfoForm = new org_shaolin_vogerp_commonmodel_form_PersonalInfo({"prefix":prefix + "personalInfoForm."});
 
     var personalAccountForm = new org_shaolin_vogerp_commonmodel_form_PersonalAccount({"prefix":prefix + "personalAccountForm."});
 
@@ -31,11 +29,9 @@ function org_shaolin_vogerp_commonmodel_page_CustomerInformation(json)
 
     Form.functionsTab=functionsTab;
 
-    Form.personalInfoForm=personalInfoForm;
-
-    Form.orgInfoForm=orgInfoForm;
-
     Form.certifyForm=certifyForm;
+
+    Form.personalInfoForm=personalInfoForm;
 
     Form.personalAccountForm=personalAccountForm;
 
@@ -54,8 +50,6 @@ function org_shaolin_vogerp_commonmodel_page_CustomerInformation(json)
     Form.openUserDetail = org_shaolin_vogerp_commonmodel_page_CustomerInformation_openUserDetail;
 
     Form.deleteUser = org_shaolin_vogerp_commonmodel_page_CustomerInformation_deleteUser;
-
-    Form.createOrg = org_shaolin_vogerp_commonmodel_page_CustomerInformation_createOrg;
 
     Form.initPageJs = org_shaolin_vogerp_commonmodel_page_CustomerInformation_initPageJs;
 
@@ -100,17 +94,6 @@ function org_shaolin_vogerp_commonmodel_page_CustomerInformation(json)
         var o = this;
         var UIEntity = this;
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_CustomerInformation_deleteUser */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_page_CustomerInformation_createOrg(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_CustomerInformation_createOrg */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showBlankOrgInfoPanel",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_CustomerInformation_createOrg */
 
 
     function org_shaolin_vogerp_commonmodel_page_CustomerInformation_initPageJs(){/* Gen_First:org_shaolin_vogerp_commonmodel_page_CustomerInformation_initPageJs */

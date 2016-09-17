@@ -14,6 +14,11 @@ function org_shaolin_vogerp_commonmodel_form_ContactInfoTable(json)
         ,editable: true
     });
 
+    var verifyBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "verifyBtn"]
+    });
+
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
@@ -28,7 +33,7 @@ function org_shaolin_vogerp_commonmodel_form_ContactInfoTable(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "verifyBtn",prefix + "okbtn",prefix + "cancelbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -41,12 +46,14 @@ function org_shaolin_vogerp_commonmodel_form_ContactInfoTable(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentIdUI,itemTable,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [parentIdUI,itemTable,verifyBtn,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.parentIdUI=parentIdUI;
 
     Form.itemTable=itemTable;
+
+    Form.verifyBtn=verifyBtn;
 
     Form.okbtn=okbtn;
 
@@ -60,6 +67,8 @@ function org_shaolin_vogerp_commonmodel_form_ContactInfoTable(json)
 
     Form.actionPanel=actionPanel;
 
+    Form.verifyBtn=verifyBtn;
+
     Form.okbtn=okbtn;
 
     Form.cancelbtn=cancelbtn;
@@ -69,6 +78,8 @@ function org_shaolin_vogerp_commonmodel_form_ContactInfoTable(json)
         /* Construct_FIRST:org_shaolin_vogerp_commonmodel_form_ContactInfoTable */
         /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_ContactInfoTable */
     };
+
+    Form.VerfiyPhoneNumber = org_shaolin_vogerp_commonmodel_form_ContactInfoTable_VerfiyPhoneNumber;
 
     Form.createItem = org_shaolin_vogerp_commonmodel_form_ContactInfoTable_createItem;
 
@@ -89,6 +100,17 @@ function org_shaolin_vogerp_commonmodel_form_ContactInfoTable(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_commonmodel_form_ContactInfoTable */
 /* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_ContactInfoTable */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_ContactInfoTable_VerfiyPhoneNumber(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ContactInfoTable_VerfiyPhoneNumber */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"VerfiyPhoneNumber_1993740592",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ContactInfoTable_VerfiyPhoneNumber */
+
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_ContactInfoTable_createItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ContactInfoTable_createItem */

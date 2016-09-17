@@ -18,7 +18,7 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox(json)
         ui: elementList[prefix + "filterUI"]
         ,width: "30px"
         ,height: "30px"
-        ,src: "cefilter.png"
+        ,src: "/cefilter.png"
     });
 
     var fieldPanel = new UIMaster.ui.panel

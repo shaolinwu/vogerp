@@ -2,6 +2,24 @@
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
   <entityName>org.shaolin.vogerp.commonmodel.form.ContactInfoTable</entityName>
   <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="VerfiyPhoneNumber">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="VerfiyPhoneNumber_1993740592">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.commonmodel.be.ContactInfoImpl;
+        { 
+            Table tableWidget = (Table)@page.getElement("itemTable");
+            if (tableWidget.getSelectedRow() == null) {
+                return;
+            }
+            //TODO:
+            Dialog.showMessageDialog("短信已发送，请确认!", "Information", Dialog.INFORMATION_MESSAGE, null);
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
   <ns2:eventHandler functionName="createItem">
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createItem_1993740592">
       <ns2:exp>
@@ -29,6 +47,7 @@
                 return;
             }
             tableWidget.deleteRow(tableWidget.getSelectedIndex());
+            Dialog.showMessageDialog("删除完成!", "Information", Dialog.INFORMATION_MESSAGE, null);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -220,7 +239,21 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="verifyBtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="VerfiyPhoneNumber"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:editable xsi:type="ns2:ExpressionPropertyType">
+          <ns2:expression>
+            <expressionString>{return $editable;}</expressionString>
+          </ns2:expression>
+        </ns2:editable>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>手机验证</ns2:value>
+        </ns2:text>
+      </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="Save"></ns2:handler>
@@ -245,12 +278,16 @@
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>okbtn</ns2:componentId>
+        <ns2:componentId>verifyBtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:componentId>okbtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="2" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>

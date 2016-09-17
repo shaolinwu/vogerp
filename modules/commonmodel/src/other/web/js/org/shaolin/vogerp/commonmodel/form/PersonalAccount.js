@@ -18,6 +18,39 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
         ui: elementList[prefix + "userNameUI"]
     });
 
+    var orgPasswordUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "orgPasswordUILabel"]
+    });
+
+    var orgPasswordUI = new UIMaster.ui.passwordfield
+    ({
+        ui: elementList[prefix + "orgPasswordUI"]
+        ,validators:[
+        {
+            func: function() {
+                
+                    {
+                        if (this.value.length > 0) {
+                            return !/[¡£~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
+                        }
+                        return true;
+                    }
+                    
+            }
+            ,msg: "\u53EA\u5141\u8BB8\u5B57\u6BCD\u548C\u6570\u5B57\u3002"
+        }
+,
+        {
+            func: function() {
+                
+                    return this.value != "******";
+                    
+            }
+            ,msg: "Please change your password."
+        }
+]    });
+
     var passwordUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "passwordUILabel"]
@@ -109,13 +142,13 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "userNameUILabel",prefix + "userNameUI",prefix + "passwordUILabel",prefix + "passwordUI",prefix + "password1UILabel",prefix + "password1UI"]
+        ,subComponents: [prefix + "idUI",prefix + "userNameUILabel",prefix + "userNameUI",prefix + "orgPasswordUILabel",prefix + "orgPasswordUI",prefix + "passwordUILabel",prefix + "passwordUI",prefix + "password1UILabel",prefix + "password1UI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,userNameUILabel,userNameUI,passwordUILabel,passwordUI,password1UILabel,password1UI,resetPasswordbtn,fieldPanel,actionPanel]
+        ,items: [idUI,userNameUILabel,userNameUI,orgPasswordUILabel,orgPasswordUI,passwordUILabel,passwordUI,password1UILabel,password1UI,resetPasswordbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -123,6 +156,10 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
     Form.userNameUILabel=userNameUILabel;
 
     Form.userNameUI=userNameUI;
+
+    Form.orgPasswordUILabel=orgPasswordUILabel;
+
+    Form.orgPasswordUI=orgPasswordUI;
 
     Form.passwordUILabel=passwordUILabel;
 
@@ -141,6 +178,10 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
     Form.userNameUILabel=userNameUILabel;
 
     Form.userNameUI=userNameUI;
+
+    Form.orgPasswordUILabel=orgPasswordUILabel;
+
+    Form.orgPasswordUI=orgPasswordUI;
 
     Form.passwordUILabel=passwordUILabel;
 

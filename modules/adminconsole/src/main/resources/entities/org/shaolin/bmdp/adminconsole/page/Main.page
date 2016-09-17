@@ -491,9 +491,11 @@
                                 <ns2:bundle>org_shaolin_vogerp_adminconsole_i18n</ns2:bundle>
                                 <ns2:key>org.shaolin.bmdp.adminconsole.page.Main</ns2:key>
                             </ns2:title>
+                            <ns2:frame chunkName="org.shaolin.vogerp.commonmodel.diagram.ModularityModel" nodeName="OrgManager" role="Admin,0">
+                            </ns2:frame>
                             <ns2:frame chunkName="org.shaolin.vogerp.commonmodel.diagram.ModularityModel" nodeName="OnlineOrderList">
                             </ns2:frame>
-                        </ns2:tab>    
+                        </ns2:tab>
 					    <!--
 					    <ns2:tab uiid="currentStatusPanel">
 		                    <ns2:title xsi:type="ns2:ResourceBundlePropertyType">

@@ -48,23 +48,32 @@
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.bmdp.runtime.security.UserContext;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
-        import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
-        import org.shaolin.vogerp.commonmodel.be.PersonInfoImpl;
+        import org.shaolin.vogerp.commonmodel.be.*;
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
-        import org.shaolin.bmdp.runtime.AppContext;
         import org.shaolin.vogerp.commonmodel.IUserService;
         import org.shaolin.vogerp.commonmodel.internal.PasswordCheckResult;
         import org.shaolin.vogerp.commonmodel.internal.PasswordVerifier;
+        import org.shaolin.uimaster.page.flow.WebflowConstants;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             HashMap input = (HashMap)form.ui2Data();
-            PersonalAccountImpl defaultUser = (PersonalAccountImpl)input.get("beObject");
-            defaultUser.setPassword(PasswordVerifier.getPasswordHash(defaultUser.getPassword()));
-            CommonModel.INSTANCE.update(defaultUser);
             
-            Dialog.showMessageDialog("更新成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
+            UserContext userContext = UserContext.getUserContext();
+            IUserService moduleService = (IUserService)AppContext.get().getService(IUserService.class);
+            PersonalAccountImpl personalAccount = (PersonalAccountImpl)moduleService.getPersonalAccount(userContext.getUserId());
+            
+            if (personalAccount.getPassword().equals(PasswordVerifier.getPasswordHash(@page.getTextField("orgPasswordUI").getValue()))) {
+	            PersonalAccountImpl tempData = (PersonalAccountImpl)input.get("beObject");
+	            personalAccount.setPassword(PasswordVerifier.getPasswordHash(tempData.getPassword()));
+	            CommonModel.INSTANCE.update(personalAccount);
+	            Dialog.showMessageDialog("更新成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
+            } else {
+                Dialog.showMessageDialog("更新失败，当前密码错误！", "Error", Dialog.ERROR_MESSAGE, null);
+            }
         }
         ]]></expressionString>
       </ns2:exp>
@@ -98,6 +107,7 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
@@ -113,12 +123,21 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="userNameUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="orgPasswordUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.commonmodel.be.PersonalAccount.password</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIPasswordFieldType" UIID="orgPasswordUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
         <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
             <ns2:value>false</ns2:value>
         </ns2:allowBlank>
-        <ns2:allowBlankText xsi:type="ns2:ResourceBundlePropertyType">
-            <ns2:bundle>org_shaolin_bmdp_security_i18n</ns2:bundle>
-            <ns2:key>org.shaolin.bmdp.security.form.User.userNameUI.allowBlankText</ns2:key>
+        <ns2:allowBlankText xsi:type="ns2:StringPropertyType">
+            <ns2:value>当前密码</ns2:value>
         </ns2:allowBlankText>
         <ns2:maxLength xsi:type="ns2:NumericPropertyType">
             <type>int</type>
@@ -127,29 +146,29 @@
         <ns2:validator xsi:type="ns2:ValidatorsPropertyType">
             <ns2:validator xsi:type="ns2:ValidatorPropertyType">
                     <isFuncRef>false</isFuncRef>
-                    <funcCode><![CDATA[if (this.value.length > 0) {
-        return !/[。~!@#$%\^\+\*&\\\/\?\|:\.<>{}()';="]/.test(this.value);
-    }
-    return true;]]></funcCode>
-                    <errMsg>Please input only alphabets and digits.</errMsg>
+                    <funcCode><![CDATA[
+                    {
+                        if (this.value.length > 0) {
+                            return !/[。~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
+                        }
+                        return true;
+                    }
+                    ]]></funcCode>
+                    <errMsg>\u53EA\u5141\u8BB8\u5B57\u6BCD\u548C\u6570\u5B57\u3002</errMsg>
             </ns2:validator>
             <ns2:validator xsi:type="ns2:ValidatorPropertyType">
                     <isFuncRef>false</isFuncRef>
                     <funcCode><![CDATA[
-                    if (this.value.length > 0) {
-				        return true;
-				    }
-				    return true;
+                    return this.value != "******";
                     ]]></funcCode>
-                    <errMsg>This user name has existed! Please reenter new one.</errMsg>
+                    <errMsg>Please change your password.</errMsg>
             </ns2:validator>
         </ns2:validator>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="passwordUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.commonmodel.be.PersonalAccount.password</ns2:key>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>输入新密码</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIPasswordFieldType" UIID="passwordUI">
@@ -189,9 +208,8 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="password1UILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.commonmodel.be.PersonalAccount.repassword</ns2:key>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>再次输入新密码</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIPasswordFieldType" UIID="password1UI">
@@ -265,20 +283,28 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>passwordUILabel</ns2:componentId>
+        <ns2:componentId>orgPasswordUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>passwordUI</ns2:componentId>
+        <ns2:componentId>orgPasswordUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>password1UILabel</ns2:componentId>
+        <ns2:componentId>passwordUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>password1UI</ns2:componentId>
+        <ns2:componentId>passwordUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>password1UILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>password1UI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <!-- 
       <ns2:layoutConstraint>
@@ -337,7 +363,7 @@
     <ns2:DataEntity scope="InOut" name="isNewAccount" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping_0">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
       <ns2:UIComponent componentPath="idUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Number">
@@ -346,7 +372,7 @@
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="userNameUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
@@ -355,12 +381,12 @@
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="passwordUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
         <ns2:expression>
-          <expressionString>"******"</expressionString>
+          <expressionString>""</expressionString>
         </ns2:expression>
         <ns2:uiToDataExpression>
            <ns2:expression>
@@ -369,12 +395,12 @@
         </ns2:uiToDataExpression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping11">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="password1UI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
         <ns2:expression>
-          <expressionString>"******"</expressionString>
+          <expressionString>""</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
@@ -394,8 +420,8 @@
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString>{
-@odContext.executeAllMappings();
-}</expressionString>
+       @odContext.executeAllMappings();
+     }</expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>
 </ns2:UIEntity>
