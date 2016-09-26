@@ -13,23 +13,6 @@ function org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector(json)
         ui: elementList[prefix + "productTree"]
     });
 
-    var okbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "okbtn"]
-    });
-
-    var cancelbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "cancelbtn"]
-    });
-
-    var actionPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "actionPanel"]
-        ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
-    });
-
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
@@ -40,28 +23,18 @@ function org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [selectProductNodeUI,productTree,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [selectProductNodeUI,productTree,fieldPanel]
     });
 
     Form.selectProductNodeUI=selectProductNodeUI;
 
     Form.productTree=productTree;
 
-    Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
-
     Form.fieldPanel=fieldPanel;
 
     Form.selectProductNodeUI=selectProductNodeUI;
 
     Form.productTree=productTree;
-
-    Form.actionPanel=actionPanel;
-
-    Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

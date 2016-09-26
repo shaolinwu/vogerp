@@ -33,11 +33,12 @@
                       order.setHtmlDesc("/product/" + resourceId + "/desc.html");
                       order.setPhotos("/product/" + resourceId + "/images");
                       order.setCreateDate(new java.util.Date());
+                      order.setCount(1);
                       
                       HashMap input = new HashMap();
                       input.put("beObject", order);
                       input.put("editable", new Boolean(true));
-                      RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrderPreEditor", input);
+                      RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor", input);
                       @page.addElement(form);
                       
                       form.openInWindows("新建抢购订单", new TableCallBack("goldenOrderTable"), true);
@@ -441,6 +442,7 @@
 		                            </ns2:expression>
 		                        </ns2:updateCondition>
 		                    </ns2:column>
+		                    <!-- 
                             <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
 		                            <ns2:value>超时时间</ns2:value>
@@ -478,6 +480,7 @@
 		                            </ns2:expression>
 		                        </ns2:updateCondition>
 		                    </ns2:column>
+		                     -->
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
 		                            <ns2:value>建立时间</ns2:value>
@@ -674,6 +677,7 @@
                                     </ns2:expression>
                                 </ns2:updateCondition>
                             </ns2:column>
+                            <!-- 
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
                                     <ns2:value>超时时间</ns2:value>
@@ -711,6 +715,7 @@
                                     </ns2:expression>
                                 </ns2:updateCondition>
                             </ns2:column>
+                             -->
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
                                     <ns2:value>建立时间</ns2:value>

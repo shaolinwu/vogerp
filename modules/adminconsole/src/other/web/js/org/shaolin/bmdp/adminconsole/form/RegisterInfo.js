@@ -1,226 +1,108 @@
-/* null */
-/* auto generated constructor */
-function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
-{
-    var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var phoneNumberUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "phoneNumberUILabel"]
-    });
-
-    var phoneNumberUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "phoneNumberUI"]
-        ,validators:[
-        {
-            func: function() {
-                
-                    {
-                        if (this.value.length > 0) {
-                            if (/^1[3|4|5|7|8]\d{9}$/.test(this.value)) {
-                              return true;
-                            } else {
-                              return false;
-                            }
-                        }
-                        return true;
-                    }
-                    
-            }
-            ,msg: "\u8BF7\u8F93\u5165\u6B63\u786E\u624B\u673A\u53F7\u3002"
-        }
-]    });
-
-    var passwordUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "passwordUILabel"]
-    });
-
-    var passwordUI = new UIMaster.ui.passwordfield
-    ({
-        ui: elementList[prefix + "passwordUI"]
-        ,validators:[
-        {
-            func: function() {
-                
-                    {
-                        if (this.value.length > 0) {
-                            return !/[。~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
-                        }
-                        return true;
-                    }
-                    
-            }
-            ,msg: "\u8BF7\u8F93\u5165A-Z\u5B57\u6BCD\u62160-9\u6570\u5B57\u4F5C\u4E3A\u5BC6\u7801\u3002"
-        }
-]    });
-
-    var password1UILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "password1UILabel"]
-    });
-
-    var password1UI = new UIMaster.ui.passwordfield
-    ({
-        ui: elementList[prefix + "password1UI"]
-        ,validators:[
-        {
-            func: function() {
-                
-                    {
-                        if (this.value.length > 0) {
-                            return !/[。~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
-                        }
-                        return true;
-                    }
-            }
-            ,msg: "\u8BF7\u8F93\u5165A-Z\u5B57\u6BCD\u62160-9\u6570\u5B57\u4F5C\u4E3A\u5BC6\u7801\u3002"
-        }
-,
-        {
-            func: function() {
-                
-                    { 
-                    return this.value == passwordUI.value;
-                    }
-            }
-            ,msg: "\u5BC6\u7801\u4E0D\u5339\u914D\uFF01"
-        }
-]    });
-
-    var nameUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "nameUILabel"]
-    });
-
-    var nameUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "nameUI"]
-    });
-
-    var industryUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "industryUILabel"]
-    });
-
-    var industryUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "industryUI"]
-      ,allowBlank:false
-      ,allowBlankText:"行业类型不能为空！"
-    });
-
-    var fieldPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "fieldPanel"]
-        ,items: []
-        ,subComponents: [prefix + "phoneNumberUILabel",prefix + "phoneNumberUI",prefix + "passwordUILabel",prefix + "passwordUI",prefix + "password1UILabel",prefix + "password1UI",prefix + "nameUILabel",prefix + "nameUI",prefix + "industryUILabel",prefix + "industryUI"]
-    });
-
-    var Form = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "Form"]
-        ,items: [phoneNumberUILabel,phoneNumberUI,passwordUILabel,passwordUI,password1UILabel,password1UI,nameUILabel,nameUI,industryUILabel,industryUI,fieldPanel]
-    });
-
-    Form.phoneNumberUILabel=phoneNumberUILabel;
-
-    Form.phoneNumberUI=phoneNumberUI;
-
-    Form.passwordUILabel=passwordUILabel;
-
-    Form.passwordUI=passwordUI;
-
-    Form.password1UILabel=password1UILabel;
-
-    Form.password1UI=password1UI;
-
-    Form.nameUILabel=nameUILabel;
-
-    Form.nameUI=nameUI;
-
-    Form.industryUILabel=industryUILabel;
-
-    Form.industryUI=industryUI;
-
-    Form.fieldPanel=fieldPanel;
-
-    Form.phoneNumberUILabel=phoneNumberUILabel;
-
-    Form.phoneNumberUI=phoneNumberUI;
-
-    Form.passwordUILabel=passwordUILabel;
-
-    Form.passwordUI=passwordUI;
-
-    Form.password1UILabel=password1UILabel;
-
-    Form.password1UI=password1UI;
-
-    Form.nameUILabel=nameUILabel;
-
-    Form.nameUI=nameUI;
-
-    Form.industryUILabel=industryUILabel;
-
-    Form.industryUI=industryUI;
-
-    Form.user_constructor = function()
-    {
-        /* Construct_FIRST:org_shaolin_bmdp_adminconsole_form_RegisterInfo */
-        /* Construct_LAST:org_shaolin_bmdp_adminconsole_form_RegisterInfo */
-    };
-
-    Form.verifiPhoneNumber = org_shaolin_bmdp_adminconsole_form_RegisterInfo_verifiPhoneNumber;
-
-    Form.invokeDynamicFunction = org_shaolin_bmdp_adminconsole_form_RegisterInfo_invokeDynamicFunction;
-
-    Form.__entityName="org.shaolin.bmdp.adminconsole.form.RegisterInfo";
-
-    Form.init();
-    return Form;
-};
-
-    /* EventHandler Functions */
-/* Other_Func_FIRST:org_shaolin_bmdp_adminconsole_form_RegisterInfo */
-/* Other_Func_LAST:org_shaolin_bmdp_adminconsole_form_RegisterInfo */
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_bmdp_adminconsole_form_RegisterInfo_verifiPhoneNumber(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_form_RegisterInfo_verifiPhoneNumber */
-        var o = this;
-        var UIEntity = this;
-
-        {   
-            //if(event.keyCode != 13 || event.keyCode != 9) {
-               //return;
-            //}
-            var constraint_result = this.phoneNumberUI.validate();
-            if (constraint_result != true && constraint_result != null) {
-                return false;
-            }
-        }
-        
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifiPhoneNumber-20160101-1112432",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_form_RegisterInfo_verifiPhoneNumber */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_bmdp_adminconsole_form_RegisterInfo_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_form_RegisterInfo_invokeDynamicFunction */
-        var o = this;
-        var UIEntity = this;
-
-        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing? ^_^',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),event,UIMaster.getValue(eventsource),o.__entityName);
-
-        
-        }
-        }).open();
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_form_RegisterInfo_invokeDynamicFunction */
-
-
-
+09/20:07:31:56.764[00:020212:] Failed to report to server
+2016/09/20:07:31:56.774[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.774[00:020212:] Failed to report to server
+2016/09/20:07:31:56.774[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.775[00:020212:] Failed to report to server
+2016/09/20:07:31:56.785[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.785[00:020212:] Failed to report to server
+2016/09/20:07:31:56.795[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.795[00:020212:] Failed to report to server
+2016/09/20:07:31:56.796[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.796[00:020212:] Failed to report to server
+2016/09/20:07:31:56.806[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.806[00:020212:] Failed to report to server
+2016/09/20:07:31:56.816[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.816[00:020212:] Failed to report to server
+2016/09/20:07:31:56.827[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.827[00:020212:] Failed to report to server
+2016/09/20:07:31:56.837[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.837[00:020212:] Failed to report to server
+2016/09/20:07:31:56.847[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.847[00:020212:] Failed to report to server
+2016/09/20:07:31:56.848[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.848[00:020212:] Failed to report to server
+2016/09/20:07:31:56.858[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.858[00:020212:] Failed to report to server
+2016/09/20:07:31:56.859[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.859[00:020212:] Failed to report to server
+2016/09/20:07:31:56.859[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.860[00:020212:] Failed to report to server
+2016/09/20:07:31:56.870[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.870[00:020212:] Failed to report to server
+2016/09/20:07:31:56.880[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.880[00:020212:] Failed to report to server
+2016/09/20:07:31:56.890[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.890[00:020212:] Failed to report to server
+2016/09/20:07:31:56.891[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.891[00:020212:] Failed to report to server
+2016/09/20:07:31:56.891[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.891[00:020212:] Failed to report to server
+2016/09/20:07:31:56.902[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.902[00:020212:] Failed to report to server
+2016/09/20:07:31:56.912[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.912[00:020212:] Failed to report to server
+2016/09/20:07:31:56.922[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.922[00:020212:] Failed to report to server
+2016/09/20:07:31:56.922[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.923[00:020212:] Failed to report to server
+2016/09/20:07:31:56.933[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.933[00:020212:] Failed to report to server
+2016/09/20:07:31:56.934[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.934[00:020212:] Failed to report to server
+2016/09/20:07:31:56.944[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.944[00:020212:] Failed to report to server
+2016/09/20:07:31:56.954[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.954[00:020212:] Failed to report to server
+2016/09/20:07:31:56.955[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.955[00:020212:] Failed to report to server
+2016/09/20:07:31:56.959[10:021832:] No current forward peer, set true reflector flag
+2016/09/20:07:31:56.959[10:021832:] No current backward peer, set true reflector flag
+2016/09/20:07:31:56.959[10:021832:] KeepAlive timed out... Connect reflector.
+2016/09/20:07:31:56.959[10:021832:] KeepAlive timed out, but sending is blocked, or CA pump is stopped, so don't connect reflector.
+2016/09/20:07:31:56.965[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.965[00:020212:] Failed to report to server
+2016/09/20:07:31:56.976[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.976[00:020212:] Failed to report to server
+2016/09/20:07:31:56.977[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.977[00:020212:] Failed to report to server
+2016/09/20:07:31:56.987[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.987[00:020212:] Failed to report to server
+2016/09/20:07:31:56.988[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.988[00:020212:] Failed to report to server
+2016/09/20:07:31:56.988[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.988[00:020212:] Failed to report to server
+2016/09/20:07:31:56.989[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.989[00:020212:] Failed to report to server
+2016/09/20:07:31:56.990[00:020212:] About to throw error code 10065
+2016/09/20:07:31:56.990[00:020212:] Failed to report to server
+2016/09/20:07:31:57.000[00:020212:] About to throw error code 10065
+2016/09/20:07:31:57.000[00:020212:] Failed to report to server
+2016/09/20:07:31:57.001[00:020212:] About to throw error code 10065
+2016/09/20:07:31:57.001[00:020212:] Failed to report to server
+2016/09/20:07:31:57.011[00:020212:] About to throw error code 10065
+2016/09/20:07:31:57.011[00:020212:] Failed to report to server
+2016/09/20:07:31:57.012[00:020212:] About to throw error code 10065
+2016/09/20:07:31:57.012[00:020212:] Failed to report to server
+2016/09/20:07:31:57.022[00:020212:] About to throw error code 10065
+2016/09/20:07:31:57.022[00:020212:] Failed to report to server
+2016/09/20:07:31:57.032[00:020212:] About to throw error code 10065
+2016/09/20:07:31:57.032[00:020212:] Failed to report to server
+2016/09/20:07:31:57.043[00:020212:] About to throw error code 10065
+2016/09/20:07:31:57.043[00:020212:] Failed to report to server
+2016/09/20:07:31:57.044[00:020212:] About to throw error code 10065
+2016/09/20:07:31:57.044[00:020212:] Failed to report to server
+2016/09/20:07:31:57.054[00:020212:] About to throw error code 10065
+2016/09/20:07:31:57.054[00:020212:] Failed to report to server
+2016/09/20:07:31:57.064[00:020212:] About to throw error code 10065
+2016/09/20:07:31:57.064[00:020212:] Failed to report to server
+2016/09/20:07:31:57.065[00:020212:] About to throw error code 10065
+2016/09/20:07:31:57.065[00:020212:] Failed to report to server
+2016/09/20:07:31:57.075[00:020212:] About to throw error code 10065
+2016/09/20:07:31:57.075[00:020212:] Failed to report to server
+2016/09/20:07:31:57.076[00:020212:] About to throw error code 10065
+2016/09/20:07:31:57.076[00:020212:] Failed to report to server
+2016/09/20:07:31:57.086[00:020212:] About to throw error code 10065
+2016/09/20:07:31:57.086[00:020212:] Failed to report to server
+2016/09/20:07:31:57.087[00:020212:] About to throw error code 10065
+2016/09/20:07:31:57.087[00:020212:] Failed to report to server
+2016/09/20:07:31:57.097[00:0
