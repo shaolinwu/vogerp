@@ -271,23 +271,100 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         var UIEntity = this;
 
                 {
-                ’–WK>Ç´Ø€rĞŞµá®vøç²LĞ•®ÆÇÕ7}t”sÂÌf{^IÃT¬~É€Î9ÕjÀ÷¤‰ ¤‚4ÛM!óØ£fQÃ&ñ¦|ÍH¨§VJƒ•#¢Ï1?[;¨ˆô×R-’¯„ë9À#^yG‚réHnk˜_Ôw9fË’/§V=z#fh²},w‰5›^Æ%N5œb+EŠÊ¦¡Äñ‹ÊÖd¹e
-Æ#¬vz2}´¯”¥RJUóX¤æ£ª-R’­²qqHMM7|¼£ïe4Ud™¦äÂ ¼TqÕj	_c“¨H0Y“h½xÎ©¢Û¤ıÃ6©*ıš,Ô7SPM¦OBUlr™cEÔ­«c¸jÇy«?ÎNârìŞ_²4Må&Å“kwxëÅÑG¶F{“ŠBóPÒ€‹äß(ŞRÏ]F¾Ê(Ñì¤`Ôõ xæM+3yZÁ5;ëĞu$“vÚ&ÈÚüyÉ9…9)}]íaZ¬1É®%P'˜«%êçb)„[~KÀ¹jõn[ GÄm¨lÔùçø’Ód¬dEeãİ1ˆV>¼öæ­VÃ„»¨÷Y,Ùã,Œ£˜ájñoL>ŠºÄV»±UÒjÇµ9],"*.S¤A*ªÈ41…@?Yš·óÔ(¦#ĞÁÜ¤Cz "P(”z¸ü{İ‡‘  9D9˜w.ãk-ÆyÃ%$C¤´Ó¦I¬Œ­7@Ã&á©W]ÒÄfEÈ¢‰•g+¸M)W9Õ°œ¥»GÔìß¶êÏ±æñæxŠË­ Hé1¼Ø *µyœ|•VD*©>•vş-R‹#¹ß¤²ï=e6ì	$àóÑ¤"å—ÑÇRkSáe.ĞÑí²‹ùV Í´r ^@˜å©„ÓRY‚ìÌÌ‹FG¤ÚÀŸ´Ú¾½´/YítÈcˆfwÃL;J²Şö¤”IçZ=‰k:5TN>dãÒúÅì¡\'+>`á0äAcÖÛ®  ‘%`1€:H&1IÁÄà_{.úAĞÈùuh x8¦¢[³Ÿ`C*;3On´—QšpÃ6Ltr•¢Šœ’Òc"Â@êÀ»`EQ+åößŞr‚”çë£kCtÈĞm[S%(œ"²ß
-3mµ’†ùF¬¡¡½$“Yg…“|™b•aõİRáÒÙ?Üµz¡"ş7ø’`‰|Ÿ3Lh>ÙŒ›0ñšÄ?µô‹A™x7mŠªìH™êŠ;+¶MÁ¯Ò‹Wàã£¨‡HMÈ(AKƒôB§ÂİPÂCz*©É,š§MDÄšüğ>È?Ä:ûAÌ÷œ=“6rÂ;2!Qw‡7eºXw¨–$ª ¦qV ÇÉÈ8—o9s˜³9%\1b’ÍaÓ1cO1Ÿc[•<@­>Ëä|Ği|İ[±ä°G ­”ò$Œ¼6+`„ümÅğÙìé™ûK6÷H¶awîåÙ¥,»	X–PÒÈ‡Ö=À>~CğÕtˆZo¹>)Ìzu\ahfy…˜J»ÈÊWW!›•9FÍII›$’ëUH1>´ÉÓq@uUˆ:X<EäÉú# {É›¬S	é ¾‰BÌ%*¢š@` '~ 7ôhÑ ßŒw\ÍŞ»HÄ²²òmâ¯{ZV—;#Z”MŠ0“'I¹c$tFLrsE U)ËØDÀûõƒnN‹”¶Æµ#(Å@cÍ½ØÓ"—{ùö^ÈÖì|£6,¬ô(Ú¦BÁF}Q‹É°l‚¿k17+W©*fÓôZS;Œ|Œ£ì5”;¯,‚ªÇ:Š%¼Lœ‘CàD¾æx\A2 'QŒ BğPñÉ„uõ½À|ƒôh<¡Aš-º&º˜(©Ö
-%òpëå4GÈ@ÄèàzxÆõÈÁMîT
-+9Lé”ŠTÙ“	ÊpPë(ªû¢ÂB‡8&Nëv£Óµ]Ë˜Åmÿ 1˜QàÅc»€Åã(‡Pp !Èw#•lŠ>ù¼äêSj6ïxGåÆ²}`<÷ä=!yî"`Ğ6_fİx=l \$U„p«uDN&…ªÏÜGGÌJ%tJc@Ja—aŒ` ê© £ã€àR*BwLƒèÈ>eK÷ F ]D€w÷¶şDPş•Yµ/š=H¦
-ôÀåLy
-Šú#J…ıÕ/IèÖ/î†7JÅP¾WH’G%áÏâ#èıQÔTçô‰@ç9Œ9DAE9ôŠuÒÂcs»ª€yè<ßcFu…¡êé1”2f0	3¨™)¨t2‹S¨S õaHNq5çŠPÂcµ ˆ”J%©ğ' ‘LTÀÆ0pc æ!™Œ)¨r|ËUĞy‡d&7÷2aÔ'0˜€$0Š…Lªˆœ‚P‰&‘ÇŸ}r‘@š»ÔÚºı]3IDå …à €~¢¼¼€Rû¡Û°qèêŞ¢‡n|¿(è.õ/{–ÇôyÍ´R+¶)Y*³^È³Vy‚B!AÅnJõ•¦û«—åHWL‹G*:VnQ:­Z]¼{¦è7ıîÿ "äœÏ0•².Ñuƒ†BÃ\ËñæÃ–Z³E‘B¼•2×Ã/µùD©¥İNÔ¦:ÇJ¿­Æ±Öés¬œ4F]"G	#%P=îİ„°üùçËôëÉo Á¹LVè¤Ø cƒvé 0 —¨ŞŒ¥äÀ#Àˆ è5B@?{`Z·4tÉ”ªì{M£'Â‘²j÷Ñúvìİ™»s®Õ‚ÆnÜê&c"—G¸1ìŒ'nEKé}0Q2Ä*œtŠš¦1 ÊR”S{å(¾œ‹=¸|w‰[µfzı«_n”ô¾×MõVf­Á",":o“œ]i7¼
-·nRv1´âô^ÏgÕÔLòC¨NLaäæƒ”*ÿ åDyC€W¨ Tæ!ÑıÎC`oF¨R	ÌS‰ˆS˜Å)ÀJ^…
- r „1JkxGã­7§áªÂA(œîüôœü‡Jg *‚ A(&à;ƒ‰ºHW)Õù›Dì‚pp‘N¦lî—Tí£!âP¯+é²‰"Õ²*¸R 8ô +'Ò©°7\R¾ÌÉn"ù¤D¥ê
-–3§Ékâ³µöëh‰‘D¤~F³ML=™¿¯åëtHn®ÒÉfcXFaÏ—kp¶àò‚˜í#.¦"ÄÒ,d!)ÎVìpQf å¼…f´ÙV“vV«”è»–,c)‡©õÈ‹!ÈBÑ
-I&QL¢ ˜„©¶LH=TÒUN%oÒDHd“›­Âqì¬ÀÍ¸z@'¤F^“‰H)”N: NÜ	xç¸€ˆ …B-J™Ü©‘.L©D€€O  Låíğ0y¼àb€·ôh<âÇ3l™Á³r$`'=Eç¬ÆtêÂc*r” RA1ÈÁê5÷Q¹ÁãçAÆìa`S[¨òsn³44]ÊŒu²6Dˆ–Œ­béñÿ ¯®ò$ËL+KÍZ·j³8˜)Œc%':â.ÔªÅò)ÍrßZ‚µWß•4ßÃY"XÍÃ>)DNB»Œ|“†®A#”§(9@ÉDD¼õì›t’ Æ6¶Xw±*.CµâÛ™W¥ÏTê6	xr3•l$v´½}üy‘4°4–”ojRZ°êV`"Åê®vç‰¨wz,¶9—­G'W•‚\#8¢„ñ1’Ôjs×$!ÅıjJ4ænşN¼ò2NM«98WŒ_³lé¦5*ö3§;Œ¢ÖëõHJü#õb+uè†PÕ¶Ş¬œ‹Ğ*‘-˜·hEœ‰rT(uÎqsŞ^ßïÓ?ãŒ<İ“y‹uZ:mûxàWÔ’Yés&€,” ¥éu÷:¸ä¢‡İmQvI|+–Şú|•WMy˜{3i•qºÓ¯P€¸E¯©°^v!ºlëÙ>$±‘2QvÀYXø…¨Ò4Û=‹Öw¹li—f0›Åæ“»ÂEšQÒ‹Õ¦®€¡ZNà´[)´Ø¬/eRƒU9S5A‰Š#"w
-¢îgle3n`ÆÓJUÌ§AxòwNºpºEÓEšÊÀL]'Õ«,3·p/›;o İ5ÊA6H:‰‹ÙªxGåìšûtp×J_jî‹~bÕÌk9¸TS¦’ó>Û9q‹)¦°¶¸áh²ä,³™ö«*šéàâ0&|Æùú&ZÁŞÉÈCEJ4Œtp/ Õ3×°Ñ“ŒŸ´Múh æ>VY„›'ŒŒCë˜ÏÙ3|
-”®EÌs Iu}U"œ8˜é”äPÅM% ¥1‘áUP1Œ	ppôƒé
-AT Úh»TÚ´.Ùª²ÕÈ9Éi¤¦æâäÜ°r‰ j±®`ëpõtŞÕê-$%ckÏ¬ÍaÛÌßV<c{•¹Ôµ²F	¤ŒŠè)în¿uøÏhXJû²£Óı­SØ7ø„·Üç¥_2ƒ¯S©ĞçU%§,V»$¤Mj5°	œIÉ·"æE¹W]€oe#w‹¿œì>«eÂqöİán5S¤Á´l2›^”6;¯¥4Í,-¥onÖq8†kÇDH Ğ[JƒÆJ$ĞßB;OKnX-Ì›6hLaM)7jŠ-SL`.Ø¥"$A"¦zR¤@D@¥YdÀ¥"ªõÆ¶Æ6ihÅĞï=Ä™¦í·•^µ^òœJ«"ñ¾&§%$:Â°
-’BA4ÙTkdŠ4û˜÷I·’³âëG‘BzA”]«€}0`ÿ Áu#ú9ûG@¶.= DÑpR¦à¸Cu¾÷?y÷¤ø‘0ËÂe)Cm"¦÷JûñíÈ'0İ¹ã¹ƒŸ.ŞAÀvÖ}"qøÿ «F® óÑ ùûßïWäóÆÉ¿êÓ
-ëë‹_#¿aš÷+²8ÿ õÇÉŸË0·ì××½îß÷©îoüŞóGú¸²i ÜÏ÷¿3_ùª]ÿ Õ«*ûµr˜mSsTzDØ3& »›ÙØGŸŸŸù4’îUB)á÷›@L rmFàqü ­_|<üÒ(‡Ç· Ú|¿¼õ°ò"‡ôªÍ©|üÂ?£úÄ5¾ÏSCÁça%/
-¬A*Eêë-spBŠ¨¡‡ ‰¦s˜G±xÜÙ¹,-·jr×Ìë–1î§79Ò5£ Yb«1K®&\E¡¥_µj
-)úĞ¤İeÔJ~²"(P_À_>@ó ë
-‡çï
-cˆ H=À;uqû? Gì€¶ßwu#´,-ºëÛ•—^»P.Á÷D±Õ®U›W®].L±lŠ‡©DÄ"f€E¤%NÕ²i®“¦Î$Yœ®5ï¾ÜÏFk]ÒxW`[zÚ\kJÌo/:'”là¢#éYÃÓvñ,Í„YĞÛ<BRRäı5JÙÃe¡‘QBŠa:jÈ ×Ñ‚¢%½0¤S	1ı	Jcô•SÃÇ%(p"&àKïk1&rºT( €#Ü GÌ~"Qãä
+                    var userInfoCell = "#div-bottomPanel-0_0";
+                    $(userInfoCell).css("left", $(this.middlePanel).offset().left);
+                    $(userInfoCell).css("top", $(this.middlePanel).offset().top);
+					
+                    if ($(userInfoCell).css("display") == "none") {
+                        $(userInfoCell).show('slide', {direction: 'left'}, 500);
+                    } else {
+                        $(userInfoCell).hide('slide', {direction: 'left'}, 500);
+                    }
+                }
+                    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_showUserInfo */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Main_mob_showStartMenu(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_mob_showStartMenu */
+        var o = this;
+        var UIEntity = this;
+
+                {
+                    var menuCell = "#div-bottomPanel-0_1";
+                    $(menuCell).css("left", $(this.middlePanel).offset().left);
+					$(menuCell).css("top", $(this.middlePanel).offset().top);
+				
+                    if ($(menuCell).css("display") == "none") {
+                        $(menuCell).show('slide', {direction: 'left'}, 500);
+                    } else {
+                        $(menuCell).hide('slide', {direction: 'left'}, 500);
+                    }
+                }
+                    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_showStartMenu */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Main_mob_showNotification(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_mob_showNotification */
+        var o = this;
+        var UIEntity = this;
+
+               {
+                var userInfoCell = "#div-bottomPanel-0_1";
+                $(userInfoCell).css("left", $(this.middlePanel).offset().left);
+                $(userInfoCell).css("top", $(this.middlePanel).offset().top);
+                
+                if ($(userInfoCell).css("display") == "none") {
+                    $(userInfoCell).show('slide', {direction: 'left'}, 500);
+                } else {
+                    $(userInfoCell).hide('slide', {direction: 'left'}, 500);
+                }
+               }
+                 }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_showNotification */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Main_mob_showHelp(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_mob_showHelp */
+        var o = this;
+        var UIEntity = this;
+
+              {
+                var toPartyId = parseInt(event);
+                if (!isNaN(toPartyId)) {
+                   this.tempSentPartyIdUI.setValue(toPartyId);
+                }
+                if (arguments.length > 2) {
+                   this.tempSessionIdUI.setValue(arguments[2]);
+                }
+                this.showNotification();
+              }
+              
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showHelp-201506102211",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_showHelp */
+
+
+    function org_shaolin_bmdp_adminconsole_page_Main_mob_initPageJs(){/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_mob_initPageJs */
+        var constraint_result = true;
+        var UIEntity = this;
+
+			{
+			   /**
+			   $("#pagePanel").height($(document.body).height()-180);
+			   $("#pagePanel").css("overflow", "scroll");
+			   
+			   window.setTimeout(function(){
+			      $("#pagePanel").height($(document.body).height()-180);
+                  $("#pagePanel").css("overflow", "scroll");
+			   }, 800);
+			   */
+			}
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_initPageJs */
+
+
+    function org_shaolin_bmdp_adminconsole_page_Main_mob_finalizePageJs(){/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_mob_finalizePageJs */
+
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_finalizePageJs */
+
+
+

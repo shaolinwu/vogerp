@@ -22,7 +22,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var searchContext = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "searchContext"]
-        ,placeholder: "搜索功能模块及数据"
+        ,placeholder: "?????????"
     });
 
     var searchButton = new UIMaster.ui.button
@@ -33,7 +33,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var userIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "userIcon"]
-        ,text: "用户中心"
+        ,text: "????"
     });
 
     var userLogout = new UIMaster.ui.image
@@ -44,19 +44,19 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var taskIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "taskIcon"]
-        ,text: "任务"
+        ,text: "??"
     });
 
     var notificationIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "notificationIcon"]
-        ,text: "通知"
+        ,text: "??"
     });
 
     var helpIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "helpIcon"]
-        ,text: "帮助"
+        ,text: "??"
     });
 
     var functionTree = new UIMaster.ui.webtree
