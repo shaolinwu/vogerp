@@ -24,7 +24,7 @@
                         RefForm form = new RefForm("organizationForm", "org.shaolin.vogerp.commonmodel.form.Organization", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Create Organization Information", new TableCallBack("organizationInfoTable"), 600, 400);
+                        form.openInWindows("Create Organization Information", new TableCallBack("organizationInfoTable"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -51,7 +51,7 @@
                         RefForm form = new RefForm("organizationForm", "org.shaolin.vogerp.commonmodel.form.Organization", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Modify Organization Information", new TableCallBack("organizationInfoTable"), 600, 400);
+                        form.openInWindows("Modify Organization Information", new TableCallBack("organizationInfoTable"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -78,7 +78,7 @@
                         RefForm form = new RefForm("organizationTreeForm", "org.shaolin.vogerp.commonmodel.form.OrganizationTreeEditor", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Modify Organization Information", new TableCallBack("organizationInfoTable"), 600, 400);
+                        form.openInWindows("Modify Organization Information", new TableCallBack("organizationInfoTable"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -102,7 +102,7 @@
                         RefForm form = new RefForm("organizationForm", "org.shaolin.vogerp.commonmodel.form.PersonalInfo", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("新增员工", new TableCallBack("employeeInfoTablel"), 600, 400);
+                        form.openInWindows("新增员工", new TableCallBack("employeeInfoTablel"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -129,7 +129,7 @@
                         RefForm form = new RefForm("organizationForm", "org.shaolin.vogerp.commonmodel.form.PersonalInfo", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("员工信息", new TableCallBack("employeeInfoTablel"), 600, 400);
+                        form.openInWindows("员工信息", new TableCallBack("employeeInfoTablel"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>

@@ -58,7 +58,7 @@
             RefForm form1 = new RefForm("goldenOrderForm1", "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor", input);
             @page.addElement(form1);
             
-            form1.openInWindows("新建抢购订单", new TableCallBack("goldenOrderTable"), 690, 450);
+            form1.openInWindows("新建抢购订单", new TableCallBack("goldenOrderTable"), true);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -103,8 +103,9 @@
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="Next"></ns2:handler>
         </ns2:EventListener>
-        <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>下一步</ns2:value>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>Savebtn</ns2:key>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">

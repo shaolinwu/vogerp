@@ -43,11 +43,16 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         ui: elementList[prefix + "registerBtn"]
     });
 
+    var bottomPanelInfo = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "bottomPanelInfo"]
+    });
+
     var bottomPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "bottomPanel"]
         ,items: []
-        ,subComponents: []
+        ,subComponents: [prefix + "bottomPanelInfo"]
     });
 
     var actionPanel = new UIMaster.ui.panel
@@ -60,7 +65,6 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     var loginPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "loginPanel"]
-        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
         ,subComponents: [prefix + "errorInfo",prefix + "userName",prefix + "password",prefix + "veriCodeQuestion",prefix + "veriCode",prefix + "actionPanel"]
     });
@@ -75,7 +79,7 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [vogerplogo,errorInfo,userName,password,veriCodeQuestion,veriCode,loginBtn,registerBtn,topPanel,loginPanel,actionPanel,bottomPanel]
+        ,items: [vogerplogo,errorInfo,userName,password,veriCodeQuestion,veriCode,loginBtn,registerBtn,bottomPanelInfo,topPanel,loginPanel,actionPanel,bottomPanel]
     });
 
     Form.vogerplogo=vogerplogo;
@@ -93,6 +97,8 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     Form.loginBtn=loginBtn;
 
     Form.registerBtn=registerBtn;
+
+    Form.bottomPanelInfo=bottomPanelInfo;
 
     Form.topPanel=topPanel;
 
@@ -123,6 +129,8 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     Form.registerBtn=registerBtn;
 
     Form.bottomPanel=bottomPanel;
+
+    Form.bottomPanelInfo=bottomPanelInfo;
 
     Form.user_constructor = function()
     {

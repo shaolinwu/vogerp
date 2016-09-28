@@ -62,16 +62,15 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
+  <ns2:reconfigurableProperty functionName="clickTreeNode" xsi:type="ns2:ReconfigurableFunctionType"/>
   <ns2:reconfigurableProperty functionName="SelectProduct" xsi:type="ns2:ReconfigurableFunctionType"/>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-      <ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
@@ -101,52 +100,18 @@
 	              }]]></ns2:expressionString>
 	          </ns2:expression>
 	      </ns2:initExpression>
+	      <ns2:EventListener xsi:type="ns2:ClickListenerType">
+	         <ns2:handler functionName="clickTreeNode"></ns2:handler>
+	      </ns2:EventListener>
 	  </ns2:component>
 	  <ns2:layoutConstraint>
         <ns2:componentId>productTree</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
-    <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
-      <ns2:layout xsi:type="ns2:TableLayoutType">
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-      </ns2:layout>
-      <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
-        <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="SelectProduct"></ns2:handler>
-        </ns2:EventListener>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>OKbtn</ns2:key>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
-        <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="Cancel"></ns2:handler>
-        </ns2:EventListener>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>Cancelbtn</ns2:key>
-        </ns2:text>
-      </ns2:component>
-      <ns2:layoutConstraint>
-        <ns2:componentId>okbtn</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>cancelbtn</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
-      </ns2:layoutConstraint>
-    </ns2:component>
     <ns2:layoutConstraint>
       <ns2:componentId>fieldPanel</ns2:componentId>
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
-    </ns2:layoutConstraint>
-    <ns2:layoutConstraint>
-      <ns2:componentId>actionPanel</ns2:componentId>
-      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
   </ns2:body>
   <ns2:mapping>

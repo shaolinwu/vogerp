@@ -3,12 +3,25 @@
 function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var idUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "idUI"]
+    });
+
     var funcsPanel = new UIMaster.ui.prenextpanel
     ({
         ui: elementList[prefix + "funcsPanel"]
         ,vertical: true
         ,items: []
-        ,subComponents: [prefix + "photoPanel",prefix + "deliveryInfoPanel",prefix + "prodcutInfoPanel"]
+        ,subComponents: [prefix + "priceSelectorPanel",prefix + "photoPanel",prefix + "deliveryInfoPanel",prefix + "prodcutInfoPanel"]
+    });
+    var priceSelector = new org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector({"prefix":prefix + "priceSelector."});
+
+    var priceSelectorPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "priceSelectorPanel"]
+        ,items: []
+        ,subComponents: [prefix + "priceSelector"]
     });
     var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
 
@@ -67,7 +80,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         ui: elementList[prefix + "estimatedPriceUILabel"]
     });
 
-    var estimatedPriceUI = new UIMaster.ui.label
+    var estimatedPriceUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "estimatedPriceUI"]
     });
@@ -128,16 +141,22 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "funcsPanel"]
+        ,subComponents: [prefix + "idUI",prefix + "funcsPanel"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [funcsPanel,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,funcsPanel,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
+    Form.idUI=idUI;
+
     Form.funcsPanel=funcsPanel;
+
+    Form.priceSelectorPanel=priceSelectorPanel;
+
+    Form.priceSelector=priceSelector;
 
     Form.photoPanel=photoPanel;
 
@@ -183,7 +202,13 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.idUI=idUI;
+
     Form.funcsPanel=funcsPanel;
+
+    Form.priceSelectorPanel=priceSelectorPanel;
+
+    Form.priceSelector=priceSelector;
 
     Form.photoPanel=photoPanel;
 
@@ -232,10 +257,20 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor */
-        /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor */
+
+        
+        { 
+        if (this.idUI.value != "0") {
+           this.funcsPanel.collapseTab(0);
+        }
+        }
+    
+            /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor */
     };
 
     Form.Save = org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Save;
+
+    Form.SelectPrice = org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_SelectPrice;
 
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Cancel;
 
@@ -268,6 +303,21 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20160416-173334",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Save */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_SelectPrice(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_SelectPrice */
+        var o = this;
+        var UIEntity = this;
+
+        {   
+            this.priceSelector.productTree.sync();
+        }
+        
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectPrice-20160416-173334",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_SelectPrice */
 
 
     /* auto generated eventlistener function declaration */

@@ -3,16 +3,31 @@
 function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var partyUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "partyUILabel"]
+    });
+
     var partyUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "partyUI"]
       ,allowBlank:false
     });
 
+    var addressUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "addressUILabel"]
+    });
+
     var addressUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "addressUI"]
       ,allowBlank:false
+    });
+
+    var contactUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "contactUILabel"]
     });
 
     var contactUI = new UIMaster.ui.combobox
@@ -25,26 +40,38 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "partyUI",prefix + "addressUI",prefix + "contactUI"]
+        ,subComponents: [prefix + "partyUILabel",prefix + "partyUI",prefix + "addressUILabel",prefix + "addressUI",prefix + "contactUILabel",prefix + "contactUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [partyUI,addressUI,contactUI,fieldPanel]
+        ,items: [partyUILabel,partyUI,addressUILabel,addressUI,contactUILabel,contactUI,fieldPanel]
     });
+
+    Form.partyUILabel=partyUILabel;
 
     Form.partyUI=partyUI;
 
+    Form.addressUILabel=addressUILabel;
+
     Form.addressUI=addressUI;
+
+    Form.contactUILabel=contactUILabel;
 
     Form.contactUI=contactUI;
 
     Form.fieldPanel=fieldPanel;
 
+    Form.partyUILabel=partyUILabel;
+
     Form.partyUI=partyUI;
 
+    Form.addressUILabel=addressUILabel;
+
     Form.addressUI=addressUI;
+
+    Form.contactUILabel=contactUILabel;
 
     Form.contactUI=contactUI;
 

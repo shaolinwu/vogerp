@@ -92,14 +92,6 @@
                 </ns2:layoutConstraint>
 			</ns2:component>
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="loginPanel">
-				<ns2:UISkin xsi:type="ns2:UISkinType">
-					<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
-					<ns2:param name="text">
-						<ns2:value xsi:type="ns2:StringPropertyType">
-							<ns2:value>用户登录</ns2:value>
-						</ns2:value>
-					</ns2:param>
-				</ns2:UISkin>
 				<ns2:layout xsi:type="ns2:TableLayoutType">
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -232,6 +224,16 @@
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 				</ns2:layout>
+				<ns2:component xsi:type="ns2:UILabelType" UIID="bottomPanelInfo">
+                    <ns2:text xsi:type="ns2:StringPropertyType">
+                        <ns2:value>沪ICP备案号: 16005435</ns2:value>
+                    </ns2:text>
+                </ns2:component>
+                <ns2:layoutConstraint>
+                    <ns2:componentId>bottomPanelInfo</ns2:componentId>
+                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                        x="0" y="0" align="FULL"></ns2:constraint>
+                </ns2:layoutConstraint>
 			</ns2:component>
 			<ns2:layoutConstraint>
 				<ns2:componentId>topPanel</ns2:componentId>

@@ -45,7 +45,7 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
                 
                     {
                         if (this.value.length > 0) {
-                            return !/[。~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
+                            return !/[?~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
                         }
                         return true;
                     }
@@ -69,7 +69,7 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
                 
                     {
                         if (this.value.length > 0) {
-                            return !/[。~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
+                            return !/[?~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
                         }
                         return true;
                     }
@@ -107,7 +107,7 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
     ({
         ui: elementList[prefix + "industryUI"]
       ,allowBlank:false
-      ,allowBlankText:"行业类型不能为空！"
+      ,allowBlankText:"?????????"
     });
 
     var fieldPanel = new UIMaster.ui.panel

@@ -36,7 +36,7 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     var termsUI = new UIMaster.ui.checkbox
     ({
         ui: elementList[prefix + "termsUI"]
-        ,label: "接受用户注册协议书"
+        ,label: "?????????"
     });
 
     var registerBtn = new UIMaster.ui.button
@@ -49,13 +49,18 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
         ui: elementList[prefix + "loginBtn"]
     });
 
+    var bottomPanelInfo = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "bottomPanelInfo"]
+    });
+
     var registerInfo = new org_shaolin_bmdp_adminconsole_form_RegisterInfo({"prefix":prefix + "registerInfo."});
 
     var bottomPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "bottomPanel"]
         ,items: []
-        ,subComponents: []
+        ,subComponents: [prefix + "bottomPanelInfo"]
     });
 
     var verifyCodePanel = new UIMaster.ui.panel
@@ -83,7 +88,7 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [vogerplogo,errorInfo,veriCodeQuestionUILabel,veriCodeQuestion,veriCodeUILabel,veriCode,termsUI,registerBtn,loginBtn,registerInfo,topPanel,loginPanel,verifyCodePanel,bottomPanel]
+        ,items: [vogerplogo,errorInfo,veriCodeQuestionUILabel,veriCodeQuestion,veriCodeUILabel,veriCode,termsUI,registerBtn,loginBtn,bottomPanelInfo,registerInfo,topPanel,loginPanel,verifyCodePanel,bottomPanel]
     });
 
     Form.vogerplogo=vogerplogo;
@@ -103,6 +108,8 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     Form.registerBtn=registerBtn;
 
     Form.loginBtn=loginBtn;
+
+    Form.bottomPanelInfo=bottomPanelInfo;
 
     Form.registerInfo=registerInfo;
 
@@ -149,6 +156,8 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     Form.loginBtn=loginBtn;
 
     Form.bottomPanel=bottomPanel;
+
+    Form.bottomPanelInfo=bottomPanelInfo;
 
     Form.user_constructor = function()
     {
