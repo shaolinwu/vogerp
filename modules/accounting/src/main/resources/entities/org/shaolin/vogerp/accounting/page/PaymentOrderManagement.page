@@ -103,14 +103,18 @@
                  import org.shaolin.uimaster.page.ajax.*;
                  import org.shaolin.vogerp.accounting.be.PayOrderImpl;
                  import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+                 import org.shaolin.vogerp.accounting.IAccountingService;
+                 import org.shaolin.bmdp.runtime.AppContext;
                  {
                      Table orderInfoTable = (Table)@page.getElement("payOrderTable");
                      if (orderInfoTable.getSelectedRow() == null) {
                          return;
                      }
-                     PayOrderImpl defaultUser = (PayOrderImpl)orderInfoTable.getSelectedRow();
-                     if (defaultUser.getStatus() == PayOrderStatusType.PAYED) {
-	                    
+                     PayOrderImpl payOrder = (PayOrderImpl)orderInfoTable.getSelectedRow();
+                     if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
+
+                     } else {
+                        @page.executeJavaScript("alert(\"\");");
                      }
                  }
                  ]]></ns2:expressionString>
@@ -129,20 +133,27 @@
                  import org.shaolin.uimaster.page.ajax.*;
                  import org.shaolin.vogerp.accounting.be.PayOrderImpl;
                  import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+                 import org.shaolin.vogerp.accounting.IAccountingService;
+                 import org.shaolin.bmdp.runtime.AppContext;
                  {
                      Table orderInfoTable = (Table)@page.getElement("payOrderTable");
                      if (orderInfoTable.getSelectedRow() == null) {
                          return;
                      }
-                     PayOrderImpl defaultUser = (PayOrderImpl)orderInfoTable.getSelectedRow();
-                     if (defaultUser.getStatus() == PayOrderStatusType.PAYED) {
-                        
+                     PayOrderImpl payOrder = (PayOrderImpl)orderInfoTable.getSelectedRow();
+                     if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
+	                    IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+	                    String returnUrl = accountingService.refund(payOrder);
+	                    @page.executeJavaScript("UIMaster.util.forwardToPage(\"" + returnUrl + "\");");
+                     } else {
+                        @page.executeJavaScript("alert(\"Order status is not payed, can not refund.\");");
                      }
                  }
                  ]]></ns2:expressionString>
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
+
         <ns2:eventHandler functionName="cancelPayment">
             <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelPayment-20160406-1109">
                 <ns2:exp>

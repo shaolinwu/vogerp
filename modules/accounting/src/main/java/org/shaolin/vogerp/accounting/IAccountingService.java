@@ -14,7 +14,7 @@ public interface IAccountingService {
 	
 	public void ensurePayment(IPayOrder order);
 	
-	public void refund(IPayOrder order);
+	public String refund(IPayOrder order);
 	
 	public void cancelPayment(IPayOrder order);
 	

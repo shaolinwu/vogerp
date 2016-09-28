@@ -1,10 +1,14 @@
 package org.shaolin.vogerp.accounting.internal;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.beecloud.BCPay;
+import cn.beecloud.BeeCloud;
+import cn.beecloud.bean.BCRefund;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.security.UserContext;
@@ -194,15 +198,58 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 	public void ensurePayment(IPayOrder order) {
 		
 	}
-	
-	public void refund(IPayOrder order) {
-		
+
+	/**
+	 * refund
+	 *
+	 * @param order
+	 * @return
+     */
+	public String refund(IPayOrder order) {
+		registeBeeCloudApp();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String billNo = order.getSerialNumber();
+		String refundNo = sdf.format(new Date()) + "222" + System.currentTimeMillis();
+
+		BCRefund bcRefund = new BCRefund(billNo, refundNo, Double.valueOf(order.getAmount() * 100).intValue());
+		try {
+			BCRefund refund = BCPay.startBCRefund(bcRefund);
+			if (refund.getAliRefundUrl() != null) {//直接退款（支付宝）
+				return refund.getAliRefundUrl();
+			} else {
+				//TODO refund result
+				if (refund.isNeedApproval() != null && refund.isNeedApproval()) {//预退款
+					System.out.println("预退款成功！");
+					System.out.println(refund.getObjectId());
+				} else {//直接退款
+					System.out.println("退款成功！易宝、百度、快钱渠道还需要定期查询退款结果！");
+					System.out.println(refund.getObjectId());
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			//TODO deal exception
+		}
+		return null;
 	}
 	
 	public void cancelPayment(IPayOrder order) {
-		
+
 	}
-	
+
+	/**
+	 * BeeCloud live register
+	 */
+	private void registeBeeCloudApp() {
+		Map<String, String> attributes = new HashMap<String, String>(Registry.getInstance().getNodeItems("/System/payment/beecloud/common"));
+		String appId = attributes.get("app_id");
+		String appSecret = attributes.get("app_secret");
+		String masterSecret = attributes.get("master_secret");
+		//live模式
+		BeeCloud.registerApp(appId, null, appSecret, masterSecret);
+	}
+
 	@Override
 	public Class getServiceInterface() {
 		return IAccountingService.class;

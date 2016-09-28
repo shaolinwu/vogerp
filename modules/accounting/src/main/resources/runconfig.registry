@@ -21,6 +21,11 @@
         </node>
         <node name="payment">
             <node name="beecloud">
+                <node name="common">
+                    <item name="app_id" value="1ab7992b-26b6-4f1c-b007-02f6c325444c" />
+                    <item name="app_secret" value="72e12f38-c89d-4061-bf6e-2b446ef2fe9c" />
+                    <item name="master_secret" value="08bea2e6-223b-4dbf-96d4-3c870abee599" />
+                </node>
                 <node name="buttonPay">
                     <item name="app_id" value="1ab7992b-26b6-4f1c-b007-02f6c325444c" />
                     <item name="app_secret" value="72e12f38-c89d-4061-bf6e-2b446ef2fe9c" />
