@@ -1,0 +1,334 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.productmodel.form.ProductTypeSupplier</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="selectProductType">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectProductType-20160421-2032">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.List;
+        import java.util.ArrayList;
+        import org.shaolin.bmdp.runtime.ce.CEUtil;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+        import org.shaolin.bmdp.runtime.spi.IConstantService;
+        import org.shaolin.vogerp.productmodel.be.*;
+        import org.shaolin.vogerp.productmodel.IProductService;
+        import org.shaolin.vogerp.productmodel.dao.ProductModel;
+        {  
+            Tree tree = @page.getTree("ceTree");
+            String selectedProductType = tree.getSelectedItemId();
+            if (selectedProductType == null || selectedProductType.length() == 0) {
+                return;
+            }
+            String format = selectedProductType.replace('-', '.');
+            selectedProductType = format.substring(0, format.lastIndexOf("_"));
+            int parentIntValue = Integer.parseInt(format.substring(format.lastIndexOf("_") + 1));
+            selectedProductType = selectedProductType + "," + parentIntValue;
+            IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
+            String selectedProductName = CEUtil.toCEValue(selectedProductType).getDisplayName();
+            
+            SupplierRelationshipImpl condition = new SupplierRelationshipImpl();
+            condition.setProductType(selectedProductType);
+            List result = ProductModel.INSTANCE.searchPTypeSupplier(condition, null, 0, 1);
+            if (result != null && result.size() > 0) {
+                SupplierRelationshipImpl item = (SupplierRelationshipImpl)result.get(0);
+                ((Hidden)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeIdUI")).setValue(item.getId() + "");
+                ((Hidden)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeName0UI")).setValue(item.getProductType());
+	            ((TextField)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeNameUI")).setValue(CEUtil.getValue(item.getProductType()));
+	            AList supplierUI = (AList)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeSuppliersUI");
+	            supplierUI.removeAllOptions();
+	            if (item.getSupplierPTypes() != null && item.getSupplierPTypes().length() > 0) {
+	                String[] values = item.getSupplierPTypes().split(";");
+	                for (int i=0; i<values.length;i++) {
+			            String itemName = CEUtil.getValue(values[i]);
+			            String itemValue = values[i];
+			            supplierUI.addOption(itemName, itemValue);
+		            }
+	            }
+            } else {
+                ((Hidden)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeIdUI")).setValue("0");
+	            ((Hidden)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeName0UI")).setValue(selectedProductType);
+	            ((TextField)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeNameUI")).setValue(selectedProductName);
+	            ((AList)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeSuppliersUI")).removeAllOptions();
+            }
+            
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="selectProductType1">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectProductType1-20160421-2032">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.List;
+        import java.util.ArrayList;
+        import org.shaolin.bmdp.runtime.ce.CEUtil;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+        import org.shaolin.bmdp.runtime.spi.IConstantService;
+        import org.shaolin.vogerp.productmodel.IProductService;
+        import org.shaolin.vogerp.productmodel.dao.ProductModel;
+        import org.shaolin.vogerp.productmodel.be.*;
+        {  
+            Tree tree = @page.getTree("ceTree");
+            String selectedProductType = tree.getSelectedItemId();
+            if (selectedProductType == null || selectedProductType.length() == 0) {
+                return;
+            }
+            String format = selectedProductType.replace('-', '.');
+            selectedProductType = format.substring(0, format.lastIndexOf("_"));
+            int parentIntValue = Integer.parseInt(format.substring(format.lastIndexOf("_") + 1));
+            selectedProductType = selectedProductType + "," + parentIntValue;
+            IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
+            String selectedProductName = CEUtil.toCEValue(selectedProductType).getDisplayName();
+            
+            AList supplierUI = (AList)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeSuppliersUI");
+            String itemName = selectedProductName;
+            String itemValue = selectedProductType;
+            supplierUI.addOption(itemName, itemValue);
+            
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Save">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveDetail-201609281504">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.List;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.productmodel.be.*;
+        import org.shaolin.vogerp.productmodel.dao.ProductModel;
+        { 
+           Hidden pTypeName0UI = @page.getHidden("pTypeName0UI");
+           if (pTypeName0UI.getValue() == null || pTypeName0UI.getValue().trim().length() == 0) {
+              return;
+           }
+           
+           SupplierRelationshipImpl object = new SupplierRelationshipImpl();
+           object.setId(Long.valueOf(@page.getHidden("pTypeIdUI").getValue()).longValue());
+           object.setProductType(@page.getHidden("pTypeName0UI").getValue());
+           java.lang.StringBuffer sb = new java.lang.StringBuffer();
+           List values = @page.getList("pTypeSuppliersUI").getOptionValues();
+           for (int i=0; i<values.size(); i++) {
+              sb.append(values.get(i)).append(";");
+           }
+           if (sb.length() > 0) {
+           	  sb.deleteCharAt(sb.length()-1);
+           }
+           object.setSupplierPTypes(sb.toString());
+           if (object.getId() == 0) {
+           	  ProductModel.INSTANCE.create(object);
+           } else {
+              ProductModel.INSTANCE.update(object);
+           }
+           Dialog.showMessageDialog("Saved!", "Information", Dialog.INFORMATION_MESSAGE, null);
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="RemoveItem">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="RemoveItem-201609281504">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.List;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+          AList supplierUI = @page.getList("pTypeSuppliersUI");
+          List values = supplierUI.getValues();
+          if (values == null || values.size() == 0) {
+              Dialog.showMessageDialog("Please select a supplier node!", "Warning", Dialog.WARNING_MESSAGE, null);
+              return;
+          }
+          for (int i=0; i<values.size(); i++) {
+              supplierUI.removeOption(values.get(i).toString());
+          }
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Cancel">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-884729403">
+      <ns2:exp>
+        <expressionString>
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            form.closeIfinWindows(true);
+            @page.removeForm(@page.getEntityUiid()); 
+        }</expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="productTypeTreeUI">
+         <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy" />
+         <ns2:reconfiguration originFunctionName="clickTreeNode" overrideFunctionName="selectProductType" xsi:type="ns2:FunctionReconfigurationType"/>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="productTypeTreeUI1">
+         <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy" />
+         <ns2:reconfiguration originFunctionName="clickTreeNode" overrideFunctionName="selectProductType1" xsi:type="ns2:FunctionReconfigurationType"/>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>productTypeTreeUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="producttypetree"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>productTypeTreeUI1</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="producttypetree"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="rightPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="pTypeIdUI">
+        <ns2:secure>
+          <ns2:value>true</ns2:value>
+        </ns2:secure>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="pTypeName0UI">
+        <ns2:secure>
+          <ns2:value>true</ns2:value>
+        </ns2:secure>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="pTypeNameUI">
+        <ns2:UIStyle></ns2:UIStyle>]
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+           <ns2:value>产品类型</ns2:value>
+        </ns2:widgetLabel>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIListType" UIID="pTypeSuppliersUI">
+        <ns2:UIStyle></ns2:UIStyle>
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+           <ns2:value>供应类型</ns2:value>
+        </ns2:widgetLabel>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="savebtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Save"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>Savebtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="remveItembtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="RemoveItem"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>删除供应类型</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>pTypeNameUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>pTypeSuppliersUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass=""></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>savebtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>remveItembtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>rightPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.productmodel.be.ProductCharacteristic"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="pType" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="productTypeTreeUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
+        <ns2:expression>
+          <expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="openLevels">
+        <ns2:expression>
+          <expressionString>{return new Integer(3);}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="productTypeTreeUI1" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
+        <ns2:expression>
+          <expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="openLevels">
+        <ns2:expression>
+          <expressionString>{return new Integer(3);}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:DataToUIMappingOperation>
+      <expressionString>{
+@odContext.executeAllMappings();
+}</expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>{
+@odContext.executeAllMappings();
+}</expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

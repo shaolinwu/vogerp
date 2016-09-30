@@ -371,6 +371,9 @@
                   ]]></ns2:expressionString>
               </ns2:expression>
           </ns2:expandExpression>
+          <ns2:EventListener xsi:type="ns2:ClickListenerType">
+	         <ns2:handler functionName="clickTreeNode"></ns2:handler>
+	      </ns2:EventListener>
 	      <ns2:action>
               <ns2:uiid>createItem</ns2:uiid>
               <ns2:title xsi:type="ns2:StringPropertyType">

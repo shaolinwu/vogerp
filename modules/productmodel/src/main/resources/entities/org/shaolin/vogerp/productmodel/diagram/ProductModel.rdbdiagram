@@ -147,6 +147,27 @@
     </ns2:mapping>
   </ns2:table>
   <ns2:table>
+    <entityName>PROD_SUPPLIERRELATION</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="ProductType" type="VARCHAR" length="255" isNull="true"></ns2:column>
+    <ns2:column name="SupplierPTypes" type="VARCHAR" length="512" isNull="true"></ns2:column>
+    <ns2:column name="EXT" type="VARCHAR" length="255" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.productmodel.be.SupplierRelationship"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="productType" columnName="ProductType"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="supplierPTypes" columnName="SupplierPTypes"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="ext" columnName="EXT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
     <entityName>PROD_WAREHOUSE</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
@@ -848,6 +869,56 @@
       </ns2:fieldMapping>
       <ns2:searchConditionData name="scObject" category="BusinessEntity">
         <type entityName="org.shaolin.vogerp.productmodel.be.ProductPrice"></type>
+      </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  
+  <ns2:query queryName="searchPTypeSupplier">
+    <ns2:searchResult name="outObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.productmodel.be.SupplierRelationship"></type>
+    </ns2:searchResult>
+    <ns2:fromData name="inObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.productmodel.be.SupplierRelationship"></type>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>outObject</ns2:toDataFieldPath>
+        <ns2:value xsi:type="ns2:SimpleFieldValueType">
+          <ns2:valueFieldPath>inObject</ns2:valueFieldPath>
+        </ns2:value>
+      </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.id</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.id</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getId() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.productType</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.productType</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getProductType() != null && scObject.getProductType().length() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:searchConditionData name="scObject" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.productmodel.be.SupplierRelationship"></type>
       </ns2:searchConditionData>
     </ns2:searchConditionMapping>
   </ns2:query>

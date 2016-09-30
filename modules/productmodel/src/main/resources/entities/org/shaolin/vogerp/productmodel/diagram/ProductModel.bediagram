@@ -193,7 +193,26 @@
         </bediagram:member>
 	</bediagram:beEntity>
 	
-	<!-- Manufacturer, Suppiler defined in party organization. -->
+	<!-- Product type supplier's relationship. -->
+	<bediagram:beEntity needPersist="true">
+		<common:entityName>SupplierRelationship</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>productType</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>supplierPTypes</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>ext</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+	</bediagram:beEntity>
 	<bediagram:beEntity needOrgId="true">
 		<common:entityName>SupplierProduct</common:entityName>
 		<bediagram:member pk="true">
