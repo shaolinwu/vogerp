@@ -58,6 +58,11 @@
                 <value>200px</value>
             </ns2:value>
          </ns2:Property>
+         <ns2:Property name="custDirectory">
+            <ns2:value xsi:type="ns2:BooleanPropertyType">
+                <value>true</value>
+            </ns2:value>
+         </ns2:Property>
          <ns2:Property name="src">
              <ns2:value xsi:type="ns2:ExpressionPropertyType">
                   <ns2:expression>

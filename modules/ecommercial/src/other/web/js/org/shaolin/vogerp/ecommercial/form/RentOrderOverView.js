@@ -8,6 +8,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderOverView(json)
         ui: elementList[prefix + "photoUI"]
         ,width: "250px"
         ,height: "200px"
+        ,custDirectory: true
     });
 
     var expiratedDateUI = new UIMaster.ui.countdown

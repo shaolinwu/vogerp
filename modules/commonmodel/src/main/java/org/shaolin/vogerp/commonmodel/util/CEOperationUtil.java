@@ -18,6 +18,7 @@ import org.shaolin.uimaster.page.ajax.Table;
 import org.shaolin.uimaster.page.ajax.TreeItem;
 import org.shaolin.uimaster.page.ajax.json.JSONArray;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
+import org.shaolin.uimaster.page.widgets.HTMLMatrixType.DataMode;
 import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
 import org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl;
 import org.shaolin.vogerp.commonmodel.be.ICEExtension;

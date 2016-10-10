@@ -17,4 +17,7 @@
   <ns2:webNode xsi:type="ns2:PageNodeType" name="PartyManager">
     <ns2:sourceEntity entityName="org.shaolin.vogerp.commonmodel.page.PartyManagement"></ns2:sourceEntity>
   </ns2:webNode>
+  <ns2:webNode xsi:type="ns2:PageNodeType" name="MemberManager">
+    <ns2:sourceEntity entityName="org.shaolin.vogerp.commonmodel.page.MemberManagement"></ns2:sourceEntity>
+  </ns2:webNode>
 </ns2:WebChunk>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.commonmodel.page.MemberManagement</entityName>
+	<systemVersion>0</systemVersion>
+	<description>会员管理</description>
+	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<ns2:eventHandler functionName="createMember">
+		   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createMember-201507132249">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.MemberServiceRuleImpl;
+                    {
+                        MemberServiceRuleImpl defaultUser = new MemberServiceRuleImpl();
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.MemberServiceRule", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("建立会员服务", new TableCallBack("mserviceInfoTable"));
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="openMemberDetail">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openMemberDetail-201507132246">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.be.MemberServiceRuleImpl;
+                    {
+                        Table mserviceInfoTable = (Table)@page.getElement("mserviceInfoTable");
+                        if (mserviceInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        MemberServiceRuleImpl defaultUser = (MemberServiceRuleImpl)mserviceInfoTable.getSelectedRow();
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.MemberServiceRule", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("编辑会员服务", new TableCallBack("mserviceInfoTable"));
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
+		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+		    <ns2:UISkin xsi:type="ns2:UISkinType">
+                <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
+                <ns2:param name="text">
+                    <ns2:value xsi:type="ns2:StringPropertyType">
+                        <ns2:value></ns2:value>
+                    </ns2:value>
+                </ns2:param>
+                <ns2:param name="skin_titlepanel_content">
+                    <ns2:value xsi:type="ns2:StringPropertyType">
+                        <ns2:value>cust_skin_titlepanel_content</ns2:value>
+                    </ns2:value>
+                </ns2:param>
+            </ns2:UISkin>
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UITableType" UIID="mserviceInfoTable">
+                <ns2:beElement>org.shaolin.vogerp.commonmodel.be.MemberServiceRule</ns2:beElement>
+                <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+                <ns2:defaultRowSize>10</ns2:defaultRowSize>
+                <ns2:showActionBar>true</ns2:showActionBar>
+                <ns2:showFilter>true</ns2:showFilter>
+                <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                    <ns2:expression xsi:type="ns2:ExpressionType">
+                        <ns2:expressionString><![CDATA[
+                        import java.util.List;
+                        import org.shaolin.uimaster.page.ajax.TableConditions;
+                        import org.shaolin.vogerp.commonmodel.be.MemberServiceRuleImpl;
+                        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                        import org.shaolin.bmdp.runtime.security.UserContext;
+                        {
+                              if ($tableCondition == null) {
+                                 MemberServiceRuleImpl condition = new MemberServiceRuleImpl();
+                                 $tableCondition = TableConditions.createCondition(condition);
+                                 $tableCondition.setCount(10);
+                                 $tableCondition.addOrder("createDate", false);
+                              }
+                              MemberServiceRuleImpl condition = (MemberServiceRuleImpl)$tableCondition.getCondition();
+                              return CommonModel.INSTANCE.searchMemberService(condition,
+                                            $tableCondition.getOrders(),
+                                            $tableCondition.getOffset(), 
+                                            $tableCondition.getCount());
+                        }]]></ns2:expressionString>
+                    </ns2:expression>
+                </ns2:query>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>类型</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.type</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
+                    <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                        <ns2:expression xsi:type="ns2:ExpressionType">
+                            <ns2:expressionString><![CDATA[
+                            import org.shaolin.bmdp.runtime.AppContext;
+                            import org.shaolin.vogerp.commonmodel.ce.AMemberType;
+                            {
+                                $rowBE.setType((AMemberType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.commonmodel.ce.AMemberType").getByIntValue(Integer.valueOf($value).intValue()));
+                            }]]></ns2:expressionString>
+                        </ns2:expression>
+                    </ns2:updateCondition>
+                </ns2:column>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>服务功能</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.functionId</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                </ns2:column>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>服务价格</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.price</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                </ns2:column>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>服务周期</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.dateType</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                </ns2:column>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>允许数量</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.overloadNumber</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                </ns2:column>
+                <ns2:column xsi:type="ns2:UITableColumnType">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>说明</ns2:value>
+                    </ns2:title>
+                    <ns2:beFieldId>rowBE.description</ns2:beFieldId>
+                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                </ns2:column>
+                <ns2:defaultActions>
+                    <ns2:defaultNewAction>createMember</ns2:defaultNewAction>
+                    <ns2:defaultOpenAction>openMemberDetail</ns2:defaultOpenAction>
+                </ns2:defaultActions>
+            </ns2:component>
+            <ns2:layoutConstraint>
+                <ns2:componentId>mserviceInfoTable</ns2:componentId>
+                <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                    x="0" y="0" align="FULL"></ns2:constraint>
+            </ns2:layoutConstraint>
+		</ns2:body>
+	</ns2:UIEntity>
+	<ns2:ODMapping>
+		<ns2:DataEntity scope="InOut" name="personalInfo" category="BusinessEntity">
+	      <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo"></type>
+	    </ns2:DataEntity>
+	</ns2:ODMapping>
+	<ns2:in>
+		<ns2:serverOperation xsi:type="ns2:ExpressionType">
+			<ns2:expressionString><![CDATA[
+			import org.shaolin.bmdp.runtime.AppContext;
+			{
+			  @odContext.executeAllMappings();
+			}]]></ns2:expressionString>
+		</ns2:serverOperation>
+	</ns2:in>
+</ns2:UIPage>

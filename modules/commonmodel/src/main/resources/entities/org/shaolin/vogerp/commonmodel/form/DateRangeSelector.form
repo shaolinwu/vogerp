@@ -1,0 +1,111 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.commonmodel.form.DateRangeSelector</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="selectItem">
+  </ns2:eventHandler>
+  <ns2:reconfigurableProperty functionName="selectItem" xsi:type="ns2:ReconfigurableFunctionType"/>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="dateTypeUI">
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType"><ns2:value>日期类型</ns2:value></ns2:widgetLabel>
+        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
+          <ns2:handler functionName="selectItem"></ns2:handler>
+        </ns2:EventListener>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="amountUI">
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType"><ns2:value>日期数量</ns2:value></ns2:widgetLabel>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
+        <ns2:maxLength xsi:type="ns2:NumericPropertyType">
+            <type>int</type>
+            <value>5</value>
+        </ns2:maxLength>
+        <ns2:validator xsi:type="ns2:ValidatorsPropertyType">
+           <ns2:validator xsi:type="ns2:ValidatorPropertyType">
+              <isFuncRef>false</isFuncRef>
+              <funcCode><![CDATA[
+              {
+                  if (this.value.length > 0) {
+                      if (isNaN(this.value)) {
+                        return false;
+                      } else {
+                        return true;
+                      }
+                  }
+                  return true;
+              }
+              ]]></funcCode>
+              <errMsg></errMsg>
+           </ns2:validator>
+        </ns2:validator>
+      </ns2:component>
+	  <ns2:layoutConstraint>
+        <ns2:componentId>dateTypeUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>amountUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass=""></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="dateType" category="JavaClass">
+      <type entityName="org.shaolin.vogerp.commonmodel.ce.YearAndMonthDateType"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="amount" category="JavaPrimitive">
+      <type entityName="java.lang.Integer"></type>
+    </ns2:DataEntity>
+	<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="dateTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="dateType" paramName="CEValue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
+        <ns2:expression>
+          <expressionString>"org.shaolin.vogerp.commonmodel.ce.YearAndMonthDateType"</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ContainsNotSpecified">
+        <ns2:expression>
+          <expressionString>Boolean.TRUE</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="amountUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="amount" paramName="Number"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:DataToUIMappingOperation>
+      <expressionString><![CDATA[
+      import java.util.ArrayList;
+      {
+	      @odContext.executeAllMappings();
+      }   
+      ]]></expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>
+      {
+		@odContext.executeAllMappings();
+	  }
+	  </expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

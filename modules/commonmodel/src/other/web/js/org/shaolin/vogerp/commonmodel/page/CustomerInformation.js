@@ -7,9 +7,11 @@ function org_shaolin_vogerp_commonmodel_page_CustomerInformation(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "certifyForm",prefix + "personalInfoForm",prefix + "personalAccountForm",prefix + "contractForm",prefix + "addressForm"]
+        ,subComponents: [prefix + "certifyForm",prefix + "memberForm",prefix + "personalInfoForm",prefix + "personalAccountForm",prefix + "contractForm",prefix + "addressForm"]
     });
     var certifyForm = new org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo({"prefix":prefix + "certifyForm."});
+
+    var memberForm = new org_shaolin_vogerp_commonmodel_form_AssignedMember({"prefix":prefix + "memberForm."});
 
     var personalInfoForm = new org_shaolin_vogerp_commonmodel_form_PersonalInfo({"prefix":prefix + "personalInfoForm."});
 
@@ -30,6 +32,8 @@ function org_shaolin_vogerp_commonmodel_page_CustomerInformation(json)
     Form.functionsTab=functionsTab;
 
     Form.certifyForm=certifyForm;
+
+    Form.memberForm=memberForm;
 
     Form.personalInfoForm=personalInfoForm;
 

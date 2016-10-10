@@ -21,6 +21,10 @@ import org.shaolin.vogerp.commonmodel.be.IPartyRelationship;
 import org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl;
 import org.shaolin.vogerp.commonmodel.be.IPartyEvent;
 import org.shaolin.vogerp.commonmodel.be.PartyEventImpl;
+import org.shaolin.vogerp.commonmodel.be.IMemberServiceRule;
+import org.shaolin.vogerp.commonmodel.be.MemberServiceRuleImpl;
+import org.shaolin.vogerp.commonmodel.be.IAssignedMember;
+import org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl;
 /**
  * This code is generated automatically, any change will be replaced after rebuild.
  */
@@ -45,6 +49,22 @@ public class CommonModel extends BEEntityDaoObject {
 
     public long listIPartyEventCount() {
         return count(IPartyEvent.class);
+    }
+
+    public List<IMemberServiceRule> listIMemberServiceRules(int offset, int count) {
+        return list(offset, count, IMemberServiceRule.class, MemberServiceRuleImpl.class);
+    }
+
+    public long listIMemberServiceRuleCount() {
+        return count(IMemberServiceRule.class);
+    }
+
+    public List<IAssignedMember> listIAssignedMembers(int offset, int count) {
+        return list(offset, count, IAssignedMember.class, AssignedMemberImpl.class);
+    }
+
+    public long listIAssignedMemberCount() {
+        return count(IAssignedMember.class);
     }
 
     public List<org.shaolin.vogerp.commonmodel.be.ICaptcha> allCaptcha(org.shaolin.vogerp.commonmodel.be.CaptchaImpl scFlow,
@@ -505,6 +525,102 @@ public class CommonModel extends BEEntityDaoObject {
     public long searchRegisterInfoCount(org.shaolin.vogerp.commonmodel.be.RegisterInfoImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.RegisterInfoImpl.class, "inObject");
 
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
+    }
+
+    public List<org.shaolin.vogerp.commonmodel.be.IAssignedMember> searchAssignedMember(org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+            if (scObject.getPartyId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.partyId", scObject.getPartyId()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long searchAssignedMemberCount(org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl.class, "inObject");
+
+            if (scObject.getPartyId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.partyId", scObject.getPartyId()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
+    }
+
+    public List<org.shaolin.vogerp.commonmodel.be.IAssignedMemberServiceUsed> searchMemberServiceUsed(org.shaolin.vogerp.commonmodel.be.AssignedMemberServiceUsedImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.AssignedMemberServiceUsedImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+            if (scObject.getPartyId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.partyId", scObject.getPartyId()));
+            }
+            if (scObject.getFunctionId() != null && scObject.getFunctionId().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.functionId", scObject.getFunctionId()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long searchMemberServiceUsedCount(org.shaolin.vogerp.commonmodel.be.AssignedMemberServiceUsedImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.AssignedMemberServiceUsedImpl.class, "inObject");
+
+            if (scObject.getPartyId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.partyId", scObject.getPartyId()));
+            }
+            if (scObject.getFunctionId() != null && scObject.getFunctionId().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.functionId", scObject.getFunctionId()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
+    }
+
+    public List<org.shaolin.vogerp.commonmodel.be.IMemberServiceRule> searchMemberService(org.shaolin.vogerp.commonmodel.be.MemberServiceRuleImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.MemberServiceRuleImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+            if (scObject.getFunctionId() != null && scObject.getFunctionId().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.functionId", scObject.getFunctionId()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long searchMemberServiceCount(org.shaolin.vogerp.commonmodel.be.MemberServiceRuleImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.MemberServiceRuleImpl.class, "inObject");
+
+            if (scObject.getFunctionId() != null && scObject.getFunctionId().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.functionId", scObject.getFunctionId()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 

@@ -87,6 +87,14 @@
                        <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo" />
                     </ns2:refEntity>
                 </ns2:tab>
+                <ns2:tab uiid="memberForm">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>会员信息</ns2:value>
+                    </ns2:title>
+                    <ns2:refEntity UIID="memberForm">
+		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.AssignedMember" />
+		            </ns2:refEntity>
+                </ns2:tab>
                 <ns2:tab uiid="personalInfoForm">
                     <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
                         <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
@@ -188,6 +196,15 @@
             </ns2:expression>
           </ns2:DataComponent>
         </ns2:ComponentMapping>
+        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping6">
+          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.AssignedMember"></ns2:mappingRule>
+          <ns2:UIComponent componentPath="memberForm" paramName="UIWidgetType"></ns2:UIComponent>
+          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
+            <ns2:expression>
+              <expressionString>Boolean.TRUE</expressionString>
+            </ns2:expression>
+          </ns2:DataComponent>
+        </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
 		<ns2:serverOperation xsi:type="ns2:ExpressionType">
@@ -203,7 +220,6 @@
 			  IUserService moduleService = (IUserService)AppContext.get().getService(IUserService.class);
 			  $personalAccount = (PersonalAccountImpl)moduleService.getPersonalAccount(userContext.getUserId());
 			  $personalInfo = $personalAccount.getInfo();
-			  //$contract = new OrganizationContractImpl();
 			  
 			  @odContext.executeAllMappings();
 			}]]></ns2:expressionString>

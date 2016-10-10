@@ -96,6 +96,9 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 			
 			ResourceManagerImpl resourceManager = new ResourceManagerImpl(orgService);
 			serviceManger.register(resourceManager);
+			
+			MemberServiceImpl memberService = new MemberServiceImpl();
+			serviceManger.register(memberService);
 		} finally {
 			HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
 		}
