@@ -1,53 +1,53 @@
 <?xml version="1.0" ?>
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
-  <entityName>org.shaolin.vogerp.commonmodel.form.UIDyanimcPageLinkTable</entityName>
+  <entityName>org.shaolin.vogerp.commonmodel.form.UIDyanimcPageHintsTable</entityName>
   <systemVersion>0</systemVersion>
   <ns2:eventHandler functionName="createItem">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createItem_-136152441">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createItem_201610131544">
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.AjaxActionHelper;
         import org.shaolin.uimaster.page.ajax.*;
-        import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl;
+        import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageHintsImpl;
         {
-            UIDyanimcPageLinkImpl defaultUser = new UIDyanimcPageLinkImpl();
+            UIDyanimcPageHintsImpl defaultUser = new UIDyanimcPageHintsImpl();
             
             HashMap input = new HashMap();
             input.put("beObject", defaultUser);
             input.put("editable", new Boolean(true));
-            RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.UIDyanimcPageLink", input);
+            RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.UIDyanimcPageHints", input);
             @page.addElement(form);
             
-            form.openInWindows("Create Dynamic Page Link", new TableCallBack("itemTable"));
+            form.openInWindows("Create Dynamic Page Hints", new TableCallBack("itemTable"));
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="openItem">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openItem_201610131644">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openItem_201610131544">
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.AjaxActionHelper;
         import org.shaolin.uimaster.page.ajax.*;
-        import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl;
+        import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageHintsImpl;
         {
             Table tableWidget = (Table)@page.getElement("itemTable");
             if (tableWidget.getSelectedRow() == null) {
                 return;
             }
-            UIDyanimcPageLinkImpl defaultUser = (UIDyanimcPageLinkImpl)tableWidget.getSelectedRow();
+            UIDyanimcPageHintsImpl defaultUser = (UIDyanimcPageHintsImpl)tableWidget.getSelectedRow();
             
             HashMap input = new HashMap();
             input.put("beObject", defaultUser);
             input.put("editable", new Boolean(true));
-            RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.UIDyanimcPageLink", input);
+            RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.UIDyanimcPageHints", input);
             @page.addElement(form);
             
-            form.openInWindows("Open Dynamic Page Link", new TableCallBack("itemTable"));
+            form.openInWindows("Open Dynamic Page Hints", new TableCallBack("itemTable"));
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -58,7 +58,7 @@
         <expressionString><![CDATA[
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
-        import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl;
+        import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageHintsImpl;
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
         { 
             Table tableWidget = (Table)@page.getElement("itemTable");
@@ -66,7 +66,7 @@
                 return;
             }
             
-            UIDyanimcPageLinkImpl defaultUser = (UIDyanimcPageLinkImpl)tableWidget.getSelectedRow();
+            UIDyanimcPageHintsImpl defaultUser = (UIDyanimcPageHintsImpl)tableWidget.getSelectedRow();
             CommonModel.INSTANCE.delete(defaultUser);
             tableWidget.refresh();
         }]]></expressionString>
@@ -87,14 +87,14 @@
                   height:150,
                   width:300,
                   handler: function() {
-                     UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"reload_201601171829",UIMaster.getValue(eventsource),o.__entityName);
+                     UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"reload_201601171839",UIMaster.getValue(eventsource),o.__entityName);
                   }
               }).open();
               return;
              }
              ]]></ns2:expressionString>
          </ns2:ops>
-         <ns2:ops xsi:type="ns2:OpCallAjaxType" name="reload_201601171829">
+         <ns2:ops xsi:type="ns2:OpCallAjaxType" name="reload_201601171839">
             <ns2:exp>
                 <ns2:expressionString><![CDATA[
                 import java.util.HashMap;
@@ -107,23 +107,12 @@
                 import org.shaolin.vogerp.commonmodel.IDynamicUIService;
                 {
                     IDynamicUIService service = (IDynamicUIService)AppContext.get().getService(IDynamicUIService.class);
-                    service.reloadAllItems();
+                    service.reloadAllHints();
                 }
                 ]]></ns2:expressionString>
             </ns2:exp>
         </ns2:ops>
     </ns2:eventHandler>
-  <ns2:eventHandler functionName="Cancel">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-884197646">
-      <ns2:exp>
-        <expressionString><![CDATA[
-        import org.shaolin.uimaster.page.AjaxContext;
-        import org.shaolin.uimaster.page.ajax.*;
-        { 
-        }]]></expressionString>
-      </ns2:exp>
-    </ns2:ops>
-  </ns2:eventHandler>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -140,24 +129,24 @@
         <ns2:showActionBar>true</ns2:showActionBar>
         <ns2:showFilter>false</ns2:showFilter>
         <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
-        <ns2:beElement>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink</ns2:beElement>
+        <ns2:beElement>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageHints</ns2:beElement>
         <ns2:query>
           <ns2:expression>
             <expressionString><![CDATA[
              import java.util.List;
              import org.shaolin.uimaster.page.ajax.TableConditions;
-             import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl;
+             import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageHintsImpl;
              import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
              import org.shaolin.bmdp.runtime.security.UserContext;
              {
                    if ($tableCondition == null) {
-                      UIDyanimcPageLinkImpl condition = new UIDyanimcPageLinkImpl();
+                      UIDyanimcPageHintsImpl condition = new UIDyanimcPageHintsImpl();
                       $tableCondition = TableConditions.createCondition(condition);
                       $tableCondition.setCount(10);
                       $tableCondition.addOrder("createDate", false);
                    }
-                   UIDyanimcPageLinkImpl condition = (UIDyanimcPageLinkImpl)$tableCondition.getCondition();
-                   return ModularityModel.INSTANCE.searchDynamicPageLink(condition,
+                   UIDyanimcPageHintsImpl condition = (UIDyanimcPageHintsImpl)$tableCondition.getCondition();
+                   return ModularityModel.INSTANCE.searchDynamicPageHints(condition,
                                  $tableCondition.getOrders(),
                                  $tableCondition.getOffset(), 
                                  $tableCondition.getCount());
@@ -169,7 +158,7 @@
             <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
             <ns2:key>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink.srcUIName</ns2:key>
           </ns2:title>
-          <ns2:beFieldId>rowBE.srcUIName</ns2:beFieldId>
+          <ns2:beFieldId>rowBE.uiEntity</ns2:beFieldId>
           <ns2:uiType>
             <ns2:type>Text</ns2:type>
           </ns2:uiType>
@@ -179,7 +168,7 @@
             <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
             <ns2:key>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink.srcUIPanel</ns2:key>
           </ns2:title>
-          <ns2:beFieldId>rowBE.srcUIPanel</ns2:beFieldId>
+          <ns2:beFieldId>rowBE.uiPanel</ns2:beFieldId>
           <ns2:uiType>
             <ns2:type>Text</ns2:type>
           </ns2:uiType>
@@ -189,47 +178,25 @@
             <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
             <ns2:key>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink.srcUIWidget</ns2:key>
           </ns2:title>
-          <ns2:beFieldId>rowBE.srcUIWidget</ns2:beFieldId>
+          <ns2:beFieldId>rowBE.uiWidget</ns2:beFieldId>
+          <ns2:uiType>
+            <ns2:type>Text</ns2:type>
+          </ns2:uiType>
+        </ns2:column>
+        <ns2:column>
+          <ns2:title xsi:type="ns2:StringPropertyType">
+            <ns2:value>直接内容描述</ns2:value>
+          </ns2:title>
+          <ns2:beFieldId>rowBE.description</ns2:beFieldId>
           <ns2:uiType>
             <ns2:type>Label</ns2:type>
           </ns2:uiType>
         </ns2:column>
         <ns2:column>
-          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
-            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-            <ns2:key>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink.linkComment</ns2:key>
+          <ns2:title xsi:type="ns2:StringPropertyType">
+            <ns2:value>连接型描述</ns2:value>
           </ns2:title>
-          <ns2:beFieldId>rowBE.linkComment</ns2:beFieldId>
-          <ns2:uiType>
-            <ns2:type>Label</ns2:type>
-          </ns2:uiType>
-        </ns2:column>
-        <ns2:column>
-          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
-            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-            <ns2:key>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink.tarUIName</ns2:key>
-          </ns2:title>
-          <ns2:beFieldId>rowBE.tarUIName</ns2:beFieldId>
-          <ns2:uiType>
-            <ns2:type>Label</ns2:type>
-          </ns2:uiType>
-        </ns2:column>
-        <ns2:column>
-          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
-            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-            <ns2:key>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink.tarUITab</ns2:key>
-          </ns2:title>
-          <ns2:beFieldId>rowBE.tarUITab</ns2:beFieldId>
-          <ns2:uiType>
-            <ns2:type>Label</ns2:type>
-          </ns2:uiType>
-        </ns2:column>
-        <ns2:column>
-          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
-            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-            <ns2:key>org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLink.tarUIArchor</ns2:key>
-          </ns2:title>
-          <ns2:beFieldId>rowBE.tarUIArchor</ns2:beFieldId>
+          <ns2:beFieldId>rowBE.link</ns2:beFieldId>
           <ns2:uiType>
             <ns2:type>Label</ns2:type>
           </ns2:uiType>
@@ -282,6 +249,8 @@
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
       import java.util.List;
+      import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageHintsImpl;
+      import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
       {
         @odContext.executeAllMappings();
       }]]></expressionString>

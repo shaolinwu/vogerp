@@ -6,19 +6,13 @@ function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable(json)
     var itemTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "itemTable"]
-        ,editable: true
-    });
-
-    var okbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "okbtn"]
     });
 
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "okbtn"]
+        ,subComponents: []
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -31,20 +25,16 @@ function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [itemTable,okbtn,fieldPanel,actionPanel]
+        ,items: [itemTable,fieldPanel,actionPanel]
     });
 
     Form.itemTable=itemTable;
-
-    Form.okbtn=okbtn;
 
     Form.fieldPanel=fieldPanel;
 
     Form.itemTable=itemTable;
 
     Form.actionPanel=actionPanel;
-
-    Form.okbtn=okbtn;
 
     Form.user_constructor = function()
     {
@@ -54,9 +44,9 @@ function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable(json)
 
     Form.createItem = org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_createItem;
 
-    Form.deleteItem = org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_deleteItem;
+    Form.openItem = org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_openItem;
 
-    Form.Save = org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_Save;
+    Form.deleteItem = org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_deleteItem;
 
     Form.reload = org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_reload;
 
@@ -81,8 +71,19 @@ function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_-136152444",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createItem_-136152441",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_createItem */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_openItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_openItem */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openItem_201610131644",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_openItem */
 
 
     /* auto generated eventlistener function declaration */
@@ -94,17 +95,6 @@ function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_209729176",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_deleteItem */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_Save */
-        var o = this;
-        var UIEntity = this;
-{this.itemTable.syncBodyDataToServer();}
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveItem-20150713-125459",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable_Save */
 
 
     /* auto generated eventlistener function declaration */

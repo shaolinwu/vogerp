@@ -7,7 +7,7 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "reloadPanel",prefix + "ceentityPanel",prefix + "dynamicUIPanel",prefix + "dynamicPageLinkPanel"]
+        ,subComponents: [prefix + "reloadPanel",prefix + "ceentityPanel",prefix + "dynamicUIPanel",prefix + "dynamicPageLinkPanel",prefix + "dynamicPageHintsPanel"]
     });
     var reloadPathText = new UIMaster.ui.textarea
     ({
@@ -31,6 +31,8 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
 
     var dynamicPageLinkPanel = new org_shaolin_vogerp_commonmodel_form_UIDyanimcPageLinkTable({"prefix":prefix + "dynamicPageLinkPanel."});
 
+    var dynamicPageHintsPanel = new org_shaolin_vogerp_commonmodel_form_UIDyanimcPageHintsTable({"prefix":prefix + "dynamicPageHintsPanel."});
+
 
     var Form = new UIMaster.ui.panel
     ({
@@ -52,6 +54,8 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
     Form.dynamicUIPanel=dynamicUIPanel;
 
     Form.dynamicPageLinkPanel=dynamicPageLinkPanel;
+
+    Form.dynamicPageHintsPanel=dynamicPageHintsPanel;
 
     Form.user_constructor = function()
     {

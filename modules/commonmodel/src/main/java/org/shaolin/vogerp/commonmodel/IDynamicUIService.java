@@ -2,6 +2,9 @@ package org.shaolin.vogerp.commonmodel;
 
 import java.util.List;
 
+import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageHintsImpl;
+import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl;
+
 
 public interface IDynamicUIService {
 
@@ -10,6 +13,12 @@ public interface IDynamicUIService {
 	 * 
 	 */
 	public void reloadAllItems();
+	
+	public void reloadAllHints();
+	
+	public void updateDynamicLink(UIDyanimcPageLinkImpl link);
+	
+	public void updateDynamicHints(UIDyanimcPageHintsImpl hints);
 	
 	/**
 	 * reload one dynamic ui widget.

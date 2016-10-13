@@ -10,6 +10,9 @@
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl;
+        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+        import org.shaolin.vogerp.commonmodel.IDynamicUIService;
+        import org.shaolin.bmdp.runtime.AppContext;
         { 
             UIDyanimcPageLinkImpl defaultUser = new UIDyanimcPageLinkImpl();
             HashMap input = new HashMap();
@@ -19,16 +22,14 @@
             form.ui2Data(input);
 
             defaultUser = (UIDyanimcPageLinkImpl)input.get("beObject");
-            String v = @page.getHidden("idUI").getValue();
-            if (v != null && v.length() > 0) {
-            	   Long objectId = Long.valueOf(v);
-            	   defaultUser.setId(objectId.longValue());
-            }
             if (defaultUser.getId() == 0) {
-                System.out.println("created object: " + defaultUser);
+                CommonModel.INSTANCE.create(defaultUser);
             } else {
-                System.out.println("updated object: " + defaultUser);
+                CommonModel.INSTANCE.update(defaultUser);
             }
+            
+            IDynamicUIService service = (IDynamicUIService)AppContext.get().getService(IDynamicUIService.class);
+            service.updateDynamicLink(defaultUser);
 
             form.closeIfinWindows();
             @page.removeForm(@page.getEntityUiid()); 
@@ -65,8 +66,8 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="idUI">
         <ns2:secure>

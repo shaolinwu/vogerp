@@ -23,8 +23,10 @@ import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
 import org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl;
 import org.shaolin.vogerp.commonmodel.be.ICEExtension;
 import org.shaolin.vogerp.commonmodel.be.IUIDyanimcItem;
+import org.shaolin.vogerp.commonmodel.be.IUIDyanimcPageHints;
 import org.shaolin.vogerp.commonmodel.be.IUIDyanimcPageLink;
 import org.shaolin.vogerp.commonmodel.be.UIDyanimcItemImpl;
+import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageHintsImpl;
 import org.shaolin.vogerp.commonmodel.be.UIDyanimcPageLinkImpl;
 import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
@@ -84,6 +86,25 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
     			} 
     		} 
         }
+        
+        // load dynamic ui hints.
+        UIDyanimcPageHintsImpl pageHint = new UIDyanimcPageHintsImpl();
+        pageHint.setEnabled(true);
+        List<IUIDyanimcPageHints> pageHints = ModularityModel.INSTANCE.searchDynamicPageHints(pageHint, null, 0, -1);
+        for (IUIDyanimcPageHints module: pageHints) {
+        	try {
+	        	UIFormObject uiCache = PageCacheManager.getUIFormObject(module.getUiEntity());
+	        	uiCache.addDynamicHints(module.getUiPanel(), module.getUiWidget(), module.getDescription(), module.getLink());
+        	} catch (EntityNotFoundException e) {
+        		try {
+    				UIPageObject uiCache = PageCacheManager.getUIPageObject(module.getUiEntity());
+		        	uiCache.getUIForm().addDynamicHints(module.getUiPanel(), module.getUiWidget(), module.getDescription(), module.getLink());
+    			} catch (Exception e1) {
+    				Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page hints: " + e.getMessage(), e);
+    			} 
+    		} 
+        }
+        
 	}
 
 	private HTMLDynamicUIItem convert(IUIDyanimcItem module) {
@@ -104,6 +125,59 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
         List<IUIDyanimcItem> all = ModularityModel.INSTANCE.searchDynamicItemEntities(condition, null, 0, -1);
         reloadItem0(all);
 	}
+	
+	@Override
+	public void reloadAllHints() {
+		// load dynamic ui hints.
+        UIDyanimcPageHintsImpl pageHint = new UIDyanimcPageHintsImpl();
+        pageHint.setEnabled(true);
+        List<IUIDyanimcPageHints> pageHints = ModularityModel.INSTANCE.searchDynamicPageHints(pageHint, null, 0, -1);
+        for (IUIDyanimcPageHints module: pageHints) {
+        	try {
+	        	UIFormObject uiCache = PageCacheManager.getUIFormObject(module.getUiEntity());
+	        	uiCache.addDynamicHints(module.getUiPanel(), module.getUiWidget(), module.getDescription(), module.getLink());
+        	} catch (EntityNotFoundException e) {
+        		try {
+    				UIPageObject uiCache = PageCacheManager.getUIPageObject(module.getUiEntity());
+		        	uiCache.getUIForm().addDynamicHints(module.getUiPanel(), module.getUiWidget(), module.getDescription(), module.getLink());
+    			} catch (Exception e1) {
+    				Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page hints: " + e.getMessage(), e);
+    			} 
+    		} 
+        }
+	}
+	
+	@Override
+	public void updateDynamicLink(UIDyanimcPageLinkImpl link) {
+		String targetInfo = link.getTarUIName() + ";" + link.getTarUITab();
+    	try {
+        	UIFormObject uiCache = PageCacheManager.getUIFormObject(link.getSrcUIName());
+        	uiCache.addDynamicLink(link.getSrcUIPanel(), link.getSrcUIWidget(), link.getLinkComment(), targetInfo);
+    	} catch (EntityNotFoundException e) {
+    		try {
+				UIPageObject uiCache = PageCacheManager.getUIPageObject(link.getSrcUIName());
+	        	uiCache.getUIForm().addDynamicLink(link.getSrcUIPanel(), link.getSrcUIWidget(), link.getLinkComment(), targetInfo);
+			} catch (Exception e1) {
+				Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page links: " + e.getMessage(), e);
+			} 
+		} 
+	}
+	
+	@Override
+	public void updateDynamicHints(UIDyanimcPageHintsImpl hints) {
+		try {
+        	UIFormObject uiCache = PageCacheManager.getUIFormObject(hints.getUiEntity());
+        	uiCache.addDynamicHints(hints.getUiPanel(), hints.getUiWidget(), hints.getDescription(), hints.getLink());
+    	} catch (EntityNotFoundException e) {
+    		try {
+				UIPageObject uiCache = PageCacheManager.getUIPageObject(hints.getUiEntity());
+	        	uiCache.getUIForm().addDynamicHints(hints.getUiPanel(), hints.getUiWidget(), hints.getDescription(), hints.getLink());
+			} catch (Exception e1) {
+				Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page hints: " + e.getMessage(), e);
+			} 
+		} 
+	}
+	
 	
 	@Override
 	public void reloadItems(String uiformName) {

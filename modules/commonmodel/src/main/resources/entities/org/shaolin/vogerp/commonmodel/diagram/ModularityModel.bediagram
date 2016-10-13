@@ -253,6 +253,36 @@
 			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
 	</bediagram:beEntity>
+	
+	<bediagram:beEntity needPersist="true" needUIEntity="true"
+		needUITableEditor="true">
+		<common:entityName>UIDyanimcPageHints</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- the ui form -->
+			<bediagram:name>uiEntity</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>uiPanel</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>uiWidget</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>description</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>link</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+	</bediagram:beEntity>
 
 	<bediagram:ceEntity>
 		<common:entityName>CESelectModeType</common:entityName>
