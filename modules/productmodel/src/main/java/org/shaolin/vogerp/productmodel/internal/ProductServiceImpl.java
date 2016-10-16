@@ -1,32 +1,99 @@
 package org.shaolin.vogerp.productmodel.internal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import org.hibernate.criterion.Order;
 import org.shaolin.bmdp.runtime.AppContext;
+import org.shaolin.bmdp.runtime.cache.CacheManager;
+import org.shaolin.bmdp.runtime.cache.ICache;
+import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
 import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
-import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.uimaster.page.ajax.TreeItem;
 import org.shaolin.vogerp.commonmodel.IUserService;
+import org.shaolin.vogerp.commonmodel.be.IOrganization;
 import org.shaolin.vogerp.productmodel.IProductService;
 import org.shaolin.vogerp.productmodel.be.IProduct;
 import org.shaolin.vogerp.productmodel.be.IProductPrice;
 import org.shaolin.vogerp.productmodel.be.IProductTemplate;
+import org.shaolin.vogerp.productmodel.be.ISupplierRelationship;
 import org.shaolin.vogerp.productmodel.be.ProductImpl;
 import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
 import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
-import org.shaolin.vogerp.productmodel.dao.CustProductModel;
+import org.shaolin.vogerp.productmodel.be.SupplierRelationshipImpl;
 import org.shaolin.vogerp.productmodel.dao.ProductModel;
 import org.shaolin.vogerp.productmodel.util.ProductUtil;
 
 public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider, IProductService {
 
+	private static final String WEB_SERVICE_CACHE = "__app_product_cache";
+	
+    private static ICache<IConstantEntity, List> suppilerTreeCache;
+	
+	public ProductServiceImpl() {
+		suppilerTreeCache = CacheManager.getInstance().getCache(WEB_SERVICE_CACHE, IConstantEntity.class, 
+				List.class);
+	}
+	
+	private void loadProductTypeSuppliers() {
+		SupplierRelationshipImpl condition = new SupplierRelationshipImpl();
+		List<ISupplierRelationship> result = ProductModel.INSTANCE.searchPTypeSupplier(condition, null, 0, -1);
+		for (ISupplierRelationship relation: result) {
+			if (relation.getSupplierPTypes() != null && relation.getSupplierPTypes().length() > 0) {
+				String[] items = relation.getSupplierPTypes().split(";");
+				List<IConstantEntity> ceItems = new ArrayList<IConstantEntity>(items.length);
+				for (String i : items) {
+					ceItems.add(CEUtil.toCEValue(i));
+				}
+				suppilerTreeCache.put(CEUtil.toCEValue(relation.getProductType()), ceItems);
+			}
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<IConstantEntity> getProductTypeSuppliers(IConstantEntity ce) {
+		return Collections.unmodifiableList(suppilerTreeCache.get(ce));
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<IConstantEntity> getProductTypeSuppliers(String ceValue) {
+		return Collections.unmodifiableList(suppilerTreeCache.get(CEUtil.toCEValue(ceValue)));
+	}
+	
+	public void addProductTypeSuppliers(SupplierRelationshipImpl relation) {
+		if (relation.getId() == 0) {
+			ProductModel.INSTANCE.create(relation);
+		} else {
+			ProductModel.INSTANCE.update(relation);
+		}
+		if (relation.getSupplierPTypes() != null && relation.getSupplierPTypes().length() > 0) {
+			String[] items = relation.getSupplierPTypes().split(";");
+			List<IConstantEntity> ceItems = new ArrayList<IConstantEntity>(items.length);
+			for (String i : items) {
+				ceItems.add(CEUtil.toCEValue(i));
+			}
+			suppilerTreeCache.put(CEUtil.toCEValue(relation.getProductType()), ceItems);
+		}
+	}
+	
+	public void removeProductTypeSuppliers(SupplierRelationshipImpl relation) {
+		ProductModel.INSTANCE.delete(relation);
+		suppilerTreeCache.remove(CEUtil.toCEValue(relation.getProductType()));
+	}
+	
+	public List<IOrganization> getPossibleProductSuppliers(IProduct product) {
+		List<IConstantEntity> items = getProductTypeSuppliers(product.getType());
+		//TODO:
+		
+		return null;
+	}
+	
 	public static class PriceCostCache {
 		ArrayList priceResult;
 		java.util.Map priceDataModel;
@@ -176,6 +243,9 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		}
 		
 		serviceManger.register(this);
+		
+		loadProductTypeSuppliers();
+		
 	}
 
 	@Override
@@ -189,6 +259,7 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 
 	@Override
 	public void reload() {
+		loadProductTypeSuppliers();
 	}
 
 	@Override

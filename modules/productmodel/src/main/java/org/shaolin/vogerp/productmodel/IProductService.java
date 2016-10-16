@@ -3,8 +3,12 @@ package org.shaolin.vogerp.productmodel;
 import java.util.List;
 import java.util.Map;
 
+import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+import org.shaolin.vogerp.commonmodel.be.IOrganization;
+import org.shaolin.vogerp.productmodel.be.IProduct;
 import org.shaolin.vogerp.productmodel.be.IProductPrice;
 import org.shaolin.vogerp.productmodel.be.IProductTemplate;
+import org.shaolin.vogerp.productmodel.be.SupplierRelationshipImpl;
 
 public interface IProductService {
 
@@ -59,4 +63,20 @@ public interface IProductService {
 	public String getProductPhotos(long productId);
 	
 	public String getProductPhotos(IProductPrice pack);
+	
+	/**
+	 * Get prudct's suppliers for promotion
+	 * 
+	 * @param ce
+	 * @return
+	 */
+	public List<IConstantEntity> getProductTypeSuppliers(IConstantEntity ce);
+	
+	public List<IConstantEntity> getProductTypeSuppliers(String ceValue);
+	
+	public void addProductTypeSuppliers(SupplierRelationshipImpl relation);
+	
+	public void removeProductTypeSuppliers(SupplierRelationshipImpl relation);
+	
+	public List<IOrganization> getPossibleProductSuppliers(IProduct product);
 }

@@ -33,6 +33,10 @@
 			<artifactId>designtime</artifactId>
 		</dependency>
 		<dependency>
+            <groupId>org.shaolin.bmdp</groupId>
+            <artifactId>workflow</artifactId>
+        </dependency>
+		<dependency>
 			<groupId>org.shaolin.vogerp</groupId>
 			<artifactId>commonmodel</artifactId>
 			<version>${vogerp.version}</version>

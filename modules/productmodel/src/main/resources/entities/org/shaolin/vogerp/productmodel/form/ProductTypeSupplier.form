@@ -101,10 +101,12 @@
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.List;
+        import org.shaolin.bmdp.runtime.AppContext;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.productmodel.be.*;
         import org.shaolin.vogerp.productmodel.dao.ProductModel;
+        import org.shaolin.vogerp.productmodel.IProductService;
         { 
            Hidden pTypeName0UI = @page.getHidden("pTypeName0UI");
            if (pTypeName0UI.getValue() == null || pTypeName0UI.getValue().trim().length() == 0) {
@@ -123,11 +125,10 @@
            	  sb.deleteCharAt(sb.length()-1);
            }
            object.setSupplierPTypes(sb.toString());
-           if (object.getId() == 0) {
-           	  ProductModel.INSTANCE.create(object);
-           } else {
-              ProductModel.INSTANCE.update(object);
-           }
+           
+           IProductService pservice =(IProductService)AppContext.get().getService(IProductService.class);
+           pservice.addProductTypeSuppliers(object);
+           
            Dialog.showMessageDialog("Saved!", "Information", Dialog.INFORMATION_MESSAGE, null);
         }]]></expressionString>
       </ns2:exp>
