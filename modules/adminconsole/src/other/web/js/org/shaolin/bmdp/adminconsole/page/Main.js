@@ -431,12 +431,10 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 		        if ($("#div-topRightPanel-4_0").css("display") == "block") {
 		            $("#div-topRightPanel-4_0").slideUp("fast");
 		        }
+		        
+		        window.open("http://120.25.197.58:8080/xwiki");
 		      }
-		      
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showHelp-201506102211",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_showHelp */
+		          }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_showHelp */
 
 
     function org_shaolin_bmdp_adminconsole_page_Main_initPageJs(){/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_initPageJs */

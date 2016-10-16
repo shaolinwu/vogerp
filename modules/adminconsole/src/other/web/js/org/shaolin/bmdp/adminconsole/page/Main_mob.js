@@ -335,13 +335,11 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
                 if (arguments.length > 2) {
                    this.tempSessionIdUI.setValue(arguments[2]);
                 }
-                this.showNotification();
+                //this.showNotification();
+                
+                window.open("http://120.25.197.58:8080/xwiki");
               }
-              
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showHelp-201506102211",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_showHelp */
+                  }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_showHelp */
 
 
     function org_shaolin_bmdp_adminconsole_page_Main_mob_initPageJs(){/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_mob_initPageJs */

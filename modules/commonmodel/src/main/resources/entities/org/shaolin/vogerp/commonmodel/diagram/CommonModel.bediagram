@@ -938,7 +938,7 @@
 		<bediagram:constantValue>
 			<bediagram:value>Super</bediagram:value>
 			<bediagram:intValue>3</bediagram:intValue>
-			<bediagram:description>王版会员</bediagram:description>
+			<bediagram:description>王牌会员</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>
 	

@@ -119,9 +119,12 @@
 		        if ($("#div-topRightPanel-4_0").css("display") == "block") {
 		            $("#div-topRightPanel-4_0").slideUp("fast");
 		        }
+		        
+		        window.open("http://120.25.197.58:8080/xwiki");
 		      }
 		      ]]></ns2:expressionString>
             </ns2:ops>
+            <!-- 
             <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showHelp-201506102211">
                 <ns2:exp>
                     <expressionString><![CDATA[
@@ -165,6 +168,7 @@
                 ]]></expressionString>
                 </ns2:exp>
             </ns2:ops>
+             -->
         </ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:layout xsi:type="ns2:TableLayoutType">
