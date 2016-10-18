@@ -6,9 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.beecloud.BCEumeration;
 import cn.beecloud.BCPay;
 import cn.beecloud.BeeCloud;
 import cn.beecloud.bean.BCRefund;
+import cn.beecloud.bean.TransferParameter;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.security.UserContext;
@@ -195,8 +197,8 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 	 * 
 	 * @param order
 	 */
-	public void ensurePayment(IPayOrder order) {
-		
+	public String ensurePayment(IPayOrder order) {
+		return transfer();
 	}
 
 	/**
@@ -215,15 +217,15 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		BCRefund bcRefund = new BCRefund(billNo, refundNo, Double.valueOf(order.getAmount() * 100).intValue());
 		try {
 			BCRefund refund = BCPay.startBCRefund(bcRefund);
-			if (refund.getAliRefundUrl() != null) {//直接退款（支付宝）
+			if (refund.getAliRefundUrl() != null) {//Alipay
 				return refund.getAliRefundUrl();
 			} else {
 				//TODO refund result
-				if (refund.isNeedApproval() != null && refund.isNeedApproval()) {//预退款
-					System.out.println("预退款成功！");
+				if (refund.isNeedApproval() != null && refund.isNeedApproval()) {//Pre refund
+					System.out.println("Pre refund suuccessful!");
 					System.out.println(refund.getObjectId());
-				} else {//直接退款
-					System.out.println("退款成功！易宝、百度、快钱渠道还需要定期查询退款结果！");
+				} else {//refund directly
+					System.out.println("refund directly");
 					System.out.println(refund.getObjectId());
 				}
 			}
@@ -232,6 +234,28 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 			//TODO deal exception
 		}
 		return null;
+	}
+
+	public String transfer() {
+		registeBeeCloudApp();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		TransferParameter param = new TransferParameter();
+		param.setChannel(BCEumeration.TRANSFER_CHANNEL.ALI_TRANSFER);
+		param.setChannelUserId("990034346@qq.com");
+		param.setChannelUserName("吴集刚");
+		param.setTotalFee(1);
+		param.setDescription("支付宝单笔打款测试！");
+		param.setAccountName("上海抚企信息科技有限公司");
+		param.setTransferNo("transfer" + sdf.format(new Date()));
+		try {
+			String url = BCPay.startTransfer(param);
+//			response.sendRedirect(url);
+			return url;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public void cancelPayment(IPayOrder order) {
@@ -246,7 +270,7 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		String appId = attributes.get("app_id");
 		String appSecret = attributes.get("app_secret");
 		String masterSecret = attributes.get("master_secret");
-		//live模式
+		//live model
 		BeeCloud.registerApp(appId, null, appSecret, masterSecret);
 	}
 

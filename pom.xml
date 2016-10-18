@@ -8,6 +8,7 @@
     <packaging>pom</packaging>
 
     <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<vogerp.version>1.0.0-SNAPSHOT</vogerp.version>
         <uimaster.version>1.0.0-SNAPSHOT</uimaster.version>
 		<uimaster.package>C:/uimaster/deploy</uimaster.package>

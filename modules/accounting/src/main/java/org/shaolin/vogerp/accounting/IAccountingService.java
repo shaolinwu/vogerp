@@ -12,7 +12,7 @@ public interface IAccountingService {
 	
 	public String queryforPayStatus(IPayOrder order);
 	
-	public void ensurePayment(IPayOrder order);
+	public String ensurePayment(IPayOrder order);
 	
 	public String refund(IPayOrder order);
 	

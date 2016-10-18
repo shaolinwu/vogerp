@@ -155,14 +155,14 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
 
 			{
 				BC.err = function(data) {
-                    //æ³¨å†Œé”™è¯¯ä¿¡æ¯æ¥å—
+                    //×¢²á´íÎóĞÅÏ¢½ÓÊÜ
                     alert(data["ERROR"]);
                 }
                 /**
-                 * clickè°ƒç”¨é”™è¯¯è¿”å›ï¼šé»˜è®¤è¡Œä¸ºconsole.log(err)
+                 * clickµ÷ÓÃ´íÎó·µ»Ø£ºÄ¬ÈÏĞĞÎªconsole.log(err)
                  */
                 BC.err = function(err) {
-                    //err ä¸ºobject, ä¾‹ ï½›â€ERRORâ€œ : "xxxx"ï½;
+                    //err Îªobject, Àı £û¡±ERROR¡° : "xxxx"£ı;
                     console.log(err);
                     alert(err["ERROR"]);
                 }

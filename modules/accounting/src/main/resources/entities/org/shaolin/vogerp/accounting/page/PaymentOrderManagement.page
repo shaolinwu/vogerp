@@ -112,9 +112,11 @@
                      }
                      PayOrderImpl payOrder = (PayOrderImpl)orderInfoTable.getSelectedRow();
                      if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
-
+                        IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+                        String returnUrl = accountingService.ensurePayment(payOrder);
+                        @page.executeJavaScript("UIMaster.util.forwardToPage(\"" + returnUrl + "\");");
                      } else {
-                        @page.executeJavaScript("alert(\"\");");
+                        @page.executeJavaScript("alert(\"Pay Order is not payed state.\");");
                      }
                  }
                  ]]></ns2:expressionString>
