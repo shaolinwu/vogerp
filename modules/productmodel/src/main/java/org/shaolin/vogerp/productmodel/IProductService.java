@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.vogerp.commonmodel.be.IOrganization;
+import org.shaolin.vogerp.commonmodel.ce.AMemberType;
 import org.shaolin.vogerp.productmodel.be.IProduct;
 import org.shaolin.vogerp.productmodel.be.IProductPrice;
 import org.shaolin.vogerp.productmodel.be.IProductTemplate;
@@ -74,9 +75,17 @@ public interface IProductService {
 	
 	public List<IConstantEntity> getProductTypeSuppliers(String ceValue);
 	
+	public List<IConstantEntity> getProductTypeConsumers(IConstantEntity ce);
+	
+	public List<IConstantEntity> getProductTypeConsumers(String ceValue);
+	
 	public void addProductTypeSuppliers(SupplierRelationshipImpl relation);
 	
 	public void removeProductTypeSuppliers(SupplierRelationshipImpl relation);
 	
-	public List<IOrganization> getPossibleProductSuppliers(IProduct product);
+	public List<IOrganization> getPossibleProductSuppliers(IProduct product, 
+			String orgName, AMemberType memberType, boolean isSupplier, int offset, int lenght);
+	
+	public List<IOrganization> getPossibleProductWithoutSuppliers(IProduct product, 
+			String orgName, AMemberType memberType, int offset, int lenght);
 }

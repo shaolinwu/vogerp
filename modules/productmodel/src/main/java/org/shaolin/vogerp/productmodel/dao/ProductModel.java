@@ -124,6 +124,21 @@ public class ProductModel extends BEEntityDaoObject {
             if (scFlow.getDescription() != null && scFlow.getDescription().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.description", scFlow.getDescription()));
             }
+            if (scFlow.getCity() != null && scFlow.getCity().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.city", scFlow.getCity()));
+            }
+            if (scFlow.getType() != null && scFlow.getType().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.type", scFlow.getType()));
+            }
+            if (scFlow.getSubType() != null && scFlow.getSubType().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.subType", scFlow.getSubType()));
+            }
+            if (scFlow.getTypes() != null && scFlow.getTypes().size() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.IN, "inFlow.type", scFlow.getTypes()));
+            }
+            if (scFlow.getSubTypes() != null && scFlow.getSubTypes().size() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.IN, "inFlow.subType", scFlow.getSubTypes()));
+            }
 
         inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
@@ -148,6 +163,21 @@ public class ProductModel extends BEEntityDaoObject {
             }
             if (scFlow.getDescription() != null && scFlow.getDescription().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.description", scFlow.getDescription()));
+            }
+            if (scFlow.getCity() != null && scFlow.getCity().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.city", scFlow.getCity()));
+            }
+            if (scFlow.getType() != null && scFlow.getType().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.type", scFlow.getType()));
+            }
+            if (scFlow.getSubType() != null && scFlow.getSubType().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.subType", scFlow.getSubType()));
+            }
+            if (scFlow.getTypes() != null && scFlow.getTypes().size() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.IN, "inFlow.type", scFlow.getTypes()));
+            }
+            if (scFlow.getSubTypes() != null && scFlow.getSubTypes().size() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.IN, "inFlow.subType", scFlow.getSubTypes()));
             }
 
         inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));

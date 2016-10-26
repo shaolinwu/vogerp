@@ -62,6 +62,9 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getType() != null && scObject.getType() != org.shaolin.vogerp.ecommercial.ce.GoldenOrderType.NOT_SPECIFIED) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.typeInt", scObject.getType().getIntValue()));
             }
+            if (scObject.getCity() != null && scObject.getCity().trim().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -98,6 +101,9 @@ public class OrderModel extends BEEntityDaoObject {
             }
             if (scObject.getType() != null && scObject.getType() != org.shaolin.vogerp.ecommercial.ce.GoldenOrderType.NOT_SPECIFIED) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.typeInt", scObject.getType().getIntValue()));
+            }
+            if (scObject.getCity() != null && scObject.getCity().trim().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
@@ -140,6 +146,9 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.ecommercial.ce.OrderStatusType.NOT_SPECIFIED) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
             }
+            if (scObject.getCity() != null && scObject.getCity().trim().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -176,6 +185,9 @@ public class OrderModel extends BEEntityDaoObject {
             }
             if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.ecommercial.ce.OrderStatusType.NOT_SPECIFIED) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
+            }
+            if (scObject.getCity() != null && scObject.getCity().trim().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
@@ -260,6 +272,9 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getProductType() != null && scObject.getProductType().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.productType", scObject.getProductType()));
             }
+            if (scObject.getProductSubType() != null && scObject.getProductSubType().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.productSubType", scObject.getProductSubType()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -278,6 +293,9 @@ public class OrderModel extends BEEntityDaoObject {
             }
             if (scObject.getProductType() != null && scObject.getProductType().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.productType", scObject.getProductType()));
+            }
+            if (scObject.getProductSubType() != null && scObject.getProductSubType().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.productSubType", scObject.getProductSubType()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));

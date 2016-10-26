@@ -55,6 +55,7 @@
     <ns2:column name="HTMLDESC" type="VARCHAR" length="255" isNull="true"></ns2:column>
     <ns2:column name="TYPE" type="VARCHAR" length="64" isNull="true"></ns2:column>
     <ns2:column name="SUBTYPE" type="VARCHAR" length="64" isNull="true"></ns2:column>
+    <ns2:column name="CITY" type="VARCHAR" length="100" isNull="true"></ns2:column>
     <ns2:column name="ATTRS" type="VARCHAR" length="512" isNull="true"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
@@ -76,6 +77,7 @@
       <ns2:fieldMapping beFieldName="attributes" columnName="ATTRS"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="subType" columnName="SUBTYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="city" columnName="CITY"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="PROD_PRODUCT_PRICEITEM_JT" collectionElement="org.shaolin.vogerp.productmodel.be.ProductPrice" mappingType="One-to-Many" beFieldName="priceList"></ns2:fieldMapping>
@@ -152,6 +154,7 @@
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="ProductType" type="VARCHAR" length="255" isNull="true"></ns2:column>
     <ns2:column name="SupplierPTypes" type="VARCHAR" length="512" isNull="true"></ns2:column>
+    <ns2:column name="ConsumerPTypes" type="VARCHAR" length="512" isNull="true"></ns2:column>
     <ns2:column name="EXT" type="VARCHAR" length="255" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
@@ -162,6 +165,7 @@
       <ns2:businessEntity entityName="org.shaolin.vogerp.productmodel.be.SupplierRelationship"></ns2:businessEntity>
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="productType" columnName="ProductType"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="consumerPTypes" columnName="ConsumerPTypes"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="supplierPTypes" columnName="SupplierPTypes"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="ext" columnName="EXT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
@@ -412,6 +416,76 @@
           </ns2:value>
           <ns2:condition>
             <expressionString><![CDATA[scFlow.getDescription() != null && scFlow.getDescription().length() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inFlow.city</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scFlow.city</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scFlow.getCity() != null && scFlow.getCity().length() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inFlow.type</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scFlow.type</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scFlow.getType() != null && scFlow.getType().length() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inFlow.subType</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scFlow.subType</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scFlow.getSubType() != null && scFlow.getSubType().length() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inFlow.type</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>IN</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scFlow.types</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scFlow.getTypes() != null && scFlow.getTypes().size() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inFlow.subType</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>IN</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scFlow.subTypes</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scFlow.getSubTypes() != null && scFlow.getSubTypes().size() > 0]]></expressionString>
           </ns2:condition>
         </ns2:conditionValue>
       </ns2:fieldMapping>

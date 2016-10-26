@@ -18,6 +18,18 @@ function org_shaolin_vogerp_productmodel_form_ProductTypeSupplier(json)
         ui: elementList[prefix + "pTypeNameUI"]
     });
 
+    var selectConsumersTypeUI = new UIMaster.ui.checkbox
+    ({
+        ui: elementList[prefix + "selectConsumersTypeUI"]
+        ,checked: true
+        ,selected: true
+    });
+
+    var pTypeConsumersUI = new UIMaster.ui.list
+    ({
+        ui: elementList[prefix + "pTypeConsumersUI"]
+    });
+
     var pTypeSuppliersUI = new UIMaster.ui.list
     ({
         ui: elementList[prefix + "pTypeSuppliersUI"]
@@ -48,7 +60,7 @@ function org_shaolin_vogerp_productmodel_form_ProductTypeSupplier(json)
     ({
         ui: elementList[prefix + "rightPanel"]
         ,items: []
-        ,subComponents: [prefix + "pTypeIdUI",prefix + "pTypeName0UI",prefix + "pTypeNameUI",prefix + "pTypeSuppliersUI",prefix + "savebtn",prefix + "remveItembtn"]
+        ,subComponents: [prefix + "pTypeIdUI",prefix + "pTypeName0UI",prefix + "pTypeNameUI",prefix + "selectConsumersTypeUI",prefix + "pTypeConsumersUI",prefix + "pTypeSuppliersUI",prefix + "savebtn",prefix + "remveItembtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -61,7 +73,7 @@ function org_shaolin_vogerp_productmodel_form_ProductTypeSupplier(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [pTypeIdUI,pTypeName0UI,pTypeNameUI,pTypeSuppliersUI,savebtn,remveItembtn,productTypeTreeUI,productTypeTreeUI1,fieldPanel,rightPanel,actionPanel]
+        ,items: [pTypeIdUI,pTypeName0UI,pTypeNameUI,selectConsumersTypeUI,pTypeConsumersUI,pTypeSuppliersUI,savebtn,remveItembtn,productTypeTreeUI,productTypeTreeUI1,fieldPanel,rightPanel,actionPanel]
     });
 
     Form.pTypeIdUI=pTypeIdUI;
@@ -69,6 +81,10 @@ function org_shaolin_vogerp_productmodel_form_ProductTypeSupplier(json)
     Form.pTypeName0UI=pTypeName0UI;
 
     Form.pTypeNameUI=pTypeNameUI;
+
+    Form.selectConsumersTypeUI=selectConsumersTypeUI;
+
+    Form.pTypeConsumersUI=pTypeConsumersUI;
 
     Form.pTypeSuppliersUI=pTypeSuppliersUI;
 
@@ -93,6 +109,10 @@ function org_shaolin_vogerp_productmodel_form_ProductTypeSupplier(json)
     Form.pTypeName0UI=pTypeName0UI;
 
     Form.pTypeNameUI=pTypeNameUI;
+
+    Form.selectConsumersTypeUI=selectConsumersTypeUI;
+
+    Form.pTypeConsumersUI=pTypeConsumersUI;
 
     Form.pTypeSuppliersUI=pTypeSuppliersUI;
 

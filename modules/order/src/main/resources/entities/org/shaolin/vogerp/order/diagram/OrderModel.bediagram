@@ -6,7 +6,7 @@
 	<bePackage>org.shaolin.vogerp.order.be</bePackage>
 	<cePackage>org.shaolin.vogerp.order.ce</cePackage>
 	<diagramPackage>org.shaolin.vogerp.order.diagram</diagramPackage>
-	
+	<!-- this is tranditional ERP orders model -->
 	<bediagram:beEntity>
 		<common:entityName>Order</common:entityName>
 		<bediagram:member pk="true">

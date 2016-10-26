@@ -16,8 +16,11 @@ import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
 import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.uimaster.page.ajax.TreeItem;
+import org.shaolin.vogerp.commonmodel.IMemberService;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.IOrganization;
+import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+import org.shaolin.vogerp.commonmodel.ce.AMemberType;
 import org.shaolin.vogerp.productmodel.IProductService;
 import org.shaolin.vogerp.productmodel.be.IProduct;
 import org.shaolin.vogerp.productmodel.be.IProductPrice;
@@ -32,12 +35,18 @@ import org.shaolin.vogerp.productmodel.util.ProductUtil;
 
 public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider, IProductService {
 
-	private static final String WEB_SERVICE_CACHE = "__app_product_cache";
+	private static final String SUPPLIER_CACHE = "__app_producttype_supplier_cache";
+	
+	private static final String CONSUMER_CACHE = "__app_producttype_consumer_cache";
 	
     private static ICache<IConstantEntity, List> suppilerTreeCache;
 	
+    private static ICache<IConstantEntity, List> consumerTreeCache;
+	
 	public ProductServiceImpl() {
-		suppilerTreeCache = CacheManager.getInstance().getCache(WEB_SERVICE_CACHE, IConstantEntity.class, 
+		suppilerTreeCache = CacheManager.getInstance().getCache(SUPPLIER_CACHE, IConstantEntity.class, 
+				List.class);
+		consumerTreeCache = CacheManager.getInstance().getCache(CONSUMER_CACHE, IConstantEntity.class, 
 				List.class);
 	}
 	
@@ -53,6 +62,14 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 				}
 				suppilerTreeCache.put(CEUtil.toCEValue(relation.getProductType()), ceItems);
 			}
+			if (relation.getConsumerPTypes() != null && relation.getConsumerPTypes().length() > 0) {
+				String[] items = relation.getConsumerPTypes().split(";");
+				List<IConstantEntity> ceItems = new ArrayList<IConstantEntity>(items.length);
+				for (String i : items) {
+					ceItems.add(CEUtil.toCEValue(i));
+				}
+				consumerTreeCache.put(CEUtil.toCEValue(relation.getProductType()), ceItems);
+			}
 		}
 	}
 	
@@ -64,6 +81,16 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	@SuppressWarnings("unchecked")
 	public List<IConstantEntity> getProductTypeSuppliers(String ceValue) {
 		return Collections.unmodifiableList(suppilerTreeCache.get(CEUtil.toCEValue(ceValue)));
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<IConstantEntity> getProductTypeConsumers(IConstantEntity ce) {
+		return Collections.unmodifiableList(consumerTreeCache.get(ce));
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<IConstantEntity> getProductTypeConsumers(String ceValue) {
+		return Collections.unmodifiableList(consumerTreeCache.get(CEUtil.toCEValue(ceValue)));
 	}
 	
 	public void addProductTypeSuppliers(SupplierRelationshipImpl relation) {
@@ -80,18 +107,110 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 			}
 			suppilerTreeCache.put(CEUtil.toCEValue(relation.getProductType()), ceItems);
 		}
+		
+		if (relation.getConsumerPTypes() != null && relation.getConsumerPTypes().length() > 0) {
+			String[] items = relation.getConsumerPTypes().split(";");
+			List<IConstantEntity> ceItems = new ArrayList<IConstantEntity>(items.length);
+			for (String i : items) {
+				ceItems.add(CEUtil.toCEValue(i));
+			}
+			consumerTreeCache.put(CEUtil.toCEValue(relation.getProductType()), ceItems);
+		}
 	}
 	
 	public void removeProductTypeSuppliers(SupplierRelationshipImpl relation) {
 		ProductModel.INSTANCE.delete(relation);
 		suppilerTreeCache.remove(CEUtil.toCEValue(relation.getProductType()));
+		consumerTreeCache.remove(CEUtil.toCEValue(relation.getProductType()));
 	}
 	
-	public List<IOrganization> getPossibleProductSuppliers(IProduct product) {
-		List<IConstantEntity> items = getProductTypeSuppliers(product.getType());
-		//TODO:
+	/**
+	 * TODO: this operation is too heavy!
+	 * 
+	 */
+	public List<IOrganization> getPossibleProductSuppliers(IProduct product, 
+			String orgName, AMemberType memberType, boolean isSupplier, int offset, int lenght) {
+		List<IConstantEntity> items = null;
+		if (isSupplier) {
+			items = getProductTypeSuppliers(product.getSubType());
+		} else {
+			items = getProductTypeConsumers(product.getSubType());
+		}
+		 
+		if (items == null || items.size() ==0) {
+			if (isSupplier) {
+				items = getProductTypeSuppliers(product.getType());
+			} else {
+				items = getProductTypeConsumers(product.getType());
+			}
+		}
+		if (items == null || items.size() ==0) {
+			return Collections.emptyList();
+		}
+		ArrayList<String> ceItems = new ArrayList<String>(items.size());
+		for (IConstantEntity i : items) {
+			ceItems.add(i.getEntityName() + "," + i.getIntValue());
+		}
 		
-		return null;
+		ProductImpl scFlow = new ProductImpl();
+		scFlow.setSubTypes(ceItems);
+		List<IProduct> result = ProductModel.INSTANCE.searchProductInfo(scFlow, null, offset, lenght);
+		ArrayList<Long> orgIdList = new ArrayList<Long>(result.size());
+		for (IProduct p : result) {
+			if (orgIdList.contains(p.getOrgId())) {
+				orgIdList.add(p.getOrgId());
+			}
+		}
+		
+		// secondary filter
+		IMemberService mService = AppContext.get().getService(IMemberService.class);
+		ArrayList orgList = new ArrayList(result.size());
+		for (Long orgId: orgIdList) {
+			OrganizationImpl org = ProductModel.INSTANCE.get(orgId, OrganizationImpl.class);
+			if (memberType != null && memberType != AMemberType.NOT_SPECIFIED 
+				&& mService.checkUserHasAMember(org.getId()) == memberType) {
+				if (orgName == null || orgName.length() == 0 || org.getName().contains(orgName)) {
+					orgList.add(org);
+				}
+			} else {
+				if (orgName == null || orgName.length() == 0 || org.getName().contains(orgName)) {
+					orgList.add(org);
+				}
+			}
+		}
+		return orgList;
+	}
+	
+	public List<IOrganization> getPossibleProductWithoutSuppliers(IProduct product, 
+			String orgName, AMemberType memberType, int offset, int lenght) {
+		ProductImpl scFlow = new ProductImpl();
+		scFlow.setCity(product.getCity());
+		scFlow.setType(product.getType());
+		scFlow.setSubType(product.getSubType());
+		List<IProduct> result = ProductModel.INSTANCE.searchProductInfo(scFlow, null, offset, lenght);
+		ArrayList<Long> orgIdList = new ArrayList<Long>(result.size());
+		for (IProduct p : result) {
+			if (orgIdList.contains(p.getOrgId())) {
+				orgIdList.add(p.getOrgId());
+			}
+		}
+		// secondary filter
+		IMemberService mService = AppContext.get().getService(IMemberService.class);
+		List<IOrganization> orgList = new ArrayList<IOrganization>(result.size());
+		for (Long orgId: orgIdList) {
+			OrganizationImpl org = ProductModel.INSTANCE.get(orgId, OrganizationImpl.class);
+			if (memberType != null && memberType != AMemberType.NOT_SPECIFIED 
+				&& mService.checkUserHasAMember(org.getId()) == memberType) {
+				if (orgName == null || orgName.length() == 0 || org.getName().contains(orgName)) {
+					orgList.add(org);
+				}
+			} else {
+				if (orgName == null || orgName.length() == 0 || org.getName().contains(orgName)) {
+					orgList.add(org);
+				}
+			}
+		}
+		return orgList;
 	}
 	
 	public static class PriceCostCache {

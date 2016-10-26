@@ -49,6 +49,26 @@
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>types</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEListType">
+                <bediagram:elementType xsi:type="bediagram:StringType">
+                </bediagram:elementType>
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>subTypes</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEListType">
+                <bediagram:elementType xsi:type="bediagram:StringType">
+                </bediagram:elementType>
+            </bediagram:type>
+        </bediagram:member>
+        
+        <!-- published city -->
+        <bediagram:member>
+            <bediagram:name>city</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
             <!-- ProductCharacteristic the dynamic values implementation that all values will be stored as JSON pattern.-->
             <bediagram:name>attributes</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
@@ -205,7 +225,13 @@
 			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
 		<bediagram:member>
+		    <!-- 供应方 -->
 			<bediagram:name>supplierPTypes</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+		    <!-- 需求方 -->
+			<bediagram:name>consumerPTypes</bediagram:name>
 			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
 		<bediagram:member>

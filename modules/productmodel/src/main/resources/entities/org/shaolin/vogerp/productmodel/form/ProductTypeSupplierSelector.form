@@ -1,0 +1,114 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.productmodel.form.ProductTypeSupplierSelector</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="pTypeIdUI">
+        <ns2:secure>
+          <ns2:value>true</ns2:value>
+        </ns2:secure>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="pTypeName0UI">
+        <ns2:secure>
+          <ns2:value>true</ns2:value>
+        </ns2:secure>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="pTypeNameUI">
+        <ns2:UIStyle></ns2:UIStyle>]
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+           <ns2:value>产品类型</ns2:value>
+        </ns2:widgetLabel>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UICheckBoxType" UIID="selectConsumersTypeUI">
+        <ns2:UIStyle></ns2:UIStyle>
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+           <ns2:value>选择需求方类型</ns2:value>
+        </ns2:widgetLabel>
+        <ns2:Property name="checked">
+           <ns2:value xsi:type="ns2:BooleanPropertyType">
+               <value>true</value>
+           </ns2:value>
+        </ns2:Property>
+        <ns2:Property name="selected">
+           <ns2:value xsi:type="ns2:BooleanPropertyType">
+               <value>true</value>
+           </ns2:value>
+        </ns2:Property>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIListType" UIID="pTypeConsumersUI">
+        <ns2:UIStyle></ns2:UIStyle>
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+           <ns2:value>需求方类型</ns2:value>
+        </ns2:widgetLabel>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIListType" UIID="pTypeSuppliersUI">
+        <ns2:UIStyle></ns2:UIStyle>
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+           <ns2:value>供应方类型</ns2:value>
+        </ns2:widgetLabel>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>pTypeNameUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>pTypeConsumersUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass=""></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>pTypeSuppliersUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="2" y="0" align="FULL" cellUIClass=""></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>selectConsumersTypeUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="3" y="0" align="FULL" cellUIClass=""></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="pType" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
+    <ns2:DataToUIMappingOperation>
+      <expressionString>{
+@odContext.executeAllMappings();
+}</expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>{
+@odContext.executeAllMappings();
+}</expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>
