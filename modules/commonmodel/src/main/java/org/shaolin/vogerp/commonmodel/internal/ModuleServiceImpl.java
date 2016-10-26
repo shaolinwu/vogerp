@@ -1,6 +1,7 @@
 package org.shaolin.vogerp.commonmodel.internal;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -46,12 +47,12 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	}
 	
 	private void init() {
+		if (!this.initialized) {
+			this.initialized = true;
+		}
 		ModuleGroupImpl condition = new ModuleGroupImpl();
 		condition.setEnabled(true);
         List<IModuleGroup> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
-        if (!this.initialized) {
-        	this.initialized = true;
-        }
         
         // build links
         for (IModuleGroup module: all) {
@@ -110,24 +111,14 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	 */
 	@Override
 	public ArrayList[] getModuleListInOptions() {
-		String moduleType = IModuleService.DEFAULT_USER_MODULES;
-		if (UserContext.getUserContext() != null && UserContext.getUserContext().getUserId() > 0 
-        		&& UserContext.getUserContext().getOrgCode().equals(IModuleService.ADMIN_MODULES)) {
-            moduleType = IModuleService.ADMIN_MODULES;
-        }
-		
-		IModuleGroup root = null;
 		ArrayList<String> optionsValues = new ArrayList<String>();
 		ArrayList<String> displayItems = new ArrayList<String>();
-		Iterator<IModuleGroup> i = modules.getValues().iterator();
-		while(i.hasNext()) {
-			IModuleGroup module = i.next();
-			if (moduleType.equals(module.getName())) {
-     		   root = module;
-	     	   break;
-	     	}
-		} 
-		i = modules.getValues().iterator();
+		IModuleGroup root = getModuleRootByOrgCode(UserContext.getUserContext().getOrgCode()); 
+		if (root == null) {
+			root = getModuleRootByOrgCode(IModuleService.DEFAULT_USER_MODULES); 
+		}
+		Collection<IModuleGroup> values = modules.getValues();
+		Iterator<IModuleGroup> i = values.iterator();
 		while(i.hasNext()) {
 			IModuleGroup module = i.next();
 			if (module.getParentId() != root.getId()) {
@@ -144,7 +135,7 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 				displayItems.add(module.getName());
 			}
 			// find children
-			for (Object item: modules.getValues()) {
+			for (Object item: values) {
 				if (module.getId() == ((ModuleGroupImpl) item).getParentId()) {
 					optionsValues.add(((ModuleGroupImpl) item).getId() + "");
 					displayItems.add("--"+((ModuleGroupImpl) item).getName());
@@ -153,6 +144,18 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 		}
 		
 		return new ArrayList[]{optionsValues, displayItems};
+	}
+
+	@Override
+	public IModuleGroup getModuleRootByOrgCode(String orgCode) {
+		Iterator<IModuleGroup> i = modules.getValues().iterator();
+		while(i.hasNext()) {
+			IModuleGroup module = i.next();
+			if (orgCode.equals(module.getName())) {
+     		   return module;
+	     	}
+		}
+		return null;
 	}
 	
 	@Override
@@ -172,48 +175,31 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	 */
 	@Override
 	public IModuleGroup getModule(String moduleType) {
-		IModuleGroup root = null;
-		Iterator<IModuleGroup> i = modules.getValues().iterator();
-		while(i.hasNext()) {
-			IModuleGroup module = i.next();
-			if (moduleType.equals(module.getName())) {
-     		   root = module;
-	     	   break;
-	     	}
-		} 
+		IModuleGroup root = getModuleRootByOrgCode(UserContext.getUserContext().getOrgCode()); 
+		if (root == null) {
+			root = getModuleRootByOrgCode(moduleType); 
+		}
         return root;
 	}
 	
 	@Override
 	public IModuleGroup getModule(long id) {
-		ModuleGroupImpl condition = new ModuleGroupImpl();
-		condition.setId(id);
-		condition.setEnabled(true);
-        List<IModuleGroup> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
-        return all.size() > 0 ? all.get(0) : null;
+		Iterator<IModuleGroup> i = modules.getValues().iterator();
+		while(i.hasNext()) {
+			IModuleGroup module = i.next();
+			if (id == module.getId()) {
+     		   return module;
+	     	}
+		}
+		return null;
 	}
 	
 	public List getModuleGroupToJson() {
-		ModuleGroupImpl condition = new ModuleGroupImpl();
-        List all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
-        if (all.size() == 0) {
-        	logger.warn("AdminConsoleTree data is not initialized!");
-            return Collections.emptyList();
-        } 
-        String moduleType = IModuleService.DEFAULT_USER_MODULES;
-        if (UserContext.getUserContext() != null && UserContext.getUserContext().getUserId() > 0 
-        		&& UserContext.getUserContext().getOrgCode().equals(IModuleService.ADMIN_MODULES)) {
-            moduleType = IModuleService.ADMIN_MODULES;
-        }
         // find root
-        ModuleGroupImpl root = null;
-        for (int i=0;i<all.size();i++) {
-        	ModuleGroupImpl mg = (ModuleGroupImpl)all.get(i);
-        	if (moduleType.equals(mg.getName())) {
-        		   root = mg;
-        	    break;
-        	}
-        }
+        IModuleGroup root = getModuleRootByOrgCode(UserContext.getUserContext().getOrgCode()); 
+		if (root == null) {
+			root = getModuleRootByOrgCode(IModuleService.DEFAULT_USER_MODULES); 
+		}
         if (root == null) {
             logger.warn("Please give an empty name as the application root node!");
             return Collections.emptyList();
@@ -222,8 +208,10 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
         
         // list the nodes under the root node.
 		ArrayList result = new ArrayList();
-		for (int i = 0; i < all.size(); i++) {
-			ModuleGroupImpl mg = (ModuleGroupImpl) all.get(i);
+		Collection<IModuleGroup> values = modules.getValues();
+		Iterator<IModuleGroup> i = values.iterator();
+		while(i.hasNext()) {
+			IModuleGroup mg = i.next();
 			if (mg.getParentId() != root.getId() || !checkPermission(mg, roleIds)) {
 				continue;
 			}
@@ -241,10 +229,11 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 
 			// find children
 			boolean addedChild = false;
-			for (int j = 0; j < all.size(); j++) {
-				if (mg.getId() == ((ModuleGroupImpl) all.get(j)).getParentId()
-						&& checkPermission((ModuleGroupImpl) all.get(j), roleIds)) {
-					ModuleGroupImpl m = (ModuleGroupImpl) all.get(j);
+			// find children
+			for (Object mitem: values) {
+				if (mg.getId() == ((ModuleGroupImpl) mitem).getParentId()
+						&& checkPermission((ModuleGroupImpl) mitem, roleIds)) {
+					ModuleGroupImpl m = (ModuleGroupImpl) mitem;
 					TreeItem item = new TreeItem();
 					item.setId("mg_" + m.getId());
 					item.setText(m.getName());
@@ -257,39 +246,29 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 					addedChild = true;
 				}
 			}
-			if (all.size() > 0 && !addedChild && "#".equals(mg.getAccessURL())) {
+			if (values.size() > 0 && !addedChild && "#".equals(mg.getAccessURL())) {
 				result.remove(result.size() -1);
 			}
 		}
 		return result;
 	}
 	
-	@Override
 	public List<IModuleGroup> getModuleGroupTree(final String type) {
 		List<IConstantEntity> roleIds = (List<IConstantEntity>)UserContext.getUserData(WebflowConstants.USER_ROLE_KEY);
-		ModuleGroupImpl condition = new ModuleGroupImpl();
-		condition.setEnabled(true);
-        List<IModuleGroup> all = ModularityModel.INSTANCE.searchModuleGroup(condition, null, 0, -1);
-        
-        String moduleType = IModuleService.DEFAULT_USER_MODULES;
-        if (type.equals(IModuleService.ADMIN_MODULES)) {
-        	moduleType = IModuleService.ADMIN_MODULES;
-        }
-        ModuleGroupImpl root = null;
-		for (int i = 0; i < all.size(); i++) {
-			ModuleGroupImpl mg = (ModuleGroupImpl) all.get(i);
-			if (moduleType.equals(mg.getName())) {
-				root = mg;
-				break;
-			}
+		IModuleGroup root = getModuleRootByOrgCode(UserContext.getUserContext().getOrgCode()); 
+		if (root == null) {
+			root = getModuleRootByOrgCode(IModuleService.DEFAULT_USER_MODULES); 
 		}
         if (root == null) {
-        	return Collections.emptyList();
+            logger.warn("Please give an empty name as the application root node!");
+            return Collections.emptyList();
         }
         
 		ArrayList<IModuleGroup> result = new ArrayList<IModuleGroup>();
-		for (int i = 0; i < all.size(); i++) {
-			ModuleGroupImpl mg = (ModuleGroupImpl) all.get(i);
+		Collection<IModuleGroup> values = modules.getValues();
+		Iterator<IModuleGroup> i = values.iterator();
+		while(i.hasNext()) {
+			IModuleGroup mg = i.next();
 			if (mg.getParentId() != root.getId() || !checkPermission(mg, roleIds)) {
 				continue;
 			}
@@ -297,15 +276,15 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 
 			// find children
 			boolean addedChild = false;
-			for (int j = 0; j < all.size(); j++) {
-				if (mg.getId() == ((ModuleGroupImpl) all.get(j)).getParentId() 
-						&& checkPermission((ModuleGroupImpl) all.get(j), roleIds)) {
-					ModuleGroupImpl m = (ModuleGroupImpl) all.get(j);
+			for (Object mitem: values) {
+				if (mg.getId() == ((ModuleGroupImpl) mitem).getParentId()
+						&& checkPermission((ModuleGroupImpl) mitem, roleIds)) {
+					ModuleGroupImpl m = (ModuleGroupImpl) mitem;
 					result.add(m);
 					addedChild = true;
 				}
 			}
-			if (all.size() > 0 && !addedChild && "#".equals(mg.getAccessURL())) {
+			if (values.size() > 0 && !addedChild && "#".equals(mg.getAccessURL())) {
 				result.remove(result.size() -1);
 			}
 		}
@@ -316,12 +295,12 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	public List<List<DataMode>> getModulesInMatrix(String orgCode, int columns) {
 		List<IConstantEntity> roleIds = (List<IConstantEntity>)UserContext.getUserData(WebflowConstants.USER_ROLE_KEY);
 		
-		List<List<DataMode>> result = new ArrayList<List<DataMode>>();
-		List<IModuleGroup> a = getModuleGroupTree(orgCode);
+		List<IModuleGroup> root = getModuleGroupTree(orgCode);
 		List<IModuleGroup> modules = new ArrayList<IModuleGroup>();
-		for (int i = 0; i < a.size(); i++) {
-			IModuleGroup m = a.get(i);
-			if ("#".equals(m.getAccessURL()) || !checkPermission(m, roleIds)) {
+		List<List<DataMode>> result = new ArrayList<List<DataMode>>();
+		for (int i = 0; i < root.size(); i++) {
+			IModuleGroup m = root.get(i);
+			if ("#".equals(m.getAccessURL())) {
 				continue;
 			}
 			if (!m.getIsDisplay()) {

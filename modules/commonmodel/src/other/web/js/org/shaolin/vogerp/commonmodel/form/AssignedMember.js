@@ -8,9 +8,9 @@ function org_shaolin_vogerp_commonmodel_form_AssignedMember(json)
         ui: elementList[prefix + "idUI"]
     });
 
-    var partyIdUI = new UIMaster.ui.hidden
+    var orgIdUI = new UIMaster.ui.hidden
     ({
-        ui: elementList[prefix + "partyIdUI"]
+        ui: elementList[prefix + "orgIdUI"]
     });
 
     var type0UILabel = new UIMaster.ui.label
@@ -58,18 +58,18 @@ function org_shaolin_vogerp_commonmodel_form_AssignedMember(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "partyIdUI",prefix + "type0UILabel",prefix + "type0UI",prefix + "typeUILabel",prefix + "typeUI",prefix + "endDateUILabel",prefix + "endDateUI"]
+        ,subComponents: [prefix + "idUI",prefix + "orgIdUI",prefix + "type0UILabel",prefix + "type0UI",prefix + "typeUILabel",prefix + "typeUI",prefix + "endDateUILabel",prefix + "endDateUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,partyIdUI,type0UILabel,type0UI,typeUILabel,endDateUILabel,paybtn,upgradebtn,typeUI,endDateUI,fieldPanel,actionPanel]
+        ,items: [idUI,orgIdUI,type0UILabel,type0UI,typeUILabel,endDateUILabel,paybtn,upgradebtn,typeUI,endDateUI,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
 
-    Form.partyIdUI=partyIdUI;
+    Form.orgIdUI=orgIdUI;
 
     Form.type0UILabel=type0UILabel;
 
@@ -91,7 +91,7 @@ function org_shaolin_vogerp_commonmodel_form_AssignedMember(json)
 
     Form.idUI=idUI;
 
-    Form.partyIdUI=partyIdUI;
+    Form.orgIdUI=orgIdUI;
 
     Form.type0UILabel=type0UILabel;
 

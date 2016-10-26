@@ -18,7 +18,6 @@ import org.shaolin.uimaster.page.ajax.Table;
 import org.shaolin.uimaster.page.ajax.TreeItem;
 import org.shaolin.uimaster.page.ajax.json.JSONArray;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
-import org.shaolin.uimaster.page.widgets.HTMLMatrixType.DataMode;
 import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
 import org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl;
 import org.shaolin.vogerp.commonmodel.be.ICEExtension;
@@ -260,6 +259,50 @@ public class CEOperationUtil {
 			}
 			values.add(nodeId + "," + item.getIntValue());
 			displayItems.add(item.getDisplayName());
+		}
+	}
+	
+	public static void getCEItems(int openLevel, ArrayList<String> values, ArrayList<String> displayItems, 
+			IConstantEntity ce) {
+		// ce node.
+		String nodeId = ce.getEntityName();
+		
+		IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
+		String space = "--";
+		List<IConstantEntity> items = ce.getConstantList();
+		for (IConstantEntity item: items) {
+			if (item.getIntValue() == -1) {
+				continue;
+			}
+			values.add(nodeId + "," + item.getIntValue());
+			displayItems.add(item.getDisplayName());
+			IConstantEntity kid = cs.getChildren(item);
+			if (kid != null){
+				getCEItems0(--openLevel, space, values, displayItems, kid);
+			}
+		}
+		
+	}
+	
+	private static void getCEItems0(int openLevel, String space, ArrayList<String> values, ArrayList<String> displayItems, 
+			IConstantEntity ce) {
+		// ce node.
+		String nodeId = ce.getEntityName();
+		
+		IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
+		List<IConstantEntity> items = ce.getConstantList();
+		for (IConstantEntity item: items) {
+			if (item.getIntValue() == -1) {
+				continue;
+			}
+			values.add(nodeId + "," + item.getIntValue());
+			displayItems.add(space + item.getDisplayName());
+			if (openLevel > 1) {
+				IConstantEntity kid = cs.getChildren(item);
+				if (kid != null){
+					getCEItems0(--openLevel, space + "--", values, displayItems, kid);
+				}
+			}
 		}
 	}
 	

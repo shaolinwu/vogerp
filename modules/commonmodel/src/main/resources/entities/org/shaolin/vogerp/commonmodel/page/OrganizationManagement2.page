@@ -2,9 +2,9 @@
 <ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
 	xsi:schemaLocation="">
-	<entityName>org.shaolin.vogerp.commonmodel.page.OrganizationManagement</entityName>
+	<entityName>org.shaolin.vogerp.commonmodel.page.OrganizationManagement2</entityName>
 	<systemVersion>0</systemVersion>
-	<description>组织管理</description>
+	<description>组织管理--系统管理员</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="createOrg">
            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showBlankOrgInfoPanel">
@@ -301,7 +301,7 @@
                                       $tableCondition.addOrder("createDate", false);
                                    }
                                    OrganizationImpl condition = (OrganizationImpl)$tableCondition.getCondition();
-                                   return CommonModel.INSTANCE.searchSubOrganizationInfo(condition,
+                                   return CommonModel.INSTANCE.searchOrganization(condition,
                                                  $tableCondition.getOrders(),
                                                  $tableCondition.getOffset(), 
                                                  $tableCondition.getCount());
@@ -406,8 +406,12 @@
              <ns2:panel UIID="employeeInfoPanel">
 		           <ns2:layout xsi:type="ns2:TableLayoutType">
 		               <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+		               <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 		               <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 		           </ns2:layout>
+		           <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="citySelector">
+                      <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CityOnlySelelctor" />
+                   </ns2:component>
 		           <ns2:component xsi:type="ns2:UITableType" UIID="employeeInfoTablel">
 		               <ns2:beElement>org.shaolin.vogerp.commonmodel.be.PersonalInfo</ns2:beElement>
 		               <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
@@ -538,9 +542,14 @@
 		               </ns2:actionGroup>
 		           </ns2:component>
 		           <ns2:layoutConstraint>
-		               <ns2:componentId>employeeInfoTablel</ns2:componentId>
+		               <ns2:componentId>citySelector</ns2:componentId>
 		               <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 		                   x="0" y="0" align="FULL"></ns2:constraint>
+		           </ns2:layoutConstraint>
+		           <ns2:layoutConstraint>
+		               <ns2:componentId>employeeInfoTablel</ns2:componentId>
+		               <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                   x="0" y="1" align="FULL"></ns2:constraint>
 		           </ns2:layoutConstraint>
              </ns2:panel>
          </ns2:tab>
@@ -556,7 +565,7 @@
 	   <ns2:DataEntity scope="InOut" name="orgObject" category="BusinessEntity">
       <type entityName="org.shaolin.vogerp.commonmodel.be.Organization"></type>
     </ns2:DataEntity>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
        <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchy"></ns2:mappingRule>
        <ns2:UIComponent componentPath="organizationTypePanel" paramName="UIWidgetType"></ns2:UIComponent>
        <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
@@ -564,7 +573,11 @@
            <expressionString>"org.shaolin.vogerp.commonmodel.ce.OrganizationType"</expressionString>
          </ns2:expression>
        </ns2:DataComponent>
-     </ns2:ComponentMapping>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+       <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CityOnlySelelctor"></ns2:mappingRule>
+       <ns2:UIComponent componentPath="citySelector" paramName="UIWidgetType"></ns2:UIComponent>
+    </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
 		<ns2:serverOperation xsi:type="ns2:ExpressionType">

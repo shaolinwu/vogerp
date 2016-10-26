@@ -390,7 +390,7 @@
     <entityName>COMM_MEMBERSERVICEUSED</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="PARTYID" type="BIGINT" length="38"></ns2:column>
+    <ns2:column name="ORGID" type="BIGINT" length="38"></ns2:column>
     <ns2:column name="FUNCTIONID" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="USERDCOUNT" type="INTEGER" length="5" default="0"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
@@ -401,7 +401,7 @@
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.AssignedMemberServiceUsed"></ns2:businessEntity>
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="partyId" columnName="PARTYID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="orgId" columnName="ORGID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="functionId" columnName="FUNCTIONID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="usedCount" columnName="USERDCOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
@@ -411,7 +411,7 @@
     <entityName>COMM_ASSIMEMBER</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="PARTYID" type="BIGINT" length="38"></ns2:column>
+    <ns2:column name="ORGID" type="BIGINT" length="38"></ns2:column>
     <ns2:column name="TYPE" type="INTEGER" length="2" default="0"></ns2:column>
     <ns2:column name="_starttime" type="TIMESTAMP"></ns2:column>
     <ns2:column name="_endtime" type="TIMESTAMP"></ns2:column>
@@ -423,7 +423,7 @@
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.AssignedMember"></ns2:businessEntity>
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="partyId" columnName="PARTYID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="orgId" columnName="ORGID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_starttime" columnName="_starttime"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_endtime" columnName="_endtime"></ns2:fieldMapping>

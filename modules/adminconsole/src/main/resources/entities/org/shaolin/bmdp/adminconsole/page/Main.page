@@ -62,13 +62,14 @@
 			<ns2:ops xsi:type="ns2:OpExecuteScriptType">
 				<ns2:expressionString><![CDATA[
       {
+          var userPanelId = $("#div-topRightPanel-2_0");
           var value = $("#topPanel").width();
-          var self = $("#div-topRightPanel-1_0").width();
-          $("#div-topRightPanel-1_0").css("left", (value - self + 5) + "px");
-          if ($("#div-topRightPanel-1_0").css("display") == "none") {
-              $("#div-topRightPanel-1_0").slideDown("fast");
+          var self = userPanelId.width();
+          userPanelId.css("left", (value - self + 5) + "px");
+          if (userPanelId.css("display") == "none") {
+              userPanelId.slideDown("fast");
           } else {
-              $("#div-topRightPanel-1_0").slideUp("fast");
+              userPanelId.slideUp("fast");
           }
       }
       ]]></ns2:expressionString>
@@ -78,13 +79,14 @@
             <ns2:ops xsi:type="ns2:OpExecuteScriptType">
                 <ns2:expressionString><![CDATA[
       {
+          var notifiPanelId = $("#div-topRightPanel-5_0");
           var value = $("#topPanel").width();
-          var self = $("#div-topRightPanel-4_0").width();
-          $("#div-topRightPanel-4_0").css("left", (value - self + 5) + "px");
-          if ($("#div-topRightPanel-4_0").css("display") == "none") {
-              $("#div-topRightPanel-4_0").slideDown("fast");
+          var self = notifiPanelId.width();
+          notifiPanelId.css("left", (value - self + 5) + "px");
+          if (notifiPanelId.css("display") == "none") {
+              notifiPanelId.slideDown("fast");
           } else {
-              $("#div-topRightPanel-4_0").slideUp("fast");
+              notifiPanelId.slideUp("fast");
           }
       }
       ]]></ns2:expressionString>
@@ -99,7 +101,7 @@
 		        import org.shaolin.vogerp.commonmodel.IUserService;
 		        import org.shaolin.bmdp.runtime.AppContext;
 		        { 
-		            System.out.println("Searching for :" + @page.getTextField("searchContext").getValue());
+		            //System.out.println("Searching for :" + @page.getTextField("searchContext").getValue());
 		        }
 		        ]]></expressionString>
 				</ns2:exp>
@@ -116,8 +118,8 @@
 		        if (arguments.length > 2) {
                    this.tempSessionIdUI.setValue(arguments[2]);
                 }
-		        if ($("#div-topRightPanel-4_0").css("display") == "block") {
-		            $("#div-topRightPanel-4_0").slideUp("fast");
+		        if ($("#div-topRightPanel-5_0").css("display") == "block") {
+		            $("#div-topRightPanel-5_0").slideUp("fast");
 		        }
 		        
 		        window.open("http://120.25.197.58:8080/xwiki");
@@ -243,12 +245,16 @@
 					<ns2:layout xsi:type="ns2:TableLayoutType">
 						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 						<ns2:columnWidthWeight>60</ns2:columnWidthWeight>
+						<ns2:columnWidthWeight>60</ns2:columnWidthWeight>
 						<ns2:columnWidthWeight>-1.0</ns2:columnWidthWeight>
 						<ns2:columnWidthWeight>60</ns2:columnWidthWeight>
 						<ns2:columnWidthWeight>60</ns2:columnWidthWeight>
 						<ns2:columnWidthWeight>250</ns2:columnWidthWeight>
 						<ns2:columnWidthWeight>60</ns2:columnWidthWeight>
 					</ns2:layout>
+					<ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="citySelector">
+				        <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CityOnlySelelctor" />
+				    </ns2:component>
 					<ns2:component xsi:type="ns2:UIImageType" UIID="userIcon">
 						<ns2:Property name="text" >
       			           <ns2:value xsi:type="ns2:StringPropertyType">
@@ -364,35 +370,40 @@
                                 x="0" y="0" align="FULL"></ns2:constraint>
                         </ns2:layoutConstraint>
                     </ns2:component>
-					<ns2:layoutConstraint>
-						<ns2:componentId>userIcon</ns2:componentId>
+                    <ns2:layoutConstraint>
+						<ns2:componentId>citySelector</ns2:componentId>
 						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 							x="0" y="0" align="FULL"></ns2:constraint>
 					</ns2:layoutConstraint>
 					<ns2:layoutConstraint>
+						<ns2:componentId>userIcon</ns2:componentId>
+						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+							x="1" y="0" align="FULL"></ns2:constraint>
+					</ns2:layoutConstraint>
+					<ns2:layoutConstraint>
 						<ns2:componentId>userForm</ns2:componentId>
 						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-							x="1" y="0" align="FULL" cellUIClass=""></ns2:constraint>
+							x="2" y="0" align="FULL" cellUIClass=""></ns2:constraint>
 					</ns2:layoutConstraint>
 					<ns2:layoutConstraint>
 						<ns2:componentId>taskIcon</ns2:componentId>
 						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-							x="2" y="0" align="FULL"></ns2:constraint>
+							x="3" y="0" align="FULL"></ns2:constraint>
 					</ns2:layoutConstraint>
 					<ns2:layoutConstraint>
 						<ns2:componentId>notificationIcon</ns2:componentId>
 						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-							x="3" y="0" align="FULL"></ns2:constraint>
+							x="4" y="0" align="FULL"></ns2:constraint>
 					</ns2:layoutConstraint>
 					<ns2:layoutConstraint>
                         <ns2:componentId>notificationForm</ns2:componentId>
                         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                            x="4" y="0" align="FULL"></ns2:constraint>
+                            x="5" y="0" align="FULL"></ns2:constraint>
                     </ns2:layoutConstraint>
                     <ns2:layoutConstraint>
                         <ns2:componentId>helpIcon</ns2:componentId>
                         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                            x="5" y="0" align="FULL"></ns2:constraint>
+                            x="6" y="0" align="FULL"></ns2:constraint>
                     </ns2:layoutConstraint>
 				</ns2:component>
 				<ns2:layoutConstraint>
@@ -496,6 +507,8 @@
                                 <ns2:key>org.shaolin.bmdp.adminconsole.page.Main</ns2:key>
                             </ns2:title>
                             <ns2:frame chunkName="org.shaolin.vogerp.commonmodel.diagram.ModularityModel" nodeName="OrgManager" role="Admin,0">
+                            </ns2:frame>
+                            <ns2:frame chunkName="org.shaolin.vogerp.commonmodel.diagram.ModularityModel" nodeName="OrderManagementByAdmin" role="org.shaolin.vogerp.commonmodel.ce.GenericOrganizationType,3">
                             </ns2:frame>
                             <ns2:frame chunkName="org.shaolin.vogerp.commonmodel.diagram.ModularityModel" nodeName="OnlineOrderList">
                             </ns2:frame>
@@ -605,10 +618,14 @@
           <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="notificator" paramName="beObject"></ns2:DataComponent>
           <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="countUIId">
               <ns2:expression>
-                   <expressionString>"div-topRightPanel-3_0"</expressionString><!-- indicates the notificationIcon parent.-->
+                   <expressionString>"div-topRightPanel-4_0"</expressionString><!-- indicates the notificationIcon parent.-->
                </ns2:expression>
           </ns2:DataComponent>
         </ns2:ComponentMapping>
+        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
+	       <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CityOnlySelelctor"></ns2:mappingRule>
+	       <ns2:UIComponent componentPath="citySelector" paramName="UIWidgetType"></ns2:UIComponent>
+	    </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
 		<ns2:serverOperation xsi:type="ns2:ExpressionType">

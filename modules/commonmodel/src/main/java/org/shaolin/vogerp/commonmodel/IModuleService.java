@@ -22,6 +22,8 @@ public interface IModuleService {
 
 	public void newAppModules(String reference, Long orgId, String orgCode);
 
+	public IModuleGroup getModuleRootByOrgCode(String orgCode);
+	
 	public long getModuleId(String chunkName, String nodeName);
 
 	/**
@@ -30,12 +32,12 @@ public interface IModuleService {
 	 */
 	public List getModuleGroupToJson();
 	
-	public List<IModuleGroup> getModuleGroupTree(String orgCode);
-	
 	public IModuleGroup getModule(long id);
 	
 	public IModuleGroup getModule(String name);
 
+	public List<IModuleGroup> getModuleGroupTree(final String type);
+	
 	public ArrayList[] getModuleListInOptions();
 
 	public List<List<DataMode>> getModulesInMatrix(String orgCode, int columns);

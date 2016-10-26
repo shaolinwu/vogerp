@@ -1,10 +1,14 @@
 package org.shaolin.vogerp.commonmodel.internal;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
+import org.shaolin.bmdp.workflow.be.NotificationImpl;
+import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
 import org.shaolin.vogerp.commonmodel.IOrganizationService;
 import org.shaolin.vogerp.commonmodel.be.ILegalOrganizationInfo;
 import org.shaolin.vogerp.commonmodel.be.IOrganization;
@@ -20,6 +24,22 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 	}
 	
 	public void reload() {
+	}
+	
+	public void notifyOrganizer(String subject, String message, IOrganization org) {
+		List<IPersonalInfo> employeese = getEmployeese(org.getId());
+		if (employeese == null || employeese.size() == 0) {
+			return;
+		}
+		NotificationImpl item = new NotificationImpl();
+		item.setOrgId(org.getId());
+        item.setPartyId(employeese.get(0).getId());//select the first user.
+        item.setSubject(subject);
+        item.setDescription(message);
+        item.setCreateDate(new Date());
+        
+        ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+        service.addNotification(item, true);
 	}
 	
 	@Override

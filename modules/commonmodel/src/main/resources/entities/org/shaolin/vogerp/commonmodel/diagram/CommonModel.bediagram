@@ -607,7 +607,7 @@
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
-            <bediagram:name>partyId</bediagram:name>
+            <bediagram:name>orgId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
@@ -628,7 +628,7 @@
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
-            <bediagram:name>partyId</bediagram:name>
+            <bediagram:name>orgId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>

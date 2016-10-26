@@ -4,8 +4,8 @@
 
 #topRightPanel img{cursor:pointer; width: 24px; height: 24px;}
 #div-topPanel-1_0 {margin-top: 15px; width: 40%;}
-#div-topRightPanel-1_0{margin-top: 15px;display:none;position: absolute;z-index: 100000;left:45px;top:55px;background:white;border: 2px solid #8DB9DB;border-top-right-radius: 4px;border-top-left-radius: 4px;border-bottom-right-radius: 12px;border-bottom-left-radius: 12px;}
-#div-topRightPanel-4_0{margin-top: 15px;display:none;position: absolute;z-index: 100000;left:45px;top:55px;background:white;border: 2px solid #8DB9DB;border-top-right-radius: 4px;border-top-left-radius: 4px;border-bottom-right-radius: 12px;border-bottom-left-radius: 12px;}
+#div-topRightPanel-2_0{margin-top: 15px;display:none;position: absolute;z-index: 100000;left:45px;top:55px;background:white;border: 2px solid #8DB9DB;border-top-right-radius: 4px;border-top-left-radius: 4px;border-bottom-right-radius: 12px;border-bottom-left-radius: 12px;}
+#div-topRightPanel-5_0{margin-top: 15px;display:none;position: absolute;z-index: 100000;left:45px;top:55px;background:white;border: 2px solid #8DB9DB;border-top-right-radius: 4px;border-top-left-radius: 4px;border-bottom-right-radius: 12px;border-bottom-left-radius: 12px;}
 #div-topPanel-2_0 {margin-top: 15px;margin-right: 10px;float:right;}
 
 #div-Form-0_0 {margin-bottom: 10px;}

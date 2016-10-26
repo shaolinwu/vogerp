@@ -39,7 +39,7 @@
 		    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
                 <ns2:expressionString><![CDATA[
                 {
-                    var userInfoCell = "#div-bottomPanel-0_0";
+                    var userInfoCell = "#div-bottomPanel1-0_0";
                     $(userInfoCell).css("left", $(this.middlePanel).offset().left);
                     $(userInfoCell).css("top", $(this.middlePanel).offset().top);
 					
@@ -56,7 +56,7 @@
 		    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
                 <ns2:expressionString><![CDATA[
                 {
-                    var menuCell = "#div-bottomPanel-0_1";
+                    var menuCell = "#div-bottomPanel1-0_1";
                     $(menuCell).css("left", $(this.middlePanel).offset().left);
 					$(menuCell).css("top", $(this.middlePanel).offset().top);
 				
@@ -73,7 +73,7 @@
             <ns2:ops xsi:type="ns2:OpExecuteScriptType">
                 <ns2:expressionString><![CDATA[
                {
-                var userInfoCell = "#div-bottomPanel-0_1";
+                var userInfoCell = "#div-bottomPanel1-0_1";
                 $(userInfoCell).css("left", $(this.middlePanel).offset().left);
                 $(userInfoCell).css("top", $(this.middlePanel).offset().top);
                 
@@ -84,6 +84,15 @@
                 }
                }
              ]]></ns2:expressionString>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="showCityList">
+            <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+                <ns2:expressionString><![CDATA[
+                {
+                    //TODO: show city list panel.
+                }
+                ]]></ns2:expressionString>
             </ns2:ops>
         </ns2:eventHandler>
         <ns2:eventHandler functionName="showHelp">
@@ -153,7 +162,8 @@
 			<ns2:layout xsi:type="ns2:TableLayoutType">
 				<ns2:rowHeightWeight>150</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>400</ns2:rowHeightWeight>
-				<ns2:rowHeightWeight>20</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>50</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			</ns2:layout>
 			<ns2:component xsi:type="ns2:UIHiddenType" UIID="tempSentPartyIdUI">
@@ -176,19 +186,38 @@
 	                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 	                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 	                </ns2:layout>
-	                <ns2:component xsi:type="ns2:UITextFieldType" UIID="searchContext">
+	                <ns2:component xsi:type="ns2:UILabelType" UIID="cityLabel">
+	                    <ns2:Property name="displayValue">
+				            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+						         <ns2:expression>
+						           <expressionString><![CDATA[
+						           import org.shaolin.bmdp.runtime.security.UserContext;
+						           import org.shaolin.bmdp.runtime.ce.CEUtil;
+						           { 
+						               try {
+						                 return "城市： " + CEUtil.getConstantEntity("CityList", UserContext.getUserContext().getCity()).getDisplayName();
+						               } catch (Exception e) {
+						                 return "城市： 未选择";
+						               } 
+						           }]]></expressionString>
+						         </ns2:expression>
+					        </ns2:value>
+			            </ns2:Property>
+			            <ns2:Property name="value">
+				            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+						         <ns2:expression>
+						           <expressionString><![CDATA[
+						           import org.shaolin.bmdp.runtime.security.UserContext;
+						           { 
+						               return UserContext.getUserContext().getCity(); 
+						           }]]></expressionString>
+						         </ns2:expression>
+					        </ns2:value>
+			            </ns2:Property>
+			            <ns2:EventListener xsi:type="ns2:ClickListenerType">
+                            <ns2:handler functionName="showCityList" />
+                        </ns2:EventListener>
                     </ns2:component>
-					<ns2:component xsi:type="ns2:UIImageType" UIID="userIcon">
-	                    <ns2:title xsi:type="ns2:StringPropertyType">
-	                        <ns2:value>用户中心</ns2:value>
-	                    </ns2:title>
-	                    <ns2:src xsi:type="ns2:ImagePropertyType">
-	                        <ns2:location>/admin/tree/manager.png</ns2:location>
-	                    </ns2:src>
-	                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
-	                         <ns2:handler functionName="showUserInfo" />
-	                     </ns2:EventListener>
-	                </ns2:component>
 	                <!-- please keep helpIcon no change for notifications -->
 	                <ns2:component xsi:type="ns2:UIImageType" UIID="helpIcon">
                         <ns2:Property name="text" >
@@ -207,15 +236,10 @@
                         </ns2:showWords>
                     </ns2:component>
 	                <ns2:layoutConstraint>
-	                    <ns2:componentId>searchContext</ns2:componentId>
+	                    <ns2:componentId>cityLabel</ns2:componentId>
 	                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 	                         x="0" y="0" align="FULL"></ns2:constraint>
 	                </ns2:layoutConstraint>
-	                <ns2:layoutConstraint>
-                        <ns2:componentId>userIcon</ns2:componentId>
-                        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                             x="1" y="0" align="FULL"></ns2:constraint>
-                    </ns2:layoutConstraint>
                     <ns2:layoutConstraint>
                         <ns2:componentId>helpIcon</ns2:componentId>
                         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
@@ -332,8 +356,34 @@
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="bottomPanel">
 			    <ns2:layout xsi:type="ns2:TableLayoutType">
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:columnWidthWeight>0.2</ns2:columnWidthWeight>
+					<ns2:columnWidthWeight>0.2</ns2:columnWidthWeight>
+					<ns2:columnWidthWeight>0.2</ns2:columnWidthWeight>
+					<ns2:columnWidthWeight>0.2</ns2:columnWidthWeight>
+			    </ns2:layout>
+			    <ns2:component xsi:type="ns2:UIImageType" UIID="userIcon">
+                   <ns2:title xsi:type="ns2:StringPropertyType">
+                       <ns2:value>用户中心</ns2:value>
+                   </ns2:title>
+                   <ns2:src xsi:type="ns2:ImagePropertyType">
+                       <ns2:location>/admin/tree/manager.png</ns2:location>
+                   </ns2:src>
+                   <ns2:EventListener xsi:type="ns2:ClickListenerType">
+                        <ns2:handler functionName="showUserInfo" />
+                    </ns2:EventListener>
+                </ns2:component>
+                <ns2:layoutConstraint>
+                    <ns2:componentId>userIcon</ns2:componentId>
+                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                        x="0" y="0" align="FULL"></ns2:constraint>
+                </ns2:layoutConstraint>
+			</ns2:component>
+			<ns2:component xsi:type="ns2:UIPanelType" UIID="bottomPanel1">
+			    <ns2:layout xsi:type="ns2:TableLayoutType">
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-					<ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:columnWidthWeight>1</ns2:columnWidthWeight>
 			    </ns2:layout>
 			    <ns2:component xsi:type="ns2:UIPanelType" UIID="userForm">
 	                <ns2:UISkin xsi:type="ns2:UISkinType">
@@ -400,6 +450,9 @@
                             x="0" y="0" align="FULL"></ns2:constraint>
                     </ns2:layoutConstraint>
                 </ns2:component>
+                <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="citySelector">
+			        <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CityOnlySelelctor" />
+			    </ns2:component>
 				<ns2:layoutConstraint>
 			        <ns2:componentId>userForm</ns2:componentId>
 			        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
@@ -410,8 +463,13 @@
                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                         x="0" y="1" align="FULL"></ns2:constraint>
                  </ns2:layoutConstraint>
-			</ns2:component>
-			<ns2:layoutConstraint>
+                 <ns2:layoutConstraint>
+                     <ns2:componentId>citySelector</ns2:componentId>
+                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                          x="0" y="2" align="FULL"></ns2:constraint>
+                 </ns2:layoutConstraint>
+			  </ns2:component>
+			  <ns2:layoutConstraint>
 					<ns2:componentId>topPanel</ns2:componentId>
 					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 						x="0" y="0" align="FULL"></ns2:constraint>
@@ -425,6 +483,11 @@
 					<ns2:componentId>bottomPanel</ns2:componentId>
 					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 						x="0" y="2" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+				<ns2:layoutConstraint>
+					<ns2:componentId>bottomPanel1</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="0" y="3" align="FULL"></ns2:constraint>
 				</ns2:layoutConstraint>
 		</ns2:body>
 	</ns2:UIEntity>
@@ -459,6 +522,10 @@
                </ns2:expression>
           </ns2:DataComponent>
         </ns2:ComponentMapping>
+        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
+	       <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CityOnlySelelctor"></ns2:mappingRule>
+	       <ns2:UIComponent componentPath="citySelector" paramName="UIWidgetType"></ns2:UIComponent>
+	    </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
 		<ns2:serverOperation xsi:type="ns2:ExpressionType">

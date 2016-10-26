@@ -7,6 +7,15 @@ import org.shaolin.vogerp.commonmodel.be.IOrganization;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 
 public interface IOrganizationService {
+	
+	/**
+	 * Send a message to this organization.
+	 * 
+	 * @param subject
+	 * @param message
+	 * @param org
+	 */
+	public void notifyOrganizer(String subject, String message, IOrganization org);
 
 	/**
 	 * 

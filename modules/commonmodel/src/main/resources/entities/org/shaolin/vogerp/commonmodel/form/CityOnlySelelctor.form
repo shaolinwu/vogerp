@@ -1,0 +1,112 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.commonmodel.form.CityOnlySelelctor</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="selectSubItem">
+  </ns2:eventHandler>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIHiddenType" UIID="parentUI">
+        <ns2:secure>
+          <ns2:value>true</ns2:value>
+        </ns2:secure>
+      </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="cityListPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="cityListUI">
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+            <value>当前省市:</value>
+        </ns2:widgetLabel>
+        <ns2:Property name="horizontalLayout" >
+         <ns2:value xsi:type="ns2:BooleanPropertyType">
+            <value>true</value>
+         </ns2:value>
+        </ns2:Property>
+        <ns2:Property name="colCount" >
+         <ns2:value xsi:type="ns2:NumericPropertyType">
+            <type>int</type>
+            <value>6</value>
+         </ns2:value>
+        </ns2:Property>
+        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
+          <ns2:handler functionName="selectSubItem"></ns2:handler>
+        </ns2:EventListener>
+      </ns2:component>
+	     <ns2:layoutConstraint>
+        <ns2:componentId>cityListUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>cityListPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="parentUIID" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="selectedCity" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="Internal" name="values" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="Internal" name="displayItems" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="parentUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="parentUIID" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="cityListUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="selectedCity" paramName="Value"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values" paramName="OptionValues"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:DataToUIMappingOperation>
+      <expressionString><![CDATA[
+      import java.util.ArrayList;
+      import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.bmdp.runtime.ce.CEUtil;
+      import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+      import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+      import org.shaolin.bmdp.runtime.spi.IConstantService;
+      import org.shaolin.bmdp.runtime.security.UserContext;
+      {
+          if ($selectedCity == null) {
+              $selectedCity = UserContext.getUserContext().getCity();
+          }
+          if ($selectedCity == null) {
+              $selectedCity = "110000";//bejing.
+          }
+          
+          ArrayList values = new ArrayList();
+          ArrayList displayItems = new ArrayList();
+          CEOperationUtil.getCEItems(2, values, displayItems, AppContext.get().getConstantService().getConstantEntity("CityList"));
+          $values = values;
+          $displayItems = displayItems;
+         
+          @odContext.executeAllMappings();
+      }   
+    ]]></expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>
+      {
+  @odContext.executeAllMappings();
+   }
+   </expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

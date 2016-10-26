@@ -50,7 +50,7 @@
           <ns2:value>true</ns2:value>
         </ns2:secure>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UIHiddenType" UIID="partyIdUI">
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="orgIdUI">
         <ns2:secure>
           <ns2:value>true</ns2:value>
         </ns2:secure>
@@ -179,8 +179,8 @@
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="partyIdUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.partyId" paramName="Number"></ns2:DataComponent>
+      <ns2:UIComponent componentPath="orgIdUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.orgId" paramName="Number"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
@@ -256,6 +256,7 @@
         import org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl;
 		{
 		  AssignedMemberImpl member = new AssignedMemberImpl();
+		  member.setOrgId(UserContext.getUserContext().getOrgId());
 		  IMemberService service = (IMemberService)AppContext.get().getService(IMemberService.class);
 		  $beObject = (AssignedMemberImpl)service.getUserMember();
 		  if ($beObject == null) {
@@ -273,7 +274,7 @@
         import org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl;
 		{
 		  @odContext.executeAllMappings();
-		  $beObject.setPartyId(UserContext.getUserContext().getUserId());
+		  $beObject.setOrgId(UserContext.getUserContext().getOrgId());
 		}]]></expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>

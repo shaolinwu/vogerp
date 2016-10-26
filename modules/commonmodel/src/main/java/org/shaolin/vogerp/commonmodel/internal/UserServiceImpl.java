@@ -169,11 +169,11 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			JSONObject json = new JSONObject(jsonStr);
 			String regionId = json.getJSONObject("data").getString("region_id");
 			String cityId = json.getJSONObject("data").getString("city_id");
-			if (regionId != null && regionId.trim().length() > 0) {
-				IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
-				String entityName = cs.getChildren("CityList", Integer.parseInt(regionId)).getByIntValue(Integer.parseInt(cityId)).getEntityName();
-				newAccount.setLocationInfo(entityName +","+cityId);
-			}
+//			if (regionId != null && regionId.trim().length() > 0) {
+//				IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
+//				String entityName = cs.getChildren("CityList", Integer.parseInt(regionId)).getByIntValue(Integer.parseInt(cityId)).getEntityName();
+//				newAccount.setLocationInfo(entityName +","+cityId);
+//			}
 		} catch (Exception e) {
 		}
 	}
@@ -277,6 +277,13 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			userContext.setUserName(matchedUser.getInfo().getFirstName() + matchedUser.getInfo().getLastName());
 			userContext.setUserLocale(matchedUser.getLocale());
 			userContext.setUserLocation(matchedUser.getLocationInfo());
+			if (matchedUser.getLocationInfo() != null) {
+				try {
+					JSONObject json = new JSONObject(matchedUser.getLocationInfo());
+					String cityId = json.getJSONObject("data").getString("city_id");
+					userContext.setCity(cityId);
+				} catch (Exception e) {}
+			}
 			userContext.setUserRoles(CEOperationUtil.toCElist(matchedUser.getInfo().getType()));
 			if (matchedUser.getLastLogin() != null) {
 				DateParser parse = new DateParser(matchedUser.getLastLogin());

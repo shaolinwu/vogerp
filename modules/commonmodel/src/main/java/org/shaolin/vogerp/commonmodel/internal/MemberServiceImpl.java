@@ -41,9 +41,9 @@ public class MemberServiceImpl implements IMemberService, IServiceProvider {
 	}
 	
 	@Override
-	public IAssignedMember getUserMember() {
+	public IAssignedMember getUserMember(long orgId) {
 		AssignedMemberImpl member = new AssignedMemberImpl();
-		member.setPartyId(UserContext.getUserContext().getUserId());
+		member.setOrgId(orgId);
 		List list = CommonModel.INSTANCE.searchAssignedMember(member, null, 0, 1);
 		if (list != null && list.size() > 0) {
 			AssignedMemberImpl item = (AssignedMemberImpl)list.get(0);
@@ -53,9 +53,14 @@ public class MemberServiceImpl implements IMemberService, IServiceProvider {
 	}
 	
 	@Override
-	public AMemberType checkUserHasAMember() {
+	public IAssignedMember getUserMember() {
+		return getUserMember(UserContext.getUserContext().getOrgId());
+	}
+	
+	@Override
+	public AMemberType checkUserHasAMember(long orgId) {
 		AssignedMemberImpl member = new AssignedMemberImpl();
-		member.setPartyId(UserContext.getUserContext().getUserId());
+		member.setOrgId(orgId);
 		List list = CommonModel.INSTANCE.searchAssignedMember(member, null, 0, 1);
 		if (list != null && list.size() > 0) {
 			AssignedMemberImpl item = (AssignedMemberImpl)list.get(0);
@@ -68,7 +73,17 @@ public class MemberServiceImpl implements IMemberService, IServiceProvider {
 	}
 	
 	@Override
+	public AMemberType checkUserHasAMember() {
+		return checkUserHasAMember(UserContext.getUserContext().getOrgId());
+	}
+	
+	@Override
 	public int getMemeberServiceRemainingCount(String memberType, String functionId) {
+		return getMemeberServiceRemainingCount(UserContext.getUserContext().getOrgId(), memberType, functionId);
+	}
+	
+	@Override
+	public int getMemeberServiceRemainingCount(long orgId, String memberType, String functionId) {
 		AMemberType type = checkUserHasAMember();
 		if (type == AMemberType.NOT_SPECIFIED) {
 			return -1;
@@ -80,7 +95,7 @@ public class MemberServiceImpl implements IMemberService, IServiceProvider {
 		
 		//MemberServiceRuleImpl
 		AssignedMemberServiceUsedImpl member = new AssignedMemberServiceUsedImpl();
-		member.setPartyId(UserContext.getUserContext().getUserId());
+		member.setOrgId(orgId);
 		member.setFunctionId(functionId);
 		
 		List<IAssignedMemberServiceUsed> result = CommonModel.INSTANCE.searchMemberServiceUsed(member, null, 0, 1);
@@ -88,7 +103,7 @@ public class MemberServiceImpl implements IMemberService, IServiceProvider {
 			return rule.getOverloadNumber() - result.get(0).getUsedCount();
 		} else {
 			AssignedMemberServiceUsedImpl newMember = new AssignedMemberServiceUsedImpl();
-			newMember.setPartyId(UserContext.getUserContext().getUserId());
+			newMember.setOrgId(orgId);
 			newMember.setFunctionId(functionId);
 			newMember.setUsedCount(1);
 			newMember.setCreateDate(new Date());
@@ -100,6 +115,11 @@ public class MemberServiceImpl implements IMemberService, IServiceProvider {
 	
 	@Override
 	public int updateUserMemeberServiceCount(String memberType, String functionId) {
+		return updateUserMemeberServiceCount(UserContext.getUserContext().getOrgId(), memberType, functionId);
+	}
+	
+	@Override
+	public int updateUserMemeberServiceCount(long orgId, String memberType, String functionId) {
 		AMemberType type = checkUserHasAMember();
 		if (type == AMemberType.NOT_SPECIFIED) {
 			return -1;
@@ -111,7 +131,7 @@ public class MemberServiceImpl implements IMemberService, IServiceProvider {
 		
 		//MemberServiceRuleImpl
 		AssignedMemberServiceUsedImpl member = new AssignedMemberServiceUsedImpl();
-		member.setPartyId(UserContext.getUserContext().getUserId());
+		member.setOrgId(orgId);
 		member.setFunctionId(functionId);
 		
 		List<IAssignedMemberServiceUsed> result = CommonModel.INSTANCE.searchMemberServiceUsed(member, null, 0, 1);
@@ -124,7 +144,7 @@ public class MemberServiceImpl implements IMemberService, IServiceProvider {
 			return rule.getOverloadNumber() - item.getUsedCount();
 		} else {
 			AssignedMemberServiceUsedImpl newMember = new AssignedMemberServiceUsedImpl();
-			newMember.setPartyId(UserContext.getUserContext().getUserId());
+			newMember.setOrgId(orgId);
 			newMember.setFunctionId(functionId);
 			newMember.setCreateDate(new Date());
 			newMember.setUsedCount(1);

@@ -7,7 +7,11 @@ public interface IMemberService {
 
 	public void reload();
 	
+	public IAssignedMember getUserMember(long orgId);
+	
 	public IAssignedMember getUserMember();
+	
+	public AMemberType checkUserHasAMember(long orgId);
 	
 	public AMemberType checkUserHasAMember();
 	
@@ -15,6 +19,9 @@ public interface IMemberService {
 	
 	public int getMemeberServiceRemainingCount(String memberType, String functionId);
 	
+	public int getMemeberServiceRemainingCount(long orgId, String memberType, String functionId);
+	
 	public int updateUserMemeberServiceCount(String memberType, String functionId);
 	
+	public int updateUserMemeberServiceCount(long orgId, String memberType, String functionId);
 }

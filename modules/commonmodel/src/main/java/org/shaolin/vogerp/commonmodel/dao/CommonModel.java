@@ -539,9 +539,6 @@ public class CommonModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
-            if (scObject.getPartyId() > 0) {
-                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.partyId", scObject.getPartyId()));
-            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -552,9 +549,6 @@ public class CommonModel extends BEEntityDaoObject {
     public long searchAssignedMemberCount(org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl.class, "inObject");
 
-            if (scObject.getPartyId() > 0) {
-                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.partyId", scObject.getPartyId()));
-            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -569,9 +563,6 @@ public class CommonModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
-            if (scObject.getPartyId() > 0) {
-                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.partyId", scObject.getPartyId()));
-            }
             if (scObject.getFunctionId() != null && scObject.getFunctionId().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.functionId", scObject.getFunctionId()));
             }
@@ -585,9 +576,6 @@ public class CommonModel extends BEEntityDaoObject {
     public long searchMemberServiceUsedCount(org.shaolin.vogerp.commonmodel.be.AssignedMemberServiceUsedImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.AssignedMemberServiceUsedImpl.class, "inObject");
 
-            if (scObject.getPartyId() > 0) {
-                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.partyId", scObject.getPartyId()));
-            }
             if (scObject.getFunctionId() != null && scObject.getFunctionId().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.functionId", scObject.getFunctionId()));
             }
