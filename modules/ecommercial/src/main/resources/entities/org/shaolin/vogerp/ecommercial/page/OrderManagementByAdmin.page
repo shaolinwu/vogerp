@@ -230,6 +230,60 @@
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
+        
+        <ns2:eventHandler functionName="disableGoldenOrder">
+            <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+		        <ns2:expressionString><![CDATA[
+		        {   
+		        	new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+		        	
+	        				UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forbiddenGOrder",UIMaster.getValue(eventsource),o.__entityName);
+			            }
+			        }).open();
+		        }
+		        ]]></ns2:expressionString>
+		    </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="disableSaleGoldenOrder">
+            <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+		        <ns2:expressionString><![CDATA[
+		        {
+		            new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+		        	
+	        				UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forbiddenGOrder",UIMaster.getValue(eventsource),o.__entityName);
+			            }
+			        }).open();   
+		        }
+		        ]]></ns2:expressionString>
+		    </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="disableRentOrder">
+            <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+		        <ns2:expressionString><![CDATA[
+		        {
+		            new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+		        	
+	        				UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forbiddenGOrder",UIMaster.getValue(eventsource),o.__entityName);
+			            }
+			        }).open();   
+		        }
+		        ]]></ns2:expressionString>
+		    </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="disableLoanOrder">
+            <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+		        <ns2:expressionString><![CDATA[
+		        {   
+		            new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+		        	
+	        				UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forbiddenGOrder",UIMaster.getValue(eventsource),o.__entityName);
+			            }
+			        }).open();
+		        }
+		        ]]></ns2:expressionString>
+		    </ns2:ops>
+        </ns2:eventHandler>
+        
         <ns2:eventHandler functionName="openGOrderTracker">
           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openGOrderTracker-20161017-2229">
               <ns2:exp>
@@ -364,6 +418,31 @@
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			</ns2:layout>
+			<ns2:component xsi:type="ns2:UIPanelType" UIID="conditionPanel">
+		       <ns2:layout xsi:type="ns2:TableLayoutType">
+		          <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+		          <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+		          <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+		       </ns2:layout>
+		       <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="citySelector">
+		           <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CityOnlySelelctor" />
+		        </ns2:component>
+		        <ns2:component xsi:type="ns2:UITextAreaType" UIID="comment">
+		      	   <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+		              <value>管理员操作备注:</value>
+		          </ns2:widgetLabel>
+		        </ns2:component>
+		        <ns2:layoutConstraint>
+	             <ns2:componentId>citySelector</ns2:componentId>
+	             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	                 x="0" y="0" align="FULL"></ns2:constraint>
+		       </ns2:layoutConstraint>
+		       <ns2:layoutConstraint>
+	             <ns2:componentId>comment</ns2:componentId>
+	             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	                 x="0" y="0" align="FULL"></ns2:constraint>
+	          </ns2:layoutConstraint>
+		    </ns2:component>  
 			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
 			    <ns2:ajaxLoad>true</ns2:ajaxLoad>
                 <ns2:tab uiid="goldenOrderInfoPanel">
@@ -538,12 +617,12 @@
                                     <ns2:function>openGOrderTracker</ns2:function>
                                 </ns2:action>
                                 <ns2:action>
-                                    <ns2:uiid>openGoldenOrder</ns2:uiid>
+                                    <ns2:uiid>disableGoldenOrder</ns2:uiid>
                                     <ns2:title xsi:type="ns2:StringPropertyType">
                                         <ns2:value>禁止该订单</ns2:value>
                                     </ns2:title>
                                     <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>openGoldenOrder</ns2:function>
+                                    <ns2:function>disableGoldenOrder</ns2:function>
                                 </ns2:action>
                              </ns2:actionGroup>
 		                </ns2:component>
@@ -745,12 +824,12 @@
                                     <ns2:function>openGSOrderTracker</ns2:function>
                                 </ns2:action>
                                 <ns2:action>
-                                    <ns2:uiid>openTakenGoldenOrder</ns2:uiid>
+                                    <ns2:uiid>disableTakenGoldenOrder</ns2:uiid>
                                     <ns2:title xsi:type="ns2:StringPropertyType">
                                         <ns2:value>禁止该订单</ns2:value>
                                     </ns2:title>
                                     <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>openTakenGoldenOrder</ns2:function>
+                                    <ns2:function>disableTakenGoldenOrder</ns2:function>
                                 </ns2:action>
                              </ns2:actionGroup>
                         </ns2:component>
@@ -911,12 +990,12 @@
                                     <ns2:function>openRentOrderTracker</ns2:function>
                                 </ns2:action>
                                 <ns2:action>
-                                    <ns2:uiid>openRentOrder</ns2:uiid>
+                                    <ns2:uiid>disableRentOrder</ns2:uiid>
                                     <ns2:title xsi:type="ns2:StringPropertyType">
                                         <ns2:value>禁止该订单</ns2:value>
                                     </ns2:title>
                                     <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>openRentOrder</ns2:function>
+                                    <ns2:function>disableRentOrder</ns2:function>
                                 </ns2:action>
                              </ns2:actionGroup>
                         </ns2:component>
@@ -1117,12 +1196,12 @@
                                     <ns2:function>openLoanOrderTracker</ns2:function>
                                 </ns2:action>
                                 <ns2:action>
-                                    <ns2:uiid>openLoanOrder</ns2:uiid>
+                                    <ns2:uiid>disableLoanOrder</ns2:uiid>
                                     <ns2:title xsi:type="ns2:StringPropertyType">
                                         <ns2:value>禁止该订单</ns2:value>
                                     </ns2:title>
                                     <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>openLoanOrder</ns2:function>
+                                    <ns2:function>disableLoanOrder</ns2:function>
                                 </ns2:action>
                              </ns2:actionGroup>
                         </ns2:component>
@@ -1134,16 +1213,13 @@
                     </ns2:panel>
                 </ns2:tab>
           </ns2:component>
-          <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="citySelector">
-	         <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CityOnlySelelctor" />
-	      </ns2:component>
           <ns2:layoutConstraint>
-             <ns2:componentId>functionsTab</ns2:componentId>
+             <ns2:componentId>conditionPanel</ns2:componentId>
              <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                  x="0" y="0" align="FULL"></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-             <ns2:componentId>citySelector</ns2:componentId>
+             <ns2:componentId>functionsTab</ns2:componentId>
              <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                  x="0" y="1" align="FULL"></ns2:constraint>
           </ns2:layoutConstraint>

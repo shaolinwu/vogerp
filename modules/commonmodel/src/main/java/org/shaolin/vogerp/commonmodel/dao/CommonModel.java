@@ -539,6 +539,9 @@ public class CommonModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -549,6 +552,9 @@ public class CommonModel extends BEEntityDaoObject {
     public long searchAssignedMemberCount(org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl.class, "inObject");
 
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -563,6 +569,9 @@ public class CommonModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
             if (scObject.getFunctionId() != null && scObject.getFunctionId().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.functionId", scObject.getFunctionId()));
             }
@@ -576,6 +585,9 @@ public class CommonModel extends BEEntityDaoObject {
     public long searchMemberServiceUsedCount(org.shaolin.vogerp.commonmodel.be.AssignedMemberServiceUsedImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.AssignedMemberServiceUsedImpl.class, "inObject");
 
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
             if (scObject.getFunctionId() != null && scObject.getFunctionId().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.functionId", scObject.getFunctionId()));
             }
@@ -596,6 +608,9 @@ public class CommonModel extends BEEntityDaoObject {
             if (scObject.getFunctionId() != null && scObject.getFunctionId().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.functionId", scObject.getFunctionId()));
             }
+            if (scObject.getType() != null && scObject.getType() != org.shaolin.vogerp.commonmodel.ce.AMemberType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.typeInt", scObject.getType().getIntValue()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -608,6 +623,9 @@ public class CommonModel extends BEEntityDaoObject {
 
             if (scObject.getFunctionId() != null && scObject.getFunctionId().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.functionId", scObject.getFunctionId()));
+            }
+            if (scObject.getType() != null && scObject.getType() != org.shaolin.vogerp.commonmodel.ce.AMemberType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.typeInt", scObject.getType().getIntValue()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));

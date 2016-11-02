@@ -7,7 +7,7 @@
 	<cePackage>org.shaolin.vogerp.commonmodel.ce</cePackage>
 	<diagramPackage>org.shaolin.vogerp.commonmodel.diagram</diagramPackage>
 
-    <bediagram:beEntity needPersist="true" needUIEntity="true">
+    <bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
         <common:entityName>Registry</common:entityName>
         <bediagram:member pk="true">
             <bediagram:name>id</bediagram:name>

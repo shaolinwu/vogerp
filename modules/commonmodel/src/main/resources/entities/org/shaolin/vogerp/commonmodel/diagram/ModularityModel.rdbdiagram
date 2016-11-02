@@ -10,6 +10,7 @@
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="PATH" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="VALUE" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2"></ns2:column>
     <ns2:primaryKey>
       <ns2:columnName>ID</ns2:columnName>
@@ -20,6 +21,7 @@
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="path" columnName="PATH"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="value" columnName="VALUE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
@@ -241,6 +243,20 @@
         </ns2:fieldMapping>
     </ns2:searchResultMapping>
     <ns2:searchConditionMapping name="Search">
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.path</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:StarLikeOperatorType">
+                    <ns2:type>LIKE %*</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.path</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getPath() != null && scFlow.getPath().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
         <ns2:searchConditionData name="scFlow" category="BusinessEntity" searchable="false">
             <type entityName="org.shaolin.vogerp.commonmodel.be.Registry"/>
         </ns2:searchConditionData>

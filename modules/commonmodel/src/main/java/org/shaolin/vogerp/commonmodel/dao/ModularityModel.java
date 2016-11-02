@@ -35,6 +35,9 @@ public class ModularityModel extends BEEntityDaoObject {
                 this._addOrders(inFlowCriteria, orders);
             }
 
+            if (scFlow.getPath() != null && scFlow.getPath().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.path", scFlow.getPath()));
+            }
 
         inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
@@ -45,6 +48,9 @@ public class ModularityModel extends BEEntityDaoObject {
     public long searchRegistryItemsCount(org.shaolin.vogerp.commonmodel.be.RegistryImpl scFlow) {
             Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.RegistryImpl.class, "inFlow");
 
+            if (scFlow.getPath() != null && scFlow.getPath().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.path", scFlow.getPath()));
+            }
 
         inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 

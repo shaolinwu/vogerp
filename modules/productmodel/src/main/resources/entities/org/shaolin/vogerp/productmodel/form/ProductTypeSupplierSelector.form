@@ -21,32 +21,11 @@
           <ns2:value>true</ns2:value>
         </ns2:secure>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UIHiddenType" UIID="pTypeName0UI">
-        <ns2:secure>
-          <ns2:value>true</ns2:value>
-        </ns2:secure>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="pTypeNameUI">
-        <ns2:UIStyle></ns2:UIStyle>]
+      <ns2:component xsi:type="ns2:UILabelType" UIID="pTypeUI">
+        <ns2:UIStyle></ns2:UIStyle>
         <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
            <ns2:value>产品类型</ns2:value>
         </ns2:widgetLabel>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UICheckBoxType" UIID="selectConsumersTypeUI">
-        <ns2:UIStyle></ns2:UIStyle>
-        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-           <ns2:value>选择需求方类型</ns2:value>
-        </ns2:widgetLabel>
-        <ns2:Property name="checked">
-           <ns2:value xsi:type="ns2:BooleanPropertyType">
-               <value>true</value>
-           </ns2:value>
-        </ns2:Property>
-        <ns2:Property name="selected">
-           <ns2:value xsi:type="ns2:BooleanPropertyType">
-               <value>true</value>
-           </ns2:value>
-        </ns2:Property>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIListType" UIID="pTypeConsumersUI">
         <ns2:UIStyle></ns2:UIStyle>
@@ -61,7 +40,7 @@
         </ns2:widgetLabel>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>pTypeNameUI</ns2:componentId>
+        <ns2:componentId>pTypeUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
@@ -71,10 +50,6 @@
       <ns2:layoutConstraint>
         <ns2:componentId>pTypeSuppliersUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="2" y="0" align="FULL" cellUIClass=""></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>selectConsumersTypeUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="3" y="0" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
@@ -97,13 +72,89 @@
     <ns2:DataEntity scope="InOut" name="pType" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
-    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
-      <type entityName="java.lang.Boolean"></type>
+    <ns2:DataEntity scope="Internal" name="pTypeName" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="values" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="displayItems" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="values1" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="displayItems1" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="pTypeIdUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="pType" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="pTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="pTypeName" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="pTypeConsumersUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values" paramName="OptionValues"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="pTypeSuppliersUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values1" paramName="OptionValues"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems1" paramName="OptionDisplayValues"></ns2:DataComponent>
+    </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
-      <expressionString>{
-@odContext.executeAllMappings();
-}</expressionString>
+      <expressionString><![CDATA[
+      import java.util.List;
+      import java.util.ArrayList;
+      import org.shaolin.bmdp.runtime.ce.CEUtil;
+      import org.shaolin.uimaster.page.AjaxContext;
+      import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.uimaster.page.ajax.*;
+      import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+      import org.shaolin.bmdp.runtime.spi.IConstantService;
+      import org.shaolin.vogerp.productmodel.be.*;
+      import org.shaolin.vogerp.productmodel.IProductService;
+      import org.shaolin.vogerp.productmodel.dao.ProductModel;
+      {
+        if ($pType == null || $pType.length() ==0) {
+           return;
+        }
+      	$pTypeName = CEUtil.getValue($pType);
+      	
+      	SupplierRelationshipImpl condition = new SupplierRelationshipImpl();
+        condition.setProductType($pType);
+        List result = ProductModel.INSTANCE.searchPTypeSupplier(condition, null, 0, 1);
+      	if (result != null && result.size() > 0) {
+           SupplierRelationshipImpl item = (SupplierRelationshipImpl)result.get(0);
+           
+           if (item.getSupplierPTypes() != null && item.getSupplierPTypes().length() > 0) {
+               String[] values = item.getSupplierPTypes().split(";");
+               $values = new ArrayList(values.length);
+               $displayItems = new ArrayList(values.length);
+               for (int i=0; i<values.length;i++) {
+	              $displayItems.add(CEUtil.getValue(values[i]));
+	              $values.add(values[i]);
+               }
+           }
+           if (item.getConsumerPTypes() != null && item.getConsumerPTypes().length() > 0) {
+               String[] values = item.getConsumerPTypes().split(";");
+               $values1 = new ArrayList(values.length);
+               $displayItems1 = new ArrayList(values.length);
+               for (int i=0; i<values.length;i++) {
+                   $displayItems1.add(CEUtil.getValue(values[i]));
+	               $values1.add(values[i]);
+               }
+           }
+        }
+      	@odContext.executeAllMappings();
+	 }]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString>{

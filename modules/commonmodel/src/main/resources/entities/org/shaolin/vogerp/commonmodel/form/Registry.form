@@ -10,17 +10,21 @@
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.commonmodel.be.RegistryImpl;
+        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+        import org.shaolin.bmdp.runtime.Registry;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             HashMap out = (HashMap)form.ui2Data();
 
             RegistryImpl defaultUser = (RegistryImpl)out.get("beObject");
             if (defaultUser.getId() == 0) {
-                System.out.println("created object: " + defaultUser);
+                CommonModel.INSTANCE.create(defaultUser);
             } else {
-                System.out.println("updated object: " + defaultUser);
+                CommonModel.INSTANCE.update(defaultUser);
             }
-
+            int last = defaultUser.getPatch().lastIndexOf("/");
+			Registry.getInstance().getNodeItems(defaultUser.getPatch().substring(0, last + 1)).put(defaultUser.getPatch().substring(last), defaultUser.getValue());
+			
             form.closeIfinWindows();
             @page.removeForm(@page.getEntityUiid()); 
         }]]></expressionString>

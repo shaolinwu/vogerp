@@ -13,12 +13,13 @@ import org.shaolin.bmdp.i18n.Localizer;
 import org.shaolin.bmdp.i18n.ResourceUtil;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.runtime.AppContext;
+import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.security.UserContext.OnlineUserChecker;
-import org.shaolin.bmdp.runtime.spi.IConstantService;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.bmdp.utils.DateParser;
+import org.shaolin.bmdp.utils.DateUtil;
 import org.shaolin.bmdp.utils.HttpUserUtil;
 import org.shaolin.uimaster.page.MobilitySupport;
 import org.shaolin.uimaster.page.WebConfig;
@@ -28,6 +29,7 @@ import org.shaolin.vogerp.commonmodel.ICaptcherService;
 import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.IOrganizationService;
 import org.shaolin.vogerp.commonmodel.IUserService;
+import org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl;
 import org.shaolin.vogerp.commonmodel.be.ICaptcha;
 import org.shaolin.vogerp.commonmodel.be.ILegalOrganizationInfo;
 import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
@@ -36,6 +38,7 @@ import org.shaolin.vogerp.commonmodel.be.IRegisterInfo;
 import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
 import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
 import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+import org.shaolin.vogerp.commonmodel.ce.AMemberType;
 import org.shaolin.vogerp.commonmodel.ce.EmployeeLevel;
 import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
 import org.shaolin.vogerp.commonmodel.dao.CommonModel;
@@ -143,6 +146,15 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		newAccount.setLoginIP(HttpUserUtil.getIP(request));
 		this.setLocationInfo(newAccount);
 		CommonModel.INSTANCE.create(newAccount);
+		
+		AssignedMemberImpl assignedMember = new AssignedMemberImpl();
+		assignedMember.setOrgId(org.getId());
+		assignedMember.setType(AMemberType.GENERAL);
+		assignedMember.setDescription("Defualt");
+		Date assingedDate = new Date();
+		DateUtil.increaseMonths(new Date(), Registry.getInstance().getValue("/System/Vogerp/UserMemberRule/DefaultMonth", 12));//TODO: must be configurable online.
+		assignedMember.setCreateDate(assingedDate);
+		CommonModel.INSTANCE.create(assignedMember);
 		
 		// assign modules
 		IModuleService moduleService = AppContext.get().getService(IModuleService.class);
@@ -296,7 +308,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			userContext.setOrgCode(organization.getOrgCode());
 			userContext.setOrgType(organization.getType());
 			userContext.setOrgName(organization.getName());
-			userContext.setIsAdmin("uimaster".equals(organization.getOrgCode()));
+			userContext.setIsAdmin("uimaster".equals(organization.getOrgCode()) || "runner".equals(organization.getOrgCode()));
 			IOrganizationService orgService = AppContext.get().getService(IOrganizationService.class);
 	        ILegalOrganizationInfo legalInfo = orgService.getLegalInfo(userContext.getOrgId());
 	        if (legalInfo != null) {

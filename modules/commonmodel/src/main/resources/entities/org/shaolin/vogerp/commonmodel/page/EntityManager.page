@@ -129,6 +129,14 @@
 		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.UIDyanimcPageHintsTable" />
 		            </ns2:refEntity>  
                 </ns2:tab>
+                <ns2:tab uiid="registryTable">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>注册表</ns2:value>
+                    </ns2:title>
+                    <ns2:refEntity UIID="registryTable">
+		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.RegistryTable" />
+		            </ns2:refEntity>  
+                </ns2:tab>
             </ns2:component>
             <ns2:layoutConstraint>
                 <ns2:componentId>functionsTab</ns2:componentId>
@@ -166,6 +174,10 @@
   <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
     <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.UIDyanimcPageHintsTable"></ns2:mappingRule>
     <ns2:UIComponent componentPath="dynamicPageHintsPanel" paramName="UIWidgetType"></ns2:UIComponent>
+  </ns2:ComponentMapping>
+  <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
+    <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.RegistryTable"></ns2:mappingRule>
+    <ns2:UIComponent componentPath="registryTable" paramName="UIWidgetType"></ns2:UIComponent>
   </ns2:ComponentMapping>
   </ns2:ODMapping>
   <ns2:in>

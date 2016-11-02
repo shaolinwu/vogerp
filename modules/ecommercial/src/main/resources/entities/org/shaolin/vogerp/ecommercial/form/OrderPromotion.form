@@ -364,6 +364,9 @@
     <ns2:DataEntity scope="InOut" name="selectedCity" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
+    <ns2:DataEntity scope="Internal" name="pType" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
@@ -386,6 +389,7 @@
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
       <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductTypeSupplierSelector"></ns2:mappingRule>
       <ns2:UIComponent componentPath="supplierSelector" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="pType" paramName="pType"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
@@ -406,7 +410,8 @@
           $selectedCity = UserContext.getUserContext().getCity();
           $product = new ProductImpl();
           if ($beObject.getProductId() > 0) {
-			  $product = (ProductImpl)ProductModel.INSTANCE.get($beObject.getProductId(), ProductImpl.class);      
+			  $product = (ProductImpl)ProductModel.INSTANCE.get($beObject.getProductId(), ProductImpl.class);
+			  $pType = $product.getSubType() != null? $product.getSubType() : $product.getType();
           }
 		  @odContext.executeAllMappings();
 		}

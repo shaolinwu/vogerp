@@ -8,21 +8,9 @@ function org_shaolin_vogerp_productmodel_form_ProductTypeSupplierSelector(json)
         ui: elementList[prefix + "pTypeIdUI"]
     });
 
-    var pTypeName0UI = new UIMaster.ui.hidden
+    var pTypeUI = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "pTypeName0UI"]
-    });
-
-    var pTypeNameUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "pTypeNameUI"]
-    });
-
-    var selectConsumersTypeUI = new UIMaster.ui.checkbox
-    ({
-        ui: elementList[prefix + "selectConsumersTypeUI"]
-        ,checked: true
-        ,selected: true
+        ui: elementList[prefix + "pTypeUI"]
     });
 
     var pTypeConsumersUI = new UIMaster.ui.list
@@ -46,22 +34,18 @@ function org_shaolin_vogerp_productmodel_form_ProductTypeSupplierSelector(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "pTypeIdUI",prefix + "pTypeName0UI",prefix + "pTypeNameUI",prefix + "selectConsumersTypeUI",prefix + "pTypeConsumersUI",prefix + "pTypeSuppliersUI"]
+        ,subComponents: [prefix + "pTypeIdUI",prefix + "pTypeUI",prefix + "pTypeConsumersUI",prefix + "pTypeSuppliersUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [pTypeIdUI,pTypeName0UI,pTypeNameUI,selectConsumersTypeUI,pTypeConsumersUI,pTypeSuppliersUI,fieldPanel,actionPanel]
+        ,items: [pTypeIdUI,pTypeUI,pTypeConsumersUI,pTypeSuppliersUI,fieldPanel,actionPanel]
     });
 
     Form.pTypeIdUI=pTypeIdUI;
 
-    Form.pTypeName0UI=pTypeName0UI;
-
-    Form.pTypeNameUI=pTypeNameUI;
-
-    Form.selectConsumersTypeUI=selectConsumersTypeUI;
+    Form.pTypeUI=pTypeUI;
 
     Form.pTypeConsumersUI=pTypeConsumersUI;
 
@@ -71,11 +55,7 @@ function org_shaolin_vogerp_productmodel_form_ProductTypeSupplierSelector(json)
 
     Form.pTypeIdUI=pTypeIdUI;
 
-    Form.pTypeName0UI=pTypeName0UI;
-
-    Form.pTypeNameUI=pTypeNameUI;
-
-    Form.selectConsumersTypeUI=selectConsumersTypeUI;
+    Form.pTypeUI=pTypeUI;
 
     Form.pTypeConsumersUI=pTypeConsumersUI;
 

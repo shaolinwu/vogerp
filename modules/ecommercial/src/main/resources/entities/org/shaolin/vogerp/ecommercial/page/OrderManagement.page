@@ -54,6 +54,7 @@
                     import java.util.HashMap;
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
                     {
                         Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
@@ -64,7 +65,11 @@
                         
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
-                        input.put("editable", new Boolean(true));
+                        if (defaultUser.getStatus() == OrderStatusType.FORBIDDEN) {
+                            input.put("editable", new Boolean(false));
+                        } else {
+                        	input.put("editable", new Boolean(true));
+                        }
                         RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor", input);
                         @page.addElement(form);
                         
@@ -206,6 +211,7 @@
                   import java.util.HashMap;
                   import org.shaolin.uimaster.page.AjaxContext;
                   import org.shaolin.uimaster.page.ajax.*;
+                  import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                   import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                   import org.shaolin.bmdp.runtime.AppContext;
                   import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
@@ -218,7 +224,11 @@
                       
                       HashMap input = new HashMap();
                       input.put("beObject", defaultUser);
-                      input.put("editable", new Boolean(true));
+                      if (defaultUser.getStatus() == OrderStatusType.FORBIDDEN) {
+                            input.put("editable", new Boolean(false));
+                        } else {
+                        	input.put("editable", new Boolean(true));
+                        }
                       RefForm form = new RefForm("rentOrLoanOrder", "org.shaolin.vogerp.ecommercial.form.RentOrLoanOrderEditor", input);
                       @page.addElement(form);
                       

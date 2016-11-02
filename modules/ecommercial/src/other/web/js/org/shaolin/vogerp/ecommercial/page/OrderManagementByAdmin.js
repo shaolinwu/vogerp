@@ -3,6 +3,11 @@
 function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var comment = new UIMaster.ui.textarea
+    ({
+        ui: elementList[prefix + "comment"]
+    });
+
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
@@ -56,12 +61,21 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
 
     var citySelector = new org_shaolin_vogerp_commonmodel_form_CityOnlySelelctor({"prefix":prefix + "citySelector."});
 
+    var conditionPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "conditionPanel"]
+        ,items: []
+        ,subComponents: [prefix + "citySelector",prefix + "comment"]
+    });
+
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [functionsTab,citySelector]
+        ,items: [comment,functionsTab,citySelector,conditionPanel]
     });
+
+    Form.comment=comment;
 
     Form.functionsTab=functionsTab;
 
@@ -82,6 +96,12 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
     Form.loanOrderTable=loanOrderTable;
 
     Form.citySelector=citySelector;
+
+    Form.conditionPanel=conditionPanel;
+
+    Form.citySelector=citySelector;
+
+    Form.comment=comment;
 
     Form.user_constructor = function()
     {
@@ -104,6 +124,14 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
     Form.openRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openRentOrder;
 
     Form.openLoanOrder = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openLoanOrder;
+
+    Form.disableGoldenOrder = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableGoldenOrder;
+
+    Form.disableSaleGoldenOrder = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableSaleGoldenOrder;
+
+    Form.disableRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableRentOrder;
+
+    Form.disableLoanOrder = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableLoanOrder;
 
     Form.openGOrderTracker = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openGOrderTracker;
 
@@ -215,6 +243,66 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openLoanOrder-20161017-2229",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openLoanOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableGoldenOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableGoldenOrder */
+        var o = this;
+        var UIEntity = this;
+
+		        {   
+		        	new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+		        	
+	        				UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forbiddenGOrder",UIMaster.getValue(eventsource),o.__entityName);
+			            }
+			        }).open();
+		        }
+		            }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableGoldenOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableSaleGoldenOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableSaleGoldenOrder */
+        var o = this;
+        var UIEntity = this;
+
+		        {
+		            new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+		        	
+	        				UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forbiddenGOrder",UIMaster.getValue(eventsource),o.__entityName);
+			            }
+			        }).open();   
+		        }
+		            }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableSaleGoldenOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableRentOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableRentOrder */
+        var o = this;
+        var UIEntity = this;
+
+		        {
+		            new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+		        	
+	        				UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forbiddenGOrder",UIMaster.getValue(eventsource),o.__entityName);
+			            }
+			        }).open();   
+		        }
+		            }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableRentOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableLoanOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableLoanOrder */
+        var o = this;
+        var UIEntity = this;
+
+		        {   
+		            new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+		        	
+	        				UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forbiddenGOrder",UIMaster.getValue(eventsource),o.__entityName);
+			            }
+			        }).open();
+		        }
+		            }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableLoanOrder */
 
 
     /* auto generated eventlistener function declaration */

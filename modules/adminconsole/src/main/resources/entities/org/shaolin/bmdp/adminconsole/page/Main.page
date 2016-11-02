@@ -618,7 +618,7 @@
           <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="notificator" paramName="beObject"></ns2:DataComponent>
           <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="countUIId">
               <ns2:expression>
-                   <expressionString>"div-topRightPanel-4_0"</expressionString><!-- indicates the notificationIcon parent.-->
+                   <expressionString>"div-topRightPanel-5_0"</expressionString><!-- indicates the notificationIcon parent.-->
                </ns2:expression>
           </ns2:DataComponent>
         </ns2:ComponentMapping>

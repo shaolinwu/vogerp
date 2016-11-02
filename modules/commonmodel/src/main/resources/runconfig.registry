@@ -24,6 +24,38 @@
                 </node>
             </node>
         </node>
+        <!-- 
+        /System/Vogerp/Payment/UserMemberRule/Super	    30
+		/System/Vogerp/Payment/UserMemberRule/Golden	20
+		/System/Vogerp/Payment/UserMemberRule/Silver	10
+		/System/Vogerp/Payment/UserMemberRule/General	0
+		/System/Vogerp/UserMemberRule/OrderCountPerMonth/Super	65
+		/System/Vogerp/UserMemberRule/OrderCountPerMonth/Golden	30
+		/System/Vogerp/UserMemberRule/OrderCountPerMonth/Silver	15
+		/System/Vogerp/UserMemberRule/OrderCountPerMonth/General 5
+		/System/Vogerp/UserMemberRule/DefaultMemberAfterVerified	Silver
+		/System/Vogerp/UserMemberRule/DefaultMonth 12
+         -->
+         <node name="Vogerp">
+            <node name="UserMemberRule">
+                <item name="DefaultMemberAfterVerified" value="Silver" />
+                <item name="DefaultMonth" value="Silver" />
+                <node name="OrderCountPerMonth">
+                   <item name="Super" value="65" />
+                   <item name="Golden" value="30" />
+                   <item name="Silver" value="15" />
+                   <item name="General" value="5" />
+                </node>
+            </node>
+            <node name="Payment">
+	            <node name="UserMemberRule">
+	                <item name="Super" value="30" />
+	                <item name="Golden" value="20" />
+	                <item name="Silver" value="10" />
+	                <item name="General" value="0" />
+	            </node>
+            </node>
+         </node>       
     </node>
 </registry>
 
