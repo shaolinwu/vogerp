@@ -20,6 +20,7 @@ import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.uimaster.page.flow.WebFlowServlet.AttributesAccessor;
 import org.shaolin.uimaster.page.flow.WebflowConstants;
+import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.IUserService;
 
 /**
@@ -90,9 +91,12 @@ public class UserAccessFilter implements Filter {
         	orgCode = IServerServiceManager.INSTANCE.getMasterNodeName();
         }
         AppContext.register(IServerServiceManager.INSTANCE.getApplication(orgCode));
-    	IPermissionService permiService = AppContext.get().getService(IPermissionService.class);
+        
+        IModuleService moduleService = AppContext.get().getService(IModuleService.class);
+        IPermissionService permiService = AppContext.get().getService(IPermissionService.class);
+        
     	List<IConstantEntity> roleIds = (List<IConstantEntity>)request.getSession().getAttribute(WebflowConstants.USER_ROLE_KEY);
-    	int decision = permiService.checkModule(attrAccessor.chunkName, attrAccessor.nodeName, roleIds);
+    	int decision = permiService.checkModule(moduleService.getModuleId(orgCode, attrAccessor.chunkName, attrAccessor.nodeName), roleIds);
     	return IPermissionService.ACCEPTABLE == decision;
     }
 	

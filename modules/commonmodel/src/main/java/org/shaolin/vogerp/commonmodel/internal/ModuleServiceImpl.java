@@ -32,7 +32,8 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	
-	private final ICache<String, Long> moduleLinks;
+	//String, List<Long>
+	private final ICache<String, List> moduleLinks;
 	
 	private final ICache<Long, IModuleGroup> modules;
 	
@@ -42,7 +43,7 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 		modules = CacheManager.getInstance().getCache(IModuleService.ADMIN_MODULES 
 				+ "_modules_cache", Long.class, IModuleGroup.class);
 		moduleLinks = CacheManager.getInstance().getCache(IModuleService.ADMIN_MODULES
-				+ "_modules_link_cache", String.class, Long.class);
+				+ "_modules_link_cache", String.class, List.class);
 		init();
 	}
 	
@@ -71,11 +72,23 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	            		node = node.substring(0, node.indexOf('&'));
 	            	}
 	            	path = path + "." + node;
-	            	moduleLinks.put(path, module.getId());
+	            	if (moduleLinks.containsKey(path)) {
+	            		moduleLinks.get(path).add(module.getId());
+	            	} else {
+	            		ArrayList<Long> ids = new ArrayList<Long>();
+	            		ids.add(module.getId());
+	            		moduleLinks.put(path, ids);
+	            	}
 	            	if (module.getAdditionNodes() != null && module.getAdditionNodes().trim().length() > 0) {
 	            		String[] additionalPages = module.getAdditionNodes().split(";");
 	            		for (String nodeName: additionalPages) {
-	            			moduleLinks.put(nodeName, module.getId());
+	            			if (moduleLinks.containsKey(nodeName)) {
+	    	            		moduleLinks.get(nodeName).add(module.getId());
+	    	            	} else {
+	    	            		ArrayList<Long> ids = new ArrayList<Long>();
+	    	            		ids.add(module.getId());
+	    	            		moduleLinks.put(nodeName, ids);
+	    	            	}
 	            		}
 	            	}
 	            	logger.info("Read module link: {}", path);
@@ -98,10 +111,31 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	}
 	
 	@Override
-	public long getModuleId(String chunkName, String nodeName) {
+	public long getModuleId(String orgCode, String chunkName, String nodeName) {
+		IModuleGroup root = getModuleRootByOrgCode(orgCode); 
+		if (root == null) {
+			root = getModuleRootByOrgCode(IModuleService.DEFAULT_USER_MODULES); 
+		}
+		
 		String path = chunkName + "." + nodeName;
 		if (moduleLinks.containsKey(path)) {
-			return moduleLinks.get(path);
+			List<Long> ids = moduleLinks.get(path);
+			for (Long id : ids) {
+				if (id == root.getId()) {
+					return id;
+				}
+				Long pid = this.getModule(id).getParentId();
+				while (pid != root.getId()) {
+					IModuleGroup p = this.getModule(pid);
+					if (p == null) {
+						break;
+					}
+					pid = p.getParentId();
+				}
+				if (pid == root.getId()) {
+					return id;
+				}
+			}
 		}
 		return -1;
 	}
@@ -340,19 +374,8 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	private boolean checkPermission(IModuleGroup module, List<IConstantEntity> roleIds) {
 		String accessURL = escapeTNR(module.getAccessURL());
 		if (accessURL != null && !"#".equals(accessURL)) {
-			int chunkNameIndex = accessURL.indexOf("_chunkname=");
-        	int _nodenameIndex = accessURL.indexOf("_nodename=");
-        	int _framenameIndex = accessURL.indexOf("_framename=");
-        	String chunkName = accessURL.substring(chunkNameIndex + "_chunkname=".length(), _nodenameIndex - 1);
-        	String nodenName = accessURL.substring(_nodenameIndex + "_nodename=".length());
-        	if (_framenameIndex >= 0) {
-        		nodenName = accessURL.substring(_nodenameIndex + "_nodename=".length(), _framenameIndex -1);
-        	}
-        	if (nodenName.indexOf('&') != -1) {
-        		nodenName = nodenName.substring(0, nodenName.indexOf('&'));
-        	}
 	     	IPermissionService permiService = AppContext.get().getService(IPermissionService.class);
-	     	int decision = permiService.checkModule(chunkName, nodenName, roleIds);
+	     	int decision = permiService.checkModule(module.getId(), roleIds);
 	     	return IPermissionService.ACCEPTABLE == decision;
 		}
 		return true;

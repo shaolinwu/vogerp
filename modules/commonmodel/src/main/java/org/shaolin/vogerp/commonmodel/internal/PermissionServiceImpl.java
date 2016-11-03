@@ -3,6 +3,7 @@ package org.shaolin.vogerp.commonmodel.internal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.cache.CacheManager;
 import org.shaolin.bmdp.runtime.cache.ICache;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
@@ -80,9 +81,15 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 	}
 	
 	@Override
-	public int checkModule(String chunkName, String nodeName, IConstantEntity role) {
+	public int checkModule(String orgCode, String chunkName, String nodeName, List<IConstantEntity> roles) {
+		IModuleService moduleService = AppContext.get().getService(IModuleService.class);
+		return checkModule(moduleService.getModuleId(orgCode, chunkName, nodeName), roles);
+	}
+	
+	
+	@Override
+	public int checkModule(long moduleId, IConstantEntity role) {
 		prepareDefaultOrgPermissions(role);
-		long moduleId = moduleService.getModuleId(chunkName, nodeName);
 		if (moduleId == -1) {
 			return PermissionType.NOT_SPECIFIED.getIntValue(); 
 		}
@@ -90,9 +97,9 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 	}
 	
 	@Override
-	public int checkModule(String chunkName, String nodeName, List<IConstantEntity> roles) {
+	public int checkModule(long moduleId, List<IConstantEntity> roles) {
 		if (roles == null) {
-			int matched = checkModule(chunkName, nodeName, PermissionType.NOT_SPECIFIED);//empty rule
+			int matched = checkModule(moduleId, PermissionType.NOT_SPECIFIED);//empty rule
 			if (matched != PermissionType.NOT_SPECIFIED.getIntValue()) {
 				return matched;
 			}
@@ -100,7 +107,7 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 		}
 		
 		for (IConstantEntity role : roles) {
-			int matched = checkModule(chunkName, nodeName, role);
+			int matched = checkModule(moduleId, role);
 			if (matched != PermissionType.NOT_SPECIFIED.getIntValue()) {
 				return matched;
 			}
@@ -109,9 +116,9 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 	}
 	
 	@Override
-	public int checkModule(String chunkName, String nodeName, String orgId, List<IConstantEntity> roles) {
+	public int checkModule(long moduleId, String orgId, List<IConstantEntity> roles) {
 		if (roles == null) {
-			int matched = checkModule(chunkName, nodeName, PermissionType.NOT_SPECIFIED);//empty rule
+			int matched = checkModule(moduleId, PermissionType.NOT_SPECIFIED);//empty rule
 			if (matched != PermissionType.NOT_SPECIFIED.getIntValue()) {
 				return matched;
 			}
@@ -122,7 +129,7 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 		}
 		
 		for (IConstantEntity role : roles) {
-			int matched = checkModule(chunkName, nodeName, role);
+			int matched = checkModule(moduleId, role);
 			if (matched != PermissionType.NOT_SPECIFIED.getIntValue()) {
 				return matched;
 			}

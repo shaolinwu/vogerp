@@ -24,7 +24,7 @@ public interface IModuleService {
 
 	public IModuleGroup getModuleRootByOrgCode(String orgCode);
 	
-	public long getModuleId(String chunkName, String nodeName);
+	public long getModuleId(String orgCode, String chunkName, String nodeName);
 
 	/**
 	 * Get the main page modules.
