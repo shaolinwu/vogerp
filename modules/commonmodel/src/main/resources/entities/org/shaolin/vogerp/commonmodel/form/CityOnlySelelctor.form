@@ -88,7 +88,7 @@
               $selectedCity = UserContext.getUserContext().getCity();
           }
           if ($selectedCity == null) {
-              $selectedCity = "110000";//bejing.
+              $selectedCity = "CityBJ0,110100";//bejing.
           }
           
           ArrayList values = new ArrayList();

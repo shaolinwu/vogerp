@@ -16,6 +16,7 @@ import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.security.UserContext.OnlineUserChecker;
+import org.shaolin.bmdp.runtime.spi.IConstantService;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.bmdp.utils.DateParser;
@@ -181,11 +182,11 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			JSONObject json = new JSONObject(jsonStr);
 			String regionId = json.getJSONObject("data").getString("region_id");
 			String cityId = json.getJSONObject("data").getString("city_id");
-//			if (regionId != null && regionId.trim().length() > 0) {
-//				IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
-//				String entityName = cs.getChildren("CityList", Integer.parseInt(regionId)).getByIntValue(Integer.parseInt(cityId)).getEntityName();
-//				newAccount.setLocationInfo(entityName +","+cityId);
-//			}
+			if (regionId != null && regionId.trim().length() > 0) {
+				IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
+				String entityName = cs.getChildren("CityList", Integer.parseInt(regionId)).getEntityName();
+				newAccount.setLocationInfo(entityName +","+cityId);
+			}
 		} catch (Exception e) {
 		}
 	}
@@ -290,11 +291,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			userContext.setUserLocale(matchedUser.getLocale());
 			userContext.setUserLocation(matchedUser.getLocationInfo());
 			if (matchedUser.getLocationInfo() != null) {
-				try {
-					JSONObject json = new JSONObject(matchedUser.getLocationInfo());
-					String cityId = json.getJSONObject("data").getString("city_id");
-					userContext.setCity(cityId);
-				} catch (Exception e) {}
+				userContext.setCity(matchedUser.getLocationInfo());
 			}
 			userContext.setUserRoles(CEOperationUtil.toCElist(matchedUser.getInfo().getType()));
 			if (matchedUser.getLastLogin() != null) {
