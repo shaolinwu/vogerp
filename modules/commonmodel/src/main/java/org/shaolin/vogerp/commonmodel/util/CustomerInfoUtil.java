@@ -3,8 +3,10 @@ package org.shaolin.vogerp.commonmodel.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
 import org.shaolin.vogerp.commonmodel.be.IContactInfo;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
@@ -25,9 +27,10 @@ public class CustomerInfoUtil {
 	}
 	
 	public static String getCustomerCity(IPersonalInfo customer) {
-		if (customer.getAddresses() != null && customer.getAddresses().size() > 0) {
-			return CEUtil.getValue(customer.getAddresses().get(0).getCity());
-		}
+		try {
+			IUserService userService = AppContext.get().getService(IUserService.class);
+			return CEUtil.getValue(userService.getPersonalAccount(customer.getId()).getLocationInfo());
+		} catch (Exception e){}
 		return "";
 	}
 	
