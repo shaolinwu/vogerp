@@ -249,6 +249,9 @@ public class CEOperationUtil {
 	
 	public static void getCEItems(ArrayList<String> values, ArrayList<String> displayItems, 
 			IConstantEntity ce) {
+		if (ce == null) {
+			return;
+		}
 		// ce node.
 		String nodeId = ce.getEntityName();
 		
@@ -264,6 +267,9 @@ public class CEOperationUtil {
 	
 	public static void getCEItems(int openLevel, ArrayList<String> values, ArrayList<String> displayItems, 
 			IConstantEntity ce) {
+		if (ce == null) {
+			return;
+		}
 		// ce node.
 		String nodeId = ce.getEntityName();
 		
@@ -286,6 +292,9 @@ public class CEOperationUtil {
 	
 	private static void getCEItems0(int openLevel, String space, ArrayList<String> values, ArrayList<String> displayItems, 
 			IConstantEntity ce) {
+		if (ce == null) {
+			return;
+		}
 		// ce node.
 		String nodeId = ce.getEntityName();
 		

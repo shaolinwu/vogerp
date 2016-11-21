@@ -20,6 +20,15 @@
                ComboBox subtypeUI = @page.getComboBox("subtypeUI");
                
                String value = typeUI.getValue();
+               if (@page.existElmByAbstId(@page.getHidden("parentTypeUI").getValue())) {
+	               TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(@page.getHidden("parentTypeUI").getValue());
+	               textWidget.setValue(value);
+	               if (textWidget instanceof Label) {
+	                  ((Label)textWidget).setValue(value);
+	                  ((Label)textWidget).setDisplayValue(typeUI.getSelectedDisplayValue());
+	               }
+               }
+               
                ArrayList values = new ArrayList();
                ArrayList displayItems = new ArrayList();
                int startFrom = typeUI.getOptionValues().size();
@@ -31,6 +40,15 @@
                subtypeUI.removeAllOptions();
                for (int i=0; i<values.size(); i++) {
                   subtypeUI.addOption(displayItems.get(i).toString(), values.get(i).toString());
+               }
+               value = subtypeUI.getValue();
+               if (@page.existElmByAbstId(@page.getHidden("parentSubTypeUI").getValue())) {
+	               TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(@page.getHidden("parentSubTypeUI").getValue());
+	               textWidget.setValue(value);
+	               if (textWidget instanceof Label) {
+	                  ((Label)textWidget).setValue(value);
+	                  ((Label)textWidget).setDisplayValue(subtypeUI.getSelectedDisplayValue());
+	               }
                }
                @page.executeJavaScript("{var i0=0;}");//Don't remove
            }
@@ -55,6 +73,14 @@
                ComboBox sub2typeUI = @page.getComboBox("sub2typeUI");
                
                String value = subtypeUI.getValue();
+               if (@page.existElmByAbstId(@page.getHidden("parentSubTypeUI").getValue())) {
+	               TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(@page.getHidden("parentSubTypeUI").getValue());
+	               textWidget.setValue(value);
+	               if (textWidget instanceof Label) {
+	                  ((Label)textWidget).setValue(value);
+	                  ((Label)textWidget).setDisplayValue(subtypeUI.getSelectedDisplayValue());
+	               }
+               }
                ArrayList values = new ArrayList();
                ArrayList displayItems = new ArrayList();
                int startFrom = subtypeUI.getOptionValues().size();
@@ -66,138 +92,71 @@
                for (int i=0; i<values.size(); i++) {
                   sub2typeUI.addOption(displayItems.get(i).toString(), values.get(i).toString());
                }
+               
+               if (@page.existElmByAbstId(@page.getHidden("parentSubType2UI").getValue())) {
+	               TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(@page.getHidden("parentSubType2UI").getValue());
+	               textWidget.setValue(sub2typeUI.getValue());
+	               if (textWidget instanceof Label) {
+	                  ((Label)textWidget).setValue(sub2typeUI.getValue());
+	                  ((Label)textWidget).setDisplayValue(sub2typeUI.getSelectedDisplayValue());
+	               }
+               }
+               
                @page.executeJavaScript("{var i0=0;}");//Don't remove
            }
            ]]></ns2:expressionString>
        </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
-  <ns2:eventHandler functionName="addSubType">
-    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-         <ns2:expressionString><![CDATA[
-         {
-          var o = this;
-          new UIMaster.ui.dialog({
-              dialogType: UIMaster.ui.dialog.INPUT_DIALOG,
-              message:'\u8BF7\u8F93\u5165\u4EA7\u54C1\u7C7B\u578B\u540D\u79F0',
-              messageType:UIMaster.ui.dialog.Information,
-              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
-              title:'',
-              height:150,
-              width:300,
-              handler: function(v) {
-                 if (this.value == null || this.value == "") return;
-                 o.productNameUI.setValue(this.value);
-                 o.Form.sync();
-                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"addSubType_20160904_5435",UIMaster.getValue(eventsource),o.__entityName);
-              }
-          }).open();
-          return;
-         }
-         ]]></ns2:expressionString>
-     </ns2:ops>
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="addSubType_20160904_5435">
-       <ns2:exp>
-           <ns2:expressionString><![CDATA[
-           import java.util.HashMap;
-           import java.util.ArrayList;
-           import org.shaolin.bmdp.runtime.AppContext;
-           import org.shaolin.uimaster.page.AjaxContext;
-           import org.shaolin.uimaster.page.ajax.*;
-           import org.shaolin.bmdp.runtime.ce.IConstantEntity;
-           import org.shaolin.bmdp.runtime.ce.CEUtil;
-           import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
-           import org.shaolin.vogerp.commonmodel.be.CEEntityInfoImpl;
-           import org.shaolin.vogerp.commonmodel.IDynamicUIService;
-           {
-              ComboBox typeUI = @page.getComboBox("typeUI");
-              ComboBox subtypeUI = @page.getComboBox("subtypeUI");
-              String newItem = @page.getHidden("productNameUI").getValue();
-              
-              IDynamicUIService service=(IDynamicUIService)AppContext.get().getService(IDynamicUIService.class); 
-              service.createCE(newItem, typeUI.getValue());
-              
-              ArrayList values = new ArrayList();
-              ArrayList displayItems = new ArrayList();
-              IConstantEntity ce = AppContext.get().getConstantService().getChildren(CEUtil.toCEValue(typeUI.getValue()));
-              if (ce != null) {
-                  CEOperationUtil.getCEComboBox(values, displayItems, ce);
-              }
-              subtypeUI.removeAllOptions();
-              for (int i=0; i<values.size(); i++) {
-                 subtypeUI.addOption(displayItems.get(i).toString(), values.get(i).toString());
-              }
-              Dialog.showMessageDialog("添加成功", "Information", Dialog.INFORMATION_MESSAGE, null);
-           }
-           ]]></ns2:expressionString>
-       </ns2:exp>
-    </ns2:ops>
-  </ns2:eventHandler>
-  <ns2:eventHandler functionName="addSub2Type">
-    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-         <ns2:expressionString><![CDATA[
-         {
-          var o = this;
-          new UIMaster.ui.dialog({
-              dialogType: UIMaster.ui.dialog.INPUT_DIALOG,
-              message:'\u8BF7\u8F93\u5165\u5B50\u4EA7\u54C1\u7C7B\u578B\u540D\u79F0',
-              messageType:UIMaster.ui.dialog.Information,
-              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
-              title:'',
-              height:150,
-              width:300,
-              handler: function(v) {
-                 if (this.value == null || this.value == "") return;
-                 o.productNameUI.setValue(this.value);
-                 o.Form.sync();
-                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"addSub2Type_20160904_5433",UIMaster.getValue(eventsource),o.__entityName);
-              }
-          }).open();
-          return;
-         }
-         ]]></ns2:expressionString>
-     </ns2:ops>
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="addSub2Type_20160904_5433">
-       <ns2:exp>
-           <ns2:expressionString><![CDATA[
-           import java.util.HashMap;
-           import java.util.ArrayList;
-           import org.shaolin.bmdp.runtime.AppContext;
-           import org.shaolin.uimaster.page.AjaxContext;
-           import org.shaolin.uimaster.page.ajax.*;
-           import org.shaolin.bmdp.runtime.ce.IConstantEntity;
-           import org.shaolin.bmdp.runtime.ce.CEUtil;
-           import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
-           import org.shaolin.vogerp.commonmodel.be.CEEntityInfoImpl;
-           import org.shaolin.vogerp.commonmodel.IDynamicUIService;
-           {
-              ComboBox subtypeUI = @page.getComboBox("subtypeUI");
-              ComboBox sub2typeUI = @page.getComboBox("sub2typeUI");
-              String newItem = @page.getHidden("productNameUI").getValue();
-              IDynamicUIService service=(IDynamicUIService)AppContext.get().getService(IDynamicUIService.class); 
-              service.createCE(newItem, subtypeUI.getValue());
-              
-              ArrayList values = new ArrayList();
-              ArrayList displayItems = new ArrayList();
-              IConstantEntity ce = AppContext.get().getConstantService().getChildren(CEUtil.toCEValue(subtypeUI.getValue()));
-              if (ce != null) {
-                  CEOperationUtil.getCEComboBox(values, displayItems, ce);
-              }
-              sub2typeUI.removeAllOptions();
-              for (int i=0; i<values.size(); i++) {
-                 sub2typeUI.addOption(displayItems.get(i).toString(), values.get(i).toString());
-              }
-              Dialog.showMessageDialog("添加成功", "Information", Dialog.INFORMATION_MESSAGE, null);
-           }
-           ]]></ns2:expressionString>
-       </ns2:exp>
-    </ns2:ops>
-  </ns2:eventHandler>
   <ns2:eventHandler functionName="selectItem">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectItem_20160804_5435">
+       <ns2:exp>
+           <ns2:expressionString><![CDATA[
+           import java.util.HashMap;
+           import java.util.ArrayList;
+           import org.shaolin.bmdp.runtime.AppContext;
+           import org.shaolin.uimaster.page.AjaxContext;
+           import org.shaolin.uimaster.page.ajax.*;
+           import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+           import org.shaolin.bmdp.runtime.ce.CEUtil;
+           import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+           {
+               ComboBox sub2typeUI = @page.getComboBox("sub2typeUI");
+               String value = sub2typeUI.getValue();
+               if (@page.existElmByAbstId(@page.getHidden("parentSubType2UI").getValue())) {
+	               TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(@page.getHidden("parentSubType2UI").getValue());
+	               textWidget.setValue(value);
+	               if (textWidget instanceof Label) {
+	                  ((Label)textWidget).setValue(value);
+	                  ((Label)textWidget).setDisplayValue(sub2typeUI.getSelectedDisplayValue());
+	               }
+               }
+           }
+           ]]></ns2:expressionString>
+       </ns2:exp>
+    </ns2:ops>
   </ns2:eventHandler>
-  <ns2:reconfigurableProperty functionName="selectItem" xsi:type="ns2:ReconfigurableFunctionType"/>
+  <ns2:eventHandler functionName="Cancel">
+     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="Cancel-20160904_54356">
+        <ns2:exp>
+         <expressionString><![CDATA[
+              import java.util.HashMap;
+              import java.util.ArrayList;
+              import org.shaolin.bmdp.runtime.AppContext;
+              import org.shaolin.uimaster.page.AjaxContext;
+              import org.shaolin.uimaster.page.ajax.*;
+              {
+                 RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+	             form.closeIfinWindows(true);
+	             @page.removeForm(@page.getEntityUiid()); 
+              }
+              ]]></expressionString>
+        </ns2:exp>
+     </ns2:ops>
+  </ns2:eventHandler>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
     </ns2:layout>
@@ -208,6 +167,21 @@
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="parentTypeUI">
+        <ns2:secure>
+          <ns2:value>true</ns2:value>
+        </ns2:secure>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="parentSubTypeUI">
+        <ns2:secure>
+          <ns2:value>true</ns2:value>
+        </ns2:secure>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="parentSubType2UI">
+        <ns2:secure>
+          <ns2:value>true</ns2:value>
+        </ns2:secure>
+      </ns2:component>
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="productNameUI" />
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="ceNameUI" />
       <ns2:component xsi:type="ns2:UIComboBoxType" UIID="typeUI">
@@ -256,9 +230,32 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="2" y="0" align="FULL" cellUIClass="cehierarchy_combox_typeui"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Cancel"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>OKbtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
     <ns2:layoutConstraint>
       <ns2:componentId>fieldPanel</ns2:componentId>
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
   </ns2:body>
   <ns2:mapping>
@@ -296,28 +293,52 @@
     <ns2:DataEntity scope="InOut" name="singleLevel" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
-	<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+    <ns2:DataEntity scope="InOut" name="parentTypeUIID" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="parentSubTypeUIID" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="parentSubType2UIID" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="parentTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="parentTypeUIID" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="parentSubTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="parentSubTypeUIID" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="parentSubType2UI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="parentSubType2UIID" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+	<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
       <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="pvalue" paramName="Value"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="pvalues" paramName="OptionValues"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="pdisplayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
       <ns2:UIComponent componentPath="subtypeUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="subvalue" paramName="Value"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="subvalues" paramName="OptionValues"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="subdisplayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
       <ns2:UIComponent componentPath="sub2typeUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="value" paramName="Value"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values" paramName="OptionValues"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping6">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="ceNameUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="ceName" paramName="StringData"></ns2:DataComponent>

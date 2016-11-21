@@ -48,12 +48,26 @@
                   textWidget.setValue(citySubListUI.getValue());
                   if (textWidget instanceof Label) {
                      ((Label)textWidget).setValue(citySubListUI.getValue());
-                     ((Label)textWidget).setDisplayValue(cityListUI.getSelectedDisplayValue() + "-" + citySubListUI.getSelectedDisplayValue());
+                     ((Label)textWidget).setDisplayValue(citySubListUI.getSelectedDisplayValue());
                   }
-                  
-                  RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-                  form.closeIfinWindows();
-                  @page.removeForm(@page.getEntityUiid()); 
+              }
+              ]]></expressionString>
+        </ns2:exp>
+     </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Cancel">
+     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="Cancel-201604152311">
+        <ns2:exp>
+         <expressionString><![CDATA[
+              import java.util.HashMap;
+              import java.util.ArrayList;
+              import org.shaolin.bmdp.runtime.AppContext;
+              import org.shaolin.uimaster.page.AjaxContext;
+              import org.shaolin.uimaster.page.ajax.*;
+              {
+                 RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+	             form.closeIfinWindows(true);
+	             @page.removeForm(@page.getEntityUiid()); 
               }
               ]]></expressionString>
         </ns2:exp>
@@ -63,14 +77,18 @@
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIHiddenType" UIID="parentUI">
-        <ns2:secure>
-          <ns2:value>true</ns2:value>
-        </ns2:secure>
-      </ns2:component>
+      <ns2:secure>
+        <ns2:value>true</ns2:value>
+      </ns2:secure>
+    </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="cityListPanel">
+      <ns2:UISkin xsi:type="ns2:UISkinType">
+	     <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
+	  </ns2:UISkin>
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
@@ -125,6 +143,25 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Cancel"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>OKbtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
     <ns2:layoutConstraint>
       <ns2:componentId>cityListPanel</ns2:componentId>
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
@@ -132,6 +169,10 @@
     <ns2:layoutConstraint>
       <ns2:componentId>citySubListPanel</ns2:componentId>
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
   </ns2:body>
   <ns2:mapping>
@@ -198,7 +239,7 @@
           IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
           ArrayList values1 = new ArrayList();
           ArrayList displayItems1 = new ArrayList();
-          CEOperationUtil.getCEItems(values1, displayItems1, cs.getChildren(CEUtil.toCEValue("CityList," + $selectedCity)));
+          CEOperationUtil.getCEItems(values1, displayItems1, CEUtil.toCEValue($selectedCity));
           $values1 = values1;
           $displayItems1 = displayItems1;
          

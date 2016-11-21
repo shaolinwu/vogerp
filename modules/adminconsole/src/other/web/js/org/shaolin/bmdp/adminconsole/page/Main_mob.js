@@ -13,11 +13,6 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         ui: elementList[prefix + "tempSessionIdUI"]
     });
 
-    var cityLabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "cityLabel"]
-    });
-
     var helpIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "helpIcon"]
@@ -43,7 +38,17 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         ui: elementList[prefix + "matrixUI"]
     });
 
-    var userIcon = new UIMaster.ui.image
+    var mainIcon = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "mainIcon"]
+    });
+
+    var orderIcon = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "orderIcon"]
+    });
+
+    var userIcon = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "userIcon"]
     });
@@ -58,11 +63,11 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         ui: elementList[prefix + "userLogout"]
     });
 
+    var citySelector = new org_shaolin_vogerp_commonmodel_form_CityOnlySelelctor({"prefix":prefix + "citySelector."});
+
     var userFormContent = new org_shaolin_bmdp_adminconsole_form_UserAccount({"prefix":prefix + "userFormContent."});
 
     var notificationFormContent = new org_shaolin_bmdp_workflow_form_NotificationBoard({"prefix":prefix + "notificationFormContent."});
-
-    var citySelector = new org_shaolin_vogerp_commonmodel_form_CityOnlySelelctor({"prefix":prefix + "citySelector."});
 
     var notificationForm = new UIMaster.ui.panel
     ({
@@ -84,14 +89,14 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     ({
         ui: elementList[prefix + "bottomPanel1"]
         ,items: []
-        ,subComponents: [prefix + "userForm",prefix + "notificationForm",prefix + "citySelector"]
+        ,subComponents: [prefix + "userForm",prefix + "notificationForm"]
     });
 
     var bottomPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "bottomPanel"]
         ,items: []
-        ,subComponents: [prefix + "userIcon"]
+        ,subComponents: [prefix + "mainIcon",prefix + "orderIcon",prefix + "userIcon"]
     });
 
     var pagePanel = new UIMaster.ui.panel
@@ -112,7 +117,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     ({
         ui: elementList[prefix + "searchPanel"]
         ,items: []
-        ,subComponents: [prefix + "cityLabel",prefix + "helpIcon"]
+        ,subComponents: [prefix + "citySelector",prefix + "helpIcon"]
     });
 
     var topPanel = new UIMaster.ui.panel
@@ -126,14 +131,12 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [tempSentPartyIdUI,tempSessionIdUI,cityLabel,helpIcon,advImagesUI,matrixUI,userIcon,collapseLabel1,userLogout,userFormContent,notificationFormContent,citySelector,topPanel,searchPanel,middlePanel,pagePanel,bottomPanel,bottomPanel1,userForm,notificationForm]
+        ,items: [tempSentPartyIdUI,tempSessionIdUI,helpIcon,advImagesUI,matrixUI,mainIcon,orderIcon,userIcon,collapseLabel1,userLogout,citySelector,userFormContent,notificationFormContent,topPanel,searchPanel,middlePanel,pagePanel,bottomPanel,bottomPanel1,userForm,notificationForm]
     });
 
     Form.tempSentPartyIdUI=tempSentPartyIdUI;
 
     Form.tempSessionIdUI=tempSessionIdUI;
-
-    Form.cityLabel=cityLabel;
 
     Form.helpIcon=helpIcon;
 
@@ -141,23 +144,27 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
     Form.matrixUI=matrixUI;
 
+    Form.mainIcon=mainIcon;
+
+    Form.orderIcon=orderIcon;
+
     Form.userIcon=userIcon;
 
     Form.collapseLabel1=collapseLabel1;
 
     Form.userLogout=userLogout;
 
+    Form.citySelector=citySelector;
+
     Form.userFormContent=userFormContent;
 
     Form.notificationFormContent=notificationFormContent;
-
-    Form.citySelector=citySelector;
 
     Form.topPanel=topPanel;
 
     Form.searchPanel=searchPanel;
 
-    Form.cityLabel=cityLabel;
+    Form.citySelector=citySelector;
 
     Form.helpIcon=helpIcon;
 
@@ -165,7 +172,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
     Form.searchPanel=searchPanel;
 
-    Form.cityLabel=cityLabel;
+    Form.citySelector=citySelector;
 
     Form.helpIcon=helpIcon;
 
@@ -180,6 +187,10 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     Form.matrixUI=matrixUI;
 
     Form.bottomPanel=bottomPanel;
+
+    Form.mainIcon=mainIcon;
+
+    Form.orderIcon=orderIcon;
 
     Form.userIcon=userIcon;
 
@@ -197,8 +208,6 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
     Form.notificationFormContent=notificationFormContent;
 
-    Form.citySelector=citySelector;
-
     Form.userForm=userForm;
 
     Form.collapseLabel1=collapseLabel1;
@@ -214,7 +223,21 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_bmdp_adminconsole_page_Main_mob */
-        /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_Main_mob */
+
+        
+			   {
+			     var o = this;
+			     o.clearSelectedTab = function() {
+			        $(o.bottomPanel).children().each(function(){
+				        $(this).css("color","black");
+				     });
+			     } 
+			     $(this.bottomPanel).children().each(function(){
+			        $(this).click(function(){ o.clearSelectedTab(); $(this).css("color","blue"); });
+			     });
+			   }
+			
+            /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_Main_mob */
     };
 
     Form.Submit = org_shaolin_bmdp_adminconsole_page_Main_mob_Submit;
@@ -222,6 +245,10 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     Form.logout = org_shaolin_bmdp_adminconsole_page_Main_mob_logout;
 
     Form.clickFunctionNode = org_shaolin_bmdp_adminconsole_page_Main_mob_clickFunctionNode;
+
+    Form.showMainInfo = org_shaolin_bmdp_adminconsole_page_Main_mob_showMainInfo;
+
+    Form.showOrderInfo = org_shaolin_bmdp_adminconsole_page_Main_mob_showOrderInfo;
 
     Form.showUserInfo = org_shaolin_bmdp_adminconsole_page_Main_mob_showUserInfo;
 
@@ -278,6 +305,28 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 				    showMobileFrame(link, name);
 				}
 				    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_clickFunctionNode */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Main_mob_showMainInfo(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_mob_showMainInfo */
+        var o = this;
+        var UIEntity = this;
+
+                {
+                }
+                    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_showMainInfo */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Main_mob_showOrderInfo(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_mob_showOrderInfo */
+        var o = this;
+        var UIEntity = this;
+
+                {
+                   var link = "webflow.do?_chunkname=org.shaolin.vogerp.commonmodel.diagram.ModularityModel&_nodename=OrderManagement&_page=org.shaolin.vogerp.ecommercial.page.OrderManagement&_framename=goldenOrderManager&_framePrefix=";
+                   this.clickFunctionNode(link,'\u6211\u7684\u62A2\u5355','null');
+                }
+                    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_showOrderInfo */
 
 
     /* auto generated eventlistener function declaration */

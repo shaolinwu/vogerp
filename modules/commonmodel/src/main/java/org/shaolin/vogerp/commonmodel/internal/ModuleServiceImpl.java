@@ -3,6 +3,7 @@ package org.shaolin.vogerp.commonmodel.internal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -241,7 +242,7 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
         List<IConstantEntity> roleIds = (List<IConstantEntity>)UserContext.getUserData(WebflowConstants.USER_ROLE_KEY);
         
         // list the nodes under the root node.
-		ArrayList result = new ArrayList();
+		ArrayList<TreeItem> result = new ArrayList<TreeItem>();
 		Collection<IModuleGroup> values = modules.getValues();
 		Iterator<IModuleGroup> i = values.iterator();
 		while(i.hasNext()) {
@@ -256,6 +257,7 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 			gitem.setId("mg_" + mg.getId());
 			gitem.setText(mg.getName());
 			gitem.setIcon(mg.getSmallIcon());
+			gitem.setDisplayIndex(mg.getDisplayIndex());
 			gitem.setState(new org.shaolin.uimaster.page.ajax.TreeItem.State());
 			gitem.setA_attr(new org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute(
 					mg.getAccessURL()));
@@ -271,6 +273,7 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 					TreeItem item = new TreeItem();
 					item.setId("mg_" + m.getId());
 					item.setText(m.getName());
+					item.setDisplayIndex(m.getDisplayIndex());
 					item.setA_attr(new org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute(
 							m.getAccessURL()));
 					item.setState(new org.shaolin.uimaster.page.ajax.TreeItem.State());
@@ -284,6 +287,14 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 				result.remove(result.size() -1);
 			}
 		}
+		
+		Collections.sort(result, new Comparator<TreeItem>() {
+			@Override
+			public int compare(TreeItem o1, TreeItem o2) {
+				return o1.getDisplayIndex() - o2.getDisplayIndex();
+			}
+		});
+		
 		return result;
 	}
 	
@@ -322,6 +333,13 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 				result.remove(result.size() -1);
 			}
 		}
+		Collections.sort(result, new Comparator<IModuleGroup>() {
+			@Override
+			public int compare(IModuleGroup o1, IModuleGroup o2) {
+				return o1.getDisplayIndex() - o2.getDisplayIndex();
+			}
+		});
+		
 		return result;
 	}
 	
@@ -342,6 +360,13 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 			}
 			modules.add(m);
 		}
+		Collections.sort(modules, new Comparator<IModuleGroup>() {
+			@Override
+			public int compare(IModuleGroup o1, IModuleGroup o2) {
+				return o1.getDisplayIndex() - o2.getDisplayIndex();
+			}
+		});
+		
 		int total = modules.size()/columns;
 		if (modules.size()%columns > 0) {
 			total += 1;
@@ -368,6 +393,7 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 			}
 			result.get(i/columns).add(item);
 		}
+		
 		return result;
 	}
 	

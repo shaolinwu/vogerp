@@ -15,7 +15,7 @@
         <node name="webConstant">
             <node name="commonjs">
                 <node name="org.shaolin.vogerp.commonmodel.page.CustomerManagement">
-                    <item name="baidumap" value="http://api.map.baidu.com/api?v=2.0&amp;ak=kT8czcw0fydHdXiGPGBOckX1" />
+                    <item name="baidumap" value="https://api.map.baidu.com/api?v=2.0&amp;ak=kT8czcw0fydHdXiGPGBOckX1" />
                 </node>
                 <node name="org.shaolin.vogerp.commonmodel.page.GlobalStatistic">
                     <item name="raphael-min" value="/js/controls/map/raphael-min.js" />

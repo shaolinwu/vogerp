@@ -1,5 +1,5 @@
 #div-topPanel-0_1 {text-align: center; vertical-align: middle;}
 #veriCodeQuestion_Label{background: yellowgreen; cursor: pointer;}
-#div-actionPanel-0_0{width: 50px; min-width: 50px; float: left;}
-#div-actionPanel-1_0{width: 50px; min-width: 50px; float: left;}
+#div-actionPanel-0_0{width: 100px; min-width: 50px; float: left; padding-left: 20px;}
+#div-actionPanel-1_0{width: 100px; min-width: 50px; float: right;}
 #bottomPanel {position: fixed;bottom: 0;}

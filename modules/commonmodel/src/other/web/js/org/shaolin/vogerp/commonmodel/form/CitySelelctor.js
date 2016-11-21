@@ -22,6 +22,18 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor(json)
         ,colCount: 6
     });
 
+    var cancelbtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "cancelbtn"]
+    });
+
+    var actionPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "actionPanel"]
+        ,items: []
+        ,subComponents: [prefix + "cancelbtn"]
+    });
+
     var citySubListPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "citySubListPanel"]
@@ -33,6 +45,7 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor(json)
     var cityListPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "cityListPanel"]
+        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
         ,subComponents: [prefix + "cityListUI"]
     });
@@ -40,7 +53,7 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentUI,cityListUI,citySubListUI,cityListPanel,citySubListPanel]
+        ,items: [parentUI,cityListUI,citySubListUI,cancelbtn,cityListPanel,citySubListPanel,actionPanel]
     });
 
     Form.parentUI=parentUI;
@@ -49,6 +62,8 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor(json)
 
     Form.citySubListUI=citySubListUI;
 
+    Form.cancelbtn=cancelbtn;
+
     Form.cityListPanel=cityListPanel;
 
     Form.cityListUI=cityListUI;
@@ -56,6 +71,10 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor(json)
     Form.citySubListPanel=citySubListPanel;
 
     Form.citySubListUI=citySubListUI;
+
+    Form.actionPanel=actionPanel;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {
@@ -66,6 +85,8 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor(json)
     Form.selectSubItem = org_shaolin_vogerp_commonmodel_form_CitySelelctor_selectSubItem;
 
     Form.selectedCity = org_shaolin_vogerp_commonmodel_form_CitySelelctor_selectedCity;
+
+    Form.Cancel = org_shaolin_vogerp_commonmodel_form_CitySelelctor_Cancel;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_CitySelelctor_invokeDynamicFunction;
 
@@ -99,6 +120,17 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedCity-201604152311",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CitySelelctor_selectedCity */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_CitySelelctor_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CitySelelctor_Cancel */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"Cancel-201604152311",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CitySelelctor_Cancel */
 
 
     /* auto generated eventlistener function declaration */

@@ -22,8 +22,8 @@
             } else {
                 CommonModel.INSTANCE.update(defaultUser);
             }
-            int last = defaultUser.getPatch().lastIndexOf("/");
-			Registry.getInstance().getNodeItems(defaultUser.getPatch().substring(0, last + 1)).put(defaultUser.getPatch().substring(last), defaultUser.getValue());
+            int last = defaultUser.getPath().lastIndexOf("/");
+			Registry.getInstance().getNodeItems(defaultUser.getPath().substring(0, last + 1)).put(defaultUser.getPath().substring(last), defaultUser.getValue());
 			
             form.closeIfinWindows();
             @page.removeForm(@page.getEntityUiid()); 
