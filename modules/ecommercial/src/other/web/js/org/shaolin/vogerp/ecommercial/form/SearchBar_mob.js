@@ -3,14 +3,14 @@
 function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var citiesCbx = new UIMaster.ui.label
+    var citiesCbxIU = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "citiesCbx"]
+        ui: elementList[prefix + "citiesCbxIU"]
     });
 
-    var moreLabel = new UIMaster.ui.label
+    var productTypeUI = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "moreLabel"]
+        ui: elementList[prefix + "productTypeUI"]
     });
 
     var searchContext = new UIMaster.ui.textfield
@@ -22,7 +22,7 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
     ({
         ui: elementList[prefix + "firstRow"]
         ,items: []
-        ,subComponents: [prefix + "citiesCbx",prefix + "moreLabel"]
+        ,subComponents: [prefix + "citiesCbxIU",prefix + "productTypeUI"]
     });
 
     var root = new UIMaster.ui.panel
@@ -35,12 +35,12 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [citiesCbx,moreLabel,searchContext,root,firstRow]
+        ,items: [citiesCbxIU,productTypeUI,searchContext,root,firstRow]
     });
 
-    Form.citiesCbx=citiesCbx;
+    Form.citiesCbxIU=citiesCbxIU;
 
-    Form.moreLabel=moreLabel;
+    Form.productTypeUI=productTypeUI;
 
     Form.searchContext=searchContext;
 
@@ -48,17 +48,17 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
 
     Form.firstRow=firstRow;
 
-    Form.citiesCbx=citiesCbx;
+    Form.citiesCbxIU=citiesCbxIU;
 
-    Form.moreLabel=moreLabel;
+    Form.productTypeUI=productTypeUI;
 
     Form.searchContext=searchContext;
 
     Form.firstRow=firstRow;
 
-    Form.citiesCbx=citiesCbx;
+    Form.citiesCbxIU=citiesCbxIU;
 
-    Form.moreLabel=moreLabel;
+    Form.productTypeUI=productTypeUI;
 
     Form.user_constructor = function()
     {
@@ -68,9 +68,9 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
 
     Form.selectCity = org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectCity;
 
-    Form.search = org_shaolin_vogerp_ecommercial_form_SearchBar_mob_search;
+    Form.selectProductType = org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectProductType;
 
-    Form.moreCondition = org_shaolin_vogerp_ecommercial_form_SearchBar_mob_moreCondition;
+    Form.search = org_shaolin_vogerp_ecommercial_form_SearchBar_mob_search;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_SearchBar_mob_invokeDynamicFunction;
 
@@ -96,6 +96,17 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
 
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectProductType(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectProductType */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectProductType-201604102211",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectProductType */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_form_SearchBar_mob_search(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_SearchBar_mob_search */
         var o = this;
         var UIEntity = this;
@@ -110,17 +121,6 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"search-20160410-2211",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_SearchBar_mob_search */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_SearchBar_mob_moreCondition(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_SearchBar_mob_moreCondition */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"moreCondition-20160410-2211",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_SearchBar_mob_moreCondition */
 
 
     /* auto generated eventlistener function declaration */

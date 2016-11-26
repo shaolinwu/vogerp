@@ -150,6 +150,9 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="countryUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="provinceUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -160,6 +163,9 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UIComboBoxType" UIID="provinceUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
         <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
           <ns2:handler functionName="selectProvince"></ns2:handler>
         </ns2:EventListener>
@@ -173,6 +179,9 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UIComboBoxType" UIID="cityUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
         <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
           <ns2:handler functionName="selectCity"></ns2:handler>
         </ns2:EventListener>
@@ -185,6 +194,9 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UIComboBoxType" UIID="districtUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="streetUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -195,6 +207,9 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="streetUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="blockUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>

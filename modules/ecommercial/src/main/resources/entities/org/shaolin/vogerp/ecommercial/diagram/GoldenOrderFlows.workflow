@@ -30,6 +30,7 @@
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     {
                       $gOrder.setStatus(OrderStatusType.PUBLISHED);
+                      $gOrder.setSessionId(@flowContext.getSession().getID());
                       @flowContext.save($gOrder);
                       //assign task id to sales order. this object is passed from blow action actually.
                     }]]></expressionString>
@@ -126,7 +127,9 @@
                      import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
                      import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
                      {
-                         // notify all customers.
+                         //TODO: notify all interested customers.
+                         
+                         // notify self.
                          PersonalInfoImpl condition = new PersonalInfoImpl();
                          condition.setId($gOrder.getPublishedCustomerId());
                          List result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, 1);
@@ -180,8 +183,8 @@
 			            offerPrice.setSessionId(OrderUtil.genConversationId());
 			            
 			            // compare the prices.
-			            if (!OrderUtil.compareAPrice(order, offerPrice)) {
-			                @page.getLabel("resultUILabel").setValue("竞价失败，请刷新价格！");
+			            if (!OrderUtil.addAPrice(order, offerPrice)) {
+			                @page.getLabel("resultUILabel").setValue("竞价失败，请刷新订单状态！");
 			                return;
 			            }
 			            
@@ -189,7 +192,8 @@
 			            @page.removeForm(@page.getEntityUiid()); 
 			            
 			            HashMap result = new HashMap();
-			            result.put("goldenOrder", out.get("beObject"));
+			            result.put("goldenOrder", order);
+			            result.put("offerPrice", offerPrice);
 			            return result;
 			        }
                     ]]></expressionString>
@@ -199,7 +203,8 @@
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     {
                        return UserContext.hasRole("GenericOrganizationType.Director,0") 
-                              && $beObject.getOrgId() != UserContext.getUserContext().getOrgId();
+                              && $beObject.getOrgId() != UserContext.getUserContext().getOrgId() 
+                              && $beObject.getStatus() == OrderStatusType.PUBLISHED;
                     }
                 ]]></expressionString></ns2:filter>
             </ns2:uiAction>
@@ -208,14 +213,45 @@
                 <ns2:var name="goldenOrder" category="BusinessEntity" scope="InOut">
                     <type entityName="org.shaolin.vogerp.ecommercial.be.GoldenOrder"></type>
                 </ns2:var>
+                <ns2:var name="offerPrice" category="BusinessEntity" scope="InOut">
+                    <type entityName="org.shaolin.vogerp.ecommercial.be.GOOfferPrice"></type>
+                </ns2:var>
                 <ns2:expression>
                     <expressionString><![CDATA[
                      import java.util.List;
                      import java.util.ArrayList;
-                     import org.shaolin.vogerp.order.be.*;
-                     import org.shaolin.vogerp.order.dao.OrderModel;
+                     import org.shaolin.bmdp.runtime.AppContext; 
+                     import org.shaolin.bmdp.runtime.security.UserContext;
+                     import org.shaolin.vogerp.ecommercial.ce.EOrderType;
+                     import org.shaolin.vogerp.ecommercial.be.InterestEOrderImpl;
+                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
+                     import org.shaolin.bmdp.workflow.ws.ChatService;
                      {
+                          InterestEOrderImpl condition = new InterestEOrderImpl();
+                          condition.setOrgId(UserContext.getUserContext().getOrgId());
+                          condition.setOrderId($goldenOrder.getId());
+                          condition.setType(EOrderType.GOLDENORDER);
+                          long result = OrderModel.INSTANCE.searchInterestEOrderCount(condition);
+                          if (result == 0) {
+                             OrderModel.INSTANCE.create(condition);
+                          }
                           
+                          String message0 = $offerPrice.getLeaveWords();
+                          long from = $offerPrice.getTakenCustomerId();
+                          long to = $goldenOrder.getPublishedCustomerId();
+                          String sessionId = $offerPrice.getSessionId();
+                          org.shaolin.bmdp.workflow.ws.ChatService.sendOffLine(message0, from, to, sessionId);
+                          
+                          NotificationImpl message = new NotificationImpl();
+                          message.setPartyId($goldenOrder.getPublishedCustomerId());
+                          message.setSubject($goldenOrder.getSerialNumber() + "有新的竞价信息。");
+                          message.setDescription($goldenOrder.getDescription());
+                          message.setCreateDate(new java.util.Date());
+	                      
+	                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+	                      service.addNotification(message, true);
                      }
                      ]]></expressionString>
                 </ns2:expression>

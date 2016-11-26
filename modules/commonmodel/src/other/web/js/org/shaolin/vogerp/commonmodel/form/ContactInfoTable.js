@@ -11,29 +11,6 @@ function org_shaolin_vogerp_commonmodel_form_ContactInfoTable(json)
     var itemTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "itemTable"]
-        ,editable: true
-    });
-
-    var verifyBtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "verifyBtn"]
-    });
-
-    var okbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "okbtn"]
-    });
-
-    var cancelbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "cancelbtn"]
-    });
-
-    var actionPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "actionPanel"]
-        ,items: []
-        ,subComponents: [prefix + "verifyBtn",prefix + "okbtn",prefix + "cancelbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -46,32 +23,18 @@ function org_shaolin_vogerp_commonmodel_form_ContactInfoTable(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentIdUI,itemTable,verifyBtn,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [parentIdUI,itemTable,fieldPanel]
     });
 
     Form.parentIdUI=parentIdUI;
 
     Form.itemTable=itemTable;
 
-    Form.verifyBtn=verifyBtn;
-
-    Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
-
     Form.fieldPanel=fieldPanel;
 
     Form.parentIdUI=parentIdUI;
 
     Form.itemTable=itemTable;
-
-    Form.actionPanel=actionPanel;
-
-    Form.verifyBtn=verifyBtn;
-
-    Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {
@@ -83,9 +46,9 @@ function org_shaolin_vogerp_commonmodel_form_ContactInfoTable(json)
 
     Form.createItem = org_shaolin_vogerp_commonmodel_form_ContactInfoTable_createItem;
 
-    Form.deleteItem = org_shaolin_vogerp_commonmodel_form_ContactInfoTable_deleteItem;
+    Form.openItem = org_shaolin_vogerp_commonmodel_form_ContactInfoTable_openItem;
 
-    Form.Save = org_shaolin_vogerp_commonmodel_form_ContactInfoTable_Save;
+    Form.deleteItem = org_shaolin_vogerp_commonmodel_form_ContactInfoTable_deleteItem;
 
     Form.Cancel = org_shaolin_vogerp_commonmodel_form_ContactInfoTable_Cancel;
 
@@ -124,29 +87,41 @@ function org_shaolin_vogerp_commonmodel_form_ContactInfoTable(json)
 
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_ContactInfoTable_openItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ContactInfoTable_openItem */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openItem-1993740592",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ContactInfoTable_openItem */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_ContactInfoTable_deleteItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ContactInfoTable_deleteItem */
         var o = this;
         var UIEntity = this;
 
+         {
+          new UIMaster.ui.dialog({
+              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
+              message:'\u786E\u5B9A\u5220\u9664\u5730\u5740\u5417',
+              messageType:UIMaster.ui.dialog.Information,
+              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+              title:'',
+              height:150,
+              width:300,
+              handler: function() {
+                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_78319948",UIMaster.getValue(eventsource),o.__entityName);
+              }
+          }).open();
+          return;
+         }
+         
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_-78319948",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_78319948",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ContactInfoTable_deleteItem */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_ContactInfoTable_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ContactInfoTable_Save */
-        var o = this;
-        var UIEntity = this;
-
-        {
-            this.itemTable.syncBodyDataToServer();
-        }
-        
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveItem_201507111934",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ContactInfoTable_Save */
 
 
     /* auto generated eventlistener function declaration */

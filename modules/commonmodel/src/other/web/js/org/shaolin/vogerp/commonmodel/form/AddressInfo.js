@@ -31,6 +31,7 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfo(json)
     var provinceUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "provinceUI"]
+      ,allowBlank:false
     });
 
     var cityUILabel = new UIMaster.ui.label
@@ -41,6 +42,7 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfo(json)
     var cityUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "cityUI"]
+      ,allowBlank:false
     });
 
     var districtUILabel = new UIMaster.ui.label
@@ -51,6 +53,7 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfo(json)
     var districtUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "districtUI"]
+      ,allowBlank:false
     });
 
     var streetUILabel = new UIMaster.ui.label

@@ -20,8 +20,8 @@
                ComboBox subtypeUI = @page.getComboBox("subtypeUI");
                
                String value = typeUI.getValue();
-               if (@page.existElmByAbstId(@page.getHidden("parentTypeUI").getValue())) {
-	               TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(@page.getHidden("parentTypeUI").getValue());
+	           TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(@page.getHidden("parentTypeUI").getValue());
+               if (textWidget != null) {
 	               textWidget.setValue(value);
 	               if (textWidget instanceof Label) {
 	                  ((Label)textWidget).setValue(value);
@@ -42,8 +42,8 @@
                   subtypeUI.addOption(displayItems.get(i).toString(), values.get(i).toString());
                }
                value = subtypeUI.getValue();
-               if (@page.existElmByAbstId(@page.getHidden("parentSubTypeUI").getValue())) {
-	               TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(@page.getHidden("parentSubTypeUI").getValue());
+               textWidget = (TextWidget)@page.getElementByAbsoluteId(@page.getHidden("parentSubTypeUI").getValue());
+               if (textWidget != null) {
 	               textWidget.setValue(value);
 	               if (textWidget instanceof Label) {
 	                  ((Label)textWidget).setValue(value);
@@ -73,8 +73,8 @@
                ComboBox sub2typeUI = @page.getComboBox("sub2typeUI");
                
                String value = subtypeUI.getValue();
-               if (@page.existElmByAbstId(@page.getHidden("parentSubTypeUI").getValue())) {
-	               TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(@page.getHidden("parentSubTypeUI").getValue());
+               TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(@page.getHidden("parentSubTypeUI").getValue());
+               if (textWidget != null) {
 	               textWidget.setValue(value);
 	               if (textWidget instanceof Label) {
 	                  ((Label)textWidget).setValue(value);
@@ -91,15 +91,6 @@
                sub2typeUI.removeAllOptions();
                for (int i=0; i<values.size(); i++) {
                   sub2typeUI.addOption(displayItems.get(i).toString(), values.get(i).toString());
-               }
-               
-               if (@page.existElmByAbstId(@page.getHidden("parentSubType2UI").getValue())) {
-	               TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(@page.getHidden("parentSubType2UI").getValue());
-	               textWidget.setValue(sub2typeUI.getValue());
-	               if (textWidget instanceof Label) {
-	                  ((Label)textWidget).setValue(sub2typeUI.getValue());
-	                  ((Label)textWidget).setDisplayValue(sub2typeUI.getSelectedDisplayValue());
-	               }
                }
                
                @page.executeJavaScript("{var i0=0;}");//Don't remove
@@ -123,8 +114,8 @@
            {
                ComboBox sub2typeUI = @page.getComboBox("sub2typeUI");
                String value = sub2typeUI.getValue();
-               if (@page.existElmByAbstId(@page.getHidden("parentSubType2UI").getValue())) {
-	               TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(@page.getHidden("parentSubType2UI").getValue());
+               TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(@page.getHidden("parentSubType2UI").getValue());
+               if (textWidget != null) {
 	               textWidget.setValue(value);
 	               if (textWidget instanceof Label) {
 	                  ((Label)textWidget).setValue(value);

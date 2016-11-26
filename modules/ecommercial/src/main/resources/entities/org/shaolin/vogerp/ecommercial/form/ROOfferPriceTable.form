@@ -39,9 +39,9 @@
             
             ChatHistoryImpl defaultUser = new ChatHistoryImpl();
             defaultUser.setTaskId(((IRentOrLoanOrder)form.getInputParameter("beObject")).getTaskId());
-            defaultUser.setSentPartyId((Long)UserContext.getUserData("CurrentUserId"));
-            defaultUser.setReceivedPartyId(offer.getTakenCustomerId());
-            defaultUser.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+            defaultUser.setSentPartyId(offer.getTakenCustomerId());
+            defaultUser.setReceivedPartyId(UserContext.getUserContext().getUserId());
+            defaultUser.setOrgId(UserContext.getUserContext().getOrgId());
             defaultUser.setSessionId(offer.getSessionId());
             if (defaultUser.getSessionId() == null || defaultUser.getSessionId().length() == 0) {
                 //throw new java.lang.IllegalArgumentException("Chat session id must be specified!");
@@ -51,8 +51,8 @@
             IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
             HashMap input = new HashMap();
             input.put("beObject", defaultUser);
-            input.put("sentPartyName", UserContext.getUserData("CurrentUserAccount"));
-            input.put("recievedPartyName", org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil.getCustomerEnterpriseBasicInfo(offer.getTakenCustomer()));
+            input.put("recievedPartyName", UserContext.getUserContext().getUserName());
+            input.put("sentPartyName", org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil.getCustomerEnterpriseBasicInfo(offer.getTakenCustomer()));
             
             RefForm chatForm = new RefForm("chatWindow", "org.shaolin.bmdp.workflow.form.ChatWindow", input);
             @page.addElement(chatForm);

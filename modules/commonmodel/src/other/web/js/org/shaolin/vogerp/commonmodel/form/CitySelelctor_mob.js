@@ -27,11 +27,6 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
         ,colCount: 6
     });
 
-    var okbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "okbtn"]
-    });
-
     var cancelbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "cancelbtn"]
@@ -41,7 +36,7 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "cancelbtn"]
     });
 
     var citySubListPanel = new UIMaster.ui.panel
@@ -63,7 +58,7 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentUI,clickEventUI,cityListUI,citySubListUI,okbtn,cancelbtn,cityListPanel,citySubListPanel,actionPanel]
+        ,items: [parentUI,clickEventUI,cityListUI,citySubListUI,cancelbtn,cityListPanel,citySubListPanel,actionPanel]
     });
 
     Form.parentUI=parentUI;
@@ -73,8 +68,6 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
     Form.cityListUI=cityListUI;
 
     Form.citySubListUI=citySubListUI;
-
-    Form.okbtn=okbtn;
 
     Form.cancelbtn=cancelbtn;
 
@@ -88,8 +81,6 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
 
     Form.actionPanel=actionPanel;
 
-    Form.okbtn=okbtn;
-
     Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
@@ -101,6 +92,8 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
     Form.selectSubItem = org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_selectSubItem;
 
     Form.selectedCity = org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_selectedCity;
+
+    Form.Cancel = org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_Cancel;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_invokeDynamicFunction;
 
@@ -134,6 +127,17 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedCity-201604152311",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_selectedCity */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_Cancel */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"Cancel-201604152311",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_Cancel */
 
 
     /* auto generated eventlistener function declaration */

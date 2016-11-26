@@ -193,6 +193,8 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
 
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder_Cancel;
 
+    Form.OfferPrice = org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder_OfferPrice;
+
     Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder_invokeDynamicFunction;
 
     Form.__entityName="org.shaolin.vogerp.ecommercial.form.RentOrLoanOrder";
@@ -214,6 +216,17 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160416-173334",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder_OfferPrice(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder_OfferPrice */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"OfferPrice-20160106-214008",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder_OfferPrice */
 
 
     /* auto generated eventlistener function declaration */

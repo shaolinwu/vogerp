@@ -28,13 +28,11 @@
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             HashMap out = (HashMap)form.ui2Data();
             GoldenOrderImpl beObject = (GoldenOrderImpl)out.get("beObject");
-            form.closeIfinWindows(true);
-            @page.removeForm(@page.getEntityUiid()); 
             
             HashMap input = new HashMap();
             input.put("beObject", beObject);
             input.put("editable", new Boolean(true));
-            RefForm form1 = new RefForm("gorderForm1", "org.shaolin.vogerp.ecommercial.form.GOOfferPrice", input);
+            RefForm form1 = new RefForm("gorderOfferPriceForm", "org.shaolin.vogerp.ecommercial.form.GOOfferPrice", input);
             @page.addElement(form1);
             
             form1.openInWindows("竟价", null, 700, 400);

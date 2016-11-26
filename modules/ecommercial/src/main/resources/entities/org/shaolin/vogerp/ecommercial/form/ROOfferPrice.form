@@ -137,17 +137,17 @@
       <ns2:component xsi:type="ns2:UILabelType" UIID="leaveWordUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>留言</ns2:value>
+          <ns2:value>说点啥</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextAreaType" UIID="leaveWordUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>        
         <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
-            <ns2:value>true</ns2:value>
+            <ns2:value>false</ns2:value>
         </ns2:allowBlank>
         <ns2:maxLength xsi:type="ns2:NumericPropertyType">
             <type>int</type>
-            <value>255</value>
+            <value>100</value>
         </ns2:maxLength>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="samplePhotoUILabel">

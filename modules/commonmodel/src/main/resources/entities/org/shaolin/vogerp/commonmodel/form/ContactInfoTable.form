@@ -24,64 +24,88 @@
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createItem_1993740592">
       <ns2:exp>
         <expressionString><![CDATA[
+        import java.util.HashMap;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.commonmodel.be.ContactInfoImpl;
         { 
-            Table tableWidget = (Table)@page.getElement("itemTable");
-            tableWidget.addRow(new ContactInfoImpl());
+           String pid = @page.getHidden("parentIdUI").getValue();
+           ContactInfoImpl contact = new ContactInfoImpl();    
+           
+           HashMap input = new HashMap();
+           input.put("beObject", contact);
+           input.put("parentId", Long.valueOf(pid));
+           input.put("editable", new Boolean(true));
+           RefForm form = new RefForm("contactForm", "org.shaolin.vogerp.commonmodel.form.ContactInfo", input);
+           @page.addElement(form);
+           
+           form.openInWindows("新增联系人信息", null);
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="openItem">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openItem-1993740592">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.commonmodel.be.ContactInfoImpl;
+        { 
+           String pid = @page.getHidden("parentIdUI").getValue();
+           Table tableWidget = (Table)@page.getElement("itemTable");
+           if (tableWidget.getSelectedRow() == null) {
+              return;
+           }
+           ContactInfoImpl contact = (ContactInfoImpl)tableWidget.getSelectedRow();
+           
+           HashMap input = new HashMap();
+           input.put("beObject", contact);
+           input.put("parentId", Long.valueOf(pid));
+           input.put("editable", new Boolean(true));
+           RefForm form = new RefForm("contactForm", "org.shaolin.vogerp.commonmodel.form.ContactInfo", input);
+           @page.addElement(form);
+           
+           form.openInWindows("打开联系人信息", new TableCallBack("itemTable"));
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="deleteItem">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deleteItem_-78319948">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+         <ns2:expressionString><![CDATA[
+         {
+          new UIMaster.ui.dialog({
+              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
+              message:'\u786E\u5B9A\u5220\u9664\u5730\u5740\u5417',
+              messageType:UIMaster.ui.dialog.Information,
+              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+              title:'',
+              height:150,
+              width:300,
+              handler: function() {
+                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_78319948",UIMaster.getValue(eventsource),o.__entityName);
+              }
+          }).open();
+          return;
+         }
+         ]]></ns2:expressionString>
+     </ns2:ops>
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deleteItem_78319948">
       <ns2:exp>
         <expressionString><![CDATA[
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.commonmodel.be.ContactInfoImpl;
+        import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
         { 
             Table tableWidget = (Table)@page.getElement("itemTable");
             if (tableWidget.getSelectedRow() == null) {
                 return;
             }
-            tableWidget.deleteRow(tableWidget.getSelectedIndex());
-            Dialog.showMessageDialog("删除完成!", "Information", Dialog.INFORMATION_MESSAGE, null);
-        }]]></expressionString>
-      </ns2:exp>
-    </ns2:ops>
-  </ns2:eventHandler>
-  <ns2:eventHandler functionName="Save">
-    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-        <ns2:expressionString><![CDATA[
-        {
-            this.itemTable.syncBodyDataToServer();
-        }
-        ]]></ns2:expressionString>
-    </ns2:ops>
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveItem_201507111934">
-      <ns2:exp>
-        <expressionString><![CDATA[
-        import org.shaolin.uimaster.page.AjaxContext;
-        import org.shaolin.uimaster.page.ajax.*;
-        import org.shaolin.vogerp.commonmodel.be.ContactInfoImpl;
-        import java.util.List;
-        import org.shaolin.vogerp.commonmodel.dao.CustCommonModel;
-        { 
-            long parentId = 0;
-            String pid = @page.getHidden("parentIdUI").getValue();
-            if (pid != null && pid.length() > 0) {
-                parentId = Long.valueOf(pid).longValue();
-            }
-            Table tableWidget = @page.getTable("itemTable");
-            CustCommonModel.INSTANCE.updateContracts(parentId, tableWidget.getListData());
-            
-            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            if (form != null && form.isInWindows()) {
-            	form.closeIfinWindows(true);
-            	@page.removeForm(@page.getEntityUiid()); 
-            }
+            ContactInfoImpl addressInfo = (ContactInfoImpl)tableWidget.getSelectedRow();
+            ModularityModel.INSTANCE.delete(addressInfo);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -105,7 +129,6 @@
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
@@ -119,9 +142,6 @@
         </ns2:secure>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITableType" UIID="itemTable">
-        <ns2:editable xsi:type="ns2:BooleanPropertyType">
-          <ns2:value>true</ns2:value>
-        </ns2:editable>
         <ns2:beElement>org.shaolin.vogerp.commonmodel.be.ContactInfo</ns2:beElement>
         <ns2:initQuery>
           <ns2:expression>
@@ -153,17 +173,6 @@
         <ns2:defaultRowSize>20</ns2:defaultRowSize>
         <ns2:showActionBar>true</ns2:showActionBar>
         <ns2:showFilter>false</ns2:showFilter>
-        <ns2:editableCell>true</ns2:editableCell>
-        <ns2:column>
-          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
-            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-            <ns2:key>org.shaolin.vogerp.commonmodel.be.ContactInfo.telephone</ns2:key>
-          </ns2:title>
-          <ns2:beFieldId>rowBE.telephone</ns2:beFieldId>
-          <ns2:uiType>
-            <ns2:type>Text</ns2:type>
-          </ns2:uiType>
-        </ns2:column>
         <ns2:column>
           <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
             <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
@@ -174,6 +183,17 @@
             <ns2:type>Text</ns2:type>
           </ns2:uiType>
         </ns2:column>
+        <ns2:column>
+          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+            <ns2:key>org.shaolin.vogerp.commonmodel.be.ContactInfo.telephone</ns2:key>
+          </ns2:title>
+          <ns2:beFieldId>rowBE.telephone</ns2:beFieldId>
+          <ns2:uiType>
+            <ns2:type>Text</ns2:type>
+          </ns2:uiType>
+        </ns2:column>
+        <!-- 
         <ns2:column>
           <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
             <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
@@ -194,22 +214,13 @@
             <ns2:type>Text</ns2:type>
           </ns2:uiType>
         </ns2:column>
+         -->
         <ns2:column>
           <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
             <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
             <ns2:key>org.shaolin.vogerp.commonmodel.be.ContactInfo.email</ns2:key>
           </ns2:title>
           <ns2:beFieldId>rowBE.email</ns2:beFieldId>
-          <ns2:uiType>
-            <ns2:type>Text</ns2:type>
-          </ns2:uiType>
-        </ns2:column>
-        <ns2:column>
-          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
-            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-            <ns2:key>org.shaolin.vogerp.commonmodel.be.ContactInfo.homepage</ns2:key>
-          </ns2:title>
-          <ns2:beFieldId>rowBE.homepage</ns2:beFieldId>
           <ns2:uiType>
             <ns2:type>Text</ns2:type>
           </ns2:uiType>
@@ -226,6 +237,7 @@
         </ns2:column>
         <ns2:defaultActions>
           <ns2:defaultNewAction>createItem</ns2:defaultNewAction>
+          <ns2:defaultOpenAction>openItem</ns2:defaultOpenAction>
           <ns2:defaultDeleteAction>deleteItem</ns2:defaultDeleteAction>
         </ns2:defaultActions>
       </ns2:component>
@@ -234,69 +246,9 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
-    <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
-      <ns2:layout xsi:type="ns2:TableLayoutType">
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-      </ns2:layout>
-      <ns2:component xsi:type="ns2:UIButtonType" UIID="verifyBtn">
-        <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="VerfiyPhoneNumber"></ns2:handler>
-        </ns2:EventListener>
-        <ns2:editable xsi:type="ns2:ExpressionPropertyType">
-          <ns2:expression>
-            <expressionString>{return $editable;}</expressionString>
-          </ns2:expression>
-        </ns2:editable>
-        <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>手机验证</ns2:value>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
-        <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="Save"></ns2:handler>
-        </ns2:EventListener>
-        <ns2:editable xsi:type="ns2:ExpressionPropertyType">
-          <ns2:expression>
-            <expressionString>{return $editable;}</expressionString>
-          </ns2:expression>
-        </ns2:editable>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>OKbtn</ns2:key>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
-        <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="Cancel"></ns2:handler>
-        </ns2:EventListener>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>Cancelbtn</ns2:key>
-        </ns2:text>
-      </ns2:component>
-      <ns2:layoutConstraint>
-        <ns2:componentId>verifyBtn</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>okbtn</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>cancelbtn</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="2" y="0" align="FULL"></ns2:constraint>
-      </ns2:layoutConstraint>
-    </ns2:component>
     <ns2:layoutConstraint>
       <ns2:componentId>fieldPanel</ns2:componentId>
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
-    </ns2:layoutConstraint>
-    <ns2:layoutConstraint>
-      <ns2:componentId>actionPanel</ns2:componentId>
-      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
   </ns2:body>
   <ns2:mapping>

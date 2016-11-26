@@ -8,14 +8,9 @@ function org_shaolin_vogerp_commonmodel_form_ContactInfo(json)
         ui: elementList[prefix + "idUI"]
     });
 
-    var telephoneUILabel = new UIMaster.ui.label
+    var parentIdUI = new UIMaster.ui.hidden
     ({
-        ui: elementList[prefix + "telephoneUILabel"]
-    });
-
-    var telephoneUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "telephoneUI"]
+        ui: elementList[prefix + "parentIdUI"]
     });
 
     var mobileUILabel = new UIMaster.ui.label
@@ -28,6 +23,16 @@ function org_shaolin_vogerp_commonmodel_form_ContactInfo(json)
         ui: elementList[prefix + "mobileUI"]
     });
 
+    var telephoneUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "telephoneUILabel"]
+    });
+
+    var telephoneUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "telephoneUI"]
+    });
+
     var emailUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "emailUILabel"]
@@ -38,22 +43,12 @@ function org_shaolin_vogerp_commonmodel_form_ContactInfo(json)
         ui: elementList[prefix + "emailUI"]
     });
 
-    var homepageUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "homepageUILabel"]
-    });
-
-    var homepageUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "homepageUI"]
-    });
-
     var remarkUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "remarkUILabel"]
     });
 
-    var remarkUI = new UIMaster.ui.textfield
+    var remarkUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "remarkUI"]
     });
@@ -79,32 +74,30 @@ function org_shaolin_vogerp_commonmodel_form_ContactInfo(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "telephoneUILabel",prefix + "telephoneUI",prefix + "mobileUILabel",prefix + "mobileUI",prefix + "emailUILabel",prefix + "emailUI",prefix + "homepageUILabel",prefix + "homepageUI",prefix + "remarkUILabel",prefix + "remarkUI"]
+        ,subComponents: [prefix + "idUI",prefix + "parentIdUI",prefix + "mobileUILabel",prefix + "mobileUI",prefix + "telephoneUILabel",prefix + "telephoneUI",prefix + "emailUILabel",prefix + "emailUI",prefix + "remarkUILabel",prefix + "remarkUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,telephoneUILabel,telephoneUI,mobileUILabel,mobileUI,emailUILabel,emailUI,homepageUILabel,homepageUI,remarkUILabel,remarkUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,parentIdUI,mobileUILabel,mobileUI,telephoneUILabel,telephoneUI,emailUILabel,emailUI,remarkUILabel,remarkUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
 
-    Form.telephoneUILabel=telephoneUILabel;
-
-    Form.telephoneUI=telephoneUI;
+    Form.parentIdUI=parentIdUI;
 
     Form.mobileUILabel=mobileUILabel;
 
     Form.mobileUI=mobileUI;
 
+    Form.telephoneUILabel=telephoneUILabel;
+
+    Form.telephoneUI=telephoneUI;
+
     Form.emailUILabel=emailUILabel;
 
     Form.emailUI=emailUI;
-
-    Form.homepageUILabel=homepageUILabel;
-
-    Form.homepageUI=homepageUI;
 
     Form.remarkUILabel=remarkUILabel;
 
@@ -118,21 +111,19 @@ function org_shaolin_vogerp_commonmodel_form_ContactInfo(json)
 
     Form.idUI=idUI;
 
-    Form.telephoneUILabel=telephoneUILabel;
-
-    Form.telephoneUI=telephoneUI;
+    Form.parentIdUI=parentIdUI;
 
     Form.mobileUILabel=mobileUILabel;
 
     Form.mobileUI=mobileUI;
 
+    Form.telephoneUILabel=telephoneUILabel;
+
+    Form.telephoneUI=telephoneUI;
+
     Form.emailUILabel=emailUILabel;
 
     Form.emailUI=emailUI;
-
-    Form.homepageUILabel=homepageUILabel;
-
-    Form.homepageUI=homepageUI;
 
     Form.remarkUILabel=remarkUILabel;
 

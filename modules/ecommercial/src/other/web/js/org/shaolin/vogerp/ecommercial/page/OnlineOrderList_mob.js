@@ -104,7 +104,14 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob(json)
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob */
-        /* Construct_LAST:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob */
+
+        
+	          {
+			UIMaster.require("/js/org/shaolin/vogerp/ecommercial/form/GoldenOrderOverView_mob.js");
+			UIMaster.require("/js/org/shaolin/vogerp/ecommercial/form/RentOrderOverView_mob.js");
+			}
+	         
+            /* Construct_LAST:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob */
     };
 
     Form.openGoldenOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob_openGoldenOrder;
@@ -218,8 +225,8 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob(json)
         var constraint_result = true;
         var UIEntity = this;
 
-            {
-            }
+			{
+			}
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob_initPageJs */
 
 

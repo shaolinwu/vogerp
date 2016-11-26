@@ -308,7 +308,7 @@
             <ns2:component xsi:type="ns2:UIPanelType" UIID="searchConditionPanel">
               <ns2:layout xsi:type="ns2:TableLayoutType">
                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+                <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
               </ns2:layout>
               <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="searchBar">
                 <ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.SearchBar" />
@@ -767,14 +767,6 @@
                             <ns2:actionGroup>
                                 <ns2:type>radio</ns2:type>
                                 <ns2:action>
-                                    <ns2:uiid>publishLoanOrder</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>发单</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>publishLoanOrder</ns2:function>
-                                </ns2:action>
-                                <ns2:action>
                                     <ns2:uiid>takeLoanOrder</ns2:uiid>
                                     <ns2:title xsi:type="ns2:StringPropertyType">
                                         <ns2:value>抢单</ns2:value>
@@ -803,6 +795,12 @@
 	             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 	                 x="0" y="1" align="FULL"></ns2:constraint>
 	         </ns2:layoutConstraint>
+	         <ns2:constructorCode><![CDATA[
+	          {
+			UIMaster.require("/js/org/shaolin/vogerp/ecommercial/form/GoldenOrderOverView.js");
+			UIMaster.require("/js/org/shaolin/vogerp/ecommercial/form/RentOrderOverView.js");
+			}
+	         ]]></ns2:constructorCode>
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>
@@ -817,5 +815,9 @@
             @odContext.executeAllMappings();
             }]]></ns2:expressionString>
         </ns2:serverOperation>
+        <ns2:clientAction xsi:type="ns2:ExpressionType">
+			<ns2:expressionString><![CDATA[
+			]]></ns2:expressionString>
+		</ns2:clientAction>
     </ns2:in>    
 </ns2:UIPage>

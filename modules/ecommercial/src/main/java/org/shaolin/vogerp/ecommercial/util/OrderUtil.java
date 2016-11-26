@@ -4,17 +4,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.shaolin.bmdp.persistence.HibernateUtil;
-import org.shaolin.bmdp.runtime.be.IPersistentEntity;
+import org.shaolin.bmdp.i18n.LocaleContext;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.utils.DateParser;
 import org.shaolin.bmdp.utils.LockManager;
+import org.shaolin.uimaster.page.exception.FormatException;
+import org.shaolin.uimaster.page.od.formats.FormatUtil;
+import org.shaolin.vogerp.ecommercial.be.GOOfferPriceImpl;
 import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
 import org.shaolin.vogerp.ecommercial.be.IEOrder;
 import org.shaolin.vogerp.ecommercial.be.IGoldenOrder;
 import org.shaolin.vogerp.ecommercial.be.IOfferPrice;
 import org.shaolin.vogerp.ecommercial.be.IRentOrLoanOrder;
+import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
+import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
 import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
+import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
 import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
 import org.shaolin.vogerp.ecommercial.dao.OrderModel;
 
@@ -37,35 +42,39 @@ public class OrderUtil {
 		return "r" + System.nanoTime();
 	}
 	
-	public static boolean compareAPrice(IEOrder gorder,
-			IOfferPrice newPrice) {
-		if (gorder.getId() == 0) {
-			return false;
-		}
-		//TODO: we need the distributed lock manager for all nodes here.
-		lockManager.acquireLock(gorder.getId());
+	public static boolean addAPrice(final IEOrder eorder,
+			final IOfferPrice newPrice) {
+		//TODO: we need the distributed lock manager for all nodes here since this is a competition.
+		lockManager.acquireLock(eorder.getId());
 		try {
-			GoldenOrderImpl condition = new GoldenOrderImpl();
-			condition.setId(gorder.getId());
-			List<IGoldenOrder> result = OrderModel.INSTANCE.searchGoldenOrder(
-					condition, null, 0, 1);
-			gorder = result.get(0);
-			if (gorder.getTakenCustomerId() > 0) {
+			if (eorder.getId() == 0 || eorder.getStatus() != OrderStatusType.PUBLISHED) {
 				return false;
 			}
-			if (gorder.getOfferPrices() == null) {
-				gorder.setOfferPrices(new ArrayList());
-			}
-			if (getLowestOfferPrice(gorder) < newPrice.getPrice()) {
-				return false;
-			}
-			gorder.getOfferPrices().add(newPrice);
-			OrderModel.INSTANCE.update((IPersistentEntity)gorder);
+			
+			if (eorder instanceof GoldenOrderImpl) {
+				GoldenOrderImpl gorder = OrderModel.INSTANCE.get(eorder.getId(), GoldenOrderImpl.class);
+				if (gorder.getOfferPrices() == null) {
+					gorder.setOfferPrices(new ArrayList());
+				}
+				gorder.getOfferPrices().add(newPrice);
+				OrderModel.INSTANCE.update(gorder, true);
+			} else if (eorder instanceof RentOrLoanOrderImpl) {
+				RentOrLoanOrderImpl rorder = OrderModel.INSTANCE.get(eorder.getId(), RentOrLoanOrderImpl.class);
+				if (rorder.getOfferPrices() == null) {
+					rorder.setOfferPrices(new ArrayList());
+				}
+				// no need compare the price.
+//				if (getLowestOfferPrice(rorder) < newPrice.getPrice()) {
+//					return false;
+//				}
+				rorder.getOfferPrices().add(newPrice);
+				OrderModel.INSTANCE.update(rorder, true);
+			} 
+			
 			// commit the update.
-			HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
 			return true;
 		} finally {
-			lockManager.releaseLock(gorder.getId());
+			lockManager.releaseLock(eorder.getId());
 		}
 	}
 	
@@ -124,7 +133,7 @@ public class OrderUtil {
 			}
 		} 
 		sb.append("</span>");
-		sb.append("<span class='vogerp_desc'>").append(order.getDescription()).append("</span><a href='#' onclick=''>\u67E5\u770B</a>");
+		sb.append("<span class='vogerp_desc'>").append(order.getDescription()).append("</span>");
 		sb.append("</div>");
 		
 		return sb.toString();
@@ -140,5 +149,18 @@ public class OrderUtil {
 		
 		return sb.toString();
 	}
+	
+	public static String getOfferPriceInfo(IOfferPrice offerPrice) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("\u51FA\u4EF7: ");
+		try {
+			sb.append(FormatUtil.getCurrency(offerPrice.getPrice(), LocaleContext.getUserLocale(), false));
+		} catch (FormatException e) {
+			sb.append(offerPrice.getPrice());
+		}
+		//todo: add photos.
+		return sb.toString();
+	}
+	
 	
 }

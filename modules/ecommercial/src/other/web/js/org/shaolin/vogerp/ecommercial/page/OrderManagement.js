@@ -7,7 +7,18 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "goldenOrderInfoPanel",prefix + "takenGOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "takenROrderInfoPanel"]
+        ,subComponents: [prefix + "interestEOrderPanel",prefix + "goldenOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "takenGOrderInfoPanel",prefix + "takenROrderInfoPanel"]
+    });
+    var interestEOrderTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "interestEOrderTable"]
+    });
+
+    var interestEOrderPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "interestEOrderPanel"]
+        ,items: []
+        ,subComponents: [prefix + "interestEOrderTable"]
     });
     var goldenOrderTable = new UIMaster.ui.objectlist
     ({
@@ -20,17 +31,6 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         ,items: []
         ,subComponents: [prefix + "goldenOrderTable"]
     });
-    var takengGOrderTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "takengGOrderTable"]
-    });
-
-    var takenGOrderInfoPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "takenGOrderInfoPanel"]
-        ,items: []
-        ,subComponents: [prefix + "takengGOrderTable"]
-    });
     var rentOrderTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "rentOrderTable"]
@@ -41,6 +41,17 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         ui: elementList[prefix + "rentOrderInfoPanel"]
         ,items: []
         ,subComponents: [prefix + "rentOrderTable"]
+    });
+    var takengGOrderTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "takengGOrderTable"]
+    });
+
+    var takenGOrderInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "takenGOrderInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "takengGOrderTable"]
     });
     var takenROrderTable = new UIMaster.ui.objectlist
     ({
@@ -63,17 +74,21 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
     Form.functionsTab=functionsTab;
 
+    Form.interestEOrderPanel=interestEOrderPanel;
+
+    Form.interestEOrderTable=interestEOrderTable;
+
     Form.goldenOrderInfoPanel=goldenOrderInfoPanel;
 
     Form.goldenOrderTable=goldenOrderTable;
 
-    Form.takenGOrderInfoPanel=takenGOrderInfoPanel;
-
-    Form.takengGOrderTable=takengGOrderTable;
-
     Form.rentOrderInfoPanel=rentOrderInfoPanel;
 
     Form.rentOrderTable=rentOrderTable;
+
+    Form.takenGOrderInfoPanel=takenGOrderInfoPanel;
+
+    Form.takengGOrderTable=takengGOrderTable;
 
     Form.takenROrderInfoPanel=takenROrderInfoPanel;
 
@@ -104,6 +119,10 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     Form.payGoldenOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_payGoldenOrder;
 
     Form.payRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_payRentOrder;
+
+    Form.responseOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_responseOrder;
+
+    Form.offerPriceAgain = org_shaolin_vogerp_ecommercial_page_OrderManagement_offerPriceAgain;
 
     Form.initPageJs = org_shaolin_vogerp_ecommercial_page_OrderManagement_initPageJs;
 
@@ -229,6 +248,28 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"payRentOrder-20160618-2044",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_payRentOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_responseOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_responseOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"responseOrder-20160618-2044",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_responseOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_offerPriceAgain(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_offerPriceAgain */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"offerPriceAgain-20160618-2044",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_offerPriceAgain */
 
 
     function org_shaolin_vogerp_ecommercial_page_OrderManagement_initPageJs(){/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_initPageJs */

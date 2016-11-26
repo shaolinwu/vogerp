@@ -345,5 +345,47 @@ public class OrderModel extends BEEntityDaoObject {
         return this._count(inObjectCriteria);
     }
 
+    public List<org.shaolin.vogerp.ecommercial.be.IInterestEOrder> searchInterestEOrder(org.shaolin.vogerp.ecommercial.be.InterestEOrderImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.ecommercial.be.InterestEOrderImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
+            if (scObject.getOrderId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orderId", scObject.getOrderId()));
+            }
+            if (scObject.getType() != null && scObject.getType() != org.shaolin.vogerp.ecommercial.ce.EOrderType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.typeInt", scObject.getType().getIntValue()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long searchInterestEOrderCount(org.shaolin.vogerp.ecommercial.be.InterestEOrderImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.ecommercial.be.InterestEOrderImpl.class, "inObject");
+
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
+            if (scObject.getOrderId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orderId", scObject.getOrderId()));
+            }
+            if (scObject.getType() != null && scObject.getType() != org.shaolin.vogerp.ecommercial.ce.EOrderType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.typeInt", scObject.getType().getIntValue()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
+    }
+
 }
 

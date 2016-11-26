@@ -124,6 +124,28 @@ public class CustCommonModel extends BEEntityDaoObject {
     	}
     }
     
+    public void updateContract(long customerId, IContactInfo item) {
+    	PersonalInfoImpl custCriteria = new PersonalInfoImpl();
+    	custCriteria.setId(customerId);
+    	List values = CommonModel.INSTANCE.searchPersonInfo(custCriteria, null, 0, 1);
+		PersonalInfoImpl customer = (PersonalInfoImpl)values.get(0);
+		List<IContactInfo> existing = customer.getContacts();
+		if (item.getId() == 0) {
+			customer.getContacts().add(item);
+		} else {
+			for (IContactInfo b: existing) {
+				if (b.getId() == item.getId()) {
+					b.setEmail(item.getEmail());
+					b.setMobile(item.getMobile());
+					b.setTelephone(item.getTelephone());
+					b.setRemark(item.getRemark());
+					break;
+				}
+			}
+		}
+		CommonModel.INSTANCE.update(customer);
+    }
+    
     public void updateContracts(long customerId, List<IContactInfo> list) {
     	PersonalInfoImpl custCriteria = new PersonalInfoImpl();
     	custCriteria.setId(customerId);
