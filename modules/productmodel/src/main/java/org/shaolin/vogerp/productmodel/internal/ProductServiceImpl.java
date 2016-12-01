@@ -1,5 +1,6 @@
 package org.shaolin.vogerp.productmodel.internal;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,15 +40,21 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	
 	private static final String CONSUMER_CACHE = "__app_producttype_consumer_cache";
 	
-    private static ICache<IConstantEntity, List> suppilerTreeCache;
+	private static final String CACHE_NAME = "__app_product_price_tree";
 	
-    private static ICache<IConstantEntity, List> consumerTreeCache;
+    private final ICache<IConstantEntity, List> suppilerTreeCache;
+	
+    private final ICache<IConstantEntity, List> consumerTreeCache;
+    
+    private final ICache<Long, PriceCostCache> productPriceCache;
 	
 	public ProductServiceImpl() {
-		suppilerTreeCache = CacheManager.getInstance().getCache(SUPPLIER_CACHE, IConstantEntity.class, 
+		suppilerTreeCache = CacheManager.getInstance().getCache(SUPPLIER_CACHE, 200, false, IConstantEntity.class, 
 				List.class);
-		consumerTreeCache = CacheManager.getInstance().getCache(CONSUMER_CACHE, IConstantEntity.class, 
+		consumerTreeCache = CacheManager.getInstance().getCache(CONSUMER_CACHE, 200, false, IConstantEntity.class, 
 				List.class);
+		productPriceCache = CacheManager.getInstance().getCache(CONSUMER_CACHE, 100, false, Long.class, 
+				PriceCostCache.class);
 	}
 	
 	private void loadProductTypeSuppliers() {
@@ -213,20 +220,25 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		return orgList;
 	}
 	
-	public static class PriceCostCache {
-		ArrayList priceResult;
-		java.util.Map priceDataModel;
+	public static class PriceCostCache implements Serializable {
+		private static final long serialVersionUID = 1L;
+		ArrayList<TreeItem> priceResult;
+		java.util.Map<String, IProductPrice> priceDataModel;
 	}
 	
 	private PriceCostCache reloadPriceTree(Long orgId) {
+		if (productPriceCache.containsKey(orgId)) {
+			return productPriceCache.get(orgId);
+		}
+		
         ProductImpl criteria = new ProductImpl();
 		criteria.setParentId(0);
 		criteria.setOrgId(orgId);
 		List<IProduct> all = ProductModel.INSTANCE.searchProductParent(criteria, null, 0, -1);
 		
 		java.util.Map<String, IProductPrice> dataModel = new java.util.HashMap<String, IProductPrice>();
-		// categoried by the types
-		ArrayList result = new ArrayList();
+		// categorized by the types
+		ArrayList<TreeItem> result = new ArrayList<TreeItem>();
 		// list the nodes under the root node.
 		for (int i = 0; i < all.size(); i++) {
 			ProductImpl mg = (ProductImpl) all.get(i);
@@ -255,7 +267,51 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		PriceCostCache pcCache = new PriceCostCache();
 		pcCache.priceResult = result;
 		pcCache.priceDataModel = dataModel;
+		
+		productPriceCache.put(orgId, pcCache);
 		return pcCache;
+	}
+	
+	public void reloadProductPrice(Long orgId, IProduct product) {
+		if (productPriceCache.containsKey(orgId)) {
+			List<IProductPrice> priceItems = product.getPriceList();
+			if (priceItems.size() == 0) {
+				return;
+			}
+			
+			ArrayList<TreeItem> result = productPriceCache.get(orgId).priceResult;
+			int i=0;
+			for (; i<result.size(); i++) {
+				if (result.get(i).getText().equals(product.getName())) {
+					break;
+				}
+			}
+			if (result.size() > i) {
+				result.remove(i);
+			}
+			TreeItem gitem = new TreeItem();
+			gitem.setId("mg_" + productPriceCache.get(orgId).priceResult.size());
+			gitem.setText(product.getName());
+			productPriceCache.get(orgId).priceResult.add(gitem);
+			
+			for (int j = 0; j < priceItems.size(); j++) {
+				IProductPrice price = priceItems.get(j);
+				price.setProduct((ProductImpl)product);
+				productPriceCache.get(orgId).priceDataModel.put("pg_" + price.getId(), price);
+			
+				TreeItem pitem = new TreeItem();
+				pitem.setId("pg_" + price.getId());
+				pitem.setText(ProductUtil.getProductSummary(product) + 
+							"--" + ProductUtil.getPriceFormat(price.getPrice()) + 
+							"--" + ProductUtil.getPricePackage(price));
+				gitem.getChildren().add(pitem);
+			}
+			
+			//TODO:
+			productPriceCache.get(orgId);
+		} else {
+			reloadPriceTree(orgId);
+		}
 	}
 	
 	public List getProductTemplateInComboBox(String productType) {
@@ -330,10 +386,7 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	}
 	
 	public IProductPrice getPricePackage(long priceId) {
-		ProductPriceImpl condition = new ProductPriceImpl();
-		condition.setId(priceId);
-		List<IProductPrice> all = ProductModel.INSTANCE.searchProductPrice(condition, null, 0, 1);
-		return all.get(0);
+		return ProductModel.INSTANCE.get(priceId, ProductPriceImpl.class);
 	}
 	
 	public String getProductPhotos(IProductPrice pack) {

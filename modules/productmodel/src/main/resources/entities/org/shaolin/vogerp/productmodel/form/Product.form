@@ -26,6 +26,7 @@
         import org.shaolin.bmdp.runtime.AppContext;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.bmdp.runtime.security.UserContext;
         import org.shaolin.vogerp.productmodel.be.*;
         import org.shaolin.vogerp.productmodel.dao.ProductModel;
         import org.shaolin.vogerp.productmodel.IProductService;
@@ -42,6 +43,9 @@
             } else {
 	            ProductModel.INSTANCE.update(defaultUser, true);
             }
+            
+            IProductService pService = (IProductService)AppContext.get().getService(IProductService.class);
+            pService.reloadProductPrice(UserContext.getUserContext().getOrgId(), defaultUser);
             
             form.closeIfinWindows();
             @page.removeForm(@page.getEntityUiid()); 

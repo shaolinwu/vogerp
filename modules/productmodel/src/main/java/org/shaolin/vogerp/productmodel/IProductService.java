@@ -20,6 +20,14 @@ public interface IProductService {
 	public Map getPriceTreeMap();
 	
 	/**
+	 * Reload product price after changing.
+	 * 
+	 * @param orgId
+	 * @param product
+	 */
+	public void reloadProductPrice(Long orgId, IProduct product);
+	
+	/**
 	 * Get product templates from Master node.
 	 * 
 	 * @param productType
