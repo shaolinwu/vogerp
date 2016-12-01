@@ -36,7 +36,7 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 	public PermissionServiceImpl(IModuleService moduleService) {
 		this.moduleService = moduleService;
 		this.rolePermissions = CacheManager.getInstance().getCache(IModuleService.ADMIN_MODULES
-				+ "_rolepermission_cache", String.class, SingleRolePermission.class);
+				+ "_rolepermission_cache", 200, false, String.class, SingleRolePermission.class);
 	}
 	
 	public void reloadRolePermissions(IConstantEntity partyType) {

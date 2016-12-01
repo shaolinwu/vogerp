@@ -32,6 +32,11 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
         ui: elementList[prefix + "emtpyLabel"]
     });
 
+    var downloadbtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "downloadbtn"]
+    });
+
     var refreshbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "refreshbtn"]
@@ -46,7 +51,7 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "refreshbtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "downloadbtn",prefix + "refreshbtn",prefix + "cancelbtn"]
     });
 
     var aframePanel = new UIMaster.ui.panel
@@ -80,7 +85,7 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [searchWordUI,searchBtn,photoUI,hintUI,emtpyLabel,refreshbtn,cancelbtn,fieldPanel,searchPanel,photoPanel,aframePanel,actionPanel]
+        ,items: [searchWordUI,searchBtn,photoUI,hintUI,emtpyLabel,downloadbtn,refreshbtn,cancelbtn,fieldPanel,searchPanel,photoPanel,aframePanel,actionPanel]
     });
 
     Form.searchWordUI=searchWordUI;
@@ -92,6 +97,8 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
     Form.hintUI=hintUI;
 
     Form.emtpyLabel=emtpyLabel;
+
+    Form.downloadbtn=downloadbtn;
 
     Form.refreshbtn=refreshbtn;
 
@@ -133,6 +140,8 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
 
     Form.actionPanel=actionPanel;
 
+    Form.downloadbtn=downloadbtn;
+
     Form.refreshbtn=refreshbtn;
 
     Form.cancelbtn=cancelbtn;
@@ -155,6 +164,8 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
     Form.Cancel = org_shaolin_vogerp_commonmodel_form_ImageSearcher_Cancel;
 
     Form.refresh = org_shaolin_vogerp_commonmodel_form_ImageSearcher_refresh;
+
+    Form.download = org_shaolin_vogerp_commonmodel_form_ImageSearcher_download;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_ImageSearcher_invokeDynamicFunction;
 
@@ -233,6 +244,25 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"refresh-20160522-172647",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ImageSearcher_refresh */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_ImageSearcher_download(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ImageSearcher_download */
+        var o = this;
+        var UIEntity = this;
+
+         {
+            if (this.photoUI.galleryTop.slides && this.photoUI.galleryTop.slides.length > 0) {
+	            var slide = this.photoUI.galleryTop.slides[this.photoUI.galleryTop.activeIndex];
+				var url = $(slide).attr("img");
+				var output = "vogerp-output-" + Math.round((Math.random()*1000),0) + url.substring(url.lastIndexOf("."));
+	            $("<a id='downloadImg' href='" +url+ "' style='display:none;' crossOrigin='Anonymous' download='"+output+"'/>Download</a>").appendTo($(document.body));
+				var imgObject = $('#downloadImg');
+	            imgObject[0].click();
+	            imgObject.remove();
+            }
+         }
+            }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ImageSearcher_download */
 
 
     /* auto generated eventlistener function declaration */

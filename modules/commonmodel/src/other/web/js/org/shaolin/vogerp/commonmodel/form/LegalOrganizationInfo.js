@@ -108,11 +108,6 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         ui: elementList[prefix + "okbtn"]
     });
 
-    var cancelbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "cancelbtn"]
-    });
-
     var typeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "typeUI."});
 
     var personalPhoto = new org_shaolin_vogerp_commonmodel_form_SingleImageUploader({"prefix":prefix + "personalPhoto."});
@@ -125,7 +120,7 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "okbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -138,7 +133,7 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,verifiedUI,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,bankAccountUILabel,bankAccountUI,bankTypeUILabel,bankTypeUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,okbtn,cancelbtn,typeUI,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,fieldPanel,actionPanel]
+        ,items: [idUI,verifiedUI,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,bankAccountUILabel,bankAccountUI,bankTypeUILabel,bankTypeUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,okbtn,typeUI,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -182,8 +177,6 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     Form.busiLicensePhotoLabel=busiLicensePhotoLabel;
 
     Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
 
     Form.typeUI=typeUI;
 
@@ -246,8 +239,6 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     Form.actionPanel=actionPanel;
 
     Form.okbtn=okbtn;
-
-    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {

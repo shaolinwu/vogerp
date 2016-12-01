@@ -76,6 +76,23 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
+  <ns2:eventHandler functionName="download">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+         <ns2:expressionString><![CDATA[
+         {
+            if (this.photoUI.galleryTop.slides && this.photoUI.galleryTop.slides.length > 0) {
+	            var slide = this.photoUI.galleryTop.slides[this.photoUI.galleryTop.activeIndex];
+				var url = $(slide).attr("img");
+				var output = "vogerp-output-" + Math.round((Math.random()*1000),0) + url.substring(url.lastIndexOf("."));
+	            $("<a id='downloadImg' href='" +url+ "' style='display:none;' crossOrigin='Anonymous' download='"+output+"'/>Download</a>").appendTo($(document.body));
+				var imgObject = $('#downloadImg');
+	            imgObject[0].click();
+	            imgObject.remove();
+            }
+         }
+        ]]></ns2:expressionString>
+    </ns2:ops>
+  </ns2:eventHandler>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -168,7 +185,7 @@
           <ns2:component xsi:type="ns2:UILabelType" UIID="hintUI">
             <ns2:UIStyle></ns2:UIStyle>
             <ns2:text xsi:type="ns2:StringPropertyType">
-                <ns2:value>请选择满意图片后，手动下载到电脑或者手机设备，然后上传图片。谢谢！</ns2:value>
+                <ns2:value>请选择满意图片后，点击"下载"按钮到电脑或者手机设备，然后上传图片。谢谢！</ns2:value>
             </ns2:text>
           </ns2:component>
           <ns2:layoutConstraint>
@@ -206,7 +223,16 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="downloadbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="download"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>下载</ns2:value>
+        </ns2:text>
+      </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="refreshbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="refresh"></ns2:handler>
@@ -225,12 +251,16 @@
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>refreshbtn</ns2:componentId>
+        <ns2:componentId>downloadbtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:componentId>refreshbtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="2" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>

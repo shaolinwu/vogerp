@@ -7,7 +7,7 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "reloadPanel",prefix + "ceentityPanel",prefix + "dynamicUIPanel",prefix + "dynamicPageLinkPanel",prefix + "dynamicPageHintsPanel",prefix + "registryTable"]
+        ,subComponents: [prefix + "reloadPanel",prefix + "ceentityPanel",prefix + "dynamicUIPanel",prefix + "dynamicPageLinkPanel",prefix + "dynamicPageHintsPanel",prefix + "registryTable",prefix + "InterfacePanel"]
     });
     var reloadPathText = new UIMaster.ui.textarea
     ({
@@ -35,6 +35,22 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
 
     var registryTable = new org_shaolin_vogerp_commonmodel_form_RegistryTable({"prefix":prefix + "registryTable."});
 
+    var scriptCodeUI = new UIMaster.ui.textarea
+    ({
+        ui: elementList[prefix + "scriptCodeUI"]
+    });
+
+    var testBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "testBtn"]
+    });
+
+    var InterfacePanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "InterfacePanel"]
+        ,items: []
+        ,subComponents: [prefix + "scriptCodeUI",prefix + "testBtn"]
+    });
 
     var Form = new UIMaster.ui.panel
     ({
@@ -61,6 +77,12 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
 
     Form.registryTable=registryTable;
 
+    Form.InterfacePanel=InterfacePanel;
+
+    Form.scriptCodeUI=scriptCodeUI;
+
+    Form.testBtn=testBtn;
+
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_commonmodel_page_EntityManager */
@@ -68,6 +90,8 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
     };
 
     Form.ReloadFunction = org_shaolin_vogerp_commonmodel_page_EntityManager_ReloadFunction;
+
+    Form.testScript = org_shaolin_vogerp_commonmodel_page_EntityManager_testScript;
 
     Form.initPageJs = org_shaolin_vogerp_commonmodel_page_EntityManager_initPageJs;
 
@@ -92,8 +116,19 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openPage",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"reloadFunction-20161011-1513",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_EntityManager_ReloadFunction */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_page_EntityManager_testScript(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_EntityManager_testScript */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"testScript-20161011-1513",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_EntityManager_testScript */
 
 
     function org_shaolin_vogerp_commonmodel_page_EntityManager_initPageJs(){/* Gen_First:org_shaolin_vogerp_commonmodel_page_EntityManager_initPageJs */

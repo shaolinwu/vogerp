@@ -14,6 +14,8 @@ import org.shaolin.bmdp.i18n.ResourceUtil;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.Registry;
+import org.shaolin.bmdp.runtime.cache.CacheManager;
+import org.shaolin.bmdp.runtime.cache.ICache;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.security.UserContext.OnlineUserChecker;
 import org.shaolin.bmdp.runtime.spi.IConstantService;
@@ -56,10 +58,18 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	
 	private List<UserActionListener> listeners = new ArrayList<UserActionListener>();
 	
+	private static final String CACHE_NAME = "__app_users_secondarycache";
+	
+	// for boosting the user login speed and getting hot user details.
+    private final ICache<Long, PersonalInfoImpl> userSecondaryCache;
+	
+    //TODO:
 	private static List<Long> onlineUserIds = new ArrayList<Long>();
 	
 	public UserServiceImpl() {
 		UserContext.setOnlineUserChecker(this);
+		userSecondaryCache = CacheManager.getInstance().getCache(CACHE_NAME, 300, false, Long.class, 
+				PersonalInfoImpl.class);
 	}
 	
 	public void addListener(UserActionListener listener) {
@@ -281,26 +291,35 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			HttpSession session = request.getSession(true);
 			session.removeAttribute(WebflowConstants.USER_TOKEN);
 			session.removeAttribute("has_first_token");
-			if (!onlineUserIds.contains(matchedUser.getInfo().getId())) {
-				onlineUserIds.add(matchedUser.getInfo().getId());
+			
+			PersonalInfoImpl userInfo = matchedUser.getInfo();
+			Long userId = userInfo.getId();
+			if (userSecondaryCache.containsKey(userId)) {
+				userInfo = userSecondaryCache.get(userId);
+	        } else {
+	        	userSecondaryCache.put(userId, userInfo);
+	        }
+			
+			if (!onlineUserIds.contains(userInfo.getId())) {
+				onlineUserIds.add(userInfo.getId());
 			}
 			UserContext userContext = new UserContext();
-			userContext.setUserId(matchedUser.getInfo().getId());
+			userContext.setUserId(userInfo.getId());
 			userContext.setUserAccount(matchedUser.getUserName());
-			userContext.setUserName(matchedUser.getInfo().getFirstName() + matchedUser.getInfo().getLastName());
+			userContext.setUserName(userInfo.getFirstName() + userInfo.getLastName());
 			userContext.setUserLocale(matchedUser.getLocale());
 			userContext.setUserLocation(matchedUser.getLocationInfo());
 			if (matchedUser.getLocationInfo() != null) {
 				userContext.setCity(matchedUser.getLocationInfo());
 			}
-			userContext.setUserRoles(CEOperationUtil.toCElist(matchedUser.getInfo().getType()));
+			userContext.setUserRoles(CEOperationUtil.toCElist(userInfo.getType()));
 			if (matchedUser.getLastLogin() != null) {
 				DateParser parse = new DateParser(matchedUser.getLastLogin());
 				userContext.setLastLoginDate(parse.getCNDateString() 
 						+ "-" + parse.format(parse.getHours(), 2) 
 						+ ":" + parse.format(parse.getSeconds(), 2) );
 			}
-			OrganizationImpl organization = matchedUser.getInfo().getOrganization();
+			OrganizationImpl organization = userInfo.getOrganization();
 			userContext.setOrgId(organization.getId());
 			userContext.setOrgCode(organization.getOrgCode());
 			userContext.setOrgType(organization.getType());
@@ -311,10 +330,9 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	        if (legalInfo != null) {
 	        	userContext.setVerified(legalInfo.getVeriState() == OrgVerifyStatusType.VERIFIED);
 	        }
-	        
 			session.setAttribute(WebflowConstants.USER_SESSION_KEY, userContext);
 			session.setAttribute(WebflowConstants.USER_LOCALE_KEY, matchedUser.getLocale());
-			session.setAttribute(WebflowConstants.USER_ROLE_KEY, CEOperationUtil.toCElist(matchedUser.getInfo().getType()));
+			session.setAttribute(WebflowConstants.USER_ROLE_KEY, CEOperationUtil.toCElist(userInfo.getType()));
 			
 			String userLocale = WebConfig.getUserLocale(request);
 			List userRoles = (List)session.getAttribute(WebflowConstants.USER_ROLE_KEY);
@@ -323,7 +341,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			//add user-context thread bind
             UserContext.register(session, userContext, userLocale, userRoles, isMobile);
             for (UserActionListener listener: listeners) {
-    			listener.loggedIn(matchedUser, matchedUser.getInfo());
+    			listener.loggedIn(matchedUser, userInfo);
     		}
             
 			boolean hasCookie = false;
@@ -414,19 +432,15 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	
 	@Override
 	public IPersonalInfo getPersonalInfo(long userId) {
-		PersonalInfoImpl userInfo = new PersonalInfoImpl();
-		userInfo.setId(userId);
-		List<IPersonalInfo> result = CommonModel.INSTANCE.searchPersonInfo(userInfo, null, 0, 1);
-		return result.get(0);
+		if (userSecondaryCache.containsKey(userId)) {
+			return userSecondaryCache.get(userId);
+		}
+		return CommonModel.INSTANCE.get(userId, PersonalInfoImpl.class);
 	}
 	
 	@Override
 	public String getUserName(long userId) {
-		PersonalInfoImpl userInfo = new PersonalInfoImpl();
-		userInfo.setId(userId);
-		List<IPersonalInfo> result = CommonModel.INSTANCE.searchPersonInfo(userInfo, null, 0, 1);
-		IPersonalInfo iPersonalInfo = result.get(0);
-		return CustomerInfoUtil.getCustomerEnterpriseBasicInfo(iPersonalInfo);
+		return CustomerInfoUtil.getCustomerEnterpriseBasicInfo(getPersonalInfo(userId));
 	}
 	
 	@Override

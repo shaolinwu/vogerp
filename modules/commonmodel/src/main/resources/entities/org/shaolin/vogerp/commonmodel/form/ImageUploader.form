@@ -41,7 +41,7 @@
             RefForm form = new RefForm("onlineSearchForm", "org.shaolin.vogerp.commonmodel.form.ImageSearcher", input);
             @page.addElement(form);
             
-            form.openInWindows("在线搜索", null, 750, 600);
+            form.openInWindows("在线搜索", null, true);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>

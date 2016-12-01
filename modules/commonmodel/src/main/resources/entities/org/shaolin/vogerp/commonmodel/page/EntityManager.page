@@ -7,7 +7,7 @@
 	<description>系统组件管理</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 	<ns2:eventHandler functionName="ReloadFunction">
-		<ns2:ops xsi:type="ns2:OpCallAjaxType" name="openPage">
+		<ns2:ops xsi:type="ns2:OpCallAjaxType" name="reloadFunction-20161011-1513">
 			<ns2:exp>
 				<ns2:expressionString><![CDATA[
 				import org.shaolin.uimaster.page.ajax.*;
@@ -27,6 +27,28 @@
 					
 					Dialog.showMessageDialog("Finished", "Information", Dialog.INFORMATION_MESSAGE, null);
                        @page.getButton("reloadBtn").setWidgetLabel("Reloaded.");
+				}
+				]]></ns2:expressionString>
+			</ns2:exp>
+		</ns2:ops>
+	</ns2:eventHandler>
+	<ns2:eventHandler functionName="testScript">
+		<ns2:ops xsi:type="ns2:OpCallAjaxType" name="testScript-20161011-1513">
+			<ns2:exp>
+				<ns2:expressionString><![CDATA[
+				import org.shaolin.uimaster.page.ajax.*;
+				import org.shaolin.uimaster.page.AjaxContext;
+				import org.shaolin.bmdp.runtime.AppContext;
+				import org.shaolin.javacc.StatementEvaluator;
+                import org.shaolin.javacc.StatementParser;
+                import org.shaolin.javacc.statement.CompilationUnit;
+				{
+                    String value = @page.getTextArea("scriptCodeUI").getValue();
+                    if (value != null && value.trim().length() > 0) {
+                       CompilationUnit unit = StatementParser.parse(value);
+                       StatementEvaluator.evaluate(unit);
+					   Dialog.showMessageDialog("Finished", "Information", Dialog.INFORMATION_MESSAGE, null);
+                    }
 				}
 				]]></ns2:expressionString>
 			</ns2:exp>
@@ -136,6 +158,48 @@
                     <ns2:refEntity UIID="registryTable">
 		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.RegistryTable" />
 		            </ns2:refEntity>  
+                </ns2:tab>
+                <ns2:tab uiid="InterfacePanel">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>第三方接口调试</ns2:value>
+                    </ns2:title>
+                    <ns2:panel UIID="InterfacePanel">
+		                <ns2:layout xsi:type="ns2:TableLayoutType">
+		                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+		                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+		                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+		                </ns2:layout>
+		                <ns2:component xsi:type="ns2:UITextAreaType" UIID="scriptCodeUI">
+		                    <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+		                    <ns2:title xsi:type="ns2:StringPropertyType">
+		                        <ns2:value>JavaCC Script Code</ns2:value>
+		                    </ns2:title>
+		                    <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+		                        <ns2:value>JavaCC Script Code</ns2:value>
+		                    </ns2:widgetLabel>
+		                    <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+		                        <ns2:value>false</ns2:value>
+		                    </ns2:allowBlank>
+		                </ns2:component>
+		                <ns2:component xsi:type="ns2:UIButtonType" UIID="testBtn">
+		                    <ns2:text xsi:type="ns2:StringPropertyType">
+		                        <ns2:value>Test</ns2:value>
+		                    </ns2:text>
+		                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
+		                        <ns2:handler functionName="testScript" />
+		                    </ns2:EventListener>
+		                </ns2:component>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>scriptCodeUI</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="0" y="0" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>testBtn</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="0" y="1" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+		            </ns2:panel> 
                 </ns2:tab>
             </ns2:component>
             <ns2:layoutConstraint>
