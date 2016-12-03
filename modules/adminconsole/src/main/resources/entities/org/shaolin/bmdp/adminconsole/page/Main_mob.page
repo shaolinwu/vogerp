@@ -39,6 +39,8 @@
 		    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
                 <ns2:expressionString><![CDATA[
                 {
+                   var link = "webflow.do?_chunkname=org.shaolin.vogerp.commonmodel.diagram.ModularityModel&_nodename=OnlineOrderList&_page=org.shaolin.vogerp.ecommercial.page.OnlineOrderList&_framename=onlineOrderList&_framePrefix=";
+                   this.clickFunctionNode(link,'\u5728\u7EBF\u62A2\u5355','null');
                 }
                 ]]></ns2:expressionString>
             </ns2:ops>
@@ -385,7 +387,7 @@
 			    </ns2:layout>
 			    <ns2:component xsi:type="ns2:UILabelType" UIID="mainIcon">
                    <ns2:text xsi:type="ns2:StringPropertyType">
-                       <ns2:value>主页</ns2:value>
+                       <ns2:value>开始抢单</ns2:value>
                    </ns2:text>
                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
                         <ns2:handler functionName="showMainInfo" />

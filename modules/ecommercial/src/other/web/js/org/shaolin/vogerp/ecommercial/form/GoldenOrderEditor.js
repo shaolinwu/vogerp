@@ -12,16 +12,9 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     ({
         ui: elementList[prefix + "funcsPanel"]
         ,vertical: true
+        ,closeOthersByDefault: true
         ,items: []
-        ,subComponents: [prefix + "priceSelectorPanel",prefix + "photoPanel",prefix + "deliveryInfoPanel",prefix + "prodcutInfoPanel"]
-    });
-    var priceSelector = new org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector({"prefix":prefix + "priceSelector."});
-
-    var priceSelectorPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "priceSelectorPanel"]
-        ,items: []
-        ,subComponents: [prefix + "priceSelector"]
+        ,subComponents: [prefix + "photoPanel",prefix + "prodcutInfoPanel",prefix + "deliveryInfoPanel"]
     });
     var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
 
@@ -35,16 +28,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         ui: elementList[prefix + "serialNumberUI"]
     });
 
-    var isPurchaseOrderUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "isPurchaseOrderUILabel"]
-    });
-
-    var typeUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "typeUI"]
-    });
-
     var publishedCustomerIdUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "publishedCustomerIdUILabel"]
@@ -53,6 +36,16 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     var publishedCustomerIdUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "publishedCustomerIdUI"]
+    });
+
+    var isPurchaseOrderUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "isPurchaseOrderUILabel"]
+    });
+
+    var typeUI = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "typeUI"]
     });
 
     var descriptionUILabel = new UIMaster.ui.label
@@ -89,21 +82,13 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "isPurchaseOrderUILabel",prefix + "typeUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "isPurchaseOrderUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI"]
     });
     var photoPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "photoPanel"]
         ,items: []
         ,subComponents: [prefix + "photoUI",prefix + "attributePanel"]
-    });
-    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo({"prefix":prefix + "deliveryInfoUI."});
-
-    var deliveryInfoPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "deliveryInfoPanel"]
-        ,items: []
-        ,subComponents: [prefix + "deliveryInfoUI"]
     });
     var htmlDescUI = new UIMaster.ui.textarea
     ({
@@ -118,6 +103,14 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         ui: elementList[prefix + "prodcutInfoPanel"]
         ,items: []
         ,subComponents: [prefix + "htmlDescUI"]
+    });
+    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo({"prefix":prefix + "deliveryInfoUI."});
+
+    var deliveryInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "deliveryInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "deliveryInfoUI"]
     });
 
     var okbtn = new UIMaster.ui.button
@@ -154,10 +147,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.funcsPanel=funcsPanel;
 
-    Form.priceSelectorPanel=priceSelectorPanel;
-
-    Form.priceSelector=priceSelector;
-
     Form.photoPanel=photoPanel;
 
     Form.photoUI=photoUI;
@@ -168,13 +157,13 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.serialNumberUI=serialNumberUI;
 
-    Form.isPurchaseOrderUILabel=isPurchaseOrderUILabel;
-
-    Form.typeUI=typeUI;
-
     Form.publishedCustomerIdUILabel=publishedCustomerIdUILabel;
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
+
+    Form.isPurchaseOrderUILabel=isPurchaseOrderUILabel;
+
+    Form.typeUI=typeUI;
 
     Form.descriptionUILabel=descriptionUILabel;
 
@@ -188,13 +177,13 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.estimatedPriceUI=estimatedPriceUI;
 
-    Form.deliveryInfoPanel=deliveryInfoPanel;
-
-    Form.deliveryInfoUI=deliveryInfoUI;
-
     Form.prodcutInfoPanel=prodcutInfoPanel;
 
     Form.htmlDescUI=htmlDescUI;
+
+    Form.deliveryInfoPanel=deliveryInfoPanel;
+
+    Form.deliveryInfoUI=deliveryInfoUI;
 
     Form.okbtn=okbtn;
 
@@ -206,10 +195,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.funcsPanel=funcsPanel;
 
-    Form.priceSelectorPanel=priceSelectorPanel;
-
-    Form.priceSelector=priceSelector;
-
     Form.photoPanel=photoPanel;
 
     Form.photoUI=photoUI;
@@ -220,13 +205,13 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.serialNumberUI=serialNumberUI;
 
-    Form.isPurchaseOrderUILabel=isPurchaseOrderUILabel;
-
-    Form.typeUI=typeUI;
-
     Form.publishedCustomerIdUILabel=publishedCustomerIdUILabel;
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
+
+    Form.isPurchaseOrderUILabel=isPurchaseOrderUILabel;
+
+    Form.typeUI=typeUI;
 
     Form.descriptionUILabel=descriptionUILabel;
 
@@ -240,13 +225,13 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.estimatedPriceUI=estimatedPriceUI;
 
-    Form.deliveryInfoPanel=deliveryInfoPanel;
-
-    Form.deliveryInfoUI=deliveryInfoUI;
-
     Form.prodcutInfoPanel=prodcutInfoPanel;
 
     Form.htmlDescUI=htmlDescUI;
+
+    Form.deliveryInfoPanel=deliveryInfoPanel;
+
+    Form.deliveryInfoUI=deliveryInfoUI;
 
     Form.actionPanel=actionPanel;
 
@@ -261,7 +246,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         
         { 
         if (this.idUI.value != "0") {
-           this.funcsPanel.collapseTab(0);
+           //this.funcsPanel.collapseTab(0);
         }
         }
     
@@ -269,8 +254,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     };
 
     Form.Save = org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Save;
-
-    Form.SelectPrice = org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_SelectPrice;
 
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Cancel;
 
@@ -303,21 +286,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20160416-173334",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Save */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_SelectPrice(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_SelectPrice */
-        var o = this;
-        var UIEntity = this;
-
-        {   
-            this.priceSelector.productTree.sync();
-        }
-        
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectPrice-20160416-173334",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_SelectPrice */
 
 
     /* auto generated eventlistener function declaration */

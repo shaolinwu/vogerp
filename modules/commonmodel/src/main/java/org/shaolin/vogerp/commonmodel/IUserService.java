@@ -22,6 +22,8 @@ public interface IUserService {
 	
 	public void addListener(UserActionListener listener);
 	
+	public void updateUserCache(IPersonalInfo user);
+	
 	public boolean checkNewAccount(String userAccount);
 	
 	public boolean register(IRegisterInfo info, HttpServletRequest request);
@@ -64,6 +66,8 @@ public interface IUserService {
 	 * @return
 	 */
 	public String getUserOrganizationType();
+	
+	public int getOnlineUsers();
 	
 	/**
 	 * Get logined user Id.

@@ -206,6 +206,11 @@
                     <value>disabled</value>
                 </ns2:value>
             </ns2:Property>
+            <ns2:Property name="maxHeight" >
+                <ns2:value xsi:type="ns2:BooleanPropertyType">
+                    <value>true</value>
+                </ns2:value>
+            </ns2:Property>
           </ns2:component>
 	      <ns2:layoutConstraint>
             <ns2:componentId>htmlDescUI</ns2:componentId>

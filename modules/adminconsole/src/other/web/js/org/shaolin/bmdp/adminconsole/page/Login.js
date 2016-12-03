@@ -3,6 +3,12 @@
 function org_shaolin_bmdp_adminconsole_page_Login(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var helpIcon = new UIMaster.ui.image
+    ({
+        ui: elementList[prefix + "helpIcon"]
+        ,text: "????"
+    });
+
     var vogerplogo = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "vogerplogo"]
@@ -76,11 +82,20 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         ,subComponents: [prefix + "vogerplogo"]
     });
 
+    var topBannerPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "topBannerPanel"]
+        ,items: []
+        ,subComponents: [prefix + "helpIcon"]
+    });
+
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [vogerplogo,errorInfo,userName,password,veriCodeQuestion,veriCode,loginBtn,registerBtn,bottomPanelInfo,topPanel,loginPanel,actionPanel,bottomPanel]
+        ,items: [helpIcon,vogerplogo,errorInfo,userName,password,veriCodeQuestion,veriCode,loginBtn,registerBtn,bottomPanelInfo,topBannerPanel,topPanel,loginPanel,actionPanel,bottomPanel]
     });
+
+    Form.helpIcon=helpIcon;
 
     Form.vogerplogo=vogerplogo;
 
@@ -99,6 +114,10 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     Form.registerBtn=registerBtn;
 
     Form.bottomPanelInfo=bottomPanelInfo;
+
+    Form.topBannerPanel=topBannerPanel;
+
+    Form.helpIcon=helpIcon;
 
     Form.topPanel=topPanel;
 
@@ -141,6 +160,8 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     Form.genVerifiCode = org_shaolin_bmdp_adminconsole_page_Login_genVerifiCode;
 
     Form.verifiCode = org_shaolin_bmdp_adminconsole_page_Login_verifiCode;
+
+    Form.showHelp = org_shaolin_bmdp_adminconsole_page_Login_showHelp;
 
     Form.Login = org_shaolin_bmdp_adminconsole_page_Login_Login;
 
@@ -193,6 +214,17 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifiCode-20151227-1839",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_verifiCode */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Login_showHelp(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_showHelp */
+        var o = this;
+        var UIEntity = this;
+
+		      {
+		        window.open("http://120.25.197.58:8080/xwiki");
+		      }
+		          }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_showHelp */
 
 
     /* auto generated eventlistener function declaration */

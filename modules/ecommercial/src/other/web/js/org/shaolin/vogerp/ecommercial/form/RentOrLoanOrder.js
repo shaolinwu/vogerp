@@ -41,6 +41,16 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
         ui: elementList[prefix + "estimatedPriceUI"]
     });
 
+    var dateMethodUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "dateMethodUILabel"]
+    });
+
+    var dateMethodUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "dateMethodUI"]
+    });
+
     var publishedCustomerIdUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "publishedCustomerIdUILabel"]
@@ -65,7 +75,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "createDateUILabel",prefix + "createDateUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "dateMethodUILabel",prefix + "dateMethodUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "createDateUILabel",prefix + "createDateUI"]
     });
     var photoPanel = new UIMaster.ui.panel
     ({
@@ -79,6 +89,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
         ,hiddenToolbar: true
         ,persistable: false
         ,disabled: "disabled"
+        ,maxHeight: true
     });
 
     var prodcutInfoPanel = new UIMaster.ui.panel
@@ -133,6 +144,10 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
 
     Form.estimatedPriceUI=estimatedPriceUI;
 
+    Form.dateMethodUILabel=dateMethodUILabel;
+
+    Form.dateMethodUI=dateMethodUI;
+
     Form.publishedCustomerIdUILabel=publishedCustomerIdUILabel;
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
@@ -168,6 +183,10 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
     Form.estimatedPriceUILabel=estimatedPriceUILabel;
 
     Form.estimatedPriceUI=estimatedPriceUI;
+
+    Form.dateMethodUILabel=dateMethodUILabel;
+
+    Form.dateMethodUI=dateMethodUI;
 
     Form.publishedCustomerIdUILabel=publishedCustomerIdUILabel;
 

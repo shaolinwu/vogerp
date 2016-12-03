@@ -63,7 +63,6 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	// for boosting the user login speed and getting hot user details.
     private final ICache<Long, PersonalInfoImpl> userSecondaryCache;
 	
-    //TODO:
 	private static List<Long> onlineUserIds = new ArrayList<Long>();
 	
 	public UserServiceImpl() {
@@ -82,6 +81,14 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 				+ "-" + parse.format(parse.getHours(), 2) 
 				+ "" + parse.format(parse.getSeconds(), 2) 
 				+ "-" + (((int)(Math.random() * 1000)) + 1);
+	}
+	
+	public void updateUserCache(IPersonalInfo user) {
+		if (userSecondaryCache.containsKey(user.getId())) {
+			userSecondaryCache.put(user.getId(), (PersonalInfoImpl)user);
+        } else {
+        	userSecondaryCache.put(user.getId(), (PersonalInfoImpl)user);
+        }
 	}
 	
 	public boolean checkNewAccount(String userAccount) {
@@ -370,6 +377,10 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	@Override
 	public boolean isOnline(long userId) {
 		return onlineUserIds.contains(userId);
+	}
+	
+	public int getOnlineUsers() {
+		return onlineUserIds.size();
 	}
 	
 	@Override

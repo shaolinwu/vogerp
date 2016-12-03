@@ -11,7 +11,7 @@ public class OrderUtil {
 		return "SOSN-" + parse.getCNDateString() 
 				+ "-" + parse.format(parse.getHours(), 2) 
 				+ "" + parse.format(parse.getSeconds(), 2)
-				+ "-" + parse.getMilliSeconds();
+				+ "-" + (int)(Math.random() * 100000);
 	}
 	
 	public synchronized static String genPurchaseOrderSerialNumber() {
@@ -19,7 +19,7 @@ public class OrderUtil {
 		return "PCOSN-" + parse.getCNDateString() 
 				+ "-" + parse.format(parse.getHours(), 2) 
 				+ "" + parse.format(parse.getSeconds(), 2)
-				+ "-" + parse.getMilliSeconds();
+				+ "-" + (int)(Math.random() * 100000);
 	}
 
 }

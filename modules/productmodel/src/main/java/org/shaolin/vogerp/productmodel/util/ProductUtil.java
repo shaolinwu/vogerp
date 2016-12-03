@@ -28,14 +28,16 @@ public class ProductUtil {
 		DateParser parse = new DateParser(new Date());
 		return "PSN-" + parse.getCNDateString() 
 				+ "-" + parse.format(parse.getHours(), 2) 
-				+ "" + parse.format(parse.getSeconds(), 2);
+				+ "" + parse.format(parse.getSeconds(), 2)
+				+ "-" + (int)(Math.random() * 100000);
 	}
 
 	public synchronized static String genStorageSerialNumber() {
 		DateParser parse = new DateParser(new Date());
 		return "PSN-" + parse.getCNDateString() 
 				+ "-" + parse.format(parse.getHours(), 2) 
-				+ "" + parse.format(parse.getSeconds(), 2);
+				+ "" + parse.format(parse.getSeconds(), 2)
+				+ "-" + (int)(Math.random() * 10000);
 	}
 	
 	public synchronized static String genProductCode() {

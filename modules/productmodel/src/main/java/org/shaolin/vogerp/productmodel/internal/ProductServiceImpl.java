@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.criterion.Order;
+import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.cache.CacheManager;
 import org.shaolin.bmdp.runtime.cache.ICache;
@@ -230,6 +231,8 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		if (productPriceCache.containsKey(orgId)) {
 			return productPriceCache.get(orgId);
 		}
+		
+		HibernateUtil.getSession();
 		
         ProductImpl criteria = new ProductImpl();
 		criteria.setParentId(0);

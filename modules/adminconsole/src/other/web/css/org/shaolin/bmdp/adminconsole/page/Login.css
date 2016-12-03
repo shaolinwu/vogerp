@@ -1,3 +1,6 @@
+#topBannerPanel {height: 30px; background: #f5f5f5;}
+#div-topBannerPanel-0_0 img {cursor: pointer;height: 20px;float: right;}
+#div-topBannerPanel-0_0 span {float: right;}
 #div-topPanel-0_1 {text-align: center; vertical-align: middle;}
 #loginPanel {
     position: absolute;

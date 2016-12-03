@@ -21,12 +21,18 @@
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
+        import org.shaolin.bmdp.utils.DateUtil;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.bmdp.runtime.security.UserContext;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
-        import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
+        import org.shaolin.vogerp.commonmodel.IUserService; 
+        import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
         import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
         import org.shaolin.vogerp.productmodel.util.ProductUtil;
-        import org.shaolin.bmdp.utils.DateUtil;
+        import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
         { 
             Tree tree = @page.getTree("priceSelector.productTree");
             ProductPriceImpl price = (ProductPriceImpl)tree.getSelectedObject();
@@ -36,24 +42,41 @@
             }
             
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            HashMap out = (HashMap)form.ui2Data();
-            GoldenOrderImpl beObject = (GoldenOrderImpl)out.get("beObject");
+
+            IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+            GoldenOrderImpl order = new GoldenOrderImpl();
+            order.setOrgId(UserContext.getUserContext().getOrgId());
+            order.setSerialNumber(OrderUtil.genSerialNumber());
+            order.setStatus(OrderStatusType.CREATED);
+            order.setPublishedCustomerId(service.getUserId());
+            order.setPublishedCustomer((PersonalInfoImpl)service.getPersonalInfo(service.getUserId()));
+            order.setCreateDate(new java.util.Date());
+            order.setCount(1);
             
-            beObject.setProductId(price.getProduct().getId());
-            beObject.setDescription(price.getProduct().getName() + "\n" + ProductUtil.getPricePackage(price));
-            beObject.setHtmlDesc(price.getProduct().getHtmlDesc());
-            beObject.setPhotos(price.getProduct().getPhotos());
-            beObject.setEstimatedPrice(price.getPrice());
-            java.util.Date expireDate = new java.util.Date();
-            DateUtil.increaseDays(expireDate, 7);// plus 7 days as default.
-            beObject.setExpiredDate(expireDate);
-            beObject.setCount(1);
+            order.setProductId(price.getProduct().getId());
+            order.setDescription(price.getProduct().getName() + "\n" + ProductUtil.getPricePackage(price));
             
-            form.closeIfinWindows(true);
-            @page.removeForm(@page.getEntityUiid()); 
+            String resourceId = OrderUtil.genResourceId();
+            if (price.getProduct().getHtmlDesc() != null && price.getProduct().getHtmlDesc().length() > 0) {
+               order.setHtmlDesc(price.getProduct().getHtmlDesc());
+            } else {
+               order.setHtmlDesc("/product/" + resourceId + "/desc.html");
+            }
+            if (price.getProduct().getPhotos() != null && price.getProduct().getPhotos().length() > 0) {
+               order.setPhotos(price.getProduct().getPhotos());
+            } else {
+               order.setPhotos("/product/" + resourceId + "/images");
+            }
+            
+            order.setEstimatedPrice(price.getPrice());
+            // java.util.Date expireDate = new java.util.Date();
+            // DateUtil.increaseDays(expireDate, 7);
+            // plus 7 days as default.
+            // beObject.setExpiredDate(expireDate);
+            order.setCount(1);
             
             HashMap input = new HashMap();
-            input.put("beObject", beObject);
+            input.put("beObject", order);
             input.put("editable", new Boolean(true));
             RefForm form1 = new RefForm("goldenOrderForm1", "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor", input);
             @page.addElement(form1);
@@ -103,9 +126,8 @@
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="Next"></ns2:handler>
         </ns2:EventListener>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>Savebtn</ns2:key>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>下一步</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">

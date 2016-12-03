@@ -253,6 +253,11 @@
             <bediagram:name>dateCount</bediagram:name>
             <bediagram:type xsi:type="bediagram:IntType" />
         </bediagram:member>
+        <bediagram:member>
+            <!-- the number of date type. -->
+            <bediagram:name>deposit</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
     </bediagram:beEntity>    
 	
 	<bediagram:beEntity>

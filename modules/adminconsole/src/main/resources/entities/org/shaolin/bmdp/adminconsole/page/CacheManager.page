@@ -4,7 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.bmdp.adminconsole.page.CacheManager</entityName>
 	<systemVersion>0</systemVersion>
-	<description>缓存管理</description>
+	<description>本地缓存管理</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="ReloadFunction">
 			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="openPage">
@@ -43,6 +43,63 @@
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
+        <ns2:eventHandler functionName="calculateCache">
+           <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+	         <ns2:expressionString><![CDATA[
+	         
+	         
+	         ]]></ns2:expressionString>
+	       </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="updateMaxSize">
+           <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+	         <ns2:expressionString><![CDATA[
+	         {
+	          var o = this;
+	          new UIMaster.ui.dialog({
+	              dialogType: UIMaster.ui.dialog.INPUT_DIALOG,
+	              message:'\u8BF7\u8F93\u5165\u65B0\u7684\u4E8C\u7EA7\u7F13\u5B58\u6700\u5927\u503C',
+	              messageType:UIMaster.ui.dialog.Information,
+	              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+	              title:'',
+	              height:150,
+	              width:300,
+	              handler: function(v) {
+	                 if (this.value == null || this.value == "" || isNaN(this.value) || parseInt(this.value) < 1) {
+	                    return;
+	                 }
+	                 Form.cacheMaxSizeUI.setValue(this.value);
+	                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"updateMaxSize-2016122-0849",UIMaster.getValue(eventsource),o.__entityName);
+	              }
+	          }).open();
+	          return;
+	         }
+	         ]]></ns2:expressionString>
+	     </ns2:ops>
+           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="updateMaxSize-2016122-0849">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.List;
+                    import java.util.ArrayList;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.cache.CacheManager;
+                    import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+                    import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.bmdp.runtime.cache.CacheManager;
+                    import org.shaolin.bmdp.runtime.cache.ICacheInfo;
+                    import org.shaolin.bmdp.adminconsole.be.LifeServiceItemImpl;
+                    {
+                        Table customerInfoTable = (Table)@page.getElement("cacheInfoTable");
+                        if (customerInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        ICacheInfo item = (ICacheInfo)customerInfoTable.getSelectedRow();
+                        CacheManager.getInstance().setCacheMaxSize(item.getName(), @page.getHidden("cacheMaxSizeUI").getValue());
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 		    <ns2:UISkin xsi:type="ns2:UISkinType">
                 <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
@@ -52,6 +109,7 @@
                     </ns2:value>
                 </ns2:param>
             </ns2:UISkin>
+            <ns2:component xsi:type="ns2:UIHiddenType" UIID="cacheMaxSizeUI" />
 			<ns2:layout xsi:type="ns2:TableLayoutType">
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
@@ -79,7 +137,7 @@
 		                            import java.util.List;
 		                            import org.shaolin.bmdp.runtime.cache.CacheManager;
 		                            {
-		                            	return org.shaolin.bmdp.runtime.cache.CacheManager.getInstance().getCacheBes();
+		                            	return org.shaolin.bmdp.runtime.cache.CacheManager.getInstance().getCaches();
 		                            }]]></ns2:expressionString>
 		                        </ns2:expression>
 		                    </ns2:query>
@@ -106,6 +164,13 @@
 		                    </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>MaxSize</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.maxSize</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
 		                            <ns2:value>ReadCount</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.readCount</ns2:beFieldId>
@@ -119,11 +184,27 @@
 		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
 		                    </ns2:column>
 		                    <ns2:defaultActions>
-		                        <ns2:defaultNewAction>createAccount</ns2:defaultNewAction>
 		                        <ns2:defaultOpenAction>openAccount</ns2:defaultOpenAction>
-		                        <ns2:defaultEnableAction>enableUser</ns2:defaultEnableAction>
-		                        <ns2:defaultDisableAction>disableUser</ns2:defaultDisableAction>
 		                    </ns2:defaultActions>
+		                    <ns2:actionGroup>
+                                <ns2:type>radio</ns2:type>
+                                <ns2:action>
+                                    <ns2:uiid>updateMaxSize</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>设置缓存最大值</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>updateMaxSize</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>calculateCache</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>计算缓存消耗(MB)</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>calculateCache</ns2:function>
+                                </ns2:action>
+                             </ns2:actionGroup>    
 		                </ns2:component>
 		                <ns2:layoutConstraint>
 		                    <ns2:componentId>cacheInfoTable</ns2:componentId>

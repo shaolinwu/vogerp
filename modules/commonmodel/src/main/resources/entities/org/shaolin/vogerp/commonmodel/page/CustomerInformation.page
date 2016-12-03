@@ -217,8 +217,8 @@
 		    import org.shaolin.vogerp.commonmodel.IOrganizationService;
 			{
 			  UserContext userContext = (UserContext)@odContext.getRequest().getSession().getAttribute(WebflowConstants.USER_SESSION_KEY);
-			  IUserService moduleService = (IUserService)AppContext.get().getService(IUserService.class);
-			  $personalAccount = (PersonalAccountImpl)moduleService.getPersonalAccount(userContext.getUserId());
+			  IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+			  $personalAccount = (PersonalAccountImpl)userService.getPersonalAccount(userContext.getUserId());
 			  $personalInfo = $personalAccount.getInfo();
 			  
 			  @odContext.executeAllMappings();

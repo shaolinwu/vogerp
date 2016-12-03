@@ -17,9 +17,13 @@
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
+        import org.shaolin.bmdp.runtime.AppContext;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
+		import org.shaolin.bmdp.runtime.security.UserContext;
+	    import org.shaolin.vogerp.commonmodel.IUserService;
         import org.shaolin.vogerp.commonmodel.ce.EmployeeLevel;
+        import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
         import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
         { 
@@ -33,7 +37,9 @@
             } else {
                 CommonModel.INSTANCE.update(defaultUser);
             }
-
+            IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+            userService.updateUserCache((IPersonalInfo)defaultUser);
+            
             if (form != null && form.isInWindows()) {
                 form.closeIfinWindows();
                 @page.removeForm(@page.getEntityUiid());

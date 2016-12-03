@@ -10,13 +10,11 @@ import org.shaolin.bmdp.utils.DateParser;
 import org.shaolin.bmdp.utils.LockManager;
 import org.shaolin.uimaster.page.exception.FormatException;
 import org.shaolin.uimaster.page.od.formats.FormatUtil;
-import org.shaolin.vogerp.ecommercial.be.GOOfferPriceImpl;
 import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
 import org.shaolin.vogerp.ecommercial.be.IEOrder;
 import org.shaolin.vogerp.ecommercial.be.IGoldenOrder;
 import org.shaolin.vogerp.ecommercial.be.IOfferPrice;
 import org.shaolin.vogerp.ecommercial.be.IRentOrLoanOrder;
-import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
 import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
 import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
 import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
@@ -31,7 +29,8 @@ public class OrderUtil {
 		DateParser parse = new DateParser(new Date());
 		return "GOSN-" + parse.getCNDateString() + "-"
 				+ parse.format(parse.getHours(), 2) + ""
-				+ parse.format(parse.getSeconds(), 2);
+				+ parse.format(parse.getSeconds(), 2)
+				+ "-" + (int)(Math.random() * 100000);
 	}
 	
 	public synchronized static String genConversationId() {

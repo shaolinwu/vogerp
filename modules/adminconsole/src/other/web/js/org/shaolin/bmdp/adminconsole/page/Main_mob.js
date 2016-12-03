@@ -313,6 +313,8 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         var UIEntity = this;
 
                 {
+                   var link = "webflow.do?_chunkname=org.shaolin.vogerp.commonmodel.diagram.ModularityModel&_nodename=OnlineOrderList&_page=org.shaolin.vogerp.ecommercial.page.OnlineOrderList&_framename=onlineOrderList&_framePrefix=";
+                   this.clickFunctionNode(link,'\u5728\u7EBF\u62A2\u5355','null');
                 }
                     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_showMainInfo */
 

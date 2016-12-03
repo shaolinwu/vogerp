@@ -7,18 +7,7 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "interestEOrderPanel",prefix + "goldenOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "takenGOrderInfoPanel",prefix + "takenROrderInfoPanel"]
-    });
-    var interestEOrderTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "interestEOrderTable"]
-    });
-
-    var interestEOrderPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "interestEOrderPanel"]
-        ,items: []
-        ,subComponents: [prefix + "interestEOrderTable"]
+        ,subComponents: [prefix + "goldenOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "interestEOrderPanel",prefix + "takenGOrderInfoPanel",prefix + "takenROrderInfoPanel"]
     });
     var goldenOrderTable = new UIMaster.ui.objectlist
     ({
@@ -41,6 +30,17 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         ui: elementList[prefix + "rentOrderInfoPanel"]
         ,items: []
         ,subComponents: [prefix + "rentOrderTable"]
+    });
+    var interestEOrderTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "interestEOrderTable"]
+    });
+
+    var interestEOrderPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "interestEOrderPanel"]
+        ,items: []
+        ,subComponents: [prefix + "interestEOrderTable"]
     });
     var takengGOrderTable = new UIMaster.ui.objectlist
     ({
@@ -74,10 +74,6 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
     Form.functionsTab=functionsTab;
 
-    Form.interestEOrderPanel=interestEOrderPanel;
-
-    Form.interestEOrderTable=interestEOrderTable;
-
     Form.goldenOrderInfoPanel=goldenOrderInfoPanel;
 
     Form.goldenOrderTable=goldenOrderTable;
@@ -85,6 +81,10 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     Form.rentOrderInfoPanel=rentOrderInfoPanel;
 
     Form.rentOrderTable=rentOrderTable;
+
+    Form.interestEOrderPanel=interestEOrderPanel;
+
+    Form.interestEOrderTable=interestEOrderTable;
 
     Form.takenGOrderInfoPanel=takenGOrderInfoPanel;
 

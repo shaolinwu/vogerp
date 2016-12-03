@@ -91,11 +91,14 @@
                   import java.lang.StringBuffer;
 		          import org.shaolin.bmdp.utils.DateUtil;
 		          {
-		            long v = DateUtil.calCountDown($beObject.getExpiredDate());
-		            if (v > 0) {
-		               v = v/1000;
+		            if ($beObject.getExpiredDate() != null) {
+			            long v = DateUtil.calCountDown($beObject.getExpiredDate());
+			            if (v > 0) {
+			               v = v/1000;
+			            }
+			            return v;
 		            }
-		            return v;
+		            return 0;
 		          }]]></expressionString>
                   </ns2:expression>
              </ns2:value>

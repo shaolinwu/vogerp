@@ -92,7 +92,7 @@
       <ns2:component xsi:type="ns2:UILabelType" UIID="partyUILabel">
         <ns2:UIStyle></ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>当事人</ns2:value>
+          <ns2:value>联系人</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIComboBoxType" UIID="partyUI">
@@ -130,7 +130,7 @@
       <ns2:component xsi:type="ns2:UILabelType" UIID="contactUILabel">
         <ns2:UIStyle></ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>联系人</ns2:value>
+          <ns2:value>电话</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIComboBoxType" UIID="contactUI">

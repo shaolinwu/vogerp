@@ -79,6 +79,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
         ,hiddenToolbar: true
         ,persistable: false
         ,disabled: "disabled"
+        ,maxHeight: true
     });
 
     var prodcutInfoPanel = new UIMaster.ui.panel
