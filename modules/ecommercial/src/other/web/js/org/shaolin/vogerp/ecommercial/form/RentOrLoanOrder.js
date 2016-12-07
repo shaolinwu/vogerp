@@ -29,6 +29,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
     var descriptionUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "descriptionUI"]
+        ,showMaxLength: 100
     });
 
     var estimatedPriceUILabel = new UIMaster.ui.label
@@ -39,6 +40,16 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
     var estimatedPriceUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "estimatedPriceUI"]
+    });
+
+    var depositUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "depositUILabel"]
+    });
+
+    var depositUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "depositUI"]
     });
 
     var dateMethodUILabel = new UIMaster.ui.label
@@ -75,7 +86,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "dateMethodUILabel",prefix + "dateMethodUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "createDateUILabel",prefix + "createDateUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "depositUILabel",prefix + "depositUI",prefix + "dateMethodUILabel",prefix + "dateMethodUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "createDateUILabel",prefix + "createDateUI"]
     });
     var photoPanel = new UIMaster.ui.panel
     ({
@@ -99,6 +110,11 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
         ,subComponents: [prefix + "htmlDescUI"]
     });
 
+    var offerPriceBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "offerPriceBtn"]
+    });
+
     var cancelbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "cancelbtn"]
@@ -108,7 +124,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "cancelbtn"]
+        ,subComponents: [prefix + "offerPriceBtn",prefix + "cancelbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -121,7 +137,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [funcsPanel,cancelbtn,fieldPanel,actionPanel]
+        ,items: [funcsPanel,offerPriceBtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.funcsPanel=funcsPanel;
@@ -144,6 +160,10 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
 
     Form.estimatedPriceUI=estimatedPriceUI;
 
+    Form.depositUILabel=depositUILabel;
+
+    Form.depositUI=depositUI;
+
     Form.dateMethodUILabel=dateMethodUILabel;
 
     Form.dateMethodUI=dateMethodUI;
@@ -159,6 +179,8 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
     Form.prodcutInfoPanel=prodcutInfoPanel;
 
     Form.htmlDescUI=htmlDescUI;
+
+    Form.offerPriceBtn=offerPriceBtn;
 
     Form.cancelbtn=cancelbtn;
 
@@ -184,6 +206,10 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
 
     Form.estimatedPriceUI=estimatedPriceUI;
 
+    Form.depositUILabel=depositUILabel;
+
+    Form.depositUI=depositUI;
+
     Form.dateMethodUILabel=dateMethodUILabel;
 
     Form.dateMethodUI=dateMethodUI;
@@ -201,6 +227,8 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
     Form.htmlDescUI=htmlDescUI;
 
     Form.actionPanel=actionPanel;
+
+    Form.offerPriceBtn=offerPriceBtn;
 
     Form.cancelbtn=cancelbtn;
 
@@ -244,7 +272,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"OfferPrice-20160106-214008",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"OfferPrice-20160106-214009",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrder_OfferPrice */
 
 

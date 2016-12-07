@@ -30,7 +30,8 @@
 				{
 				    var link = eventsource;
 				    var name = event;
-				    showMobileFrame(link, name);
+				    window.location.href=link;
+				    //showMobileFrame(link, name);
 				}
 				]]></ns2:expressionString>
 			</ns2:ops>
@@ -538,6 +539,11 @@
 			     } 
 			     $(this.bottomPanel).children().each(function(){
 			        $(this).click(function(){ o.clearSelectedTab(); $(this).css("color","blue"); });
+			     });
+			     
+			     UIMaster.pageInitFunctions.push(function() {
+			        // clean all cached page for going back support.
+			        $.ajax({url:AJAX_SERVICE_URL,async:true,data:{_ajaxUserEvent:"tabpane",_uiid:"Form",_valueName:"removeExcludedPage",_value:"#GLOBAL#", _framePrefix:UIMaster.getFramePrefix(), r:Math.random()}});
 			     });
 			   }
 			]]></ns2:constructorCode>

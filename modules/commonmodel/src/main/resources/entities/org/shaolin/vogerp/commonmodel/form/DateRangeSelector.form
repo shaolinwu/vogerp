@@ -49,6 +49,11 @@
               <errMsg></errMsg>
            </ns2:validator>
         </ns2:validator>
+        <ns2:Property name="isNumber">
+           <ns2:value xsi:type="ns2:BooleanPropertyType">
+               <value>true</value>
+           </ns2:value>
+        </ns2:Property>
       </ns2:component>
 	  <ns2:layoutConstraint>
         <ns2:componentId>dateTypeUI</ns2:componentId>

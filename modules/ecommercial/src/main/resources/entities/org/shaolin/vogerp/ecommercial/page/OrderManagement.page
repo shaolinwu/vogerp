@@ -705,27 +705,6 @@
                                 </ns2:title>
                                 <ns2:beFieldId>rowBE.type</ns2:beFieldId>
                                 <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
-                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-                                   <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import java.lang.StringBuffer;
-                                        import org.shaolin.bmdp.utils.DateUtil;
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                                        import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
-                                        import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
-                                        import org.shaolin.vogerp.ecommercial.dao.OrderModel;
-                                        {
-                                           if ($rowBE.getStatus() == OrderStatusType.TAKEN) {
-                                              PersonalInfoImpl user = (PersonalInfoImpl)OrderModel.INSTANCE.get($rowBE.getTakenCustomerId(), PersonalInfoImpl.class);
-                                              $rowBE.setTakenCustomer(user);
-                                              return $rowBE.getStatus().getDisplayName() + "("+CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getTakenCustomer())+")";
-                                           } else {
-                                              return $rowBE.getStatus().getDisplayName();
-                                           }
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:rowExpression>s
                                 <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
                                     <ns2:expression xsi:type="ns2:ExpressionType">
                                         <ns2:expressionString><![CDATA[

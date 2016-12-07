@@ -187,18 +187,6 @@
       <ns2:component xsi:type="ns2:UILabelType" UIID="statusUI">
         <ns2:UIStyle></ns2:UIStyle>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="moreDetailUILabel0">
-        <ns2:UIStyle></ns2:UIStyle>
-        <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>-</ns2:value>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="moreDetailUILabel">
-        <ns2:UIStyle></ns2:UIStyle>
-        <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>更多详细资料...</ns2:value>
-        </ns2:text>
-      </ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>serialNumberUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
@@ -246,14 +234,6 @@
       <ns2:layoutConstraint>
         <ns2:componentId>statusUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass=""></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>moreDetailUILabel0</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>moreDetailUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>

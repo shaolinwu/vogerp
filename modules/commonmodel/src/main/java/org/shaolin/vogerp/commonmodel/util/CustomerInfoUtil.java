@@ -6,6 +6,7 @@ import java.util.List;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
 import org.shaolin.vogerp.commonmodel.be.IContactInfo;
@@ -20,9 +21,11 @@ public class CustomerInfoUtil {
 	public static String getCustomerEnterpriseBasicInfo(IPersonalInfo customer) {
 		if (customer.getOrganization() != null) {
 			return customer.getOrganization().getDescription() + "["
-					+ getCustomerBasicInfo(customer) + "]";
+					+ getCustomerBasicInfo(customer) + "]" + 
+					(UserContext.getUserContext().isVerified()?"[\u8BA4\u8BC1\u7528\u6237]":"");
 		} else {
-			return getCustomerBasicInfo(customer);
+			return getCustomerBasicInfo(customer) + 
+					(UserContext.getUserContext().isVerified()?"[\u8BA4\u8BC1\u7528\u6237]":"");
 		}
 	}
 	

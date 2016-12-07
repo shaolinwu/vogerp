@@ -194,6 +194,11 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UIDateType" UIID="birthdayUI">
       	<ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+      	<ns2:Property name="isDataOnly">
+          <ns2:value xsi:type="ns2:BooleanPropertyType">
+              <value>true</value>
+          </ns2:value>
+        </ns2:Property>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="languageUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -354,7 +359,7 @@
         </ns2:EventListener>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
           <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>Cancelbtn</ns2:key>
+          <ns2:key>Closebtn</ns2:key>
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>

@@ -40,6 +40,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView(json)
     var descriptionUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "descriptionUI"]
+        ,showMaxLength: 100
     });
 
     var estimatedPriceUILabel = new UIMaster.ui.label

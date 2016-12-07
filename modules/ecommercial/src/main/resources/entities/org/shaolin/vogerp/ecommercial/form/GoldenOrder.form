@@ -35,7 +35,7 @@
             RefForm form1 = new RefForm("gorderOfferPriceForm", "org.shaolin.vogerp.ecommercial.form.GOOfferPrice", input);
             @page.addElement(form1);
             
-            form1.openInWindows("竟价", null, 700, 400);
+            form1.openInWindows("竟价", null, true);
             
         }]]></expressionString>
       </ns2:exp>

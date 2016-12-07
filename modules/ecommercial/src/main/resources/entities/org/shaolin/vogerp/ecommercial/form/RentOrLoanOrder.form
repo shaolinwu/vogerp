@@ -17,7 +17,7 @@
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="OfferPrice">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="OfferPrice-20160106-214008">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="OfferPrice-20160106-214009">
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
@@ -35,7 +35,7 @@
             RefForm form1 = new RefForm("rorderOfferPriceForm", "org.shaolin.vogerp.ecommercial.form.ROOfferPrice", input);
             @page.addElement(form1);
             
-            form1.openInWindows("竟价", null, 700, 400);
+            form1.openInWindows("竟价", null, true);
             
         }]]></expressionString>
       </ns2:exp>
@@ -74,6 +74,7 @@
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
             <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
           </ns2:layout>
@@ -96,6 +97,12 @@
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="descriptionUI">
             <ns2:UIStyle></ns2:UIStyle>
+            <ns2:Property name="showMaxLength">
+               <ns2:value xsi:type="ns2:NumericPropertyType">
+                   <type>int</type>
+                   <value>100</value>
+               </ns2:value>
+            </ns2:Property>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="estimatedPriceUILabel">
             <ns2:UIStyle></ns2:UIStyle>
@@ -105,6 +112,15 @@
             </ns2:text>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="estimatedPriceUI">
+            <ns2:UIStyle></ns2:UIStyle>
+          </ns2:component>
+          <ns2:component xsi:type="ns2:UILabelType" UIID="depositUILabel">
+            <ns2:UIStyle></ns2:UIStyle>
+            <ns2:text xsi:type="ns2:StringPropertyType">
+              <ns2:value>押金</ns2:value>
+            </ns2:text>
+          </ns2:component>
+          <ns2:component xsi:type="ns2:UILabelType" UIID="depositUI">
             <ns2:UIStyle></ns2:UIStyle>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="dateMethodUILabel">
@@ -161,28 +177,36 @@
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>dateMethodUILabel</ns2:componentId>
+            <ns2:componentId>depositUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>dateMethodUI</ns2:componentId>
+            <ns2:componentId>depositUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>publishedCustomerIdUILabel</ns2:componentId>
+            <ns2:componentId>dateMethodUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>publishedCustomerIdUI</ns2:componentId>
+            <ns2:componentId>dateMethodUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>createDateUILabel</ns2:componentId>
+            <ns2:componentId>publishedCustomerIdUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>createDateUI</ns2:componentId>
+            <ns2:componentId>publishedCustomerIdUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass=""></ns2:constraint>
+          </ns2:layoutConstraint>
+          <ns2:layoutConstraint>
+            <ns2:componentId>createDateUILabel</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
+          </ns2:layoutConstraint>
+          <ns2:layoutConstraint>
+            <ns2:componentId>createDateUI</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
        </ns2:component>
        <ns2:layoutConstraint>
@@ -246,7 +270,16 @@
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="offerPriceBtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="OfferPrice"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>竟价</ns2:value>
+        </ns2:text>
+      </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="Cancel"></ns2:handler>
@@ -257,8 +290,12 @@
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:componentId>offerPriceBtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
@@ -323,15 +360,25 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.estimatedPrice" paramName="Currency"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="dateMethodUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithCurrency"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="depositUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.deposit" paramName="Currency"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="displayZero">
         <ns2:expression>
-          <expressionString>{return $beObject.getDateCount() + $beObject.getDateType().getDisplayName();}</expressionString>
+          <expressionString>true</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="dateMethodUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
+        <ns2:expression>
+          <expressionString>{return $beObject.getDateType().getDisplayName();}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping6">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="publishedCustomerIdUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
@@ -340,12 +387,12 @@
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping6">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping7">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithDate"></ns2:mappingRule>
       <ns2:UIComponent componentPath="createDateUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.createDate" paramName="Date"></ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping7">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping8">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="htmlDescUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.htmlDesc" paramName="StringData"></ns2:DataComponent>

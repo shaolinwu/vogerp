@@ -76,7 +76,25 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     var estimatedPriceUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "estimatedPriceUI"]
-    });
+        ,validators:[
+        {
+            func: function() {
+                
+	                    {
+	                        if (this.value.length > 0) {
+	                            if (/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(this.value)) {
+	                              return true;
+	                            } else {
+	                              return false;
+	                            }
+	                        }
+	                        return true;
+	                    }
+	                    
+            }
+            ,msg: ""
+        }
+]    });
 
     var attributePanel = new UIMaster.ui.panel
     ({

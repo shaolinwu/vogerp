@@ -21,6 +21,12 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="descriptionUI">
         <ns2:UIStyle></ns2:UIStyle>
+        <ns2:Property name="showMaxLength">
+           <ns2:value xsi:type="ns2:NumericPropertyType">
+               <type>int</type>
+               <value>100</value>
+           </ns2:value>
+        </ns2:Property>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIPanelType" UIID="bannerPanel">
           <ns2:layout xsi:type="ns2:TableLayoutType">

@@ -82,21 +82,11 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderOverView(json)
         ui: elementList[prefix + "statusUI"]
     });
 
-    var moreDetailUILabel0 = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "moreDetailUILabel0"]
-    });
-
-    var moreDetailUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "moreDetailUILabel"]
-    });
-
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "createDateUILabel",prefix + "createDateUI",prefix + "statusUILabel",prefix + "statusUI",prefix + "moreDetailUILabel0",prefix + "moreDetailUILabel"]
+        ,subComponents: [prefix + "idUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "createDateUILabel",prefix + "createDateUI",prefix + "statusUILabel",prefix + "statusUI"]
     });
 
     var topPanel = new UIMaster.ui.panel
@@ -109,7 +99,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderOverView(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [photoUI,expiratedDateUI,idUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,estimatedPriceUILabel,estimatedPriceUI,publishedCustomerIdUILabel,publishedCustomerIdUI,createDateUILabel,createDateUI,statusUILabel,statusUI,moreDetailUILabel0,moreDetailUILabel,topPanel,fieldPanel]
+        ,items: [photoUI,expiratedDateUI,idUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,estimatedPriceUILabel,estimatedPriceUI,publishedCustomerIdUILabel,publishedCustomerIdUI,createDateUILabel,createDateUI,statusUILabel,statusUI,topPanel,fieldPanel]
     });
 
     Form.photoUI=photoUI;
@@ -141,10 +131,6 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderOverView(json)
     Form.statusUILabel=statusUILabel;
 
     Form.statusUI=statusUI;
-
-    Form.moreDetailUILabel0=moreDetailUILabel0;
-
-    Form.moreDetailUILabel=moreDetailUILabel;
 
     Form.topPanel=topPanel;
 
@@ -179,10 +165,6 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderOverView(json)
     Form.statusUILabel=statusUILabel;
 
     Form.statusUI=statusUI;
-
-    Form.moreDetailUILabel0=moreDetailUILabel0;
-
-    Form.moreDetailUILabel=moreDetailUILabel;
 
     Form.user_constructor = function()
     {

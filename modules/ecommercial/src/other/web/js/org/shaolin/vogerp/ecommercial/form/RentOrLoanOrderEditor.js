@@ -62,6 +62,16 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
         ui: elementList[prefix + "rentDateTypeUI"]
     });
 
+    var dateCountUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "dateCountUILabel"]
+    });
+
+    var dateCountUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "dateCountUI"]
+    });
+
     var estimatedPriceUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "estimatedPriceUILabel"]
@@ -70,33 +80,59 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
     var estimatedPriceUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "estimatedPriceUI"]
-    });
-
-    var dateCountUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "dateCountUILabel"]
-    });
-
-    var dateCountUI = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "dateCountUI"]
-    });
+        ,validators:[
+        {
+            func: function() {
+                
+	                    {
+	                        if (this.value.length > 0) {
+	                            if (/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(this.value)) {
+	                              return true;
+	                            } else {
+	                              return false;
+	                            }
+	                        }
+	                        return true;
+	                    }
+	                    
+            }
+            ,msg: ""
+        }
+]    });
 
     var depositUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "depositUILabel"]
     });
 
-    var depositUI = new UIMaster.ui.label
+    var depositUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "depositUI"]
-    });
+        ,validators:[
+        {
+            func: function() {
+                
+	                    {
+	                        if (this.value.length > 0) {
+	                            if (/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(this.value)) {
+	                              return true;
+	                            } else {
+	                              return false;
+	                            }
+	                        }
+	                        return true;
+	                    }
+	                    
+            }
+            ,msg: ""
+        }
+]    });
 
     var attributePanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "rentTypeUILabel",prefix + "rentTypeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "rentDateTypeUILabel",prefix + "rentDateTypeUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "dateCountUILabel",prefix + "dateCountUI",prefix + "depositUILabel",prefix + "depositUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "rentTypeUILabel",prefix + "rentTypeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "rentDateTypeUILabel",prefix + "rentDateTypeUI",prefix + "dateCountUILabel",prefix + "dateCountUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "depositUILabel",prefix + "depositUI"]
     });
     var photoPanel = new UIMaster.ui.panel
     ({
@@ -185,13 +221,13 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
 
     Form.rentDateTypeUI=rentDateTypeUI;
 
-    Form.estimatedPriceUILabel=estimatedPriceUILabel;
-
-    Form.estimatedPriceUI=estimatedPriceUI;
-
     Form.dateCountUILabel=dateCountUILabel;
 
     Form.dateCountUI=dateCountUI;
+
+    Form.estimatedPriceUILabel=estimatedPriceUILabel;
+
+    Form.estimatedPriceUI=estimatedPriceUI;
 
     Form.depositUILabel=depositUILabel;
 
@@ -239,13 +275,13 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
 
     Form.rentDateTypeUI=rentDateTypeUI;
 
-    Form.estimatedPriceUILabel=estimatedPriceUILabel;
-
-    Form.estimatedPriceUI=estimatedPriceUI;
-
     Form.dateCountUILabel=dateCountUILabel;
 
     Form.dateCountUI=dateCountUI;
+
+    Form.estimatedPriceUILabel=estimatedPriceUILabel;
+
+    Form.estimatedPriceUI=estimatedPriceUI;
 
     Form.depositUILabel=depositUILabel;
 

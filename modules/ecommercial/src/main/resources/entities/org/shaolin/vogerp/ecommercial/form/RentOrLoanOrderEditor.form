@@ -150,13 +150,26 @@
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="rentDateTypeUILabel">
             <ns2:UIStyle></ns2:UIStyle>
-            <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-              <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
-              <ns2:key>org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder.dateType</ns2:key>
+            <ns2:text xsi:type="ns2:StringPropertyType">
+              <ns2:value>租赁周期类型</ns2:value>
             </ns2:text>
           </ns2:component>
           <ns2:component xsi:type="ns2:UIComboBoxType" UIID="rentDateTypeUI">
             <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+          </ns2:component>
+          <ns2:component xsi:type="ns2:UILabelType" UIID="dateCountUILabel">
+            <ns2:UIStyle></ns2:UIStyle>
+            <ns2:text xsi:type="ns2:StringPropertyType">
+              <ns2:value>几个周期</ns2:value>
+            </ns2:text>
+          </ns2:component>
+          <ns2:component xsi:type="ns2:UITextFieldType" UIID="dateCountUI">
+            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+            <ns2:Property name="isNumber">
+               <ns2:value xsi:type="ns2:BooleanPropertyType">
+                   <value>true</value>
+               </ns2:value>
+            </ns2:Property>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="estimatedPriceUILabel">
             <ns2:UIStyle></ns2:UIStyle>
@@ -169,15 +182,29 @@
             <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
               <ns2:value>false</ns2:value>
             </ns2:allowBlank>
-          </ns2:component>
-          <ns2:component xsi:type="ns2:UILabelType" UIID="dateCountUILabel">
-            <ns2:UIStyle></ns2:UIStyle>
-            <ns2:text xsi:type="ns2:StringPropertyType">
-              <ns2:value>几个周期</ns2:value>
-            </ns2:text>
-          </ns2:component>
-          <ns2:component xsi:type="ns2:UILabelType" UIID="dateCountUI">
-            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+            <ns2:validator xsi:type="ns2:ValidatorsPropertyType">
+	            <ns2:validator xsi:type="ns2:ValidatorPropertyType">
+	                    <isFuncRef>false</isFuncRef>
+	                    <funcCode><![CDATA[
+	                    {
+	                        if (this.value.length > 0) {
+	                            if (/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(this.value)) {
+	                              return true;
+	                            } else {
+	                              return false;
+	                            }
+	                        }
+	                        return true;
+	                    }
+	                    ]]></funcCode>
+	                    <errMsg></errMsg>
+	            </ns2:validator>
+	        </ns2:validator>
+	        <ns2:Property name="isNumber">
+               <ns2:value xsi:type="ns2:BooleanPropertyType">
+                   <value>true</value>
+               </ns2:value>
+            </ns2:Property>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="depositUILabel">
             <ns2:UIStyle></ns2:UIStyle>
@@ -185,8 +212,31 @@
               <ns2:value>押金</ns2:value>
             </ns2:text>
           </ns2:component>
-          <ns2:component xsi:type="ns2:UILabelType" UIID="depositUI">
+          <ns2:component xsi:type="ns2:UITextFieldType" UIID="depositUI">
             <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+            <ns2:validator xsi:type="ns2:ValidatorsPropertyType">
+	            <ns2:validator xsi:type="ns2:ValidatorPropertyType">
+	                    <isFuncRef>false</isFuncRef>
+	                    <funcCode><![CDATA[
+	                    {
+	                        if (this.value.length > 0) {
+	                            if (/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(this.value)) {
+	                              return true;
+	                            } else {
+	                              return false;
+	                            }
+	                        }
+	                        return true;
+	                    }
+	                    ]]></funcCode>
+	                    <errMsg></errMsg>
+	            </ns2:validator>
+	        </ns2:validator>
+	        <ns2:Property name="isNumber">
+               <ns2:value xsi:type="ns2:BooleanPropertyType">
+                   <value>true</value>
+               </ns2:value>
+            </ns2:Property>
           </ns2:component>
           <!-- 
           <ns2:component xsi:type="ns2:UILabelType" UIID="finalPriceUILabel">
@@ -249,19 +299,19 @@
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>estimatedPriceUILabel</ns2:componentId>
+            <ns2:componentId>dateCountUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>estimatedPriceUI</ns2:componentId>
+            <ns2:componentId>dateCountUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>dateCountUILabel</ns2:componentId>
+            <ns2:componentId>estimatedPriceUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>dateCountUI</ns2:componentId>
+            <ns2:componentId>estimatedPriceUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
@@ -527,14 +577,19 @@
       </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping10">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="descriptionUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.description" paramName="StringData"></ns2:DataComponent>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithCurrency"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="depositUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.deposit" paramName="Currency"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="displayZero">
+        <ns2:expression>
+          <expressionString>true</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping11">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="descriptionUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.description" paramName="StringData"></ns2:DataComponent>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="dateCountUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.dateCount" paramName="Number"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <!-- 
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping10">

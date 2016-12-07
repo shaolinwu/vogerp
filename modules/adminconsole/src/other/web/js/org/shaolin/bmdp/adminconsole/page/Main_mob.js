@@ -235,6 +235,11 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 			     $(this.bottomPanel).children().each(function(){
 			        $(this).click(function(){ o.clearSelectedTab(); $(this).css("color","blue"); });
 			     });
+			     
+			     UIMaster.pageInitFunctions.push(function() {
+			        // clean all cached page for going back support.
+			        $.ajax({url:AJAX_SERVICE_URL,async:true,data:{_ajaxUserEvent:"tabpane",_uiid:"Form",_valueName:"remveExcludedPage",_value:"#GLOBAL#", _framePrefix:UIMaster.getFramePrefix(), r:Math.random()}});
+			     });
 			   }
 			
             /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_Main_mob */
@@ -302,7 +307,8 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 				{
 				    var link = eventsource;
 				    var name = event;
-				    showMobileFrame(link, name);
+				    window.location.href=link;
+				    //showMobileFrame(link, name);
 				}
 				    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_mob_clickFunctionNode */
 
