@@ -753,7 +753,7 @@
                                         import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                                         import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
                                         {
-                                            return $rowBE.getStatus().getDisplayName() + "(" +$rowBE.getPaymentState().getDisplayName()+ ")";
+                                            return $rowBE.getStatus().getDisplayName();
                                         }]]></ns2:expressionString>
                                     </ns2:expression>
                                 </ns2:rowExpression>
@@ -1125,7 +1125,7 @@
                                         import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                                         import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
                                         {
-                                            return $rowBE.getStatus().getDisplayName() + "(" +$rowBE.getPaymentState().getDisplayName()+ ")";
+                                            return $rowBE.getStatus().getDisplayName();
                                         }]]></ns2:expressionString>
                                     </ns2:expression>
                                 </ns2:rowExpression>

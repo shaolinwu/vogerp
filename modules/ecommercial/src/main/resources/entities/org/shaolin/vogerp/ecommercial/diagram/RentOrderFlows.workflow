@@ -380,21 +380,25 @@
                          $gorder.setStatus(OrderStatusType.TAKEN);
                          OrderModel.INSTANCE.update($gorder, true);//must commit.
                          
-                         IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class); 
                          IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
-                         IPayOrder payOrder = accountingService.createPayOrder(PayBusinessType.GOLDENORDERBUSI, $gorder.getId(), $gorder.getEndPrice());
-                         payOrder.setOrgId(orgService.getOrgIdByPartyId($gorder.getTakenCustomerId()));
+                         IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class); 
                          if ($gorder.getType() == RentOrLoanOrderType.RENT) {
-                            payOrder.setCustomerBPayAccount((String)UserContext.getUserData("CustAccountId"));
+	                         IPayOrder payOrder = accountingService.createSelfPayOrder(PayBusinessType.EQUIPMENTRENTBUSI, 
+	                         						$gorder.getPublishedCustomerId(), $gorder.getSerialNumber(), $gorder.getEndPrice());
+                             @flowContext.save(payOrder);
                          } else {
-                            payOrder.setCustomerAPayAccount((String)UserContext.getUserData("CustAccountId"));
+                             long orgId = orgService.getOrgIdByPartyId($gorder.getTakenCustomerId());
+	                         IPayOrder payOrder = accountingService.createPayOrder(PayBusinessType.EQUIPMENTLOANBUSI, 
+	                         				orgId, $gorder.getTakenCustomerId(), UserContext.getUserContext().getUserId(), 
+	                         				$gorder.getSerialNumber(), $gorder.getEndPrice());
+	                         payOrder.setOrgId(orgService.getOrgIdByPartyId($gorder.getTakenCustomerId()));
+                             @flowContext.save(payOrder);
                          }
-                         @flowContext.save(payOrder);
                          
                          String description = $gorder.getDescription();
                          NotificationImpl message = new NotificationImpl();
                          message.setPartyId($gorder.getTakenCustomerId());
-                         message.setSubject("恭喜您成功抢到租赁订单！等待预付款中。订单信息： " + description);
+                         message.setSubject("恭喜您成功抢到租赁订单！等待预付款中...订单信息： " + description);
                          message.setDescription(description);
                          message.setCreateDate(new Date());
                          

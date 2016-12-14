@@ -92,6 +92,7 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
     var birthdayUI = new UIMaster.ui.calendar
     ({
         ui: elementList[prefix + "birthdayUI"]
+        ,isDataOnly: true
     });
 
     var languageUILabel = new UIMaster.ui.label

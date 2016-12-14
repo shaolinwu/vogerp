@@ -26,6 +26,13 @@ public interface IOrganizationService {
 	public List[] getAllOrganizations(int offset, int count);
 	
 	/**
+	 * Get admin organization.
+	 * 
+	 * @return
+	 */
+	public IOrganization getAdminOrganization();
+	
+	/**
 	 * Get organization information of current login user.
 	 * 
 	 * @return

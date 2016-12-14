@@ -9,6 +9,7 @@ import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.bmdp.workflow.be.NotificationImpl;
 import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.IOrganizationService;
 import org.shaolin.vogerp.commonmodel.be.ILegalOrganizationInfo;
 import org.shaolin.vogerp.commonmodel.be.IOrganization;
@@ -63,6 +64,15 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 		return result;
 	}
 	
+	public IOrganization getAdminOrganization() {
+		OrganizationImpl scFlow = new OrganizationImpl();
+		scFlow.setOrgCode(IModuleService.ADMIN_MODULES);
+		List<IOrganization> result = CommonModel.INSTANCE.searchOrganization(scFlow, null, 0, 1);
+		if (result != null && result.size() > 0) {
+			return result.get(0);
+		}
+		throw new IllegalStateException("Admin Organization must be pre-configured.");
+	}
 
 	@Override
 	public long getOrgIdByPartyId(long partyId) {

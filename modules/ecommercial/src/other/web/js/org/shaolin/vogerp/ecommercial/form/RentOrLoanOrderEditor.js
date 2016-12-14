@@ -70,6 +70,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
     var dateCountUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "dateCountUI"]
+        ,isNumber: true
     });
 
     var estimatedPriceUILabel = new UIMaster.ui.label
@@ -80,6 +81,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
     var estimatedPriceUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "estimatedPriceUI"]
+        ,isNumber: true
         ,validators:[
         {
             func: function() {
@@ -108,6 +110,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderEditor(json)
     var depositUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "depositUI"]
+        ,isNumber: true
         ,validators:[
         {
             func: function() {

@@ -171,6 +171,11 @@ public class MemberServiceImpl implements IMemberService, IServiceProvider {
 		return -1;
 	}
 	
+	public double getServicePrice(IAssignedMember member) {
+		String memberType = member.getType().getValue();
+		return cache.get(memberType).getPrice();
+	}
+	
 	@Override
 	public Class getServiceInterface() {
 		return IMemberService.class;

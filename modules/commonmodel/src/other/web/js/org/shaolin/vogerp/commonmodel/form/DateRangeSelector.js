@@ -11,6 +11,7 @@ function org_shaolin_vogerp_commonmodel_form_DateRangeSelector(json)
     var amountUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "amountUI"]
+        ,isNumber: true
         ,validators:[
         {
             func: function() {

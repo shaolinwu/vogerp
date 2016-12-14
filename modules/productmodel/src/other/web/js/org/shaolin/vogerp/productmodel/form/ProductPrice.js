@@ -36,7 +36,25 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
     var priceUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "priceUI"]
-    });
+        ,validators:[
+        {
+            func: function() {
+                
+                    {
+                        if (this.value.length > 0) {
+                            if (/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(this.value)) {
+                              return true;
+                            } else {
+                              return false;
+                            }
+                        }
+                        return true;
+                    }
+                    
+            }
+            ,msg: ""
+        }
+]    });
 
     var exceedAmountUILabel = new UIMaster.ui.label
     ({

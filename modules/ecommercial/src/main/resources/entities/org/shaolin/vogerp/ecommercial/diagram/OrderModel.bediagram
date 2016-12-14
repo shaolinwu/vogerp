@@ -117,12 +117,6 @@
             </bediagram:type>
         </bediagram:member>
         <bediagram:member>
-            <bediagram:name>paymentState</bediagram:name>
-            <bediagram:type xsi:type="bediagram:CEObjRefType">
-                <bediagram:targetEntity entityName="PaymentStatusType" />
-            </bediagram:type>
-        </bediagram:member>
-        <bediagram:member>
             <bediagram:name>offerPrices</bediagram:name>
             <bediagram:type xsi:type="bediagram:BEListType">
                 <bediagram:elementType xsi:type="bediagram:BEObjRefType">
@@ -355,6 +349,21 @@
             <bediagram:description>拍下</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
+            <bediagram:value>Taken_Payed</bediagram:value>
+            <bediagram:intValue>21</bediagram:intValue>
+            <bediagram:description>支付</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Taken_Delivery</bediagram:value>
+            <bediagram:intValue>22</bediagram:intValue>
+            <bediagram:description>发货中</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Taken_Completed</bediagram:value>
+            <bediagram:intValue>23</bediagram:intValue>
+            <bediagram:description>完成</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
             <bediagram:value>Cancelled</bediagram:value>
             <bediagram:intValue>3</bediagram:intValue>
             <bediagram:description>取消</bediagram:description>
@@ -366,26 +375,6 @@
             <bediagram:description>禁止</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
-    
-    <bediagram:ceEntity>
-        <common:entityName>PaymentStatusType</common:entityName>
-        <bediagram:constantValue>
-            <bediagram:value>Unpayed</bediagram:value>
-            <bediagram:intValue>0</bediagram:intValue>
-            <bediagram:description>未支付</bediagram:description>
-        </bediagram:constantValue>
-        <bediagram:constantValue>
-            <bediagram:value>Payed</bediagram:value>
-            <bediagram:intValue>1</bediagram:intValue>
-            <bediagram:description>已支付</bediagram:description>
-        </bediagram:constantValue>
-        <bediagram:constantValue>
-            <bediagram:value>Refound</bediagram:value>
-            <bediagram:intValue>2</bediagram:intValue>
-            <bediagram:description>退款中</bediagram:description>
-        </bediagram:constantValue>
-    </bediagram:ceEntity>
-    
     <bediagram:ceEntity>
         <common:entityName>EOrderType</common:entityName>
         <bediagram:constantValue>

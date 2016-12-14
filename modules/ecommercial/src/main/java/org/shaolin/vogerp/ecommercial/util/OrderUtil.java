@@ -29,8 +29,8 @@ public class OrderUtil {
 		DateParser parse = new DateParser(new Date());
 		return "GOSN-" + parse.getCNDateString() + "-"
 				+ parse.format(parse.getHours(), 2) + ""
-				+ parse.format(parse.getSeconds(), 2)
-				+ "-" + (int)(Math.random() * 100000);
+				+ parse.format(parse.getMilliSeconds(), 5)
+				+ "-" + (int)(Math.random() * 10000);
 	}
 	
 	public synchronized static String genConversationId() {

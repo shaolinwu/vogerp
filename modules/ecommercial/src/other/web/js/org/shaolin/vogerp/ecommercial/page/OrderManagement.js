@@ -42,28 +42,10 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         ,items: []
         ,subComponents: [prefix + "interestEOrderTable"]
     });
-    var takengGOrderTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "takengGOrderTable"]
-    });
+    var takenGOrderInfoPanel = new org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack({"prefix":prefix + "takenGOrderInfoPanel."});
 
-    var takenGOrderInfoPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "takenGOrderInfoPanel"]
-        ,items: []
-        ,subComponents: [prefix + "takengGOrderTable"]
-    });
-    var takenROrderTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "takenROrderTable"]
-    });
+    var takenROrderInfoPanel = new org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack({"prefix":prefix + "takenROrderInfoPanel."});
 
-    var takenROrderInfoPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "takenROrderInfoPanel"]
-        ,items: []
-        ,subComponents: [prefix + "takenROrderTable"]
-    });
 
     var Form = new UIMaster.ui.panel
     ({
@@ -88,11 +70,7 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
     Form.takenGOrderInfoPanel=takenGOrderInfoPanel;
 
-    Form.takengGOrderTable=takengGOrderTable;
-
     Form.takenROrderInfoPanel=takenROrderInfoPanel;
-
-    Form.takenROrderTable=takenROrderTable;
 
     Form.user_constructor = function()
     {
@@ -108,6 +86,8 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
     Form.acceptGoldenOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_acceptGoldenOrder;
 
+    Form.acceptRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_acceptRentOrder;
+
     Form.openGOrderTracker = org_shaolin_vogerp_ecommercial_page_OrderManagement_openGOrderTracker;
 
     Form.createRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_createRentOrder;
@@ -115,10 +95,6 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     Form.openRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_openRentOrder;
 
     Form.openRentOrderTracker = org_shaolin_vogerp_ecommercial_page_OrderManagement_openRentOrderTracker;
-
-    Form.payGoldenOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_payGoldenOrder;
-
-    Form.payRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_payRentOrder;
 
     Form.responseOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_responseOrder;
 
@@ -185,6 +161,17 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_acceptRentOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_acceptRentOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"acceptRentOrder-2016-0124-1351",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_acceptRentOrder */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_page_OrderManagement_openGOrderTracker(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_openGOrderTracker */
         var o = this;
         var UIEntity = this;
@@ -226,28 +213,6 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openRentOrderTracker-20150614",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_openRentOrderTracker */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_page_OrderManagement_payGoldenOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_payGoldenOrder */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"payGoldenOrder-20160618-2044",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_payGoldenOrder */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_page_OrderManagement_payRentOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_payRentOrder */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"payRentOrder-20160618-2044",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_payRentOrder */
 
 
     /* auto generated eventlistener function declaration */

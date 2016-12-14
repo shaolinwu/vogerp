@@ -66,6 +66,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     var countUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "countUI"]
+        ,isNumber: true
     });
 
     var estimatedPriceUILabel = new UIMaster.ui.label
@@ -76,6 +77,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     var estimatedPriceUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "estimatedPriceUI"]
+        ,isNumber: true
         ,validators:[
         {
             func: function() {

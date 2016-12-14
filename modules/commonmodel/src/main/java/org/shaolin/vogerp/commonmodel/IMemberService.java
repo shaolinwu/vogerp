@@ -15,6 +15,8 @@ public interface IMemberService {
 	
 	public AMemberType checkUserHasAMember();
 	
+	public double getServicePrice(IAssignedMember member);
+	
 	public int getServiceOverloadNumber(String memberType, String functionId);
 	
 	public int getMemeberServiceRemainingCount(String memberType, String functionId);
