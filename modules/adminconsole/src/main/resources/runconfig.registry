@@ -18,6 +18,14 @@
              </node>
         </node>
          -->
+        <node name="webConstant">
+            <node name="skipBackButton">
+                 <item name="Login" value="org.shaolin.bmdp.adminconsole.page.Login" />
+                 <item name="Login_mob" value="org.shaolin.bmdp.adminconsole.page.Login_mob" />
+                 <item name="Main_mob" value="org.shaolin.bmdp.adminconsole.page.Main_mob" />
+                 <item name="Registration" value="org.shaolin.bmdp.adminconsole.page.Registration" />
+            </node>
+         </node>   
     </node>
 </registry>
 

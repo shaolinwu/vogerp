@@ -13,12 +13,6 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         ui: elementList[prefix + "tempSessionIdUI"]
     });
 
-    var helpIcon = new UIMaster.ui.image
-    ({
-        ui: elementList[prefix + "helpIcon"]
-        ,text: ""
-    });
-
     var advImagesUI = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "advImagesUI"]
@@ -69,27 +63,19 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
     var notificationFormContent = new org_shaolin_bmdp_workflow_form_NotificationBoard({"prefix":prefix + "notificationFormContent."});
 
-    var notificationForm = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "notificationForm"]
-        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: []
-        ,subComponents: [prefix + "notificationFormContent"]
-    });
-
     var userForm = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "userForm"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
-        ,subComponents: [prefix + "collapseLabel1",prefix + "userFormContent",prefix + "userLogout"]
+        ,subComponents: [prefix + "collapseLabel1",prefix + "userFormContent",prefix + "notificationFormContent",prefix + "userLogout"]
     });
 
     var bottomPanel1 = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "bottomPanel1"]
         ,items: []
-        ,subComponents: [prefix + "userForm",prefix + "notificationForm"]
+        ,subComponents: [prefix + "userForm"]
     });
 
     var bottomPanel = new UIMaster.ui.panel
@@ -117,7 +103,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     ({
         ui: elementList[prefix + "searchPanel"]
         ,items: []
-        ,subComponents: [prefix + "citySelector",prefix + "helpIcon"]
+        ,subComponents: [prefix + "citySelector"]
     });
 
     var topPanel = new UIMaster.ui.panel
@@ -131,14 +117,12 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [tempSentPartyIdUI,tempSessionIdUI,helpIcon,advImagesUI,matrixUI,mainIcon,orderIcon,userIcon,collapseLabel1,userLogout,citySelector,userFormContent,notificationFormContent,topPanel,searchPanel,middlePanel,pagePanel,bottomPanel,bottomPanel1,userForm,notificationForm]
+        ,items: [tempSentPartyIdUI,tempSessionIdUI,advImagesUI,matrixUI,mainIcon,orderIcon,userIcon,collapseLabel1,userLogout,citySelector,userFormContent,notificationFormContent,topPanel,searchPanel,middlePanel,pagePanel,bottomPanel,bottomPanel1,userForm]
     });
 
     Form.tempSentPartyIdUI=tempSentPartyIdUI;
 
     Form.tempSessionIdUI=tempSessionIdUI;
-
-    Form.helpIcon=helpIcon;
 
     Form.advImagesUI=advImagesUI;
 
@@ -166,15 +150,11 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
     Form.citySelector=citySelector;
 
-    Form.helpIcon=helpIcon;
-
     Form.advImagesUI=advImagesUI;
 
     Form.searchPanel=searchPanel;
 
     Form.citySelector=citySelector;
-
-    Form.helpIcon=helpIcon;
 
     Form.middlePanel=middlePanel;
 
@@ -202,11 +182,9 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
     Form.userFormContent=userFormContent;
 
-    Form.userLogout=userLogout;
-
-    Form.notificationForm=notificationForm;
-
     Form.notificationFormContent=notificationFormContent;
+
+    Form.userLogout=userLogout;
 
     Form.userForm=userForm;
 
@@ -214,11 +192,9 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
     Form.userFormContent=userFormContent;
 
-    Form.userLogout=userLogout;
-
-    Form.notificationForm=notificationForm;
-
     Form.notificationFormContent=notificationFormContent;
+
+    Form.userLogout=userLogout;
 
     Form.user_constructor = function()
     {
@@ -238,7 +214,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 			     
 			     UIMaster.pageInitFunctions.push(function() {
 			        // clean all cached page for going back support.
-			        $.ajax({url:AJAX_SERVICE_URL,async:true,data:{_ajaxUserEvent:"tabpane",_uiid:"Form",_valueName:"remveExcludedPage",_value:"#GLOBAL#", _framePrefix:UIMaster.getFramePrefix(), r:Math.random()}});
+			        $.ajax({url:AJAX_SERVICE_URL,async:true,data:{_ajaxUserEvent:"tabpane",_uiid:"Form",_valueName:"removeExcludedPage",_value:"#GLOBAL#", _framePrefix:UIMaster.getFramePrefix(), r:Math.random()}});
 			     });
 			   }
 			
