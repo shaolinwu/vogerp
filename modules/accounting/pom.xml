@@ -50,6 +50,10 @@
 			<artifactId>beecloud-java-sdk</artifactId>
 			<version>3.4.7</version>
 		</dependency>
+		<dependency>
+	        <groupId>javax.servlet</groupId>
+	        <artifactId>javax.servlet-api</artifactId>
+	    </dependency>
     </dependencies>
 
     <build>

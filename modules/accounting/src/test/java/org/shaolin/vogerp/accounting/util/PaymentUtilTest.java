@@ -8,6 +8,8 @@ public class PaymentUtilTest {
 
 	@Test
 	public void test() {
+		System.out.println(PaymentUtil.genPayOrderSerialNumber());
 	}
 
+	//PayO201612111000011031896
 }

@@ -1,31 +1,40 @@
 package org.shaolin.vogerp.accounting;
 
-import org.shaolin.vogerp.accounting.be.IAccountVoucher;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
 import org.shaolin.vogerp.accounting.ce.PayBusinessType;
+import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
 
 public interface IAccountingService {
 
-	public IPayOrder createPayOrder(PayBusinessType type, long origOrderId, double amount);
-	
-	public String prepay(IPayOrder order);
-	
-	public String queryforPayStatus(IPayOrder order);
-	
-	public String ensurePayment(IPayOrder order);
-	
-	public String refund(IPayOrder order);
-	
-	public void cancelPayment(IPayOrder order);
-	
 	/**
-	 * for all receiving money orders.
+	 * transaction_type	String	 'PAY’ or 'REFUND’ or 'TRANSFER'
 	 */
-	public IAccountVoucher createIncomingVoucher(String incomingCOAType, double amount, String comment);
+	public enum TransactionType {
+		PAY("pay"), REFUND("refund"), TRANSFER("transfer");
+		
+		String type;
+		private TransactionType(String type) {
+			this.type = type;
+		}
+	}
 	
-	/**
-	 * for all pay orders
-	 */
-	public IAccountVoucher createOutgoingVoucher(String outgoingCOAType, double amount, String comment);
+	public IPayOrder createSelfPayOrder(PayBusinessType type, long endUserId, String orderSeriaNumber, double amount);
+	
+	public IPayOrder createPayOrder(final PayBusinessType type, final long orgId, final long userId, 
+			final long endUserId, final String orderSeriaNumber, final double amount);
+	
+	public String prepay(IPayOrder order) throws PaymentException;
+	
+	public String ensurePayment(IPayOrder order) throws PaymentException;
+	
+	public String refund(IPayOrder order) throws PaymentException;
+	
+	public void cancelPayment(IPayOrder order) throws PaymentException;
+	
+	public String queryForPayStatus(IPayOrder order) throws PaymentException;
+	
+	public IPayOrder queryForIPayOrder(final String orderSerialNumber);
+	
+	public PayOrderStatusType queryForPayOrderState(String orderSeriaNumber);
 	
 }

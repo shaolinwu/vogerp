@@ -107,8 +107,17 @@ public class AccountingModel extends BEEntityDaoObject {
             if (scObject.getOrgId() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
             }
+            if (scObject.getUserId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.userId", scObject.getUserId()));
+            }
+            if (scObject.getEndUserId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.endUserId", scObject.getEndUserId()));
+            }
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getOrderSerialNumber() != null && scObject.getOrderSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orderSerialNumber", scObject.getOrderSerialNumber()));
             }
             if (scObject.getCustomerAPayAccount() != null && scObject.getCustomerAPayAccount().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.customerAPayAccount", scObject.getCustomerAPayAccount()));
@@ -132,8 +141,17 @@ public class AccountingModel extends BEEntityDaoObject {
             if (scObject.getOrgId() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
             }
+            if (scObject.getUserId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.userId", scObject.getUserId()));
+            }
+            if (scObject.getEndUserId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.endUserId", scObject.getEndUserId()));
+            }
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getOrderSerialNumber() != null && scObject.getOrderSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orderSerialNumber", scObject.getOrderSerialNumber()));
             }
             if (scObject.getCustomerAPayAccount() != null && scObject.getCustomerAPayAccount().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.customerAPayAccount", scObject.getCustomerAPayAccount()));

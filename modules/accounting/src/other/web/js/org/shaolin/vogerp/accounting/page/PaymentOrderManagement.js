@@ -3,6 +3,11 @@
 function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var hintUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "hintUILabel"]
+    });
+
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
@@ -36,8 +41,10 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [functionsTab]
+        ,items: [hintUILabel,functionsTab]
     });
+
+    Form.hintUILabel=hintUILabel;
 
     Form.functionsTab=functionsTab;
 
@@ -110,10 +117,19 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
         var o = this;
         var UIEntity = this;
 
+		        {   
+		        	eventsource = this.receivePayOrderTable;
+		        }
+		        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"pay-20160406-1109",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_pay */
+
+		        {
+		            event.stopPropagation();
+		        	return false;   
+		        }
+		            }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_pay */
 
 
     /* auto generated eventlistener function declaration */
@@ -121,10 +137,19 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
         var o = this;
         var UIEntity = this;
 
+		        {   
+		        	eventsource = this.receivePayOrderTable;
+		        }
+		        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"ensurePayment-20160406-1109",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_ensurePayment */
+
+		        {
+		            event.stopPropagation();
+		        	return false;   
+		        }
+		            }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_ensurePayment */
 
 
     /* auto generated eventlistener function declaration */
@@ -132,10 +157,19 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
         var o = this;
         var UIEntity = this;
 
+		        {   
+		        	eventsource = this.receivePayOrderTable;
+		        }
+		        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"refund-20160406-1109",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_refund */
+
+		        {
+		            event.stopPropagation();
+		        	return false;   
+		        }
+		            }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_refund */
 
 
     /* auto generated eventlistener function declaration */
@@ -143,10 +177,19 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
         var o = this;
         var UIEntity = this;
 
+		        {   
+		        	eventsource = this.receivePayOrderTable;
+		        }
+		        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelPayment-20160406-1109",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_cancelPayment */
+
+		        {
+		            event.stopPropagation();
+		        	return false;   
+		        }
+		            }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_cancelPayment */
 
 
     function org_shaolin_vogerp_accounting_page_PaymentOrderManagement_initPageJs(){/* Gen_First:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_initPageJs */
@@ -155,14 +198,14 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
 
 			{
 				BC.err = function(data) {
-                    //×¢²á´íÎóÐÅÏ¢½ÓÊÜ
+                    //????????
                     alert(data["ERROR"]);
                 }
                 /**
-                 * clickµ÷ÓÃ´íÎó·µ»Ø£ºÄ¬ÈÏÐÐÎªconsole.log(err)
+                 * click???????????console.log(err)
                  */
                 BC.err = function(err) {
-                    //err Îªobject, Àý £û¡±ERROR¡° : "xxxx"£ý;
+                    //err ?object, ? ?”ERROR“ : "xxxx"?;
                     console.log(err);
                     alert(err["ERROR"]);
                 }

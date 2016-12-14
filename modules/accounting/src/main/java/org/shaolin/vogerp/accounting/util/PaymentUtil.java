@@ -1,8 +1,43 @@
 package org.shaolin.vogerp.accounting.util;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
+import java.util.Date;
+
+import org.apache.commons.codec.digest.DigestUtils;
+import org.shaolin.bmdp.utils.DateParser;
+
+import cn.beecloud.BCCache;
 
 public class PaymentUtil {
+	
+	public synchronized static String genAccountNumber() {
+		DateParser parse = new DateParser(new Date());
+		return "ACCN-" + parse.getCNDateString() 
+				+ "-" + parse.format(parse.getHours(), 2) 
+				+ "" + parse.format(parse.getMilliSeconds(), 5)
+				+ "-" + (int)(Math.random() * 10000);
+	}
+	
+	public synchronized static String genSerialNumber() {
+		DateParser parse = new DateParser(new Date());
+		return "ACCV-" + parse.getCNDateString() 
+				+ "-" + parse.format(parse.getHours(), 2) 
+				+ "" + parse.format(parse.getMilliSeconds(), 5)
+				+ "-" + (int)(Math.random() * 10000);
+	}
+	
+	/**
+	 * Weixi does not support '-' symbol in the serial number.
+	 * 
+	 * @return
+	 */
+	public synchronized static String genPayOrderSerialNumber() {
+		DateParser parse = new DateParser(new Date());
+		return "PayO" + parse.format(parse.getYear(), 4) + parse.format(parse.getMonth(), 2) + parse.format(parse.getDays(), 2) 
+				+ parse.format(parse.getHours(), 2) + parse.format(parse.getMilliSeconds(), 5) + (int)(Math.random() * 10000);
+	}
+	
 	/**
 	 * BeeCloud MD5
 	 *
@@ -89,6 +124,28 @@ public class PaymentUtil {
 		}
 		String s = new String(a);
 		return s;
+	}
+	
+	public static byte[] getContentBytes(String content, String charset) {
+		if (charset == null || "".equals(charset)) {
+			return content.getBytes();
+		}
+		try {
+			return content.getBytes(charset);
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException("MD5 signature is wrong! charset: " + charset);
+		}
+	}
+
+	public static boolean verify(String sign, String text, String key, String input_charset) {
+		text = text + key;
+		String mysign = DigestUtils.md5Hex(getContentBytes(text, input_charset));
+		long timeDifference = System.currentTimeMillis() - Long.valueOf(key);
+		return (mysign.equals(sign) && timeDifference <= 300000);
+	}
+
+	public static boolean verifySign(String sign, String timestamp) {
+		return verify(sign, BCCache.getAppID() + BCCache.getAppSecret(), timestamp, "UTF-8");
 	}
 
 }

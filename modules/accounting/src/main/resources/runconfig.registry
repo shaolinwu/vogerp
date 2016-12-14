@@ -23,12 +23,15 @@
             <node name="beecloud">
                 <node name="common">
                     <item name="app_id" value="1ab7992b-26b6-4f1c-b007-02f6c325444c" />
-                    <item name="app_secret" value="72e12f38-c89d-4061-bf6e-2b446ef2fe9c" />
-                    <item name="master_secret" value="08bea2e6-223b-4dbf-96d4-3c870abee599" />
+                    <!-- 
+                    <item name="app_secret" value="" />
+                    <item name="master_secret" value="" />
+                     -->
                 </node>
                 <node name="buttonPay">
-                    <item name="app_id" value="1ab7992b-26b6-4f1c-b007-02f6c325444c" />
-                    <item name="app_secret" value="72e12f38-c89d-4061-bf6e-2b446ef2fe9c" />
+                    <item name="app_id" value="${app_id}" />
+                    <item name="app_secret" value="${app_secret}" />
+                    <item name="master_secret" value="${master_secret}" />
                     <item name="out_trade_no" value="" />
                     <item name="title" value="" />
                     <item name="amount" value="" />
@@ -37,8 +40,9 @@
                     <item name="debug" value="false" />
                 </node>
 	            <node name="urlPay">
-	                <item name="app_id" value="1ab7992b-26b6-4f1c-b007-02f6c325444c" />
-	                <item name="app_secret" value="72e12f38-c89d-4061-bf6e-2b446ef2fe9c" />
+	                <item name="app_id" value="${app_id}" />
+	                <item name="app_secret" value="${app_secret}" />
+	                <item name="master_secret" value="${master_secret}" />
 	                <item name="channel" value="" />
 	                <item name="title" value="" />
 	                <item name="total_fee" value="" />
@@ -51,8 +55,9 @@
                     <item name="timestamp" value="" />
 	            </node>
 	            <node name="queryBills">
-                    <item name="app_id" value="1ab7992b-26b6-4f1c-b007-02f6c325444c" />
-                    <item name="app_secret" value="72e12f38-c89d-4061-bf6e-2b446ef2fe9c" />
+                    <item name="app_id" value="${app_id}" />
+                    <item name="app_secret" value="${app_secret}" />
+                    <item name="master_secret" value="${master_secret}" />
                     <item name="channel" value="" />
                     <item name="bill_no" value="" />
                     <item name="start_time" value="" />
@@ -63,8 +68,9 @@
                     <item name="timestamp" value="" />
                 </node>
                 <node name="refund">
-                    <item name="app_id" value="1ab7992b-26b6-4f1c-b007-02f6c325444c" />
-                    <item name="app_secret" value="72e12f38-c89d-4061-bf6e-2b446ef2fe9c" />
+                    <item name="app_id" value="${app_id}" />
+                    <item name="app_secret" value="${app_secret}" />
+                    <item name="master_secret" value="${master_secret}" />
                     <item name="channel" value="" />
                     <item name="refund_no" value="" />
                     <item name="bill_no" value="" />
@@ -74,8 +80,9 @@
                     <item name="timestamp" value="" />
                 </node>
                 <node name="queryRefund">
-                    <item name="app_id" value="1ab7992b-26b6-4f1c-b007-02f6c325444c" />
-                    <item name="app_secret" value="72e12f38-c89d-4061-bf6e-2b446ef2fe9c" />
+                    <item name="app_id" value="${app_id}" />
+                    <item name="app_secret" value="${app_secret}" />
+                    <item name="master_secret" value="${master_secret}" />
                     <item name="channel" value="" />
                     <item name="bill_no" value="" />
                     <item name="start_time" value="" />
@@ -86,8 +93,9 @@
                     <item name="timestamp" value="" />
                 </node>
                 <node name="queryRefundStatus">
-                    <item name="app_id" value="1ab7992b-26b6-4f1c-b007-02f6c325444c" />
-                    <item name="app_secret" value="72e12f38-c89d-4061-bf6e-2b446ef2fe9c" />
+                    <item name="app_id" value="${app_id}" />
+                    <item name="app_secret" value="${app_secret}" />
+                    <item name="master_secret" value="${master_secret}" />
                     <item name="channel" value="" />
                     <item name="refund_no" value="" />
                     <item name="app_sign" value="" />
