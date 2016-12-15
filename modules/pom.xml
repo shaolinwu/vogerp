@@ -20,7 +20,7 @@
 		<module>order</module>
 		<module>accounting</module>
 		<module>adminconsole</module>
-		<module>ecommercial</module>
+		<module>order2</module>
 		<module>coupon</module>
 	</modules>
 	
