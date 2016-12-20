@@ -94,7 +94,7 @@
                             return;
                         }
                         ICacheInfo item = (ICacheInfo)customerInfoTable.getSelectedRow();
-                        CacheManager.getInstance().setCacheMaxSize(item.getName(), @page.getHidden("cacheMaxSizeUI").getValue());
+                        CacheManager.getInstance().setCacheMaxSize(item.getName(), Integer.parseInt(@page.getHidden("cacheMaxSizeUI").getValue()));
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>

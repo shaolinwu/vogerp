@@ -13,6 +13,16 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         ui: elementList[prefix + "tempSessionIdUI"]
     });
 
+    var partyIdUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "partyIdUI"]
+    });
+
+    var serverURLUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "serverURLUI"]
+    });
+
     var advImagesUI = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "advImagesUI"]
@@ -52,7 +62,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         ui: elementList[prefix + "collapseLabel1"]
     });
 
-    var userLogout = new UIMaster.ui.image
+    var userLogout = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "userLogout"]
     });
@@ -61,14 +71,12 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
     var userFormContent = new org_shaolin_bmdp_adminconsole_form_UserAccount({"prefix":prefix + "userFormContent."});
 
-    var notificationFormContent = new org_shaolin_bmdp_workflow_form_NotificationBoard({"prefix":prefix + "notificationFormContent."});
-
     var userForm = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "userForm"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
-        ,subComponents: [prefix + "collapseLabel1",prefix + "userFormContent",prefix + "notificationFormContent",prefix + "userLogout"]
+        ,subComponents: [prefix + "collapseLabel1",prefix + "userFormContent",prefix + "userLogout"]
     });
 
     var bottomPanel1 = new UIMaster.ui.panel
@@ -117,12 +125,16 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [tempSentPartyIdUI,tempSessionIdUI,advImagesUI,matrixUI,mainIcon,orderIcon,userIcon,collapseLabel1,userLogout,citySelector,userFormContent,notificationFormContent,topPanel,searchPanel,middlePanel,pagePanel,bottomPanel,bottomPanel1,userForm]
+        ,items: [tempSentPartyIdUI,tempSessionIdUI,partyIdUI,serverURLUI,advImagesUI,matrixUI,mainIcon,orderIcon,userIcon,collapseLabel1,userLogout,citySelector,userFormContent,topPanel,searchPanel,middlePanel,pagePanel,bottomPanel,bottomPanel1,userForm]
     });
 
     Form.tempSentPartyIdUI=tempSentPartyIdUI;
 
     Form.tempSessionIdUI=tempSessionIdUI;
+
+    Form.partyIdUI=partyIdUI;
+
+    Form.serverURLUI=serverURLUI;
 
     Form.advImagesUI=advImagesUI;
 
@@ -141,8 +153,6 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     Form.citySelector=citySelector;
 
     Form.userFormContent=userFormContent;
-
-    Form.notificationFormContent=notificationFormContent;
 
     Form.topPanel=topPanel;
 
@@ -182,8 +192,6 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
     Form.userFormContent=userFormContent;
 
-    Form.notificationFormContent=notificationFormContent;
-
     Form.userLogout=userLogout;
 
     Form.userForm=userForm;
@@ -191,8 +199,6 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     Form.collapseLabel1=collapseLabel1;
 
     Form.userFormContent=userFormContent;
-
-    Form.notificationFormContent=notificationFormContent;
 
     Form.userLogout=userLogout;
 
@@ -216,6 +222,24 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 			        // clean all cached page for going back support.
 			        $.ajax({url:AJAX_SERVICE_URL,async:true,data:{_ajaxUserEvent:"tabpane",_uiid:"Form",_valueName:"removeExcludedPage",_value:"#GLOBAL#", _framePrefix:UIMaster.getFramePrefix(), r:Math.random()}});
 			     });
+			     this.realCounter = $("<span style='color:blue;font-weight:bold;'></span>");
+			     $(this.matrixUI).find("[class=messageIcon]").append(this.realCounter);
+			     this.nodesocket = io.connect(this.serverURLUI.value);
+			     this.nodesocket.on('connect', function(e) {
+		            var msg = {partyId: o.partyIdUI.value};
+		            o.nodesocket.emit('register', msg);
+		         });
+		         this.nodesocket.on('loginSuccess', function(e) {
+		            var msg = {partyId: o.partyIdUI.value};
+		            o.nodesocket.emit('notifyCountHistory', msg);
+		         });
+		         o.nodesocket.on('notifyCount', function(e) {
+		            o.realCounter.text("("+e+")");
+		            o.realCounter.c = e;
+		         });
+		         o.nodesocket.on('notifyFrom', function(e) {
+		            o.realCounter.text("("+(++o.realCounter.c)+")");
+		         });
 			   }
 			
             /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_Main_mob */

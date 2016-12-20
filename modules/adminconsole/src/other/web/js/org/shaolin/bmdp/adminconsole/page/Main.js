@@ -36,7 +36,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
         ,text: "????"
     });
 
-    var userLogout = new UIMaster.ui.image
+    var userLogout = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "userLogout"]
     });
@@ -62,6 +62,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var functionTree = new UIMaster.ui.webtree
     ({
         ui: elementList[prefix + "functionTree"]
+        ,editable: false
     });
 
     var functionsTab = new UIMaster.ui.tab

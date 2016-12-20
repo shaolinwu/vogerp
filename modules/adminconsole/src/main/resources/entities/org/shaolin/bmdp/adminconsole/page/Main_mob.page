@@ -191,6 +191,22 @@
             </ns2:component>
             <ns2:component xsi:type="ns2:UIHiddenType" UIID="tempSessionIdUI">
             </ns2:component>
+            <ns2:component xsi:type="ns2:UIHiddenType" UIID="partyIdUI">
+    		</ns2:component>
+            <ns2:component xsi:type="ns2:UIHiddenType" UIID="serverURLUI">
+		       <ns2:Property name="value">
+		           <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           import org.shaolin.bmdp.runtime.Registry;
+			           { 
+			               Registry instance = Registry.getInstance();
+			               return instance.getValue("/System/webConstant/websocketServer"); 
+			           }]]></expressionString>
+			         </ns2:expression>
+		           </ns2:value>
+		        </ns2:Property>
+		    </ns2:component>
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="topPanel">
 				<ns2:UISkin xsi:type="ns2:UISkinType">
 					<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
@@ -385,7 +401,6 @@
 	                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 	                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
                         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 	                    <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 	                </ns2:layout>
 	                <ns2:component xsi:type="ns2:UILabelType" UIID="collapseLabel1">
@@ -399,16 +414,10 @@
 				    <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="userFormContent">
 				        <ns2:referenceEntity entityName="org.shaolin.bmdp.adminconsole.form.UserAccount"></ns2:referenceEntity>
 				    </ns2:component>
-				    <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="notificationFormContent">
-                        <ns2:referenceEntity entityName="org.shaolin.bmdp.workflow.form.NotificationBoard"></ns2:referenceEntity>
-                    </ns2:component>
-				    <ns2:component xsi:type="ns2:UIImageType" UIID="userLogout">
-                        <ns2:title xsi:type="ns2:StringPropertyType">
-                            <ns2:value>Logout</ns2:value>
-                        </ns2:title>
-                        <ns2:src xsi:type="ns2:ImagePropertyType">
-                            <ns2:location>/admin/logout.png</ns2:location>
-                        </ns2:src>
+				    <ns2:component xsi:type="ns2:UIButtonType" UIID="userLogout">
+                        <ns2:text xsi:type="ns2:StringPropertyType">
+                            <ns2:value>退出</ns2:value>
+                        </ns2:text>
                         <ns2:EventListener xsi:type="ns2:ClickListenerType">
                             <ns2:handler functionName="logout" />
                         </ns2:EventListener>
@@ -424,14 +433,9 @@
 	                        x="0" y="1" align="FULL"></ns2:constraint>
 	                </ns2:layoutConstraint>
 	                <ns2:layoutConstraint>
-                        <ns2:componentId>notificationFormContent</ns2:componentId>
-                        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                            x="0" y="2" align="FULL"></ns2:constraint>
-                    </ns2:layoutConstraint>
-	                <ns2:layoutConstraint>
                         <ns2:componentId>userLogout</ns2:componentId>
                         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                            x="0" y="3" align="FULL"></ns2:constraint>
+                            x="0" y="2" align="FULL"></ns2:constraint>
                     </ns2:layoutConstraint>
 	            </ns2:component>
 				<ns2:layoutConstraint>
@@ -476,6 +480,24 @@
 			        // clean all cached page for going back support.
 			        $.ajax({url:AJAX_SERVICE_URL,async:true,data:{_ajaxUserEvent:"tabpane",_uiid:"Form",_valueName:"removeExcludedPage",_value:"#GLOBAL#", _framePrefix:UIMaster.getFramePrefix(), r:Math.random()}});
 			     });
+			     this.realCounter = $("<span style='color:blue;font-weight:bold;'></span>");
+			     $(this.matrixUI).find("[class=messageIcon]").append(this.realCounter);
+			     this.nodesocket = io.connect(this.serverURLUI.value);
+			     this.nodesocket.on('connect', function(e) {
+		            var msg = {partyId: o.partyIdUI.value};
+		            o.nodesocket.emit('register', msg);
+		         });
+		         this.nodesocket.on('loginSuccess', function(e) {
+		            var msg = {partyId: o.partyIdUI.value};
+		            o.nodesocket.emit('notifyCountHistory', msg);
+		         });
+		         o.nodesocket.on('notifyCount', function(e) {
+		            o.realCounter.text("("+e+")");
+		            o.realCounter.c = e;
+		         });
+		         o.nodesocket.on('notifyFrom', function(e) {
+		            o.realCounter.text("("+(++o.realCounter.c)+")");
+		         });
 			   }
 			]]></ns2:constructorCode>
 		</ns2:body>
@@ -491,6 +513,9 @@
         <ns2:DataEntity scope="InOut" name="notificator" category="BusinessEntity">
             <type entityName="org.shaolin.bmdp.workflow.be.Notification"></type>
         </ns2:DataEntity>
+        <ns2:DataEntity scope="InOut" name="partyId" category="JavaPrimitive">
+	      <type entityName="java.lang.String"></type>
+	    </ns2:DataEntity>
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
 	      <ns2:mappingRule entityName="org.shaolin.bmdp.adminconsole.form.UserAccount"></ns2:mappingRule>
 	      <ns2:UIComponent componentPath="userFormContent" paramName="UIWidgetType"></ns2:UIComponent>
@@ -501,16 +526,23 @@
 	        </ns2:expression>
             </ns2:DataComponent>
 	    </ns2:ComponentMapping>
+	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+	      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+	      <ns2:UIComponent componentPath="partyIdUI" paramName="UIWidgetType"></ns2:UIComponent>
+	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="partyId" paramName="StringData"></ns2:DataComponent>
+	    </ns2:ComponentMapping>
+	    <!-- 
 	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
           <ns2:mappingRule entityName="org.shaolin.bmdp.workflow.form.NotificationBoard"></ns2:mappingRule>
           <ns2:UIComponent componentPath="notificationFormContent" paramName="UIWidgetType"></ns2:UIComponent>
           <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="notificator" paramName="beObject"></ns2:DataComponent>
           <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="countUIId">
               <ns2:expression>
-                   <expressionString>"div-bottomPanel-2_0"</expressionString><!-- indicates the helpIcon parent.-->
+                   <expressionString>"div-bottomPanel-2_0"</expressionString> indicates the helpIcon parent.
                </ns2:expression>
           </ns2:DataComponent>
         </ns2:ComponentMapping>
+         -->
         <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
 	       <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CityOnlySelelctor"></ns2:mappingRule>
 	       <ns2:UIComponent componentPath="citySelector" paramName="UIWidgetType"></ns2:UIComponent>
@@ -526,10 +558,9 @@
 		    import org.shaolin.bmdp.runtime.security.UserContext;
 		    import org.shaolin.bmdp.workflow.be.NotificationImpl;
 			{
-			  $userAccount = (UserContext)@odContext.getRequest().getSession().getAttribute(WebflowConstants.USER_SESSION_KEY);
-			  $notificator = new NotificationImpl();
-              $notificator.setPartyId($userAccount.getUserId());
-			  @odContext.executeAllMappings();
+			   $userAccount = (UserContext)@odContext.getRequest().getSession().getAttribute(WebflowConstants.USER_SESSION_KEY);
+			   $partyId = $userAccount.getUserId() + "";
+			   @odContext.executeAllMappings();
 			}]]></ns2:expressionString>
 		</ns2:serverOperation>
 		<ns2:clientAction xsi:type="ns2:ExpressionType">
