@@ -37,6 +37,10 @@
 		/System/Vogerp/UserMemberRule/DefaultMonth 12
          -->
          <node name="Vogerp">
+            <node name="Express">
+               <item name="ThirdPartyURL" value="http://api.kuaidi100.com/api?id=" />
+               <item name="ThirdPartyKey" value="1bd3acf94d246ac2" />
+            </node>
             <node name="UserMemberRule">
                 <item name="DefaultMemberAfterVerified" value="Silver" />
                 <item name="DefaultMonth" value="Silver" />

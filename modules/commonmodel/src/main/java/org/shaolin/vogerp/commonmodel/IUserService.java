@@ -60,6 +60,8 @@ public interface IUserService {
 	
 	public String getUserName(long userId);
 	
+	public String getUserLocation(long userId);
+	
 	/**
 	 * Get logined user organization type.
 	 * 

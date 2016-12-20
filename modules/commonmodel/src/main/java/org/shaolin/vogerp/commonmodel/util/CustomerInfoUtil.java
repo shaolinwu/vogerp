@@ -20,8 +20,7 @@ public class CustomerInfoUtil {
 	
 	public static String getCustomerEnterpriseBasicInfo(IPersonalInfo customer) {
 		if (customer.getOrganization() != null) {
-			return customer.getOrganization().getDescription() + "["
-					+ getCustomerBasicInfo(customer) + "]" + 
+			return customer.getOrganization().getDescription() + 
 					(UserContext.getUserContext().isVerified()?"[\u8BA4\u8BC1\u7528\u6237]":"");
 		} else {
 			return getCustomerBasicInfo(customer) + 
@@ -61,9 +60,21 @@ public class CustomerInfoUtil {
     	ArrayList<String> displayResult = new ArrayList<String>();
     	for (IContactInfo contact : list) {
     		valueResult.add(String.valueOf(contact.getId()));
-    		displayResult.add(contact.getTelephone() + "/" + contact.getEmail());
+    		if (contact.getMobile() != null) {
+    			displayResult.add(contact.getMobile());
+    		} else {
+    			displayResult.add(contact.getTelephone());
+    		}
     	}
     	return new List[] {valueResult, displayResult};
+    }
+    
+    public static String contactToString(IContactInfo contact) {
+    	if (contact.getMobile() != null) {
+			return contact.getMobile();
+		} else {
+			return contact.getTelephone();
+		}
     }
     
     public static String addressToString(IAddressInfo address) {

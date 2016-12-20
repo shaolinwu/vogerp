@@ -560,6 +560,46 @@
         </bediagram:member>
     </bediagram:beEntity>
 
+    <bediagram:beEntity needPersist="true" needUIEntity="true">
+		<common:entityName>DeliveryInfo</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>addressId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>address</bediagram:name>
+			<bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="AddressInfo" />
+            </bediagram:type>
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>contactId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>contact</bediagram:name>
+			<bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="ContactInfo" />
+            </bediagram:type>
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>expressVendor</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>expressNumber</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>comment</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+	</bediagram:beEntity>
+
     <!-- 会员服务规则定义 -->
     <bediagram:beEntity needPersist="true" needUIEntity="true" needHistory="true">
         <common:entityName>MemberServiceRule</common:entityName>

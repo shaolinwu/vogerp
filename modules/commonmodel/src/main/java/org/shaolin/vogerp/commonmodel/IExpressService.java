@@ -6,6 +6,6 @@ public interface IExpressService {
 
 	public Map<String, String> queryVendorsList();
 	
-	public void query(String vendorId, String expressNumber);
+	public String query(String vendorId, String expressNumber);
 	
 }

@@ -383,6 +383,19 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		return onlineUserIds.size();
 	}
 	
+	public String getUserLocation(long userId) {
+		if (userId < 1) {
+			return "China";
+		}
+		PersonalAccountImpl account = new PersonalAccountImpl();
+		account.setPersonalId(userId);
+		List<IPersonalAccount> result = CommonModel.INSTANCE.searchUserAccount(account, null, 0, 1);
+		if (result != null && result.size() > 0) {
+			return result.get(0).getLocationInfo();
+		}
+		return "China";
+	}
+	
 	@Override
 	public String getUserOrganizationType() {
 		return ((UserContext)UserContext.getUserData(WebflowConstants.USER_SESSION_KEY)).getOrgType();
