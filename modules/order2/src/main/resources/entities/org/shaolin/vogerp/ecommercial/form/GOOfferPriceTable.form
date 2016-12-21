@@ -25,10 +25,13 @@
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.ecommercial.be.*;
         import org.shaolin.vogerp.commonmodel.IUserService;
+        import org.shaolin.bmdp.runtime.ce.CEUtil;
         import org.shaolin.bmdp.runtime.AppContext;
         import org.shaolin.bmdp.runtime.security.UserContext;
         import org.shaolin.bmdp.workflow.be.ChatHistoryImpl;
         import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+        import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
         { 
             Table orderInfoTable = (Table)@page.getElement("itemTable");
             if (orderInfoTable.getSelectedRow() == null) {
@@ -51,8 +54,11 @@
             IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
             HashMap input = new HashMap();
             input.put("beObject", defaultUser);
-            input.put("recievedPartyName", UserContext.getUserContext().getUserName());
-            input.put("sentPartyName", org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil.getCustomerEnterpriseBasicInfo(offer.getTakenCustomer()));
+            input.put("recievedPartyName", UserContext.getUserContext().getUserName() + "(" +CEUtil.getValue(UserContext.getUserContext().getCity())+")");
+            input.put("sentPartyName", CustomerInfoUtil.getCustomerEnterpriseBasicInfo(offer.getTakenCustomer()) + "("+CEUtil.getValue(userService.getUserLocation(offer.getTakenCustomerId()))+")");
+            if (((IGoldenOrder)form.getInputParameter("beObject")).getStatus() != OrderStatusType.PUBLISHED) {
+               input.put("isEditable", Boolean.FALSE);
+            }
             
             RefForm chatForm = new RefForm("chatWindow", "org.shaolin.bmdp.workflow.form.ChatWindow", input);
             @page.addElement(chatForm);
@@ -163,6 +169,15 @@
           <ns2:uiType>
             <ns2:type>Label</ns2:type>
           </ns2:uiType>
+          <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+            <ns2:expression xsi:type="ns2:ExpressionType">
+                <ns2:expressionString><![CDATA[
+                import org.shaolin.bmdp.utils.StringUtil;
+                {
+                   return StringUtil.getAbbreviatoryString($rowBE.getLeaveWords(), 70);
+                }]]></ns2:expressionString>
+            </ns2:expression>
+          </ns2:rowExpression>
         </ns2:column>
         <ns2:column>
           <ns2:title xsi:type="ns2:ResourceBundlePropertyType">

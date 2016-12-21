@@ -105,7 +105,7 @@
                 return;
             }
             ContactInfoImpl addressInfo = (ContactInfoImpl)tableWidget.getSelectedRow();
-            ModularityModel.INSTANCE.delete(addressInfo);
+            //ModularityModel.INSTANCE.delete(addressInfo);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>

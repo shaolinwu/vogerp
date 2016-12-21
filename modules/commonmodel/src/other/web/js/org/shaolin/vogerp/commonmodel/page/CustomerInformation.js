@@ -7,7 +7,7 @@ function org_shaolin_vogerp_commonmodel_page_CustomerInformation(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "certifyForm",prefix + "memberForm",prefix + "personalInfoForm",prefix + "personalAccountForm",prefix + "contractForm",prefix + "addressForm"]
+        ,subComponents: [prefix + "certifyForm",prefix + "memberForm",prefix + "personalInfoForm",prefix + "addressForm",prefix + "personalAccountForm"]
     });
     var certifyForm = new org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo({"prefix":prefix + "certifyForm."});
 
@@ -15,11 +15,9 @@ function org_shaolin_vogerp_commonmodel_page_CustomerInformation(json)
 
     var personalInfoForm = new org_shaolin_vogerp_commonmodel_form_PersonalInfo({"prefix":prefix + "personalInfoForm."});
 
-    var personalAccountForm = new org_shaolin_vogerp_commonmodel_form_PersonalAccount({"prefix":prefix + "personalAccountForm."});
-
-    var contractForm = new org_shaolin_vogerp_commonmodel_form_ContactInfoTable({"prefix":prefix + "contractForm."});
-
     var addressForm = new org_shaolin_vogerp_commonmodel_form_AddressInfoTable({"prefix":prefix + "addressForm."});
+
+    var personalAccountForm = new org_shaolin_vogerp_commonmodel_form_PersonalAccount({"prefix":prefix + "personalAccountForm."});
 
 
     var Form = new UIMaster.ui.panel
@@ -37,11 +35,9 @@ function org_shaolin_vogerp_commonmodel_page_CustomerInformation(json)
 
     Form.personalInfoForm=personalInfoForm;
 
-    Form.personalAccountForm=personalAccountForm;
-
-    Form.contractForm=contractForm;
-
     Form.addressForm=addressForm;
+
+    Form.personalAccountForm=personalAccountForm;
 
     Form.user_constructor = function()
     {

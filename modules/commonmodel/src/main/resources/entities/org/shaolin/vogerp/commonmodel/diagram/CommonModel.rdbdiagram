@@ -217,7 +217,6 @@
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="COMM_PERSONINFOADDRESSINFO_JT" collectionElement="org.shaolin.vogerp.commonmodel.be.AddressInfo" mappingType="One-to-Many" beFieldName="addresses"></ns2:fieldMapping>
-      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="COMM_PERSONINFOCONTACTINFO_JT" collectionElement="org.shaolin.vogerp.commonmodel.be.ContactInfo" mappingType="One-to-Many" beFieldName="contacts"></ns2:fieldMapping>
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="COMM_PERSONINFO1" mappingType="One-to-One" beFieldName="organization" columnName="ORGID"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
@@ -305,7 +304,12 @@
     <ns2:column name="STREET" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="BLOCK" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="ZIPCODE" type="VARCHAR" isNull="true"></ns2:column>
+    
     <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="TELEPHONE" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="MOBILE" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="EMAIL" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="NAME" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
       <ns2:columnName>ID</ns2:columnName>
@@ -322,37 +326,10 @@
       <ns2:fieldMapping beFieldName="block" columnName="BLOCK"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="zipcode" columnName="ZIPCODE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
-    </ns2:mapping>
-  </ns2:table>
-  <ns2:table>
-    <entityName>COMM_CONTACTINFO</entityName>
-    <systemVersion>0</systemVersion>
-    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="TELEPHONE" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="MOBILE" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="EMAIL" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="QQ" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="WEIXIN" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="ALI" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="HOMEPAGE" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="REMARK" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
-    <ns2:primaryKey>
-      <ns2:columnName>ID</ns2:columnName>
-    </ns2:primaryKey>
-    <ns2:mapping>
-      <systemVersion>0</systemVersion>
-      <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.ContactInfo"></ns2:businessEntity>
-      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="telephone" columnName="TELEPHONE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="mobile" columnName="MOBILE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="email" columnName="EMAIL"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="qq" columnName="QQ"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="weixin" columnName="WEIXIN"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="ali" columnName="ALI"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="homepage" columnName="HOMEPAGE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="remark" columnName="REMARK"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="name" columnName="NAME"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
@@ -360,8 +337,9 @@
     <entityName>COMM_DELIVERYINFO</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="ADDRESSID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="CONTACTID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="ADDRESS" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="NAME" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="MOBILENUMBER" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="COMMENT" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="EXPRESSVENDOR" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="EXPRESSNUMBER" type="VARCHAR" isNull="true"></ns2:column>
@@ -374,10 +352,10 @@
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.commonmodel.be.DeliveryInfo"></ns2:businessEntity>
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="addressId" columnName="ADDRESSID"></ns2:fieldMapping>
-      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="DELIVERYINFOADDRESSINFO" mappingType="One-to-One" beFieldName="address" columnName="ADDRESSID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="contactId" columnName="CONTACTID"></ns2:fieldMapping>
-      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="DELIVERYINFOCONTACTINFO" mappingType="One-to-One" beFieldName="contact" columnName="CONTACTID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="address" columnName="ADDRESS"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="name" columnName="NAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="mobileNumber" columnName="MOBILENUMBER"></ns2:fieldMapping>
+      
       <ns2:fieldMapping beFieldName="comment" columnName="COMMENT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="expressVendor" columnName="EXPRESSVENDOR"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="expressNumber" columnName="EXPRESSNUMBER"></ns2:fieldMapping>

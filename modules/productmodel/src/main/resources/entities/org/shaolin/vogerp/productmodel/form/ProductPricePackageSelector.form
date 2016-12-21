@@ -103,6 +103,11 @@
 	      <ns2:EventListener xsi:type="ns2:ClickListenerType">
 	         <ns2:handler functionName="clickTreeNode"></ns2:handler>
 	      </ns2:EventListener>
+	      <ns2:Property name="editable">
+             <ns2:value xsi:type="ns2:BooleanPropertyType">
+              <ns2:value>false</ns2:value>
+             </ns2:value>
+          </ns2:Property>
 	  </ns2:component>
 	  <ns2:layoutConstraint>
         <ns2:componentId>productTree</ns2:componentId>
@@ -118,6 +123,9 @@
     <systemVersion>0</systemVersion>
     <ns2:DataEntity scope="InOut" name="productId" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
 		<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>

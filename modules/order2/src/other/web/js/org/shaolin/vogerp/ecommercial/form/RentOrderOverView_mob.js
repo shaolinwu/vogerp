@@ -23,11 +23,16 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderOverView_mob(json)
         ui: elementList[prefix + "publishedCustomerIdUI"]
     });
 
+    var createDateUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "createDateUI"]
+    });
+
     var bannerPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "bannerPanel"]
         ,items: []
-        ,subComponents: [prefix + "estimatedPriceUI",prefix + "publishedCustomerIdUI"]
+        ,subComponents: [prefix + "estimatedPriceUI",prefix + "publishedCustomerIdUI",prefix + "createDateUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -40,7 +45,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderOverView_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,descriptionUI,estimatedPriceUI,publishedCustomerIdUI,fieldPanel,bannerPanel]
+        ,items: [idUI,descriptionUI,estimatedPriceUI,publishedCustomerIdUI,createDateUI,fieldPanel,bannerPanel]
     });
 
     Form.idUI=idUI;
@@ -50,6 +55,8 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderOverView_mob(json)
     Form.estimatedPriceUI=estimatedPriceUI;
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
+
+    Form.createDateUI=createDateUI;
 
     Form.fieldPanel=fieldPanel;
 
@@ -63,11 +70,15 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderOverView_mob(json)
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
+    Form.createDateUI=createDateUI;
+
     Form.bannerPanel=bannerPanel;
 
     Form.estimatedPriceUI=estimatedPriceUI;
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
+
+    Form.createDateUI=createDateUI;
 
     Form.user_constructor = function()
     {
@@ -92,7 +103,12 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderOverView_mob(json)
         var o = this;
         var UIEntity = this;
 
-        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing? ^_^',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+        var constraint_result = this.Form.validate();
+        if (constraint_result != true && constraint_result != null) {
+            return false;
+        }
+
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:WORKFLOW_COMFORMATION_MSG,messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 

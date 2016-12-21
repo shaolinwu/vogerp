@@ -77,7 +77,7 @@
 		<bediagram:member>
 			<bediagram:name>deliveryInfo</bediagram:name>
 			<bediagram:type xsi:type="bediagram:BEObjRefType">
-		        <bediagram:targetEntity entityName="DeliveryInfo" />
+		        <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.DeliveryInfo" />
 		    </bediagram:type>
 		</bediagram:member>
 		<bediagram:member>
@@ -130,7 +130,7 @@
         <bediagram:member>
             <bediagram:name>deliveryInfo</bediagram:name>
             <bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="DeliveryInfo" />
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.DeliveryInfo" />
             </bediagram:type>
         </bediagram:member>
 	</bediagram:beEntity>
@@ -238,38 +238,6 @@
             </bediagram:type>
         </bediagram:member>
     </bediagram:beEntity>
-	
-	<bediagram:beEntity needHistory="true"  needPersist="true">
-		<common:entityName>DeliveryInfo</common:entityName>
-		<bediagram:member pk="true">
-			<bediagram:name>id</bediagram:name>
-			<bediagram:type xsi:type="bediagram:LongType" />
-		</bediagram:member>
-		<bediagram:member>
-			<bediagram:name>addressId</bediagram:name>
-			<bediagram:type xsi:type="bediagram:LongType" />
-		</bediagram:member>
-		<bediagram:member>
-			<bediagram:name>address</bediagram:name>
-			<bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.AddressInfo" />
-            </bediagram:type>
-		</bediagram:member>
-		<bediagram:member>
-			<bediagram:name>contactId</bediagram:name>
-			<bediagram:type xsi:type="bediagram:LongType" />
-		</bediagram:member>
-		<bediagram:member>
-			<bediagram:name>contact</bediagram:name>
-			<bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.ContactInfo" />
-            </bediagram:type>
-		</bediagram:member>
-		<bediagram:member>
-			<bediagram:name>comment</bediagram:name>
-			<bediagram:type xsi:type="bediagram:StringType" />
-		</bediagram:member>
-	</bediagram:beEntity>
 	
 	<bediagram:ceEntity>
 		<common:entityName>OrderType</common:entityName>

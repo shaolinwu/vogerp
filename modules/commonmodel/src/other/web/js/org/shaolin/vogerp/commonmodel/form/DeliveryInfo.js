@@ -28,9 +28,14 @@ function org_shaolin_vogerp_commonmodel_form_DeliveryInfo(json)
         ui: elementList[prefix + "contactIdUI"]
     });
 
-    var contactUILabel = new UIMaster.ui.label
+    var mobileUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "contactUILabel"]
+        ui: elementList[prefix + "mobileUILabel"]
+    });
+
+    var mobileUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "mobileUI"]
     });
 
     var expressVendorUILabel = new UIMaster.ui.label
@@ -84,13 +89,13 @@ function org_shaolin_vogerp_commonmodel_form_DeliveryInfo(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "addressIdUILabel",prefix + "addressIdUI",prefix + "contactIdUILabel",prefix + "contactIdUI",prefix + "contactUILabel",prefix + "expressVendorUILabel",prefix + "expressVendorUI",prefix + "expressNumberUILabel",prefix + "expressNumberUI",prefix + "commentUILabel",prefix + "commentUI"]
+        ,subComponents: [prefix + "idUI",prefix + "addressIdUILabel",prefix + "addressIdUI",prefix + "contactIdUILabel",prefix + "contactIdUI",prefix + "mobileUILabel",prefix + "mobileUI",prefix + "expressVendorUILabel",prefix + "expressVendorUI",prefix + "expressNumberUILabel",prefix + "expressNumberUI",prefix + "commentUILabel",prefix + "commentUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,addressIdUILabel,addressIdUI,contactIdUILabel,contactIdUI,contactUILabel,expressVendorUILabel,expressVendorUI,expressNumberUILabel,expressNumberUI,commentUILabel,commentUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,addressIdUILabel,addressIdUI,contactIdUILabel,contactIdUI,mobileUILabel,mobileUI,expressVendorUILabel,expressVendorUI,expressNumberUILabel,expressNumberUI,commentUILabel,commentUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -103,7 +108,9 @@ function org_shaolin_vogerp_commonmodel_form_DeliveryInfo(json)
 
     Form.contactIdUI=contactIdUI;
 
-    Form.contactUILabel=contactUILabel;
+    Form.mobileUILabel=mobileUILabel;
+
+    Form.mobileUI=mobileUI;
 
     Form.expressVendorUILabel=expressVendorUILabel;
 
@@ -133,7 +140,9 @@ function org_shaolin_vogerp_commonmodel_form_DeliveryInfo(json)
 
     Form.contactIdUI=contactIdUI;
 
-    Form.contactUILabel=contactUILabel;
+    Form.mobileUILabel=mobileUILabel;
+
+    Form.mobileUI=mobileUI;
 
     Form.expressVendorUILabel=expressVendorUILabel;
 

@@ -13,6 +13,36 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfo(json)
         ui: elementList[prefix + "parentIdUI"]
     });
 
+    var contactorUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "contactorUILabel"]
+    });
+
+    var contactorUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "contactorUI"]
+    });
+
+    var mobileUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "mobileUILabel"]
+    });
+
+    var mobileUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "mobileUI"]
+    });
+
+    var emailUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "emailUILabel"]
+    });
+
+    var emailUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "emailUI"]
+    });
+
     var countryUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "countryUILabel"]
@@ -117,18 +147,30 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfo(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "parentIdUI",prefix + "countryUILabel",prefix + "countryUI",prefix + "provinceUILabel",prefix + "provinceUI",prefix + "cityUILabel",prefix + "cityUI",prefix + "districtUILabel",prefix + "districtUI",prefix + "streetUILabel",prefix + "streetUI",prefix + "blockUILabel",prefix + "blockUI",prefix + "zipcodeUILabel",prefix + "zipcodeUI",prefix + "descriptionUILabel",prefix + "descriptionUI"]
+        ,subComponents: [prefix + "idUI",prefix + "parentIdUI",prefix + "contactorUILabel",prefix + "contactorUI",prefix + "mobileUILabel",prefix + "mobileUI",prefix + "emailUILabel",prefix + "emailUI",prefix + "countryUILabel",prefix + "countryUI",prefix + "provinceUILabel",prefix + "provinceUI",prefix + "cityUILabel",prefix + "cityUI",prefix + "districtUILabel",prefix + "districtUI",prefix + "streetUILabel",prefix + "streetUI",prefix + "blockUILabel",prefix + "blockUI",prefix + "zipcodeUILabel",prefix + "zipcodeUI",prefix + "descriptionUILabel",prefix + "descriptionUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,parentIdUI,countryUILabel,countryUI,provinceUILabel,provinceUI,cityUILabel,cityUI,districtUILabel,districtUI,streetUILabel,streetUI,blockUILabel,blockUI,zipcodeUILabel,zipcodeUI,descriptionUILabel,descriptionUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,parentIdUI,contactorUILabel,contactorUI,mobileUILabel,mobileUI,emailUILabel,emailUI,countryUILabel,countryUI,provinceUILabel,provinceUI,cityUILabel,cityUI,districtUILabel,districtUI,streetUILabel,streetUI,blockUILabel,blockUI,zipcodeUILabel,zipcodeUI,descriptionUILabel,descriptionUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
 
     Form.parentIdUI=parentIdUI;
+
+    Form.contactorUILabel=contactorUILabel;
+
+    Form.contactorUI=contactorUI;
+
+    Form.mobileUILabel=mobileUILabel;
+
+    Form.mobileUI=mobileUI;
+
+    Form.emailUILabel=emailUILabel;
+
+    Form.emailUI=emailUI;
 
     Form.countryUILabel=countryUILabel;
 
@@ -171,6 +213,18 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfo(json)
     Form.idUI=idUI;
 
     Form.parentIdUI=parentIdUI;
+
+    Form.contactorUILabel=contactorUILabel;
+
+    Form.contactorUI=contactorUI;
+
+    Form.mobileUILabel=mobileUILabel;
+
+    Form.mobileUI=mobileUI;
+
+    Form.emailUILabel=emailUILabel;
+
+    Form.emailUI=emailUI;
 
     Form.countryUILabel=countryUILabel;
 

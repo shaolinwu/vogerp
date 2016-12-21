@@ -8,8 +8,10 @@ import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.vogerp.commonmodel.IUserService;
+import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
 import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
 import org.shaolin.vogerp.commonmodel.be.IContactInfo;
+import org.shaolin.vogerp.commonmodel.be.IDeliveryInfo;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 
 public class CustomerInfoUtil {
@@ -79,6 +81,7 @@ public class CustomerInfoUtil {
     
     public static String addressToString(IAddressInfo address) {
     	StringBuffer sb = new StringBuffer();
+    	sb.append(address.getName()).append("--");
     	sb.append(CEUtil.toCEValue(address.getProvince()).getValue()).append(" ");
     	sb.append(CEUtil.toCEValue(address.getCity()).getValue()).append(" ");
     	if (address.getDistrict() != null && address.getDistrict().length() > 0
@@ -93,5 +96,19 @@ public class CustomerInfoUtil {
     		sb.append("(").append(address.getDescription()).append(")");
     	}
     	return sb.toString();
+    }
+    
+    public static IDeliveryInfo createDeliveryInfo(long userId) {
+    	DeliveryInfoImpl deliveryInfo = new DeliveryInfoImpl();
+    	IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+    	List<IAddressInfo> list = userService.getPersonalInfo(userId).getAddresses();
+    	if (list != null && list.size() > 0) {
+    		IAddressInfo info = list.get(0);
+    		deliveryInfo.setName(info.getName());
+    		deliveryInfo.setAddress(addressToString(info));
+    		deliveryInfo.setMobileNumber(info.getMobile());
+    		deliveryInfo.setComment(info.getDescription());
+    	}
+    	return deliveryInfo;
     }
 }

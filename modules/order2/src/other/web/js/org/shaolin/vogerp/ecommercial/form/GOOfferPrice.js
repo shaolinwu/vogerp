@@ -13,16 +13,6 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPrice(json)
         ui: elementList[prefix + "currPriceUI"]
     });
 
-    var lastPriceUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "lastPriceUILabel"]
-    });
-
-    var lastPriceUI = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "lastPriceUI"]
-    });
-
     var priceUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "priceUILabel"]
@@ -31,7 +21,26 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPrice(json)
     var priceUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "priceUI"]
-    });
+        ,isNumber: true
+        ,validators:[
+        {
+            func: function() {
+                
+                   {
+                       if (this.value.length > 0) {
+                           if (/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(this.value)) {
+                             return true;
+                           } else {
+                             return false;
+                           }
+                       }
+                       return true;
+                   }
+                   
+            }
+            ,msg: ""
+        }
+]    });
 
     var leaveWordUILabel = new UIMaster.ui.label
     ({
@@ -48,9 +57,9 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPrice(json)
         ui: elementList[prefix + "samplePhotoUILabel"]
     });
 
-    var priceDescriptionUILabel = new UIMaster.ui.label
+    var deliveryInfoUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "priceDescriptionUILabel"]
+        ui: elementList[prefix + "deliveryInfoUILabel"]
     });
 
     var resultUILabel = new UIMaster.ui.label
@@ -65,6 +74,8 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPrice(json)
 
     var samplePhotoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "samplePhotoUI."});
 
+    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView({"prefix":prefix + "deliveryInfoUI."});
+
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
@@ -76,22 +87,18 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPrice(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "currPriceUILabel",prefix + "currPriceUI",prefix + "lastPriceUILabel",prefix + "lastPriceUI",prefix + "priceUILabel",prefix + "priceUI",prefix + "leaveWordUILabel",prefix + "leaveWordUI",prefix + "samplePhotoUILabel",prefix + "samplePhotoUI",prefix + "priceDescriptionUILabel",prefix + "resultUILabel"]
+        ,subComponents: [prefix + "currPriceUILabel",prefix + "currPriceUI",prefix + "priceUILabel",prefix + "priceUI",prefix + "leaveWordUILabel",prefix + "leaveWordUI",prefix + "samplePhotoUILabel",prefix + "samplePhotoUI",prefix + "deliveryInfoUILabel",prefix + "deliveryInfoUI",prefix + "resultUILabel"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [currPriceUILabel,currPriceUI,lastPriceUILabel,lastPriceUI,priceUILabel,priceUI,leaveWordUILabel,leaveWordUI,samplePhotoUILabel,priceDescriptionUILabel,resultUILabel,cancelbtn,samplePhotoUI,fieldPanel,actionPanel]
+        ,items: [currPriceUILabel,currPriceUI,priceUILabel,priceUI,leaveWordUILabel,leaveWordUI,samplePhotoUILabel,deliveryInfoUILabel,resultUILabel,cancelbtn,samplePhotoUI,deliveryInfoUI,fieldPanel,actionPanel]
     });
 
     Form.currPriceUILabel=currPriceUILabel;
 
     Form.currPriceUI=currPriceUI;
-
-    Form.lastPriceUILabel=lastPriceUILabel;
-
-    Form.lastPriceUI=lastPriceUI;
 
     Form.priceUILabel=priceUILabel;
 
@@ -103,7 +110,7 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPrice(json)
 
     Form.samplePhotoUILabel=samplePhotoUILabel;
 
-    Form.priceDescriptionUILabel=priceDescriptionUILabel;
+    Form.deliveryInfoUILabel=deliveryInfoUILabel;
 
     Form.resultUILabel=resultUILabel;
 
@@ -111,15 +118,13 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPrice(json)
 
     Form.samplePhotoUI=samplePhotoUI;
 
+    Form.deliveryInfoUI=deliveryInfoUI;
+
     Form.fieldPanel=fieldPanel;
 
     Form.currPriceUILabel=currPriceUILabel;
 
     Form.currPriceUI=currPriceUI;
-
-    Form.lastPriceUILabel=lastPriceUILabel;
-
-    Form.lastPriceUI=lastPriceUI;
 
     Form.priceUILabel=priceUILabel;
 
@@ -133,7 +138,9 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPrice(json)
 
     Form.samplePhotoUI=samplePhotoUI;
 
-    Form.priceDescriptionUILabel=priceDescriptionUILabel;
+    Form.deliveryInfoUILabel=deliveryInfoUILabel;
+
+    Form.deliveryInfoUI=deliveryInfoUI;
 
     Form.resultUILabel=resultUILabel;
 
@@ -170,7 +177,7 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPrice(json)
         var o = this;
         var UIEntity = this;
 
-        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing? ^_^',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:WORKFLOW_COMFORMATION_MSG,messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         {
             var constraint_result = this.Form.validate();
@@ -216,7 +223,12 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPrice(json)
         var o = this;
         var UIEntity = this;
 
-        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing? ^_^',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+        var constraint_result = this.Form.validate();
+        if (constraint_result != true && constraint_result != null) {
+            return false;
+        }
+
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:WORKFLOW_COMFORMATION_MSG,messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 

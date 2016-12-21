@@ -21,7 +21,7 @@
            RefForm form = new RefForm("addressForm", "org.shaolin.vogerp.commonmodel.form.AddressInfo", input);
            @page.addElement(form);
            
-           form.openInWindows("新增地址信息", null);
+           form.openInWindows("新增地址信息", null, true);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -49,7 +49,7 @@
            RefForm form = new RefForm("addressForm", "org.shaolin.vogerp.commonmodel.form.AddressInfo", input);
            @page.addElement(form);
            
-           form.openInWindows("打开地址信息", new TableCallBack("itemTable"));
+           form.openInWindows("打开地址信息", new TableCallBack("itemTable"), true);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -334,6 +334,9 @@
   <ns2:mapping>
     <systemVersion>0</systemVersion>
     <ns2:DataEntity scope="InOut" name="list" category="JavaClass">
+      <type entityName="java.util.List"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="contactList" category="JavaClass">
       <type entityName="java.util.List"></type>
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="parentId" category="JavaPrimitive">

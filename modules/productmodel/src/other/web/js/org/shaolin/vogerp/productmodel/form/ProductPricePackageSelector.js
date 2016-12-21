@@ -11,6 +11,7 @@ function org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector(json)
     var productTree = new UIMaster.ui.webtree
     ({
         ui: elementList[prefix + "productTree"]
+        ,editable: false
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -120,7 +121,12 @@ function org_shaolin_vogerp_productmodel_form_ProductPricePackageSelector(json)
         var o = this;
         var UIEntity = this;
 
-        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing? ^_^',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+        var constraint_result = this.Form.validate();
+        if (constraint_result != true && constraint_result != null) {
+            return false;
+        }
+
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:WORKFLOW_COMFORMATION_MSG,messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 

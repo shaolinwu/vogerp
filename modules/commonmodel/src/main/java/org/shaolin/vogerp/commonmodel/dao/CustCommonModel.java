@@ -82,6 +82,11 @@ public class CustCommonModel extends BEEntityDaoObject {
 					b.setBlock(item.getBlock());
 					b.setDescription(item.getDescription());
 					b.setZipcode(item.getZipcode());
+					
+					b.setName(item.getName());
+					b.setMobile(item.getMobile());
+					b.setTelephone(item.getTelephone());
+					b.setEmail(item.getEmail());
 					break;
 				}
 			}
@@ -107,11 +112,18 @@ public class CustCommonModel extends BEEntityDaoObject {
     					for (IAddressInfo b: existing) {
     						if (b.getId() == a.getId()) {
     							b.setCountry(a.getCountry());
+    							b.setProvince(a.getProvince());
     							b.setCity(a.getCity());
     							b.setStreet(a.getStreet());
+    							b.setXian(a.getXian());
     							b.setBlock(a.getBlock());
     							b.setDescription(a.getDescription());
     							b.setZipcode(a.getZipcode());
+    							
+    							b.setName(a.getName());
+    							b.setMobile(a.getMobile());
+    							b.setTelephone(a.getTelephone());
+    							b.setEmail(a.getEmail());
     							break;
     						}
     					}
@@ -125,58 +137,11 @@ public class CustCommonModel extends BEEntityDaoObject {
     }
     
     public void updateContract(long customerId, IContactInfo item) {
-    	PersonalInfoImpl custCriteria = new PersonalInfoImpl();
-    	custCriteria.setId(customerId);
-    	List values = CommonModel.INSTANCE.searchPersonInfo(custCriteria, null, 0, 1);
-		PersonalInfoImpl customer = (PersonalInfoImpl)values.get(0);
-		List<IContactInfo> existing = customer.getContacts();
-		if (item.getId() == 0) {
-			customer.getContacts().add(item);
-		} else {
-			for (IContactInfo b: existing) {
-				if (b.getId() == item.getId()) {
-					b.setEmail(item.getEmail());
-					b.setMobile(item.getMobile());
-					b.setTelephone(item.getTelephone());
-					b.setRemark(item.getRemark());
-					break;
-				}
-			}
-		}
-		CommonModel.INSTANCE.update(customer);
+    	//TODO
     }
     
     public void updateContracts(long customerId, List<IContactInfo> list) {
-    	PersonalInfoImpl custCriteria = new PersonalInfoImpl();
-    	custCriteria.setId(customerId);
-    	List values = CommonModel.INSTANCE.searchPersonInfo(custCriteria, null, 0, 1);
-    	if (list != null && list.size() > 0) {
-    		PersonalInfoImpl customer = (PersonalInfoImpl)values.get(0);
-    		List<IContactInfo> existing = customer.getContacts();
-    		if (list.isEmpty() && !customer.getContacts().isEmpty()) {
-    			// disable all addresses
-    			for (IContactInfo a: existing) {
-    				a.setEnabled(false);
-    			}
-    		} else {
-    			for (IContactInfo a: list) {
-    				if (a.getId() > 0) {
-    					for (IContactInfo b: existing) {
-    						if (b.getId() == a.getId()) {
-    							b.setEmail(a.getEmail());
-    							b.setMobile(a.getMobile());
-    							b.setTelephone(a.getTelephone());
-    							b.setRemark(a.getRemark());
-    							break;
-    						}
-    					}
-    				} else {
-    					customer.getContacts().add(a);
-    				}
-    			}
-    		}
-    		CommonModel.INSTANCE.update(customer);
-    	}
+    	//TODO
     }
     
     public List<ArrayList<String>>[] getOrgEmployeeGroup() {

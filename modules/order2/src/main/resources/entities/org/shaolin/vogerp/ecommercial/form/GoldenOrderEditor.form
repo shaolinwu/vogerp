@@ -10,7 +10,6 @@
             if (constraint_result != true && constraint_result != null) {
                 return false;
             }
-            this.htmlDescUI.saveBtn.trigger("click");
         }
         ]]></ns2:expressionString>
     </ns2:ops>
@@ -310,7 +309,7 @@
 	            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 	          </ns2:layout>
 	          <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="deliveryInfoUI">
-	             <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithDeliveryInfo" />
+	             <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.DeliveryInfoSimpleView" />
 	            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
 	          </ns2:component>
 	          <ns2:layoutConstraint>
@@ -329,22 +328,7 @@
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
-      <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
-        <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="Save"></ns2:handler>
-        </ns2:EventListener>
-        <ns2:editable xsi:type="ns2:ExpressionPropertyType">
-          <ns2:expression>
-            <expressionString>{return $editable;}</expressionString>
-          </ns2:expression>
-        </ns2:editable>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>OKbtn</ns2:key>
-        </ns2:text>
-      </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="Cancel"></ns2:handler>
@@ -355,12 +339,8 @@
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>okbtn</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
         <ns2:componentId>cancelbtn</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
@@ -477,36 +457,23 @@
       </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping8">
-      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithDeliveryInfo"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.DeliveryInfoSimpleView"></ns2:mappingRule>
       <ns2:UIComponent componentPath="deliveryInfoUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.deliveryInfo.addressId" paramName="value2"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.deliveryInfo.contactId" paramName="value3"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="personalInfo">
-         <ns2:expression>
-           <expressionString><![CDATA[
-           import org.shaolin.bmdp.runtime.AppContext;
-           import org.shaolin.bmdp.runtime.security.UserContext;
-           import org.shaolin.vogerp.commonmodel.IUserService;
-           {
-              IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
-              return userService.getPersonalInfo(UserContext.getUserContext().getUserId());
-           }
-           ]]></expressionString>
-         </ns2:expression>
-      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.deliveryInfo" paramName="beObject"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
-      import org.shaolin.vogerp.order.be.DeliveryInfoImpl;
-      import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+      import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+      import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+      import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+      import org.shaolin.bmdp.runtime.security.UserContext;
       {
         if ($beObject.getDeliveryInfoId() > 0) {
-           DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)OrderModel.INSTANCE.get($beObject.getDeliveryInfoId(), DeliveryInfoImpl.class);
+           DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)CommonModel.INSTANCE.get($beObject.getDeliveryInfoId(), DeliveryInfoImpl.class);
            $beObject.setDeliveryInfo(deliveryInfo);
         }
         if ($beObject.getDeliveryInfo() == null) {
-           DeliveryInfoImpl deliveryInfo = new DeliveryInfoImpl();
-           $beObject.setDeliveryInfo(deliveryInfo);
+           $beObject.setDeliveryInfo((DeliveryInfoImpl)CustomerInfoUtil.createDeliveryInfo(UserContext.getUserContext().getUserId()));
         }
         @odContext.executeAllMappings();
       }]]></expressionString>

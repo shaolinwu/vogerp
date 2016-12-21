@@ -48,26 +48,36 @@
                     import java.util.ArrayList;
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
-                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                    import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
-                    import org.shaolin.vogerp.ecommercial.dao.*;
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.vogerp.commonmodel.IUserService; 
                     import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
+                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
                         RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)out.get("beObject");
-                        if (gorder.getId() == 0) {
-                           @page.executeJavaScript("alert(\"请先保存订单!\");");
-                           return;
-                        }
+                        gorder.setCount(1);
+			            if (gorder.getDeliveryInfo() != null) {
+			                if (gorder.getDeliveryInfo().getId() > 0) {
+				               OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
+				            } else {
+				               OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
+				            }
+				            gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
+			            }
+			            if (gorder.getId() == 0) {
+			                OrderModel.INSTANCE.create(gorder, true);
+			            } else {
+			                OrderModel.INSTANCE.update(gorder, true);
+			            }
                         
                         form.closeIfinWindows();
                         @page.removeForm(@page.getEntityUiid()); 
                         
                         HashMap result = new HashMap();
-                        result.put("gOrder", out.get("beObject"));
+                        result.put("gOrder", gorder);
                         return result;
                     }
                     ]]></expressionString>
@@ -94,7 +104,7 @@
                        // add the search criteria.
                        ROrderSearchCriteriaImpl sc = new ROrderSearchCriteriaImpl();
                        sc.setOrderId($gOrder.getId());
-                       sc.setCity($gOrder.getDeliveryInfo().getAddress().getCity());
+                       sc.setCity($gOrder.getCity());
                        if ($gOrder.getProductId() > 0) {
                           sc.setProductType(((ProductImpl)OrderModel.INSTANCE.get($gOrder.getProductId(), ProductImpl.class)).getType());
                        }

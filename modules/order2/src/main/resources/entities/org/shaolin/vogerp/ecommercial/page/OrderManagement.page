@@ -91,7 +91,7 @@
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
                     {
-                        Table orderInfoTable = (Table)@page.getElement("takengGOrderTable");
+                        Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
                         if (orderInfoTable.getSelectedRow() == null) {
                             return;
                         }
@@ -103,7 +103,7 @@
                         RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("抢购订单详情", new TableCallBack("takengGOrderTable"), true);
+                        form.openInWindows("抢购订单详情", new TableCallBack("goldenOrderTable"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -160,6 +160,90 @@
                         @page.addElement(form);
                         
                         form.openInWindows("接受出价", new TableCallBack("goldenOrderTable"), true);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="deliveryGOrder">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deliveryGOrder-2016-1214-1351">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                    import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+                    import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                    {
+                        Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
+                        
+                        if (defaultUser.getDeliveryInfoId() > 0) {
+				           DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)CommonModel.INSTANCE.get(defaultUser.getDeliveryInfoId(), DeliveryInfoImpl.class);
+				           defaultUser.setDeliveryInfo(deliveryInfo);
+				        }
+				        if (defaultUser.getDeliveryToInfoId() > 0) {
+				           DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)CommonModel.INSTANCE.get(defaultUser.getDeliveryToInfoId(), DeliveryInfoImpl.class);
+				           defaultUser.setDeliveryToInfo(deliveryInfo);
+				        }
+				        if (defaultUser.getDeliveryToInfo() == null) {
+				           DeliveryInfoImpl deliveryInfo = new DeliveryInfoImpl();
+				           defaultUser.setDeliveryToInfo(deliveryInfo);
+				        }
+				        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser.getDeliveryInfo());
+                        input.put("beObject1", defaultUser.getDeliveryToInfo());
+                        
+                        RefForm form = new RefForm("deliverInfo", "org.shaolin.vogerp.commonmodel.form.E2EDeliveryInfo", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("更新物流信息", null, true);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="deliveryROrder">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deliveryROrder-2016-1214-1351">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                    import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+                    import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                    {
+                        Table orderInfoTable = (Table)@page.getElement("rentOrderTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)orderInfoTable.getSelectedRow();
+                        if (defaultUser.getDeliveryInfoId() > 0) {
+				           DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)CommonModel.INSTANCE.get(defaultUser.getDeliveryInfoId(), DeliveryInfoImpl.class);
+				           defaultUser.setDeliveryInfo(deliveryInfo);
+				        }
+				        if (defaultUser.getDeliveryToInfoId() > 0) {
+				           DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)CommonModel.INSTANCE.get(defaultUser.getDeliveryToInfoId(), DeliveryInfoImpl.class);
+				           defaultUser.setDeliveryToInfo(deliveryInfo);
+				        }
+				        if (defaultUser.getDeliveryToInfo() == null) {
+				           DeliveryInfoImpl deliveryInfo = new DeliveryInfoImpl();
+				           defaultUser.setDeliveryToInfo(deliveryInfo);
+				        }
+				        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser.getDeliveryInfo());
+                        input.put("beObject1", defaultUser.getDeliveryToInfo());
+                        RefForm form = new RefForm("deliverInfo", "org.shaolin.vogerp.commonmodel.form.E2EDeliveryInfo", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("更新物流信息", null, true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -403,7 +487,7 @@
 			    
                 <ns2:tab uiid="goldenOrderInfoPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
-                        <ns2:value>发布抢购单</ns2:value>
+                        <ns2:value>我的抢购单</ns2:value>
                     </ns2:title>
                     <ns2:panel UIID="goldenOrderInfoPanel">
 		                <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -474,7 +558,16 @@
 		                            <ns2:value>描述</ns2:value>
 		                        </ns2:title>
 		                        <ns2:beFieldId>rowBE.description</ns2:beFieldId>
-		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+		                        <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+						            <ns2:expression xsi:type="ns2:ExpressionType">
+						                <ns2:expressionString><![CDATA[
+						                import org.shaolin.bmdp.utils.StringUtil;
+						                {
+						                   return StringUtil.getAbbreviatoryString($rowBE.getDescription(), 70);
+						                }]]></ns2:expressionString>
+						            </ns2:expression>
+						        </ns2:rowExpression>
 		                    </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 		                        <ns2:title xsi:type="ns2:StringPropertyType">
@@ -603,9 +696,17 @@
                                     <ns2:function>acceptGoldenOrder</ns2:function>
                                 </ns2:action>
                                 <ns2:action>
+		                            <ns2:uiid>deliveryGOrder</ns2:uiid>
+		                            <ns2:title xsi:type="ns2:StringPropertyType">
+		                                <ns2:value>发货</ns2:value>
+		                            </ns2:title>
+		                            <ns2:icon>ui-icon-note</ns2:icon>
+		                            <ns2:function>deliveryGOrder</ns2:function>
+		                        </ns2:action>
+                                <ns2:action>
 		                            <ns2:uiid>openGOrderTracker</ns2:uiid>
 		                            <ns2:title xsi:type="ns2:StringPropertyType">
-		                                <ns2:value>状态跟踪</ns2:value>
+		                                <ns2:value>状态</ns2:value>
 		                            </ns2:title>
 		                            <ns2:icon>ui-icon-note</ns2:icon>
 		                            <ns2:function>openGOrderTracker</ns2:function>
@@ -622,7 +723,7 @@
                   
                   <ns2:tab uiid="rentOrderInfoPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
-                        <ns2:value>发布租赁单</ns2:value>
+                        <ns2:value>我的租赁单</ns2:value>
                     </ns2:title>
                     <ns2:panel UIID="rentOrderInfoPanel">
                         <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -693,7 +794,16 @@
                                     <ns2:value>描述</ns2:value>
                                 </ns2:title>
                                 <ns2:beFieldId>rowBE.description</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+						            <ns2:expression xsi:type="ns2:ExpressionType">
+						                <ns2:expressionString><![CDATA[
+						                import org.shaolin.bmdp.utils.StringUtil;
+						                {
+						                   return StringUtil.getAbbreviatoryString($rowBE.getDescription(), 70);
+						                }]]></ns2:expressionString>
+						            </ns2:expression>
+						        </ns2:rowExpression>
                             </ns2:column>
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
@@ -762,9 +872,17 @@
                                     <ns2:function>acceptRentOrder</ns2:function>
                                 </ns2:action>
                                 <ns2:action>
+		                            <ns2:uiid>deliveryROrder</ns2:uiid>
+		                            <ns2:title xsi:type="ns2:StringPropertyType">
+		                                <ns2:value>发货</ns2:value>
+		                            </ns2:title>
+		                            <ns2:icon>ui-icon-note</ns2:icon>
+		                            <ns2:function>deliveryROrder</ns2:function>
+		                        </ns2:action>
+                                <ns2:action>
                                     <ns2:uiid>openRentOrderTracker</ns2:uiid>
                                     <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>状态跟踪</ns2:value>
+                                        <ns2:value>状态</ns2:value>
                                     </ns2:title>
                                     <ns2:icon>ui-icon-note</ns2:icon>
                                     <ns2:function>openRentOrderTracker</ns2:function>

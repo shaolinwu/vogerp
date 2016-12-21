@@ -25,28 +25,17 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo(json)
       ,allowBlank:false
     });
 
-    var contactUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "contactUILabel"]
-    });
-
-    var contactUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "contactUI"]
-      ,allowBlank:false
-    });
-
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "partyUILabel",prefix + "partyUI",prefix + "addressUILabel",prefix + "addressUI",prefix + "contactUILabel",prefix + "contactUI"]
+        ,subComponents: [prefix + "partyUILabel",prefix + "partyUI",prefix + "addressUILabel",prefix + "addressUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [partyUILabel,partyUI,addressUILabel,addressUI,contactUILabel,contactUI,fieldPanel]
+        ,items: [partyUILabel,partyUI,addressUILabel,addressUI,fieldPanel]
     });
 
     Form.partyUILabel=partyUILabel;
@@ -56,10 +45,6 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo(json)
     Form.addressUILabel=addressUILabel;
 
     Form.addressUI=addressUI;
-
-    Form.contactUILabel=contactUILabel;
-
-    Form.contactUI=contactUI;
 
     Form.fieldPanel=fieldPanel;
 
@@ -70,10 +55,6 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo(json)
     Form.addressUILabel=addressUILabel;
 
     Form.addressUI=addressUI;
-
-    Form.contactUILabel=contactUILabel;
-
-    Form.contactUI=contactUI;
 
     Form.user_constructor = function()
     {

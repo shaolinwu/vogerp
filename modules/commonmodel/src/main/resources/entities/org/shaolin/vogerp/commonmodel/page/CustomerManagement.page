@@ -98,16 +98,6 @@
                         if (customerInfoTable.getSelectedRow() == null) {
                             return;
                         }
-                        PersonalInfoImpl defaultUser = (PersonalInfoImpl)customerInfoTable.getSelectedRow();
-                        
-                        HashMap input = new HashMap();
-                        input.put("list", defaultUser.getContacts());
-                        input.put("parentId", new Long(defaultUser.getId()));
-                        input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.ContactInfoTable", input);
-                        @page.addElement(form);
-                        
-                        form.openInWindows("Modify Personal Information", new TableCallBack("customerInfoTable"));
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -327,14 +317,6 @@
                         </ns2:title>
                         <ns2:icon>ui-icon-note</ns2:icon>
                         <ns2:function>openAddresses</ns2:function>
-                    </ns2:action>
-                    <ns2:action>
-                        <ns2:uiid>openContacts</ns2:uiid>
-                        <ns2:title xsi:type="ns2:StringPropertyType">
-                            <ns2:value>联系方式管理</ns2:value>
-                        </ns2:title>
-                        <ns2:icon>ui-icon-note</ns2:icon>
-                        <ns2:function>openContacts</ns2:function>
                     </ns2:action>
                 </ns2:actionGroup>
             </ns2:component>

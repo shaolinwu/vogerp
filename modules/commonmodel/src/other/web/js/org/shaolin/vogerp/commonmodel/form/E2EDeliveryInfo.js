@@ -28,9 +28,14 @@ function org_shaolin_vogerp_commonmodel_form_E2EDeliveryInfo(json)
         ui: elementList[prefix + "contactIdUI"]
     });
 
-    var contactUILabel = new UIMaster.ui.label
+    var mobileUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "contactUILabel"]
+        ui: elementList[prefix + "mobileUILabel"]
+    });
+
+    var mobileUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "mobileUI"]
     });
 
     var expressVendorUILabel = new UIMaster.ui.label
@@ -38,7 +43,7 @@ function org_shaolin_vogerp_commonmodel_form_E2EDeliveryInfo(json)
         ui: elementList[prefix + "expressVendorUILabel"]
     });
 
-    var expressVendorUI = new UIMaster.ui.textfield
+    var expressVendorUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "expressVendorUI"]
     });
@@ -88,9 +93,14 @@ function org_shaolin_vogerp_commonmodel_form_E2EDeliveryInfo(json)
         ui: elementList[prefix + "contactId1UI"]
     });
 
-    var contact1UILabel = new UIMaster.ui.label
+    var mobile1UILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "contact1UILabel"]
+        ui: elementList[prefix + "mobile1UILabel"]
+    });
+
+    var mobile1UI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "mobile1UI"]
     });
 
     var expressVendor1UILabel = new UIMaster.ui.label
@@ -98,7 +108,7 @@ function org_shaolin_vogerp_commonmodel_form_E2EDeliveryInfo(json)
         ui: elementList[prefix + "expressVendor1UILabel"]
     });
 
-    var expressVendor1UI = new UIMaster.ui.textfield
+    var expressVendor1UI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "expressVendor1UI"]
     });
@@ -145,7 +155,7 @@ function org_shaolin_vogerp_commonmodel_form_E2EDeliveryInfo(json)
         ui: elementList[prefix + "fieldPanel1"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
-        ,subComponents: [prefix + "id1UI",prefix + "addressId1UILabel",prefix + "addressId1UI",prefix + "contactId1UILabel",prefix + "contactId1UI",prefix + "contact1UILabel",prefix + "expressVendor1UILabel",prefix + "expressVendor1UI",prefix + "expressNumber1UILabel",prefix + "expressNumber1UI",prefix + "comment1UILabel",prefix + "comment1UI"]
+        ,subComponents: [prefix + "id1UI",prefix + "addressId1UILabel",prefix + "addressId1UI",prefix + "contactId1UILabel",prefix + "contactId1UI",prefix + "mobile1UILabel",prefix + "mobile1UI",prefix + "expressVendor1UILabel",prefix + "expressVendor1UI",prefix + "expressNumber1UILabel",prefix + "expressNumber1UI",prefix + "comment1UILabel",prefix + "comment1UI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -153,13 +163,13 @@ function org_shaolin_vogerp_commonmodel_form_E2EDeliveryInfo(json)
         ui: elementList[prefix + "fieldPanel"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "addressIdUILabel",prefix + "addressIdUI",prefix + "contactIdUILabel",prefix + "contactIdUI",prefix + "contactUILabel",prefix + "expressVendorUILabel",prefix + "expressVendorUI",prefix + "expressNumberUILabel",prefix + "expressNumberUI",prefix + "commentUILabel",prefix + "commentUI"]
+        ,subComponents: [prefix + "idUI",prefix + "addressIdUILabel",prefix + "addressIdUI",prefix + "contactIdUILabel",prefix + "contactIdUI",prefix + "mobileUILabel",prefix + "mobileUI",prefix + "expressVendorUILabel",prefix + "expressVendorUI",prefix + "expressNumberUILabel",prefix + "expressNumberUI",prefix + "commentUILabel",prefix + "commentUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,addressIdUILabel,addressIdUI,contactIdUILabel,contactIdUI,contactUILabel,expressVendorUILabel,expressVendorUI,expressNumberUILabel,expressNumberUI,commentUILabel,commentUI,id1UI,addressId1UILabel,addressId1UI,contactId1UILabel,contactId1UI,contact1UILabel,expressVendor1UILabel,expressVendor1UI,expressNumber1UILabel,expressNumber1UI,comment1UILabel,comment1UI,okbtn,cancelbtn,fieldPanel,fieldPanel1,actionPanel]
+        ,items: [idUI,addressIdUILabel,addressIdUI,contactIdUILabel,contactIdUI,mobileUILabel,mobileUI,expressVendorUILabel,expressVendorUI,expressNumberUILabel,expressNumberUI,commentUILabel,commentUI,id1UI,addressId1UILabel,addressId1UI,contactId1UILabel,contactId1UI,mobile1UILabel,mobile1UI,expressVendor1UILabel,expressVendor1UI,expressNumber1UILabel,expressNumber1UI,comment1UILabel,comment1UI,okbtn,cancelbtn,fieldPanel,fieldPanel1,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -172,7 +182,9 @@ function org_shaolin_vogerp_commonmodel_form_E2EDeliveryInfo(json)
 
     Form.contactIdUI=contactIdUI;
 
-    Form.contactUILabel=contactUILabel;
+    Form.mobileUILabel=mobileUILabel;
+
+    Form.mobileUI=mobileUI;
 
     Form.expressVendorUILabel=expressVendorUILabel;
 
@@ -196,7 +208,9 @@ function org_shaolin_vogerp_commonmodel_form_E2EDeliveryInfo(json)
 
     Form.contactId1UI=contactId1UI;
 
-    Form.contact1UILabel=contact1UILabel;
+    Form.mobile1UILabel=mobile1UILabel;
+
+    Form.mobile1UI=mobile1UI;
 
     Form.expressVendor1UILabel=expressVendor1UILabel;
 
@@ -226,7 +240,9 @@ function org_shaolin_vogerp_commonmodel_form_E2EDeliveryInfo(json)
 
     Form.contactIdUI=contactIdUI;
 
-    Form.contactUILabel=contactUILabel;
+    Form.mobileUILabel=mobileUILabel;
+
+    Form.mobileUI=mobileUI;
 
     Form.expressVendorUILabel=expressVendorUILabel;
 
@@ -252,7 +268,9 @@ function org_shaolin_vogerp_commonmodel_form_E2EDeliveryInfo(json)
 
     Form.contactId1UI=contactId1UI;
 
-    Form.contact1UILabel=contact1UILabel;
+    Form.mobile1UILabel=mobile1UILabel;
+
+    Form.mobile1UI=mobile1UI;
 
     Form.expressVendor1UILabel=expressVendor1UILabel;
 

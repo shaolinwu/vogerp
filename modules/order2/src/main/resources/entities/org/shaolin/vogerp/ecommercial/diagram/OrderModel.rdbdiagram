@@ -61,6 +61,7 @@
     <ns2:column name="PUBLISHEDCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="TAKENCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="DELIVERYINFOID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="DELIVERYTOINFOID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="ISPURCHASEORDER" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="PRODUCTID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="ORDERID" type="BIGINT" isNull="true"></ns2:column>
@@ -93,6 +94,7 @@
       <ns2:fieldMapping beFieldName="orderId" columnName="ORDERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="productId" columnName="PRODUCTID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="deliveryInfoId" columnName="DELIVERYINFOID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="deliveryToInfoId" columnName="DELIVERYTOINFOID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="expiredDate" columnName="EXPIREDDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="photos" columnName="PHOTOS"></ns2:fieldMapping>
@@ -176,6 +178,7 @@
     <ns2:column name="PUBLISHEDCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="TAKENCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="DELIVERYINFOID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="DELIVERYTOINFOID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="PRODUCTID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="PHOTOS" type="VARCHAR" default="1"></ns2:column>
     <ns2:column name="HTMLDESC" type="VARCHAR" length="255" isNull="true"></ns2:column>
@@ -207,6 +210,7 @@
       <ns2:fieldMapping beFieldName="publishedCustomerId" columnName="PUBLISHEDCUSTOMERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="takenCustomerId" columnName="TAKENCUSTOMERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="deliveryInfoId" columnName="DELIVERYINFOID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="deliveryToInfoId" columnName="DELIVERYTOINFOID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="productId" columnName="PRODUCTID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="expiredDate" columnName="EXPIREDDATE"></ns2:fieldMapping>

@@ -124,18 +124,13 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         ,items: []
         ,subComponents: [prefix + "htmlDescUI"]
     });
-    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo({"prefix":prefix + "deliveryInfoUI."});
+    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView({"prefix":prefix + "deliveryInfoUI."});
 
     var deliveryInfoPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "deliveryInfoPanel"]
         ,items: []
         ,subComponents: [prefix + "deliveryInfoUI"]
-    });
-
-    var okbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "okbtn"]
     });
 
     var cancelbtn = new UIMaster.ui.button
@@ -147,7 +142,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "cancelbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -160,7 +155,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,funcsPanel,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,funcsPanel,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -204,8 +199,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     Form.deliveryInfoPanel=deliveryInfoPanel;
 
     Form.deliveryInfoUI=deliveryInfoUI;
-
-    Form.okbtn=okbtn;
 
     Form.cancelbtn=cancelbtn;
 
@@ -255,8 +248,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.actionPanel=actionPanel;
 
-    Form.okbtn=okbtn;
-
     Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
@@ -299,7 +290,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
             if (constraint_result != true && constraint_result != null) {
                 return false;
             }
-            this.htmlDescUI.saveBtn.trigger("click");
         }
         
         // cal ajax function. 
@@ -324,7 +314,12 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         var o = this;
         var UIEntity = this;
 
-        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing? ^_^',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+        var constraint_result = this.Form.validate();
+        if (constraint_result != true && constraint_result != null) {
+            return false;
+        }
+
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:WORKFLOW_COMFORMATION_MSG,messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 

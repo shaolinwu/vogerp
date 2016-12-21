@@ -357,14 +357,6 @@
             </bediagram:type>
         </bediagram:member>
         <bediagram:member>
-            <bediagram:name>contacts</bediagram:name>
-            <bediagram:type xsi:type="bediagram:BEListType">
-                <bediagram:elementType xsi:type="bediagram:BEObjRefType">
-                    <bediagram:targetEntity entityName="ContactInfo" />
-                </bediagram:elementType>
-            </bediagram:type>
-        </bediagram:member>
-        <bediagram:member>
             <bediagram:name>startCreateDate</bediagram:name>
             <bediagram:type xsi:type="bediagram:DateTimeType" />
         </bediagram:member>
@@ -514,13 +506,32 @@
             <bediagram:name>zipcode</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
+        
+        <bediagram:member>
+            <bediagram:name>telephone</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>mobile</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>email</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>name</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        
         <bediagram:member>
             <bediagram:name>description</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
     </bediagram:beEntity>
 
-    <bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
+	<!-- deprecated! -->
+    <bediagram:beEntity needUIEntity="true" needUITableEditor="true">
         <common:entityName>ContactInfo</common:entityName>
         <bediagram:member pk="true">
             <bediagram:name>id</bediagram:name>
@@ -566,25 +577,18 @@
 			<bediagram:name>id</bediagram:name>
 			<bediagram:type xsi:type="bediagram:LongType" />
 		</bediagram:member>
-		<bediagram:member>
-			<bediagram:name>addressId</bediagram:name>
-			<bediagram:type xsi:type="bediagram:LongType" />
-		</bediagram:member>
+		<!-- compressed address info -->
 		<bediagram:member>
 			<bediagram:name>address</bediagram:name>
-			<bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="AddressInfo" />
-            </bediagram:type>
+			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
 		<bediagram:member>
-			<bediagram:name>contactId</bediagram:name>
-			<bediagram:type xsi:type="bediagram:LongType" />
+			<bediagram:name>name</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
 		<bediagram:member>
-			<bediagram:name>contact</bediagram:name>
-			<bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="ContactInfo" />
-            </bediagram:type>
+			<bediagram:name>mobileNumber</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
 		<bediagram:member>
 			<bediagram:name>expressVendor</bediagram:name>

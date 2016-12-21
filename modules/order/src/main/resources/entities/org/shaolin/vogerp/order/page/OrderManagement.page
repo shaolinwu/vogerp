@@ -67,8 +67,8 @@
                     import org.shaolin.bmdp.runtime.AppContext;
                     import org.shaolin.bmdp.runtime.security.UserContext;
                     import org.shaolin.vogerp.commonmodel.IUserService;
+                    import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
                     import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
-                    import org.shaolin.vogerp.order.be.DeliveryInfoImpl;
                     {
                         IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
                         PurchaseOrderImpl defaultUser = new PurchaseOrderImpl();

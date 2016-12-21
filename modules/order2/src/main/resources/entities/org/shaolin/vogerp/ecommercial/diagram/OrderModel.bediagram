@@ -82,7 +82,17 @@
         <bediagram:member>
             <bediagram:name>deliveryInfo</bediagram:name>
             <bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="org.shaolin.vogerp.order.be.DeliveryInfo" />
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.DeliveryInfo" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>deliveryToInfoId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>deliveryToInfo</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.DeliveryInfo" />
             </bediagram:type>
         </bediagram:member>
         <bediagram:member>

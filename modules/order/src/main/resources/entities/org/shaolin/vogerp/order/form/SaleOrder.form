@@ -32,6 +32,7 @@
 		import org.shaolin.vogerp.order.dao.OrderModel;
 		import org.shaolin.vogerp.order.util.OrderUtil;
 		import org.shaolin.bmdp.runtime.security.UserContext;
+		import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
 		{ 
 			RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
 			HashMap input = (HashMap)form.ui2Data();
@@ -380,7 +381,7 @@
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
-      import org.shaolin.vogerp.order.be.DeliveryInfoImpl;
+      import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
       import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
       {
       if ($beObject.getDeliveryInfo() == null) {

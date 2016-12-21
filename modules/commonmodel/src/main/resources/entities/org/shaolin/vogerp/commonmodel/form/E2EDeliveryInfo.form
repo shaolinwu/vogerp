@@ -65,7 +65,6 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
@@ -86,20 +85,21 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="contactIdUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.commonmodel.be.DeliveryInfo.contact</ns2:key>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>联系人</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="contactIdUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="contactUILabel">
+      <ns2:component xsi:type="ns2:UILabelType" UIID="mobileUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.commonmodel.be.DeliveryInfo.contact</ns2:key>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>电话</ns2:value>
         </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="mobileUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="expressVendorUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -148,28 +148,36 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>expressVendorUILabel</ns2:componentId>
+        <ns2:componentId>mobileUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>expressVendorUI</ns2:componentId>
+        <ns2:componentId>mobileUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>expressNumberUILabel</ns2:componentId>
+        <ns2:componentId>expressVendorUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>expressNumberUI</ns2:componentId>
+        <ns2:componentId>expressVendorUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>commentUILabel</ns2:componentId>
+        <ns2:componentId>expressNumberUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>commentUI</ns2:componentId>
+        <ns2:componentId>expressNumberUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>commentUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>commentUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel1">
@@ -182,7 +190,6 @@
         </ns2:param>
       </ns2:UISkin>
       <ns2:layout xsi:type="ns2:TableLayoutType">
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -209,20 +216,21 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="contactId1UILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.commonmodel.be.DeliveryInfo.contact</ns2:key>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>联系人</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="contactId1UI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="contact1UILabel">
+      <ns2:component xsi:type="ns2:UILabelType" UIID="mobile1UILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.commonmodel.be.DeliveryInfo.contact</ns2:key>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>电话</ns2:value>
         </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="mobile1UI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="expressVendor1UILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -271,28 +279,36 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>expressVendor1UILabel</ns2:componentId>
+        <ns2:componentId>mobile1UILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>expressVendor1UI</ns2:componentId>
+        <ns2:componentId>mobile1UI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>expressNumber1UILabel</ns2:componentId>
+        <ns2:componentId>expressVendor1UILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>expressNumber1UI</ns2:componentId>
+        <ns2:componentId>expressVendor1UI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>comment1UILabel</ns2:componentId>
+        <ns2:componentId>expressNumber1UILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>comment1UI</ns2:componentId>
+        <ns2:componentId>expressNumber1UI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>comment1UILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>comment1UI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
@@ -375,28 +391,17 @@
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="contactIdUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
-        <ns2:expression>
-          <expressionString>
-          import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
-          {
-            return CustomerInfoUtil.contactToString($beObject.getContact());
-          }</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.name" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="mobileUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.mobileNumber" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="addressIdUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
-        <ns2:expression>
-          <expressionString>
-          import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
-          {
-            return CustomerInfoUtil.addressToString($beObject.getAddress());
-          }</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.address" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
@@ -428,28 +433,17 @@
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping9">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="contactId1UI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
-        <ns2:expression>
-          <expressionString>
-          import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
-          {
-            return $beObject1.getContact()!=null ? CustomerInfoUtil.contactToString($beObject1.getContact()) : "";
-          }</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject1.name" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping91">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="mobile1UI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject1.mobileNumber" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping10">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="addressId1UI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
-        <ns2:expression>
-          <expressionString>
-          import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
-          {
-            return $beObject1.getAddress()!=null ? CustomerInfoUtil.addressToString($beObject1.getAddress()) : "";
-          }</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject1.address" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping11">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>

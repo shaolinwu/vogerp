@@ -17,8 +17,6 @@ import org.shaolin.bmdp.persistence.BEEntityDaoObject;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.persistence.query.operator.Operator;
 
-import org.shaolin.vogerp.order.be.IDeliveryInfo;
-import org.shaolin.vogerp.order.be.DeliveryInfoImpl;
 /**
  * This code is generated automatically, any change will be replaced after rebuild.
  */
@@ -27,14 +25,6 @@ public class OrderModel extends BEEntityDaoObject {
     public static final OrderModel INSTANCE = new OrderModel();
 
     private OrderModel() {
-    }
-
-    public List<IDeliveryInfo> listIDeliveryInfos(int offset, int count) {
-        return list(offset, count, IDeliveryInfo.class, DeliveryInfoImpl.class);
-    }
-
-    public long listIDeliveryInfoCount() {
-        return count(IDeliveryInfo.class);
     }
 
     public List<org.shaolin.vogerp.order.be.ISaleOrder> searchSaleOrder(org.shaolin.vogerp.order.be.SaleOrderImpl scObject,
@@ -294,30 +284,6 @@ public class OrderModel extends BEEntityDaoObject {
 
     public long searchOrderItemCount(org.shaolin.vogerp.order.be.OrderItemImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.OrderItemImpl.class, "inObject");
-
-
-        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
-
-        return this._count(inObjectCriteria);
-    }
-
-    public List<org.shaolin.vogerp.order.be.IDeliveryInfo> searchDeliveryInfo(org.shaolin.vogerp.order.be.DeliveryInfoImpl scObject,
-           List<Order> orders, int offset, int count) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.DeliveryInfoImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
-            }
-
-
-        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
-
-        List result = this._list(offset, count, inObjectCriteria);
-        return result;
-    }
-
-    public long searchDeliveryInfoCount(org.shaolin.vogerp.order.be.DeliveryInfoImpl scObject) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.order.be.DeliveryInfoImpl.class, "inObject");
 
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));

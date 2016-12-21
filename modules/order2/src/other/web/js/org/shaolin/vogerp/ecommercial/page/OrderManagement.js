@@ -88,6 +88,10 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
     Form.acceptRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_acceptRentOrder;
 
+    Form.deliveryGOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_deliveryGOrder;
+
+    Form.deliveryROrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_deliveryROrder;
+
     Form.openGOrderTracker = org_shaolin_vogerp_ecommercial_page_OrderManagement_openGOrderTracker;
 
     Form.createRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_createRentOrder;
@@ -169,6 +173,28 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"acceptRentOrder-2016-0124-1351",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_acceptRentOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_deliveryGOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_deliveryGOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deliveryGOrder-2016-1214-1351",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_deliveryGOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_deliveryROrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_deliveryROrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deliveryROrder-2016-1214-1351",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_deliveryROrder */
 
 
     /* auto generated eventlistener function declaration */
