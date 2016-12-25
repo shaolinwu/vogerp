@@ -288,6 +288,12 @@
                             @page.executeJavaScript("alert(\"请选择一个竟价单。\");");
                             return;
                         }
+                        ROOfferPriceImpl selectedPrice= (ROOfferPriceImpl)out.get("selectedPrice");
+                        IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+                        if (!service.hasAddressConfigured(selectedPrice.getTakenCustomerId())) {
+                            @page.executeJavaScript("alert(\"无法成交，因竟价客户没有配置默认地址！\");");
+                            return;
+                        }
                         
                         HashMap result = new HashMap();
                         result.put("gorder", out.get("beObject"));
@@ -322,6 +328,12 @@
                         RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)out.get("beObject");
                         if (gorder.getOfferPrices() == null || gorder.getOfferPrices().size() == 0) {
                             @page.executeJavaScript("alert(\"当前没有客户竟价单。\");");
+                            return;
+                        }
+                        ROOfferPriceImpl selectedPrice= (ROOfferPriceImpl)out.get("selectedPrice");
+                        IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+                        if (!service.hasAddressConfigured(selectedPrice.getTakenCustomerId())) {
+                            @page.executeJavaScript("alert(\"无法成交，因竟价客户没有配置默认地址！\");");
                             return;
                         }
                         

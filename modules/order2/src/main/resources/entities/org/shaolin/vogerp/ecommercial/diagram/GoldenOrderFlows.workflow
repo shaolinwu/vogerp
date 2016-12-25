@@ -290,6 +290,12 @@
                             @page.executeJavaScript("alert(\"请选择一个客户竟价单。\");");
                             return;
                         }
+                        GOOfferPriceImpl selectedPrice= (GOOfferPriceImpl)out.get("selectedPrice");
+                        IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+                        if (!service.hasAddressConfigured(selectedPrice.getTakenCustomerId())) {
+                            @page.executeJavaScript("alert(\"无法成交，因竟价客户没有配置默认地址！\");");
+                            return;
+                        }
                         
                         HashMap result = new HashMap();
                         result.put("gorder", out.get("beObject"));
@@ -326,10 +332,16 @@
                             @page.executeJavaScript("alert(\"当前没有客户竟价单。\");");
                             return;
                         }
+                        GOOfferPriceImpl selectedPrice= (GOOfferPriceImpl)out.get("selectedPrice");
+                        IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+                        if (!service.hasAddressConfigured(selectedPrice.getTakenCustomerId())) {
+                            @page.executeJavaScript("alert(\"无法成交，因竟价客户没有配置默认地址！\");");
+                            return;
+                        }
                         
                         HashMap result = new HashMap();
                         result.put("gorder", out.get("beObject"));
-                        result.put("selectedPrice", out.get("selectedPrice"));
+                        result.put("selectedPrice", selectedPrice);
                         result.put("offerLowestPrice", Boolean.TRUE);
                         
                         form.closeIfinWindows();

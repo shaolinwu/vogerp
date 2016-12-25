@@ -33,6 +33,7 @@ import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.IOrganizationService;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl;
+import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
 import org.shaolin.vogerp.commonmodel.be.ICaptcha;
 import org.shaolin.vogerp.commonmodel.be.ILegalOrganizationInfo;
 import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
@@ -488,4 +489,8 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 	}
 
+	public boolean hasAddressConfigured(long userId) {
+		List<IAddressInfo> addressInfo = getPersonalInfo(userId).getAddresses();
+		return (addressInfo != null && addressInfo.size() > 0);
+	}
 }

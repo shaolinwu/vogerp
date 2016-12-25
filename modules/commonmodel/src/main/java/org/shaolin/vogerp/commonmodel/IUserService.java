@@ -7,7 +7,6 @@ import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 import org.shaolin.vogerp.commonmodel.be.IRegisterInfo;
-import org.shaolin.vogerp.commonmodel.ce.AMemberType;
 import org.shaolin.vogerp.commonmodel.internal.PasswordCheckResult;
 
 public interface IUserService {
@@ -61,6 +60,8 @@ public interface IUserService {
 	public String getUserName(long userId);
 	
 	public String getUserLocation(long userId);
+	
+	public boolean hasAddressConfigured(long userId);
 	
 	/**
 	 * Get logined user organization type.

@@ -22,7 +22,22 @@
               RefForm form = new RefForm("cityListForm", "org.shaolin.vogerp.commonmodel.form.CitySelelctor_mob", input);
               @page.addElement(form);
               
-              form.openInWindows("\u9009\u62E9\u57CE\u5E02", null, 470, 350);
+              form.openInWindows("\u9009\u62E9\u57CE\u5E02", new FunctionCallBack(@page, "selectedCity-201604102211"), true);
+          }
+          ]]></expressionString>
+    </ns2:exp>
+   </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="selectedCity">
+   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectedCity-201604102211">
+    <ns2:exp>
+     <expressionString><![CDATA[
+          import java.util.HashMap;
+          import org.shaolin.bmdp.runtime.AppContext;
+          import org.shaolin.uimaster.page.AjaxContext;
+          import org.shaolin.uimaster.page.ajax.*;
+          {
+              //TODO:
           }
           ]]></expressionString>
     </ns2:exp>
@@ -46,7 +61,22 @@
               RefForm form = new RefForm("productTypeForm", "org.shaolin.vogerp.productmodel.form.ProductHierarchySelector2", input);
               @page.addElement(form);
               
-              form.openInWindows("\u9009\u62E9\u57CE\u5E02", null, 470, 350);
+              form.openInWindows("\u9009\u62E9\u57CE\u5E02", new FunctionCallBack(@page, "selectedProductType-201604102211"), true);
+          }
+          ]]></expressionString>
+    </ns2:exp>
+   </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="selectedProductType">
+   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectedProductType-201604102211">
+    <ns2:exp>
+     <expressionString><![CDATA[
+          import java.util.HashMap;
+          import org.shaolin.bmdp.runtime.AppContext;
+          import org.shaolin.uimaster.page.AjaxContext;
+          import org.shaolin.uimaster.page.ajax.*;
+          {
+              //TODO:
           }
           ]]></expressionString>
     </ns2:exp>

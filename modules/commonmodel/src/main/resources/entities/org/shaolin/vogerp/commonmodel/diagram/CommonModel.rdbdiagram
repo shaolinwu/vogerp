@@ -310,6 +310,7 @@
     <ns2:column name="MOBILE" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="EMAIL" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="NAME" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="DEFAULTA" type="INTEGER" length="2" default="0"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
       <ns2:columnName>ID</ns2:columnName>
@@ -330,6 +331,7 @@
       <ns2:fieldMapping beFieldName="mobile" columnName="MOBILE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="email" columnName="EMAIL"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="name" columnName="NAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="defaultAddress" columnName="DEFAULTA"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>

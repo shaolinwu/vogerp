@@ -13,6 +13,15 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable(json)
         ui: elementList[prefix + "itemTable"]
     });
 
+    var imageViewer = new UIMaster.ui.image
+    ({
+        ui: elementList[prefix + "imageViewer"]
+        ,thumbnails: true
+        ,width: "100%"
+        ,height: "400px"
+        ,mobheight: "250px"
+    });
+
     var chatbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "chatbtn"]
@@ -30,6 +39,13 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable(json)
         ,subComponents: [prefix + "chatbtn",prefix + "cancelbtn"]
     });
 
+    var imagePanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "imagePanel"]
+        ,items: []
+        ,subComponents: [prefix + "imageViewer"]
+    });
+
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
@@ -40,12 +56,14 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentIdUI,itemTable,chatbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [parentIdUI,itemTable,imageViewer,chatbtn,cancelbtn,fieldPanel,imagePanel,actionPanel]
     });
 
     Form.parentIdUI=parentIdUI;
 
     Form.itemTable=itemTable;
+
+    Form.imageViewer=imageViewer;
 
     Form.chatbtn=chatbtn;
 
@@ -57,6 +75,10 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable(json)
 
     Form.itemTable=itemTable;
 
+    Form.imagePanel=imagePanel;
+
+    Form.imageViewer=imageViewer;
+
     Form.actionPanel=actionPanel;
 
     Form.chatbtn=chatbtn;
@@ -66,10 +88,23 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable(json)
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable */
-        /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable */
+
+        
+      {
+        var o = this;
+        this.itemTable.callSelectedFunc = function() {
+           o.itemTable.sync();
+           UIMaster.triggerServerEvent(UIMaster.getUIID(o.itemTable),"SelectItem-20161225-172849",UIMaster.getValue(o.itemTable),Form.__entityName);
+        };
+      }
+    
+    
+            /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable */
     };
 
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable_Cancel;
+
+    Form.SelectItem = org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable_SelectItem;
 
     Form.chat = org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable_chat;
 
@@ -94,6 +129,17 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160325-112849",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable_SelectItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable_SelectItem */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"SelectItem-20161225-172849",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GOOfferPriceTable_SelectItem */
 
 
     /* auto generated eventlistener function declaration */

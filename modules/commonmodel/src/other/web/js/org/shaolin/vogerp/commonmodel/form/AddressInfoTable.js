@@ -49,6 +49,8 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfoTable(json)
 
     Form.deleteItem = org_shaolin_vogerp_commonmodel_form_AddressInfoTable_deleteItem;
 
+    Form.setAsDefaultAddress = org_shaolin_vogerp_commonmodel_form_AddressInfoTable_setAsDefaultAddress;
+
     Form.verifyAddress = org_shaolin_vogerp_commonmodel_form_AddressInfoTable_verifyAddress;
 
     Form.selectProvince = org_shaolin_vogerp_commonmodel_form_AddressInfoTable_selectProvince;
@@ -114,6 +116,17 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfoTable(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteItem_1667539263",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_AddressInfoTable_deleteItem */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_AddressInfoTable_setAsDefaultAddress(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_AddressInfoTable_setAsDefaultAddress */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"setAsDefaultAddress-20151229-1148",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_AddressInfoTable_setAsDefaultAddress */
 
 
     /* auto generated eventlistener function declaration */

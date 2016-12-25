@@ -6,6 +6,9 @@
                 <node name="org.shaolin.bmdp.adminconsole.page.Main_mob">
                     <item name="socket.io" value="/js/socket.io.js" />
                 </node>
+                <node name="org.shaolin.bmdp.adminconsole.page.Main">
+                    <item name="socket.io" value="/js/socket.io.js" />
+                </node>
             </node>
         </node>
         <node name="webConstant">

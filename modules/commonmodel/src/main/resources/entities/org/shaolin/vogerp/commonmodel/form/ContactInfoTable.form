@@ -173,6 +173,14 @@
         <ns2:defaultRowSize>20</ns2:defaultRowSize>
         <ns2:showActionBar>true</ns2:showActionBar>
         <ns2:showFilter>false</ns2:showFilter>
+        <ns2:rowFilter>
+          <ns2:expression>
+            <expressionString><![CDATA[
+        {
+            return $rowBE.isEnabled();
+        }]]></expressionString>
+          </ns2:expression>
+        </ns2:rowFilter>
         <ns2:column>
           <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
             <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>

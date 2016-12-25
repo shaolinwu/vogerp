@@ -41,6 +41,8 @@
               import org.shaolin.uimaster.page.AjaxContext;
               import org.shaolin.uimaster.page.ajax.*;
               {
+                  RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+                  
                   AList cityListUI = @page.getList("cityListUI");
               
                   AList citySubListUI = @page.getList("citySubListUI");
@@ -50,9 +52,7 @@
                      ((Label)textWidget).setValue(citySubListUI.getValue());
                      ((Label)textWidget).setDisplayValue(citySubListUI.getSelectedDisplayValue());
                   }
-                  @page.executeJavaScript(@page.getHidden("clickEventUI").getValue());
                   
-                  RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                   form.closeIfinWindows();
                   @page.removeForm(@page.getEntityUiid()); 
               }

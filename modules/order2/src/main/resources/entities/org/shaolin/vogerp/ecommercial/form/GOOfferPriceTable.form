@@ -16,6 +16,26 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
+  <ns2:eventHandler functionName="SelectItem">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="SelectItem-20161225-172849">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.ecommercial.be.*;
+        { 
+            Table orderInfoTable = (Table)@page.getElement("itemTable");
+            if (orderInfoTable.getSelectedRow() == null) {
+                return;
+            }
+            IGOOfferPrice offer = (IGOOfferPrice)orderInfoTable.getSelectedRow();
+            Image i = @page.getImage("imageViewer");
+            i.setSrc(offer.getSamplePhoto());
+            i.refresh();
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
   <ns2:eventHandler functionName="chat">
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="chat-20160325-112849">
       <ns2:exp>
@@ -37,8 +57,8 @@
             if (orderInfoTable.getSelectedRow() == null) {
                 return;
             }
-            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             IGOOfferPrice offer = (IGOOfferPrice)orderInfoTable.getSelectedRow();
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid());  
             
             ChatHistoryImpl defaultUser = new ChatHistoryImpl();
             defaultUser.setTaskId(((IGoldenOrder)form.getInputParameter("beObject")).getTaskId());
@@ -70,6 +90,7 @@
   </ns2:eventHandler>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
@@ -198,6 +219,42 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="imagePanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIImageType" UIID="imageViewer">
+            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+            <ns2:isGallery xsi:type="ns2:BooleanPropertyType">
+                <ns2:value>true</ns2:value>
+            </ns2:isGallery>
+            <ns2:Property name="thumbnails">
+              <ns2:value xsi:type="ns2:BooleanPropertyType">
+                 <value>true</value>
+              </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="width">
+               <ns2:value xsi:type="ns2:StringPropertyType">
+                   <value>100%</value>
+               </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="height">
+               <ns2:value xsi:type="ns2:StringPropertyType">
+                   <value>400px</value>
+               </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="mobheight">
+               <ns2:value xsi:type="ns2:StringPropertyType">
+                   <value>250px</value>
+               </ns2:value>
+            </ns2:Property>
+          </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>imageViewer</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -235,9 +292,23 @@
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
     <ns2:layoutConstraint>
-      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:componentId>imagePanel</ns2:componentId>
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:constructorCode><![CDATA[
+      {
+        var o = this;
+        this.itemTable.callSelectedFunc = function() {
+           o.itemTable.sync();
+           UIMaster.triggerServerEvent(UIMaster.getUIID(o.itemTable),"SelectItem-20161225-172849",UIMaster.getValue(o.itemTable),Form.__entityName);
+        };
+      }
+    ]]>
+    </ns2:constructorCode>
   </ns2:body>
   <ns2:mapping>
     <systemVersion>0</systemVersion>
@@ -254,9 +325,15 @@
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
     <ns2:DataToUIMappingOperation>
-      <expressionString>{
-@odContext.executeAllMappings();
-}</expressionString>
+      <expressionString><![CDATA[
+      import org.shaolin.vogerp.ecommercial.be.GOOfferPriceImpl;
+      {
+        if ($selectedPrice == null) {
+           $selectedPrice = new GOOfferPriceImpl();
+        }
+		@odContext.executeAllMappings();
+	  }
+	  ]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString><![CDATA[

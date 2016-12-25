@@ -528,6 +528,10 @@
             <bediagram:name>description</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>defaultAddress</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BooleanType" />
+        </bediagram:member>
     </bediagram:beEntity>
 
 	<!-- deprecated! -->

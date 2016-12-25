@@ -85,7 +85,8 @@ public class CustomerInfoUtil {
     	sb.append(CEUtil.toCEValue(address.getProvince()).getValue()).append(" ");
     	sb.append(CEUtil.toCEValue(address.getCity()).getValue()).append(" ");
     	if (address.getDistrict() != null && address.getDistrict().length() > 0
-    			&& !address.getDistrict().equals(""+IConstantEntity.CONSTANT_DEFAULT_INT_VALUE)) {
+    			&& !address.getDistrict().equals(""+IConstantEntity.CONSTANT_DEFAULT_INT_VALUE)
+    			&& !address.getDistrict().equals(""+IConstantEntity.CONSTANT_DEFAULT_VALUE)) {
     		sb.append(CEUtil.toCEValue(address.getDistrict()).getValue()).append(" ");
     	}
     	sb.append(address.getStreet()).append(" ");
@@ -103,11 +104,37 @@ public class CustomerInfoUtil {
     	IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
     	List<IAddressInfo> list = userService.getPersonalInfo(userId).getAddresses();
     	if (list != null && list.size() > 0) {
-    		IAddressInfo info = list.get(0);
+    		IAddressInfo defaultAddress = null;
+    		for (IAddressInfo a : list) {
+    			if (a.getDefaultAddress()) {
+    				defaultAddress = a;
+    				break;
+    			}
+    		}
+    		IAddressInfo info = defaultAddress != null? defaultAddress : list.get(0);
     		deliveryInfo.setName(info.getName());
     		deliveryInfo.setAddress(addressToString(info));
     		deliveryInfo.setMobileNumber(info.getMobile());
     		deliveryInfo.setComment(info.getDescription());
+    	}
+    	return deliveryInfo;
+    }
+    
+    public static IDeliveryInfo createDeliveryInfo(long userId, long addressId) {
+    	DeliveryInfoImpl deliveryInfo = new DeliveryInfoImpl();
+    	IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+    	List<IAddressInfo> list = userService.getPersonalInfo(userId).getAddresses();
+    	if (list != null && list.size() > 0) {
+    		for (IAddressInfo address: list) {
+    			if (address.getId() == addressId) {
+		    		IAddressInfo info = list.get(0);
+		    		deliveryInfo.setName(info.getName());
+		    		deliveryInfo.setAddress(addressToString(info));
+		    		deliveryInfo.setMobileNumber(info.getMobile());
+		    		deliveryInfo.setComment(info.getDescription());
+		    		break;
+    			}
+    		}
     	}
     	return deliveryInfo;
     }

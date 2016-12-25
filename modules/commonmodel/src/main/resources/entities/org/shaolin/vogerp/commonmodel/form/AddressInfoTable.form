@@ -88,6 +88,46 @@
             }
             AddressInfoImpl addressInfo = (AddressInfoImpl)tableWidget.getSelectedRow();
             ModularityModel.INSTANCE.delete(addressInfo);
+            tableWidget.deleteRow(tableWidget.getSelectedIndex());
+            Dialog.showMessageDialog("删除成功！", "", Dialog.INFORMATION_MESSAGE, null);
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="setAsDefaultAddress">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="setAsDefaultAddress-20151229-1148">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.List;
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.commonmodel.be.AddressInfoImpl;
+        import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+        { 
+            Table tableWidget = (Table)@page.getElement("itemTable");
+            if (tableWidget.getSelectedRow() == null) {
+                return;
+            }
+            AddressInfoImpl defaultAddress = null;
+            List rows = tableWidget.getListData();
+            for (int i=0; i<rows.size(); i++) {
+                AddressInfoImpl item = (AddressInfoImpl)rows.get(i);
+                if (item.getDefaultAddress()) {
+                   defaultAddress = item;
+                   break;
+                }
+            }
+            if (defaultAddress != null) {
+                defaultAddress.setDefaultAddress(false);
+                ModularityModel.INSTANCE.update(defaultAddress);
+            }
+            AddressInfoImpl address = (AddressInfoImpl)tableWidget.getSelectedRow();
+            address.setDefaultAddress(true);
+            ModularityModel.INSTANCE.update(address);
+            
+            tableWidget.refresh();
+            Dialog.showMessageDialog("设置成功！", "", Dialog.INFORMATION_MESSAGE, null);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -100,6 +140,7 @@
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.commonmodel.be.AddressInfoImpl;
+        import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
         { 
             Table tableWidget = (Table)@page.getElement("itemTable");
             if (tableWidget.getSelectedRow() == null) {
@@ -109,10 +150,8 @@
             HashMap input = new HashMap();
             input.put("beObject", address);
             input.put("editable", new Boolean(true));
-            RefForm form = new RefForm("addressSearchForm", "org.shaolin.vogerp.commonmodel.form.AddressInfoMap", input);
-            @page.addElement(form);
             
-            form.openInWindows("Address Searcher", new TableCallBack("itemTable"), 690, 400);
+            Dialog.showMessageDialog("验证通过！", "成功", Dialog.INFORMATION_MESSAGE, null);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -199,19 +238,10 @@
             import org.shaolin.bmdp.runtime.security.UserContext;
             import java.util.ArrayList;
             {
-              return new ArrayList();
+              return $table.getListData();
             }]]></expressionString>
           </ns2:expression>
         </ns2:query>
-        <ns2:totalCount>
-          <ns2:expression>
-            <expressionString><![CDATA[
-        import java.util.List;
-        {
-            return $table.getListData().size();
-        }]]></expressionString>
-          </ns2:expression>
-        </ns2:totalCount>
         <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
         <ns2:defaultRowSize>20</ns2:defaultRowSize>
         <ns2:showActionBar>true</ns2:showActionBar>
@@ -259,39 +289,24 @@
            </ns2:rowExpression>
         </ns2:column>
         <ns2:column>
-          <ns2:title xsi:type="ns2:StringPropertyType">
-            <ns2:value>区/县</ns2:value>
-          </ns2:title>
-          <ns2:beFieldId>rowBE.district</ns2:beFieldId>
-          <ns2:uiType>
-            <ns2:type>Text</ns2:type>
-          </ns2:uiType>
-          <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-               <ns2:expression xsi:type="ns2:ExpressionType">
-                   <ns2:expressionString><![CDATA[{
-                   return org.shaolin.bmdp.runtime.ce.CEUtil.toCEValue($rowBE.getDistrict()).getValue();
-                   }]]></ns2:expressionString>
-               </ns2:expression>
-           </ns2:rowExpression>
-        </ns2:column>
-        <ns2:column>
           <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
             <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
             <ns2:key>org.shaolin.vogerp.commonmodel.be.AddressInfo.street</ns2:key>
           </ns2:title>
           <ns2:beFieldId>rowBE.street</ns2:beFieldId>
+          <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+               <ns2:expression xsi:type="ns2:ExpressionType">
+                   <ns2:expressionString><![CDATA[
+                   {
+                   if ($rowBE.getDistrict() != null && !"-1".equals($rowBE.getDistrict())) {
+                   	  return org.shaolin.bmdp.runtime.ce.CEUtil.toCEValue($rowBE.getDistrict()).getValue() + rowBE.getStreet();
+                   }
+                   return rowBE.getStreet();
+                   }]]></ns2:expressionString>
+               </ns2:expression>
+           </ns2:rowExpression>
           <ns2:uiType>
-            <ns2:type>Text</ns2:type>
-          </ns2:uiType>
-        </ns2:column>
-        <ns2:column>
-          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
-            <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-            <ns2:key>org.shaolin.vogerp.commonmodel.be.AddressInfo.zipcode</ns2:key>
-          </ns2:title>
-          <ns2:beFieldId>rowBE.zipcode</ns2:beFieldId>
-          <ns2:uiType>
-            <ns2:type>Text</ns2:type>
+            <ns2:type>Label</ns2:type>
           </ns2:uiType>
         </ns2:column>
         <ns2:column>
@@ -304,6 +319,15 @@
             <ns2:type>Text</ns2:type>
           </ns2:uiType>
         </ns2:column>
+        <ns2:column>
+          <ns2:title xsi:type="ns2:StringPropertyType">
+            <ns2:value>默认地址</ns2:value>
+          </ns2:title>
+          <ns2:beFieldId>rowBE.defaultAddress</ns2:beFieldId>
+          <ns2:uiType>
+            <ns2:type>Label</ns2:type>
+          </ns2:uiType>
+        </ns2:column>
         <ns2:defaultActions>
           <ns2:defaultNewAction>createItem</ns2:defaultNewAction>
           <ns2:defaultOpenAction>openItem</ns2:defaultOpenAction>
@@ -311,6 +335,14 @@
         </ns2:defaultActions>
         <ns2:actionGroup>
            <ns2:type>radio</ns2:type>
+           <ns2:action>
+               <ns2:uiid>setAsDefaultAddress</ns2:uiid>
+               <ns2:title xsi:type="ns2:StringPropertyType">
+                   <ns2:value>设置为默认</ns2:value>
+               </ns2:title>
+               <ns2:icon>ui-icon-note</ns2:icon>
+               <ns2:function>setAsDefaultAddress</ns2:function>
+           </ns2:action>
            <ns2:action>
                <ns2:uiid>verifyAddress</ns2:uiid>
                <ns2:title xsi:type="ns2:StringPropertyType">

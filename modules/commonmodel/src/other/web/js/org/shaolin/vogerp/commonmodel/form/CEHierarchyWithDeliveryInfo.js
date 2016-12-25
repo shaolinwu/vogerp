@@ -3,15 +3,14 @@
 function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var partyUILabel = new UIMaster.ui.label
+    var pidUI = new UIMaster.ui.hidden
     ({
-        ui: elementList[prefix + "partyUILabel"]
+        ui: elementList[prefix + "pidUI"]
     });
 
-    var partyUI = new UIMaster.ui.combobox
+    var parentUI = new UIMaster.ui.hidden
     ({
-        ui: elementList[prefix + "partyUI"]
-      ,allowBlank:false
+        ui: elementList[prefix + "parentUI"]
     });
 
     var addressUILabel = new UIMaster.ui.label
@@ -25,36 +24,63 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo(json)
       ,allowBlank:false
     });
 
+    var savebtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "savebtn"]
+    });
+
+    var cancelbtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "cancelbtn"]
+    });
+
+    var actionPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "actionPanel"]
+        ,items: []
+        ,subComponents: [prefix + "savebtn",prefix + "cancelbtn"]
+    });
+
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "partyUILabel",prefix + "partyUI",prefix + "addressUILabel",prefix + "addressUI"]
+        ,subComponents: [prefix + "pidUI",prefix + "parentUI",prefix + "addressUILabel",prefix + "addressUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [partyUILabel,partyUI,addressUILabel,addressUI,fieldPanel]
+        ,items: [pidUI,parentUI,addressUILabel,addressUI,savebtn,cancelbtn,fieldPanel,actionPanel]
     });
 
-    Form.partyUILabel=partyUILabel;
+    Form.pidUI=pidUI;
 
-    Form.partyUI=partyUI;
+    Form.parentUI=parentUI;
 
     Form.addressUILabel=addressUILabel;
 
     Form.addressUI=addressUI;
+
+    Form.savebtn=savebtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.fieldPanel=fieldPanel;
 
-    Form.partyUILabel=partyUILabel;
+    Form.pidUI=pidUI;
 
-    Form.partyUI=partyUI;
+    Form.parentUI=parentUI;
 
     Form.addressUILabel=addressUILabel;
 
     Form.addressUI=addressUI;
+
+    Form.actionPanel=actionPanel;
+
+    Form.savebtn=savebtn;
+
+    Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {
@@ -62,9 +88,11 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo(json)
         /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo */
     };
 
-    Form.ChangeItem = org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo_ChangeItem;
-
     Form.ChangePaty = org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo_ChangePaty;
+
+    Form.Save = org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo_Save;
+
+    Form.Cancel = org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo_Cancel;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo_invokeDynamicFunction;
 
@@ -79,17 +107,6 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo(json)
 /* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo_ChangeItem(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo_ChangeItem */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"ChangeItem_201507012234",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo_ChangeItem */
-
-
-    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo_ChangePaty(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo_ChangePaty */
         var o = this;
         var UIEntity = this;
@@ -98,6 +115,28 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"ChangePaty_201507112220",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo_ChangePaty */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo_Save */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"Save_20161222-2034",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo_Save */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo_Cancel */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"Cancel_20161222-2034",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo_Cancel */
 
 
     /* auto generated eventlistener function declaration */

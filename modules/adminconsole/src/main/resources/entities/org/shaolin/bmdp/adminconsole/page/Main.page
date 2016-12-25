@@ -623,6 +623,11 @@
                    <expressionString>"div-topRightPanel-4_0"</expressionString><!-- indicates the notificationIcon parent.-->
                </ns2:expression>
           </ns2:DataComponent>
+          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="skipLoadSIOjs">
+              <ns2:expression>
+                   <expressionString>true</expressionString>
+               </ns2:expression>
+          </ns2:DataComponent>
         </ns2:ComponentMapping>
         <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
 	       <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CityOnlySelelctor"></ns2:mappingRule>

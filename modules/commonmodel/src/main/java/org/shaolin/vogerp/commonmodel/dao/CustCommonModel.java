@@ -7,12 +7,14 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.shaolin.bmdp.persistence.BEEntityDaoObject;
 import org.shaolin.bmdp.persistence.HibernateUtil;
+import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.bmdp.runtime.security.UserContext;
+import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
 import org.shaolin.vogerp.commonmodel.be.IContactInfo;
-import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 
 public class CustCommonModel extends BEEntityDaoObject {
 	
@@ -63,10 +65,8 @@ public class CustCommonModel extends BEEntityDaoObject {
     }
     
     public void updateAddresse(long customerId, IAddressInfo item) {
-    	PersonalInfoImpl custCriteria = new PersonalInfoImpl();
-    	custCriteria.setId(customerId);
-    	List values = CommonModel.INSTANCE.searchPersonInfo(custCriteria, null, 0, 1);
-		PersonalInfoImpl customer = (PersonalInfoImpl)values.get(0);
+    	IUserService userService = AppContext.get().getService(IUserService.class);
+    	IPersonalInfo customer = userService.getPersonalInfo(customerId);
 		List<IAddressInfo> existing = customer.getAddresses();
 		if (item.getId() == 0) {
 			customer.getAddresses().add(item);
@@ -95,45 +95,41 @@ public class CustCommonModel extends BEEntityDaoObject {
     }
     
     public void updateAddresses(long customerId, List<IAddressInfo> list) {
-    	PersonalInfoImpl custCriteria = new PersonalInfoImpl();
-    	custCriteria.setId(customerId);
-    	List values = CommonModel.INSTANCE.searchPersonInfo(custCriteria, null, 0, 1);
-    	if (list != null && list.size() > 0) {
-    		PersonalInfoImpl customer = (PersonalInfoImpl)values.get(0);
-    		List<IAddressInfo> existing = customer.getAddresses();
-    		if (list.isEmpty() && !customer.getAddresses().isEmpty()) {
-    			// disable all addresses
-    			for (IAddressInfo a: existing) {
-    				a.setEnabled(false);
-    			}
-    		} else {
-    			for (IAddressInfo a: list) {
-    				if (a.getId() > 0) {
-    					for (IAddressInfo b: existing) {
-    						if (b.getId() == a.getId()) {
-    							b.setCountry(a.getCountry());
-    							b.setProvince(a.getProvince());
-    							b.setCity(a.getCity());
-    							b.setStreet(a.getStreet());
-    							b.setXian(a.getXian());
-    							b.setBlock(a.getBlock());
-    							b.setDescription(a.getDescription());
-    							b.setZipcode(a.getZipcode());
-    							
-    							b.setName(a.getName());
-    							b.setMobile(a.getMobile());
-    							b.setTelephone(a.getTelephone());
-    							b.setEmail(a.getEmail());
-    							break;
-    						}
-    					}
-    				} else {
-    					customer.getAddresses().add(a);
-    				}
-    			}
-    		}
-    		CommonModel.INSTANCE.update(customer);
-    	}
+    	IUserService userService = AppContext.get().getService(IUserService.class);
+    	IPersonalInfo customer = userService.getPersonalInfo(customerId);
+		List<IAddressInfo> existing = customer.getAddresses();
+		if (list.isEmpty() && !customer.getAddresses().isEmpty()) {
+			// disable all addresses
+			for (IAddressInfo a: existing) {
+				a.setEnabled(false);
+			}
+		} else {
+			for (IAddressInfo a: list) {
+				if (a.getId() > 0) {
+					for (IAddressInfo b: existing) {
+						if (b.getId() == a.getId()) {
+							b.setCountry(a.getCountry());
+							b.setProvince(a.getProvince());
+							b.setCity(a.getCity());
+							b.setStreet(a.getStreet());
+							b.setXian(a.getXian());
+							b.setBlock(a.getBlock());
+							b.setDescription(a.getDescription());
+							b.setZipcode(a.getZipcode());
+							
+							b.setName(a.getName());
+							b.setMobile(a.getMobile());
+							b.setTelephone(a.getTelephone());
+							b.setEmail(a.getEmail());
+							break;
+						}
+					}
+				} else {
+					customer.getAddresses().add(a);
+				}
+			}
+		}
+		CommonModel.INSTANCE.update(customer);
     }
     
     public void updateContract(long customerId, IContactInfo item) {

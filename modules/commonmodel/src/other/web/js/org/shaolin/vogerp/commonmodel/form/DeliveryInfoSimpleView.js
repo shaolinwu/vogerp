@@ -8,6 +8,16 @@ function org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView(json)
         ui: elementList[prefix + "idUI"]
     });
 
+    var nameUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "nameUI"]
+    });
+
+    var mobileUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "mobileUI"]
+    });
+
     var contactorUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "contactorUILabel"]
@@ -32,16 +42,21 @@ function org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "contactorUILabel",prefix + "contactorUI",prefix + "addressUILabel",prefix + "addressUI"]
+        ,subComponents: [prefix + "idUI",prefix + "nameUI",prefix + "mobileUI",prefix + "contactorUILabel",prefix + "contactorUI",prefix + "addressUILabel",prefix + "addressUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,contactorUILabel,contactorUI,addressUILabel,addressUI,fieldPanel]
+        ,uiskin: "org.shaolin.uimaster.page.skin.RighOpenPanel"
+        ,items: [idUI,nameUI,mobileUI,contactorUILabel,contactorUI,addressUILabel,addressUI,fieldPanel]
     });
 
     Form.idUI=idUI;
+
+    Form.nameUI=nameUI;
+
+    Form.mobileUI=mobileUI;
 
     Form.contactorUILabel=contactorUILabel;
 
@@ -54,6 +69,10 @@ function org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView(json)
     Form.fieldPanel=fieldPanel;
 
     Form.idUI=idUI;
+
+    Form.nameUI=nameUI;
+
+    Form.mobileUI=mobileUI;
 
     Form.contactorUILabel=contactorUILabel;
 
@@ -69,7 +88,9 @@ function org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView(json)
         /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView */
     };
 
-    Form.Save = org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_Save;
+    Form.openList = org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_openList;
+
+    Form.refershSelectedAddress = org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_refershSelectedAddress;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_invokeDynamicFunction;
 
@@ -84,14 +105,25 @@ function org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView(json)
 /* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_Save */
+    function org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_openList(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_openList */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20161216-225330",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_Save */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openList-20161216-225330",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_openList */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_refershSelectedAddress(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_refershSelectedAddress */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"refershSelectedAddress-20161216",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_refershSelectedAddress */
 
 
     /* auto generated eventlistener function declaration */
