@@ -7,12 +7,14 @@ import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.bmdp.runtime.security.UserContext;
+import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
 import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
 import org.shaolin.vogerp.commonmodel.be.IContactInfo;
 import org.shaolin.vogerp.commonmodel.be.IDeliveryInfo;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
+import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
 
 public class CustomerInfoUtil {
 
@@ -23,10 +25,20 @@ public class CustomerInfoUtil {
 	public static String getCustomerEnterpriseBasicInfo(IPersonalInfo customer) {
 		if (customer.getOrganization() != null) {
 			return customer.getOrganization().getDescription() + 
-					(UserContext.getUserContext().isVerified()?"[\u8BA4\u8BC1\u7528\u6237]":"");
+					(customer.getOrganization().getVeriState()==OrgVerifyStatusType.VERIFIED?"[\u8BA4\u8BC1\u7528\u6237]":"");
 		} else {
 			return getCustomerBasicInfo(customer) + 
-					(UserContext.getUserContext().isVerified()?"[\u8BA4\u8BC1\u7528\u6237]":"");
+					(customer.getOrganization().getVeriState()==OrgVerifyStatusType.VERIFIED?"[\u8BA4\u8BC1\u7528\u6237]":"");
+		}
+	}
+	
+	public static String getSecureCustomerBasicInfo(IPersonalInfo customer) {
+		if (customer.getOrganization() != null) {
+			return StringUtil.truncateString(customer.getOrganization().getName(), 5, "...") + 
+					(customer.getOrganization().getVeriState()==OrgVerifyStatusType.VERIFIED?"[\u8BA4\u8BC1\u7528\u6237]":"");
+		} else {
+			return getCustomerBasicInfo(customer) + 
+					(customer.getOrganization().getVeriState()==OrgVerifyStatusType.VERIFIED?"[\u8BA4\u8BC1\u7528\u6237]":"");
 		}
 	}
 	

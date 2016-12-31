@@ -13,6 +13,7 @@ import org.shaolin.bmdp.runtime.entity.EntityNotFoundException;
 import org.shaolin.bmdp.runtime.spi.IConstantService;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
+import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.javacc.exception.ParsingException;
 import org.shaolin.uimaster.page.cache.PageCacheManager;
 import org.shaolin.uimaster.page.cache.UIFormObject;
@@ -94,11 +95,21 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
         for (IUIDyanimcPageHints module: pageHints) {
         	try {
 	        	UIFormObject uiCache = PageCacheManager.getUIFormObject(module.getUiEntity());
-	        	uiCache.addDynamicHints(module.getUiPanel(), module.getUiWidget(), module.getDescription(), module.getLink());
+	        	if (!StringUtil.nullOrBlank(module.getUiPanel()) && !StringUtil.nullOrBlank(module.getUiWidget())) {
+	        		uiCache.addDynamicHints(module.getUiPanel(), module.getUiWidget(), 
+	        				module.getDescription(), module.getLink());
+	        	} else {
+	        		uiCache.addDynamicPageHints(module.getLink());
+	        	}
         	} catch (EntityNotFoundException e) {
         		try {
     				UIPageObject uiCache = PageCacheManager.getUIPageObject(module.getUiEntity());
-		        	uiCache.getUIForm().addDynamicHints(module.getUiPanel(), module.getUiWidget(), module.getDescription(), module.getLink());
+    				if (!StringUtil.nullOrBlank(module.getUiPanel()) && !StringUtil.nullOrBlank(module.getUiWidget())) {
+			        	uiCache.getUIForm().addDynamicHints(module.getUiPanel(), module.getUiWidget(), 
+			        			module.getDescription(), module.getLink());
+    				} else {
+    					uiCache.getUIForm().addDynamicPageHints(module.getLink());
+    				}
     			} catch (Exception e1) {
     				Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page hints: " + e.getMessage(), e);
     			} 

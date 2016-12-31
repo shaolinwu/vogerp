@@ -207,6 +207,19 @@
 		           </ns2:value>
 		        </ns2:Property>
 		    </ns2:component>
+		    <ns2:component xsi:type="ns2:UIHiddenType" UIID="isVerifiedUserUI">
+		       <ns2:Property name="value">
+		           <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           import org.shaolin.bmdp.runtime.Registry;
+			           { 
+			               return $userAccount.isVerified() ? "true" : "false"; 
+			           }]]></expressionString>
+			         </ns2:expression>
+		           </ns2:value>
+		        </ns2:Property>
+		    </ns2:component>
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="topPanel">
 				<ns2:UISkin xsi:type="ns2:UISkinType">
 					<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
@@ -356,7 +369,7 @@
                 </ns2:component>
                 <ns2:component xsi:type="ns2:UILabelType" UIID="orderIcon">
                    <ns2:text xsi:type="ns2:StringPropertyType">
-                       <ns2:value>我的订单</ns2:value>
+                       <ns2:value>我的抢单</ns2:value>
                    </ns2:text>
                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
                         <ns2:handler functionName="showOrderInfo" />
@@ -479,6 +492,11 @@
 			     UIMaster.pageInitFunctions.push(function() {
 			        // clean all cached page for going back support.
 			        $.ajax({url:AJAX_SERVICE_URL,async:true,data:{_ajaxUserEvent:"tabpane",_uiid:"Form",_valueName:"removeExcludedPage",_value:"#GLOBAL#", _framePrefix:UIMaster.getFramePrefix(), r:Math.random()}});
+			        if (o.isVerifiedUserUI.value == "false") {
+				        window.setTimeout(function(){
+					        UIMaster.ui.mask.openHtml("/html/hints/userguide.html");
+					    }, 1000);
+				    }
 			     });
 			     this.realCounter = $("<span style='color:blue;font-weight:bold;'></span>");
 			     $(this.matrixUI).find("[class=messageIcon]").append(this.realCounter);

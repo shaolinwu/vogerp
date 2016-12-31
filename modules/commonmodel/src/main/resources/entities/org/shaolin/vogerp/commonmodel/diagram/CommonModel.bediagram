@@ -139,6 +139,18 @@
             <bediagram:name>addressId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
+        <bediagram:member>
+            <!-- 验证状态-->
+            <bediagram:name>veriState</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="OrgVerifyStatusType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 验证人-->
+            <bediagram:name>verifierId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
         <!-- 
         <bediagram:member>
             <bediagram:name>address</bediagram:name>
@@ -535,7 +547,7 @@
     </bediagram:beEntity>
 
 	<!-- deprecated! -->
-    <bediagram:beEntity needUIEntity="true" needUITableEditor="true">
+    <bediagram:beEntity>
         <common:entityName>ContactInfo</common:entityName>
         <bediagram:member pk="true">
             <bediagram:name>id</bediagram:name>

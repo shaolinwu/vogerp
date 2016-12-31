@@ -8,6 +8,11 @@ function org_shaolin_vogerp_commonmodel_form_SingleImageUploader(json)
         ui: elementList[prefix + "imagePathUI"]
     });
 
+    var sampleImagePathUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "sampleImagePathUI"]
+    });
+
     var photoUI = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "photoUI"]
@@ -42,10 +47,12 @@ function org_shaolin_vogerp_commonmodel_form_SingleImageUploader(json)
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [imagePathUI,photoUI,uploadFile,fieldPanel,photoPanel]
+        ,items: [imagePathUI,sampleImagePathUI,photoUI,uploadFile,fieldPanel,photoPanel]
     });
 
     Form.imagePathUI=imagePathUI;
+
+    Form.sampleImagePathUI=sampleImagePathUI;
 
     Form.photoUI=photoUI;
 

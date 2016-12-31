@@ -346,7 +346,7 @@
            $beObject.setDeliveryToInfo(deliveryInfo);
         }
         if ($beObject.getDeliveryToInfo() == null) {
-           $beObject.setDeliveryInfo((DeliveryInfoImpl)CustomerInfoUtil.createDeliveryInfo(UserContext.getUserContext().getUserId()));
+           $beObject.setDeliveryToInfo((DeliveryInfoImpl)CustomerInfoUtil.createDeliveryInfo(UserContext.getUserContext().getUserId()));
         }
       
         @odContext.executeAllMappings();

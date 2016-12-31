@@ -33,14 +33,16 @@ function org_shaolin_vogerp_commonmodel_form_AssignedMember(json)
         ui: elementList[prefix + "endDateUILabel"]
     });
 
+    var termsUI = new UIMaster.ui.checkbox
+    ({
+        ui: elementList[prefix + "termsUI"]
+        ,label: "????????????"
+        ,mustCheck: true
+    });
+
     var paybtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "paybtn"]
-    });
-
-    var upgradebtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "upgradebtn"]
     });
 
     var typeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithMatrix({"prefix":prefix + "typeUI."});
@@ -51,20 +53,20 @@ function org_shaolin_vogerp_commonmodel_form_AssignedMember(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "paybtn",prefix + "upgradebtn"]
+        ,subComponents: [prefix + "paybtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "orgIdUI",prefix + "type0UILabel",prefix + "type0UI",prefix + "typeUILabel",prefix + "typeUI",prefix + "endDateUILabel",prefix + "endDateUI"]
+        ,subComponents: [prefix + "idUI",prefix + "orgIdUI",prefix + "type0UILabel",prefix + "type0UI",prefix + "typeUILabel",prefix + "typeUI",prefix + "endDateUILabel",prefix + "endDateUI",prefix + "termsUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,orgIdUI,type0UILabel,type0UI,typeUILabel,endDateUILabel,paybtn,upgradebtn,typeUI,endDateUI,fieldPanel,actionPanel]
+        ,items: [idUI,orgIdUI,type0UILabel,type0UI,typeUILabel,endDateUILabel,termsUI,paybtn,typeUI,endDateUI,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -79,9 +81,9 @@ function org_shaolin_vogerp_commonmodel_form_AssignedMember(json)
 
     Form.endDateUILabel=endDateUILabel;
 
-    Form.paybtn=paybtn;
+    Form.termsUI=termsUI;
 
-    Form.upgradebtn=upgradebtn;
+    Form.paybtn=paybtn;
 
     Form.typeUI=typeUI;
 
@@ -105,11 +107,11 @@ function org_shaolin_vogerp_commonmodel_form_AssignedMember(json)
 
     Form.endDateUI=endDateUI;
 
+    Form.termsUI=termsUI;
+
     Form.actionPanel=actionPanel;
 
     Form.paybtn=paybtn;
-
-    Form.upgradebtn=upgradebtn;
 
     Form.user_constructor = function()
     {
@@ -118,6 +120,8 @@ function org_shaolin_vogerp_commonmodel_form_AssignedMember(json)
     };
 
     Form.Save = org_shaolin_vogerp_commonmodel_form_AssignedMember_Save;
+
+    Form.openUserTerms = org_shaolin_vogerp_commonmodel_form_AssignedMember_openUserTerms;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_AssignedMember_invokeDynamicFunction;
 
@@ -136,10 +140,28 @@ function org_shaolin_vogerp_commonmodel_form_AssignedMember(json)
         var o = this;
         var UIEntity = this;
 
+       {   
+           var constraint_result = this.Form.validate();
+           if (constraint_result != true && constraint_result != null) {
+               return false;
+           }
+       }
+       
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20161004-225302",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_AssignedMember_Save */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_AssignedMember_openUserTerms(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_AssignedMember_openUserTerms */
+        var o = this;
+        var UIEntity = this;
+
+        {   
+            UIMaster.ui.mask.openHtml("/html/hints/payterms.html");
+        }
+            }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_AssignedMember_openUserTerms */
 
 
     /* auto generated eventlistener function declaration */

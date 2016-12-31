@@ -23,6 +23,11 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
         ui: elementList[prefix + "serverURLUI"]
     });
 
+    var isVerifiedUserUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "isVerifiedUserUI"]
+    });
+
     var advImagesUI = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "advImagesUI"]
@@ -125,7 +130,7 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [tempSentPartyIdUI,tempSessionIdUI,partyIdUI,serverURLUI,advImagesUI,matrixUI,mainIcon,orderIcon,userIcon,collapseLabel1,userLogout,citySelector,userFormContent,topPanel,searchPanel,middlePanel,pagePanel,bottomPanel,bottomPanel1,userForm]
+        ,items: [tempSentPartyIdUI,tempSessionIdUI,partyIdUI,serverURLUI,isVerifiedUserUI,advImagesUI,matrixUI,mainIcon,orderIcon,userIcon,collapseLabel1,userLogout,citySelector,userFormContent,topPanel,searchPanel,middlePanel,pagePanel,bottomPanel,bottomPanel1,userForm]
     });
 
     Form.tempSentPartyIdUI=tempSentPartyIdUI;
@@ -135,6 +140,8 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
     Form.partyIdUI=partyIdUI;
 
     Form.serverURLUI=serverURLUI;
+
+    Form.isVerifiedUserUI=isVerifiedUserUI;
 
     Form.advImagesUI=advImagesUI;
 
@@ -221,6 +228,11 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 			     UIMaster.pageInitFunctions.push(function() {
 			        // clean all cached page for going back support.
 			        $.ajax({url:AJAX_SERVICE_URL,async:true,data:{_ajaxUserEvent:"tabpane",_uiid:"Form",_valueName:"removeExcludedPage",_value:"#GLOBAL#", _framePrefix:UIMaster.getFramePrefix(), r:Math.random()}});
+			        if (o.isVerifiedUserUI.value == "false") {
+				        window.setTimeout(function(){
+					        UIMaster.ui.mask.openHtml("/html/hints/userguide.html");
+					    }, 1000);
+				    }
 			     });
 			     this.realCounter = $("<span style='color:blue;font-weight:bold;'></span>");
 			     $(this.matrixUI).find("[class=messageIcon]").append(this.realCounter);

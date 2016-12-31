@@ -333,6 +333,9 @@ public class ModularityModel extends BEEntityDaoObject {
             if (scFlow.getId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
             }
+            if (scFlow.getUiEntity() != null && scFlow.getUiEntity().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.uiEntity", scFlow.getUiEntity()));
+            }
 
         inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
@@ -345,6 +348,9 @@ public class ModularityModel extends BEEntityDaoObject {
 
             if (scFlow.getId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
+            }
+            if (scFlow.getUiEntity() != null && scFlow.getUiEntity().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.uiEntity", scFlow.getUiEntity()));
             }
 
         inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));

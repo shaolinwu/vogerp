@@ -68,26 +68,6 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         ui: elementList[prefix + "busiLicenseNumberUI"]
     });
 
-    var bankAccountUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "bankAccountUILabel"]
-    });
-
-    var bankAccountUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "bankAccountUI"]
-    });
-
-    var bankTypeUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "bankTypeUILabel"]
-    });
-
-    var bankTypeUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "bankTypeUI"]
-    });
-
     var personalPhotoLabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "personalPhotoLabel"]
@@ -101,6 +81,13 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     var busiLicensePhotoLabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "busiLicensePhotoLabel"]
+    });
+
+    var termsUI = new UIMaster.ui.checkbox
+    ({
+        ui: elementList[prefix + "termsUI"]
+        ,label: "?????????????????"
+        ,mustCheck: true
     });
 
     var okbtn = new UIMaster.ui.button
@@ -127,13 +114,13 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "verifiedUI",prefix + "orgIdUILabel",prefix + "orgIdUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "legalPersonUILabel",prefix + "legalPersonUI",prefix + "busiLicenseNumberUILabel",prefix + "busiLicenseNumberUI",prefix + "bankAccountUILabel",prefix + "bankAccountUI",prefix + "bankTypeUILabel",prefix + "bankTypeUI",prefix + "personalPhotoLabel",prefix + "personalPhoto",prefix + "personalIdentifierPhotoLabel",prefix + "personalIdentifierPhoto",prefix + "busiLicensePhotoLabel",prefix + "busiLicensePhoto"]
+        ,subComponents: [prefix + "idUI",prefix + "verifiedUI",prefix + "orgIdUILabel",prefix + "orgIdUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "legalPersonUILabel",prefix + "legalPersonUI",prefix + "busiLicenseNumberUILabel",prefix + "busiLicenseNumberUI",prefix + "personalPhotoLabel",prefix + "personalPhoto",prefix + "personalIdentifierPhotoLabel",prefix + "personalIdentifierPhoto",prefix + "busiLicensePhotoLabel",prefix + "busiLicensePhoto",prefix + "termsUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,verifiedUI,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,bankAccountUILabel,bankAccountUI,bankTypeUILabel,bankTypeUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,okbtn,typeUI,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,fieldPanel,actionPanel]
+        ,items: [idUI,verifiedUI,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,termsUI,okbtn,typeUI,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -162,19 +149,13 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.busiLicenseNumberUI=busiLicenseNumberUI;
 
-    Form.bankAccountUILabel=bankAccountUILabel;
-
-    Form.bankAccountUI=bankAccountUI;
-
-    Form.bankTypeUILabel=bankTypeUILabel;
-
-    Form.bankTypeUI=bankTypeUI;
-
     Form.personalPhotoLabel=personalPhotoLabel;
 
     Form.personalIdentifierPhotoLabel=personalIdentifierPhotoLabel;
 
     Form.busiLicensePhotoLabel=busiLicensePhotoLabel;
+
+    Form.termsUI=termsUI;
 
     Form.okbtn=okbtn;
 
@@ -216,14 +197,6 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.busiLicenseNumberUI=busiLicenseNumberUI;
 
-    Form.bankAccountUILabel=bankAccountUILabel;
-
-    Form.bankAccountUI=bankAccountUI;
-
-    Form.bankTypeUILabel=bankTypeUILabel;
-
-    Form.bankTypeUI=bankTypeUI;
-
     Form.personalPhotoLabel=personalPhotoLabel;
 
     Form.personalPhoto=personalPhoto;
@@ -235,6 +208,8 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     Form.busiLicensePhotoLabel=busiLicensePhotoLabel;
 
     Form.busiLicensePhoto=busiLicensePhoto;
+
+    Form.termsUI=termsUI;
 
     Form.actionPanel=actionPanel;
 
@@ -263,6 +238,8 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.Cancel = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Cancel;
 
+    Form.openUserTerms = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_openUserTerms;
+
     Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_invokeDynamicFunction;
 
     Form.__entityName="org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo";
@@ -280,6 +257,13 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         var o = this;
         var UIEntity = this;
 
+        {   
+            var constraint_result = this.Form.validate();
+            if (constraint_result != true && constraint_result != null) {
+                return false;
+            }
+        }
+        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-847970502",UIMaster.getValue(eventsource),o.__entityName);
@@ -295,6 +279,17 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail1712758469",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_openUserTerms(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_openUserTerms */
+        var o = this;
+        var UIEntity = this;
+
+        {   
+            UIMaster.ui.mask.openHtml("/html/hints/payterms.html");
+        }
+            }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_openUserTerms */
 
 
     /* auto generated eventlistener function declaration */

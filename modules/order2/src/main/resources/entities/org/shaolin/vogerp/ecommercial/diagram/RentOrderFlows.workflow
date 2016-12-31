@@ -188,11 +188,14 @@
 			            offerPrice.setLeaveWords(@page.getTextArea("leaveWordUI").getValue());
 			            offerPrice.setSessionId(OrderUtil.genConversationId());
 			            
-			            // compare the prices.
-			            if (!OrderUtil.addAPrice(order, offerPrice)) {
+			            int state = OrderUtil.addAPrice(order, offerPrice);
+			            if (state == -1) {
 			                @page.getLabel("resultUILabel").setValue("竞价失败，请刷新订单状态！");
 			                return;
-			            }
+			            } else if (state == 2) {
+			                @page.getLabel("resultUILabel").setValue("您已出价一次，不可重复竞价！");
+			                return;
+			            } 
 			            
 			            form.closeIfinWindows();
 			            @page.removeForm(@page.getEntityUiid()); 

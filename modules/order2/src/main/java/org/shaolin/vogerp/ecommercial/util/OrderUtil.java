@@ -41,37 +41,59 @@ public class OrderUtil {
 		return "r" + System.nanoTime();
 	}
 	
-	public static boolean addAPrice(final IEOrder eorder,
+	/**
+	 * 
+	 * Add a price
+	 * 
+	 * @param eorder
+	 * @param newPrice
+	 * @return error code
+	 *         1 successful
+	 *         -1 order state changed
+	 *         -2 already offered price
+	 */
+	public static int addAPrice(final IEOrder eorder,
 			final IOfferPrice newPrice) {
 		//TODO: we need the distributed lock manager for all nodes here since this is a competition.
 		lockManager.acquireLock(eorder.getId());
 		try {
-			if (eorder.getId() == 0 || eorder.getStatus() != OrderStatusType.PUBLISHED) {
-				return false;
-			}
-			
 			if (eorder instanceof GoldenOrderImpl) {
 				GoldenOrderImpl gorder = OrderModel.INSTANCE.get(eorder.getId(), GoldenOrderImpl.class);
+				if (gorder == null || eorder.getStatus() != OrderStatusType.PUBLISHED) {
+					return -1;
+				}
 				if (gorder.getOfferPrices() == null) {
 					gorder.setOfferPrices(new ArrayList());
 				}
+				// check whether has offered price already.
+				List<IOfferPrice> priceList = gorder.getOfferPrices();
+	            for (IOfferPrice price : priceList) {
+	            	if (price.getTakenCustomerId() == newPrice.getTakenCustomerId()) {
+	            		return -2;
+	            	}
+	            }
 				gorder.getOfferPrices().add(newPrice);
-				OrderModel.INSTANCE.update(gorder, true);
+				OrderModel.INSTANCE.update(gorder);
 			} else if (eorder instanceof RentOrLoanOrderImpl) {
 				RentOrLoanOrderImpl rorder = OrderModel.INSTANCE.get(eorder.getId(), RentOrLoanOrderImpl.class);
+				if (rorder == null || rorder.getStatus() != OrderStatusType.PUBLISHED) {
+					return -1;
+				}
 				if (rorder.getOfferPrices() == null) {
 					rorder.setOfferPrices(new ArrayList());
 				}
-				// no need compare the price.
-//				if (getLowestOfferPrice(rorder) < newPrice.getPrice()) {
-//					return false;
-//				}
+				// check whether has offered price already.
+				List<IOfferPrice> priceList = rorder.getOfferPrices();
+	            for (IOfferPrice price : priceList) {
+	            	if (price.getTakenCustomerId() == newPrice.getTakenCustomerId()) {
+	            		return -2;
+	            	}
+	            }
 				rorder.getOfferPrices().add(newPrice);
 				OrderModel.INSTANCE.update(rorder, true);
 			} 
-			
 			// commit the update.
-			return true;
+			return 1;
 		} finally {
 			lockManager.releaseLock(eorder.getId());
 		}

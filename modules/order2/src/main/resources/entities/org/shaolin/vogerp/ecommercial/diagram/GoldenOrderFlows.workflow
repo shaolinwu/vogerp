@@ -182,6 +182,7 @@
 			            HashMap out = (HashMap)form.ui2Data();
 			
 			            GoldenOrderImpl order = (GoldenOrderImpl)out.get("beObject");
+			            
 			            GOOfferPriceImpl offerPrice = new GOOfferPriceImpl();
 			            IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
 			            offerPrice.setTakenCustomerId(service.getUserId());
@@ -191,11 +192,14 @@
 			            offerPrice.setLeaveWords(@page.getTextArea("leaveWordUI").getValue());
 			            offerPrice.setSessionId(OrderUtil.genConversationId());
 			            
-			            // compare the prices.
-			            if (!OrderUtil.addAPrice(order, offerPrice)) {
+			            int state = OrderUtil.addAPrice(order, offerPrice);
+			            if (state == -1) {
 			                @page.getLabel("resultUILabel").setValue("竞价失败，请刷新订单状态！");
 			                return;
-			            }
+			            } else if (state == 2) {
+			                @page.getLabel("resultUILabel").setValue("您已出价一次，不可重复竞价！");
+			                return;
+			            } 
 			            
 			            form.closeIfinWindows();
 			            @page.removeForm(@page.getEntityUiid()); 

@@ -38,13 +38,14 @@
         <ns2:mission-node name="applyForVerification" expiredDays="0" expiredHours="0" autoTrigger="true">
             <ns2:description>发送管理员审核</ns2:description>
             <ns2:uiAction actionPage="org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo"
-                actionName="verifyLegalInfo" actionText="发送审核">
+                actionName="verifyLegalInfo" actionText="提交审核">
                 <ns2:filter>
                     <expressionString><![CDATA[
                     import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
                     import org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl;
                     {
-                        return $beObject.getVeriState() != OrgVerifyStatusType.VERIFIED;
+                        return $beObject.getVeriState() != OrgVerifyStatusType.VERIFYING 
+                            || $beObject.getVeriState() != OrgVerifyStatusType.VERIFIED;
                     }
                     ]]></expressionString>
                 </ns2:filter>
@@ -72,9 +73,11 @@
 	                        form.closeIfinWindows(true);
 	                        @page.removeForm(@page.getEntityUiid()); 
                         }
+                        Dialog.showMessageDialog("提交审核中，请稍等！", "", Dialog.INFORMATION_MESSAGE, null);
                         
                         HashMap result = new HashMap();
                         result.put("orgLegalinfo", out.get("beObject"));
+                        result.put("orgInfo", out.get("orgInfo"));
                         return result;
                     }
                     ]]></expressionString>
@@ -85,17 +88,24 @@
                 <ns2:var name="orgLegalinfo" category="BusinessEntity" scope="Out">
                     <type entityName="org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfo"></type>
                 </ns2:var>
+                <ns2:var name="orgInfo" category="BusinessEntity" scope="Out">
+                    <type entityName="org.shaolin.vogerp.commonmodel.be.Organization"></type>
+                </ns2:var>
                 <ns2:expression>
                     <expressionString><![CDATA[
                     import java.util.List;
-                    import java.util.Date;
-                    import java.util.HashMap;
-                    import org.shaolin.bmdp.utils.DateUtil;
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.vogerp.commonmodel.IUserService; 
+                    import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
+                    import org.shaolin.vogerp.commonmodel.dao.CommonModel;
                     {
+                       $orgInfo.setVeriState(OrgVerifyStatusType.VERIFYING);
+                       CommonModel.INSTANCE.update($orgInfo);
+                       
+                       $orgLegalinfo.setVeriState($orgInfo.getVeriState());
+        			   $orgLegalinfo.setVerifierId($orgInfo.getVerifierId());
                     }
-                     ]]></expressionString>
+                    ]]></expressionString>
                 </ns2:expression>
             </ns2:process>
         </ns2:mission-node>
@@ -131,6 +141,7 @@
                         
                         HashMap result = new HashMap();
                         result.put("orgLegalinfo", out.get("beObject"));
+                        result.put("orgInfo", out.get("orgInfo"));
                         return result;
                     }
                     ]]></expressionString>
@@ -141,6 +152,9 @@
                 <ns2:var name="orgLegalinfo" category="BusinessEntity" scope="Out">
                     <type entityName="org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfo"></type>
                 </ns2:var>
+                <ns2:var name="orgInfo" category="BusinessEntity" scope="Out">
+                    <type entityName="org.shaolin.vogerp.commonmodel.be.Organization"></type>
+                </ns2:var>
                 <ns2:expression>
                     <expressionString><![CDATA[
                     import java.util.List;
@@ -150,19 +164,24 @@
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.vogerp.commonmodel.IUserService; 
                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
-                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
-                     import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
-                     import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
-                     import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                    import org.shaolin.bmdp.workflow.be.NotificationImpl;
+                    import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+                    import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
+                    import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                    import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
                      {
+                         $orgInfo.setVeriState(OrgVerifyStatusType.FAILED);
+                         CommonModel.INSTANCE.update($orgInfo);
+                         
                          // notify customer.
+                         IUserService userService = (IUserService)AppContext.get().getService(AppContext.class);
                          PersonalInfoImpl condition = new PersonalInfoImpl();
-                         condition.setOrgId($orgLegalinfo.getOrgId());
+                         condition.setOrgId($orgInfo.getId());
                          List result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, 1);
                          IPersonalInfo publisher = (IPersonalInfo)result.get(0);
                          
-                         String subject = "恭喜您的帐号通过验证！";
-                         String description = "";
+                         String subject = "您的帐号未验证通过！";
+                         String description = "原因： 信息不明确。";
                          NotificationImpl message = new NotificationImpl();
                          message.setPartyId(publisher.getId());
                          message.setSubject(subject);
@@ -208,6 +227,7 @@
                         
                         HashMap result = new HashMap();
                         result.put("orgLegalinfo", out.get("beObject"));
+                        result.put("orgInfo", out.get("orgInfo"));
                         return result;
                     }
                     ]]></expressionString>
@@ -218,6 +238,9 @@
                 <ns2:var name="orgLegalinfo" category="BusinessEntity" scope="Out">
                     <type entityName="org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfo"></type>
                 </ns2:var>
+                <ns2:var name="orgInfo" category="BusinessEntity" scope="Out">
+                    <type entityName="org.shaolin.vogerp.commonmodel.be.Organization"></type>
+                </ns2:var>
                 <ns2:expression>
                     <expressionString><![CDATA[
                     import java.util.List;
@@ -227,14 +250,18 @@
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.vogerp.commonmodel.IUserService; 
                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
-                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
-                     import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
-                     import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
-                     import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                    import org.shaolin.bmdp.workflow.be.NotificationImpl;
+                    import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+                    import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
+                    import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                    import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
                      {
+                         $orgInfo.setVeriState(OrgVerifyStatusType.VERIFIED);
+                         CommonModel.INSTANCE.update($orgInfo);
+                         
                          // notify customer.
                          PersonalInfoImpl condition = new PersonalInfoImpl();
-                         condition.setOrgId($orgLegalinfo.getOrgId());
+                         condition.setOrgId($orgInfo.getId());
                          List result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, 1);
                          IPersonalInfo publisher = (IPersonalInfo)result.get(0);
                          

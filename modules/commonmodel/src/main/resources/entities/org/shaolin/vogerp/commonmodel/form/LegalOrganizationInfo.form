@@ -3,6 +3,16 @@
   <entityName>org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo</entityName>
   <systemVersion>0</systemVersion>
   <ns2:eventHandler functionName="Save">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+            var constraint_result = this.Form.validate();
+            if (constraint_result != true && constraint_result != null) {
+                return false;
+            }
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveDetail-847970502">
       <ns2:exp>
         <expressionString><![CDATA[
@@ -61,6 +71,15 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
+  <ns2:eventHandler functionName="openUserTerms">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+            UIMaster.ui.mask.openHtml("/html/hints/payterms.html");
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
+  </ns2:eventHandler> 
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -69,7 +88,6 @@
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -228,7 +246,7 @@
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="enterpriseCodeUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
-      -->
+      
       <ns2:component xsi:type="ns2:UILabelType" UIID="bankAccountUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -249,6 +267,7 @@
       <ns2:component xsi:type="ns2:UIComboBoxType" UIID="bankTypeUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
+      -->
       <ns2:component xsi:type="ns2:UILabelType" UIID="personalPhotoLabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
@@ -275,6 +294,28 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="busiLicensePhoto">
          <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.SingleImageUploader" />
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UICheckBoxType" UIID="termsUI">
+         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+         <ns2:Property name="label">
+	     <ns2:value xsi:type="ns2:StringPropertyType">
+	         <value>同意《抢单达人会员及网上支付协议》</value>
+	     </ns2:value>
+		 </ns2:Property>
+		 <ns2:Property name="mustCheck">
+		     <ns2:value xsi:type="ns2:BooleanPropertyType">
+		         <value>true</value>
+		     </ns2:value>
+		 </ns2:Property>
+             <ns2:text xsi:type="ns2:StringPropertyType">
+               <ns2:value>抢单达人会员议书</ns2:value>
+             </ns2:text>
+            <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+		     <ns2:value>false</ns2:value>
+		 </ns2:allowBlank>
+		 <ns2:EventListener xsi:type="ns2:CustomListenerType" eventName="linkevent">
+             <ns2:handler functionName="openUserTerms" />
+         </ns2:EventListener>
       </ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>orgIdUILabel</ns2:componentId>
@@ -325,95 +366,33 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>bankAccountUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>bankAccountUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>bankTypeUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="7" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>bankTypeUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="7" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
         <ns2:componentId>personalPhotoLabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="8" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>personalPhoto</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="8" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>personalIdentifierPhotoLabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="9" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>personalIdentifierPhoto</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="9" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>busiLicensePhotoLabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="10" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>busiLicensePhoto</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="10" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <!-- 
-      <ns2:layoutConstraint>
-        <ns2:componentId>tradeLicenseNumberUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>tradeLicenseNumberUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>taxRegistrationNumberUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>taxRegistrationNumberUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>taxRegistrationDateUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>taxRegistrationDateUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>localTaxRegistrationNumberUILabel</ns2:componentId>
+        <ns2:componentId>personalIdentifierPhotoLabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="7" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>localTaxRegistrationNumberUI</ns2:componentId>
+        <ns2:componentId>personalIdentifierPhoto</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="7" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>localTaxRegistrationDateUILabel</ns2:componentId>
+        <ns2:componentId>busiLicensePhotoLabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="8" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>localTaxRegistrationDateUI</ns2:componentId>
+        <ns2:componentId>busiLicensePhoto</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="8" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>enterpriseCodeUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:componentId>termsUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="9" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>enterpriseCodeUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-       -->
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -524,6 +503,11 @@
       <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.SingleImageUploader"></ns2:mappingRule>
       <ns2:UIComponent componentPath="personalPhoto" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.legalPhoto" paramName="imagePath"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="sampleImagePath">
+         <ns2:expression>
+          <expressionString>{return org.shaolin.uimaster.page.WebConfig.getWebContextRoot() + "/images/usersample/person.png";}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="imageWsize">
          <ns2:expression>
           <expressionString>{return 150;}</expressionString>
@@ -539,12 +523,32 @@
       <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.SingleImageUploader"></ns2:mappingRule>
       <ns2:UIComponent componentPath="personalIdentifierPhoto" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.legalIdentifierPhoto" paramName="imagePath"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="sampleImagePath">
+         <ns2:expression>
+          <expressionString>{return org.shaolin.uimaster.page.WebConfig.getWebContextRoot() + "/images/usersample/identicard.jpg";}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping9">
       <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.SingleImageUploader"></ns2:mappingRule>
       <ns2:UIComponent componentPath="busiLicensePhoto" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.busiLicensePhoto" paramName="imagePath"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="sampleImagePath">
+         <ns2:expression>
+          <expressionString>{return org.shaolin.uimaster.page.WebConfig.getWebContextRoot() + "/images/usersample/businesspepar.jpg";}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
     </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping12">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="verifiedUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
+         <ns2:expression>
+          <expressionString>String.valueOf($orgInfo.getVeriState().getIntValue())</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <!-- 
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping10">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="bankAccountUI" paramName="UIWidgetType"></ns2:UIComponent>
@@ -560,16 +564,6 @@
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping12">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="verifiedUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
-         <ns2:expression>
-          <expressionString>String.valueOf($beObject.getVeriState().getIntValue())</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <!-- 
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping8">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="enterpriseCodeUI" paramName="UIWidgetType"></ns2:UIComponent>
@@ -634,6 +628,9 @@
              $beObject.setLegalIdentifierPhoto("/user/"+$orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
              $beObject.setBusiLicensePhoto("/user/"+$orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
           }
+          $beObject.setVeriState($orgInfo.getVeriState());
+          $beObject.setVerifierId($orgInfo.getVerifierId());
+          
 	      @odContext.executeAllMappings();
      }]]></expressionString>
     </ns2:DataToUIMappingOperation>
@@ -654,7 +651,10 @@
         if (legalInfo == null) {
             legalInfo = new LegalOrganizationInfoImpl();
         }
-        $orgInfo = new OrganizationImpl();
+        legalInfo.setVeriState(orgInfo.getVeriState());
+        legalInfo.setVerifierId(orgInfo.getVerifierId());
+        
+        $orgInfo = orgInfo;
         $beObject = legalInfo;
         @odContext.executeAllMappings();
       }</expressionString>

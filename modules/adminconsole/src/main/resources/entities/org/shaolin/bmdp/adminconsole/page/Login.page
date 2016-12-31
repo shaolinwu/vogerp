@@ -202,6 +202,11 @@
 						<ns2:text xsi:type="ns2:StringPropertyType">
 							<ns2:value>登录</ns2:value>
 						</ns2:text>
+						<ns2:Property name="skipSetAsEnabled">
+				            <ns2:value xsi:type="ns2:BooleanPropertyType">
+						         <ns2:value>true</ns2:value>
+					        </ns2:value>
+			            </ns2:Property>
 						<ns2:EventListener xsi:type="ns2:ClickListenerType">
 							<ns2:handler functionName="verifiCode" />
 						</ns2:EventListener>

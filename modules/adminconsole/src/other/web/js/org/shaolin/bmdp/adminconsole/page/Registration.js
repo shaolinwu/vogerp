@@ -36,7 +36,8 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     var termsUI = new UIMaster.ui.checkbox
     ({
         ui: elementList[prefix + "termsUI"]
-        ,label: "?????????"
+        ,label: "???????????"
+        ,mustCheck: true
     });
 
     var registerBtn = new UIMaster.ui.button
@@ -169,6 +170,8 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
     Form.verifiCode = org_shaolin_bmdp_adminconsole_page_Registration_verifiCode;
 
+    Form.openUserTerms = org_shaolin_bmdp_adminconsole_page_Registration_openUserTerms;
+
     Form.Login = org_shaolin_bmdp_adminconsole_page_Registration_Login;
 
     Form.Register = org_shaolin_bmdp_adminconsole_page_Registration_Register;
@@ -220,6 +223,17 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifiCode-20151227-1839",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Registration_verifiCode */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Registration_openUserTerms(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Registration_openUserTerms */
+        var o = this;
+        var UIEntity = this;
+
+		        {   
+		            UIMaster.ui.mask.openHtml("/html/hints/terms.html");
+		        }
+		            }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Registration_openUserTerms */
 
 
     /* auto generated eventlistener function declaration */

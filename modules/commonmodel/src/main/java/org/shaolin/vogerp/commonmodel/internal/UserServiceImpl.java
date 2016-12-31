@@ -30,12 +30,10 @@ import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.uimaster.page.flow.WebflowConstants;
 import org.shaolin.vogerp.commonmodel.ICaptcherService;
 import org.shaolin.vogerp.commonmodel.IModuleService;
-import org.shaolin.vogerp.commonmodel.IOrganizationService;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl;
 import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
 import org.shaolin.vogerp.commonmodel.be.ICaptcha;
-import org.shaolin.vogerp.commonmodel.be.ILegalOrganizationInfo;
 import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 import org.shaolin.vogerp.commonmodel.be.IRegisterInfo;
@@ -333,11 +331,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			userContext.setOrgType(organization.getType());
 			userContext.setOrgName(organization.getName());
 			userContext.setIsAdmin("uimaster".equals(organization.getOrgCode()) || "runner".equals(organization.getOrgCode()));
-			IOrganizationService orgService = AppContext.get().getService(IOrganizationService.class);
-	        ILegalOrganizationInfo legalInfo = orgService.getLegalInfo(userContext.getOrgId());
-	        if (legalInfo != null) {
-	        	userContext.setVerified(legalInfo.getVeriState() == OrgVerifyStatusType.VERIFIED);
-	        }
+			userContext.setVerified(organization.getVeriState() == OrgVerifyStatusType.VERIFIED);
 			session.setAttribute(WebflowConstants.USER_SESSION_KEY, userContext);
 			session.setAttribute(WebflowConstants.USER_LOCALE_KEY, matchedUser.getLocale());
 			session.setAttribute(WebflowConstants.USER_ROLE_KEY, CEOperationUtil.toCElist(userInfo.getType()));

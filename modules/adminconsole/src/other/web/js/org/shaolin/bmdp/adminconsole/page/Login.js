@@ -42,6 +42,7 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     var loginBtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "loginBtn"]
+        ,skipSetAsEnabled: true
     });
 
     var registerBtn = new UIMaster.ui.button

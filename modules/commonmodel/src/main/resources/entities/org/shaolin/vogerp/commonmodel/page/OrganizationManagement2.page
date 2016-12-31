@@ -368,6 +368,38 @@
                          </ns2:rowExpression>
                      </ns2:column>
                      <ns2:column xsi:type="ns2:UITableColumnType">
+		                   <ns2:title xsi:type="ns2:StringPropertyType">
+		                       <ns2:value>验证状态</ns2:value>
+		                   </ns2:title>
+		                   <ns2:beFieldId>rowBE.veriState</ns2:beFieldId>
+		                   <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+		                      <ns2:type>ComBox</ns2:type>
+		                      <ns2:cetype>org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType</ns2:cetype>
+		                   </ns2:uiType>
+		                   <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+		                       <ns2:expression xsi:type="ns2:ExpressionType">
+		                           <ns2:expressionString><![CDATA[
+		                           import org.shaolin.vogerp.commonmodel.ce.OrganizationType;
+		                           import org.shaolin.bmdp.runtime.AppContext;
+		                           import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+		                           import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
+		                           import org.shaolin.bmdp.runtime.ce.CEUtil;
+		                           {
+		                              $rowBE.setVeriState((OrgVerifyStatusType)CEUtil.getConstantEntity("org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType", Integer.parseInt($value)));
+		                           }]]></ns2:expressionString>
+		                       </ns2:expression>
+		                   </ns2:updateCondition>
+		                   <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+	                     	  <ns2:expression xsi:type="ns2:ExpressionType">
+	                             <ns2:expressionString><![CDATA[
+	                             import org.shaolin.bmdp.runtime.AppContext;
+	                             {
+	                             	return org.shaolin.bmdp.runtime.ce.CEUtil.getValue($rowBE.getVeriState());
+	                             }]]></ns2:expressionString>
+	                         </ns2:expression>
+	                       </ns2:rowExpression>
+		               </ns2:column>
+                     <ns2:column xsi:type="ns2:UITableColumnType">
                          <ns2:title xsi:type="ns2:StringPropertyType">
                              <ns2:value>建立时间</ns2:value>
                          </ns2:title>
@@ -478,7 +510,7 @@
 		               </ns2:column>
 		               <ns2:column xsi:type="ns2:UITableColumnType">
 		                   <ns2:title xsi:type="ns2:StringPropertyType">
-		                       <ns2:value>Type</ns2:value>
+		                       <ns2:value>类型</ns2:value>
 		                   </ns2:title>
 		                   <ns2:beFieldId>rowBE.type</ns2:beFieldId>
 		                   <ns2:uiType xsi:type="ns2:UITableColHTMLType">

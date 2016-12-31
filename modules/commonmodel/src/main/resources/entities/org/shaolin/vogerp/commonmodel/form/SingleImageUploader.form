@@ -45,7 +45,12 @@
         <ns2:secure>
           <ns2:value>true</ns2:value>
         </ns2:secure>
-      </ns2:component>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIHiddenType" UIID="sampleImagePathUI">
+        <ns2:secure>
+          <ns2:value>true</ns2:value>
+        </ns2:secure>
+    </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -81,6 +86,16 @@
                <ns2:value xsi:type="ns2:StringPropertyType">
                    <value>220px</value>
                </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="sampleImagePath">
+               <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                     <ns2:expression>
+                       <expressionString><![CDATA[
+                       { 
+                           return $sampleImagePath; 
+                       }]]></expressionString>
+                     </ns2:expression>
+                </ns2:value>
             </ns2:Property>
             <ns2:Property name="src">
 	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
@@ -198,6 +213,9 @@
     <ns2:DataEntity scope="InOut" name="imagePath" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="sampleImagePath" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="imageWsize" category="JavaPrimitive">
       <type entityName="java.lang.Integer"></type>
       <default><expressionString><![CDATA[new Integer(-1)]]></expressionString></default>
@@ -210,10 +228,15 @@
       <type entityName="java.lang.Boolean"></type>
       <default><expressionString><![CDATA[Boolean.TRUE]]></expressionString></default>
     </ns2:DataEntity>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="imagePathUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="imagePath" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="sampleImagePathUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="sampleImagePath" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[

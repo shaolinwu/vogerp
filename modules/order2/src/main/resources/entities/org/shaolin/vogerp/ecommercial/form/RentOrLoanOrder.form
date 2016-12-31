@@ -106,9 +106,8 @@
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="estimatedPriceUILabel">
             <ns2:UIStyle></ns2:UIStyle>
-            <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-              <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
-              <ns2:key>org.shaolin.vogerp.ecommercial.be.GoldenOrder.estimatedPrice</ns2:key>
+            <ns2:text xsi:type="ns2:StringPropertyType">
+              <ns2:value>单价(估价)元</ns2:value>
             </ns2:text>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="estimatedPriceUI">
@@ -383,7 +382,7 @@
       <ns2:UIComponent componentPath="publishedCustomerIdUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
         <ns2:expression>
-          <expressionString>org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil.getCustomerEnterpriseBasicInfo($beObject.getPublishedCustomer())</expressionString>
+          <expressionString>org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil.getSecureCustomerBasicInfo($beObject.getPublishedCustomer())</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
