@@ -131,6 +131,7 @@
     <ns2:column name="EXCEEDAMOUNT" type="INTEGER" isNull="true"></ns2:column>
 	<ns2:column name="DISCOUNT" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="COMMENTS" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="ICON" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
       <ns2:columnName>ID</ns2:columnName>
@@ -145,6 +146,7 @@
       <ns2:fieldMapping beFieldName="exceedAmount" columnName="EXCEEDAMOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="discount" columnName="DISCOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="comments" columnName="COMMENTS"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="icon" columnName="ICON"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>

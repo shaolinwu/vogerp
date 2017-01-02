@@ -8,6 +8,11 @@ function org_shaolin_vogerp_productmodel_form_ImportProducts(json)
         ui: elementList[prefix + "searchWordUI"]
     });
 
+    var searchWord2UI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "searchWord2UI"]
+    });
+
     var searchBtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "searchBtn"]
@@ -41,16 +46,18 @@ function org_shaolin_vogerp_productmodel_form_ImportProducts(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "searchWordUI",prefix + "searchBtn"]
+        ,subComponents: [prefix + "searchWordUI",prefix + "searchWord2UI",prefix + "searchBtn"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [searchWordUI,searchBtn,okbtn,closebtn,fieldPanel,resultPanel,actionPanel]
+        ,items: [searchWordUI,searchWord2UI,searchBtn,okbtn,closebtn,fieldPanel,resultPanel,actionPanel]
     });
 
     Form.searchWordUI=searchWordUI;
+
+    Form.searchWord2UI=searchWord2UI;
 
     Form.searchBtn=searchBtn;
 
@@ -61,6 +68,8 @@ function org_shaolin_vogerp_productmodel_form_ImportProducts(json)
     Form.fieldPanel=fieldPanel;
 
     Form.searchWordUI=searchWordUI;
+
+    Form.searchWord2UI=searchWord2UI;
 
     Form.searchBtn=searchBtn;
 
@@ -101,13 +110,6 @@ function org_shaolin_vogerp_productmodel_form_ImportProducts(json)
         var o = this;
         var UIEntity = this;
 
-        {   
-            var constraint_result = this.Form.validate();
-            if (constraint_result != true && constraint_result != null) {
-                return false;
-            }
-        }
-        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"analysis-20160822-100447",UIMaster.getValue(eventsource),o.__entityName);

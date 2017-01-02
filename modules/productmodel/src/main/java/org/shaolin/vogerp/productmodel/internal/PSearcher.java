@@ -8,9 +8,10 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -27,6 +28,7 @@ import org.shaolin.bmdp.utils.FileUtil;
 import org.shaolin.bmdp.utils.ImageUtil;
 import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.uimaster.page.WebConfig;
+import org.shaolin.uimaster.page.ajax.json.JSONArray;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.vogerp.productmodel.be.IImprotProductItem;
 import org.shaolin.vogerp.productmodel.be.IProduct;
@@ -34,7 +36,6 @@ import org.shaolin.vogerp.productmodel.be.IProductPrice;
 import org.shaolin.vogerp.productmodel.be.ImprotProductItemImpl;
 import org.shaolin.vogerp.productmodel.be.ProductImpl;
 import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
-import org.shaolin.vogerp.productmodel.ce.PriceType;
 import org.shaolin.vogerp.productmodel.dao.ProductModel;
 import org.shaolin.vogerp.productmodel.util.ProductUtil;
 import org.slf4j.Logger;
@@ -91,7 +92,13 @@ public class PSearcher {
         HttpsURLConnection.setDefaultSSLSocketFactory(context.getSocketFactory());
     }
 	
-	public List<IImprotProductItem> execute(String url) {
+	/**
+	 * We must execute all queries in line. otherwise, we will be blocked by remote server due to request too much!
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public synchronized List<IImprotProductItem> execute(String url) {
 //        HtmlPage page = wc.getPage(url);  
         //String pageXml = page.asXml();
 		//parse(pageXml, baseUrl);
@@ -109,7 +116,52 @@ public class PSearcher {
 		return Collections.emptyList();
 	}
 	
-	public List<IProduct> downloadDetail(List<IImprotProductItem> items) {
+	/**
+	 * We must execute all queries in line. otherwise, we will be blocked by remote server.
+	 * 
+	 * @param link
+	 * @return
+	 */
+	public synchronized IProduct downloadDetail(String link) {
+		String pname = ""; 
+		ImprotProductItemImpl jitem = new ImprotProductItemImpl();
+		jitem.setName(pname);
+		jitem.setImageLink(link);
+		jitem.setDetailLink(link);
+		
+		ProductImpl product = new ProductImpl();
+		product.setOrgId(UserContext.getUserContext().getOrgId());
+		product.setName(pname);
+		product.setDescription(pname);
+		product.setSerialNumber(ProductUtil.genSerialNumber());
+		product.setType("OtherProductType,1");//temporary type.
+		String resId = ProductUtil.genResourceId();
+		product.setHtmlDesc("/product/" + resId + "/desc.html");
+		product.setPhotos("/product/" + resId + "/images");
+		
+		for (Handler h: handlers) {
+			if (h.isAcceptable(link)) {
+				try {
+					h.downloadDetail(jitem, product);
+				} catch (Exception e) {
+					logger.warn("Failed to parse this link: " + jitem.getDetailLink(), e);
+				}
+			}
+		}
+		
+		// after downloading
+		ProductUtil.genProductThumbnail(product);
+		ProductModel.INSTANCE.create(product, true);
+		return product;
+	}
+	
+	/**
+	 * We must execute all queries in line. otherwise, we will be blocked by remote server.
+	 * 
+	 * @param items
+	 * @return
+	 */
+	public synchronized List<IProduct> downloadDetail(List<IImprotProductItem> items) {
 		List resultJsonItems = new ArrayList();
 		for (IImprotProductItem item: items) {
 			ProductImpl product = new ProductImpl();
@@ -117,8 +169,7 @@ public class PSearcher {
 			product.setName(item.getName());
 			product.setDescription(item.getName());
 			product.setSerialNumber(ProductUtil.genSerialNumber());
-			product.setType("Furnitures,19");//temporary type.
-			product.setSubType("OtherProductType,1");//TODO: how to determine it?
+			product.setType("OtherProductType,1");//temporary type.
 			String resId = ProductUtil.genResourceId();
 			product.setHtmlDesc("/product/" + resId + "/desc.html");
 			product.setPhotos("/product/" + resId + "/images");
@@ -126,6 +177,7 @@ public class PSearcher {
 			for (Handler h: handlers) {
 				if (h.isAcceptable(item.getDetailLink())) {
 					try {
+						Thread.sleep(500);//prevent server blocking
 						//item.getDetailLink(), item.getDetailLink().substring(0, item.getDetailLink().indexOf(".com") + 4
 						//item.getImageLink(), item.getImageLink().substring(0, item.getImageLink().indexOf(".com") + 4)
 						h.downloadDetail(item, product);
@@ -134,19 +186,6 @@ public class PSearcher {
 					}
 				}
 			}
-			
-			ProductPriceImpl price = new ProductPriceImpl();
-			price.setProduct(product);
-			price.setType(PriceType.BASE);
-			price.setPrice(product.getEstimatedPrice());
-			price.setCost(product.getEstimatedPrice());
-			price.setCreateDate(new Date());
-			price.setPackages("");
-			price.setEnabled(true);
-			
-			ArrayList<IProductPrice> priceItems = new ArrayList<IProductPrice>();
-			priceItems.add(price);
-			product.setPriceList(priceItems);
 			
 			resultJsonItems.add(product);
 			// after downloading
@@ -223,6 +262,11 @@ public class PSearcher {
 				throws Exception {
 			Document rootdoc = getDocument(item.getDetailLink());
 			
+			if (product.getName() == null || product.getName().trim().length() == 0) {
+				String title = rootdoc.select("#J_Title").select(".tb-main-title").text();
+				product.setName(title);
+				product.setDescription(title);
+			}
 			String detailLink = null;
 			Elements result = rootdoc.select("script");
 			Iterator<Element> ii = result.iterator();
@@ -235,7 +279,63 @@ public class PSearcher {
 					detailLink = detailLink.substring(detailLink.indexOf("?") + 1);
 					detailLink = detailLink.substring(0, detailLink.indexOf("' : '"));
 					detailLink = detailLink.substring(2);
-					break;
+				} else if (e.html().indexOf("valItemInfo      : ") != -1) {
+					String script = e.html();
+					int start = script.indexOf("valItemInfo      : ") + "valItemInfo      : ".length();
+					int end = script.indexOf("Hub.config.set('desc'");
+					String valItemJson = script.substring(start, end).trim();
+					valItemJson = valItemJson.substring(0, valItemJson.lastIndexOf("});"));
+					JSONObject json = new JSONObject(valItemJson);
+					JSONObject skuJson = json.getJSONObject("skuMap");
+					JSONObject promJson = json.getJSONObject("propertyMemoMap");
+					
+					Map<String, String> priceImages = new HashMap<String, String>();
+					Map<String, String> priceAttrs = new HashMap<String, String>();
+					result = rootdoc.select(".J_TSaleProp");
+					ii = result.iterator();
+					while (ii.hasNext()) {
+						List<org.jsoup.nodes.Node> items = ii.next().childNodes();
+						for (org.jsoup.nodes.Node node: items) {
+							if (node instanceof Element) {
+								String key = node.attr("data-value");
+								Elements a = ((Element)node).select("a");
+								String value = a.attr("style");
+								if (value != null && value.trim().length() > 0) {
+									priceImages.put(key, value);
+								} 
+								priceAttrs.put(key, a.text());
+							}
+						}
+					}
+					if (skuJson.length() > 0) {
+						List<IProductPrice> priceList = new ArrayList<IProductPrice>(skuJson.length());
+						product.setPriceList(priceList);
+						Iterator i = skuJson.sortedKeys();
+						while (i.hasNext()) {
+							ProductPriceImpl priceItem = new ProductPriceImpl();
+							
+							String key = (String)i.next();
+							double price = skuJson.getJSONObject(key).getDouble("price");
+							String packageName = "";
+							String resourceKey = key.substring(1, key.length()-1);
+							if (promJson.has(resourceKey)) {
+								packageName = promJson.getString(resourceKey);
+								priceItem.setIcon("https:" + priceImages.get(resourceKey).replace("background:url(", "").replace(") center no-repeat;", ""));
+							} else {
+								String[] keys = resourceKey.split(";");
+								for (String k: keys) {
+									packageName = packageName + priceAttrs.get(k) + " ";
+								}
+							}
+							
+							priceItem.setComments(packageName);
+							priceItem.setPrice(price);
+							priceItem.setCost(price);
+							priceItem.setPackages("");
+							priceItem.setEnabled(true);
+							priceList.add(priceItem);
+						}
+					}
 				}
 			}
 			if (detailLink != null) {
@@ -342,6 +442,11 @@ public class PSearcher {
 				throws Exception {
 			Document rootdoc = getDocument(item.getDetailLink());
 			
+			if (product.getName() == null || product.getName().trim().length() == 0) {
+				String title = rootdoc.select(".tb-detail-hd").select("h1").text();
+				product.setName(title);
+				product.setDescription(title);
+			}
 			String detailLink = null;
 			Elements result = rootdoc.select("script");
 			Iterator<Element> ii = result.iterator();
@@ -353,7 +458,37 @@ public class PSearcher {
 					detailLink = detailLink.substring(0, detailLink.indexOf("\"apiAddCart\""));
 					detailLink = detailLink.substring(1);
 					detailLink = detailLink.substring(0, detailLink.indexOf("\"},"));
-					break;
+					
+					String script = e.html();
+					int start = script.indexOf("TShop.Setup(") + "TShop.Setup(".length();
+					int end = script.indexOf("})();");
+					String valItemJson = script.substring(start, end-2).trim();
+					valItemJson = valItemJson.substring(0, valItemJson.lastIndexOf(");")).trim();
+					JSONObject json = new JSONObject(valItemJson);
+					JSONArray skuList = json.getJSONObject("valItemInfo").getJSONArray("skuList");
+					JSONObject skuMap = json.getJSONObject("valItemInfo").getJSONObject("skuMap");
+					
+					if (skuList != null && skuList.length() > 0) {
+						List<IProductPrice> priceList = new ArrayList<IProductPrice>(skuList.length());
+						product.setPriceList(priceList);
+						for (int i=0; i<skuList.length(); i++) {
+							JSONObject sku = skuList.getJSONObject(i);
+							String packageName = sku.getString("names");
+							String key = ";" + sku.getString("pvs") +";";
+							if (!skuMap.has(key)) {
+								continue;
+							}
+							double price = skuMap.getJSONObject(key).getDouble("price");
+							ProductPriceImpl priceItem = new ProductPriceImpl();
+							priceItem.setComments(packageName);
+							priceItem.setPrice(price);
+							priceItem.setCost(price);
+							priceItem.setPackages("");
+							priceItem.setEnabled(true);
+							
+							priceList.add(priceItem);
+						}
+					}
 				}
 			}
 			if (detailLink != null) {

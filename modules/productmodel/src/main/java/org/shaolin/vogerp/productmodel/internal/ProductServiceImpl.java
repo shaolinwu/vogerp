@@ -17,6 +17,7 @@ import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
 import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
+import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.uimaster.page.ajax.TreeItem;
 import org.shaolin.vogerp.commonmodel.IMemberService;
 import org.shaolin.vogerp.commonmodel.IUserService;
@@ -247,7 +248,7 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 			ProductImpl mg = (ProductImpl) all.get(i);
 			TreeItem gitem = new TreeItem();
 			gitem.setId("mg_" + i);
-			gitem.setText(mg.getName());
+			gitem.setText(StringUtil.truncateString(mg.getName(), 20) + "("+mg.getSerialNumber()+")");
 			result.add(gitem);
 			
 			List<IProductPrice> priceItems = mg.getPriceList();
@@ -261,8 +262,7 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 			
 				TreeItem pitem = new TreeItem();
 				pitem.setId("pg_" + price.getId());
-				pitem.setText(ProductUtil.getProductSummary(mg) + 
-							"--" + ProductUtil.getPriceFormat(price.getPrice()) + 
+				pitem.setText(ProductUtil.getPriceFormat(price.getPrice()) + 
 							"--" + ProductUtil.getPricePackage(price));
 				gitem.getChildren().add(pitem);
 			}

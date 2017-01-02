@@ -178,11 +178,6 @@
 			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
 		<bediagram:member>
-			<!-- the price can be specific to a party optionally. -->
-			<bediagram:name>partyId</bediagram:name>
-			<bediagram:type xsi:type="bediagram:LongType" />
-		</bediagram:member>
-		<bediagram:member>
             <!-- the cost of this product. -->
             <bediagram:name>cost</bediagram:name>
             <bediagram:type xsi:type="bediagram:DoubleType" />
@@ -203,6 +198,10 @@
         </bediagram:member>
         <bediagram:member>
             <bediagram:name>comments</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>icon</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>

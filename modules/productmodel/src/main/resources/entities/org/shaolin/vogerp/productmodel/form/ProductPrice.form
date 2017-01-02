@@ -111,11 +111,13 @@
         </ns2:secure>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="costUILabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.productmodel.be.ProductPrice.cost</ns2:key>
+        <ns2:UIStyle></ns2:UIStyle>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>成本价格</ns2:value>
         </ns2:text>
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+          <ns2:value>亲，方便我们核算您的成本利润哟。</ns2:value>
+        </ns2:widgetLabel>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="costUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
@@ -177,7 +179,7 @@
       <ns2:component xsi:type="ns2:UILabelType" UIID="packagesUILabel">
         <ns2:UIStyle>uimaster_leftform_widget pricepackagelabel</ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>配置产品价格属于...</ns2:value>
+          <ns2:value>勾选价格属性</ns2:value>
         </ns2:text>
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="selectPricePackage"></ns2:handler>
@@ -191,9 +193,8 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="commentUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.productmodel.be.ProductPrice.comments</ns2:key>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:bundle>手动填写价格属性</ns2:bundle>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextAreaType" UIID="commentUI">

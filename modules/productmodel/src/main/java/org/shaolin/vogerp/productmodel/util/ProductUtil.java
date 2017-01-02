@@ -9,6 +9,7 @@ import org.shaolin.bmdp.i18n.LocaleContext;
 import org.shaolin.bmdp.utils.DateParser;
 import org.shaolin.bmdp.utils.FileUtil;
 import org.shaolin.bmdp.utils.ImageUtil;
+import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.uimaster.page.WebConfig;
 import org.shaolin.uimaster.page.exception.FormatException;
 import org.shaolin.uimaster.page.od.formats.FormatUtil;
@@ -50,7 +51,7 @@ public class ProductUtil {
 	
 	public static String getProductSummary(IProduct product) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(product.getName()).append("(").append(product.getSerialNumber()).append(")");
+		sb.append(StringUtil.truncateString(product.getName(), 8, "...")).append("(").append(product.getSerialNumber()).append(")");
 		return sb.toString();
 	}
 	
@@ -107,6 +108,8 @@ public class ProductUtil {
 		String packages = price.getPackages();
 		if (packages != null && !packages.trim().isEmpty()) {
 			sb.append(CEOperationUtil.toHTMLString(packages));
+		} else {
+			sb.append(price.getComments());
 		}
 		return sb.toString();
 	}
