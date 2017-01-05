@@ -10,18 +10,16 @@ public interface IAccountingService {
 	 * transaction_type	String	 'PAY’ or 'REFUND’ or 'TRANSFER'
 	 */
 	public enum TransactionType {
-		PAY("pay"), REFUND("refund"), TRANSFER("transfer");
-		
-		String type;
-		private TransactionType(String type) {
-			this.type = type;
-		}
+		PAY, REFUND, TRANSFER;
 	}
 	
 	public IPayOrder createSelfPayOrder(PayBusinessType type, long endUserId, String orderSeriaNumber, double amount);
 	
 	public IPayOrder createPayOrder(final PayBusinessType type, final long orgId, final long userId, 
 			final long endUserId, final String orderSeriaNumber, final double amount);
+	
+	public IPayOrder createPayAdminOrder(final PayBusinessType type, final long endUserId, 
+			final String orderSerialNumber, final double amount); 
 	
 	public String prepay(IPayOrder order) throws PaymentException;
 	

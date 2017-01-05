@@ -11,11 +11,13 @@ import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.workflow.be.NotificationImpl;
 import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
 import org.shaolin.uimaster.page.ajax.handlers.IAjaxCommand;
+import org.shaolin.uimaster.page.ajax.json.JSONException;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.vogerp.accounting.IAccountingService.TransactionType;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 import org.shaolin.vogerp.accounting.be.PayOrderTransactionLogImpl;
+import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
 import org.shaolin.vogerp.accounting.dao.AccountingModel;
 import org.shaolin.vogerp.accounting.util.PaymentUtil;
 import org.slf4j.Logger;
@@ -31,6 +33,8 @@ import org.slf4j.LoggerFactory;
  */
 public class BCWebHookHandler implements IAjaxCommand {
 
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
 	private static final Logger logger = LoggerFactory.getLogger(BCWebHookHandler.class);
 	
 	/*
@@ -63,48 +67,68 @@ public class BCWebHookHandler implements IAjaxCommand {
 	        while ((line = reader.readLine()) != null) {
 	            json.append(line);
 	        }
+	        String jsonStr = json.toString();
+	        if (jsonStr.trim().length() == 0) {
+	        	return FAIL;
+	        }
 	        PayOrderTransactionLogImpl translog = new PayOrderTransactionLogImpl();
-	        translog.setLog(json.toString());
+	        translog.setLog(jsonStr);
 	        translog.setIsCorrect(true);
 	        translog.setCreateDate(new Date());
 	        
-		    JSONObject jsonObj = new JSONObject(json.toString());
+	        JSONObject jsonObj = null;
+	        try {
+	        	jsonObj = new JSONObject(jsonStr);
+	        } catch (JSONException e) {
+	        	logger.info("Error json: " + jsonStr +", exception message: "+ e.getMessage());
+	        	return FAIL;
+	        }
 		    String sign = jsonObj.getString("sign");
 		    String timestamp = jsonObj.getString("timestamp");
 		    if (PaymentUtil.verifySign(sign, timestamp)) { 
-		    	AccountingModel.INSTANCE.update(translog, true);
+		    	AccountingModel.INSTANCE.create(translog, true);
 		    	String transactionId = jsonObj.getString("transaction_id");
+		    	TransactionType transType = TransactionType.valueOf(jsonObj.getString("transaction_type").toUpperCase()); 
 				if (logger.isInfoEnabled()) {
-					logger.info("Received a callback payment: " + transactionId);
+					logger.info("Received a callback payment: " + transactionId + ", transType: " + transType.name());
 				}
 				JSONObject orderDetail = jsonObj.getJSONObject("message_detail");
 		    	PayOrderImpl payOrder = new PayOrderImpl();
-		    	payOrder.setSerialNumber(orderDetail.getString("orderId"));
+		    	payOrder.setSerialNumber(transactionId);
 		    	List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(payOrder, null, 0, 1);
 		    	if (result != null && result.size() > 0) {
 		    		payOrder = (PayOrderImpl)result.get(0);
-		    		TransactionType transType = TransactionType.valueOf(jsonObj.getString("transaction_type").toLowerCase()); 
-		    		int momey = jsonObj.getInt("transaction_fee");
-		    		if (Double.valueOf(payOrder.getAmount() * 100).intValue() != momey) {
-		    			translog.setIsCorrect(false);
-				    	AccountingModel.INSTANCE.update(translog, true);
-				    	logger.warn("Payment order amount does not the same! PayOrder amount: " + payOrder.getAmount() + ", Callback amount: " + momey);
-				    	return "success";
+		    		if (transType == TransactionType.PAY) {
+		    			if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
+			    			// already notified.
+			    			return SUCCESS;
+		    			}
+		    			int momey = jsonObj.getInt("transaction_fee");
+		    			if (Double.valueOf(payOrder.getAmount() * 100).intValue() != momey) {
+		    				translog.setIsCorrect(false);
+		    				AccountingModel.INSTANCE.update(translog, true);
+		    				logger.warn("Payment order amount does not the same! PayOrder amount: " + payOrder.getAmount() + ", Callback amount: " + momey);
+		    				return SUCCESS;
+		    			}
+		    			if (jsonObj.getBoolean("trade_success")) {
+		    				AccountingServiceImpl.updatePayState(transactionId, transType, payOrder);
+		    				AccountingModel.INSTANCE.update(payOrder, true);
+		    			} else {
+		    				//notify user that the trade is not successful.
+		    				ICoordinatorService coorService = AppContext.get().getService(ICoordinatorService.class);
+		    				NotificationImpl message = new NotificationImpl();
+		    				message.setPartyId(payOrder.getUserId());
+		    				//message.setOrgId(payOrder.getOrderId());
+		    				message.setSubject("\u60A8\u6709\u652F\u4ED8\u64CD\u4F5C\u5F02\u5E38\u8BA2\u5355\uFF01");
+		    				message.setDescription(orderDetail.toString());
+		    				message.setCreateDate(new Date());
+		    				coorService.addNotification(message, false);
+		    			}
+		    		} else if(transType == TransactionType.REFUND) {
+		    			//TODO:
+		    		} else if(transType == TransactionType.TRANSFER) {
+		    			//TODO:
 		    		}
-			    	if (jsonObj.getBoolean("trade_success")) {
-			    		AccountingServiceImpl.updatePayState(transactionId, transType, payOrder);
-			    		AccountingModel.INSTANCE.update(payOrder, true);
-			    	} else {
-			    		//notify user that the trade is not successful.
-			    		ICoordinatorService coorService = AppContext.get().getService(ICoordinatorService.class);
-			    		NotificationImpl message = new NotificationImpl();
-			    		message.setPartyId(payOrder.getUserId());
-			    		//message.setOrgId(payOrder.getOrderId());
-			    		message.setSubject("\u60A8\u6709\u652F\u4ED8\u64CD\u4F5C\u5F02\u5E38\u8BA2\u5355\uFF01");
-			    		message.setDescription(orderDetail.toString());
-			    		message.setCreateDate(new Date());
-			    		coorService.addNotification(message, false);
-			    	}
 		    	} else {
 		    		logger.warn("Payment order does not exist! id: " + transactionId);
 		    		// send notification to admin!
@@ -113,20 +137,24 @@ public class BCWebHookHandler implements IAjaxCommand {
 		    		message.setPartyId(1L);
 		    		message.setOrgId(1L);
 		    		message.setSubject("\u652F\u4ED8\u5F02\u5E38\u5355\u901A\u77E5\uFF01");
-		    		message.setDescription("Payment order does not exist! id: " + transactionId + ",Details: " + orderDetail.toString());
+		    		message.setDescription("\u652F\u4ED8\u8BA2\u5355\u4E0D\u5B58\u5728. id: " + transactionId + ",Details: " + orderDetail.toString());
 		    		message.setCreateDate(new Date());
 		    		coorService.addNotification(message, false);
 		    	}
 		    	//we have to send a success string back to Beecloud as required. 
-				return "success";
+				return SUCCESS;
 		    } else {
 		    	translog.setIsCorrect(false);
-		    	AccountingModel.INSTANCE.update(translog, true);
+		    	AccountingModel.INSTANCE.create(translog, true);
 		    }
 		} catch (Exception e) {
 			logger.warn("Error occurred while calling back from BeeCloud: " + e.getMessage(), e);
 		}
-		return "fail";
+		return FAIL;
+	}
+	
+	public boolean needUserSession() {
+		return false;
 	}
 
 }

@@ -54,12 +54,24 @@
                     import java.util.HashMap;
                     import java.util.Date;
                     import java.util.ArrayList;
+                    import org.shaolin.bmdp.runtime.Registry;
+                    import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.utils.DateUtil;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
                     import org.shaolin.vogerp.ecommercial.dao.*;
-                    import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.vogerp.commonmodel.IUserService; 
                     import org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl;
+			        import org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl;
+			        import org.shaolin.vogerp.commonmodel.be.IAssignedMember;
+			        import org.shaolin.vogerp.commonmodel.ce.AMemberType;
+			        import org.shaolin.vogerp.commonmodel.ce.AMemberFunctionType;
+                    import org.shaolin.vogerp.commonmodel.IMemberService;
+                    import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+			        import org.shaolin.vogerp.accounting.be.IPayOrder;
+			        import org.shaolin.vogerp.accounting.ce.PayBusinessType;
+			        import org.shaolin.vogerp.accounting.IAccountingService;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
@@ -73,7 +85,28 @@
 	                        form.closeIfinWindows(true);
 	                        @page.removeForm(@page.getEntityUiid()); 
                         }
-                        Dialog.showMessageDialog("提交审核中，请稍等！", "", Dialog.INFORMATION_MESSAGE, null);
+                        
+                        //make a payment!
+			            IMemberService memberService = (IMemberService)AppContext.get().getService(IMemberService.class);
+			            IAssignedMember member = memberService.getUserMember(defaultUser.getOrgId());
+			            if (member == null) {
+			            	AssignedMemberImpl assignedMember = new AssignedMemberImpl();
+							assignedMember.setOrgId(defaultUser.getOrgId());
+							assignedMember.setType(AMemberType.GENERAL);
+							assignedMember.setDescription("Defualt");
+							Date assingedDate = new Date();
+							DateUtil.increaseMonths(assingedDate, Registry.getInstance().getValue("/System/Vogerp/UserMemberRule/DefaultMonth", 6));
+							assignedMember.setEndtime(assingedDate);
+							assignedMember.setStarttime(new Date());
+							CommonModel.INSTANCE.create(assignedMember);
+							member = assignedMember;
+			            }
+			            double price = memberService.getServicePrice(member, AMemberFunctionType.A);
+			            IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+			            IPayOrder payOrder = accountingService.createPayAdminOrder(PayBusinessType.MEMBERBUSI, UserContext.getUserContext().getUserId(), null, price);
+                        String json = accountingService.prepay(payOrder);
+                        Dialog.showMessageDialog("提交审核中, 请您支付("+price+")元会员费用，谢谢！", "", Dialog.INFORMATION_MESSAGE, null);
+		                @page.executeJavaScript("BC.click(" + json + ")");
                         
                         HashMap result = new HashMap();
                         result.put("orgLegalinfo", out.get("beObject"));

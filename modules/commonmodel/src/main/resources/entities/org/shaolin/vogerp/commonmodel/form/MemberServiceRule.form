@@ -257,11 +257,6 @@
       <ns2:UIComponent componentPath="descriptionUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.description" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="functionIdUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.functionId" paramName="StringData"></ns2:DataComponent>
-    </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithFloatNumber"></ns2:mappingRule>
       <ns2:UIComponent componentPath="priceUI" paramName="UIWidgetType"></ns2:UIComponent>

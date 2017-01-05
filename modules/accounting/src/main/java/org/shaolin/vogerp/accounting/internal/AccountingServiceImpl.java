@@ -17,10 +17,8 @@ import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.vogerp.accounting.IAccountingService;
 import org.shaolin.vogerp.accounting.PaymentException;
 import org.shaolin.vogerp.accounting.be.AccountVoucherImpl;
-import org.shaolin.vogerp.accounting.be.CustomerAccountImpl;
 import org.shaolin.vogerp.accounting.be.DoubleEntryImpl;
 import org.shaolin.vogerp.accounting.be.IAccountVoucher;
-import org.shaolin.vogerp.accounting.be.ICustomerAccount;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 import org.shaolin.vogerp.accounting.ce.ClassifyOfAccounts;
@@ -30,10 +28,6 @@ import org.shaolin.vogerp.accounting.ce.SettlementMethodType;
 import org.shaolin.vogerp.accounting.ce.VoucherType;
 import org.shaolin.vogerp.accounting.dao.AccountingModel;
 import org.shaolin.vogerp.accounting.util.PaymentUtil;
-import org.shaolin.vogerp.commonmodel.IUserService;
-import org.shaolin.vogerp.commonmodel.IUserService.UserActionListener;
-import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
-import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +42,7 @@ import cn.beecloud.bean.TransferParameter;
  * @author wushaol
  *
  */
-public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvider, IAccountingService, UserActionListener {
+public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvider, IAccountingService {
 
 	private static final Logger logger = LoggerFactory.getLogger(AccountingServiceImpl.class);
 	
@@ -78,26 +72,6 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		registered = true;
 	}
 	
-	@Override
-	public void loggedIn(IPersonalAccount account, IPersonalInfo userInfo) {
-		CustomerAccountImpl scObject = new CustomerAccountImpl();
-		scObject.setOrgId(userInfo.getOrgId());
-		List<ICustomerAccount> result = AccountingModel.INSTANCE.searchAccount(scObject, null, 0, 1);
-		if (result.size() == 0) {
-//			throw new IllegalStateException("No Account ");
-			return;
-		}
-		UserContext.addUserData("CustAccountId", result.get(0).getAccountId());
-	}
-
-	@Override
-	public void registered(IPersonalInfo userInfo) {
-		CustomerAccountImpl newAccount = new CustomerAccountImpl();
-		newAccount.setOrgId(userInfo.getOrgId());
-		
-		AccountingModel.INSTANCE.create(newAccount);
-	} 
-	
 	public IPayOrder createSelfPayOrder(final PayBusinessType type, long endUserId, String orderSerialNumber, 
 			final double amount) {
 		PayOrderImpl order = new PayOrderImpl();
@@ -120,6 +94,21 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		order.setPayBusinessType(type);
 		order.setOrgId(orgId);
 		order.setUserId(userId);
+		order.setEndUserId(endUserId);
+		order.setSerialNumber(PaymentUtil.genPayOrderSerialNumber());
+		order.setStatus(PayOrderStatusType.NOTPAYED);
+		order.setOrderSerialNumber(orderSerialNumber);
+		order.setAmount(Double.valueOf(amount * 100).intValue() / 100); //round up fen.
+		
+		AccountingModel.INSTANCE.create(order);
+		return order;
+	}
+	
+	public IPayOrder createPayAdminOrder(final PayBusinessType type, final long endUserId, final String orderSerialNumber, final double amount) {
+		PayOrderImpl order = new PayOrderImpl();
+		order.setPayBusinessType(type);
+		order.setOrgId(1); // fixed id here.
+		order.setUserId(1);
 		order.setEndUserId(endUserId);
 		order.setSerialNumber(PaymentUtil.genPayOrderSerialNumber());
 		order.setStatus(PayOrderStatusType.NOTPAYED);
@@ -228,7 +217,7 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 						Registry.getInstance().getNodeItems("/System/payment/beecloud/buttonPay"));
 				attributes.putAll(paymentKeyInfo);
 				attributes.put("out_trade_no", order.getSerialNumber());
-				String title = "(" + order.getPayBusinessType().getDescription() + ")" + order.getDescription();
+				String title = "(" + order.getPayBusinessType().getDescription() + ")" + order.getDescription()!=null?order.getDescription():"";
 				attributes.put("title", title);
 				attributes.put("amount", ((int)(order.getAmount() * 100)) + "");//it's fen unit.
 				String sign = PaymentUtil.beeCloudSign(attributes.get("app_id"),
@@ -237,6 +226,7 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 						attributes.get("out_trade_no"), 
 						attributes.get("app_secret"));
 				attributes.put("sign", sign);
+				attributes.put("return_url", order.getPayReturnUrl());
 				JSONObject json = new JSONObject(attributes); 
 				return json.toString();
 			} catch (Exception e) {
@@ -264,7 +254,7 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 	public String refund(final IPayOrder order) throws PaymentException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String billNo = order.getSerialNumber();
-		String refundNo = sdf.format(new Date()) + "222" + System.currentTimeMillis();
+		String refundNo = sdf.format(new Date()) + System.currentTimeMillis();
 
 		BCRefund bcRefund = new BCRefund(billNo, refundNo, Double.valueOf(order.getAmount() * 100).intValue());
 		try {
@@ -343,7 +333,11 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
             sb.append(formId).append("pay(this, event);'>\u652F\u4ED8</button>");
 //            sb.append("<button type='cancel' class='uimaster_button ui-btn-inline onclick='javascript:defaultname.");
 //            sb.append(formId).append("cancelPayment(this, event);'>\u53D6\u6D88</button>");
-		} else if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
+		} else if (payOrder.getStatus() == PayOrderStatusType.PAYED && 
+				(payOrder.getPayBusinessType() == PayBusinessType.EQUIPMENTLOANBUSI 
+				|| payOrder.getPayBusinessType() == PayBusinessType.EQUIPMENTRENTBUSI
+				|| payOrder.getPayBusinessType() == PayBusinessType.GOLDENPORDERBUSI
+				|| payOrder.getPayBusinessType() == PayBusinessType.GOLDENSORDERBUSI)) {
 			sb.append("<button type='agreedpaytoend' class='uimaster_button ui-btn-inline' onclick='javascript:defaultname.");
             sb.append(formId).append("ensurePayment(this, event);'>\u786E\u8BA4\u4ED8\u6B3E</button>");
 			sb.append("<button type='refund' class='uimaster_button ui-btn-inline' onclick='javascript:defaultname.");
@@ -372,9 +366,6 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		}
 		
 		AppContext.get().register(this);
-		IUserService userService = (IUserService) AppContext.get().getService(
-				IUserService.class);
-		userService.addListener(this);
 		
 		AjaxFactory.register("BCWebHook", new BCWebHookHandler());
 	}

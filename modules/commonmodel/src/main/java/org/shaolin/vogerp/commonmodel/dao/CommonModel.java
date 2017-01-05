@@ -572,9 +572,6 @@ public class CommonModel extends BEEntityDaoObject {
             if (scObject.getOrgId() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
             }
-            if (scObject.getFunctionId() != null && scObject.getFunctionId().length() > 0) {
-                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.functionId", scObject.getFunctionId()));
-            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -587,9 +584,6 @@ public class CommonModel extends BEEntityDaoObject {
 
             if (scObject.getOrgId() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
-            }
-            if (scObject.getFunctionId() != null && scObject.getFunctionId().length() > 0) {
-                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.functionId", scObject.getFunctionId()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
@@ -605,9 +599,6 @@ public class CommonModel extends BEEntityDaoObject {
                 this._addOrders(inObjectCriteria, orders);
             }
 
-            if (scObject.getFunctionId() != null && scObject.getFunctionId().length() > 0) {
-                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.functionId", scObject.getFunctionId()));
-            }
             if (scObject.getType() != null && scObject.getType() != org.shaolin.vogerp.commonmodel.ce.AMemberType.NOT_SPECIFIED) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.typeInt", scObject.getType().getIntValue()));
             }
@@ -621,9 +612,6 @@ public class CommonModel extends BEEntityDaoObject {
     public long searchMemberServiceCount(org.shaolin.vogerp.commonmodel.be.MemberServiceRuleImpl scObject) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.MemberServiceRuleImpl.class, "inObject");
 
-            if (scObject.getFunctionId() != null && scObject.getFunctionId().length() > 0) {
-                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.functionId", scObject.getFunctionId()));
-            }
             if (scObject.getType() != null && scObject.getType() != org.shaolin.vogerp.commonmodel.ce.AMemberType.NOT_SPECIFIED) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.typeInt", scObject.getType().getIntValue()));
             }

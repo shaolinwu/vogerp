@@ -1,6 +1,7 @@
 package org.shaolin.vogerp.commonmodel;
 
 import org.shaolin.vogerp.commonmodel.be.IAssignedMember;
+import org.shaolin.vogerp.commonmodel.ce.AMemberFunctionType;
 import org.shaolin.vogerp.commonmodel.ce.AMemberType;
 
 public interface IMemberService {
@@ -15,15 +16,15 @@ public interface IMemberService {
 	
 	public AMemberType checkUserHasAMember();
 	
-	public double getServicePrice(IAssignedMember member);
+	public double getServicePrice(IAssignedMember member, AMemberFunctionType functionId);
 	
-	public int getServiceOverloadNumber(String memberType, String functionId);
+	public int getServiceOverloadNumber(AMemberType memberType, AMemberFunctionType functionId);
 	
-	public int getMemeberServiceRemainingCount(String memberType, String functionId);
+	public int getMemeberServiceRemainingCount(AMemberType memberType, AMemberFunctionType functionId);
 	
-	public int getMemeberServiceRemainingCount(long orgId, String memberType, String functionId);
+	public int getMemeberServiceRemainingCount(long orgId, AMemberType memberType, AMemberFunctionType functionId);
 	
-	public int updateUserMemeberServiceCount(String memberType, String functionId);
+	public int updateUserMemeberServiceCount(AMemberType memberType, AMemberFunctionType functionId);
 	
-	public int updateUserMemeberServiceCount(long orgId, String memberType, String functionId);
+	public int updateUserMemeberServiceCount(long orgId, AMemberType memberType, AMemberFunctionType functionId);
 }

@@ -169,8 +169,9 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		assignedMember.setType(AMemberType.GENERAL);
 		assignedMember.setDescription("Defualt");
 		Date assingedDate = new Date();
-		DateUtil.increaseMonths(new Date(), Registry.getInstance().getValue("/System/Vogerp/UserMemberRule/DefaultMonth", 12));//TODO: must be configurable online.
-		assignedMember.setCreateDate(assingedDate);
+		DateUtil.increaseMonths(assingedDate, Registry.getInstance().getValue("/System/Vogerp/UserMemberRule/DefaultMonth", 1));//TODO: must be configurable online.
+		assignedMember.setEndtime(assingedDate);
+		assignedMember.setStarttime(new Date());
 		CommonModel.INSTANCE.create(assignedMember);
 		
 		// assign modules

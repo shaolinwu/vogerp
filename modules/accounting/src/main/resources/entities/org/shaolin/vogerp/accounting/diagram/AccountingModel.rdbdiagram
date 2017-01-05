@@ -40,6 +40,7 @@
     <ns2:column name="SERIALNUMBER" type="VARCHAR" length="5" isNull="true"></ns2:column>
     <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="AMOUNT" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="PAYRETURNURL" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="PAYBUSITYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="STATUS" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="CUSTAPAYMETHOD" type="INTEGER" length="2" isNull="true"></ns2:column>
@@ -67,6 +68,7 @@
       <ns2:fieldMapping beFieldName="description" columnName="DESCRPTION"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="amount" columnName="AMOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="status" columnName="STATUS"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="payReturnUrl" columnName="PAYRETURNURL"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="payBusinessType" columnName="PAYBUSITYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="customerAPaymentMethod" columnName="CUSTAPAYMETHOD"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="customerBPaymentMethod" columnName="CUSTBPAYMETHOD"></ns2:fieldMapping>

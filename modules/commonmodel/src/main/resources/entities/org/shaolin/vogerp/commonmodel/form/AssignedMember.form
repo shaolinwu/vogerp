@@ -23,6 +23,7 @@
         import org.shaolin.vogerp.commonmodel.IMemberService;
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
         import org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl;
+        import org.shaolin.vogerp.commonmodel.ce.AMemberFunctionType;
         import org.shaolin.vogerp.accounting.be.IPayOrder;
         import org.shaolin.vogerp.accounting.ce.PayBusinessType;
         import org.shaolin.vogerp.accounting.IAccountingService;
@@ -42,11 +43,12 @@
             
             //make a payment!
             IMemberService memberService = (IMemberService)AppContext.get().getService(IMemberService.class);
-            double price = memberService.getServicePrice(defaultUser);
+            double price = memberService.getServicePrice(defaultUser, AMemberFunctionType.A);
             IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
-            IPayOrder payOrder = accountingService.createSelfPayOrder(PayBusinessType.MemberBusi, -1, defaultUser.getType().getValue(), price);
-	        
-            Dialog.showMessageDialog("请到收入支出功能中支付您的会员订单!", "Information", Dialog.INFORMATION_MESSAGE, null);
+            IPayOrder payOrder = accountingService.createSelfPayOrder(PayBusinessType.MEMBERBUSI, 1, null, price);
+	        String json = accountingService.prepay(payOrder);
+            @page.executeJavaScript("BC.click(" + json + ")");
+            //Dialog.showMessageDialog("请到收入支出功能中支付您的会员订单!", "Information", Dialog.INFORMATION_MESSAGE, null);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>

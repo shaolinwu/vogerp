@@ -628,19 +628,21 @@
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>description</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>type</bediagram:name>
             <bediagram:type xsi:type="bediagram:CEObjRefType">
                 <bediagram:targetEntity entityName="AMemberType" />
             </bediagram:type>
         </bediagram:member>
         <bediagram:member>
-            <bediagram:name>description</bediagram:name>
-            <bediagram:type xsi:type="bediagram:StringType" />
-        </bediagram:member>
-        <bediagram:member>
             <!-- function defined as service. -->
             <bediagram:name>functionId</bediagram:name>
-            <bediagram:type xsi:type="bediagram:StringType" />
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="AMemberFunctionType" />
+            </bediagram:type>
         </bediagram:member>
         <bediagram:member>
         	<!-- the price of this service -->
@@ -693,7 +695,9 @@
         </bediagram:member>
         <bediagram:member>
             <bediagram:name>functionId</bediagram:name>
-            <bediagram:type xsi:type="bediagram:StringType" />
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="AMemberFunctionType" />
+            </bediagram:type>
         </bediagram:member>
         <bediagram:member>
             <bediagram:name>usedCount</bediagram:name>
@@ -982,23 +986,36 @@
 		<common:entityName>AMemberType</common:entityName>
 		<bediagram:constantValue>
 			<bediagram:value>General</bediagram:value>
-			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:intValue>1</bediagram:intValue>
 			<bediagram:description>普通会员</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Silver</bediagram:value>
-			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:intValue>2</bediagram:intValue>
 			<bediagram:description>银牌会员</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Golden</bediagram:value>
-			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:intValue>3</bediagram:intValue>
 			<bediagram:description>金牌会员</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Super</bediagram:value>
-			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:intValue>4</bediagram:intValue>
 			<bediagram:description>王牌会员</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	<bediagram:ceEntity>
+		<common:entityName>AMemberFunctionType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>A</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>MemberVerification</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>B</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>Adv</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>
 	

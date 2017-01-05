@@ -14,6 +14,7 @@ import org.shaolin.vogerp.commonmodel.be.IAssignedMember;
 import org.shaolin.vogerp.commonmodel.be.IAssignedMemberServiceUsed;
 import org.shaolin.vogerp.commonmodel.be.IMemberServiceRule;
 import org.shaolin.vogerp.commonmodel.be.MemberServiceRuleImpl;
+import org.shaolin.vogerp.commonmodel.ce.AMemberFunctionType;
 import org.shaolin.vogerp.commonmodel.ce.AMemberType;
 import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 
@@ -28,7 +29,7 @@ public class MemberServiceImpl implements IMemberService, IServiceProvider {
 		MemberServiceRuleImpl service = new MemberServiceRuleImpl();
 		List<IMemberServiceRule> list = CommonModel.INSTANCE.searchMemberService(service, null, 0, 1);
 		for (IMemberServiceRule rule: list) {
-			cache.put(rule.getType().getValue() + "." +rule.getFunctionId(), rule);
+			cache.put(rule.getType().getIntValue() + "." +rule.getFunctionId().getIntValue(), rule);
 		}
 	}
 	
@@ -78,17 +79,17 @@ public class MemberServiceImpl implements IMemberService, IServiceProvider {
 	}
 	
 	@Override
-	public int getMemeberServiceRemainingCount(String memberType, String functionId) {
+	public int getMemeberServiceRemainingCount(AMemberType memberType, AMemberFunctionType functionId) {
 		return getMemeberServiceRemainingCount(UserContext.getUserContext().getOrgId(), memberType, functionId);
 	}
 	
 	@Override
-	public int getMemeberServiceRemainingCount(long orgId, String memberType, String functionId) {
+	public int getMemeberServiceRemainingCount(long orgId, AMemberType memberType, AMemberFunctionType functionId) {
 		AMemberType type = checkUserHasAMember();
 		if (type == AMemberType.NOT_SPECIFIED) {
 			return -1;
 		}
-		IMemberServiceRule rule = cache.get(memberType + "." + functionId);
+		IMemberServiceRule rule = cache.get(memberType.getIntValue() + "." + functionId.getIntValue());
 		if (rule == null) {
 			return -1;
 		}
@@ -114,17 +115,17 @@ public class MemberServiceImpl implements IMemberService, IServiceProvider {
 	}
 	
 	@Override
-	public int updateUserMemeberServiceCount(String memberType, String functionId) {
+	public int updateUserMemeberServiceCount(AMemberType memberType, AMemberFunctionType functionId) {
 		return updateUserMemeberServiceCount(UserContext.getUserContext().getOrgId(), memberType, functionId);
 	}
 	
 	@Override
-	public int updateUserMemeberServiceCount(long orgId, String memberType, String functionId) {
+	public int updateUserMemeberServiceCount(long orgId, AMemberType memberType, AMemberFunctionType functionId) {
 		AMemberType type = checkUserHasAMember();
 		if (type == AMemberType.NOT_SPECIFIED) {
 			return -1;
 		}
-		IMemberServiceRule rule = cache.get(memberType + "." + functionId);
+		IMemberServiceRule rule = cache.get(memberType.getIntValue() + "." + functionId.getIntValue());
 		if (rule == null) {
 			return -1;
 		}
@@ -159,21 +160,26 @@ public class MemberServiceImpl implements IMemberService, IServiceProvider {
 		MemberServiceRuleImpl service = new MemberServiceRuleImpl();
 		List<IMemberServiceRule> list = CommonModel.INSTANCE.searchMemberService(service, null, 0, 1);
 		for (IMemberServiceRule rule: list) {
-			cache.put(rule.getType().getValue() + "." +rule.getFunctionId(), rule);
+			cache.put(rule.getType().getIntValue() + "." +rule.getFunctionId().getIntValue(), rule);
 		}
 	}
 	
-	public int getServiceOverloadNumber(String memberType, String functionId) {
-		IMemberServiceRule rule = cache.get(memberType + "." + functionId);
+	public int getServiceOverloadNumber(AMemberType memberType, AMemberFunctionType functionId) {
+		IMemberServiceRule rule = cache.get(memberType.getIntValue() + "." + functionId.getIntValue());
 		if (rule != null) {
 			return rule.getOverloadNumber();
 		}
 		return -1;
 	}
 	
-	public double getServicePrice(IAssignedMember member) {
-		String memberType = member.getType().getValue();
-		return cache.get(memberType).getPrice();
+	public double getServicePrice(IAssignedMember member, AMemberFunctionType functionId) {
+		int memberType = member.getType().getIntValue();
+		if (cache.containsKey(memberType + "." + functionId.getIntValue())) {
+			return cache.get(memberType + "." + functionId.getIntValue()).getPrice();
+		} else {
+			throw new IllegalArgumentException("Unable to find the service price of member type " 
+					+ member.getType().getDescription() + " with function id " + functionId.getDescription());
+		}
 	}
 	
 	@Override
