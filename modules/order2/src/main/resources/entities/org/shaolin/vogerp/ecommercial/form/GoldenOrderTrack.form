@@ -31,7 +31,7 @@
                 GoldenOrderImpl defaultUser = (GoldenOrderImpl)personalInfoTable.getSelectedRow();
                 
                 IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
-                IPayOrder payOrder = accountingService.queryForIPayOrder(defaultUser.getSerialNumber());
+                IPayOrder payOrder = accountingService.queryForPayOrder(defaultUser.getSerialNumber());
                 if (payOrder != null) {
 	                String json = accountingService.prepay(payOrder);
 			        @page.executeJavaScript("BC.click(" + json + ")");

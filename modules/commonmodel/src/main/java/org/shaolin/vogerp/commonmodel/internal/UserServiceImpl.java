@@ -28,6 +28,8 @@ import org.shaolin.uimaster.page.MobilitySupport;
 import org.shaolin.uimaster.page.WebConfig;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.uimaster.page.flow.WebflowConstants;
+import org.shaolin.vogerp.accounting.IAccountingService;
+import org.shaolin.vogerp.accounting.internal.AccountingServiceImpl;
 import org.shaolin.vogerp.commonmodel.ICaptcherService;
 import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.IUserService;
@@ -343,9 +345,12 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			boolean isMobile = MobilitySupport.isMobileRequest(userAgent);
 			//add user-context thread bind
             UserContext.register(session, userContext, userLocale, userRoles, isMobile);
+            AccountingServiceImpl accountingService = (AccountingServiceImpl)AppContext.get().getService(IAccountingService.class);
+            accountingService.registerLoginUserAccountInfo(userContext);
             for (UserActionListener listener: listeners) {
     			listener.loggedIn(matchedUser, userInfo);
     		}
+            
             
 			boolean hasCookie = false;
 			Cookie[] cookies = request.getCookies();

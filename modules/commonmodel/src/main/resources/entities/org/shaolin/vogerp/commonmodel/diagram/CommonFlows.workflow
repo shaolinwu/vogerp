@@ -111,6 +111,7 @@
                         HashMap result = new HashMap();
                         result.put("orgLegalinfo", out.get("beObject"));
                         result.put("orgInfo", out.get("orgInfo"));
+                        result.put("payOrder", payOrder);
                         return result;
                     }
                     ]]></expressionString>
@@ -123,6 +124,9 @@
                 </ns2:var>
                 <ns2:var name="orgInfo" category="BusinessEntity" scope="Out">
                     <type entityName="org.shaolin.vogerp.commonmodel.be.Organization"></type>
+                </ns2:var>
+                <ns2:var name="payOrder" category="BusinessEntity" scope="Out">
+                    <type entityName="org.shaolin.vogerp.accounting.be.PayOrder"></type>
                 </ns2:var>
                 <ns2:expression>
                     <expressionString><![CDATA[
@@ -137,6 +141,9 @@
                        
                        $orgLegalinfo.setVeriState($orgInfo.getVeriState());
         			   $orgLegalinfo.setVerifierId($orgInfo.getVerifierId());
+        			   
+        			   @flowContext.save($orgLegalinfo);
+        			   @flowContext.save($payOrder);
                     }
                     ]]></expressionString>
                 </ns2:expression>
