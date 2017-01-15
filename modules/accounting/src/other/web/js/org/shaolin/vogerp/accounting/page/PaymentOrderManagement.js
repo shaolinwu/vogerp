@@ -37,11 +37,18 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
         ,subComponents: [prefix + "payOrderTable"]
     });
 
+    var actionPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "actionPanel"]
+        ,items: []
+        ,subComponents: []
+    });
+
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [hintUILabel,functionsTab]
+        ,items: [hintUILabel,functionsTab,actionPanel]
     });
 
     Form.hintUILabel=hintUILabel;
@@ -55,6 +62,8 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
     Form.PayVoucherInfoPanel1=PayVoucherInfoPanel1;
 
     Form.payOrderTable=payOrderTable;
+
+    Form.actionPanel=actionPanel;
 
     Form.user_constructor = function()
     {

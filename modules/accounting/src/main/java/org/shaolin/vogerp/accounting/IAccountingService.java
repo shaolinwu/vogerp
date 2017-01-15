@@ -1,8 +1,11 @@
 package org.shaolin.vogerp.accounting;
 
+import org.shaolin.vogerp.accounting.be.ICustomerAccount;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
 import org.shaolin.vogerp.accounting.ce.PayBusinessType;
+import org.shaolin.vogerp.accounting.ce.PayOrderRequestType;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+import org.shaolin.vogerp.accounting.ce.RequestStatusType;
 
 public interface IAccountingService {
 
@@ -21,17 +24,19 @@ public interface IAccountingService {
 	public IPayOrder createPayAdminOrder(final PayBusinessType type, final long endUserId, 
 			final String orderSerialNumber, final double amount); 
 	
-	public String prepay(IPayOrder order) throws PaymentException;
+	public String prepay(final IPayOrder order) throws PaymentException;
 	
-	public String ensurePayment(IPayOrder order) throws PaymentException;
+	public String transfer(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException;
 	
-	public String refund(IPayOrder order) throws PaymentException;
+	public String refund(final IPayOrder order) throws PaymentException;
 	
-	public void cancelPayment(IPayOrder order) throws PaymentException;
+	public void cancelPayment(final IPayOrder order) throws PaymentException;
 	
-	public String queryForPayStatus(IPayOrder order) throws PaymentException;
+	public void requestForPayOrder(final IPayOrder order, final RequestStatusType state, final PayOrderRequestType type);
 	
-	public IPayOrder queryForIPayOrder(final String orderSerialNumber);
+	public String queryForPayStatus(final IPayOrder order) throws PaymentException;
+	
+	public IPayOrder queryForPayOrder(final String orderSerialNumber);
 	
 	public PayOrderStatusType queryForPayOrderState(String orderSeriaNumber);
 	

@@ -28,6 +28,15 @@ public class PaymentUtil {
 	}
 	
 	/**
+	 * Required 10 numbers as transfer number.
+	 * 
+	 * @return
+	 */
+	public synchronized static String genWeiXiTransferNumber() {
+		return System.currentTimeMillis() + "";
+	}
+	
+	/**
 	 * Weixi does not support '-' symbol in the serial number.
 	 * 
 	 * @return

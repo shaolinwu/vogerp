@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.shaolin.bmdp.runtime.AppContext;
+import org.shaolin.bmdp.runtime.spi.EventProcessor;
+import org.shaolin.bmdp.runtime.spi.FlowEvent;
 import org.shaolin.bmdp.workflow.be.NotificationImpl;
 import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
 import org.shaolin.uimaster.page.ajax.handlers.IAjaxCommand;
@@ -36,6 +38,10 @@ public class BCWebHookHandler implements IAjaxCommand {
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 	private static final Logger logger = LoggerFactory.getLogger(BCWebHookHandler.class);
+	
+	public static Logger getLogger() {
+		return logger;
+	}
 	
 	/*
 	 * Key	Type	Example
@@ -98,48 +104,54 @@ public class BCWebHookHandler implements IAjaxCommand {
 		    	List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(payOrder, null, 0, 1);
 		    	if (result != null && result.size() > 0) {
 		    		payOrder = (PayOrderImpl)result.get(0);
+		    		
+		    		//got adding this logic into workflow mission for tracing.
 		    		if (transType == TransactionType.PAY) {
 		    			if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
-			    			// already notified.
-			    			return SUCCESS;
-		    			}
-		    			int momey = jsonObj.getInt("transaction_fee");
-		    			if (Double.valueOf(payOrder.getAmount() * 100).intValue() != momey) {
-		    				translog.setIsCorrect(false);
-		    				AccountingModel.INSTANCE.update(translog, true);
-		    				logger.warn("Payment order amount does not the same! PayOrder amount: " + payOrder.getAmount() + ", Callback amount: " + momey);
+		    				// already notified.
 		    				return SUCCESS;
 		    			}
-		    			if (jsonObj.getBoolean("trade_success")) {
-		    				AccountingServiceImpl.updatePayState(transactionId, transType, payOrder);
-		    				AccountingModel.INSTANCE.update(payOrder, true);
-		    			} else {
-		    				//notify user that the trade is not successful.
-		    				ICoordinatorService coorService = AppContext.get().getService(ICoordinatorService.class);
-		    				NotificationImpl message = new NotificationImpl();
-		    				message.setPartyId(payOrder.getUserId());
-		    				//message.setOrgId(payOrder.getOrderId());
-		    				message.setSubject("\u60A8\u6709\u652F\u4ED8\u64CD\u4F5C\u5F02\u5E38\u8BA2\u5355\uFF01");
-		    				message.setDescription(orderDetail.toString());
-		    				message.setCreateDate(new Date());
-		    				coorService.addNotification(message, false);
-		    			}
-		    		} else if(transType == TransactionType.REFUND) {
-		    			//TODO:
+		    			FlowEvent e = new FlowEvent("PrepayCallBack");
+		    			e.setAttribute("payOrder", payOrder);
+		    			e.setAttribute("translog", translog);
+		    			e.setAttribute("jsonObj", jsonObj);
+		    			EventProcessor processor = (EventProcessor)AppContext.get().getService(
+		    					Class.forName("org.shaolin.bmdp.workflow.internal.WorkFlowEventProcessor"));
+		    			processor.process(e);
+		    			
 		    		} else if(transType == TransactionType.TRANSFER) {
 		    			//TODO:
+		    			FlowEvent e = new FlowEvent("TransferCallBack");
+		    			e.setAttribute("payOrder", payOrder);
+		    			e.setAttribute("translog", translog);
+		    			e.setAttribute("jsonObj", jsonObj);
+		    			
+		    			EventProcessor processor = (EventProcessor)AppContext.get().getService(
+		    					Class.forName("org.shaolin.bmdp.workflow.internal.WorkFlowEventProcessor"));
+		    			processor.process(e);
+		    			
+		    			
+		    			
+		    		} else if(transType == TransactionType.REFUND) {
+		    			//TODO:
+		    			FlowEvent e = new FlowEvent("RefundCallBack");
+		    			e.setAttribute("payOrder", payOrder);
+		    			e.setAttribute("translog", translog);
+		    			e.setAttribute("jsonObj", jsonObj);
+		    			
+		    			EventProcessor processor = (EventProcessor)AppContext.get().getService(
+		    					Class.forName("org.shaolin.bmdp.workflow.internal.WorkFlowEventProcessor"));
+		    			processor.process(e);
 		    		}
 		    	} else {
 		    		logger.warn("Payment order does not exist! id: " + transactionId);
 		    		// send notification to admin!
 		    		ICoordinatorService coorService = AppContext.get().getService(ICoordinatorService.class);
 		    		NotificationImpl message = new NotificationImpl();
-		    		message.setPartyId(1L);
-		    		message.setOrgId(1L);
 		    		message.setSubject("\u652F\u4ED8\u5F02\u5E38\u5355\u901A\u77E5\uFF01");
 		    		message.setDescription("\u652F\u4ED8\u8BA2\u5355\u4E0D\u5B58\u5728. id: " + transactionId + ",Details: " + orderDetail.toString());
 		    		message.setCreateDate(new Date());
-		    		coorService.addNotification(message, false);
+		    		coorService.addNotificationToAdmin(message, false);
 		    	}
 		    	//we have to send a success string back to Beecloud as required. 
 				return SUCCESS;

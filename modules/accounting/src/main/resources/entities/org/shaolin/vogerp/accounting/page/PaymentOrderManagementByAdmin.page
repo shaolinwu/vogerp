@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.accounting.page.PaymentOrderManagementByAdmin</entityName>
+	<systemVersion>0</systemVersion>
+	<description>支付审核管理</description>
+	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+		<ns2:eventHandler functionName="openPayOrder">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openPayOrder-20160115-1135">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+			        import java.util.HashMap;
+			        import org.shaolin.uimaster.page.AjaxContext;
+			        import org.shaolin.uimaster.page.ajax.*;
+			        import org.shaolin.vogerp.accounting.be.PayOrderImpl;
+			        {
+			            Table orderInfoTable = (Table)@page.getElement("payOrderRequestTable");
+			            if (orderInfoTable.getSelectedRow() == null) {
+			                return;
+			            }
+			            PayOrderImpl defaultUser = (PayOrderImpl)orderInfoTable.getSelectedRow();
+			            
+			            HashMap input = new HashMap();
+			            input.put("beObject", defaultUser);
+			            input.put("editable", new Boolean(true));
+			            RefForm form = new RefForm("payOrderForm", "org.shaolin.vogerp.accounting.form.PayOrder", input);
+			            @page.addElement(form);
+			            
+			            form.openInWindows("支付单详情", new TableCallBack("payOrderRequestTable"), true);
+			        }
+			        ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="openRufundPayOrder">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openRufundPayOrder-20160115-1135">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+			        import java.util.HashMap;
+			        import org.shaolin.uimaster.page.AjaxContext;
+			        import org.shaolin.uimaster.page.ajax.*;
+			        import org.shaolin.vogerp.accounting.be.PayOrderImpl;
+			        {
+			            Table orderInfoTable = (Table)@page.getElement("payOrderRequestTable");
+			            if (orderInfoTable.getSelectedRow() == null) {
+			                return;
+			            }
+			            PayOrderImpl defaultUser = (PayOrderImpl)orderInfoTable.getSelectedRow();
+			            
+			            HashMap input = new HashMap();
+			            input.put("beObject", defaultUser);
+			            input.put("editable", new Boolean(true));
+			            RefForm form = new RefForm("payOrderForm", "org.shaolin.vogerp.accounting.form.PayOrderRefund", input);
+			            @page.addElement(form);
+			            
+			            form.openInWindows("支付单详情", new TableCallBack("payOrderRefundTable"), true);
+			        }
+			        ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
+			<ns2:UISkin xsi:type="ns2:UISkinType">
+				<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel
+				</ns2:skinName>
+				<ns2:param name="text">
+					<ns2:value xsi:type="ns2:StringPropertyType">
+						<ns2:value></ns2:value>
+					</ns2:value>
+				</ns2:param>
+			</ns2:UISkin>
+			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+			</ns2:layout>
+			<ns2:component xsi:type="ns2:UITextFieldType" UIID="orgNameUI">
+			  <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+	            <ns2:value>客户组织名称</ns2:value>
+	          </ns2:widgetLabel>
+	        </ns2:component>
+			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
+				<ns2:ajaxLoad>true</ns2:ajaxLoad>
+                <ns2:tab uiid="PayVoucherInfoPanel1">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>提现申请表</ns2:value>
+                    </ns2:title>
+                    <ns2:panel UIID="PayVoucherInfoPanel1">
+                        <ns2:layout xsi:type="ns2:TableLayoutType">
+                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+                        </ns2:layout>
+                        <ns2:component xsi:type="ns2:UITableType" UIID="payOrderRequestTable">
+                            <ns2:beElement>org.shaolin.vogerp.accounting.be.PayOrderRequest</ns2:beElement>
+                            <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+                            <ns2:defaultRowSize>20</ns2:defaultRowSize>
+                            <ns2:showActionBar>true</ns2:showActionBar>
+                            <ns2:showFilter>true</ns2:showFilter>
+                            <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                                <ns2:expression xsi:type="ns2:ExpressionType">
+                                    <ns2:expressionString><![CDATA[
+                                     import java.util.List;
+                                     import org.shaolin.uimaster.page.ajax.TableConditions;
+                                     import org.shaolin.vogerp.accounting.be.*;
+                                     import org.shaolin.vogerp.accounting.ce.*;
+                                     import org.shaolin.vogerp.accounting.dao.AccountingModel;
+                                     import org.shaolin.bmdp.runtime.security.UserContext;
+                                     {
+                                        if ($tableCondition == null) {
+                                           $tableCondition = TableConditions.createCondition(new PayOrderRequestImpl());
+                                           $tableCondition.setCount(20);
+                                           $tableCondition.addOrder("createDate", false);
+                                        }
+                                        PayOrderRequestImpl condition = (PayOrderRequestImpl)$tableCondition.getCondition();
+						                condition.setType(PayOrderRequestType.WITHDRAW);
+						                //condition.setState(RequestStatusType.REQUEST);
+                                        return AccountingModel.INSTANCE.searchPayOrderRequest(condition,
+                                                      $tableCondition.getOrders(),
+                                                      $tableCondition.getOffset(), 
+                                                      $tableCondition.getCount());
+                                     }]]></ns2:expressionString>
+                                </ns2:expression>
+                            </ns2:query>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>支付订单号</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.payOrder.serialNumber</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Label</ns2:type>
+                                </ns2:uiType>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>金额</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.payOrder.amount</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Label</ns2:type>
+                                </ns2:uiType>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>描述</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.payOrder.description</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Text</ns2:type>
+                                </ns2:uiType>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                              <ns2:title xsi:type="ns2:StringPropertyType">
+                                  <ns2:value>状态</ns2:value>
+                              </ns2:title>
+                              <ns2:beFieldId>rowBE.state</ns2:beFieldId>
+                              <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
+                              <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                  <ns2:expression xsi:type="ns2:ExpressionType">
+                                      <ns2:expressionString><![CDATA[
+                                      import org.shaolin.bmdp.runtime.AppContext;
+                                      import org.shaolin.vogerp.accounting.ce.RequestStatusType;
+                                      {
+                                          $rowBE.setState((RequestStatusType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.accounting.ce.RequestStatusType").getByIntValue(Integer.valueOf($value).intValue()));
+                                      }]]></ns2:expressionString>
+                                  </ns2:expression>
+                              </ns2:updateCondition>
+                          </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>建立时间</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>DateRange</ns2:type>
+                                    <ns2:startCondition>rowBE.startCreateDate</ns2:startCondition>
+                                    <ns2:endCondition>rowBE.endCreateDate</ns2:endCondition>
+                                </ns2:uiType>
+                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                      import org.shaolin.uimaster.page.od.formats.FormatUtil;
+                                      import java.util.Date;
+                                      {
+                                          if ($value == null || "".equals($value)) {
+                                              if ("rowBE.startCreateDate".equals($filterId)) {
+                                                  $rowBE.setStartCreateDate(null);
+                                              } else {
+                                                  $rowBE.setEndCreateDate(null);
+                                              }
+                                          } else {
+                                              Date d = (Date)FormatUtil.convertUIToData(FormatUtil.DATE, $value);
+                                              if ("rowBE.startCreateDate".equals($filterId)) {
+                                                  $rowBE.setStartCreateDate(d);
+                                              } else {
+                                                  $rowBE.setEndCreateDate(d);
+                                              }
+                                          }
+                                      }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:updateCondition>
+                            </ns2:column>
+                            <ns2:defaultActions>
+                                <ns2:defaultOpenAction>openPayOrder</ns2:defaultOpenAction>
+                            </ns2:defaultActions>
+                        </ns2:component>
+                        <ns2:layoutConstraint>
+                            <ns2:componentId>payOrderRequestTable</ns2:componentId>
+                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                                x="0" y="0" align="FULL"></ns2:constraint>
+                        </ns2:layoutConstraint>
+                    </ns2:panel>
+                </ns2:tab>
+                <ns2:tab uiid="PayVoucherInfoPanel2">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>退款申请表</ns2:value>
+                    </ns2:title>
+                    <ns2:panel UIID="PayVoucherInfoPanel2">
+                        <ns2:layout xsi:type="ns2:TableLayoutType">
+                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+                        </ns2:layout>
+                        <ns2:component xsi:type="ns2:UITableType" UIID="payOrderRefundTable">
+                            <ns2:beElement>org.shaolin.vogerp.accounting.be.PayOrderRequest</ns2:beElement>
+                            <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+                            <ns2:defaultRowSize>20</ns2:defaultRowSize>
+                            <ns2:showActionBar>true</ns2:showActionBar>
+                            <ns2:showFilter>true</ns2:showFilter>
+                            <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                                <ns2:expression xsi:type="ns2:ExpressionType">
+                                    <ns2:expressionString><![CDATA[
+                                     import java.util.List;
+                                     import org.shaolin.uimaster.page.ajax.TableConditions;
+                                     import org.shaolin.vogerp.accounting.be.*;
+                                     import org.shaolin.vogerp.accounting.ce.*;
+                                     import org.shaolin.vogerp.accounting.dao.AccountingModel;
+                                     import org.shaolin.bmdp.runtime.security.UserContext;
+                                     {
+                                        if ($tableCondition == null) {
+                                           $tableCondition = TableConditions.createCondition(new PayOrderRequestImpl());
+                                           $tableCondition.setCount(20);
+                                           $tableCondition.addOrder("createDate", false);
+                                        }
+                                        PayOrderRequestImpl condition = (PayOrderRequestImpl)$tableCondition.getCondition();
+						                condition.setType(PayOrderRequestType.REFUND);
+						                //condition.setState(RequestStatusType.REQUEST);
+                                        return AccountingModel.INSTANCE.searchPayOrderRequest(condition,
+                                                      $tableCondition.getOrders(),
+                                                      $tableCondition.getOffset(), 
+                                                      $tableCondition.getCount());
+                                     }]]></ns2:expressionString>
+                                </ns2:expression>
+                            </ns2:query>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>支付订单号</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.payOrder.serialNumber</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Label</ns2:type>
+                                </ns2:uiType>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>金额</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.payOrder.amount</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Label</ns2:type>
+                                </ns2:uiType>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>描述</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.payOrder.description</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Text</ns2:type>
+                                </ns2:uiType>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                              <ns2:title xsi:type="ns2:StringPropertyType">
+                                  <ns2:value>支付状态</ns2:value>
+                              </ns2:title>
+                              <ns2:beFieldId>rowBE.state</ns2:beFieldId>
+                              <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
+                              <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                  <ns2:expression xsi:type="ns2:ExpressionType">
+                                      <ns2:expressionString><![CDATA[
+                                      import org.shaolin.bmdp.runtime.AppContext;
+                                      import org.shaolin.vogerp.accounting.ce.RequestStatusType;
+                                      {
+                                          $rowBE.setState((RequestStatusType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.accounting.ce.RequestStatusType").getByIntValue(Integer.valueOf($value).intValue()));
+                                      }]]></ns2:expressionString>
+                                  </ns2:expression>
+                              </ns2:updateCondition>
+                          </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>建立时间</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>DateRange</ns2:type>
+                                    <ns2:startCondition>rowBE.startCreateDate</ns2:startCondition>
+                                    <ns2:endCondition>rowBE.endCreateDate</ns2:endCondition>
+                                </ns2:uiType>
+                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                      import org.shaolin.uimaster.page.od.formats.FormatUtil;
+                                      import java.util.Date;
+                                      {
+                                          if ($value == null || "".equals($value)) {
+                                              if ("rowBE.startCreateDate".equals($filterId)) {
+                                                  $rowBE.setStartCreateDate(null);
+                                              } else {
+                                                  $rowBE.setEndCreateDate(null);
+                                              }
+                                          } else {
+                                              Date d = (Date)FormatUtil.convertUIToData(FormatUtil.DATE, $value);
+                                              if ("rowBE.startCreateDate".equals($filterId)) {
+                                                  $rowBE.setStartCreateDate(d);
+                                              } else {
+                                                  $rowBE.setEndCreateDate(d);
+                                              }
+                                          }
+                                      }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:updateCondition>
+                            </ns2:column>
+                            <ns2:defaultActions>
+                                <ns2:defaultActions>
+	                                <ns2:defaultOpenAction>openRufundPayOrder</ns2:defaultOpenAction>
+	                            </ns2:defaultActions>
+                            </ns2:defaultActions>
+                        </ns2:component>
+                        <ns2:layoutConstraint>
+                            <ns2:componentId>payOrderRefundTable</ns2:componentId>
+                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                                x="0" y="0" align="FULL"></ns2:constraint>
+                        </ns2:layoutConstraint>
+                    </ns2:panel>
+                </ns2:tab>
+                <ns2:tab uiid="PayVoucherInfoPanel">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>支付定单表</ns2:value>
+                    </ns2:title>
+                    <ns2:panel UIID="PayVoucherInfoPanel">
+                        <ns2:layout xsi:type="ns2:TableLayoutType">
+                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+                        </ns2:layout>
+                        <ns2:component xsi:type="ns2:UITableType" UIID="receivepayOrderRequestTable">
+                            <ns2:beElement>org.shaolin.vogerp.accounting.be.PayOrder</ns2:beElement>
+                            <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+                            <ns2:defaultRowSize>20</ns2:defaultRowSize>
+                            <ns2:showActionBar>true</ns2:showActionBar>
+                            <ns2:showFilter>true</ns2:showFilter>
+                            <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                                <ns2:expression xsi:type="ns2:ExpressionType">
+                                    <ns2:expressionString><![CDATA[
+						             import java.util.List;
+						             import org.shaolin.uimaster.page.ajax.TableConditions;
+						             import org.shaolin.vogerp.accounting.be.*;
+						             import org.shaolin.vogerp.accounting.ce.*;
+						             import org.shaolin.vogerp.accounting.dao.AccountingModel;
+						             import org.shaolin.bmdp.runtime.security.UserContext;
+						             {
+						                if ($tableCondition == null) {
+						                   $tableCondition = TableConditions.createCondition(new PayOrderImpl());
+						                   $tableCondition.setCount(20);
+						                   $tableCondition.addOrder("createDate", false);
+						                }
+						                PayOrderImpl condition = (PayOrderImpl)$tableCondition.getCondition();
+						                return AccountingModel.INSTANCE.searchPaymentOrder(condition,
+						                              $tableCondition.getOrders(),
+						                              $tableCondition.getOffset(), 
+						                              $tableCondition.getCount());
+						             }]]></ns2:expressionString>
+                                </ns2:expression>
+                            </ns2:query>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>支付订单号</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.serialNumber</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Label</ns2:type>
+                                </ns2:uiType>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>金额</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.amount</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Label</ns2:type>
+                                </ns2:uiType>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>描述</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.description</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Text</ns2:type>
+                                </ns2:uiType>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+	                          <ns2:title xsi:type="ns2:StringPropertyType">
+	                              <ns2:value>支付状态</ns2:value>
+	                          </ns2:title>
+	                          <ns2:beFieldId>rowBE.status</ns2:beFieldId>
+	                          <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
+	                          <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+	                              <ns2:expression xsi:type="ns2:ExpressionType">
+	                                  <ns2:expressionString><![CDATA[
+	                                  import org.shaolin.bmdp.runtime.AppContext;
+	                                  import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+	                                  {
+	                                      $rowBE.setStatus((PayOrderStatusType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.accounting.ce.PayOrderStatusType").getByIntValue(Integer.valueOf($value).intValue()));
+	                                  }]]></ns2:expressionString>
+	                              </ns2:expression>
+	                          </ns2:updateCondition>
+	                      </ns2:column>
+	                      <ns2:column xsi:type="ns2:UITableColumnType">
+                              <ns2:title xsi:type="ns2:StringPropertyType">
+                                  <ns2:value>支付类型</ns2:value>
+                              </ns2:title>
+                              <ns2:beFieldId>rowBE.payBusinessType</ns2:beFieldId>
+                              <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
+                              <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                  <ns2:expression xsi:type="ns2:ExpressionType">
+                                      <ns2:expressionString><![CDATA[
+                                      import org.shaolin.bmdp.runtime.AppContext;
+                                      import org.shaolin.vogerp.accounting.ce.PayBusinessType;
+                                      {
+                                          $rowBE.setPayBusinessType((PayBusinessType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.accounting.ce.PayBusinessType").getByIntValue(Integer.valueOf($value).intValue()));
+                                      }]]></ns2:expressionString>
+                                  </ns2:expression>
+                              </ns2:updateCondition>
+                          </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>建立时间</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>DateRange</ns2:type>
+                                    <ns2:startCondition>rowBE.startCreateDate</ns2:startCondition>
+                                    <ns2:endCondition>rowBE.endCreateDate</ns2:endCondition>
+                                </ns2:uiType>
+                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+						              import org.shaolin.uimaster.page.od.formats.FormatUtil;
+						              import java.util.Date;
+						              {
+						                  if ($value == null || "".equals($value)) {
+						                      if ("rowBE.startCreateDate".equals($filterId)) {
+						                          $rowBE.setStartCreateDate(null);
+						                      } else {
+						                          $rowBE.setEndCreateDate(null);
+						                      }
+						                  } else {
+						                      Date d = (Date)FormatUtil.convertUIToData(FormatUtil.DATE, $value);
+						                      if ("rowBE.startCreateDate".equals($filterId)) {
+						                          $rowBE.setStartCreateDate(d);
+						                      } else {
+						                          $rowBE.setEndCreateDate(d);
+						                      }
+						                  }
+						              }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:updateCondition>
+                            </ns2:column>
+                            <ns2:defaultActions>
+                            </ns2:defaultActions>
+                        </ns2:component>
+                        <ns2:layoutConstraint>
+                            <ns2:componentId>receivepayOrderRequestTable</ns2:componentId>
+                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                                x="0" y="0" align="FULL"></ns2:constraint>
+                        </ns2:layoutConstraint>
+                    </ns2:panel>
+                </ns2:tab>
+			</ns2:component>
+			<!-- for workflow dynamic actions -->
+			<ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+		      <ns2:layout xsi:type="ns2:TableLayoutType">
+		      </ns2:layout>
+		    </ns2:component>
+			<ns2:layoutConstraint>
+				<ns2:componentId>orgNameUI</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="0" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+			<ns2:layoutConstraint>
+				<ns2:componentId>functionsTab</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="1" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+			<ns2:layoutConstraint>
+				<ns2:componentId>actionPanel</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="1" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+		</ns2:body>
+	</ns2:UIEntity>
+	<ns2:ODMapping>
+	</ns2:ODMapping>
+	<ns2:in>
+        <ns2:clientAction xsi:type="ns2:ExpressionType">
+            <ns2:expressionString><![CDATA[
+			{
+				BC.err = function(data) {
+                    //注册错误信息接受
+                    alert(data["ERROR"]);
+                }
+                /**
+                 * click调用错误返回：默认行为console.log(err)
+                 */
+                BC.err = function(err) {
+                    //err 为object, 例 ｛”ERROR“ : "xxxx"｝;
+                    console.log(err);
+                    alert(err["ERROR"]);
+                }
+			}
+			]]></ns2:expressionString>
+        </ns2:clientAction>
+	</ns2:in>
+</ns2:UIPage>

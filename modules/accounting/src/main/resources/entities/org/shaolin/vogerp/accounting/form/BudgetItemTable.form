@@ -45,43 +45,6 @@
         import org.shaolin.vogerp.accounting.be.BudgetItemImpl;
         import java.util.List;
         { 
-            long parentId = 0;
-            String pid = @page.getHidden("parentIdUI").getValue();
-            if (pid != null && pid.length() > 0) {
-                parentId = Long.valueOf(pid).longValue();
-            }
-            Table tableWidget = @page.getTable("itemTable");
-            if (tableWidget.getAddItems() != null && tableWidget.getAddItems().size() > 0) {
-            	List items = tableWidget.getAddItems();
-            	for (int i=0;i<items.size();i++) {
-            		BudgetItemImpl beObject = (BudgetItemImpl)items.get(i);
-                    if (beObject.getId() == 0) {
-                        System.out.println("create item: " + beObject);
-                    } else {
-                        System.out.println("update item: " + beObject);
-                    }
-            	}
-            }
-            if (tableWidget.getDeleteItems() != null) {
-            List items = tableWidget.getDeleteItems();
-            for (int i=0;i<items.size();i++) {
-            		BudgetItemImpl beObject = (BudgetItemImpl)items.get(i);
-                    if (beObject.getId() > 0) {
-                        System.out.println("delete item: " +beObject);
-                    }
-            	}
-            }
-            if (tableWidget.getUpdateItems() != null) {
-            	List items = tableWidget.getUpdateItems();
-            	for (int i=0;i<items.size();i++) {
-            		BudgetItemImpl beObject = (BudgetItemImpl)items.get(i);
-                    if (beObject.getId() == 0) {
-                        System.out.println("create item: " +beObject);
-                    } else {
-                        System.out.println("update item: " +beObject);
-                    }
-            	}
-            }
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             form.closeIfinWindows();
             @page.removeForm(@page.getEntityUiid()); 

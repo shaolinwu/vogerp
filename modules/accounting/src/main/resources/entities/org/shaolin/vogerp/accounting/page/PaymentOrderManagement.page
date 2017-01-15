@@ -135,8 +135,8 @@
                      PayOrderImpl payOrder = (PayOrderImpl)orderInfoTable.getSelectedRow();
                      if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
                         IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
-                        String returnUrl = accountingService.ensurePayment(payOrder);
-                        @page.executeJavaScript("UIMaster.util.forwardToPage(\"" + returnUrl + "\");");
+                        //String returnUrl = accountingService.ensurePayment(payOrder);
+                        //@page.executeJavaScript("UIMaster.util.forwardToPage(\"" + returnUrl + "\");");
                      } else {
                         @page.executeJavaScript("alert(\"Pay Order is not payed state.\");");
                      }
@@ -252,6 +252,7 @@
 				</ns2:param>
 			</ns2:UISkin>
 			<ns2:layout xsi:type="ns2:TableLayoutType">
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
@@ -394,6 +395,32 @@
 						                      }
 						                  }
 						              }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:updateCondition>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>操作</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.userId</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>HTML</ns2:type>
+                                </ns2:uiType>
+                                <ns2:cssStype>payActions</ns2:cssStype>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+		                           <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.vogerp.accounting.internal.AccountingServiceImpl;
+		                                {
+		                                   return AccountingServiceImpl.getReceivedPayOperations($rowBE, $formId);
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:rowExpression>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                      {
+                                      }]]></ns2:expressionString>
                                     </ns2:expression>
                                 </ns2:updateCondition>
                             </ns2:column>
@@ -615,6 +642,11 @@
                     </ns2:panel>
                 </ns2:tab>
 			</ns2:component>
+			<!-- for workflow dynamic actions -->
+			<ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+		      <ns2:layout xsi:type="ns2:TableLayoutType">
+		      </ns2:layout>
+		    </ns2:component>
 			<ns2:layoutConstraint>
 				<ns2:componentId>hintUILabel</ns2:componentId>
 				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
@@ -622,6 +654,11 @@
 			</ns2:layoutConstraint>
 			<ns2:layoutConstraint>
 				<ns2:componentId>functionsTab</ns2:componentId>
+				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+					x="0" y="1" align="FULL"></ns2:constraint>
+			</ns2:layoutConstraint>
+			<ns2:layoutConstraint>
+				<ns2:componentId>actionPanel</ns2:componentId>
 				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 					x="0" y="1" align="FULL"></ns2:constraint>
 			</ns2:layoutConstraint>

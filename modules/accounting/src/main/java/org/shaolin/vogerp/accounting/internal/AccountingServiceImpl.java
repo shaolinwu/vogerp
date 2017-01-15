@@ -11,19 +11,26 @@ import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
+import org.shaolin.bmdp.workflow.be.NotificationImpl;
+import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
 import org.shaolin.uimaster.page.AjaxFactory;
 import org.shaolin.uimaster.page.ajax.json.JSONException;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.vogerp.accounting.IAccountingService;
 import org.shaolin.vogerp.accounting.PaymentException;
 import org.shaolin.vogerp.accounting.be.AccountVoucherImpl;
+import org.shaolin.vogerp.accounting.be.CustomerAccountImpl;
 import org.shaolin.vogerp.accounting.be.DoubleEntryImpl;
 import org.shaolin.vogerp.accounting.be.IAccountVoucher;
+import org.shaolin.vogerp.accounting.be.ICustomerAccount;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
+import org.shaolin.vogerp.accounting.be.PayOrderRequestImpl;
 import org.shaolin.vogerp.accounting.ce.ClassifyOfAccounts;
 import org.shaolin.vogerp.accounting.ce.PayBusinessType;
+import org.shaolin.vogerp.accounting.ce.PayOrderRequestType;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+import org.shaolin.vogerp.accounting.ce.RequestStatusType;
 import org.shaolin.vogerp.accounting.ce.SettlementMethodType;
 import org.shaolin.vogerp.accounting.ce.VoucherType;
 import org.shaolin.vogerp.accounting.dao.AccountingModel;
@@ -52,6 +59,30 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 	
 	public AccountingServiceImpl() {
 		this.registeBeeCloudApp();
+	}
+	
+	/**
+	 * Do not expose this method into interface.
+	 * 
+	 * @param userContext
+	 */
+	public void registerLoginUserAccountInfo(UserContext userContext) {
+		CustomerAccountImpl condition = new CustomerAccountImpl();
+		condition.setUserId(userContext.getUserId());
+		
+		List<ICustomerAccount> result = AccountingModel.INSTANCE.searchAccount(condition, null, 0, 1);
+		if (result != null && result.size() > 0) {
+			UserContext.addUserData("AccountInfo", result.get(0));
+		} else {
+			NotificationImpl message = new NotificationImpl();
+            message.setPartyId(userContext.getUserId());
+            message.setSubject("\u60A8\u8FD8\u6CA1\u6709\u914D\u5236\u6613\u5E10\u53F7\uFF01");
+            message.setDescription("\u6211\u4EEC\u652F\u6301\u652F\u4ED8\u5B9D\u548C\u5FAE\u4FE1\u8D26\u53F7\u63D0\u73B0\u3002");
+            message.setCreateDate(new java.util.Date());
+            
+            ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+            service.addNotification(message, true);
+		}
 	}
 	
 	/**
@@ -119,47 +150,13 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		return order;
 	}
 	
-	/**
-	 * for all receiving money orders.
-	 */
-	public IAccountVoucher createIncomingVoucher(final String incomingCOAType, final double amount, final String comment) {
-		AccountVoucherImpl item = new AccountVoucherImpl();
-		item.setSeqNumber(PaymentUtil.genSerialNumber());
-		item.setVoucherType(VoucherType.RECEIVER);
-		item.setComment(comment);
-		item.setOrgId(UserContext.getUserContext().getOrgId());
-		item.setEntered(UserContext.getUserContext().getUserId());
-		item.setSettlementMethod(SettlementMethodType.ALIPAY);
-		DoubleEntryImpl entry = new DoubleEntryImpl();
-		entry.setCreditAmount(Double.valueOf(amount * 100).intValue() / 100); //round up fen.
-		entry.setGeneralLedger(ClassifyOfAccounts.PROFIT);
-		entry.setSubLedger(incomingCOAType);
-		item.getDoubleEnties().add(entry);
-		AccountingModel.INSTANCE.create(item);
-		return item;
-	}
-	
-	/**
-	 * for all pay orders
-	 */
-	public IAccountVoucher createOutgoingVoucher(final String outgoingCOAType, final double amount, final String comment) {
-		AccountVoucherImpl item = new AccountVoucherImpl();
-		item.setSeqNumber(PaymentUtil.genSerialNumber());
-		item.setVoucherType(VoucherType.PAYMENT);
-		item.setComment(comment);;
-		item.setOrgId(UserContext.getUserContext().getOrgId());
-		item.setEntered(UserContext.getUserContext().getUserId());
-		item.setSettlementMethod(SettlementMethodType.ALIPAY);
-		DoubleEntryImpl entry = new DoubleEntryImpl();
-		entry.setDebitAmount(Double.valueOf(amount * 100).intValue() / 100); //round up fen.
-		entry.setGeneralLedger(ClassifyOfAccounts.COST);
-		entry.setSubLedger(outgoingCOAType);
-		item.getDoubleEnties().add(entry);
-		AccountingModel.INSTANCE.create(item);
-		return item;
-	}
-	
 	public PayOrderStatusType queryForPayOrderState(String orderSeriaNumber) {
+		PayOrderImpl order = new PayOrderImpl();
+		order.setSerialNumber(orderSeriaNumber);
+		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order, null, 0, 1);
+		if (result != null && result.size() > 0) {
+			return result.get(0).getStatus();
+		}
 		return null;
 	}
 	
@@ -167,7 +164,7 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		Map<String, String> attributes = new HashMap<String, String>(
 				Registry.getInstance().getNodeItems("/System/payment/beecloud/queryBills"));
 		attributes.putAll(paymentKeyInfo);
-		attributes.put("amount", Double.valueOf(order.getAmount() * 100).intValue() + "");//it's fen unit.
+		attributes.put("amount", ((int)order.getAmount()) + "");//it's fen unit.
 		attributes.put("out_trade_no", order.getSerialNumber());
 		String sign = PaymentUtil.sign(attributes.get("app_id"), 
 				attributes.get("title"), 
@@ -185,14 +182,14 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		attributes.put("optional", optional.toString());
 		JSONObject json = new JSONObject(attributes); 
 		try {
-			json.put("amount", Double.valueOf(order.getAmount() * 100).intValue() + "");
+			json.put("amount", ((int)order.getAmount()) + "");
 		} catch (JSONException e) {
 		}
 		
 		return json.toString();
 	}
 	
-	public IPayOrder queryForIPayOrder(final String orderSerialNumber) {
+	public IPayOrder queryForPayOrder(final String orderSerialNumber) {
 		PayOrderImpl order = new PayOrderImpl();
 		order.setOrderSerialNumber(orderSerialNumber);
 		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order, null, 0, 1);
@@ -201,8 +198,34 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		}
 		return null;
 	}
+	
+	public void requestForPayOrder(final IPayOrder order, final RequestStatusType state, final PayOrderRequestType type) {
+		PayOrderRequestImpl request = new PayOrderRequestImpl();
+		request.setPayOrderId(order.getId());
+		request.setState(state);
+		request.setType(type);
+		request.setCreateDate(new Date());
+		AccountingModel.INSTANCE.create(request);
+		
+		if (PayOrderRequestType.WITHDRAW == type) {
+			order.setStatus(PayOrderStatusType.WITHDRAWING);
+		} else if (PayOrderRequestType.REFUND == type) {
+			order.setStatus(PayOrderStatusType.REFUNDING);
+		}
+		AccountingModel.INSTANCE.create(order);
+		
+		//notify admin
+		ICoordinatorService coorService = AppContext.get().getService(ICoordinatorService.class);
+		NotificationImpl message = new NotificationImpl();
+		message.setSubject("\u7533\u8BF7: " + type.getDisplayName());
+		message.setDescription(order.getSerialNumber());
+		message.setCreateDate(new Date());
+		coorService.addNotificationToAdmin(message, false);
+	}
 
 	/**
+	 * Make a pre-payment order to our system account.
+	 * 
 	 * This is an async operation which generates the sign string then 
 	 * invoking BC.click(" + json + ")" to BeeCloud server.
 	 * After finishing this operation, BC will notify us from Web hook 
@@ -219,7 +242,7 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 				attributes.put("out_trade_no", order.getSerialNumber());
 				String title = "(" + order.getPayBusinessType().getDescription() + ")" + order.getDescription()!=null?order.getDescription():"";
 				attributes.put("title", title);
-				attributes.put("amount", ((int)(order.getAmount() * 100)) + "");//it's fen unit.
+				attributes.put("amount", ((int)order.getAmount()) + "");//it's fen unit.
 				String sign = PaymentUtil.beeCloudSign(attributes.get("app_id"),
 						attributes.get("title"), 
 						attributes.get("amount"), 
@@ -237,26 +260,63 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 	}
 	
 	/**
-	 * Ensure the payment to the end customer.
+	 * Transfer the money to End customer from our account. 
+	 * 
+	 * Support WeiXi and Alipay.
+	 * 
+	 * This method only supposed done by Admin user.
 	 * 
 	 * @param order
+	 * @param paymethod
+	 * @param thirdUserId
+	 * @param thirdUserName
+	 * @return
+	 * @throws PaymentException
 	 */
-	public String ensurePayment(final IPayOrder order) throws PaymentException {
-		return transfer(order);
+	public String transfer(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException {
+		TransferParameter param = new TransferParameter();
+		if (customerAccount.getThirdPartyAccountType() == SettlementMethodType.WEIXI) {
+			//weixipay
+			param.setChannel(BCEumeration.TRANSFER_CHANNEL.WX_TRANSFER);
+			param.setTransferNo("Tsf" + order.getSerialNumber()); 
+			// PaymentUtil.genWeiXiTransferNumber()
+			// request 10 numbers as transfer number.
+		} else if (customerAccount.getThirdPartyAccountType() == SettlementMethodType.ALIPAY) {
+			//alipay
+			param.setChannel(BCEumeration.TRANSFER_CHANNEL.ALI_TRANSFER);
+			param.setTransferNo("Tsf" + order.getSerialNumber());
+		}
+		param.setChannelUserId(customerAccount.getThirdPartyAccount());
+		param.setChannelUserName(customerAccount.getThirdPartyAccountName());
+		param.setTotalFee(((int)order.getAmount()));
+		param.setDescription("\u62A2\u5355\u8FBE\u4EBA\u8BA2\u5355\u8F6C\u5E10: " + order.getOrderSerialNumber() + ": " + (order.getDescription()!=null ? order.getDescription(): ""));
+		param.setAccountName(Registry.getInstance().getValue("/System/payment/orgName"));
+		try {
+			String url = BCPay.startTransfer(param);
+			if (customerAccount.getThirdPartyAccountType() == SettlementMethodType.WEIXI) {
+				String result = url;
+				//TODO: sync operation from weixi.
+			}
+//			response.sendRedirect(url);
+			return url;
+		} catch (Exception e) {
+			throw new PaymentException("Transfer URL error: " + e.getMessage(), e);
+		}
 	}
-
+	
 	/**
 	 * refund
 	 *
+	 * This method only allowed by Admin user.
 	 * @param order
 	 * @return
-     */
+	 */
 	public String refund(final IPayOrder order) throws PaymentException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String billNo = order.getSerialNumber();
 		String refundNo = sdf.format(new Date()) + System.currentTimeMillis();
-
-		BCRefund bcRefund = new BCRefund(billNo, refundNo, Double.valueOf(order.getAmount() * 100).intValue());
+	
+		BCRefund bcRefund = new BCRefund(billNo, refundNo, ((int)order.getAmount()));
 		try {
 			BCRefund refund = BCPay.startBCRefund(bcRefund);
 			if (refund.getAliRefundUrl() != null) {//Alipay
@@ -277,25 +337,6 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		}
 	}
 
-	public String transfer(final IPayOrder order) throws PaymentException {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		TransferParameter param = new TransferParameter();
-		param.setChannel(BCEumeration.TRANSFER_CHANNEL.ALI_TRANSFER);
-		param.setChannelUserId("");
-		param.setChannelUserName("");
-		param.setTotalFee(1);
-		param.setDescription("");
-		param.setAccountName("");
-		param.setTransferNo("transfer" + sdf.format(new Date()));
-		try {
-			String url = BCPay.startTransfer(param);
-//			response.sendRedirect(url);
-			return url;
-		} catch (Exception e) {
-			throw new PaymentException("Transfer error: " + e.getMessage(), e);
-		}
-	}
-	
 	public void cancelPayment(final IPayOrder order) throws PaymentException {
 		if (order.getStatus() == PayOrderStatusType.NOTPAYED) {
 			order.setStatus(PayOrderStatusType.CANCELLED);
@@ -303,7 +344,8 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		}
 	}
 	
-	static void updatePayState(String transactionId, TransactionType transType, PayOrderImpl payOrder) {
+	public static void updatePayState(String transactionId, JSONObject jsonObj, PayOrderImpl payOrder) throws JSONException {
+		TransactionType transType = TransactionType.valueOf(jsonObj.getString("transaction_type").toUpperCase());
 		if (transType == TransactionType.PAY && payOrder.getStatus() == PayOrderStatusType.NOTPAYED) {
 			payOrder.setStatus(PayOrderStatusType.PAYED);
 			payOrder.setThirdGenSerialNumber(transactionId);
@@ -352,6 +394,57 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		return sb.toString();
 	}
 	
+	public static String getReceivedPayOperations(IPayOrder payOrder, String formId) {
+		StringBuffer sb = new StringBuffer();
+		if (payOrder.getStatus() == PayOrderStatusType.AGREEDPAYTOEND) {
+            sb.append("<button type='pay' class='uimaster_button ui-btn-inline' onclick='javascript:defaultname.");
+            sb.append(formId).append("withdrawPayOrder(this, event);'>\u63D0\u73B0</button>");
+		} else if (payOrder.getStatus() == PayOrderStatusType.WITHDRAWN) {
+			
+		}
+		return sb.toString();
+	}
+	
+	/**
+	 * for all receiving money orders.
+	 */
+	public IAccountVoucher createIncomingVoucher(final String incomingCOAType, final double amount, final String comment) {
+		AccountVoucherImpl item = new AccountVoucherImpl();
+		item.setSeqNumber(PaymentUtil.genSerialNumber());
+		item.setVoucherType(VoucherType.RECEIVER);
+		item.setComment(comment);
+		item.setOrgId(UserContext.getUserContext().getOrgId());
+		item.setEntered(UserContext.getUserContext().getUserId());
+		item.setSettlementMethod(SettlementMethodType.ALIPAY);
+		DoubleEntryImpl entry = new DoubleEntryImpl();
+		entry.setCreditAmount(Double.valueOf(amount * 100).intValue() / 100); //round up fen.
+		entry.setGeneralLedger(ClassifyOfAccounts.PROFIT);
+		entry.setSubLedger(incomingCOAType);
+		item.getDoubleEnties().add(entry);
+		AccountingModel.INSTANCE.create(item);
+		return item;
+	}
+
+	/**
+	 * for all pay orders
+	 */
+	public IAccountVoucher createOutgoingVoucher(final String outgoingCOAType, final double amount, final String comment) {
+		AccountVoucherImpl item = new AccountVoucherImpl();
+		item.setSeqNumber(PaymentUtil.genSerialNumber());
+		item.setVoucherType(VoucherType.PAYMENT);
+		item.setComment(comment);;
+		item.setOrgId(UserContext.getUserContext().getOrgId());
+		item.setEntered(UserContext.getUserContext().getUserId());
+		item.setSettlementMethod(SettlementMethodType.ALIPAY);
+		DoubleEntryImpl entry = new DoubleEntryImpl();
+		entry.setDebitAmount(Double.valueOf(amount * 100).intValue() / 100); //round up fen.
+		entry.setGeneralLedger(ClassifyOfAccounts.COST);
+		entry.setSubLedger(outgoingCOAType);
+		item.getDoubleEnties().add(entry);
+		AccountingModel.INSTANCE.create(item);
+		return item;
+	}
+
 	@Override
 	public Class getServiceInterface() {
 		return IAccountingService.class;

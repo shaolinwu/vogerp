@@ -8,10 +8,10 @@
     <entityName>ACCT_CUSTACCOUNT</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="ORGID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="ACCOUNTID" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="WechatAccount" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="AlipayAccount" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="USERID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="THIRDPARTYACCOUNT" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="THIRDPARTYACCOUNTNAME" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="THIRDPARTYACCOUNTTYPE" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
@@ -21,10 +21,10 @@
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.CustomerAccount"></ns2:businessEntity>
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="orgId" columnName="ORGID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="accountId" columnName="ACCOUNTID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="WechatAccount" columnName="WechatAccount"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="AlipayAccount" columnName="AlipayAccount"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="userId" columnName="USERID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="thirdPartyAccount" columnName="THIRDPARTYACCOUNT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="thirdPartyAccountName" columnName="THIRDPARTYACCOUNTNAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="thirdPartyAccountType" columnName="THIRDPARTYACCOUNTTYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
@@ -51,7 +51,7 @@
     <ns2:column name="ThirdGenSerialNumber2" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="ThirdTransactionTime2" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
-    <ns2:column name="_taskId" type="BIGINT" length="38" default="0"></ns2:column>
+    <ns2:column name="_sessionId" type="VARCHAR" length="38" default="0"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
       <ns2:columnName>ID</ns2:columnName>
@@ -78,7 +78,7 @@
       <ns2:fieldMapping beFieldName="thirdGenSerialNumber2" columnName="ThirdGenSerialNumber2"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="thirdTransactionTime2" columnName="ThirdTransactionTime2"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_taskId" columnName="_taskId"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_sessionId" columnName="_sessionId"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
@@ -103,6 +103,31 @@
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
+  <ns2:table>
+    <entityName>ACCT_PAYOORDERREQUEST</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="PAYORDERID" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="TYPE" type="INTEGER" length="1" default="1"></ns2:column>
+    <ns2:column name="STATE" type="INTEGER" length="1" default="1"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.PayOrderRequest"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="payOrderId" columnName="PAYORDERID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="state" columnName="STATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ACCT_PAYOORDERREQUEST1" mappingType="One-to-One" beFieldName="payOrder" columnName="PAYORDERID"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  
   <ns2:table>
     <entityName>ACCT_VOUCHER</entityName>
     <systemVersion>0</systemVersion>
@@ -320,32 +345,18 @@
     </ns2:searchResultMapping>
     <ns2:searchConditionMapping name="Search">
       <ns2:fieldMapping>
-        <ns2:toDataFieldPath>inObject.accountId</ns2:toDataFieldPath>
+        <ns2:toDataFieldPath>inObject.userId</ns2:toDataFieldPath>
         <ns2:conditionValue>
           <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
             <ns2:type>=</ns2:type>
           </ns2:operator>
           <ns2:value xsi:type="ns2:SimpleFieldValueType">
-            <ns2:valueFieldPath>scObject.accountId</ns2:valueFieldPath>
+            <ns2:valueFieldPath>scObject.userId</ns2:valueFieldPath>
           </ns2:value>
           <ns2:condition>
-            <expressionString><![CDATA[scObject.getAccountId() != null && scObject.getAccountId().length() > 0]]></expressionString>
+            <expressionString><![CDATA[scObject.getUserId() > 0]]></expressionString>
           </ns2:condition>
         </ns2:conditionValue>
-      </ns2:fieldMapping>
-      <ns2:fieldMapping>
-         <ns2:toDataFieldPath>inObject.orgId</ns2:toDataFieldPath>
-         <ns2:conditionValue>
-             <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
-                 <ns2:type>=</ns2:type>
-             </ns2:operator>
-             <ns2:value xsi:type="ns2:SimpleFieldValueType">
-                 <ns2:valueFieldPath>scObject.orgId</ns2:valueFieldPath>
-             </ns2:value>
-             <ns2:condition>
-                 <expressionString><![CDATA[scObject.getOrgId() > 0]]></expressionString>
-             </ns2:condition>
-         </ns2:conditionValue>
       </ns2:fieldMapping>
       <ns2:searchConditionData name="scObject" category="BusinessEntity">
         <type entityName="org.shaolin.vogerp.accounting.be.CustomerAccount"></type>
@@ -562,6 +573,58 @@
       </ns2:searchConditionData>
     </ns2:searchConditionMapping>
   </ns2:query>
+  
+  <ns2:query queryName="searchPayOrderRequest">
+    <ns2:searchResult name="outObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.accounting.be.PayOrderRequest"></type>
+    </ns2:searchResult>
+    <ns2:fromData name="inObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.accounting.be.PayOrderRequest"></type>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>outObject</ns2:toDataFieldPath>
+        <ns2:value xsi:type="ns2:SimpleFieldValueType">
+          <ns2:valueFieldPath>inObject</ns2:valueFieldPath>
+        </ns2:value>
+      </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.id</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.id</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getId() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+         <ns2:toDataFieldPath>inObject.payOrderId</ns2:toDataFieldPath>
+         <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.payOrderId</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getPayOrderId() > 0]]></expressionString>
+          </ns2:condition>
+         </ns2:conditionValue>
+        </ns2:fieldMapping>
+      <ns2:searchConditionData name="scObject" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.accounting.be.PayOrderRequest"></type>
+      </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  
+  
   <ns2:query queryName="searchDoubleEntry">
     <ns2:searchResult name="outObject" category="BusinessEntity">
       <type entityName="org.shaolin.vogerp.accounting.be.DoubleEntry"></type>

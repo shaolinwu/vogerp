@@ -13,24 +13,29 @@
 	           平台将这笔钱授权给客户B，之后客户B能将本帐户中的金额提现。
 	           对于未完成订单，这笔资金冻结在平台银行帐户里，同时客户B可见。
 	 -->
-	<bediagram:beEntity needOrgId="true" needPersist="true" needUIEntity="true">
+	<bediagram:beEntity needPersist="true" needUIEntity="true">
         <common:entityName>CustomerAccount</common:entityName>
         <bediagram:member pk="true">
             <bediagram:name>id</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
-            <!-- platform virtual account -->
-            <bediagram:name>accountId</bediagram:name>
+            <bediagram:name>userId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>thirdPartyAccount</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>
-            <bediagram:name>WechatAccount</bediagram:name>
+            <bediagram:name>thirdPartyAccountName</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>
-            <bediagram:name>AlipayAccount</bediagram:name>
-            <bediagram:type xsi:type="bediagram:StringType" />
+            <bediagram:name>thirdPartyAccountType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+				<bediagram:targetEntity entityName="SettlementMethodType" />
+			</bediagram:type>
         </bediagram:member>
     </bediagram:beEntity>    
 	
@@ -155,6 +160,44 @@
         <bediagram:member>
             <bediagram:name>isCorrect</bediagram:name>
             <bediagram:type xsi:type="bediagram:BooleanType" />
+        </bediagram:member>
+    </bediagram:beEntity>
+    <!-- all request actions for a pay order. -->
+    <bediagram:beEntity needPersist="true">
+        <common:entityName>PayOrderRequest</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>payOrderId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>payOrder</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="PayOrder" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>type</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="PayOrderRequestType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>state</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="RequestStatusType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>startCreateDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>endCreateDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
         </bediagram:member>
     </bediagram:beEntity>
     
@@ -602,7 +645,7 @@
 			<bediagram:description>支付宝支付</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
-			<bediagram:value>WeChat</bediagram:value>
+			<bediagram:value>WeiXi</bediagram:value>
 			<bediagram:intValue>1</bediagram:intValue>
 			<bediagram:description>微信支付</bediagram:description>
 		</bediagram:constantValue>
@@ -621,24 +664,39 @@
             <bediagram:description>未支付</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
+            <bediagram:value>Cancelled</bediagram:value>
+            <bediagram:intValue>11</bediagram:intValue>
+            <bediagram:description>取消支付</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
             <bediagram:value>Payed</bediagram:value>
             <bediagram:intValue>2</bediagram:intValue>
             <bediagram:description>支付给平台</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
+            <bediagram:value>Refunding</bediagram:value>
+            <bediagram:intValue>30</bediagram:intValue>
+            <bediagram:description>退款中</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
             <bediagram:value>Refund</bediagram:value>
-            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:intValue>31</bediagram:intValue>
             <bediagram:description>退款</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>AgreedPayToEnd</bediagram:value>
-            <bediagram:intValue>4</bediagram:intValue>
+            <bediagram:intValue>40</bediagram:intValue>
             <bediagram:description>同意支付给客户</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
-            <bediagram:value>Cancelled</bediagram:value>
-            <bediagram:intValue>5</bediagram:intValue>
-            <bediagram:description>取消支付</bediagram:description>
+            <bediagram:value>Withdrawing</bediagram:value>
+            <bediagram:intValue>41</bediagram:intValue>
+            <bediagram:description>申请提现</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Withdrawn</bediagram:value>
+            <bediagram:intValue>42</bediagram:intValue>
+            <bediagram:description>客户已提现</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
     
@@ -680,5 +738,37 @@
             <bediagram:description>在线会计业务</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
- 
+    
+    <bediagram:ceEntity>
+        <common:entityName>PayOrderRequestType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>Withdraw</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>提现</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Refund</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>退款</bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
+    
+    <bediagram:ceEntity>
+        <common:entityName>RequestStatusType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>Request</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>申请中</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Success</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>申请成功</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Fail</bediagram:value>
+            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:description>申请失败</bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
 </bediagram:BEDiagram>
