@@ -30,7 +30,6 @@
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     {
                       $gOrder.setStatus(OrderStatusType.PUBLISHED);
-                      $gOrder.setSessionId(@flowContext.getSession().getID());
                       @flowContext.save($gOrder);
                       //assign task id to sales order. this object is passed from blow action actually.
                     }]]></expressionString>
@@ -82,6 +81,15 @@
                     }
                     ]]></expressionString>
                 </ns2:expression>
+                <ns2:filter>
+                  <expressionString><![CDATA[
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    {
+                       return $beObject.getStatus() == OrderStatusType.CREATED;
+                    }
+                   ]]></expressionString>
+                </ns2:filter>
             </ns2:uiAction>
             <ns2:participant partyType="GenericOrganizationType.Director,0" />
             <ns2:process>
@@ -94,8 +102,9 @@
                     import java.util.Date;
                     import java.util.HashMap;
                     import org.shaolin.bmdp.utils.DateUtil;
-                    import org.shaolin.bmdp.runtime.AppContext; 
-                    import org.shaolin.vogerp.commonmodel.IUserService; 
+                    import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
                     import org.shaolin.vogerp.productmodel.IProductService;
                     import org.shaolin.vogerp.productmodel.be.ProductImpl;
                     import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
@@ -110,6 +119,8 @@
                           sc.setProductType(((ProductImpl)OrderModel.INSTANCE.get($gOrder.getProductId(), ProductImpl.class)).getType());
                        }
                        OrderModel.INSTANCE.create(sc);
+                       
+                       Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
                     }
                      ]]></expressionString>
                 </ns2:expression>
@@ -211,7 +222,8 @@
 			        }
                     ]]></expressionString>
                 </ns2:expression>
-                <ns2:filter><expressionString><![CDATA[
+                <ns2:filter>
+                  <expressionString><![CDATA[
                     import org.shaolin.bmdp.runtime.security.UserContext;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     {
@@ -219,7 +231,8 @@
                               && $beObject.getOrgId() != UserContext.getUserContext().getOrgId() 
                               && $beObject.getStatus() == OrderStatusType.PUBLISHED;
                     }
-                ]]></expressionString></ns2:filter>
+                  ]]></expressionString>
+                </ns2:filter>
             </ns2:uiAction>
             <ns2:participant partyType="GenericOrganizationType.Director,0" onlyOwner="false"/>
             <ns2:process>
@@ -233,6 +246,7 @@
                     <expressionString><![CDATA[
                      import java.util.List;
                      import java.util.ArrayList;
+                     import org.shaolin.uimaster.page.ajax.*;
                      import org.shaolin.bmdp.runtime.AppContext; 
                      import org.shaolin.bmdp.runtime.security.UserContext;
                      import org.shaolin.vogerp.ecommercial.ce.EOrderType;
@@ -250,7 +264,7 @@
                           if (result == 0) {
                              OrderModel.INSTANCE.create(condition);
                           }
-                          
+			              
                           String message0 = $offerPrice.getLeaveWords();
                           long from = $offerPrice.getTakenCustomerId();
                           long to = $goldenOrder.getPublishedCustomerId();
@@ -265,6 +279,8 @@
 	                      
 	                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
 	                      service.addNotification(message, true);
+	                      
+	                      Dialog.showMessageDialog("出价成功！", "", Dialog.INFORMATION_MESSAGE, null);
                      }
                      ]]></expressionString>
                 </ns2:expression>
@@ -374,26 +390,18 @@
                     import java.util.Date;
                     import java.util.HashMap;
                     import org.shaolin.bmdp.utils.DateUtil;
-                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
-                    import org.shaolin.vogerp.order.be.IPurchaseOrder;
-                    import org.shaolin.vogerp.order.be.ISaleOrder;
-                    import org.shaolin.vogerp.order.be.SaleOrderImpl;
-                    import org.shaolin.vogerp.order.be.OrderItemImpl;
-                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
-                    import org.shaolin.vogerp.ecommercial.be.GOOfferPriceImpl;
-                    import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
+                    import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.bmdp.runtime.AppContext; 
-                    import org.shaolin.vogerp.commonmodel.IUserService;
-                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.order.be.*;
+                    import org.shaolin.vogerp.ecommercial.be.*;
+                    import org.shaolin.vogerp.ecommercial.ce.*;
                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
-                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
+                    import org.shaolin.vogerp.commonmodel.IOrganizationService;
                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
-                    import org.shaolin.bmdp.runtime.security.UserContext;
-                    import org.shaolin.vogerp.order.be.IPurchaseOrder;
-                    import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
-                    import org.shaolin.vogerp.order.be.PurchaseItemImpl;
-                    import org.shaolin.vogerp.commonmodel.IOrganizationService;
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
                     import org.shaolin.vogerp.accounting.ce.PayBusinessType;
                     import org.shaolin.vogerp.accounting.IAccountingService;
@@ -431,6 +439,8 @@
                          
                          ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
                          service.addNotification(message, true);
+                         
+                         Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
                     }
                      ]]></expressionString>
                 </ns2:expression>
@@ -493,6 +503,7 @@
                     import java.util.ArrayList;
                     import java.util.Date;
                     import java.util.HashMap;
+                    import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.bmdp.utils.DateUtil;
                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                     import org.shaolin.vogerp.order.be.IPurchaseOrder;
@@ -522,6 +533,7 @@
 		                         ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
 		                         service.addNotification(message, true);
 	                         }
+	                         Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
                          }
                     }
                     ]]></expressionString>
@@ -602,6 +614,7 @@
                     import java.util.HashMap;
                     import org.shaolin.bmdp.utils.DateUtil;
                     import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.order.be.IPurchaseOrder;
                     import org.shaolin.vogerp.commonmodel.IUserService;
                     import org.shaolin.vogerp.ecommercial.be.*;
@@ -632,6 +645,7 @@
 		                         ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
 		                         service.addNotification(message, true);
 	                         }
+	                         Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
                          }
                     }
                     ]]></expressionString>

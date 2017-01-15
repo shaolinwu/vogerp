@@ -23,11 +23,16 @@
         import java.util.HashMap;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.bmdp.runtime.security.UserContext;
         import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             HashMap out = (HashMap)form.ui2Data();
             RentOrLoanOrderImpl beObject = (RentOrLoanOrderImpl)out.get("beObject");
+            if (beObject.getOrgId() == UserContext.getUserContext().getOrgId()) {
+               Dialog.showMessageDialog("这是您自己的订单，不可参与竞价。", "提醒", Dialog.INFORMATION_MESSAGE, null);
+               return;
+            }
             
             HashMap input = new HashMap();
             input.put("beObject", beObject);

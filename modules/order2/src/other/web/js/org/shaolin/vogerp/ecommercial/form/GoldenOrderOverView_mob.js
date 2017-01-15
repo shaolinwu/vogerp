@@ -24,16 +24,11 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob(json)
         ui: elementList[prefix + "publishedCityUI"]
     });
 
-    var createDateUI = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "createDateUI"]
-    });
-
     var bannerPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "bannerPanel"]
         ,items: []
-        ,subComponents: [prefix + "estimatedPriceUI",prefix + "publishedCityUI",prefix + "createDateUI"]
+        ,subComponents: [prefix + "estimatedPriceUI",prefix + "publishedCityUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -46,7 +41,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,descriptionUI,estimatedPriceUI,publishedCityUI,createDateUI,fieldPanel,bannerPanel]
+        ,items: [idUI,descriptionUI,estimatedPriceUI,publishedCityUI,fieldPanel,bannerPanel]
     });
 
     Form.idUI=idUI;
@@ -56,8 +51,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob(json)
     Form.estimatedPriceUI=estimatedPriceUI;
 
     Form.publishedCityUI=publishedCityUI;
-
-    Form.createDateUI=createDateUI;
 
     Form.fieldPanel=fieldPanel;
 
@@ -71,15 +64,11 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderOverView_mob(json)
 
     Form.publishedCityUI=publishedCityUI;
 
-    Form.createDateUI=createDateUI;
-
     Form.bannerPanel=bannerPanel;
 
     Form.estimatedPriceUI=estimatedPriceUI;
 
     Form.publishedCityUI=publishedCityUI;
-
-    Form.createDateUI=createDateUI;
 
     Form.user_constructor = function()
     {
