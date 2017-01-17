@@ -57,6 +57,37 @@
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
+        <ns2:eventHandler functionName="verifyAccount">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="verifyAccount-20170110-1222">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.vogerp.commonmodel.be.*;
+      				import org.shaolin.vogerp.commonmodel.IOrganizationService;
+                    {
+                        Table personalInfoTable = (Table)@page.getElement("organizationInfoTable");
+                        if (personalInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        OrganizationImpl defaultUser = (OrganizationImpl)personalInfoTable.getSelectedRow();
+                        IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
+		                ILegalOrganizationInfo legalInfo = orgService.getLegalInfo(defaultUser.getId());
+                        HashMap input = new HashMap();
+                        input.put("orgInfo", defaultUser);
+                        input.put("beObject", legalInfo);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("organizationForm", "org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("Check Organization Information", new TableCallBack("organizationInfoTable"), true);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
         <ns2:eventHandler functionName="openOrgTreeDetail">
             <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showOrgTreeInfoPanel">
                 <ns2:exp>
@@ -381,6 +412,17 @@
                          <ns2:defaultOpenAction>openOrgDetail</ns2:defaultOpenAction>
                          <!-- can be default actions. -->
                      </ns2:defaultActions>
+                     <ns2:actionGroup>
+	                   <ns2:type>radio</ns2:type>
+	                   <ns2:action>
+                              <ns2:uiid>verifyAccount</ns2:uiid>
+                              <ns2:title xsi:type="ns2:StringPropertyType">
+                                  <ns2:value>验证帐号</ns2:value>
+                              </ns2:title>
+                              <ns2:icon>ui-icon-note</ns2:icon>
+                              <ns2:function>verifyAccount</ns2:function>
+                          </ns2:action>
+	               </ns2:actionGroup>
                  </ns2:component>
                  <ns2:layoutConstraint>
                      <ns2:componentId>organizationInfoTable</ns2:componentId>

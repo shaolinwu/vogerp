@@ -444,7 +444,7 @@
         </bediagram:member>
     </bediagram:beEntity>
 
-    <bediagram:beEntity needPersist="true" needUIEntity="true">
+    <bediagram:beEntity needPersist="true" needUIEntity="true" needOrgId="true">
         <common:entityName>RegisterInfo</common:entityName>
         <bediagram:member>
             <bediagram:name>id</bediagram:name>
@@ -477,6 +477,10 @@
         <bediagram:member>
             <bediagram:name>address</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>userId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
      </bediagram:beEntity>
 

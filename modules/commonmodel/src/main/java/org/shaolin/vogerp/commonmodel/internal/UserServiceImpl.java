@@ -112,7 +112,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	 * 
 	 * @param registerInfo
 	 */
-	public synchronized boolean register(IRegisterInfo registerInfo, HttpServletRequest request) {
+	public synchronized boolean register(final IRegisterInfo registerInfo, HttpServletRequest request) {
 		if (registerInfo.getPhoneNumber() == null ||
 				registerInfo.getPhoneNumber().trim().length() == 0) {
 			return false;
@@ -132,8 +132,13 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		org.setDescription(registerInfo.getOrgName());
 		org.setOrgCode(genOrgCode());
 		org.setParentId(1);
-		org.setType("org.shaolin.vogerp.productmodel.ce.ProductType,1");//TODO:
+		if (registerInfo.getOrgType() != null && registerInfo.getOrgType().length() > 0) {
+			org.setType(registerInfo.getOrgType());
+		} else {
+			org.setType("org.shaolin.vogerp.productmodel.ce.ProductType,1");
+		}
 		CommonModel.INSTANCE.create(org);
+		registerInfo.setOrgId(org.getId());
 		
 		// create user info.
 		PersonalInfoImpl userInfo = new PersonalInfoImpl();
@@ -152,6 +157,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		// userInfo.setp registerInfo.getPhoneNumber() 
 		// registerInfo.getAddress();
 		CommonModel.INSTANCE.create(userInfo);
+		registerInfo.setUserId(userInfo.getId());
 		
 		// create account.
 		PersonalAccountImpl newAccount = new PersonalAccountImpl();

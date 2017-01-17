@@ -616,19 +616,21 @@
       import org.shaolin.vogerp.commonmodel.be.*;
       import org.shaolin.vogerp.commonmodel.IOrganizationService;
       {
-	      IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
-	      $orgInfo = (OrganizationImpl)orgService.getOrganizationInfo();
-	      $beObject = (LegalOrganizationInfoImpl)orgService.getLegalInfo(UserContext.getUserContext().getOrgId());
-	      if ($beObject == null) {
-	          $beObject = new LegalOrganizationInfoImpl();
-	          $beObject.setOrgId(UserContext.getUserContext().getOrgId());
+          if ($orgInfo == null) {
+		      IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
+		      $orgInfo = (OrganizationImpl)orgService.getOrganizationInfo();
+		      $beObject = (LegalOrganizationInfoImpl)orgService.getLegalInfo(UserContext.getUserContext().getOrgId());
+		      if ($beObject == null) {
+		          $beObject = new LegalOrganizationInfoImpl();
+		          $beObject.setOrgId(UserContext.getUserContext().getOrgId());
+		      }
+	          //for security consideration, we have to generate the random numbers.
+	          if ($beObject.getLegalPhoto() == null) {
+	             $beObject.setLegalPhoto("/user/"+$orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
+	             $beObject.setLegalIdentifierPhoto("/user/"+$orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
+	             $beObject.setBusiLicensePhoto("/user/"+$orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
+	          }
 	      }
-          //for security consideration, we have to generate the random numbers.
-          if ($beObject.getLegalPhoto() == null) {
-             $beObject.setLegalPhoto("/user/"+$orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
-             $beObject.setLegalIdentifierPhoto("/user/"+$orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
-             $beObject.setBusiLicensePhoto("/user/"+$orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
-          }
           $beObject.setVeriState($orgInfo.getVeriState());
           $beObject.setVerifierId($orgInfo.getVerifierId());
           
@@ -646,17 +648,19 @@
       import org.shaolin.vogerp.commonmodel.be.*;
       import org.shaolin.vogerp.commonmodel.IOrganizationService;
       {
-        IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
-        OrganizationImpl orgInfo = (OrganizationImpl)orgService.getOrganizationInfo();
-        LegalOrganizationInfoImpl legalInfo = (LegalOrganizationInfoImpl)orgService.getLegalInfo(UserContext.getUserContext().getOrgId());
-        if (legalInfo == null) {
-            legalInfo = new LegalOrganizationInfoImpl();
+        if ($orgInfo == null) {
+	        IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
+	        OrganizationImpl orgInfo = (OrganizationImpl)orgService.getOrganizationInfo();
+	        LegalOrganizationInfoImpl legalInfo = (LegalOrganizationInfoImpl)orgService.getLegalInfo(UserContext.getUserContext().getOrgId());
+	        if (legalInfo == null) {
+	            legalInfo = new LegalOrganizationInfoImpl();
+	        }
+	        legalInfo.setVeriState(orgInfo.getVeriState());
+	        legalInfo.setVerifierId(orgInfo.getVerifierId());
+	        
+	        $orgInfo = orgInfo;
+	        $beObject = legalInfo;
         }
-        legalInfo.setVeriState(orgInfo.getVeriState());
-        legalInfo.setVerifierId(orgInfo.getVerifierId());
-        
-        $orgInfo = orgInfo;
-        $beObject = legalInfo;
         @odContext.executeAllMappings();
       }</expressionString>
     </ns2:UIToDataMappingOperation>

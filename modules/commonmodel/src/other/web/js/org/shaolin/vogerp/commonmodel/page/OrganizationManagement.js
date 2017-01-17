@@ -63,6 +63,8 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
 
     Form.openOrgDetail = org_shaolin_vogerp_commonmodel_page_OrganizationManagement_openOrgDetail;
 
+    Form.verifyAccount = org_shaolin_vogerp_commonmodel_page_OrganizationManagement_verifyAccount;
+
     Form.openOrgTreeDetail = org_shaolin_vogerp_commonmodel_page_OrganizationManagement_openOrgTreeDetail;
 
     Form.createUser = org_shaolin_vogerp_commonmodel_page_OrganizationManagement_createUser;
@@ -111,6 +113,17 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showOrgInfoPanel",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_openOrgDetail */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_page_OrganizationManagement_verifyAccount(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_verifyAccount */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifyAccount-20170110-1222",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_verifyAccount */
 
 
     /* auto generated eventlistener function declaration */

@@ -1207,7 +1207,7 @@
                   <ns2:valueFieldPath>scObject.functionId</ns2:valueFieldPath>
               </ns2:value>
               <ns2:condition>
-                  <expressionString><![CDATA[scObject.getFunctionId() != null && scObject.getFunctionId().length() > 0]]></expressionString>
+                  <expressionString><![CDATA[scObject.getFunctionId() != null && scObject.getFunctionId() != org.shaolin.vogerp.commonmodel.ce.AMemberFunctionType.NOT_SPECIFIED]]></expressionString>
               </ns2:condition>
           </ns2:conditionValue>
       </ns2:fieldMapping>
@@ -1242,7 +1242,7 @@
                   <ns2:valueFieldPath>scObject.functionId</ns2:valueFieldPath>
               </ns2:value>
               <ns2:condition>
-                  <expressionString><![CDATA[scObject.getFunctionId() != null && scObject.getFunctionId().length() > 0]]></expressionString>
+                  <expressionString><![CDATA[scObject.getFunctionId() != null && scObject.getFunctionId() != org.shaolin.vogerp.commonmodel.ce.AMemberFunctionType.NOT_SPECIFIED]]></expressionString>
               </ns2:condition>
           </ns2:conditionValue>
       </ns2:fieldMapping>

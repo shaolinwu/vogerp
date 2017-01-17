@@ -126,4 +126,36 @@
      ]]></expressionString>
         </ns2:exp>
     </ns2:service>
+    
+    <!-- only used for temporary. 
+    <ns2:service name="registerUserAccount">
+        <ns2:exp>
+            <expressionString><![CDATA[
+        import java.util.List;
+        import java.util.ArrayList;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.vogerp.commonmodel.IModuleService;
+        import org.shaolin.uimaster.page.ajax.json.JSONArray;
+        import org.shaolin.uimaster.page.ajax.json.JSONObject;
+        import org.shaolin.vogerp.commonmodel.be.*;
+        import org.shaolin.vogerp.commonmodel.ce.*;
+        import org.shaolin.vogerp.commonmodel.IUserService;
+        {
+            RegisterInfoImpl beObject = new RegisterInfoImpl();
+            beObject.setPhoneNumber(@request.getParameter("phoneNumber"));
+            beObject.setOrgName(@request.getParameter("orgName"));
+            beObject.setOrgType(@request.getParameter("orgType"));
+            beObject.setPassword("123456");
+            
+            IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
+	        if (service.register(beObject, @request)) {
+	            return beObject.getOrgId();
+	        } else {
+	            return IUserService.USER_REGISTER_FAIL;
+	        }
+        }
+     ]]></expressionString>
+        </ns2:exp>
+    </ns2:service>
+    -->
 </ns2:WebService>
