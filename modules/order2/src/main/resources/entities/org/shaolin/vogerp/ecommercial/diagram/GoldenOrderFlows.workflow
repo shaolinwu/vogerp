@@ -205,10 +205,14 @@
 			            
 			            int state = OrderUtil.addAPrice(order, offerPrice);
 			            if (state == -1) {
-			                @page.getLabel("resultUILabel").setValue("竞价失败，请刷新订单状态！");
+			                form.closeIfinWindows();
+			                @page.removeForm(@page.getEntityUiid()); 
+			                Dialog.showMessageDialog("竞价失败，请刷新订单状态！", "提醒", Dialog.WARNING_MESSAGE, null);
 			                return;
-			            } else if (state == 2) {
-			                @page.getLabel("resultUILabel").setValue("您已出价一次，不可重复竞价！");
+			            } else if (state == -2) {
+			                form.closeIfinWindows();
+			                @page.removeForm(@page.getEntityUiid()); 
+			                Dialog.showMessageDialog("您已出价一次，不可重复竞价！", "提醒", Dialog.WARNING_MESSAGE, null);
 			                return;
 			            } 
 			            

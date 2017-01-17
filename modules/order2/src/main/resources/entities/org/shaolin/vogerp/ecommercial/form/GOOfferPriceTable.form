@@ -83,7 +83,7 @@
             RefForm chatForm = new RefForm("chatWindow", "org.shaolin.bmdp.workflow.form.ChatWindow", input);
             @page.addElement(chatForm);
             
-            chatForm.openInWindows("回复", new TableCallBack("productInfoTable"), true);
+            chatForm.openInWindows("回复", null, true);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>

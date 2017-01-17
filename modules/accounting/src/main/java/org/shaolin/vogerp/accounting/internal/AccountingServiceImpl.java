@@ -295,9 +295,8 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 			String url = BCPay.startTransfer(param);
 			if (customerAccount.getThirdPartyAccountType() == SettlementMethodType.WEIXI) {
 				String result = url;
-				//TODO: sync operation from weixi.
+				//TODO: check result.
 			}
-//			response.sendRedirect(url);
 			return url;
 		} catch (Exception e) {
 			throw new PaymentException("Transfer URL error: " + e.getMessage(), e);

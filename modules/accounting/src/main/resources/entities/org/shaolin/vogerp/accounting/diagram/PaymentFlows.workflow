@@ -298,6 +298,8 @@
                     {
                         IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
 		                accountingService.requestForPayOrder((IPayOrder)$beObject, RequestStatusType.REQUEST, PayOrderRequestType.WITHDRAW);
+                        
+                        Dialog.showMessageDialog("提现申请成功，系统将在5个工作日内处理转账到您帐户。", "提醒", Dialog.INFORMATION_MESSAGE, null);
                     }
                     ]]></expressionString>
                 </ns2:expression>
