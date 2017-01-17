@@ -491,11 +491,15 @@
 			     
 			     UIMaster.pageInitFunctions.push(function() {
 			        // clean all cached page for going back support.
-			        $.ajax({url:AJAX_SERVICE_URL,async:true,data:{_ajaxUserEvent:"tabpane",_uiid:"Form",_valueName:"removeExcludedPage",_value:"#GLOBAL#", _framePrefix:UIMaster.getFramePrefix(), r:Math.random()}});
-			        if (o.isVerifiedUserUI.value == "false") {
-				        window.setTimeout(function(){
-					        UIMaster.ui.mask.openHtml("/html/hints/userguide.html");
-					    }, 1000);
+			        // check whether is read or not.
+			        if (UIMaster.getCookie("/html/hints/userguide.html") == null) {
+			            UIMaster.setCookie("/html/hints/userguide.html", "read");
+				        $.ajax({url:AJAX_SERVICE_URL,async:true,data:{_ajaxUserEvent:"tabpane",_uiid:"Form",_valueName:"removeExcludedPage",_value:"#GLOBAL#", _framePrefix:UIMaster.getFramePrefix(), r:Math.random()}});
+				        if (o.isVerifiedUserUI.value == "false") {
+					        window.setTimeout(function(){
+						        UIMaster.ui.mask.openHtml("/html/hints/userguide.html");
+						    }, 1000);
+					    }
 				    }
 			     });
 			     this.realCounter = $("<span style='color:blue;font-weight:bold;'></span>");
