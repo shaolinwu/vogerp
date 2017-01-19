@@ -148,6 +148,10 @@
                     ]]></expressionString>
                 </ns2:expression>
             </ns2:process>
+            <ns2:eventDest>
+                <ns2:dest name="verifyCustomerInfoFailed"></ns2:dest>
+            	<ns2:dest name="verifiedCustomerInfo"></ns2:dest>
+            </ns2:eventDest>
         </ns2:mission-node>
         
         <ns2:mission-node name="verifyCustomerInfoFailed" expiredDays="0" expiredHours="0" autoTrigger="true">
@@ -234,6 +238,9 @@
                      ]]></expressionString>
                 </ns2:expression>
             </ns2:process>
+            <ns2:eventDest>
+                <ns2:dest name="verifiedCustomerInfo"></ns2:dest>
+            </ns2:eventDest>
         </ns2:mission-node>
         
         <ns2:mission-node name="verifiedCustomerInfo" expiredDays="0" expiredHours="0" autoTrigger="true">

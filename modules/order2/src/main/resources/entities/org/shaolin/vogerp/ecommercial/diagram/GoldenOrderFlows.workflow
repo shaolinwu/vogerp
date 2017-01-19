@@ -169,6 +169,11 @@
                      ]]></expressionString>
                 </ns2:expression>
             </ns2:process>
+            <ns2:eventDest>
+                <ns2:dest name="offerPrice"></ns2:dest>
+            	<ns2:dest name="cancelGOrder"></ns2:dest>
+	            <ns2:dest name="forbiddenGOrder"></ns2:dest>
+            </ns2:eventDest>
         </ns2:node>
         
         <ns2:mission-node name="offerPrice" expiredDays="0" expiredHours="0" autoTrigger="false" multipleInvoke="true">
@@ -289,6 +294,12 @@
                      ]]></expressionString>
                 </ns2:expression>
             </ns2:process>
+            <ns2:eventDest>
+            	<!-- multiple time for offering a price. -->
+                <ns2:dest name="offerPrice"></ns2:dest>
+            	<ns2:dest name="acceptPrice"></ns2:dest>
+	            <ns2:dest name="cancelGOrder"></ns2:dest>
+            </ns2:eventDest>
         </ns2:mission-node>
         
         <ns2:mission-node name="acceptPrice" expiredDays="0" expiredHours="0" autoTrigger="false">
@@ -323,7 +334,7 @@
                         
                         HashMap result = new HashMap();
                         result.put("gorder", out.get("beObject"));
-                        result.put("selectedPrice", out.get("selectedPrice"));
+                        result.put("selectedPrice", selectedPrice);
                         result.put("offerLowestPrice", Boolean.FALSE);
                         
                         form.closeIfinWindows();
@@ -427,7 +438,7 @@
 	                         						$gorder.getPublishedCustomerId(), $gorder.getSerialNumber(), $gorder.getEndPrice());
 	                         @flowContext.save(payOrder);
                          } else {
-	                         long orgId = orgService.getOrgIdByPartyId($gorder.getTakenCustomerId());
+	                         long orgId = orgService.getOrgIdByPartyId($selectedPrice.getTakenCustomerId());
                              IPayOrder payOrder = accountingService.createPayOrder(PayBusinessType.GOLDENSORDERBUSI, 
                              						orgId, $gorder.getTakenCustomerId(), UserContext.getUserContext().getUserId(), 
                              						$gorder.getSerialNumber(), $gorder.getEndPrice());
@@ -449,6 +460,9 @@
                      ]]></expressionString>
                 </ns2:expression>
             </ns2:process>
+            <ns2:eventDest>
+            	<ns2:dest name="PrepayCallBack" flow="PrepayFlow" entity="org.shaolin.vogerp.accounting.diagram.PaymentFlows"></ns2:dest>
+            </ns2:eventDest>
         </ns2:mission-node>
         
         <ns2:mission-node name="cancelGOrder" expiredDays="0" expiredHours="0" autoTrigger="false">

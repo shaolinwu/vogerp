@@ -70,6 +70,10 @@
                     ]]></expressionString>
                 </ns2:expression>
             </ns2:process>
+            <ns2:eventDest>
+                <ns2:dest name="TransferCallBack"></ns2:dest>
+            	<ns2:dest name="RefundCallBack"></ns2:dest>
+            </ns2:eventDest>
         </ns2:mission-node>
         
        <ns2:mission-node name="TransferCallBack" autoTrigger="false">
@@ -105,6 +109,9 @@
                     ]]></expressionString>
                 </ns2:expression>
             </ns2:process>
+            <ns2:eventDest>
+                <ns2:dest name="TransferCallBack"></ns2:dest>
+            </ns2:eventDest>
         </ns2:mission-node>
         
         <ns2:mission-node name="RefundCallBack" autoTrigger="false">
@@ -224,7 +231,9 @@
                     ]]></expressionString>
                 </ns2:expression>
             </ns2:process>
-            <ns2:dest name="withdrawPayOrder"></ns2:dest>
+            <ns2:eventDest>
+                <ns2:dest name="withdrawPayOrder"></ns2:dest>
+            </ns2:eventDest>
         </ns2:mission-node>
         
         <!-- A user is able to request for withdraw money from a pay order of our system account. -->
@@ -304,7 +313,9 @@
                     ]]></expressionString>
                 </ns2:expression>
             </ns2:process>
-            <ns2:dest name="confirmWithdrawPayOrder"></ns2:dest>
+            <ns2:eventDest>
+                <ns2:dest name="confirmWithdrawPayOrder"></ns2:dest>
+            </ns2:eventDest>
         </ns2:mission-node>
         
         <!-- 由管理理人工转账后，点击此按钮确认 -->
@@ -483,7 +494,9 @@
                     ]]></expressionString>
                 </ns2:expression>
             </ns2:process>
-            <ns2:dest name="confirmRefundPayOrder"></ns2:dest>
+            <ns2:eventDest>
+                <ns2:dest name="confirmRefundPayOrder"></ns2:dest>
+            </ns2:eventDest>
         </ns2:mission-node>
         <ns2:mission-node name="confirmRefundPayOrder" autoTrigger="false">
             <ns2:description>管理员确认退款</ns2:description>

@@ -79,7 +79,10 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 		PersonalInfoImpl condition = new PersonalInfoImpl();
 		condition.setId(partyId);
 		List<IPersonalInfo> result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, 1);
-		return result.get(0).getOrgId();
+		if (result.size() > 0 ) {
+			return result.get(0).getOrgId();
+		} 
+		throw new IllegalArgumentException("User id isn't correct: " + partyId);
 	}
 	
 	@Override

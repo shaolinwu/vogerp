@@ -417,8 +417,13 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	public JSONObject getOnlineUserAsJSON() {
 		try {
 			JSONObject json = new JSONObject();
+			json.put("orgId", UserContext.getUserContext().getOrgId());
 			json.put("orgName", UserContext.getUserContext().getOrgName());
+			json.put("userId", UserContext.getUserContext().getUserId());
 			json.put("userName", UserContext.getUserContext().getUserName());
+			json.put("city", UserContext.getUserContext().getCity());
+			json.put("locale", UserContext.getUserContext().getLocale());
+			
 			return json;
 		} catch (Exception e) {
 			return new JSONObject();
