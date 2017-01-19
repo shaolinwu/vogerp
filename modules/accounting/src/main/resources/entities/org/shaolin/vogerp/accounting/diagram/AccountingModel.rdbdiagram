@@ -65,7 +65,7 @@
       <ns2:fieldMapping beFieldName="userId" columnName="USERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="orderSerialNumber" columnName="ORDERSERIALNUMBER"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="serialNumber" columnName="SERIALNUMBER"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="description" columnName="DESCRPTION"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="amount" columnName="AMOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="status" columnName="STATUS"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="payReturnUrl" columnName="PAYRETURNURL"></ns2:fieldMapping>

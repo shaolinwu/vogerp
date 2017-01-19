@@ -285,7 +285,6 @@
                         } else {
                             Dialog.showMessageDialog("支付订单状态异常，不能继续本次操作!", "", Dialog.WARNING_MESSAGE, null);
                         }
-		                
                     }
                     ]]></expressionString>
                 </ns2:expression>
@@ -299,6 +298,7 @@
                     <expressionString><![CDATA[
                     import java.util.List;
                     import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.accounting.ce.*;
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
                     import org.shaolin.vogerp.accounting.be.ICustomerAccount;
@@ -308,7 +308,7 @@
                         IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
 		                accountingService.requestForPayOrder((IPayOrder)$beObject, RequestStatusType.REQUEST, PayOrderRequestType.WITHDRAW);
                         
-                        Dialog.showMessageDialog("提现申请成功，系统将在5个工作日内处理转账到您帐户。", "提醒", Dialog.INFORMATION_MESSAGE, null);
+                        Dialog.showMessageDialog("提现申请成功，系统将在5个工作日内处理转账到您帐户。","提醒",Dialog.INFORMATION_MESSAGE, null);
                     }
                     ]]></expressionString>
                 </ns2:expression>

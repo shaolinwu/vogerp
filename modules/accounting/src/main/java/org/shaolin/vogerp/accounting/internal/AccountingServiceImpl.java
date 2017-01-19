@@ -11,6 +11,7 @@ import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
+import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.bmdp.workflow.be.NotificationImpl;
 import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
 import org.shaolin.uimaster.page.AjaxFactory;
@@ -135,7 +136,8 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		return order;
 	}
 	
-	public IPayOrder createPayAdminOrder(final PayBusinessType type, final long endUserId, final String orderSerialNumber, final double amount) {
+	public IPayOrder createPayAdminOrder(final PayBusinessType type, final long endUserId, 
+			final String orderSerialNumber, final double amount) {
 		PayOrderImpl order = new PayOrderImpl();
 		order.setPayBusinessType(type);
 		order.setOrgId(1); // fixed id here.
@@ -241,7 +243,7 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 				attributes.putAll(paymentKeyInfo);
 				attributes.put("out_trade_no", order.getSerialNumber());
 				String title = "(" + order.getPayBusinessType().getDescription() + ")" + order.getDescription()!=null?order.getDescription():"";
-				attributes.put("title", title);
+				attributes.put("title", StringUtil.getAbbreviatoryString(title, 15));
 				attributes.put("amount", ((int)order.getAmount()) + "");//it's fen unit.
 				String sign = PaymentUtil.beeCloudSign(attributes.get("app_id"),
 						attributes.get("title"), 

@@ -433,13 +433,15 @@
                             $gorder.setTakenCustomerId($selectedPrice.getTakenCustomerId());
                          }
                          $gorder.setStatus(OrderStatusType.TAKEN);
-                         OrderModel.INSTANCE.update($gorder, true);//must commit.
+                         OrderModel.INSTANCE.update($gorder);
                          
                          IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
                          IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class); 
                          if ($gorder.getType() == RentOrLoanOrderType.RENT) {
 	                         IPayOrder payOrder = accountingService.createSelfPayOrder(PayBusinessType.EQUIPMENTRENTBUSI, 
-	                         						$gorder.getPublishedCustomerId(), $gorder.getSerialNumber(), $gorder.getEndPrice());
+	                         						$gorder.getTakenCustomerId(), $gorder.getSerialNumber(), $gorder.getEndPrice());
+                             payOrder.setDescription("[" + $selectedPrice.getTakenCustomer().getOrganization().getDescription() + "]" 
+                                                     + $gorder.getDescription());
                              @flowContext.save(payOrder);
                          } else {
                              long orgId = orgService.getOrgIdByPartyId($selectedPrice.getTakenCustomerId());
@@ -447,6 +449,8 @@
 	                         				orgId, $gorder.getTakenCustomerId(), UserContext.getUserContext().getUserId(), 
 	                         				$gorder.getSerialNumber(), $gorder.getEndPrice());
 	                         payOrder.setOrgId(orgService.getOrgIdByPartyId($gorder.getTakenCustomerId()));
+                             payOrder.setDescription("[" + $selectedPrice.getTakenCustomer().getOrganization().getDescription() + "]" 
+                                                     + $gorder.getDescription());
                              @flowContext.save(payOrder);
                          }
                          

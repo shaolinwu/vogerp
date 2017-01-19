@@ -415,6 +415,7 @@
                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                     import org.shaolin.vogerp.commonmodel.IUserService;
                     import org.shaolin.vogerp.commonmodel.IOrganizationService;
+                    import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
@@ -435,13 +436,17 @@
                          IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
                          if ($gorder.getType() == GoldenOrderType.PURCHASE) {
 	                         IPayOrder payOrder = accountingService.createSelfPayOrder(PayBusinessType.GOLDENPORDERBUSI, 
-	                         						$gorder.getPublishedCustomerId(), $gorder.getSerialNumber(), $gorder.getEndPrice());
+	                         						$gorder.getTakenCustomerId(), $gorder.getSerialNumber(), $gorder.getEndPrice());
+	                         payOrder.setDescription("[" + $selectedPrice.getTakenCustomer().getOrganization().getDescription() + "]" 
+                                                     + $gorder.getDescription());
 	                         @flowContext.save(payOrder);
                          } else {
 	                         long orgId = orgService.getOrgIdByPartyId($selectedPrice.getTakenCustomerId());
                              IPayOrder payOrder = accountingService.createPayOrder(PayBusinessType.GOLDENSORDERBUSI, 
-                             						orgId, $gorder.getTakenCustomerId(), UserContext.getUserContext().getUserId(), 
+                             						orgId, $gorder.getTakenCustomerId(), UserContext.getUserContext().getUserId(),
                              						$gorder.getSerialNumber(), $gorder.getEndPrice());
+                             payOrder.setDescription("[" + $selectedPrice.getTakenCustomer().getOrganization().getDescription() + "]" 
+                                                     + $gorder.getDescription());
 	                         @flowContext.save(payOrder);
                          }
                          
