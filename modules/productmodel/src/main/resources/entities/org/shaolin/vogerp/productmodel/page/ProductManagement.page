@@ -416,7 +416,7 @@
 						                <ns2:expressionString><![CDATA[
 						                import org.shaolin.bmdp.utils.StringUtil;
 						                {
-						                   return StringUtil.getAbbreviatoryString($rowBE.getDescription(), 70);
+						                   return StringUtil.escape(StringUtil.getAbbreviatoryString($rowBE.getDescription(), 20));
 						                }]]></ns2:expressionString>
 						            </ns2:expression>
 						        </ns2:rowExpression>

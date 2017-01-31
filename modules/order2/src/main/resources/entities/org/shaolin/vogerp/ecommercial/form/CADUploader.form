@@ -1,0 +1,276 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.ecommercial.form.CADUploader</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="refresh">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="refresh-20151227-172647">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            @page.getImage("photoUI").refresh(); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="clean">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="clean-20151227-172647">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            @page.getImage("photoUI").clearAll(); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="search">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="search-20160520-172647">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            @page.getImage("photoUI"); 
+                        
+            HashMap input = new HashMap();
+            input.put("searchWords", @page.getHidden("searchWordsUI").getValue());
+            RefForm form = new RefForm("onlineSearchForm", "org.shaolin.vogerp.commonmodel.form.ImageSearcher", input);
+            @page.addElement(form);
+            
+            form.openInWindows("在线搜索", null, true);
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:UISkin xsi:type="ns2:UISkinType">
+      <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
+      <ns2:param name="text">
+          <ns2:value xsi:type="ns2:StringPropertyType">
+              <ns2:value> </ns2:value>
+          </ns2:value>
+      </ns2:param>
+    </ns2:UISkin>
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIHiddenType" UIID="imagePathUI">
+        <ns2:secure>
+          <ns2:value>true</ns2:value>
+        </ns2:secure>
+      </ns2:component>
+    <ns2:component xsi:type="ns2:UIHiddenType" UIID="searchWordsUI">
+       <ns2:secure>
+         <ns2:value>true</ns2:value>
+       </ns2:secure>
+     </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIPanelType" UIID="photoPanel">
+          <ns2:layout xsi:type="ns2:TableLayoutType">
+            <ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
+            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+          </ns2:layout>
+          <ns2:component xsi:type="ns2:UIImageType" UIID="photoUI">
+            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+            <ns2:isGallery xsi:type="ns2:BooleanPropertyType">
+                <ns2:value>true</ns2:value>
+            </ns2:isGallery>
+            <ns2:Property name="width">
+               <ns2:value xsi:type="ns2:StringPropertyType">
+                   <value>100%</value>
+               </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="height">
+               <ns2:value xsi:type="ns2:StringPropertyType">
+                   <value>300px</value>
+               </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="mobheight">
+               <ns2:value xsi:type="ns2:StringPropertyType">
+                   <value>220px</value>
+               </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="value">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           { 
+			               return $imagePath; 
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+            </ns2:Property>
+          </ns2:component>
+          <ns2:layoutConstraint>
+            <ns2:componentId>photoUI</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+          </ns2:layoutConstraint>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIFileType" UIID="uploadFile">
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>请上传后缀为：CAD,VDA,DXF和DWG等制图文件或任何图片文件，同时文件内容小于20M。最多三张图片。</ns2:value>
+        </ns2:text>
+        <ns2:suffix xsi:type="ns2:StringPropertyType">
+          <ns2:value>*.jpg;*.jpeg;*.png;*.gif;*.cad;*.dxf;*.dwg;*.prtdot;*.asmdot;*.drwdot;*.vda</ns2:value>
+        </ns2:suffix>
+        <ns2:isMultiple xsi:type="ns2:BooleanPropertyType">
+          <ns2:value>true</ns2:value>
+        </ns2:isMultiple>
+        <ns2:storedPath xsi:type="ns2:ExpressionPropertyType">
+         <ns2:expression>
+           <expressionString><![CDATA[
+           { 
+               return $modelFile; 
+           }]]></expressionString>
+         </ns2:expression>
+        </ns2:storedPath>
+        <ns2:Property name="contentSize">
+            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                 <ns2:expression>
+                   <expressionString><![CDATA[{ return 1024*1024*20; }]]></expressionString>
+                 </ns2:expression>
+             </ns2:value>
+         </ns2:Property>
+         <ns2:Property name="allowedNumbers">
+            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                 <ns2:expression>
+                   <expressionString><![CDATA[{ return 3; }]]></expressionString>
+                 </ns2:expression>
+             </ns2:value>
+         </ns2:Property>
+         <ns2:Property name="photoWidth">
+            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                 <ns2:expression>
+                   <expressionString><![CDATA[
+                   { 
+                       return $imageWsize; 
+                   }]]></expressionString>
+                 </ns2:expression>
+             </ns2:value>
+         </ns2:Property>
+         <ns2:Property name="photoHeight">
+            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                 <ns2:expression>
+                   <expressionString><![CDATA[
+                   { 
+                       return $imageHsize; 
+                   }]]></expressionString>
+                 </ns2:expression>
+             </ns2:value>
+          </ns2:Property>
+          <ns2:Property name="editable">
+              <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                   <ns2:expression>
+                     <expressionString><![CDATA[
+                     { 
+                         return $editable; 
+                     }]]></expressionString>
+                   </ns2:expression>
+               </ns2:value>
+          </ns2:Property>
+          <ns2:editable xsi:type="ns2:ExpressionPropertyType">
+            <ns2:expression>
+              <expressionString>{return $editable;}</expressionString>
+            </ns2:expression>
+          </ns2:editable>
+       </ns2:component>
+       <ns2:layoutConstraint>
+          <ns2:componentId>photoPanel</ns2:componentId>
+          <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIStyle="width:100%;"></ns2:constraint>
+       </ns2:layoutConstraint>
+       <ns2:layoutConstraint>
+          <ns2:componentId>uploadFile</ns2:componentId>
+          <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIStyle="width:100%;"></ns2:constraint>
+       </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:constructorCode><![CDATA[
+       var othis = this;
+       this.uploadFile.callback = function() {
+           othis.refresh(othis.uploadFile);
+       }
+       this.uploadFile.cleanAll = function() {
+           new UIMaster.ui.dialog({
+              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
+              message:'\u786E\u8BA4\u5220\u9664\u6240\u6709\u56FE\u7247\u5417\uFF1F',
+              messageType:UIMaster.ui.dialog.Warning,
+              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+              title:'',
+              height:150,
+              width:300,
+              handler: function() {
+                 othis.clean(othis.uploadFile);
+              }
+          }).open();
+           
+       }
+       this.uploadFile.onlineSearch = function() {
+           othis.search(othis.uploadFile);
+       }
+    ]]>
+    </ns2:constructorCode>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="modelFile" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="imagePath" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="imageWsize" category="JavaPrimitive">
+      <type entityName="java.lang.Integer"></type>
+      <default><expressionString><![CDATA[new Integer(-1)]]></expressionString></default>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="imageHsize" category="JavaPrimitive">
+      <type entityName="java.lang.Integer"></type>
+      <default><expressionString><![CDATA[new Integer(-1)]]></expressionString></default>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="allowNumber" category="JavaPrimitive">
+      <type entityName="java.lang.Integer"></type>
+      <default><expressionString><![CDATA[new Integer(10)]]></expressionString></default>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+      <default><expressionString><![CDATA[Boolean.TRUE]]></expressionString></default>
+    </ns2:DataEntity>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="imagePathUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="imagePath" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:DataToUIMappingOperation>
+      <expressionString><![CDATA[
+      import org.shaolin.uimaster.page.WebConfig;
+      {
+      if ($imagePath == null) {
+          int i = (int)(Math.random() * 10000);
+          $imagePath = "/tempImages/" + i;
+      }
+      if ($allowNumber == null) {
+          $allowNumber = 10;
+      }
+      
+      @odContext.executeAllMappings();
+      }]]></expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>{
+@odContext.executeAllMappings();
+}</expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

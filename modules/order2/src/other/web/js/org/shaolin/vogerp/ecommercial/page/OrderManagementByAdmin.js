@@ -12,7 +12,7 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "goldenOrderInfoPanel",prefix + "gsaleOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "loanOrderInfoPanel"]
+        ,subComponents: [prefix + "goldenOrderInfoPanel",prefix + "gsaleOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "loanOrderInfoPanel",prefix + "machiningInfoPanel"]
     });
     var goldenOrderTable = new UIMaster.ui.objectlist
     ({
@@ -58,6 +58,17 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
         ,items: []
         ,subComponents: [prefix + "loanOrderTable"]
     });
+    var machiningTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "machiningTable"]
+    });
+
+    var machiningInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "machiningInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "machiningTable"]
+    });
 
     var citySelector = new org_shaolin_vogerp_commonmodel_form_CityOnlySelelctor({"prefix":prefix + "citySelector."});
 
@@ -94,6 +105,10 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
     Form.loanOrderInfoPanel=loanOrderInfoPanel;
 
     Form.loanOrderTable=loanOrderTable;
+
+    Form.machiningInfoPanel=machiningInfoPanel;
+
+    Form.machiningTable=machiningTable;
 
     Form.citySelector=citySelector;
 
@@ -140,6 +155,8 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
     Form.openRentOrderTracker = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openRentOrderTracker;
 
     Form.openLoanOrderTracker = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openLoanOrderTracker;
+
+    Form.openMachiningOrder = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openMachiningOrder;
 
     Form.initPageJs = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_initPageJs;
 
@@ -347,6 +364,17 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openLoanOrderTracker-20161017-2229",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openLoanOrderTracker */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openMachiningOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openMachiningOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openMachiningOrder-20170125-1011",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openMachiningOrder */
 
 
     function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_initPageJs(){/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_initPageJs */

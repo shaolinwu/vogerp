@@ -7,7 +7,7 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "goldenOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "interestEOrderPanel",prefix + "takenGOrderInfoPanel",prefix + "takenROrderInfoPanel"]
+        ,subComponents: [prefix + "goldenOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "machiningInfoPanel",prefix + "interestEOrderPanel",prefix + "takenGOrderInfoPanel",prefix + "takenROrderInfoPanel"]
     });
     var goldenOrderTable = new UIMaster.ui.objectlist
     ({
@@ -30,6 +30,17 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         ui: elementList[prefix + "rentOrderInfoPanel"]
         ,items: []
         ,subComponents: [prefix + "rentOrderTable"]
+    });
+    var machiningTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "machiningTable"]
+    });
+
+    var machiningInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "machiningInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "machiningTable"]
     });
     var interestEOrderTable = new UIMaster.ui.objectlist
     ({
@@ -63,6 +74,10 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     Form.rentOrderInfoPanel=rentOrderInfoPanel;
 
     Form.rentOrderTable=rentOrderTable;
+
+    Form.machiningInfoPanel=machiningInfoPanel;
+
+    Form.machiningTable=machiningTable;
 
     Form.interestEOrderPanel=interestEOrderPanel;
 
@@ -99,6 +114,10 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     Form.openRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_openRentOrder;
 
     Form.openRentOrderTracker = org_shaolin_vogerp_ecommercial_page_OrderManagement_openRentOrderTracker;
+
+    Form.createMachiningOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_createMachiningOrder;
+
+    Form.openMachiningOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_openMachiningOrder;
 
     Form.responseOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_responseOrder;
 
@@ -239,6 +258,28 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openRentOrderTracker-20150614",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_openRentOrderTracker */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_createMachiningOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_createMachiningOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createMachiningOrder-20170125",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_createMachiningOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_openMachiningOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_openMachiningOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openMachiningOrder-20170125",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_openMachiningOrder */
 
 
     /* auto generated eventlistener function declaration */

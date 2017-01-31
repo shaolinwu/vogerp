@@ -168,6 +168,7 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		attributes.putAll(paymentKeyInfo);
 		attributes.put("amount", ((int)order.getAmount()) + "");//it's fen unit.
 		attributes.put("out_trade_no", order.getSerialNumber());
+		attributes.put("title", getPaymentTitle(order));
 		String sign = PaymentUtil.sign(attributes.get("app_id"), 
 				attributes.get("title"), 
 				attributes.get("amount"), 
@@ -242,8 +243,8 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 						Registry.getInstance().getNodeItems("/System/payment/beecloud/buttonPay"));
 				attributes.putAll(paymentKeyInfo);
 				attributes.put("out_trade_no", order.getSerialNumber());
-				String title = "(" + order.getPayBusinessType().getDescription() + ")" + order.getDescription()!=null?order.getDescription():"";
-				attributes.put("title", StringUtil.getAbbreviatoryString(title, 15));
+				//title must be less then 16 Chinese words.
+				attributes.put("title", getPaymentTitle(order));
 				attributes.put("amount", ((int)order.getAmount()) + "");//it's fen unit.
 				String sign = PaymentUtil.beeCloudSign(attributes.get("app_id"),
 						attributes.get("title"), 
@@ -259,6 +260,12 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 			}
 		}
 		throw new PaymentException("Order is not in NOT Payed state!");
+	}
+	
+	private String getPaymentTitle(final IPayOrder order) {
+		String title = "(" + order.getPayBusinessType().getDescription() + ")" + order.getDescription()!=null?order.getDescription():"";
+		//title must be less then 16 Chinese words.
+		return StringUtil.escapeAsEmtpy(StringUtil.getAbbreviatoryString(title, 15));
 	}
 	
 	/**
@@ -291,7 +298,8 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		param.setChannelUserId(customerAccount.getThirdPartyAccount());
 		param.setChannelUserName(customerAccount.getThirdPartyAccountName());
 		param.setTotalFee(((int)order.getAmount()));
-		param.setDescription("\u62A2\u5355\u8FBE\u4EBA\u8BA2\u5355\u8F6C\u5E10: " + order.getOrderSerialNumber() + ": " + (order.getDescription()!=null ? order.getDescription(): ""));
+		param.setDescription("\u62A2\u5355\u8FBE\u4EBA\u8F6C\u5E10\u8BA2\u5355: " + order.getOrderSerialNumber() + ": " + 
+				(order.getDescription()!=null ? StringUtil.escapeAsEmtpy(StringUtil.getAbbreviatoryString(order.getDescription(), 15)) : ""));
 		param.setAccountName(Registry.getInstance().getValue("/System/payment/orgName"));
 		try {
 			String url = BCPay.startTransfer(param);

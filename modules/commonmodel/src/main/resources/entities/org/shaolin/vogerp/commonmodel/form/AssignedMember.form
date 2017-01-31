@@ -47,8 +47,10 @@
             IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
             IPayOrder payOrder = accountingService.createSelfPayOrder(PayBusinessType.MEMBERBUSI, 1, null, price);
 	        String json = accountingService.prepay(payOrder);
-            @page.executeJavaScript("BC.click(" + json + ")");
-            //Dialog.showMessageDialog("请到收入支出功能中支付您的会员订单!", "Information", Dialog.INFORMATION_MESSAGE, null);
+            //@page.executeJavaScript("BC.click(" + json + ")");
+            @page.getRequest().getSession().setAttribute("__payJson", json);
+		    @page.executeJavaScript("window.open('/uimaster/jsp/paywindow.jsp')");
+            Dialog.showMessageDialog("请点击“刷新”按钮查看支付是否成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>

@@ -713,6 +713,11 @@
             <bediagram:description>销售订单业务</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
+            <bediagram:value>MachiningBusi</bediagram:value>
+            <bediagram:intValue>12</bediagram:intValue>
+            <bediagram:description>机械加工业务</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
             <bediagram:value>EquipmentRentBusi</bediagram:value>
             <bediagram:intValue>20</bediagram:intValue>
             <bediagram:description>设备租入业务</bediagram:description>

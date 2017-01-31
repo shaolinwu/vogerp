@@ -195,6 +195,84 @@ public class OrderModel extends BEEntityDaoObject {
         return this._count(inObjectCriteria);
     }
 
+    public List<org.shaolin.vogerp.ecommercial.be.IMachiningOrder> searchMachiningOrder(org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+            if (scObject.getId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.id", scObject.getId()));
+            }
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
+            if (scObject.getPublishedCustomerId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.publishedCustomerId", scObject.getPublishedCustomerId()));
+            }
+            if (scObject.getTakenCustomerId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.takenCustomerId", scObject.getTakenCustomerId()));
+            }
+            if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getStartCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getStartCreateDate()));
+            }
+            if (scObject.getEndCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
+            }
+            if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.ecommercial.ce.OrderStatusType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
+            }
+            if (scObject.getCity() != null && scObject.getCity().trim().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long searchMachiningOrderCount(org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl.class, "inObject");
+
+            if (scObject.getId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.id", scObject.getId()));
+            }
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
+            if (scObject.getPublishedCustomerId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.publishedCustomerId", scObject.getPublishedCustomerId()));
+            }
+            if (scObject.getTakenCustomerId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.takenCustomerId", scObject.getTakenCustomerId()));
+            }
+            if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getStartCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getStartCreateDate()));
+            }
+            if (scObject.getEndCreateDate() != null) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
+            }
+            if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.ecommercial.ce.OrderStatusType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
+            }
+            if (scObject.getCity() != null && scObject.getCity().trim().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
+    }
+
     public List<org.shaolin.vogerp.ecommercial.be.IGoldenOrderHistory> searchGoldenOrderHistory(org.shaolin.vogerp.ecommercial.be.GoldenOrderHistoryImpl scObject,
            List<Order> orders, int offset, int count) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.ecommercial.be.GoldenOrderHistoryImpl.class, "inObject");

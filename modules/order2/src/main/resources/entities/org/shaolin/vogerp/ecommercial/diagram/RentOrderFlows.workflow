@@ -109,6 +109,15 @@
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                     import org.shaolin.vogerp.ecommercial.be.ROrderSearchCriteriaImpl;
                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import java.util.ArrayList;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.order.be.*;
+                    import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                    import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                    import org.shaolin.bmdp.workflow.be.NotificationImpl;
+                    import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+                    import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
                     {
                        // add the search criteria.
                        ROrderSearchCriteriaImpl sc = new ROrderSearchCriteriaImpl();
@@ -118,52 +127,24 @@
                           sc.setProductType(((ProductImpl)OrderModel.INSTANCE.get($gOrder.getProductId(), ProductImpl.class)).getType());
                        }
                        OrderModel.INSTANCE.create(sc);
+                       
+                       // notify all customers.
+                       IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+                       IPersonalInfo publisher = userService.getPersonalInfo($gOrder.getPublishedCustomerId());
+                       
+                       String subject = org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil.getCustomerEnterpriseBasicInfo(publisher);
+                       String description = $gOrder.getDescription();
+                       NotificationImpl message = new NotificationImpl();
+                       message.setPartyId($gOrder.getPublishedCustomerId());
+			           message.setSubject(subject + "发布新的租赁订单！");
+		               message.setDescription(description);
+			           message.setCreateDate(new Date());
+                       
+                       ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+                       service.addNotification(message, true);
+                       
+                       Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
                     }
-                     ]]></expressionString>
-                </ns2:expression>
-            </ns2:process>
-            <ns2:dest name="goToGoldenOrder"></ns2:dest>
-        </ns2:mission-node>
-        <ns2:node name="goToGoldenOrder">
-            <ns2:description>通知客户有新的租赁订单</ns2:description>
-            <ns2:process>
-                <ns2:var name="gOrder" category="BusinessEntity" scope="In">
-                    <type entityName="org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder"></type>
-                </ns2:var>
-                <ns2:expression>
-                    <expressionString><![CDATA[
-                     import java.util.List;
-                     import java.util.Date;
-                     import java.util.ArrayList;
-                     import org.shaolin.uimaster.page.ajax.*;
-                     import org.shaolin.vogerp.order.be.*;
-                     import org.shaolin.vogerp.order.dao.OrderModel;
-                     import org.shaolin.vogerp.commonmodel.dao.CommonModel;
-                     import org.shaolin.bmdp.runtime.AppContext; 
-                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
-                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
-                     import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
-                     import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
-                     {
-                         // notify all customers.
-                         PersonalInfoImpl condition = new PersonalInfoImpl();
-                         condition.setId($gOrder.getPublishedCustomerId());
-                         List result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, 1);
-                         IPersonalInfo publisher = (IPersonalInfo)result.get(0);
-                         
-                         String subject = org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil.getCustomerEnterpriseBasicInfo(publisher);
-                         String description = $gOrder.getDescription();
-                         NotificationImpl message = new NotificationImpl();
-                         message.setPartyId($gOrder.getPublishedCustomerId());
-					     message.setSubject(subject + "发布新的租赁订单！");
-				         message.setDescription(description);
-					     message.setCreateDate(new Date());
-                         
-                         ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
-                         service.addNotification(message, true);
-                         
-                         Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
-                     }
                      ]]></expressionString>
                 </ns2:expression>
             </ns2:process>
@@ -171,7 +152,7 @@
                 <ns2:dest name="offerPrice"></ns2:dest>
             	<ns2:dest name="cancelGOrder"></ns2:dest>
             </ns2:eventDest>
-        </ns2:node>
+        </ns2:mission-node>
         
         <ns2:mission-node name="offerPrice" expiredDays="0" expiredHours="0" autoTrigger="false" multipleInvoke="true">
             <ns2:description>租赁订单竟价</ns2:description>
@@ -341,7 +322,7 @@
                 </ns2:expression>
             </ns2:uiAction>
             <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.ROOfferPriceTable"
-                actionName="acceptOfferPrice1" actionText="按当最低价格成交">
+                actionName="acceptOfferPrice1" actionText="按最低价格成交">
                 <ns2:expression>
                     <expressionString><![CDATA[
                     import java.util.HashMap;
@@ -424,6 +405,7 @@
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
                     import org.shaolin.vogerp.accounting.ce.PayBusinessType;
                     import org.shaolin.vogerp.accounting.IAccountingService;
+                    import org.shaolin.bmdp.utils.StringUtil;
                     {
                          if ($offerLowestPrice != null && $offerLowestPrice == Boolean.TRUE) {
                             $gorder.setEndPrice(OrderUtil.getLowestOfferPrice($gorder, true));

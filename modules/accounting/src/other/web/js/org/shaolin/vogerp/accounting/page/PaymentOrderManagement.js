@@ -12,18 +12,7 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "PayVoucherInfoPanel",prefix + "PayVoucherInfoPanel1"]
-    });
-    var receivePayOrderTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "receivePayOrderTable"]
-    });
-
-    var PayVoucherInfoPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "PayVoucherInfoPanel"]
-        ,items: []
-        ,subComponents: [prefix + "receivePayOrderTable"]
+        ,subComponents: [prefix + "PayVoucherInfoPanel1",prefix + "PayVoucherInfoPanel"]
     });
     var payOrderTable = new UIMaster.ui.objectlist
     ({
@@ -35,6 +24,17 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
         ui: elementList[prefix + "PayVoucherInfoPanel1"]
         ,items: []
         ,subComponents: [prefix + "payOrderTable"]
+    });
+    var receivePayOrderTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "receivePayOrderTable"]
+    });
+
+    var PayVoucherInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "PayVoucherInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "receivePayOrderTable"]
     });
 
     var actionPanel = new UIMaster.ui.panel
@@ -55,13 +55,13 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
 
     Form.functionsTab=functionsTab;
 
-    Form.PayVoucherInfoPanel=PayVoucherInfoPanel;
-
-    Form.receivePayOrderTable=receivePayOrderTable;
-
     Form.PayVoucherInfoPanel1=PayVoucherInfoPanel1;
 
     Form.payOrderTable=payOrderTable;
+
+    Form.PayVoucherInfoPanel=PayVoucherInfoPanel;
+
+    Form.receivePayOrderTable=receivePayOrderTable;
 
     Form.actionPanel=actionPanel;
 
@@ -127,7 +127,7 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
         var UIEntity = this;
 
 		        {   
-		        	eventsource = this.receivePayOrderTable;
+		        	eventsource = this.payOrderTable;
 		        }
 		        
         // cal ajax function. 
@@ -147,7 +147,7 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
         var UIEntity = this;
 
 		        {   
-		        	eventsource = this.receivePayOrderTable;
+		        	eventsource = this.payOrderTable;
 		        }
 		        
         // cal ajax function. 
@@ -167,7 +167,7 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
         var UIEntity = this;
 
 		        {   
-		        	eventsource = this.receivePayOrderTable;
+		        	eventsource = this.payOrderTable;
 		        }
 		        
         // cal ajax function. 
@@ -187,7 +187,7 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
         var UIEntity = this;
 
 		        {   
-		        	eventsource = this.receivePayOrderTable;
+		        	eventsource = this.payOrderTable;
 		        }
 		        
         // cal ajax function. 

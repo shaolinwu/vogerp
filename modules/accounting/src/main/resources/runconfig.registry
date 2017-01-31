@@ -70,6 +70,7 @@
                     <item name="limit" value="" />
                     <item name="app_sign" value="" />
                     <item name="timestamp" value="" />
+                    <item name="title" value="" />
                 </node>
                 <node name="refund">
                     <item name="app_id" value="${app_id}" />
@@ -82,6 +83,7 @@
                     <item name="optional" value="" />
                     <item name="app_sign" value="" />
                     <item name="timestamp" value="" />
+                    <item name="title" value="" />
                 </node>
                 <node name="queryRefund">
                     <item name="app_id" value="${app_id}" />
@@ -95,6 +97,7 @@
                     <item name="limit" value="" />
                     <item name="app_sign" value="" />
                     <item name="timestamp" value="" />
+                    <item name="title" value="" />
                 </node>
                 <node name="queryRefundStatus">
                     <item name="app_id" value="${app_id}" />
@@ -104,6 +107,7 @@
                     <item name="refund_no" value="" />
                     <item name="app_sign" value="" />
                     <item name="timestamp" value="" />
+                    <item name="title" value="" />
                 </node>
 	        </node> 
         </node> 
