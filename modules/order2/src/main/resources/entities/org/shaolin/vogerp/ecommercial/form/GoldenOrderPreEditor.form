@@ -52,7 +52,7 @@
             order.setPublishedCustomer((PersonalInfoImpl)service.getPersonalInfo(service.getUserId()));
             order.setCreateDate(new java.util.Date());
             order.setCount(1);
-            
+            order.setCity(UserContext.getUserContext().getCity());
             order.setProductId(price.getProduct().getId());
             order.setDescription(price.getProduct().getName() + "\n" + ProductUtil.getPricePackage(price));
             

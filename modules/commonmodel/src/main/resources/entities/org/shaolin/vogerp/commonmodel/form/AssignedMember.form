@@ -50,7 +50,7 @@
             //@page.executeJavaScript("BC.click(" + json + ")");
             @page.getRequest().getSession().setAttribute("__payJson", json);
 		    @page.executeJavaScript("window.open('/uimaster/jsp/paywindow.jsp')");
-            Dialog.showMessageDialog("请点击“刷新”按钮查看支付是否成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
+            Dialog.showMessageDialog("请您-刷新页面-查看支付是否成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>

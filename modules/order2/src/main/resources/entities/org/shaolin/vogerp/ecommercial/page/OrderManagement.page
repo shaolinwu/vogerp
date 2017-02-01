@@ -309,6 +309,7 @@
                       order.setHtmlDesc("/product/" + resourceId + "/desc.html");
                       order.setPhotos("/product/" + resourceId + "/images");
                       order.setCreateDate(new java.util.Date());
+                      order.setCity(UserContext.getUserContext().getCity());
                       
                       HashMap input = new HashMap();
                       input.put("beObject", order);
@@ -416,6 +417,7 @@
                       order.setModelFile("/morder/" + resourceId);
                       order.setCount(1);
                       order.setCreateDate(new java.util.Date());
+                      order.setCity(UserContext.getUserContext().getCity());
                       
                       HashMap input = new HashMap();
                       input.put("editable", new Boolean(true));
