@@ -107,6 +107,11 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 	public IPayOrder createSelfPayOrder(final PayBusinessType type, long endUserId, String orderSerialNumber, 
 			final double amount) {
 		PayOrderImpl order = new PayOrderImpl();
+		order.setOrderSerialNumber(orderSerialNumber);
+		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order, null, 0, 1);
+		if (result != null && result.size() > 0) {
+			return result.get(0);
+		}
 		order.setPayBusinessType(type);
 		order.setOrgId(UserContext.getUserContext().getOrgId());
 		order.setUserId(UserContext.getUserContext().getUserId());
@@ -123,6 +128,11 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 	public IPayOrder createPayOrder(final PayBusinessType type, final long orgId, final long userId, 
 			final long endUserId, final String orderSerialNumber, final double amount) {
 		PayOrderImpl order = new PayOrderImpl();
+		order.setOrderSerialNumber(orderSerialNumber);
+		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order, null, 0, 1);
+		if (result != null && result.size() > 0) {
+			return result.get(0);
+		}
 		order.setPayBusinessType(type);
 		order.setOrgId(orgId);
 		order.setUserId(userId);
@@ -139,6 +149,12 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 	public IPayOrder createPayAdminOrder(final PayBusinessType type, final long endUserId, 
 			final String orderSerialNumber, final double amount) {
 		PayOrderImpl order = new PayOrderImpl();
+		order.setOrderSerialNumber(orderSerialNumber);
+		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order, null, 0, 1);
+		if (result != null && result.size() > 0) {
+			return result.get(0);
+		}
+		
 		order.setPayBusinessType(type);
 		order.setOrgId(1); // fixed id here.
 		order.setUserId(1);

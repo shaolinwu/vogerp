@@ -42,8 +42,8 @@
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                     import org.shaolin.uimaster.page.ajax.json.JSONObject;
                     {
-                        int momey = $jsonObj.getInt("transaction_fee");
-		    			if (Double.valueOf($payOrder.getAmount() * 100).intValue() != momey) {
+                        int momey = $jsonObj.getInt("transaction_fee");//this is yuan unit.
+		    			if (Double.valueOf($payOrder.getAmount()).intValue() != momey) {
 		    				$translog.setIsCorrect(false);
 		    				AccountingModel.INSTANCE.update($translog, true);
 		    				BCWebHookHandler.getLogger().warn("Payment order("+$payOrder.getSerialNumber()+") amount does not the same! PayOrder amount: " + $payOrder.getAmount() + ", Callback amount: " + momey);
@@ -71,6 +71,7 @@
                 </ns2:expression>
             </ns2:process>
             <ns2:eventDest>
+                <ns2:dest name="PrepayCallBack"></ns2:dest>
                 <ns2:dest name="TransferCallBack"></ns2:dest>
             	<ns2:dest name="RefundCallBack"></ns2:dest>
             </ns2:eventDest>
@@ -575,6 +576,7 @@
                     {
                         $beObject.setStatus(PayOrderStatusType.REFUND);
                         AccountingModel.INSTANCE.update($beObject);
+                        //TODO:由人工完成退款.
                         
                         ICoordinatorService coorService = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
 			    		NotificationImpl message = new NotificationImpl();

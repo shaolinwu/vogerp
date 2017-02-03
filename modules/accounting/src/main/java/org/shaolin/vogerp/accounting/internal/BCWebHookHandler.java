@@ -8,10 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.shaolin.bmdp.runtime.AppContext;
+import org.shaolin.bmdp.runtime.ce.CEUtil;
+import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.EventProcessor;
 import org.shaolin.bmdp.runtime.spi.FlowEvent;
 import org.shaolin.bmdp.workflow.be.NotificationImpl;
 import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+import org.shaolin.bmdp.workflow.internal.BuiltInAttributeConstant;
 import org.shaolin.uimaster.page.ajax.handlers.IAjaxCommand;
 import org.shaolin.uimaster.page.ajax.json.JSONException;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
@@ -30,6 +33,7 @@ import org.slf4j.LoggerFactory;
  * Check from this example.
  * https://github.com/beecloud/beecloud-java/blob/master/demo/WebRoot/webhook_receiver_example/webhook_receiver.jsp
  * 
+ * We are able to debug this callback handler through Admin console by enabling 'enableDebugger'.
  * @author wushaol
  *
  */
@@ -38,6 +42,8 @@ public class BCWebHookHandler implements IAjaxCommand {
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 	private static final Logger logger = LoggerFactory.getLogger(BCWebHookHandler.class);
+	
+	public static boolean enableDebugger = false;
 	
 	public static Logger getLogger() {
 		return logger;
@@ -55,7 +61,7 @@ public class BCWebHookHandler implements IAjaxCommand {
 	 *                          'BD_WEB’ or 'BD_WAP’ or 'BC_TRANSFER’ or 'ALI_TRANSFER’
 	 * transaction_type	String	 'PAY’ or 'REFUND’ or 'TRANSFER'
 	 * transaction_id	String	 '201506101035040000001’
-	 * transaction_fee	Integer	  unit is fen
+	 * transaction_fee	Integer	  1 means 0.01 yuan
 	 * trade_success	Bool	  true
 	 * message_detail	Map(JSON) {orderId:xxxx}
 	 * optional	        Map(JSON) {"agent_id": "Alice"}
@@ -91,7 +97,8 @@ public class BCWebHookHandler implements IAjaxCommand {
 	        }
 		    String sign = jsonObj.getString("sign");
 		    String timestamp = jsonObj.getString("timestamp");
-		    if (PaymentUtil.verifySign(sign, timestamp)) { 
+		    translog.setIsCorrect(PaymentUtil.verifySign(sign, timestamp));
+		    if (translog.getIsCorrect() || BCWebHookHandler.enableDebugger) { //for secure check.
 		    	AccountingModel.INSTANCE.create(translog, true);
 		    	String transactionId = jsonObj.getString("transaction_id");
 		    	TransactionType transType = TransactionType.valueOf(jsonObj.getString("transaction_type").toUpperCase()); 
@@ -104,40 +111,44 @@ public class BCWebHookHandler implements IAjaxCommand {
 		    	List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(payOrder, null, 0, 1);
 		    	if (result != null && result.size() > 0) {
 		    		payOrder = (PayOrderImpl)result.get(0);
-		    		
+		    		if (UserContext.getUserRoles() == null) {
+		    			//add payment callback role.
+		    			UserContext.addUserRule(CEUtil.toCEValue("Admin,10"));
+		    		}
 		    		//got adding this logic into workflow mission for tracing.
 		    		if (transType == TransactionType.PAY) {
 		    			if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
 		    				// already notified.
 		    				return SUCCESS;
 		    			}
-		    			FlowEvent e = new FlowEvent("PrepayCallBack");
+		    			FlowEvent e = new FlowEvent("PayFlowConsumer");
 		    			e.setAttribute("payOrder", payOrder);
 		    			e.setAttribute("translog", translog);
 		    			e.setAttribute("jsonObj", jsonObj);
+		    			e.setAttribute(BuiltInAttributeConstant.KEY_AdhocNodeName, "PrepayCallBack");
 		    			EventProcessor processor = (EventProcessor)AppContext.get().getService(
 		    					Class.forName("org.shaolin.bmdp.workflow.internal.WorkFlowEventProcessor"));
 		    			processor.process(e);
 		    			
 		    		} else if(transType == TransactionType.TRANSFER) {
 		    			//TODO:
-		    			FlowEvent e = new FlowEvent("TransferCallBack");
+		    			FlowEvent e = new FlowEvent("TransferFlowConsumer");
 		    			e.setAttribute("payOrder", payOrder);
 		    			e.setAttribute("translog", translog);
 		    			e.setAttribute("jsonObj", jsonObj);
+		    			e.setAttribute(BuiltInAttributeConstant.KEY_AdhocNodeName, "TransferCallBack");
 		    			
 		    			EventProcessor processor = (EventProcessor)AppContext.get().getService(
 		    					Class.forName("org.shaolin.bmdp.workflow.internal.WorkFlowEventProcessor"));
 		    			processor.process(e);
 		    			
-		    			
-		    			
 		    		} else if(transType == TransactionType.REFUND) {
 		    			//TODO:
-		    			FlowEvent e = new FlowEvent("RefundCallBack");
+		    			FlowEvent e = new FlowEvent("RefundFlowConsumer");
 		    			e.setAttribute("payOrder", payOrder);
 		    			e.setAttribute("translog", translog);
 		    			e.setAttribute("jsonObj", jsonObj);
+		    			e.setAttribute(BuiltInAttributeConstant.KEY_AdhocNodeName, "RefundCallBack");
 		    			
 		    			EventProcessor processor = (EventProcessor)AppContext.get().getService(
 		    					Class.forName("org.shaolin.bmdp.workflow.internal.WorkFlowEventProcessor"));
