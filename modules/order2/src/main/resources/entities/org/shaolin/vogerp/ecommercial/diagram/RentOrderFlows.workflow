@@ -280,7 +280,7 @@
         <ns2:mission-node name="acceptPrice" expiredDays="0" expiredHours="0" autoTrigger="false">
             <ns2:description>接受当前价格</ns2:description>
             <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.ROOfferPriceTable"
-                actionName="acceptOfferPrice" actionText="按当前价格成交">
+                actionName="acceptOfferPrice" actionText="成交选中价格">
                 <ns2:expression>
                     <expressionString><![CDATA[
                     import java.util.HashMap;
@@ -321,6 +321,7 @@
                     ]]></expressionString>
                 </ns2:expression>
             </ns2:uiAction>
+            <!-- 
             <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.ROOfferPriceTable"
                 actionName="acceptOfferPrice1" actionText="按最低价格成交">
                 <ns2:expression>
@@ -364,6 +365,7 @@
                     ]]></expressionString>
                 </ns2:expression>
             </ns2:uiAction>
+             -->
             <ns2:participant partyType="GenericOrganizationType.Director,0" />
             <ns2:process>
                 <ns2:var name="gorder" category="BusinessEntity" scope="InOut">
@@ -426,24 +428,26 @@
                          if ($gorder.getType() == RentOrLoanOrderType.RENT) {
 	                         IPayOrder payOrder = accountingService.createSelfPayOrder(PayBusinessType.EQUIPMENTRENTBUSI, 
 	                         						$gorder.getTakenCustomerId(), $gorder.getSerialNumber(), $gorder.getEndPrice());
-                             payOrder.setDescription("[" + $selectedPrice.getTakenCustomer().getOrganization().getDescription() + "]" 
-                                                     + $gorder.getDescription());
-                             @flowContext.save(payOrder);
-                             
+                             if (payOrder.getDescription() == null) {
+	                             payOrder.setDescription("[" + $selectedPrice.getTakenCustomer().getOrganization().getDescription() + "]" 
+	                                                     + $gorder.getDescription());
+	                             @flowContext.save(payOrder);
+                             }
                              String json = accountingService.prepay(payOrder);
 			                 $page.getRequest().getSession().setAttribute("__payJson", json);
 			                 $page.executeJavaScript("window.open('/uimaster/jsp/paywindow.jsp')");
-			                 Dialog.showMessageDialog("请点击“刷新”按钮查看支付是否成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
+			                 Dialog.showMessageDialog("请点击“刷新”按钮查看支付是否成功（本功能要求浏览器允许“弹出窗口”）。", "Information", Dialog.INFORMATION_MESSAGE, null);
                          } else {
                              long orgId = orgService.getOrgIdByPartyId($selectedPrice.getTakenCustomerId());
 	                         IPayOrder payOrder = accountingService.createPayOrder(PayBusinessType.EQUIPMENTLOANBUSI, 
 	                         				orgId, $gorder.getTakenCustomerId(), UserContext.getUserContext().getUserId(), 
 	                         				$gorder.getSerialNumber(), $gorder.getEndPrice());
-	                         payOrder.setOrgId(orgService.getOrgIdByPartyId($gorder.getTakenCustomerId()));
-                             payOrder.setDescription("[" + $selectedPrice.getTakenCustomer().getOrganization().getDescription() + "]" 
-                                                     + $gorder.getDescription());
-                             @flowContext.save(payOrder);
-                             
+	                         if (payOrder.getDescription() == null) {
+		                         payOrder.setOrgId(orgService.getOrgIdByPartyId($gorder.getTakenCustomerId()));
+	                             payOrder.setDescription("[" + $selectedPrice.getTakenCustomer().getOrganization().getDescription() + "]" 
+	                                                     + $gorder.getDescription());
+	                             @flowContext.save(payOrder);
+                             }
 	                         String description = $gorder.getDescription();
 	                         NotificationImpl message = new NotificationImpl();
 	                         message.setPartyId($gorder.getTakenCustomerId());
@@ -453,9 +457,9 @@
 	                         
 	                         ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
 	                         service.addNotification(message, true);
+	                         Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
                          }
                          
-                         Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
                     }
                      ]]></expressionString>
                 </ns2:expression>

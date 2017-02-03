@@ -72,6 +72,9 @@ public class ResourceManagerImpl implements IResourceManager {
 	}
 	
 	public Object getResource(long orgId, long partyId) {
+		if (orgId <= 0) {
+			return null;
+		}
 		List<IPersonalInfo> allResources = this.orgService.getEmployeese(orgId);
 		for (IPersonalInfo employee : allResources) {
 			if (employee.getId() == partyId) {

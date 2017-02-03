@@ -244,6 +244,7 @@
                         
                         HashMap result = new HashMap();
                         result.put("gorder", out.get("beObject"));
+                        result.put("page", @page);
                         
                         form.closeIfinWindows();
                         @page.removeForm(@page.getEntityUiid()); 
@@ -264,6 +265,9 @@
             <ns2:process>
                 <ns2:var name="gorder" category="BusinessEntity" scope="InOut">
                     <type entityName="org.shaolin.vogerp.ecommercial.be.MachiningOrder"></type>
+                </ns2:var>
+                <ns2:var name="page" category="JavaClass" scope="InOut">
+                    <type entityName="org.shaolin.uimaster.page.AjaxContext"></type>
                 </ns2:var>
                 <ns2:expression>
                     <expressionString><![CDATA[
@@ -297,9 +301,15 @@
                          IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class); 
                          IPayOrder payOrder = accountingService.createSelfPayOrder(PayBusinessType.MACHININGBUSI, 
                          						$gorder.getPublishedCustomerId(), $gorder.getSerialNumber(), $gorder.getEndPrice());
-                         payOrder.setDescription("[" + $gorder.getPublishedCustomer().getOrganization().getDescription() + "]" 
-                                                    + $gorder.getDescription());
-                         @flowContext.save(payOrder);
+                         if (payOrder.getDescription() == null) {
+	                         payOrder.setDescription("[" + $gorder.getPublishedCustomer().getOrganization().getDescription() + "]" 
+	                                                    + $gorder.getDescription());
+	                         @flowContext.save(payOrder);
+                         }
+                         String json = accountingService.prepay(payOrder);
+		                 $page.getRequest().getSession().setAttribute("__payJson", json);
+		                 $page.executeJavaScript("window.open('/uimaster/jsp/paywindow.jsp')");
+		                 Dialog.showMessageDialog("请点击“刷新”按钮查看支付是否成功（本功能要求浏览器允许“弹出窗口”）。", "Information", Dialog.INFORMATION_MESSAGE, null);
                          
                          String description = $gorder.getDescription();
                          NotificationImpl message = new NotificationImpl();

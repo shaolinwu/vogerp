@@ -103,10 +103,12 @@
 			            }
 			            double price = memberService.getServicePrice(member, AMemberFunctionType.A);
 			            IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
-			            IPayOrder payOrder = accountingService.createPayAdminOrder(PayBusinessType.MEMBERBUSI, UserContext.getUserContext().getUserId(), null, price);
+			            IPayOrder payOrder = accountingService.createPayAdminOrder(PayBusinessType.MEMBERBUSI, UserContext.getUserContext().getUserId(), "AM-"+defaultUser.getId(), price);
                         String json = accountingService.prepay(payOrder);
-                        Dialog.showMessageDialog("提交审核中, 请您支付("+price+")元会员费用，谢谢！", "", Dialog.INFORMATION_MESSAGE, null);
-		                @page.executeJavaScript("BC.click(" + json + ")");
+	                    @page.getRequest().getSession().setAttribute("__payJson", json);
+	                    
+                        Dialog.showMessageDialog("提交审核中, 请您支付("+price+")元会员费用，谢谢（本功能要求浏览器允许“弹出窗口”）！", "", Dialog.INFORMATION_MESSAGE, null);
+	                    @page.executeJavaScript("window.open('/uimaster/jsp/paywindow.jsp')");
                         
                         HashMap result = new HashMap();
                         result.put("orgLegalinfo", out.get("beObject"));

@@ -19,11 +19,21 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
         ui: elementList[prefix + "reloadBtn"]
     });
 
+    var jsversionText = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "jsversionText"]
+    });
+
+    var reloadJSVersionBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "reloadJSVersionBtn"]
+    });
+
     var reloadPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "reloadPanel"]
         ,items: []
-        ,subComponents: [prefix + "reloadPathText",prefix + "reloadBtn"]
+        ,subComponents: [prefix + "reloadPathText",prefix + "reloadBtn",prefix + "jsversionText",prefix + "reloadJSVersionBtn"]
     });
     var ceentityPanel = new org_shaolin_vogerp_commonmodel_form_CEExtensionManager({"prefix":prefix + "ceentityPanel."});
 
@@ -40,6 +50,16 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
         ui: elementList[prefix + "scriptCodeUI"]
     });
 
+    var veriCodeQuestion = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "veriCodeQuestion"]
+    });
+
+    var veriCode = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "veriCode"]
+    });
+
     var testBtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "testBtn"]
@@ -49,7 +69,7 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
     ({
         ui: elementList[prefix + "InterfacePanel"]
         ,items: []
-        ,subComponents: [prefix + "scriptCodeUI",prefix + "testBtn"]
+        ,subComponents: [prefix + "scriptCodeUI",prefix + "veriCodeQuestion",prefix + "veriCode",prefix + "testBtn"]
     });
 
     var Form = new UIMaster.ui.panel
@@ -67,6 +87,10 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
 
     Form.reloadBtn=reloadBtn;
 
+    Form.jsversionText=jsversionText;
+
+    Form.reloadJSVersionBtn=reloadJSVersionBtn;
+
     Form.ceentityPanel=ceentityPanel;
 
     Form.dynamicUIPanel=dynamicUIPanel;
@@ -81,6 +105,10 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
 
     Form.scriptCodeUI=scriptCodeUI;
 
+    Form.veriCodeQuestion=veriCodeQuestion;
+
+    Form.veriCode=veriCode;
+
     Form.testBtn=testBtn;
 
     Form.user_constructor = function()
@@ -91,7 +119,11 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
 
     Form.ReloadFunction = org_shaolin_vogerp_commonmodel_page_EntityManager_ReloadFunction;
 
+    Form.ReloadJSVersionFunction = org_shaolin_vogerp_commonmodel_page_EntityManager_ReloadJSVersionFunction;
+
     Form.testScript = org_shaolin_vogerp_commonmodel_page_EntityManager_testScript;
+
+    Form.genVerifiCode = org_shaolin_vogerp_commonmodel_page_EntityManager_genVerifiCode;
 
     Form.initPageJs = org_shaolin_vogerp_commonmodel_page_EntityManager_initPageJs;
 
@@ -121,6 +153,17 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
 
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_page_EntityManager_ReloadJSVersionFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_EntityManager_ReloadJSVersionFunction */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"ReloadJSVersionFunction-20170201-2113",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_EntityManager_ReloadJSVersionFunction */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_page_EntityManager_testScript(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_EntityManager_testScript */
         var o = this;
         var UIEntity = this;
@@ -129,6 +172,17 @@ function org_shaolin_vogerp_commonmodel_page_EntityManager(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"testScript-20161011-1513",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_EntityManager_testScript */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_page_EntityManager_genVerifiCode(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_EntityManager_genVerifiCode */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"genVerifiCode-20161027-1839",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_EntityManager_genVerifiCode */
 
 
     function org_shaolin_vogerp_commonmodel_page_EntityManager_initPageJs(){/* Gen_First:org_shaolin_vogerp_commonmodel_page_EntityManager_initPageJs */

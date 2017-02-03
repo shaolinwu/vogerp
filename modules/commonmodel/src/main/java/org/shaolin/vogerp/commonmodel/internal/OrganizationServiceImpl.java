@@ -1,6 +1,7 @@
 package org.shaolin.vogerp.commonmodel.internal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -76,6 +77,10 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 
 	@Override
 	public long getOrgIdByPartyId(long partyId) {
+		if (partyId <= 0) {
+			throw new IllegalArgumentException("User id isn't correct: " + partyId);
+		}
+		
 		PersonalInfoImpl condition = new PersonalInfoImpl();
 		condition.setId(partyId);
 		List<IPersonalInfo> result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, 1);
@@ -87,6 +92,10 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 	
 	@Override
 	public IOrganization getOrganizationByPartyId(long partyId) {
+		if (partyId <= 0) {
+			throw new IllegalArgumentException("User id isn't correct: " + partyId);
+		}
+		
 		PersonalInfoImpl condition = new PersonalInfoImpl();
 		condition.setId(partyId);
 		List<IPersonalInfo> result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, 1);
@@ -124,6 +133,10 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 
 	@Override
 	public ILegalOrganizationInfo getLegalInfo(long orgId) {
+		if (orgId <= 0) {
+			return null;
+		}
+		
 		LegalOrganizationInfoImpl scFlow = new LegalOrganizationInfoImpl();
 		scFlow.setOrgId(orgId);
 		List<ILegalOrganizationInfo> list = CommonModel.INSTANCE.searchOrgaLegalInfo(scFlow, null, 0, -1);
@@ -135,6 +148,10 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 
 	@Override
 	public List<IOrganization> getSubOrganization(long orgId) {
+		if (orgId <= 0) {
+			return Collections.emptyList();
+		}
+		
 		OrganizationImpl scFlow = new OrganizationImpl();
 		scFlow.setParentId(orgId);
 		return CommonModel.INSTANCE.searchSubOrganizationInfo(scFlow, null, 0, -1);
@@ -143,6 +160,10 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<IPersonalInfo> getEmployeese(long orgId) {
+		if (orgId <= 0) {
+			return Collections.emptyList();
+		}
+		
 		PersonalInfoImpl condition = new PersonalInfoImpl();
 		condition.setOrgId(orgId);
 		List<IPersonalInfo> result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, -1);

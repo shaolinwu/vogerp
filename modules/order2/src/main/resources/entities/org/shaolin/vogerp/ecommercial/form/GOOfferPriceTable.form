@@ -43,6 +43,7 @@
         import java.util.HashMap;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.uimaster.page.ajax.json.JSONObject;
         import org.shaolin.vogerp.ecommercial.be.*;
         import org.shaolin.vogerp.commonmodel.IUserService;
         import org.shaolin.bmdp.runtime.ce.CEUtil;
@@ -80,10 +81,15 @@
                input.put("isEditable", Boolean.FALSE);
             }
             
-            RefForm chatForm = new RefForm("chatWindow", "org.shaolin.bmdp.workflow.form.ChatWindow", input);
-            @page.addElement(chatForm);
-            
-            chatForm.openInWindows("回复", null, true);
+            if (UserContext.isMobileRequest() && UserContext.isAppClient()) {
+                //invokes App native javascript api.
+                @page.executeJavaScript("openAppChatWindow("+ (new JSONObject(input)).toString() +");");
+            } else {
+	            RefForm chatForm = new RefForm("chatWindow", "org.shaolin.bmdp.workflow.form.ChatWindow", input);
+	            @page.addElement(chatForm);
+	            
+	            chatForm.openInWindows("回复", null, true);
+            }
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -139,9 +145,8 @@
           </ns2:expression>
         </ns2:totalCount>
         <ns2:column>
-          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
-            <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
-            <ns2:key>org.shaolin.vogerp.ecommercial.be.GOOfferPrice.takenCustomer</ns2:key>
+          <ns2:title xsi:type="ns2:StringPropertyType">
+            <ns2:value>出价客户</ns2:value>
           </ns2:title>
           <ns2:beFieldId>rowBE.takenCustomer</ns2:beFieldId>
           <ns2:uiType>
@@ -156,7 +161,11 @@
                  import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                  import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                  {
-                     return CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getTakenCustomer());
+                     String message = CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getTakenCustomer());
+                     if ($beObject.getTakenCustomerId() == $rowBE.getTakenCustomerId()) {
+                         message = message + "(已拍下)";
+                     }
+                     return message;
                  }]]></ns2:expressionString>
              </ns2:expression>
          </ns2:rowExpression>
