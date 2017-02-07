@@ -7,7 +7,8 @@
 	<description>欢迎登录抢单达人网</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="Submit"></ns2:eventHandler>
-		<ns2:eventHandler functionName="logout">
+		<ns2:eventHandler functionName="Logout">
+		    <!-- 
 			<ns2:ops xsi:type="ns2:OpCallAjaxType" name="logout-945221342">
 		      <ns2:exp>
 		        <expressionString><![CDATA[
@@ -23,6 +24,7 @@
 		        ]]></expressionString>
 		      </ns2:exp>
 		    </ns2:ops>
+		     -->
 		</ns2:eventHandler>
 		<ns2:eventHandler functionName="clickFunctionNode">
 			<ns2:ops xsi:type="ns2:OpExecuteScriptType">
@@ -432,7 +434,7 @@
                             <ns2:value>退出</ns2:value>
                         </ns2:text>
                         <ns2:EventListener xsi:type="ns2:ClickListenerType">
-                            <ns2:handler functionName="logout" />
+                            <ns2:handler functionName="Logout" />
                         </ns2:EventListener>
                     </ns2:component>
                     <ns2:layoutConstraint>
@@ -600,4 +602,18 @@
 			}]]></ns2:expressionString>
 		</ns2:clientAction>
 	</ns2:in>
+	<ns2:out name="Logout" functionName="Logout" validate="false">
+        <ns2:clientAction xsi:type="ns2:ExpressionType">
+            <ns2:expressionString><![CDATA[{
+            // hello, my first js.
+            }]]></ns2:expressionString>
+        </ns2:clientAction>
+        <ns2:serverOperation xsi:type="ns2:ExpressionType">
+           <ns2:expressionString><![CDATA[
+		    import org.shaolin.bmdp.runtime.security.UserContext;
+			{
+			  @odContext.executeMapping("simpleMapping3");
+			}]]></ns2:expressionString>
+        </ns2:serverOperation>
+    </ns2:out>
 </ns2:UIPage>

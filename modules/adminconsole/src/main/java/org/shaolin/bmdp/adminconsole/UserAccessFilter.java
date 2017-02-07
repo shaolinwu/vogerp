@@ -22,6 +22,8 @@ import org.shaolin.uimaster.page.flow.WebFlowServlet.AttributesAccessor;
 import org.shaolin.uimaster.page.flow.WebflowConstants;
 import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.IUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * --webflow.do filter
@@ -31,6 +33,8 @@ import org.shaolin.vogerp.commonmodel.IUserService;
  */
 public class UserAccessFilter implements Filter {
 
+	private static final Logger logger = LoggerFactory.getLogger(UserAccessFilter.class);
+	
 	private static final String loginName = "org.shaolin.bmdp.adminconsole.diagram.LoginAuthentication";
 	
 	private static final String mainPageName = "org.shaolin.bmdp.adminconsole.diagram.WelcomeMainPage";
@@ -57,31 +61,34 @@ public class UserAccessFilter implements Filter {
 			appContext = (IAppServiceManager) filterConfig.getServletContext().getAttribute(
 					IAppServiceManager.class.getCanonicalName());
 		}
-		AttributesAccessor attrAccessor = new AttributesAccessor((HttpServletRequest)request);
+		// AttributesAccessor attrAccessor = new AttributesAccessor((HttpServletRequest)request);
 		IUserService userService = appContext.getService(IUserService.class);
+		boolean userOnline = userService.checkUserOnline(((HttpServletRequest)request).getSession());
 		String queryString = ((HttpServletRequest)request).getQueryString();
-		if (queryString != null) {
-			if (userService.checkUserOnline(((HttpServletRequest)request).getSession())
-					|| checkAccessPermission(attrAccessor, ((HttpServletRequest)request))) {
+		if (queryString != null && queryString.trim().length() > 0) {
+			if (userOnline) {
 				 if(queryString.indexOf(loginName) != -1) {
 					 ((HttpServletResponse)response).sendRedirect(request.getServletContext().getContextPath() + mainPageURL);
 					 return;
 				 }
-			} else {
-				if(queryString.indexOf(loginName) == -1) {
-					((HttpServletResponse)response).sendRedirect(request.getServletContext().getContextPath() + loginURL);
-					return;
-				}
 			}
-			chain.doFilter(request, response);
 		} else {
-			if (userService.checkUserOnline(((HttpServletRequest)request).getSession())
-					|| checkAccessPermission(attrAccessor, ((HttpServletRequest)request))) {
+			if (userOnline) {
 				((HttpServletResponse)response).sendRedirect(request.getServletContext().getContextPath() + mainPageURL);
 				return;
 			} 
-			chain.doFilter(request, response);
 		}
+		
+		if (queryString.endsWith("/*.do")) {
+			if (userOnline) {
+				((HttpServletResponse)response).sendRedirect(request.getServletContext().getContextPath() + mainPageURL);
+				 return;
+			} else {
+				((HttpServletResponse)response).sendRedirect(request.getServletContext().getContextPath() + loginURL);
+				return;
+			}
+		}
+		chain.doFilter(request, response);
 	}
 
 	private boolean checkAccessPermission(AttributesAccessor attrAccessor, HttpServletRequest request) 

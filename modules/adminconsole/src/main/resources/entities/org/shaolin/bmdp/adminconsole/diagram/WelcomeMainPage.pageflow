@@ -4,5 +4,32 @@
   <systemVersion>0</systemVersion>
   <ns2:webNode xsi:type="ns2:PageNodeType" name="Main">
     <ns2:sourceEntity entityName="org.shaolin.bmdp.adminconsole.page.Main"></ns2:sourceEntity>
+    <ns2:out xsi:type="ns2:DisplayOutType" name="Logout">
+      <ns2:next>
+        <ns2:destNode>LogoutHandler</ns2:destNode>
+      </ns2:next>
+    </ns2:out>
+  </ns2:webNode>
+  <ns2:webNode xsi:type="ns2:LogicNodeType" name="LogoutHandler">
+    <ns2:operation>
+      <expressionString><![CDATA[
+      import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.vogerp.commonmodel.IUserService;
+      import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
+      {
+        IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+        userService.logout($getRequest().getSession());
+      }]]></expressionString>
+    </ns2:operation>
+    <ns2:out xsi:type="ns2:ConditionalOutType" name="Fail">
+      <ns2:conditionExpression>
+        <expressionString><![CDATA[{return true;}]]></expressionString>
+      </ns2:conditionExpression>
+      <ns2:next>
+        <ns2:destNode>LoginPage</ns2:destNode>
+      </ns2:next>
+    </ns2:out>
+  </ns2:webNode>  
+  <ns2:webNode xsi:type="ns2:DisplayNodeType" name="LoginPage" path="/jsp/index.jsp">
   </ns2:webNode>
 </ns2:WebChunk>

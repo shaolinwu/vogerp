@@ -291,7 +291,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
     Form.Submit = org_shaolin_bmdp_adminconsole_page_Main_Submit;
 
-    Form.logout = org_shaolin_bmdp_adminconsole_page_Main_logout;
+    Form.Logout = org_shaolin_bmdp_adminconsole_page_Main_Logout;
 
     Form.clickTreeNode = org_shaolin_bmdp_adminconsole_page_Main_clickTreeNode;
 
@@ -308,6 +308,8 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     Form.initPageJs = org_shaolin_bmdp_adminconsole_page_Main_initPageJs;
 
     Form.finalizePageJs = org_shaolin_bmdp_adminconsole_page_Main_finalizePageJs;
+
+    Form.Logout_OutFunctionName = org_shaolin_bmdp_adminconsole_page_Main_Logout_OutFunctionName;
 
     Form.__AJAXSubmit = false;
     
@@ -329,14 +331,12 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_bmdp_adminconsole_page_Main_logout(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_logout */
+    function org_shaolin_bmdp_adminconsole_page_Main_Logout(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_Logout */
         var o = this;
         var UIEntity = this;
 
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"logout-945221342",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_logout */
+        o.Logout_OutFunctionName(eventsource);
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_Logout */
 
 
     /* auto generated eventlistener function declaration */
@@ -465,5 +465,33 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_finalizePageJs */
 
+
+    function org_shaolin_bmdp_adminconsole_page_Main_Logout_OutFunctionName(eventsource) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Main_Logout_OutFunctionName */
+        var constraint_result = true;
+        var myForm;
+        if (this.formName != undefined)
+        {
+            myForm = document.forms[this.formName];
+        }
+        else
+        {
+            var p = this.Form.parentNode;
+            while(p.tagName != "FORM")
+                p = p.parentNode;
+            myForm = p;//document.forms[0];
+        }
+
+        var UIEntity = this;
+{
+            // hello, my first js.
+            }        
+        myForm._outname.value = "Logout";
+        myForm.target = "_self";
+             
+        if ( (constraint_result == true || constraint_result == null) && (!ajax_execute_onerror) ) {
+          myForm.submit();
+        }
+        return constraint_result;
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_Logout_OutFunctionName */
 
 
