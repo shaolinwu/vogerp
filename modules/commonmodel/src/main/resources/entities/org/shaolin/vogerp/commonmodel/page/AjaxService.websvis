@@ -53,6 +53,20 @@
      ]]></expressionString>
 		</ns2:exp>
 	</ns2:service>
+	<ns2:service name="checkAppForUpdate">
+		<ns2:exp>
+			<expressionString><![CDATA[
+        import java.util.List;
+        import java.util.ArrayList;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.vogerp.commonmodel.IAppUpdateService;
+        {
+           IAppUpdateService service = (IAppUpdateService)AppContext.get().getService(IAppUpdateService.class);
+           return service.getInfo();
+        }
+     ]]></expressionString>
+		</ns2:exp>
+	</ns2:service>
 	<ns2:service name="mobileBottomFunctionList">
         <ns2:exp>
             <expressionString><![CDATA[

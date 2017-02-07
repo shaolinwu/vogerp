@@ -102,6 +102,9 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 			
 			ExpressServiceImpl expressService = new ExpressServiceImpl();
 			serviceManger.register(expressService);
+			
+			AppUpdateServiceImpl updateService = new AppUpdateServiceImpl();
+			serviceManger.register(updateService);
 		} finally {
 			HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
 		}
