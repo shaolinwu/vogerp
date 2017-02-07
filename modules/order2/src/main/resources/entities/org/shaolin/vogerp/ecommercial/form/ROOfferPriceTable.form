@@ -42,8 +42,13 @@
             
             ChatHistoryImpl defaultUser = new ChatHistoryImpl();
             defaultUser.setTaskId(((IRentOrLoanOrder)form.getInputParameter("beObject")).getTaskId());
-            defaultUser.setSentPartyId(offer.getTakenCustomerId());
-            defaultUser.setReceivedPartyId(UserContext.getUserContext().getUserId());
+            if (UserContext.getUserContext().getUserId() == offer.getTakenCustomerId()) {
+                defaultUser.setSentPartyId(offer.getTakenCustomerId());
+	            defaultUser.setReceivedPartyId(UserContext.getUserContext().getUserId());
+            } else {
+	            defaultUser.setSentPartyId(UserContext.getUserContext().getUserId());
+	            defaultUser.setReceivedPartyId(offer.getTakenCustomerId());
+            }
             defaultUser.setOrgId(UserContext.getUserContext().getOrgId());
             defaultUser.setSessionId(offer.getSessionId());
             if (defaultUser.getSessionId() == null || defaultUser.getSessionId().length() == 0) {
