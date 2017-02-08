@@ -62,12 +62,10 @@
                     import org.shaolin.bmdp.runtime.security.UserContext;
                     import org.shaolin.vogerp.ecommercial.dao.*;
                     import org.shaolin.vogerp.commonmodel.IUserService; 
-                    import org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl;
-			        import org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl;
-			        import org.shaolin.vogerp.commonmodel.be.IAssignedMember;
-			        import org.shaolin.vogerp.commonmodel.ce.AMemberType;
-			        import org.shaolin.vogerp.commonmodel.ce.AMemberFunctionType;
+                    import org.shaolin.vogerp.commonmodel.be.*;
+			        import org.shaolin.vogerp.commonmodel.ce.*;
                     import org.shaolin.vogerp.commonmodel.IMemberService;
+                    import org.shaolin.vogerp.commonmodel.IOrganizationService;
                     import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 			        import org.shaolin.vogerp.accounting.be.IPayOrder;
 			        import org.shaolin.vogerp.accounting.ce.PayBusinessType;
@@ -75,12 +73,22 @@
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
-                        LegalOrganizationInfoImpl defaultUser = (LegalOrganizationInfoImpl)out.get("beObject");
-                        if (defaultUser.getId() == 0) {
-                           @page.executeJavaScript("alert(\"请先保存信息，再点击审核 !\");");
-                           return;
-                        }
                         
+                        IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
+                        OrganizationImpl orgInfo = (OrganizationImpl)orgService.getOrganizationInfo();
+                        LegalOrganizationInfoImpl templLegalInfo = (LegalOrganizationInfoImpl)out.get("beObject");
+                        if (templLegalInfo.getId() == 0) {
+				            OrganizationImpl tempInfo = (OrganizationImpl)out.get("orgInfo");
+				            orgInfo.setName(tempInfo.getName());
+				            orgInfo.setType(tempInfo.getType());
+				            orgInfo.setDescription(tempInfo.getDescription());
+				            CommonModel.INSTANCE.update(orgInfo);
+				            
+				            templLegalInfo.setOrgId(orgInfo.getId());
+				            CommonModel.INSTANCE.create(templLegalInfo, true);
+                        } else {
+				            CommonModel.INSTANCE.update(templLegalInfo, true);
+                        }
                         if (form.isInWindows()) {
 	                        form.closeIfinWindows(true);
 	                        @page.removeForm(@page.getEntityUiid()); 
@@ -88,10 +96,10 @@
                         
                         //make a payment!
 			            IMemberService memberService = (IMemberService)AppContext.get().getService(IMemberService.class);
-			            IAssignedMember member = memberService.getUserMember(defaultUser.getOrgId());
+			            IAssignedMember member = memberService.getUserMember(templLegalInfo.getOrgId());
 			            if (member == null) {
 			            	AssignedMemberImpl assignedMember = new AssignedMemberImpl();
-							assignedMember.setOrgId(defaultUser.getOrgId());
+							assignedMember.setOrgId(templLegalInfo.getOrgId());
 							assignedMember.setType(AMemberType.GENERAL);
 							assignedMember.setDescription("Defualt");
 							Date assingedDate = new Date();
@@ -103,7 +111,7 @@
 			            }
 			            double price = memberService.getServicePrice(member, AMemberFunctionType.A);
 			            IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
-			            IPayOrder payOrder = accountingService.createPayAdminOrder(PayBusinessType.MEMBERBUSI, UserContext.getUserContext().getUserId(), "AM-"+defaultUser.getId(), price);
+			            IPayOrder payOrder = accountingService.createPayAdminOrder(PayBusinessType.MEMBERBUSI, UserContext.getUserContext().getUserId(), "AM-"+templLegalInfo.getId(), price);
                         String json = accountingService.prepay(payOrder);
 	                    @page.getRequest().getSession().setAttribute("__payJson", json);
 	                    
@@ -153,6 +161,7 @@
             <ns2:eventDest>
                 <ns2:dest name="verifyCustomerInfoFailed"></ns2:dest>
             	<ns2:dest name="verifiedCustomerInfo"></ns2:dest>
+            	<ns2:dest name="applyForVerification"></ns2:dest>
             </ns2:eventDest>
         </ns2:mission-node>
         
@@ -259,14 +268,16 @@
                     import org.shaolin.vogerp.ecommercial.dao.*;
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.vogerp.commonmodel.IUserService; 
-                    import org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl;
+                    import org.shaolin.vogerp.commonmodel.be.*;
+                    import org.shaolin.vogerp.commonmodel.dao.CommonModel;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
                         LegalOrganizationInfoImpl defaultUser = (LegalOrganizationInfoImpl)out.get("beObject");
                         if (defaultUser.getId() == 0) {
-                           @page.executeJavaScript("alert(\"请先保存信息 !\");");
-                           return;
+				            OrganizationImpl orgInfo = (OrganizationImpl)out.get("orgInfo");
+				            defaultUser.setOrgId(orgInfo.getId());
+				            CommonModel.INSTANCE.create(defaultUser, true);
                         }
                         
                         if (form.isInWindows()) {

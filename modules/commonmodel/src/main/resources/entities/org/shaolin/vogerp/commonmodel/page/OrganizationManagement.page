@@ -67,16 +67,27 @@
                     import org.shaolin.bmdp.runtime.AppContext;
                     import org.shaolin.vogerp.commonmodel.be.*;
       				import org.shaolin.vogerp.commonmodel.IOrganizationService;
+      				import org.shaolin.bmdp.utils.StringUtil;
                     {
                         Table personalInfoTable = (Table)@page.getElement("organizationInfoTable");
                         if (personalInfoTable.getSelectedRow() == null) {
                             return;
                         }
-                        OrganizationImpl defaultUser = (OrganizationImpl)personalInfoTable.getSelectedRow();
+                        OrganizationImpl orgInfo = (OrganizationImpl)personalInfoTable.getSelectedRow();
                         IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
-		                ILegalOrganizationInfo legalInfo = orgService.getLegalInfo(defaultUser.getId());
+		                ILegalOrganizationInfo legalInfo = orgService.getLegalInfo(orgInfo.getId());
+		                if (legalInfo == null) {
+				           legalInfo = new LegalOrganizationInfoImpl();
+					       legalInfo.setOrgId(orgInfo.getId());
+					    }
+				        //for security consideration, we have to generate the random numbers.
+				        if (legalInfo.getLegalPhoto() == null) {
+				           legalInfo.setLegalPhoto("/user/"+orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
+				           legalInfo.setLegalIdentifierPhoto("/user/"+orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
+				           legalInfo.setBusiLicensePhoto("/user/"+orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
+				        }
                         HashMap input = new HashMap();
-                        input.put("orgInfo", defaultUser);
+                        input.put("orgInfo", orgInfo);
                         input.put("beObject", legalInfo);
                         input.put("editable", new Boolean(true));
                         RefForm form = new RefForm("organizationForm", "org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo", input);

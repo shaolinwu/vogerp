@@ -2,18 +2,8 @@
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
   <entityName>org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo</entityName>
   <systemVersion>0</systemVersion>
-  <ns2:eventHandler functionName="Save">
-    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-        <ns2:expressionString><![CDATA[
-        {   
-            var constraint_result = this.Form.validate();
-            if (constraint_result != true && constraint_result != null) {
-                return false;
-            }
-        }
-        ]]></ns2:expressionString>
-    </ns2:ops>
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveDetail-847970502">
+  <ns2:eventHandler functionName="Close">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="Close-847970502">
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
@@ -26,28 +16,8 @@
         import org.shaolin.vogerp.commonmodel.IOrganizationService;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            HashMap input = (HashMap)form.ui2Data();
-
-            IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
-            OrganizationImpl orgInfo = (OrganizationImpl)orgService.getOrganizationInfo();
-            
-            OrganizationImpl tempInfo = (OrganizationImpl)input.get("orgInfo");
-            orgInfo.setName(tempInfo.getName());
-            orgInfo.setType(tempInfo.getType());
-            orgInfo.setDescription(tempInfo.getDescription());
-            CommonModel.INSTANCE.update(orgInfo);
-            
-            LegalOrganizationInfoImpl templLegalInfo = (LegalOrganizationInfoImpl)input.get("beObject");
-            templLegalInfo.setOrgId(orgInfo.getId());
-            if (templLegalInfo.getId() == 0) {
-                CommonModel.INSTANCE.create(templLegalInfo, true);
-            } else {
-                CommonModel.INSTANCE.update(templLegalInfo, true);
-            }
-            Dialog.showMessageDialog("更新成功!", "Information", Dialog.INFORMATION_MESSAGE, null);
-            //TODO process the verification flow.
             if (form != null && form.isInWindows()) {
-	            form.closeIfinWindows();
+	            form.closeIfinWindows(true);
 	            @page.removeForm(@page.getEntityUiid()); 
             }
         }]]></expressionString>
@@ -401,7 +371,7 @@
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="Save"></ns2:handler>
+          <ns2:handler functionName="Close"></ns2:handler>
         </ns2:EventListener>
         <ns2:editable xsi:type="ns2:ExpressionPropertyType">
           <ns2:expression>
@@ -410,7 +380,7 @@
         </ns2:editable>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
           <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>OKbtn</ns2:key>
+          <ns2:key>Closebtn</ns2:key>
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
@@ -476,7 +446,7 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="orgInfo.type" paramName="value"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
         <ns2:expression>
-          <expressionString>"org.shaolin.vogerp.productmodel.ce.IndustryType"</expressionString>
+          <expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="singleLevel">
@@ -617,6 +587,7 @@
       import org.shaolin.vogerp.commonmodel.IOrganizationService;
       {
           if ($orgInfo == null) {
+              // self login.
 		      IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
 		      $orgInfo = (OrganizationImpl)orgService.getOrganizationInfo();
 		      $beObject = (LegalOrganizationInfoImpl)orgService.getLegalInfo(UserContext.getUserContext().getOrgId());
@@ -630,6 +601,8 @@
 	             $beObject.setLegalIdentifierPhoto("/user/"+$orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
 	             $beObject.setBusiLicensePhoto("/user/"+$orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
 	          }
+	      } else {
+	          // admin login.
 	      }
           $beObject.setVeriState($orgInfo.getVeriState());
           $beObject.setVerifierId($orgInfo.getVerifierId());
@@ -647,11 +620,13 @@
       import org.shaolin.bmdp.runtime.security.UserContext;
       import org.shaolin.vogerp.commonmodel.be.*;
       import org.shaolin.vogerp.commonmodel.IOrganizationService;
+      import org.shaolin.vogerp.commonmodel.dao.CommonModel;
       {
+        long orgId = Long.parseLong(@page.getLabel("orgIdUI").getValue());
         if ($orgInfo == null) {
 	        IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
-	        OrganizationImpl orgInfo = (OrganizationImpl)orgService.getOrganizationInfo();
-	        LegalOrganizationInfoImpl legalInfo = (LegalOrganizationInfoImpl)orgService.getLegalInfo(UserContext.getUserContext().getOrgId());
+	        OrganizationImpl orgInfo = (OrganizationImpl)CommonModel.INSTANCE.get(orgId, OrganizationImpl.class);
+	        LegalOrganizationInfoImpl legalInfo = (LegalOrganizationInfoImpl)orgService.getLegalInfo(orgId);
 	        if (legalInfo == null) {
 	            legalInfo = new LegalOrganizationInfoImpl();
 	        }

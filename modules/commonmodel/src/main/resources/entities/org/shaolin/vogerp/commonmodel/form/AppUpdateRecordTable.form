@@ -97,7 +97,7 @@
         <ns2:defaultRowSize>20</ns2:defaultRowSize>
         <ns2:appendRowMode>false</ns2:appendRowMode>
         <ns2:refreshInterval>0</ns2:refreshInterval>
-        <ns2:editableCell>true</ns2:editableCell>
+        <ns2:editableCell>false</ns2:editableCell>
         <ns2:showBigItem>false</ns2:showBigItem>
         <ns2:showActionBar>true</ns2:showActionBar>
         <ns2:showFilter>false</ns2:showFilter>
@@ -135,8 +135,15 @@
           </ns2:title>
           <ns2:beFieldId>rowBE.version</ns2:beFieldId>
           <ns2:uiType>
-            <ns2:type>Text</ns2:type>
+            <ns2:type>Label</ns2:type>
           </ns2:uiType>
+          <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+               <ns2:expression xsi:type="ns2:ExpressionType">
+                   <ns2:expressionString><![CDATA[{
+                   return $rowBE.getVersion() + "";
+                   }]]></ns2:expressionString>
+               </ns2:expression>
+           </ns2:rowExpression>
         </ns2:column>
         <ns2:column>
           <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
@@ -145,7 +152,7 @@
           </ns2:title>
           <ns2:beFieldId>rowBE.description</ns2:beFieldId>
           <ns2:uiType>
-            <ns2:type>Text</ns2:type>
+            <ns2:type>Label</ns2:type>
           </ns2:uiType>
         </ns2:column>
         <ns2:defaultActions>

@@ -235,7 +235,7 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
             /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo */
     };
 
-    Form.Save = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Save;
+    Form.Close = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Close;
 
     Form.Cancel = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Cancel;
 
@@ -254,21 +254,14 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 /* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Save */
+    function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Close(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Close */
         var o = this;
         var UIEntity = this;
 
-        {   
-            var constraint_result = this.Form.validate();
-            if (constraint_result != true && constraint_result != null) {
-                return false;
-            }
-        }
-        
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-847970502",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Save */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"Close-847970502",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Close */
 
 
     /* auto generated eventlistener function declaration */
