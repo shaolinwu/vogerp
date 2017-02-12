@@ -17,6 +17,7 @@
                  <item name="Login_mob" value="org.shaolin.bmdp.adminconsole.page.Login_mob" />
                  <item name="Main_mob" value="org.shaolin.bmdp.adminconsole.page.Main_mob" />
                  <item name="Registration" value="org.shaolin.bmdp.adminconsole.page.Registration" />
+                 <item name="RegisterSuccess" value="org.shaolin.bmdp.adminconsole.page.RegisterSuccess" />
             </node>
          </node>   
     </node>
