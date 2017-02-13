@@ -465,5 +465,47 @@ public class OrderModel extends BEEntityDaoObject {
         return this._count(inObjectCriteria);
     }
 
+    public List<org.shaolin.vogerp.ecommercial.be.IMachiningComponent> searchMachiningComponent(org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+            if (scObject.getCode() != null && scObject.getCode().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.code", scObject.getCode()));
+            }
+            if (scObject.getName() != null && scObject.getName().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.name", scObject.getName()));
+            }
+            if (scObject.getCategory() != null && scObject.getCategory() != org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.categoryInt", scObject.getCategory().getIntValue()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long searchMachiningComponentCount(org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl.class, "inObject");
+
+            if (scObject.getCode() != null && scObject.getCode().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.code", scObject.getCode()));
+            }
+            if (scObject.getName() != null && scObject.getName().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.name", scObject.getName()));
+            }
+            if (scObject.getCategory() != null && scObject.getCategory() != org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.categoryInt", scObject.getCategory().getIntValue()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
+    }
+
 }
 

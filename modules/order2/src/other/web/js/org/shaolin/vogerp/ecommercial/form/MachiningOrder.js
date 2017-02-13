@@ -34,12 +34,19 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
         ui: elementList[prefix + "countUI"]
     });
 
+    var materialTypeUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "materialTypeUILabel"]
+    });
+
     var cancelbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "cancelbtn"]
     });
 
     var photoUI = new org_shaolin_vogerp_ecommercial_form_CADUploader({"prefix":prefix + "photoUI."});
+
+    var materialTypeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "materialTypeUI."});
 
     var actionPanel = new UIMaster.ui.panel
     ({
@@ -52,7 +59,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -65,7 +72,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,countUILabel,countUI,cancelbtn,photoUI,fieldPanel,attributePanel,actionPanel]
+        ,items: [serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,countUILabel,countUI,materialTypeUILabel,cancelbtn,photoUI,materialTypeUI,fieldPanel,attributePanel,actionPanel]
     });
 
     Form.serialNumberUILabel=serialNumberUILabel;
@@ -80,9 +87,13 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.countUI=countUI;
 
+    Form.materialTypeUILabel=materialTypeUILabel;
+
     Form.cancelbtn=cancelbtn;
 
     Form.photoUI=photoUI;
+
+    Form.materialTypeUI=materialTypeUI;
 
     Form.fieldPanel=fieldPanel;
 
@@ -102,6 +113,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.countUI=countUI;
 
+    Form.materialTypeUILabel=materialTypeUILabel;
+
+    Form.materialTypeUI=materialTypeUI;
+
     Form.attributePanel=attributePanel;
 
     Form.serialNumberUILabel=serialNumberUILabel;
@@ -115,6 +130,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     Form.countUILabel=countUILabel;
 
     Form.countUI=countUI;
+
+    Form.materialTypeUILabel=materialTypeUILabel;
+
+    Form.materialTypeUI=materialTypeUI;
 
     Form.actionPanel=actionPanel;
 

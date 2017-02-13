@@ -24,28 +24,6 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
         ,showMaxLength: 100
     });
 
-    var makingHourUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "makingHourUILabel"]
-    });
-
-    var makingHourUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "makingHourUI"]
-    });
-
-    var makingSolutionUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "makingSolutionUILabel"]
-    });
-
-    var makingSolutionUI = new UIMaster.ui.matrix
-    ({
-        ui: elementList[prefix + "makingSolutionUI"]
-        ,ceType: "org.shaolin.vogerp.ecommercial.ce.MakingSolutionType"
-        ,isMultiple: true
-    });
-
     var countUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "countUILabel"]
@@ -56,12 +34,17 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
         ui: elementList[prefix + "countUI"]
     });
 
+    var materialTypeUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "materialTypeUILabel"]
+    });
+
     var priceUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "priceUILabel"]
     });
 
-    var priceUI = new UIMaster.ui.textfield
+    var priceUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "priceUI"]
     });
@@ -72,6 +55,16 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     });
 
     var photoUI = new org_shaolin_vogerp_ecommercial_form_CADUploader({"prefix":prefix + "photoUI."});
+
+    var materialTypeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "materialTypeUI."});
+
+    var componentTable = new org_shaolin_vogerp_ecommercial_form_MachOrderComponentTable({"prefix":prefix + "componentTable."});
+
+    var machineToolTable = new org_shaolin_vogerp_ecommercial_form_MachOrderToolTable({"prefix":prefix + "machineToolTable."});
+
+    var skinTable = new org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable({"prefix":prefix + "skinTable."});
+
+    var thirdComponentTable = new org_shaolin_vogerp_ecommercial_form_MachOrderThirdCompTable({"prefix":prefix + "thirdComponentTable."});
 
     var actionPanel = new UIMaster.ui.panel
     ({
@@ -84,20 +77,20 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "makingHourUILabel",prefix + "makingHourUI",prefix + "makingSolutionUILabel",prefix + "makingSolutionUI",prefix + "countUILabel",prefix + "countUI",prefix + "priceUILabel",prefix + "priceUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI",prefix + "priceUILabel",prefix + "priceUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "photoUI",prefix + "attributePanel"]
+        ,subComponents: [prefix + "photoUI",prefix + "attributePanel",prefix + "componentTable",prefix + "machineToolTable",prefix + "skinTable",prefix + "thirdComponentTable"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,makingHourUILabel,makingHourUI,makingSolutionUILabel,makingSolutionUI,countUILabel,countUI,priceUILabel,priceUI,cancelbtn,photoUI,fieldPanel,attributePanel,actionPanel]
+        ,items: [serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,countUILabel,countUI,materialTypeUILabel,priceUILabel,priceUI,cancelbtn,photoUI,materialTypeUI,componentTable,machineToolTable,skinTable,thirdComponentTable,fieldPanel,attributePanel,actionPanel]
     });
 
     Form.serialNumberUILabel=serialNumberUILabel;
@@ -108,17 +101,11 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
     Form.descriptionUI=descriptionUI;
 
-    Form.makingHourUILabel=makingHourUILabel;
-
-    Form.makingHourUI=makingHourUI;
-
-    Form.makingSolutionUILabel=makingSolutionUILabel;
-
-    Form.makingSolutionUI=makingSolutionUI;
-
     Form.countUILabel=countUILabel;
 
     Form.countUI=countUI;
+
+    Form.materialTypeUILabel=materialTypeUILabel;
 
     Form.priceUILabel=priceUILabel;
 
@@ -127,6 +114,16 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     Form.cancelbtn=cancelbtn;
 
     Form.photoUI=photoUI;
+
+    Form.materialTypeUI=materialTypeUI;
+
+    Form.componentTable=componentTable;
+
+    Form.machineToolTable=machineToolTable;
+
+    Form.skinTable=skinTable;
+
+    Form.thirdComponentTable=thirdComponentTable;
 
     Form.fieldPanel=fieldPanel;
 
@@ -142,21 +139,25 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
     Form.descriptionUI=descriptionUI;
 
-    Form.makingHourUILabel=makingHourUILabel;
-
-    Form.makingHourUI=makingHourUI;
-
-    Form.makingSolutionUILabel=makingSolutionUILabel;
-
-    Form.makingSolutionUI=makingSolutionUI;
-
     Form.countUILabel=countUILabel;
 
     Form.countUI=countUI;
 
+    Form.materialTypeUILabel=materialTypeUILabel;
+
+    Form.materialTypeUI=materialTypeUI;
+
     Form.priceUILabel=priceUILabel;
 
     Form.priceUI=priceUI;
+
+    Form.componentTable=componentTable;
+
+    Form.machineToolTable=machineToolTable;
+
+    Form.skinTable=skinTable;
+
+    Form.thirdComponentTable=thirdComponentTable;
 
     Form.attributePanel=attributePanel;
 
@@ -168,17 +169,13 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
     Form.descriptionUI=descriptionUI;
 
-    Form.makingHourUILabel=makingHourUILabel;
-
-    Form.makingHourUI=makingHourUI;
-
-    Form.makingSolutionUILabel=makingSolutionUILabel;
-
-    Form.makingSolutionUI=makingSolutionUI;
-
     Form.countUILabel=countUILabel;
 
     Form.countUI=countUI;
+
+    Form.materialTypeUILabel=materialTypeUILabel;
+
+    Form.materialTypeUI=materialTypeUI;
 
     Form.priceUILabel=priceUILabel;
 

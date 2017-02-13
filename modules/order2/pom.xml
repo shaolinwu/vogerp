@@ -112,7 +112,9 @@
 						<configuration>
                             <systemEntityPath>C:\uimaster\apps\vogerp\modules\commonmodel\src\main\resources\entities;
                             C:\uimaster\apps\vogerp\modules\productmodel\src\main\resources\entities;
-                            C:\uimaster\apps\vogerp\modules\order\src\main\resources\entities</systemEntityPath>
+                            C:\uimaster\apps\vogerp\modules\order\src\main\resources\entities;
+                            C:\uimaster\uimaster\modules\workflow\src\main\resources\entities;
+                            </systemEntityPath>
                         </configuration>
 					</execution>
 				</executions>

@@ -314,6 +314,9 @@ public class CommonModel extends BEEntityDaoObject {
             if (scFlow.getType() != null && scFlow.getType().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.type", scFlow.getType()));
             }
+            if (scFlow.getVeriState() != null && scFlow.getVeriState() != org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType.NOT_SPECIFIED) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.veriStateInt", scFlow.getVeriState().getIntValue()));
+            }
 
         inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
 
@@ -338,6 +341,9 @@ public class CommonModel extends BEEntityDaoObject {
             }
             if (scFlow.getType() != null && scFlow.getType().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.type", scFlow.getType()));
+            }
+            if (scFlow.getVeriState() != null && scFlow.getVeriState() != org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType.NOT_SPECIFIED) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.veriStateInt", scFlow.getVeriState().getIntValue()));
             }
 
         inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));

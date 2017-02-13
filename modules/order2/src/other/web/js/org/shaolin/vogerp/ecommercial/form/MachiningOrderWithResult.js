@@ -24,28 +24,6 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
         ,showMaxLength: 100
     });
 
-    var makingHourUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "makingHourUILabel"]
-    });
-
-    var makingHourUI = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "makingHourUI"]
-    });
-
-    var makingSolutionUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "makingSolutionUILabel"]
-    });
-
-    var makingSolutionUI = new UIMaster.ui.matrix
-    ({
-        ui: elementList[prefix + "makingSolutionUI"]
-        ,ceType: "org.shaolin.vogerp.ecommercial.ce.MakingSolutionType"
-        ,isMultiple: true
-    });
-
     var countUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "countUILabel"]
@@ -54,6 +32,11 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
     var countUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "countUI"]
+    });
+
+    var materialTypeUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "materialTypeUILabel"]
     });
 
     var priceUILabel = new UIMaster.ui.label
@@ -73,6 +56,8 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
 
     var photoUI = new org_shaolin_vogerp_ecommercial_form_CADUploader({"prefix":prefix + "photoUI."});
 
+    var materialTypeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "materialTypeUI."});
+
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
@@ -84,7 +69,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "makingHourUILabel",prefix + "makingHourUI",prefix + "makingSolutionUILabel",prefix + "makingSolutionUI",prefix + "countUILabel",prefix + "countUI",prefix + "priceUILabel",prefix + "priceUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI",prefix + "priceUILabel",prefix + "priceUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -97,7 +82,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,makingHourUILabel,makingHourUI,makingSolutionUILabel,makingSolutionUI,countUILabel,countUI,priceUILabel,priceUI,cancelbtn,photoUI,fieldPanel,attributePanel,actionPanel]
+        ,items: [serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,countUILabel,countUI,materialTypeUILabel,priceUILabel,priceUI,cancelbtn,photoUI,materialTypeUI,fieldPanel,attributePanel,actionPanel]
     });
 
     Form.serialNumberUILabel=serialNumberUILabel;
@@ -108,17 +93,11 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
 
     Form.descriptionUI=descriptionUI;
 
-    Form.makingHourUILabel=makingHourUILabel;
-
-    Form.makingHourUI=makingHourUI;
-
-    Form.makingSolutionUILabel=makingSolutionUILabel;
-
-    Form.makingSolutionUI=makingSolutionUI;
-
     Form.countUILabel=countUILabel;
 
     Form.countUI=countUI;
+
+    Form.materialTypeUILabel=materialTypeUILabel;
 
     Form.priceUILabel=priceUILabel;
 
@@ -127,6 +106,8 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
     Form.cancelbtn=cancelbtn;
 
     Form.photoUI=photoUI;
+
+    Form.materialTypeUI=materialTypeUI;
 
     Form.fieldPanel=fieldPanel;
 
@@ -142,17 +123,13 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
 
     Form.descriptionUI=descriptionUI;
 
-    Form.makingHourUILabel=makingHourUILabel;
-
-    Form.makingHourUI=makingHourUI;
-
-    Form.makingSolutionUILabel=makingSolutionUILabel;
-
-    Form.makingSolutionUI=makingSolutionUI;
-
     Form.countUILabel=countUILabel;
 
     Form.countUI=countUI;
+
+    Form.materialTypeUILabel=materialTypeUILabel;
+
+    Form.materialTypeUI=materialTypeUI;
 
     Form.priceUILabel=priceUILabel;
 
@@ -168,17 +145,13 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
 
     Form.descriptionUI=descriptionUI;
 
-    Form.makingHourUILabel=makingHourUILabel;
-
-    Form.makingHourUI=makingHourUI;
-
-    Form.makingSolutionUILabel=makingSolutionUILabel;
-
-    Form.makingSolutionUI=makingSolutionUI;
-
     Form.countUILabel=countUILabel;
 
     Form.countUI=countUI;
+
+    Form.materialTypeUILabel=materialTypeUILabel;
+
+    Form.materialTypeUI=materialTypeUI;
 
     Form.priceUILabel=priceUILabel;
 

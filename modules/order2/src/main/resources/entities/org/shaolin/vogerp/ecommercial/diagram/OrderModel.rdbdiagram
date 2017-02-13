@@ -226,59 +226,6 @@
     </ns2:mapping>
   </ns2:table>
   <ns2:table>
-    <entityName>ECOM_MACHININGORDER</entityName>
-    <systemVersion>0</systemVersion>
-    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="ORGID" type="BIGINT" isNull="false"></ns2:column>
-    <ns2:column name="SERIALNUMBER" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="COUNT" type="INTEGER" isNull="true"></ns2:column>
-    <ns2:column name="ESTIMATEDPRICE" type="DECIMAL" isNull="true"></ns2:column>
-    <ns2:column name="ENDPRICE" type="DECIMAL" isNull="true"></ns2:column>
-    <ns2:column name="PUBLISHEDCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="TAKENCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="DELIVERYINFOID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="DELIVERYTOINFOID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="PHOTOS" type="VARCHAR" default="1"></ns2:column>
-    <ns2:column name="HTMLDESC" type="VARCHAR" length="255" isNull="true"></ns2:column>
-    <ns2:column name="STATE" type="INTEGER" length="2" default="1"></ns2:column>
-    <ns2:column name="CITY" type="VARCHAR" length="50" isNull="true"></ns2:column>
-    <ns2:column name="MODELFILE" type="VARCHAR" length="50" isNull="true"></ns2:column>
-    <ns2:column name="MAKINGHOUR" type="INTEGER" length="3" default="1"></ns2:column>
-    <ns2:column name="MAKINGSOLUTION" type="VARCHAR" length="3" default="1"></ns2:column>
-    <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
-    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
-    <ns2:column name="_sessionId" type="VARCHAR" length="38" default="0"></ns2:column>
-    <ns2:primaryKey>
-      <ns2:columnName>ID</ns2:columnName>
-    </ns2:primaryKey>
-    <ns2:mapping>
-      <systemVersion>0</systemVersion>
-      <ns2:businessEntity entityName="org.shaolin.vogerp.ecommercial.be.MachiningOrder"></ns2:businessEntity>
-      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="orgId" columnName="ORGID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="serialNumber" columnName="SERIALNUMBER"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="count" columnName="COUNT"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="estimatedPrice" columnName="ESTIMATEDPRICE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="endPrice" columnName="ENDPRICE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="publishedCustomerId" columnName="PUBLISHEDCUSTOMERID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="takenCustomerId" columnName="TAKENCUSTOMERID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="deliveryInfoId" columnName="DELIVERYINFOID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="deliveryToInfoId" columnName="DELIVERYTOINFOID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="photos" columnName="PHOTOS"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="htmlDesc" columnName="HTMLDESC"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="status" columnName="STATE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="modelFile" columnName="MODELFILE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="makingHour" columnName="MAKINGHOUR"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="makingSolution" columnName="MAKINGSOLUTION"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="city" columnName="CITY"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_sessionId" columnName="_sessionId"></ns2:fieldMapping>
-    </ns2:mapping>
-  </ns2:table>
-  <ns2:table>
     <entityName>ECOM_GOOfferPrice</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
@@ -357,10 +304,126 @@
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
+  <ns2:table>
+    <entityName>ECOM_MACHININGCOMPONENT</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="NAME" type="VARCHAR" length="30" isNull="false"></ns2:column>
+    <ns2:column name="DESCRIPTION" type="VARCHAR" length="10" isNull="true"></ns2:column>
+    <ns2:column name="CATEGORY" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="CODE" type="VARCHAR" length="10" isNull="true"></ns2:column>
+    <ns2:column name="WEIGHTUNIT" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="PRICE" type="INTEGER" length="5" isNull="true"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.ecommercial.be.MachiningComponent"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="name" columnName="NAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="category" columnName="CATEGORY"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="code" columnName="CODE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="weightUnit" columnName="WEIGHTUNIT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="price" columnName="PRICE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>ECOM_MACHININGORDER</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="ORGID" type="BIGINT" isNull="false"></ns2:column>
+    <ns2:column name="SERIALNUMBER" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="COUNT" type="INTEGER" isNull="true"></ns2:column>
+    <ns2:column name="ESTIMATEDPRICE" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="ENDPRICE" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="PUBLISHEDCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="TAKENCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="DELIVERYINFOID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="DELIVERYTOINFOID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="PHOTOS" type="VARCHAR" default="1"></ns2:column>
+    <ns2:column name="HTMLDESC" type="VARCHAR" length="255" isNull="true"></ns2:column>
+    <ns2:column name="STATE" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:column name="CITY" type="VARCHAR" length="50" isNull="true"></ns2:column>
+    <ns2:column name="MODELFILE" type="VARCHAR" length="50" isNull="true"></ns2:column>
+    <ns2:column name="MATERIALTYPE" type="INTEGER" length="50" default="1"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:column name="_sessionId" type="VARCHAR" length="38" default="0"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.ecommercial.be.MachiningOrder"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="orgId" columnName="ORGID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="serialNumber" columnName="SERIALNUMBER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="count" columnName="COUNT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="estimatedPrice" columnName="ESTIMATEDPRICE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="endPrice" columnName="ENDPRICE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="publishedCustomerId" columnName="PUBLISHEDCUSTOMERID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="takenCustomerId" columnName="TAKENCUSTOMERID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="deliveryInfoId" columnName="DELIVERYINFOID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="deliveryToInfoId" columnName="DELIVERYTOINFOID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="photos" columnName="PHOTOS"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="htmlDesc" columnName="HTMLDESC"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="status" columnName="STATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="modelFile" columnName="MODELFILE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="materialType" columnName="MATERIALTYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="city" columnName="CITY"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_sessionId" columnName="_sessionId"></ns2:fieldMapping>
+      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_MACHININGORDER0" mappingType="One-to-One" beFieldName="publishedCustomer" columnName="PUBLISHEDCUSTOMERID"></ns2:fieldMapping>
+      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_MACHININGORDER_ITEMS" collectionElement="org.shaolin.vogerp.ecommercial.be.MachOrderComponent" mappingType="One-to-Many" beFieldName="components"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>ECOM_MACHORDERCOMPONENT</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="NAME" type="VARCHAR" length="30" isNull="false"></ns2:column>
+    <ns2:column name="DESCRIPTION" type="VARCHAR" length="10" isNull="true"></ns2:column>
+    <ns2:column name="CATEGORY" type="VARCHAR" length="256" isNull="true"></ns2:column>
+    <ns2:column name="CODE" type="VARCHAR" length="10" isNull="true"></ns2:column>
+    <ns2:column name="WEIGHTUNIT" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="PRICE" type="INTEGER" length="5" isNull="true"></ns2:column>
+    <ns2:column name="ESTIWEIGHT" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="ESTIMAKINGHOUR" type="VARCHAR" length="256" isNull="true"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.ecommercial.be.MachOrderComponent"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="name" columnName="NAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="category" columnName="CATEGORY"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="code" columnName="CODE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="weightUnit" columnName="WEIGHTUNIT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="price" columnName="PRICE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="estiWeight" columnName="ESTIWEIGHT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="estiMakingHour" columnName="ESTIMAKINGHOUR"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
   
   <ns2:joinTable name="ECOM_GOLDENORDER_ITEMS" srcTable="ECOM_GOLDENORDER" srcPKColumn="offerPrices" tarTable="ECOM_GOOfferPrice" tarPKColumn="id"></ns2:joinTable>
   <ns2:joinTable name="ECOM_RENTORDER_ITEMS" srcTable="ECOM_RENTORLOANORDER" srcPKColumn="offerPrices" tarTable="ECOM_ROOfferPrice" tarPKColumn="id"></ns2:joinTable>
   <ns2:joinTable name="ECOM_GOLDENORDER_ITEMS1" srcTable="ECOM_GOLDENORDER" srcPKColumn="pricePackage" tarTable="ECOM_GoldenOrderItem" tarPKColumn="id"></ns2:joinTable>
+  <ns2:joinTable name="ECOM_MACHININGORDER_ITEMS" srcTable="ECOM_MACHININGORDER" srcPKColumn="components" tarTable="ECOM_MACHORDERCOMPONENT" tarPKColumn="id"></ns2:joinTable>
   
   <ns2:query queryName="searchGoldenOrder">
     <ns2:searchResult name="outObject" category="BusinessEntity">
@@ -1146,5 +1209,68 @@
     </ns2:searchConditionMapping>
   </ns2:query>
   
+  <ns2:query queryName="searchMachiningComponent">
+    <ns2:searchResult name="outObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.ecommercial.be.MachiningComponent"></type>
+    </ns2:searchResult>
+    <ns2:fromData name="inObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.ecommercial.be.MachiningComponent"></type>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>outObject</ns2:toDataFieldPath>
+        <ns2:value xsi:type="ns2:SimpleFieldValueType">
+          <ns2:valueFieldPath>inObject</ns2:valueFieldPath>
+        </ns2:value>
+      </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.code</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.code</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getCode() != null && scObject.getCode().length() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.name</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:StarLikeOperatorType" isReverse="false">
+            <ns2:type>LIKE %*</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.name</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getName() != null && scObject.getName().length() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.categoryInt</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getCategory().getIntValue()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getCategory() != null && scObject.getCategory() != org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType.NOT_SPECIFIED]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:searchConditionData name="scObject" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.ecommercial.be.MachiningComponent"></type>
+      </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
   
 </ns2:RDBDiagram>

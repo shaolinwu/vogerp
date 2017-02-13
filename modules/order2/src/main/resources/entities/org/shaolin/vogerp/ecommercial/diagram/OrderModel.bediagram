@@ -259,7 +259,61 @@
             <bediagram:type xsi:type="bediagram:DoubleType" />
         </bediagram:member>
     </bediagram:beEntity>    
-	
+	<!-- 
+	         做为一个共用的独立组件共享库。包括四类项目： 生产材料部件, 加工设备, 表面处理方式  和其它三方独立辅材料。
+	         分成多个表处理逻辑将更加复杂，所以单表就可。
+	 -->
+	<bediagram:beEntity needPersist="true" needUIEntity="true">
+        <common:entityName>MachiningComponent</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 生产材料部件, 加工设备, 表面处理方式  和其它三方独立辅材料名称 -->
+            <bediagram:name>name</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>description</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 单价 / 每小时单价 -->
+            <bediagram:name>price</bediagram:name>
+            <bediagram:type xsi:type="bediagram:IntType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 步骤类型：  生产材料部件, 加工设备, 表面处理方式  和其它三方独立辅材料 -->
+            <bediagram:name>category</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="MachiningCategoryType" />
+            </bediagram:type>
+        </bediagram:member>
+        
+        <!--  生产材料部件和表面处理方式 -->
+        <bediagram:member>
+            <!-- 材料行业型号 -->
+            <bediagram:name>code</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 材料默认重量， 默认为1千克 -->
+            <bediagram:name>weightUnit</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="MachiningMaterialUnitType" />
+            </bediagram:type>
+        </bediagram:member>
+        
+        <bediagram:member>
+            <bediagram:name>startCreateDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>endCreateDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+    </bediagram:beEntity>
 	<!-- 机械加工订单 -->
 	<bediagram:beEntity needPersist="true" needOrgId="true" needTask="true" needUIEntity="true">
 		<common:entityName>MachiningOrder</common:entityName>
@@ -271,16 +325,39 @@
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>
-            <!-- 制造工时 -->
-            <bediagram:name>makingHour</bediagram:name>
-            <bediagram:type xsi:type="bediagram:IntType" />
-        </bediagram:member>
-        <bediagram:member>
-            <!-- 制造方式 multipe ce MakingSolutionType-->
-            <bediagram:name>makingSolution</bediagram:name>
+            <!-- 制造材料 MachiningMaterialType ce-->
+            <bediagram:name>materialType</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
+        
+        <!--估价报告-->
+        <bediagram:member>
+            <bediagram:name>components</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEListType">
+                <bediagram:elementType xsi:type="bediagram:BEObjRefType">
+                    <bediagram:targetEntity entityName="MachOrderComponent" />
+                </bediagram:elementType>
+            </bediagram:type>
+        </bediagram:member>
 	</bediagram:beEntity>
+	
+	<!--主成 生产材料部件, 加工设备, 表面处理方式  和其它三方独立辅材料-->
+	<bediagram:beEntity needPersist="true" needUIEntity="true">
+        <common:entityName>MachOrderComponent</common:entityName>
+        <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
+            <bediagram:targetEntity entityName="MachiningComponent" />
+        </bediagram:parentObject>
+        <bediagram:member>
+            <!-- 材料估算重量， 默认为1千克 -->
+            <bediagram:name>estiWeight</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 估算制造工时 -->
+            <bediagram:name>estiMakingHour</bediagram:name>
+            <bediagram:type xsi:type="bediagram:IntType" />
+        </bediagram:member>
+    </bediagram:beEntity>    
 	
 	<bediagram:beEntity>
         <common:entityName>OfferPrice</common:entityName>
@@ -489,26 +566,54 @@
     </bediagram:ceEntity>
     
     <bediagram:ceEntity>
-        <common:entityName>MakingSolutionType</common:entityName>
+        <common:entityName>MachiningCategoryType</common:entityName>
         <bediagram:constantValue>
-            <bediagram:value>cut</bediagram:value>
+            <bediagram:value>Material</bediagram:value>
             <bediagram:intValue>1</bediagram:intValue>
-            <bediagram:description>切</bediagram:description>
+            <bediagram:description>生产材料部件</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
-            <bediagram:value>wash</bediagram:value>
+            <bediagram:value>MachiningTool</bediagram:value>
             <bediagram:intValue>2</bediagram:intValue>
-            <bediagram:description>洗</bediagram:description>
+            <bediagram:description>加工设备</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
-            <bediagram:value>rub</bediagram:value>
+            <bediagram:value>SkinHandling</bediagram:value>
             <bediagram:intValue>3</bediagram:intValue>
-            <bediagram:description>磨</bediagram:description>
+            <bediagram:description>表面处理方式</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
-            <bediagram:value>polish</bediagram:value>
+            <bediagram:value>ThirdPartyComponet</bediagram:value>
             <bediagram:intValue>4</bediagram:intValue>
-            <bediagram:description>抛光</bediagram:description>
+            <bediagram:description>和其它三方独立辅材料 </bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
+    
+    <bediagram:ceEntity>
+        <common:entityName>MachiningMaterialType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>steel</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>钢铁</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>plastic</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>塑料</bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
+    
+    <bediagram:ceEntity>
+        <common:entityName>MachiningMaterialUnitType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>kilogram</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>千克</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>gram</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>克</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
     

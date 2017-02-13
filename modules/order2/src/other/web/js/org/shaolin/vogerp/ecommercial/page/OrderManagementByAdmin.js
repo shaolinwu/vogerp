@@ -3,11 +3,6 @@
 function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var comment = new UIMaster.ui.textarea
-    ({
-        ui: elementList[prefix + "comment"]
-    });
-
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
@@ -76,17 +71,15 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
     ({
         ui: elementList[prefix + "conditionPanel"]
         ,items: []
-        ,subComponents: [prefix + "citySelector",prefix + "comment"]
+        ,subComponents: [prefix + "citySelector"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [comment,functionsTab,citySelector,conditionPanel]
+        ,items: [functionsTab,citySelector,conditionPanel]
     });
-
-    Form.comment=comment;
 
     Form.functionsTab=functionsTab;
 
@@ -115,8 +108,6 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
     Form.conditionPanel=conditionPanel;
 
     Form.citySelector=citySelector;
-
-    Form.comment=comment;
 
     Form.user_constructor = function()
     {
