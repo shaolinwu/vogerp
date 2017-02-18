@@ -24,6 +24,7 @@
 
             form.closeIfinWindows();
             @page.removeForm(@page.getEntityUiid()); 
+            Dialog.showMessageDialog("保存成功！", "", Dialog.INFORMATION_MESSAGE, null);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -42,14 +43,132 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
+  <ns2:eventHandler functionName="showSelectOneTable">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="showSelectOne-20170202-155225">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
+	    import org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl;
+	    import org.shaolin.vogerp.ecommercial.be.MachOrderComponentImpl;
+        { 
+           String selectTable = @page.getHidden("selectTableUI").getValue();
+           @page.log("selectTable value: " + selectTable);
+           Table table = @page.getTable("selectMComponentTable");
+           MachiningComponentImpl condition = (MachiningComponentImpl)table.getConditions().getCondition();
+           if (selectTable.equals("1")) {
+              condition.setCategory(MachiningCategoryType.MATERIAL);
+           } else if (selectTable.equals("2")) {
+              condition.setCategory(MachiningCategoryType.MACHININGTOOL);
+           } else if (selectTable.equals("3")) {
+              condition.setCategory(MachiningCategoryType.SKINHANDLING);
+           } else if (selectTable.equals("4")) {
+              condition.setCategory(MachiningCategoryType.THIRDPARTYCOMPONET);
+           }
+           table.refresh();
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType" name="foo">
+        <expressionString><![CDATA[
+        { 
+            var othis = this;
+            if (IS_MOBILEVIEW) {
+               $(othis.selectMComponentTable).parent().dialog({
+                    height: ($(window.top).height()),
+					width: "100%",
+					modal: true,
+					closeOnEscape: true,
+					open: function(event, ui) {
+					   $(othis.selectMComponentTable).parent().css("display", "block");
+					},
+					beforeClose: function() {
+					   $(othis.selectMComponentTable).parent().css("display", "none");
+					}
+				});
+            } else {
+               $(othis.selectMComponentTable).parent().dialog({
+                    height: "300",
+					width: "400",
+					modal: true,
+					closeOnEscape: true,
+					open: function(event, ui) {
+					   $(othis.selectMComponentTable).parent().css("display", "block");
+					},
+					beforeClose: function() {
+					   $(othis.selectMComponentTable).parent().css("display", "none");
+					}
+				});
+            }
+        }]]></expressionString>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="selectedOne">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectedOne-20170202-155225">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
+	    import org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl;
+	    import org.shaolin.vogerp.ecommercial.be.MachOrderComponentImpl;
+        { 
+           Table table = @page.getTable("selectMComponentTable");
+           if (table.getSelectedIndex() > 0) {
+              MachiningComponentImpl condition = (MachiningComponentImpl)table.getConditions().getCondition();
+              MachiningComponentImpl component = (MachiningComponentImpl)table.getSelectedRow();
+              MachOrderComponentImpl morderComponent = new MachOrderComponentImpl();
+			  morderComponent.setName(component.getName());
+			  morderComponent.setCode(component.getCode());
+			  morderComponent.setDescription(component.getDescription());
+			  morderComponent.setPrice(component.getPrice());
+			  morderComponent.setWeightUnit(component.getWeightUnit());
+              
+              Table t = null;
+              if (condition.getCategory() == MachiningCategoryType.MATERIAL) {
+                 morderComponent.setCategory(MachiningCategoryType.MATERIAL);
+                 t = @page.getTable("componentTable.itemTable");
+              } else if (condition.getCategory() == MachiningCategoryType.MACHININGTOOL) {
+                 morderComponent.setCategory(MachiningCategoryType.MACHININGTOOL);
+                 t = @page.getTable("machineToolTable.itemTable");
+              } else if (condition.getCategory() == MachiningCategoryType.SKINHANDLING) {
+                 morderComponent.setCategory(MachiningCategoryType.SKINHANDLING);
+                 t = @page.getTable("skinTable.itemTable");
+              } else if (condition.getCategory() == MachiningCategoryType.THIRDPARTYCOMPONET) {
+                 morderComponent.setCategory(MachiningCategoryType.THIRDPARTYCOMPONET);
+                 t = @page.getTable("thirdComponentTable.itemTable");
+              } 
+              boolean flag = true;
+              int size = t.getListData().size();
+              for (int i=0; i<size; i++) {
+                 MachOrderComponentImpl existItem = (MachOrderComponentImpl)t.getListData().get(i);
+                 if (existItem.getName().equals(morderComponent.getName())) {
+                     flag = false;
+                     break;
+                 }
+              }
+              if (flag) {
+                 t.addRow(morderComponent, false).refresh();
+                 Dialog.showMessageDialog("项目添加成功！", "", Dialog.INFORMATION_MESSAGE, null);
+              } else {
+                 Dialog.showMessageDialog("您已选择此项目！", "", Dialog.WARNING_MESSAGE, null);
+              }
+           }
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
     </ns2:layout>
+    <ns2:component xsi:type="ns2:UIHiddenType" UIID="selectTableUI" />
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
+          <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
           <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
           <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
           <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -188,6 +307,90 @@
           </ns2:widgetLabel>
           <ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.MachOrderThirdCompTable" />
         </ns2:component>
+        
+        <ns2:component xsi:type="ns2:UITableType" UIID="selectMComponentTable">
+            <ns2:Property name="style">
+	          <ns2:value xsi:type="ns2:StringPropertyType">
+		        <ns2:value>display:none;</ns2:value>
+		      </ns2:value>
+	        </ns2:Property>
+	        <ns2:beElement>org.shaolin.vogerp.ecommercial.be.MachiningComponent</ns2:beElement>
+	        <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+	        <ns2:defaultRowSize>10</ns2:defaultRowSize>
+	        <ns2:showActionBar>false</ns2:showActionBar>
+	        <ns2:showFilter>true</ns2:showFilter>
+	        <ns2:query xsi:type="ns2:ExpressionPropertyType">
+	            <ns2:expression xsi:type="ns2:ExpressionType">
+	                <ns2:expressionString><![CDATA[
+	                import java.util.List;
+	                import org.shaolin.uimaster.page.ajax.TableConditions;
+	                import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
+	                import org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl;
+	                import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+	                import org.shaolin.bmdp.runtime.AppContext; 
+	                import org.shaolin.vogerp.commonmodel.IUserService;
+	                import org.shaolin.bmdp.runtime.security.UserContext;
+	                {
+	                      if ($tableCondition == null) {
+	                         $tableCondition = TableConditions.createCondition(new MachiningComponentImpl());
+	                         $tableCondition.setCount(20);
+	                         $tableCondition.addOrder("createDate", false);
+	                      }
+	                      MachiningComponentImpl condition = (MachiningComponentImpl)$tableCondition.getCondition();
+	                      if (condition.getCategory() == MachiningCategoryType.NOT_SPECIFIED) {
+	                         condition.setCategory(MachiningCategoryType.MATERIAL);
+	                      }
+	                      return OrderModel.INSTANCE.searchMachiningComponent(condition,
+	                                    $tableCondition.getOrders(),
+	                                    $tableCondition.getOffset(), 
+	                                    $tableCondition.getCount());
+	                }]]></ns2:expressionString>
+	            </ns2:expression>
+	        </ns2:query>
+	        <ns2:column xsi:type="ns2:UITableColumnType">
+	            <ns2:title xsi:type="ns2:StringPropertyType">
+	                <ns2:value>名称</ns2:value>
+	            </ns2:title>
+	            <ns2:beFieldId>rowBE.name</ns2:beFieldId>
+	            <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+	        </ns2:column>
+	        <ns2:column xsi:type="ns2:UITableColumnType">
+	            <ns2:title xsi:type="ns2:StringPropertyType">
+	                <ns2:value>单价</ns2:value>
+	            </ns2:title>
+	            <ns2:beFieldId>rowBE.price</ns2:beFieldId>
+	            <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+	            <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+				    <ns2:expression xsi:type="ns2:ExpressionType">
+				        <ns2:expressionString><![CDATA[
+				        import org.shaolin.bmdp.utils.StringUtil;
+				        {
+				           return $rowBE.getPrice() + "";
+				        }]]></ns2:expressionString>
+				    </ns2:expression>
+				</ns2:rowExpression>
+	        </ns2:column>
+	        <ns2:column xsi:type="ns2:UITableColumnType">
+	            <ns2:title xsi:type="ns2:StringPropertyType">
+	                <ns2:value>质量单位</ns2:value>
+	            </ns2:title>
+	            <ns2:beFieldId>rowBE.weightUnit</ns2:beFieldId>
+	            <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+	            <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+				    <ns2:expression xsi:type="ns2:ExpressionType">
+				        <ns2:expressionString><![CDATA[
+				        import org.shaolin.bmdp.utils.StringUtil;
+				        {
+				           return $rowBE.getWeightUnit().getDisplayName();
+				        }]]></ns2:expressionString>
+				    </ns2:expression>
+				</ns2:rowExpression>
+        	</ns2:column>
+          <ns2:defaultActions>
+            <ns2:defaultOpenAction>selectedOne</ns2:defaultOpenAction>
+          </ns2:defaultActions>
+       </ns2:component>
+        
        <ns2:layoutConstraint>
         <ns2:componentId>photoUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
@@ -212,12 +415,25 @@
         <ns2:componentId>thirdComponentTable</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>selectMComponentTable</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass=""></ns2:constraint>
+      </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="savebtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Save"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>暂存</ns2:value>
+        </ns2:text>
+      </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="Cancel"></ns2:handler>
@@ -228,8 +444,12 @@
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:componentId>savebtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
@@ -240,6 +460,28 @@
       <ns2:componentId>actionPanel</ns2:componentId>
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
+    <ns2:constructorCode><![CDATA[
+       $(this.selectMComponentTable).parent().css("display", "none");
+       $(this.selectMComponentTable).css("display", "block");
+       var othis = this;
+       var overrideSelectOne = function(tableId) {
+           if (tableId.indexOf("componentTable.itemTable") != -1) {
+              othis.selectTableUI.setValue("1"); 
+           } else if (tableId.indexOf("machineToolTable.itemTable") != -1) {
+              othis.selectTableUI.setValue("2"); 
+           } else if (tableId.indexOf("skinTable.itemTable") != -1) {
+              othis.selectTableUI.setValue("3"); 
+           } else if (tableId.indexOf("thirdComponentTable.itemTable") != -1) {
+              othis.selectTableUI.setValue("4"); 
+           }
+           othis.showSelectOneTable(othis.savebtn);
+       };
+       this.componentTable.selectOne = overrideSelectOne;
+       this.machineToolTable.selectOne = overrideSelectOne;
+       this.skinTable.selectOne = overrideSelectOne;
+       this.thirdComponentTable.selectOne = overrideSelectOne;
+    ]]>
+    </ns2:constructorCode>
   </ns2:body>
   <ns2:mapping>
     <systemVersion>0</systemVersion>

@@ -3,6 +3,11 @@
 function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var selectTableUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "selectTableUI"]
+    });
+
     var serialNumberUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "serialNumberUILabel"]
@@ -49,6 +54,17 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
         ui: elementList[prefix + "priceUI"]
     });
 
+    var selectMComponentTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "selectMComponentTable"]
+        ,style: "display:none;"
+    });
+
+    var savebtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "savebtn"]
+    });
+
     var cancelbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "cancelbtn"]
@@ -70,7 +86,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "cancelbtn"]
+        ,subComponents: [prefix + "savebtn",prefix + "cancelbtn"]
     });
 
     var attributePanel = new UIMaster.ui.panel
@@ -84,14 +100,16 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "photoUI",prefix + "attributePanel",prefix + "componentTable",prefix + "machineToolTable",prefix + "skinTable",prefix + "thirdComponentTable"]
+        ,subComponents: [prefix + "photoUI",prefix + "attributePanel",prefix + "componentTable",prefix + "machineToolTable",prefix + "skinTable",prefix + "thirdComponentTable",prefix + "selectMComponentTable"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,countUILabel,countUI,materialTypeUILabel,priceUILabel,priceUI,cancelbtn,photoUI,materialTypeUI,componentTable,machineToolTable,skinTable,thirdComponentTable,fieldPanel,attributePanel,actionPanel]
+        ,items: [selectTableUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,countUILabel,countUI,materialTypeUILabel,priceUILabel,priceUI,selectMComponentTable,savebtn,cancelbtn,photoUI,materialTypeUI,componentTable,machineToolTable,skinTable,thirdComponentTable,fieldPanel,attributePanel,actionPanel]
     });
+
+    Form.selectTableUI=selectTableUI;
 
     Form.serialNumberUILabel=serialNumberUILabel;
 
@@ -110,6 +128,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     Form.priceUILabel=priceUILabel;
 
     Form.priceUI=priceUI;
+
+    Form.selectMComponentTable=selectMComponentTable;
+
+    Form.savebtn=savebtn;
 
     Form.cancelbtn=cancelbtn;
 
@@ -159,6 +181,8 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
     Form.thirdComponentTable=thirdComponentTable;
 
+    Form.selectMComponentTable=selectMComponentTable;
+
     Form.attributePanel=attributePanel;
 
     Form.serialNumberUILabel=serialNumberUILabel;
@@ -183,17 +207,46 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
     Form.actionPanel=actionPanel;
 
+    Form.savebtn=savebtn;
+
     Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin */
-        /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin */
+
+        
+       $(this.selectMComponentTable).parent().css("display", "none");
+       $(this.selectMComponentTable).css("display", "block");
+       var othis = this;
+       var overrideSelectOne = function(tableId) {
+           if (tableId.indexOf("componentTable.itemTable") != -1) {
+              othis.selectTableUI.setValue("1"); 
+           } else if (tableId.indexOf("machineToolTable.itemTable") != -1) {
+              othis.selectTableUI.setValue("2"); 
+           } else if (tableId.indexOf("skinTable.itemTable") != -1) {
+              othis.selectTableUI.setValue("3"); 
+           } else if (tableId.indexOf("thirdComponentTable.itemTable") != -1) {
+              othis.selectTableUI.setValue("4"); 
+           }
+           othis.showSelectOneTable(othis.savebtn);
+       };
+       this.componentTable.selectOne = overrideSelectOne;
+       this.machineToolTable.selectOne = overrideSelectOne;
+       this.skinTable.selectOne = overrideSelectOne;
+       this.thirdComponentTable.selectOne = overrideSelectOne;
+    
+    
+            /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin */
     };
 
     Form.Save = org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_Save;
 
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_Cancel;
+
+    Form.showSelectOneTable = org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_showSelectOneTable;
+
+    Form.selectedOne = org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_selectedOne;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_invokeDynamicFunction;
 
@@ -227,6 +280,58 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20170125-215225",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_showSelectOneTable(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_showSelectOneTable */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"showSelectOne-20170202-155225",UIMaster.getValue(eventsource),o.__entityName);
+
+        { 
+            var othis = this;
+            if (IS_MOBILEVIEW) {
+               $(othis.selectMComponentTable).parent().dialog({
+                    height: ($(window.top).height()),
+					width: "100%",
+					modal: true,
+					closeOnEscape: true,
+					open: function(event, ui) {
+					   $(othis.selectMComponentTable).parent().css("display", "block");
+					},
+					beforeClose: function() {
+					   $(othis.selectMComponentTable).parent().css("display", "none");
+					}
+				});
+            } else {
+               $(othis.selectMComponentTable).parent().dialog({
+                    height: "300",
+					width: "400",
+					modal: true,
+					closeOnEscape: true,
+					open: function(event, ui) {
+					   $(othis.selectMComponentTable).parent().css("display", "block");
+					},
+					beforeClose: function() {
+					   $(othis.selectMComponentTable).parent().css("display", "none");
+					}
+				});
+            }
+        }    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_showSelectOneTable */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_selectedOne(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_selectedOne */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedOne-20170202-155225",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_selectedOne */
 
 
     /* auto generated eventlistener function declaration */

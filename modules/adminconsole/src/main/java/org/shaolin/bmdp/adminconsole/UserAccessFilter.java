@@ -61,7 +61,8 @@ public class UserAccessFilter implements Filter {
 			appContext = (IAppServiceManager) filterConfig.getServletContext().getAttribute(
 					IAppServiceManager.class.getCanonicalName());
 		}
-		// AttributesAccessor attrAccessor = new AttributesAccessor((HttpServletRequest)request);
+		
+//		AttributesAccessor attrAccessor = new AttributesAccessor((HttpServletRequest)request);
 		IUserService userService = appContext.getService(IUserService.class);
 		boolean userOnline = userService.checkUserOnline(((HttpServletRequest)request).getSession());
 		String queryString = ((HttpServletRequest)request).getQueryString();
@@ -69,6 +70,11 @@ public class UserAccessFilter implements Filter {
 			if (userOnline) {
 				 if(queryString.indexOf(loginName) != -1) {
 					 ((HttpServletResponse)response).sendRedirect(request.getServletContext().getContextPath() + mainPageURL);
+					 return;
+				 }
+			} else {
+				if(queryString.indexOf(mainPageName) != -1) {
+					 ((HttpServletResponse)response).sendRedirect(request.getServletContext().getContextPath() + loginURL);
 					 return;
 				 }
 			}
@@ -88,6 +94,7 @@ public class UserAccessFilter implements Filter {
 				return;
 			}
 		}
+		
 		chain.doFilter(request, response);
 	}
 

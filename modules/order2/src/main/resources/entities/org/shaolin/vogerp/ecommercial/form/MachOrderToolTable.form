@@ -18,7 +18,7 @@
             HashMap input = new HashMap();
             input.put("beObject", defaultUser);
             input.put("editable", new Boolean(true));
-            RefForm form = new RefForm("cmForm", "org.shaolin.vogerp.ecommercial.form.MachOrderComponent", input);
+            RefForm form = new RefForm("cmForm", "org.shaolin.vogerp.ecommercial.form.MachOrderMTool", input);
             @page.addElement(form);
             
             form.openInWindows("添加设备", null, true);
@@ -33,18 +33,18 @@
         import java.util.HashMap;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
-        import org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl;
+        import org.shaolin.vogerp.ecommercial.be.MachOrderComponentImpl;
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
         { 
             Table orderInfoTable = (Table)@page.getElement("itemTable");
             if (orderInfoTable.getSelectedRow() == null) {
                 return;
             }
-            MachiningComponentImpl defaultUser = (MachiningComponentImpl)orderInfoTable.getSelectedRow();
+            MachOrderComponentImpl defaultUser = (MachOrderComponentImpl)orderInfoTable.getSelectedRow();
             HashMap input = new HashMap();
             input.put("beObject", defaultUser);
             input.put("editable", new Boolean(true));
-            RefForm form = new RefForm("cmForm", "org.shaolin.vogerp.ecommercial.form.MachOrderComponent", input);
+            RefForm form = new RefForm("cmForm", "org.shaolin.vogerp.ecommercial.form.MachOrderMTool", input);
             @page.addElement(form);
             
             form.openInWindows("修改设备", null, true);
@@ -52,8 +52,8 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
-  <ns2:eventHandler functionName="select">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="select-20160325-112850">
+  <ns2:eventHandler functionName="delete">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="delete-20160325-112843">
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
@@ -63,10 +63,19 @@
         import org.shaolin.vogerp.ecommercial.be.MachOrderComponentImpl;
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
         { 
-            //TODO:
+            Table table = (Table)@page.getElement("itemTable");
+            if (table.getSelectedRow() == null) {
+                return;
+            }
+            MachOrderComponentImpl defaultUser = (MachOrderComponentImpl)table.getSelectedRow();
+            table.deleteRow(table.getSelectedIndex());
+            
+            table.refresh();
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="selectOne">
   </ns2:eventHandler>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -163,6 +172,17 @@
           <ns2:defaultOpenAction>open</ns2:defaultOpenAction>
           <ns2:defaultDeleteAction>delete</ns2:defaultDeleteAction>
         </ns2:defaultActions>
+        <ns2:actionGroup>
+          <ns2:type>radio</ns2:type>
+          <ns2:action>
+              <ns2:uiid>selectOne</ns2:uiid>
+              <ns2:title xsi:type="ns2:StringPropertyType">
+                  <ns2:value>选择一个</ns2:value>
+              </ns2:title>
+              <ns2:icon>ui-icon-note</ns2:icon>
+              <ns2:function>selectOne</ns2:function>
+          </ns2:action>
+        </ns2:actionGroup>
       </ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>itemTable</ns2:componentId>

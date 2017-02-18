@@ -1,6 +1,6 @@
 /* null */
 /* auto generated constructor */
-function org_shaolin_vogerp_ecommercial_form_MachOrderComponent(json)
+function org_shaolin_vogerp_ecommercial_form_MachOrderThirdComp(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
     var estiWeightUILabel = new UIMaster.ui.label
@@ -33,7 +33,7 @@ function org_shaolin_vogerp_ecommercial_form_MachOrderComponent(json)
         ui: elementList[prefix + "cancelbtn"]
     });
 
-    var parentComponent = new org_shaolin_vogerp_ecommercial_form_MachiningComponent({"prefix":prefix + "parentComponent."});
+    var parentComponent = new org_shaolin_vogerp_ecommercial_form_MachiCompThirdComp({"prefix":prefix + "parentComponent."});
 
     var actionPanel = new UIMaster.ui.panel
     ({
@@ -87,50 +87,50 @@ function org_shaolin_vogerp_ecommercial_form_MachOrderComponent(json)
 
     Form.user_constructor = function()
     {
-        /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_MachOrderComponent */
-        /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_MachOrderComponent */
+        /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_MachOrderThirdComp */
+        /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_MachOrderThirdComp */
     };
 
-    Form.Save = org_shaolin_vogerp_ecommercial_form_MachOrderComponent_Save;
+    Form.Save = org_shaolin_vogerp_ecommercial_form_MachOrderThirdComp_Save;
 
-    Form.Cancel = org_shaolin_vogerp_ecommercial_form_MachOrderComponent_Cancel;
+    Form.Cancel = org_shaolin_vogerp_ecommercial_form_MachOrderThirdComp_Cancel;
 
-    Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_MachOrderComponent_invokeDynamicFunction;
+    Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_MachOrderThirdComp_invokeDynamicFunction;
 
-    Form.__entityName="org.shaolin.vogerp.ecommercial.form.MachOrderComponent";
+    Form.__entityName="org.shaolin.vogerp.ecommercial.form.MachOrderThirdComp";
 
     Form.init();
     return Form;
 };
 
     /* EventHandler Functions */
-/* Other_Func_FIRST:org_shaolin_vogerp_ecommercial_form_MachOrderComponent */
-/* Other_Func_LAST:org_shaolin_vogerp_ecommercial_form_MachOrderComponent */
+/* Other_Func_FIRST:org_shaolin_vogerp_ecommercial_form_MachOrderThirdComp */
+/* Other_Func_LAST:org_shaolin_vogerp_ecommercial_form_MachOrderThirdComp */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_MachOrderComponent_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachOrderComponent_Save */
+    function org_shaolin_vogerp_ecommercial_form_MachOrderThirdComp_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachOrderThirdComp_Save */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20170210-120623",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachOrderComponent_Save */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20170211-201326",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachOrderThirdComp_Save */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_MachOrderComponent_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachOrderComponent_Cancel */
+    function org_shaolin_vogerp_ecommercial_form_MachOrderThirdComp_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachOrderThirdComp_Cancel */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20170210-120623",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachOrderComponent_Cancel */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20170211-201346",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachOrderThirdComp_Cancel */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_MachOrderComponent_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachOrderComponent_invokeDynamicFunction */
+    function org_shaolin_vogerp_ecommercial_form_MachOrderThirdComp_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachOrderThirdComp_invokeDynamicFunction */
         var o = this;
         var UIEntity = this;
 
@@ -148,7 +148,7 @@ function org_shaolin_vogerp_ecommercial_form_MachOrderComponent(json)
         
         }
         }).open();
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachOrderComponent_invokeDynamicFunction */
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachOrderThirdComp_invokeDynamicFunction */
 
 
 

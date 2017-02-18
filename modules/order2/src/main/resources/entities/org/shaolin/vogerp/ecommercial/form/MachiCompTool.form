@@ -129,6 +129,16 @@
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
+      <ns2:Property name="style">
+         <ns2:value xsi:type="ns2:ExpressionPropertyType">
+	        <ns2:expression>
+	          <expressionString><![CDATA[
+	          { 
+	              return ($editable != null && $editable == Boolean.FALSE) ? "display:none" : ""; 
+	          }]]></expressionString>
+	        </ns2:expression>
+	      </ns2:value>
+      </ns2:Property>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="Save"></ns2:handler>

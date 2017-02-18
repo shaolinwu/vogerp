@@ -615,6 +615,26 @@
             <bediagram:intValue>2</bediagram:intValue>
             <bediagram:description>克</bediagram:description>
         </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>meter</bediagram:value>
+            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:description>米</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>centimeter</bediagram:value>
+            <bediagram:intValue>4</bediagram:intValue>
+            <bediagram:description>厘米</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>block</bediagram:value>
+            <bediagram:intValue>5</bediagram:intValue>
+            <bediagram:description>块</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>number</bediagram:value>
+            <bediagram:intValue>6</bediagram:intValue>
+            <bediagram:description>个</bediagram:description>
+        </bediagram:constantValue>
     </bediagram:ceEntity>
     
 </bediagram:BEDiagram>

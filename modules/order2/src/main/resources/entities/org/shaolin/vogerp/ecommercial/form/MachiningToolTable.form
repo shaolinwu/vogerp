@@ -1,0 +1,210 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.ecommercial.form.MachiningToolTable</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="createMachineTools">
+	    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createMachineTools-2016-0124-1351">
+               <ns2:exp>
+                   <ns2:expressionString><![CDATA[
+                   import java.util.HashMap;
+                   import org.shaolin.uimaster.page.AjaxContext;
+                   import org.shaolin.uimaster.page.ajax.*;
+                   import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                   import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
+                   import org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl;
+                   {
+                       MachiningComponentImpl machiningComponent = new MachiningComponentImpl();
+                       machiningComponent.setCategory(MachiningCategoryType.MACHININGTOOL);
+                       HashMap input = new HashMap();
+                       input.put("beObject", machiningComponent);
+                       input.put("editable", new Boolean(true));
+                       RefForm form = new RefForm("mComponentForm", "org.shaolin.vogerp.ecommercial.form.MachiCompTool", input);
+                       @page.addElement(form);
+                       
+                       form.openInWindows("添加加工设备", new TableCallBack("mToolTable"), true);
+                   }
+                   ]]></ns2:expressionString>
+               </ns2:exp>
+           </ns2:ops>
+	</ns2:eventHandler>
+	<ns2:eventHandler functionName="openMachineTools">
+	    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openMachineTools-2016-0124-1351">
+               <ns2:exp>
+                   <ns2:expressionString><![CDATA[
+                   import java.util.HashMap;
+                   import org.shaolin.uimaster.page.AjaxContext;
+                   import org.shaolin.uimaster.page.ajax.*;
+                   import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                   import org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl;
+                   {
+                       Table orderInfoTable = (Table)@page.getElement("mToolTable");
+                       if (orderInfoTable.getSelectedRow() == null) {
+                           return;
+                       }
+                       MachiningComponentImpl defaultUser = (MachiningComponentImpl)orderInfoTable.getSelectedRow();
+                       
+                       HashMap input = new HashMap();
+                       input.put("beObject", defaultUser);
+                       input.put("editable", new Boolean(true));
+                       RefForm form = new RefForm("mComponentForm", "org.shaolin.vogerp.ecommercial.form.MachiCompTool", input);
+                       @page.addElement(form);
+                       
+                       form.openInWindows("加工设备详情", new TableCallBack("mToolTable"), true);
+                   }
+                   ]]></ns2:expressionString>
+               </ns2:exp>
+           </ns2:ops>
+	</ns2:eventHandler>
+	<ns2:eventHandler functionName="deleteMachineTools">
+	    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deleteMachineTools-2016-0124-1351">
+               <ns2:exp>
+                   <ns2:expressionString><![CDATA[
+                   import java.util.HashMap;
+                   import org.shaolin.uimaster.page.AjaxContext;
+                   import org.shaolin.uimaster.page.ajax.*;
+                   import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                   import org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl;
+                   import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                   {
+                       Table orderInfoTable = (Table)@page.getElement("mToolTable");
+                       if (orderInfoTable.getSelectedRow() == null) {
+                           return;
+                       }
+                       MachiningComponentImpl defaultUser = (MachiningComponentImpl)orderInfoTable.getSelectedRow();
+                       CommonModel.INSTANCE.delete(defaultUser);
+                       orderInfoTable.refresh();
+                   }
+                   ]]></ns2:expressionString>
+               </ns2:exp>
+           </ns2:ops>
+	</ns2:eventHandler>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="parentIdUI">
+        <ns2:secure>
+          <ns2:value>true</ns2:value>
+        </ns2:secure>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UITableType" UIID="mToolTable">
+        <ns2:beElement>org.shaolin.vogerp.ecommercial.be.MachiningComponent</ns2:beElement>
+        <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+        <ns2:defaultRowSize>20</ns2:defaultRowSize>
+        <ns2:showActionBar>true</ns2:showActionBar>
+        <ns2:showFilter>true</ns2:showFilter>
+        <ns2:query xsi:type="ns2:ExpressionPropertyType">
+            <ns2:expression xsi:type="ns2:ExpressionType">
+                <ns2:expressionString><![CDATA[
+                import java.util.List;
+                import org.shaolin.uimaster.page.ajax.TableConditions;
+                import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
+                import org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl;
+                import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                import org.shaolin.bmdp.runtime.AppContext; 
+                      import org.shaolin.vogerp.commonmodel.IUserService;
+                      import org.shaolin.bmdp.runtime.security.UserContext;
+                {
+                      if ($tableCondition == null) {
+                         $tableCondition = TableConditions.createCondition(new MachiningComponentImpl());
+                         $tableCondition.setCount(20);
+                               $tableCondition.addOrder("createDate", false);
+                      }
+                      MachiningComponentImpl condition = (MachiningComponentImpl)$tableCondition.getCondition();
+                      condition.setCategory(MachiningCategoryType.MACHININGTOOL);
+                      return OrderModel.INSTANCE.searchMachiningComponent(condition,
+                                    $tableCondition.getOrders(),
+                                    $tableCondition.getOffset(), 
+                                    $tableCondition.getCount());
+                }]]></ns2:expressionString>
+            </ns2:expression>
+        </ns2:query>
+        <ns2:column xsi:type="ns2:UITableColumnType">
+            <ns2:title xsi:type="ns2:StringPropertyType">
+                <ns2:value>名称</ns2:value>
+            </ns2:title>
+            <ns2:beFieldId>rowBE.name</ns2:beFieldId>
+            <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+        </ns2:column>
+        <ns2:column xsi:type="ns2:UITableColumnType">
+            <ns2:title xsi:type="ns2:StringPropertyType">
+                <ns2:value>工时价</ns2:value>
+            </ns2:title>
+            <ns2:beFieldId>rowBE.price</ns2:beFieldId>
+            <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+            <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+			    <ns2:expression xsi:type="ns2:ExpressionType">
+			        <ns2:expressionString><![CDATA[
+			        import org.shaolin.bmdp.utils.StringUtil;
+			        {
+			           return $rowBE.getPrice() + "";
+			        }]]></ns2:expressionString>
+			    </ns2:expression>
+			</ns2:rowExpression>
+        </ns2:column>
+        <ns2:defaultActions>
+            <ns2:defaultNewAction>createMachineTools</ns2:defaultNewAction>
+            <ns2:defaultOpenAction>openMachineTools</ns2:defaultOpenAction>
+            <ns2:defaultDeleteAction>deleteMachineTools</ns2:defaultDeleteAction>
+        </ns2:defaultActions>
+    </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>mToolTable</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:constructorCode><![CDATA[
+      {
+        var o = this;
+        this.mToolTable.callSelectedFunc = function() {
+           o.mToolTable.sync();
+        };
+      }
+    ]]>
+    </ns2:constructorCode>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="list" category="JavaClass">
+      <type entityName="java.util.List"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.ecommercial.be.MachiningComponent"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
+    <ns2:DataToUIMappingOperation>
+      <expressionString><![CDATA[
+      import java.util.List;
+      import java.util.ArrayList;
+      import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
+      import org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl;
+      {
+		@odContext.executeAllMappings();
+	  }
+	  ]]></expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString><![CDATA[
+      import java.util.List;
+      import java.util.ArrayList;
+      import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
+      import org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl;
+      {
+		$beObject = (MachiningComponentImpl)@page.getTable("mToolTable").getSelectedRow();
+      }
+     ]]></expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

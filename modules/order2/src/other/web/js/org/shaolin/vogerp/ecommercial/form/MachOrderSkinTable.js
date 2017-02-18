@@ -56,7 +56,9 @@ function org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable(json)
 
     Form.open = org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable_open;
 
-    Form.select = org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable_select;
+    Form.delete = org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable_delete;
+
+    Form.selectOne = org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable_selectOne;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable_invokeDynamicFunction;
 
@@ -93,14 +95,21 @@ function org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable(json)
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable_select(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable_select */
+    function org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable_delete(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable_delete */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"select-20160325-112851",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable_select */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"delete-20160325-122849",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable_delete */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable_selectOne(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable_selectOne */
+        var o = this;
+        var UIEntity = this;
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable_selectOne */
 
 
     /* auto generated eventlistener function declaration */
