@@ -23,7 +23,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
         ui: elementList[prefix + "descriptionUILabel"]
     });
 
-    var descriptionUI = new UIMaster.ui.textfield
+    var descriptionUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "descriptionUI"]
         ,showMaxLength: 100
@@ -44,20 +44,15 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
         ui: elementList[prefix + "materialTypeUILabel"]
     });
 
-    var priceUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "priceUILabel"]
-    });
-
-    var priceUI = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "priceUI"]
-    });
-
     var selectMComponentTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "selectMComponentTable"]
         ,style: "display:none;"
+    });
+
+    var viewbtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "viewbtn"]
     });
 
     var savebtn = new UIMaster.ui.button
@@ -86,14 +81,14 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "savebtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "viewbtn",prefix + "savebtn",prefix + "cancelbtn"]
     });
 
     var attributePanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI",prefix + "priceUILabel",prefix + "priceUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -106,7 +101,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [selectTableUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,countUILabel,countUI,materialTypeUILabel,priceUILabel,priceUI,selectMComponentTable,savebtn,cancelbtn,photoUI,materialTypeUI,componentTable,machineToolTable,skinTable,thirdComponentTable,fieldPanel,attributePanel,actionPanel]
+        ,items: [selectTableUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,countUILabel,countUI,materialTypeUILabel,selectMComponentTable,viewbtn,savebtn,cancelbtn,photoUI,materialTypeUI,componentTable,machineToolTable,skinTable,thirdComponentTable,fieldPanel,attributePanel,actionPanel]
     });
 
     Form.selectTableUI=selectTableUI;
@@ -125,11 +120,9 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
     Form.materialTypeUILabel=materialTypeUILabel;
 
-    Form.priceUILabel=priceUILabel;
-
-    Form.priceUI=priceUI;
-
     Form.selectMComponentTable=selectMComponentTable;
+
+    Form.viewbtn=viewbtn;
 
     Form.savebtn=savebtn;
 
@@ -169,10 +162,6 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
     Form.materialTypeUI=materialTypeUI;
 
-    Form.priceUILabel=priceUILabel;
-
-    Form.priceUI=priceUI;
-
     Form.componentTable=componentTable;
 
     Form.machineToolTable=machineToolTable;
@@ -201,11 +190,9 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
     Form.materialTypeUI=materialTypeUI;
 
-    Form.priceUILabel=priceUILabel;
-
-    Form.priceUI=priceUI;
-
     Form.actionPanel=actionPanel;
+
+    Form.viewbtn=viewbtn;
 
     Form.savebtn=savebtn;
 
@@ -242,6 +229,8 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
     Form.Save = org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_Save;
 
+    Form.PreView = org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_PreView;
+
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_Cancel;
 
     Form.showSelectOneTable = org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_showSelectOneTable;
@@ -269,6 +258,17 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20170125-215225",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_Save */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_PreView(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_PreView */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"preView-20170125-215225",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_PreView */
 
 
     /* auto generated eventlistener function declaration */

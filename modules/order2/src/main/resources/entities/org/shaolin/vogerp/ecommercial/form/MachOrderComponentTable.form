@@ -12,6 +12,7 @@
         import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
         import org.shaolin.vogerp.ecommercial.be.MachOrderComponentImpl;
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+        import org.shaolin.vogerp.ecommercial.uiwidget.*;
         { 
             MachOrderComponentImpl defaultUser = new MachOrderComponentImpl();
             defaultUser.setCategory(MachiningCategoryType.MATERIAL);
@@ -21,7 +22,9 @@
             RefForm form = new RefForm("cmForm", "org.shaolin.vogerp.ecommercial.form.MachOrderComponent", input);
             @page.addElement(form);
             
-            form.openInWindows("添加材料", null, true);
+            Table t = (Table)@page.getElement("itemTable");
+            CreateComponentCallBack callback = new CreateComponentCallBack(t);
+            form.openInWindows("添加材料", callback, true);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -36,6 +39,7 @@
         import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
         import org.shaolin.vogerp.ecommercial.be.MachOrderComponentImpl;
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+        import org.shaolin.vogerp.ecommercial.uiwidget.*;
         { 
             Table orderInfoTable = (Table)@page.getElement("itemTable");
             if (orderInfoTable.getSelectedRow() == null) {
@@ -48,7 +52,8 @@
             RefForm form = new RefForm("cmForm", "org.shaolin.vogerp.ecommercial.form.MachOrderComponent", input);
             @page.addElement(form);
             
-            form.openInWindows("配制材料", null, true);
+            UpdateComponentCallBack callback = new UpdateComponentCallBack(orderInfoTable);
+            form.openInWindows("配制材料", callback, true);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -94,6 +99,11 @@
         </ns2:secure>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITableType" UIID="itemTable">
+        <ns2:Property name="disableRefreshClear">
+          <ns2:value xsi:type="ns2:BooleanPropertyType">
+	        <ns2:value>true</ns2:value>
+	      </ns2:value>
+        </ns2:Property>
         <ns2:beElement>org.shaolin.vogerp.ecommercial.be.MachOrderComponent</ns2:beElement>
         <ns2:defaultRowSize>10</ns2:defaultRowSize>
         <ns2:showBigItem>false</ns2:showBigItem>
@@ -169,9 +179,9 @@
         </ns2:column>
         <ns2:column>
           <ns2:title xsi:type="ns2:StringPropertyType">
-            <ns2:value>工时价格</ns2:value>
+            <ns2:value>单价</ns2:value>
           </ns2:title>
-          <ns2:beFieldId>rowBE.estiMakingHour</ns2:beFieldId>
+          <ns2:beFieldId>rowBE.price</ns2:beFieldId>
           <ns2:uiType>
             <ns2:type>Label</ns2:type>
           </ns2:uiType>
@@ -181,7 +191,7 @@
                  import java.lang.StringBuffer;
                  import org.shaolin.uimaster.page.od.formats.FormatUtil;
                  {
-                     return $rowBE.getEstiMakingHour() +"个工时, 单价: " + FormatUtil.getCurrency($rowBE.getPrice(), null, true) ;
+                     return FormatUtil.getCurrency($rowBE.getPrice(), null, true) ;
                  }]]></ns2:expressionString>
              </ns2:expression>
          </ns2:rowExpression>

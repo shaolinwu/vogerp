@@ -23,7 +23,7 @@
                 CommonModel.INSTANCE.update(defaultUser);
             }
 
-            form.closeIfinWindows();
+            form.closeIfinWindows(new Object[]{defaultUser});
             @page.removeForm(@page.getEntityUiid()); 
         }]]></expressionString>
       </ns2:exp>

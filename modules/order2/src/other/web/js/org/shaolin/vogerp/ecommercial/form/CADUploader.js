@@ -26,6 +26,11 @@ function org_shaolin_vogerp_ecommercial_form_CADUploader(json)
         ui: elementList[prefix + "uploadFile"]
     });
 
+    var downloadBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "downloadBtn"]
+    });
+
     var photoPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "photoPanel"]
@@ -37,14 +42,14 @@ function org_shaolin_vogerp_ecommercial_form_CADUploader(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "photoPanel",prefix + "uploadFile"]
+        ,subComponents: [prefix + "photoPanel",prefix + "uploadFile",prefix + "downloadBtn"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [imagePathUI,searchWordsUI,photoUI,uploadFile,fieldPanel,photoPanel]
+        ,items: [imagePathUI,searchWordsUI,photoUI,uploadFile,downloadBtn,fieldPanel,photoPanel]
     });
 
     Form.imagePathUI=imagePathUI;
@@ -55,6 +60,8 @@ function org_shaolin_vogerp_ecommercial_form_CADUploader(json)
 
     Form.uploadFile=uploadFile;
 
+    Form.downloadBtn=downloadBtn;
+
     Form.fieldPanel=fieldPanel;
 
     Form.photoPanel=photoPanel;
@@ -62,6 +69,8 @@ function org_shaolin_vogerp_ecommercial_form_CADUploader(json)
     Form.photoUI=photoUI;
 
     Form.uploadFile=uploadFile;
+
+    Form.downloadBtn=downloadBtn;
 
     Form.photoPanel=photoPanel;
 
@@ -104,6 +113,8 @@ function org_shaolin_vogerp_ecommercial_form_CADUploader(json)
     Form.clean = org_shaolin_vogerp_ecommercial_form_CADUploader_clean;
 
     Form.search = org_shaolin_vogerp_ecommercial_form_CADUploader_search;
+
+    Form.Download = org_shaolin_vogerp_ecommercial_form_CADUploader_Download;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_CADUploader_invokeDynamicFunction;
 
@@ -148,6 +159,17 @@ function org_shaolin_vogerp_ecommercial_form_CADUploader(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"search-20160520-172647",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_CADUploader_search */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_CADUploader_Download(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_CADUploader_Download */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"Download-20160520-172647",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_CADUploader_Download */
 
 
     /* auto generated eventlistener function declaration */

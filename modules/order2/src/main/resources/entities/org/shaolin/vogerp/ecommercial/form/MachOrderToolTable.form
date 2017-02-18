@@ -12,6 +12,7 @@
         import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
         import org.shaolin.vogerp.ecommercial.be.MachOrderComponentImpl;
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+        import org.shaolin.vogerp.ecommercial.uiwidget.*;
         { 
             MachOrderComponentImpl defaultUser = new MachOrderComponentImpl();
             defaultUser.setCategory(MachiningCategoryType.MACHININGTOOL);
@@ -21,7 +22,9 @@
             RefForm form = new RefForm("cmForm", "org.shaolin.vogerp.ecommercial.form.MachOrderMTool", input);
             @page.addElement(form);
             
-            form.openInWindows("添加设备", null, true);
+            Table t = (Table)@page.getElement("itemTable");
+            CreateComponentCallBack callback = new CreateComponentCallBack(t);
+            form.openInWindows("添加设备", callback, true);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -35,6 +38,7 @@
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.ecommercial.be.MachOrderComponentImpl;
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+        import org.shaolin.vogerp.ecommercial.uiwidget.*;
         { 
             Table orderInfoTable = (Table)@page.getElement("itemTable");
             if (orderInfoTable.getSelectedRow() == null) {
@@ -47,7 +51,8 @@
             RefForm form = new RefForm("cmForm", "org.shaolin.vogerp.ecommercial.form.MachOrderMTool", input);
             @page.addElement(form);
             
-            form.openInWindows("修改设备", null, true);
+            UpdateComponentCallBack callback = new UpdateComponentCallBack(orderInfoTable);
+            form.openInWindows("修改加工设备", callback, true);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -93,6 +98,11 @@
         </ns2:secure>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITableType" UIID="itemTable">
+        <ns2:Property name="disableRefreshClear">
+          <ns2:value xsi:type="ns2:BooleanPropertyType">
+	        <ns2:value>true</ns2:value>
+	      </ns2:value>
+        </ns2:Property>
         <ns2:beElement>org.shaolin.vogerp.ecommercial.be.MachOrderComponent</ns2:beElement>
         <ns2:defaultRowSize>10</ns2:defaultRowSize>
         <ns2:showBigItem>false</ns2:showBigItem>

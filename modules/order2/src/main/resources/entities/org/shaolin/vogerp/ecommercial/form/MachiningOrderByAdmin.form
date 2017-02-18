@@ -29,6 +29,32 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
+  <ns2:eventHandler functionName="PreView">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="preView-20170125-215225">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
+        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            HashMap out = (HashMap)form.ui2Data();
+            
+            String formUI = "org.shaolin.vogerp.ecommercial.form.MachiningOrderWithResult";
+            HashMap input = new HashMap();
+            input.put("editable", new Boolean(false));
+            input.put("beObject", out.get("beObject"));
+            
+            RefForm newform = new RefForm("previewMOrderForm", formUI, input);
+            @page.addElement(newform);
+            
+            newform.openInWindows("预览报价单", null, true);
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
   <ns2:eventHandler functionName="Cancel">
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20170125-215225">
       <ns2:exp>
@@ -186,7 +212,6 @@
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
             <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
           </ns2:layout>
@@ -207,7 +232,7 @@
               <ns2:key>org.shaolin.vogerp.ecommercial.be.GoldenOrder.description</ns2:key>
             </ns2:text>
           </ns2:component>
-          <ns2:component xsi:type="ns2:UITextFieldType" UIID="descriptionUI">
+          <ns2:component xsi:type="ns2:UITextAreaType" UIID="descriptionUI">
             <ns2:UIStyle></ns2:UIStyle>
             <ns2:Property name="showMaxLength">
                <ns2:value xsi:type="ns2:NumericPropertyType">
@@ -228,19 +253,11 @@
 	      <ns2:component xsi:type="ns2:UILabelType" UIID="materialTypeUILabel">
 	        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
 	        <ns2:text xsi:type="ns2:StringPropertyType">
-	          <ns2:value>选择材料</ns2:value>
+	          <ns2:value>主材料</ns2:value>
 	        </ns2:text>
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="materialTypeUI">
 	         <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox" />
-	      </ns2:component>
-	      <ns2:component xsi:type="ns2:UILabelType" UIID="priceUILabel">
-	        <ns2:UIStyle></ns2:UIStyle>
-	        <ns2:text xsi:type="ns2:StringPropertyType">
-              <ns2:value>总价(元)</ns2:value>
-            </ns2:text>
-	      </ns2:component>
-	      <ns2:component xsi:type="ns2:UILabelType" UIID="priceUI">
 	      </ns2:component>
           <ns2:layoutConstraint>
             <ns2:componentId>serialNumberUILabel</ns2:componentId>
@@ -274,14 +291,6 @@
             <ns2:componentId>materialTypeUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
           </ns2:layoutConstraint>
-	      <ns2:layoutConstraint>
-	        <ns2:componentId>priceUILabel</ns2:componentId>
-	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-	      </ns2:layoutConstraint>
-	      <ns2:layoutConstraint>
-	        <ns2:componentId>priceUI</ns2:componentId>
-	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-	      </ns2:layoutConstraint>
        </ns2:component>
        <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="componentTable">
           <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
@@ -425,7 +434,16 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="viewbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="PreView"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>预览报价单</ns2:value>
+        </ns2:text>
+      </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="savebtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="Save"></ns2:handler>
@@ -444,12 +462,16 @@
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>savebtn</ns2:componentId>
+        <ns2:componentId>viewbtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:componentId>savebtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="2" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
@@ -530,11 +552,6 @@
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="descriptionUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.description" paramName="StringData"></ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithCurrency"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="priceUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.endPrice" paramName="Currency"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
       <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox"></ns2:mappingRule>

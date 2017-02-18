@@ -257,11 +257,11 @@
                     import org.shaolin.bmdp.runtime.security.UserContext;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     {
-                       return $beObject.getStatus() == OrderStatusType.PUBLISHED;
+                       return $beObject.getStatus() == OrderStatusType.PUBLISHED && !UserContext.hasRole("Admin,0");
                     }
                 ]]></expressionString></ns2:filter>
             </ns2:uiAction>
-            <ns2:participant partyType="GenericOrganizationType.Director,0" />
+            <ns2:participant partyType="GenericOrganizationType.Director,0" onlyOwner="true"/>
             <ns2:process>
                 <ns2:var name="gorder" category="BusinessEntity" scope="InOut">
                     <type entityName="org.shaolin.vogerp.ecommercial.be.MachiningOrder"></type>
