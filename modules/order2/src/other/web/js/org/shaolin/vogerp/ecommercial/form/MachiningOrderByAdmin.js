@@ -44,6 +44,16 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
         ui: elementList[prefix + "materialTypeUILabel"]
     });
 
+    var taxRateUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "taxRateUILabel"]
+    });
+
+    var taxRateUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "taxRateUI"]
+    });
+
     var selectMComponentTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "selectMComponentTable"]
@@ -88,7 +98,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI",prefix + "taxRateUILabel",prefix + "taxRateUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -101,7 +111,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [selectTableUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,countUILabel,countUI,materialTypeUILabel,selectMComponentTable,viewbtn,savebtn,cancelbtn,photoUI,materialTypeUI,componentTable,machineToolTable,skinTable,thirdComponentTable,fieldPanel,attributePanel,actionPanel]
+        ,items: [selectTableUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,countUILabel,countUI,materialTypeUILabel,taxRateUILabel,taxRateUI,selectMComponentTable,viewbtn,savebtn,cancelbtn,photoUI,materialTypeUI,componentTable,machineToolTable,skinTable,thirdComponentTable,fieldPanel,attributePanel,actionPanel]
     });
 
     Form.selectTableUI=selectTableUI;
@@ -119,6 +129,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     Form.countUI=countUI;
 
     Form.materialTypeUILabel=materialTypeUILabel;
+
+    Form.taxRateUILabel=taxRateUILabel;
+
+    Form.taxRateUI=taxRateUI;
 
     Form.selectMComponentTable=selectMComponentTable;
 
@@ -162,6 +176,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
     Form.materialTypeUI=materialTypeUI;
 
+    Form.taxRateUILabel=taxRateUILabel;
+
+    Form.taxRateUI=taxRateUI;
+
     Form.componentTable=componentTable;
 
     Form.machineToolTable=machineToolTable;
@@ -189,6 +207,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     Form.materialTypeUILabel=materialTypeUILabel;
 
     Form.materialTypeUI=materialTypeUI;
+
+    Form.taxRateUILabel=taxRateUILabel;
+
+    Form.taxRateUI=taxRateUI;
 
     Form.actionPanel=actionPanel;
 

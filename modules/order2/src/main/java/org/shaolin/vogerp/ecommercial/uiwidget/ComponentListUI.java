@@ -48,7 +48,9 @@ public class ComponentListUI extends HTMLWidgetType {
 					totalPrice += generateTable(context, getComponents(components, MachiningCategoryType.MACHININGTOOL), "\u52A0\u5DE5\u8BBE\u5907");
 					totalPrice += generateTable(context, getComponents(components, MachiningCategoryType.THIRDPARTYCOMPONET), "\u6807\u51C6\u4EF6\u53CA\u8F85\u52A9\u6750\u6599");
 				
-					context.generateHTML("<DIV style='font-weight:bold;color:red'>\u603B\u7ED3:"+FormatUtil.getCurrency(totalPrice, null, true)+"</DIV>");
+					double tax = morder.getTaxRate() * totalPrice;
+					context.generateHTML("<DIV>\u7A0E\u7387:"+FormatUtil.getCurrency(tax, null, true)+"</DIV>");
+					context.generateHTML("<DIV style='font-weight:bold;color:red'>\u603B\u7ED3:"+FormatUtil.getCurrency(totalPrice + tax, null, true)+"</DIV>");
 				} catch (Exception e) {
 					logger.warn("Error occurred while generating Machining order: " + e.getMessage(), e);
 				}

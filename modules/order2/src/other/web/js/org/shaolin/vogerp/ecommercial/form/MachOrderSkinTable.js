@@ -11,6 +11,7 @@ function org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable(json)
     var itemTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "itemTable"]
+        ,disableRefreshClear: true
     });
 
     var fieldPanel = new UIMaster.ui.panel

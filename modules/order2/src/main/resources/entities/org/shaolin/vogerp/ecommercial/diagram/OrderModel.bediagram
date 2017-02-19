@@ -46,6 +46,10 @@
             <bediagram:type xsi:type="bediagram:DoubleType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>taxRate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>productId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
