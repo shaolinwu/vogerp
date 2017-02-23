@@ -113,8 +113,9 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	 * @param registerInfo
 	 */
 	public synchronized boolean register(final IRegisterInfo registerInfo, HttpServletRequest request) {
-		if (registerInfo.getPhoneNumber() == null ||
-				registerInfo.getPhoneNumber().trim().length() == 0) {
+		if (registerInfo.getPhoneNumber() == null
+				|| registerInfo.getPhoneNumber().trim().length() == 0
+				|| registerInfo.getPhoneNumber().equals("null")) {
 			return false;
 		}
 		PersonalAccountImpl account = new PersonalAccountImpl();
@@ -300,7 +301,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			matchedUser.setLastLogin(new Date());
 			matchedUser.setAttempt(0);
 			matchedUser.setIsLocked(false);
-			matchedUser.setLoginedCount(matchedUser.getLoginedCount());
+			matchedUser.setLoginedCount(matchedUser.getLoginedCount() + 1);
 			CommonModel.INSTANCE.update(matchedUser);
 			
 			HttpSession session = request.getSession(true);

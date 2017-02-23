@@ -141,7 +141,7 @@
         </ns2:exp>
     </ns2:service>
     
-    <!-- only used for temporary. 
+    <!-- only used for temporary-->
     <ns2:service name="registerUserAccount">
         <ns2:exp>
             <expressionString><![CDATA[
@@ -171,5 +171,4 @@
      ]]></expressionString>
         </ns2:exp>
     </ns2:service>
-    -->
 </ns2:WebService>

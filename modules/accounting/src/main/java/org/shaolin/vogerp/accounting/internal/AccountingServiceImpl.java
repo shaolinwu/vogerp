@@ -77,8 +77,9 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		} else {
 			NotificationImpl message = new NotificationImpl();
             message.setPartyId(userContext.getUserId());
-            message.setSubject("\u60A8\u8FD8\u6CA1\u6709\u914D\u5236\u6613\u5E10\u53F7\uFF01");
-            message.setDescription("\u6211\u4EEC\u652F\u6301\u652F\u4ED8\u5B9D\u548C\u5FAE\u4FE1\u8D26\u53F7\u63D0\u73B0\u3002");
+            ///System/Vogerp/Notification/Payment/UserRegister
+            message.setSubject(Registry.getInstance().getValue("/System/Vogerp/Notification/Payment/UserRegister_SUB"));
+            message.setDescription(Registry.getInstance().getValue("/System/Vogerp/Notification/Payment/UserRegister_DESC"));
             message.setCreateDate(new java.util.Date());
             
             ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);

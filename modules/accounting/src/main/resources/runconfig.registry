@@ -22,6 +22,14 @@
                 </node>
             </node>
         </node>
+        <node name="Vogerp">
+        	<node name="Notification">
+        		<node name="Payment">
+        			<item name="UserRegister_SUB" value="支付帐号配制通知" />
+        			<item name="UserRegister_DESC" value="请您在基本信息功能里配制支付宝或微信号作为提现第三方帐号，谢谢！" />
+        		</node>
+        	</node>
+        </node>
         <node name="payment">
             <item name="orgName" value="上海抚企信息科技有限公司" />
             <node name="beecloud">
