@@ -13,6 +13,11 @@ function org_shaolin_vogerp_ecommercial_form_CADUploader(json)
         ui: elementList[prefix + "searchWordsUI"]
     });
 
+    var modelFileUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "modelFileUI"]
+    });
+
     var photoUI = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "photoUI"]
@@ -49,12 +54,14 @@ function org_shaolin_vogerp_ecommercial_form_CADUploader(json)
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [imagePathUI,searchWordsUI,photoUI,uploadFile,downloadBtn,fieldPanel,photoPanel]
+        ,items: [imagePathUI,searchWordsUI,modelFileUI,photoUI,uploadFile,downloadBtn,fieldPanel,photoPanel]
     });
 
     Form.imagePathUI=imagePathUI;
 
     Form.searchWordsUI=searchWordsUI;
+
+    Form.modelFileUI=modelFileUI;
 
     Form.photoUI=photoUI;
 

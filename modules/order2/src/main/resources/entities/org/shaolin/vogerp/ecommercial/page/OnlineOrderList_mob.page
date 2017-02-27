@@ -795,8 +795,6 @@
          </ns2:layoutConstraint>
          <ns2:constructorCode><![CDATA[
 	          {
-			UIMaster.require("/js/org/shaolin/vogerp/ecommercial/form/GoldenOrderOverView_mob.js");
-			UIMaster.require("/js/org/shaolin/vogerp/ecommercial/form/RentOrderOverView_mob.js");
 			}
 	         ]]></ns2:constructorCode>
 		</ns2:body>

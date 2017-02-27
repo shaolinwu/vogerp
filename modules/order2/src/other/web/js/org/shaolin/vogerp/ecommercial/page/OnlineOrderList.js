@@ -107,8 +107,6 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList(json)
 
         
 	          {
-			UIMaster.require("/js/org/shaolin/vogerp/ecommercial/form/GoldenOrderOverView.js");
-			UIMaster.require("/js/org/shaolin/vogerp/ecommercial/form/RentOrderOverView.js");
 			}
 	         
             /* Construct_LAST:org_shaolin_vogerp_ecommercial_page_OnlineOrderList */

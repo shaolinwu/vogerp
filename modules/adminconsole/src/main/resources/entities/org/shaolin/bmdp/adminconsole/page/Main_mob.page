@@ -253,10 +253,32 @@
 	                    <ns2:value>true</ns2:value>
 	                </ns2:isGallery>
 	                <ns2:Property name="value">
-	                    <ns2:value xsi:type="ns2:StringPropertyType">
-	                        <value>/images/adv/mainpage</value>
-	                    </ns2:value>
-	                </ns2:Property>
+		                <ns2:value xsi:type="ns2:ExpressionPropertyType">
+				         <ns2:expression>
+				           <expressionString><![CDATA[
+				           import java.util.List;
+				           import org.shaolin.bmdp.runtime.Registry;
+				           import org.shaolin.bmdp.runtime.AppContext;
+				           import org.shaolin.vogerp.campaign.be.ICampaign;
+				           import org.shaolin.vogerp.campaign.ce.CampaignType;
+				           import org.shaolin.vogerp.campaign.ICampaignService;
+				           import org.shaolin.bmdp.runtime.security.UserContext;
+				           { 
+				               ICampaignService service = (ICampaignService)AppContext.get().getService(ICampaignService.class);
+				               List result = service.getTodaysCampaign(CampaignType.FESTIVAL, UserContext.getUserContext().getUserRoles());
+				               if (result != null && result.size() > 0) {
+				                   return ((ICampaign)result.get(0)).getAdvMainImages();
+				               } else {
+				                   result = service.getTodaysCampaign(CampaignType.ADV, UserContext.getUserContext().getUserRoles());
+				                   if (result != null && result.size() > 0) {
+				                       return ((ICampaign)result.get(0)).getAdvMainImages();
+				                   } 
+				               }
+				               return "/images/adv/mainpage"; 
+				           }]]></expressionString>
+				         </ns2:expression>
+			           </ns2:value>
+		            </ns2:Property>
 	                <ns2:Property name="thumbnails">
                       <ns2:value xsi:type="ns2:BooleanPropertyType">
                          <value>false</value>

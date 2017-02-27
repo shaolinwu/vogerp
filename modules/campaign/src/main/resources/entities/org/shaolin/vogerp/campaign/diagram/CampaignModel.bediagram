@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bediagram:BEDiagram xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:bediagram="http://bmdp.shaolin.org/datamodel/BEDiagram"
+	xmlns:common="http://bmdp.shaolin.org/datamodel/Common">
+	<name>CampaignModel</name>
+	<bePackage>org.shaolin.vogerp.campaign.be</bePackage>
+	<cePackage>org.shaolin.vogerp.campaign.ce</cePackage>
+	<diagramPackage>org.shaolin.vogerp.campaign.diagram</diagramPackage>
+
+    <!-- 
+            运营活动一般分为： 日常运营活动和节日活动。    
+            一般活动需要活动的主题，参与活动的对象、活动的时间、活动的内容以及活动达到的效果。
+     1. 日常运营活动： 为了方便运营人员即时了解系统里所有业务每天的状态，需要采集业务数据，并提示运营人员是否有异常。
+     2. 节日活动: 为了更好的服务所有与在线客户，系统进行业务营销活动。
+     3. 广告运营：  为客户做广告服务。
+     -->
+	<bediagram:beEntity needPersist="true" needUIEntity="true">
+		<common:entityName>Campaign</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>name</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+		    <!-- 活动html内容 -->
+			<bediagram:name>descURL</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+		    <!-- 活动广告标题栏图片 -->
+			<bediagram:name>advTitleImage</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+		    <!-- 活动广告主页图片 -->
+			<bediagram:name>advMainImages</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+		    <!-- 活动广告主页tab icon图片 -->
+			<bediagram:name>advTabImages</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+		    <!-- 活动广告主页登录页图片 -->
+			<bediagram:name>advLoginImages</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<!--TODO: and more images will be added later -->
+		<bediagram:member>
+		    <!-- 活动类型 -->
+            <bediagram:name>type</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="CampaignType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+		    <!-- 活动客户 -->
+			<bediagram:name>partyRoles</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+        <bediagram:member>
+            <!-- 活动开始时间 -->
+            <bediagram:name>startDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 活动结束时间 -->
+            <bediagram:name>endDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 搜索条件 -->
+            <bediagram:name>startCreateDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>endCreateDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+		    <!-- 活动规则： 订单成功交所有会员打几折，或者其它规则。这里用javacc脚本实现 -->
+			<bediagram:name>policy</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+	</bediagram:beEntity>
+
+	<bediagram:ceEntity>
+		<common:entityName>CampaignType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Daily</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>日常</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Festival</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>节日</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Adv</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>广告</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+</bediagram:BEDiagram>

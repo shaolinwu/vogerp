@@ -7,7 +7,7 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "machiningInfoPanel",prefix + "goldenOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "interestEOrderPanel",prefix + "takenGOrderInfoPanel",prefix + "takenROrderInfoPanel"]
+        ,subComponents: [prefix + "machiningInfoPanel",prefix + "goldenOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "takenGOrderInfoPanel",prefix + "takenROrderInfoPanel",prefix + "interestEOrderPanel"]
     });
     var machiningTable = new UIMaster.ui.objectlist
     ({
@@ -42,6 +42,10 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         ,items: []
         ,subComponents: [prefix + "rentOrderTable"]
     });
+    var takenGOrderInfoPanel = new org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack({"prefix":prefix + "takenGOrderInfoPanel."});
+
+    var takenROrderInfoPanel = new org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack({"prefix":prefix + "takenROrderInfoPanel."});
+
     var interestEOrderTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "interestEOrderTable"]
@@ -53,10 +57,6 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         ,items: []
         ,subComponents: [prefix + "interestEOrderTable"]
     });
-    var takenGOrderInfoPanel = new org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack({"prefix":prefix + "takenGOrderInfoPanel."});
-
-    var takenROrderInfoPanel = new org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack({"prefix":prefix + "takenROrderInfoPanel."});
-
 
     var Form = new UIMaster.ui.panel
     ({
@@ -79,13 +79,13 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
     Form.rentOrderTable=rentOrderTable;
 
-    Form.interestEOrderPanel=interestEOrderPanel;
-
-    Form.interestEOrderTable=interestEOrderTable;
-
     Form.takenGOrderInfoPanel=takenGOrderInfoPanel;
 
     Form.takenROrderInfoPanel=takenROrderInfoPanel;
+
+    Form.interestEOrderPanel=interestEOrderPanel;
+
+    Form.interestEOrderTable=interestEOrderTable;
 
     Form.user_constructor = function()
     {
@@ -107,21 +107,21 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
     Form.deliveryROrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_deliveryROrder;
 
-    Form.openGOrderTracker = org_shaolin_vogerp_ecommercial_page_OrderManagement_openGOrderTracker;
-
     Form.createRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_createRentOrder;
 
     Form.openRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_openRentOrder;
-
-    Form.openRentOrderTracker = org_shaolin_vogerp_ecommercial_page_OrderManagement_openRentOrderTracker;
 
     Form.createMachiningOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_createMachiningOrder;
 
     Form.openMachiningOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_openMachiningOrder;
 
-    Form.responseOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_responseOrder;
+    Form.talkGOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_talkGOrder;
+
+    Form.talkRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_talkRentOrder;
 
     Form.offerPriceAgain = org_shaolin_vogerp_ecommercial_page_OrderManagement_offerPriceAgain;
+
+    Form.responseOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_responseOrder;
 
     Form.initPageJs = org_shaolin_vogerp_ecommercial_page_OrderManagement_initPageJs;
 
@@ -217,17 +217,6 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_page_OrderManagement_openGOrderTracker(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_openGOrderTracker */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openGOrderTracker-20150614",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_openGOrderTracker */
-
-
-    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_page_OrderManagement_createRentOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_createRentOrder */
         var o = this;
         var UIEntity = this;
@@ -247,17 +236,6 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openRentOrder-201606023543",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_openRentOrder */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_page_OrderManagement_openRentOrderTracker(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_openRentOrderTracker */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openRentOrderTracker-20150614",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_openRentOrderTracker */
 
 
     /* auto generated eventlistener function declaration */
@@ -283,14 +261,25 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_page_OrderManagement_responseOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_responseOrder */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_talkGOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_talkGOrder */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"responseOrder-20160618-2044",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_responseOrder */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"talkGOrder-20160618-2044",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_talkGOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_talkRentOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_talkRentOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"talkRentOrder-20160618-2044",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_talkRentOrder */
 
 
     /* auto generated eventlistener function declaration */
@@ -302,6 +291,17 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"offerPriceAgain-20160618-2044",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_offerPriceAgain */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_responseOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_responseOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"responseOrder-20160618-2044",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_responseOrder */
 
 
     function org_shaolin_vogerp_ecommercial_page_OrderManagement_initPageJs(){/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_initPageJs */

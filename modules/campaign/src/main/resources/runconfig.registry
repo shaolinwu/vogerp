@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<registry xmlns="http://bmdp.shaolin.org/datamodel/Registry">
+    <node name="System">
+        <node name="services">
+    	   <node name="campaign_model_service">
+	   	       <expression><![CDATA[
+	   	       import org.shaolin.bmdp.runtime.AppContext;
+	   	       import org.shaolin.vogerp.campaign.internal.CampaignServiceImpl;
+	   	       {
+	   	           AppContext.get().registerLifeCycleProvider(new CampaignServiceImpl());
+	   	       }
+	   	       ]]></expression>
+   	       </node>
+        </node>
+        <!-- 
+        <node name="webConstant">
+            <node name="commonjs">
+                <node name="org.shaolin.bmdp.adminconsole.page.Main_mob">
+                    <item name="jgallery" value="/js/controls/jsgallery/jgallery.js" />
+                    <item name="touchswipe" value="/js/controls/jsgallery/touchswipe.js" />
+                       <item name="tinycolor" value="/js/controls/jsgallery/tinycolor-0.9.16.min.js" />
+                </node>
+            </node>
+            <node name="commoncss">
+                 <node name="org.shaolin.bmdp.adminconsole.page.Main_mob">
+                     <item name="font-awesome" value="/css/jsgallery/font-awesome.min.css" />
+                     <item name="jgallery.min.css" value="/css/jsgallery/jgallery.min.css?v=1.5.0" />
+                 </node>
+             </node>
+        </node>
+         -->
+    </node>
+</registry>
+

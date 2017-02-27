@@ -1,0 +1,124 @@
+<?xml version="1.0" ?>
+<ns2:RDBDiagram xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns7="http://bmdp.shaolin.org/datamodel/FlowDiagram" xmlns:ns6="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns5="http://bmdp.shaolin.org/datamodel/Workflow" xmlns:ns4="http://bmdp.shaolin.org/datamodel/Page" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <name>CampaignModel</name>
+  <systemVersion>0</systemVersion>
+  <ns2:diagramPackage>org.shaolin.vogerp.campaign.diagram</ns2:diagramPackage>
+  <ns2:daoPackage>org.shaolin.vogerp.campaign.dao</ns2:daoPackage>
+  <ns2:table>
+    <entityName>ACTV_CAMPAIGN</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="NAME" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="DESCURL" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="ADVTITLEIMAGES" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="ADVTABIMAGES" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="ADVLOGINIMAGES" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="ADVMAINIMAGES" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="TYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="PARTYROLES" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="STARTDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="ENDDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="POLICY" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.campaign.be.Campaign"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="name" columnName="NAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="descURL" columnName="DESCURL"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="advTitleImage" columnName="ADVTITLEIMAGES"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="advTabImages" columnName="ADVTABIMAGES"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="advLoginImages" columnName="ADVLOGINIMAGES"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="advMainImages" columnName="ADVMAINIMAGES"></ns2:fieldMapping>
+      
+      <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="partyRoles" columnName="PARTYROLES"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="startDate" columnName="STARTDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="endDate" columnName="ENDDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="policy" columnName="POLICY"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:query queryName="searchCampaign">
+    <ns2:searchResult name="outObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.campaign.be.Campaign"></type>
+    </ns2:searchResult>
+    <ns2:fromData name="inObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.campaign.be.Campaign"></type>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>outObject</ns2:toDataFieldPath>
+        <ns2:value xsi:type="ns2:SimpleFieldValueType">
+          <ns2:valueFieldPath>inObject</ns2:valueFieldPath>
+        </ns2:value>
+      </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+      <ns2:fieldMapping>
+         <ns2:toDataFieldPath>inObject.name</ns2:toDataFieldPath>
+         <ns2:conditionValue>
+             <ns2:operator isReverse="false" xsi:type="ns2:StarLikeOperatorType">
+                 <ns2:type>LIKE %*</ns2:type>
+             </ns2:operator>
+             <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                 <ns2:valueFieldPath>scObject.name</ns2:valueFieldPath>
+             </ns2:value>
+             <ns2:condition>
+                 <expressionString><![CDATA[scObject.getName() != null && scObject.getName().length() > 0]]></expressionString>
+             </ns2:condition>
+         </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+         <ns2:toDataFieldPath>inObject.typeInt</ns2:toDataFieldPath>
+         <ns2:conditionValue>
+             <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                 <ns2:type>=</ns2:type>
+             </ns2:operator>
+             <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                 <ns2:valueFieldPath>scObject.getType().getIntValue()</ns2:valueFieldPath>
+             </ns2:value>
+             <ns2:condition>
+                 <expressionString><![CDATA[scObject.getType() != null && scObject.getType() != org.shaolin.vogerp.campaign.ce.CampaignType.NOT_SPECIFIED]]></expressionString>
+             </ns2:condition>
+         </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.startDate</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type><![CDATA[>=]]></ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.startCreateDate</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString>scObject.getStartCreateDate() != null</expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.endDate</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type><![CDATA[<=]]></ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.endCreateDate</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString>scObject.getEndCreateDate() != null</expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:searchConditionData name="scObject" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.campaign.be.Campaign"></type>
+      </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+</ns2:RDBDiagram>

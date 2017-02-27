@@ -176,7 +176,8 @@
                     import org.shaolin.bmdp.runtime.security.UserContext;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     {
-                       return UserContext.hasRole("Admin,0") && $beObject.getStatus() == OrderStatusType.PUBLISHED;
+                       return (UserContext.hasRole("Admin,0") || UserContext.hasRole("org.shaolin.vogerp.commonmodel.ce.GenericOrganizationType,3"))
+                           && $beObject.getStatus() == OrderStatusType.PUBLISHED;
                     }
                 ]]></expressionString></ns2:filter>
             </ns2:uiAction>
@@ -257,7 +258,8 @@
                     import org.shaolin.bmdp.runtime.security.UserContext;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     {
-                       return $beObject.getStatus() == OrderStatusType.PUBLISHED && !UserContext.hasRole("Admin,0");
+                       return $beObject.getStatus() == OrderStatusType.PUBLISHED 
+                           && $beObject.getPublishedCustomerId() == UserContext.getUserContext().getOrgId();
                     }
                 ]]></expressionString></ns2:filter>
             </ns2:uiAction>
