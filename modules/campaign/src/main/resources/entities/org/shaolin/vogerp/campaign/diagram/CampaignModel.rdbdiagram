@@ -92,7 +92,7 @@
         <ns2:toDataFieldPath>inObject.startDate</ns2:toDataFieldPath>
         <ns2:conditionValue>
           <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
-            <ns2:type><![CDATA[>=]]></ns2:type>
+            <ns2:type><![CDATA[<=]]></ns2:type>
           </ns2:operator>
           <ns2:value xsi:type="ns2:SimpleFieldValueType">
             <ns2:valueFieldPath>scObject.startCreateDate</ns2:valueFieldPath>
@@ -106,7 +106,7 @@
         <ns2:toDataFieldPath>inObject.endDate</ns2:toDataFieldPath>
         <ns2:conditionValue>
           <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
-            <ns2:type><![CDATA[<=]]></ns2:type>
+            <ns2:type><![CDATA[>=]]></ns2:type>
           </ns2:operator>
           <ns2:value xsi:type="ns2:SimpleFieldValueType">
             <ns2:valueFieldPath>scObject.endCreateDate</ns2:valueFieldPath>

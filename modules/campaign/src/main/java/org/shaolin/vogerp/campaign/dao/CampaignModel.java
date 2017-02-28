@@ -42,10 +42,10 @@ public class CampaignModel extends BEEntityDaoObject {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.typeInt", scObject.getType().getIntValue()));
             }
             if (scObject.getStartCreateDate() != null) {
-                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.startDate", scObject.getStartCreateDate()));
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.startDate", scObject.getStartCreateDate()));
             }
             if (scObject.getEndCreateDate() != null) {
-                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.endDate", scObject.getEndCreateDate()));
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.endDate", scObject.getEndCreateDate()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
@@ -64,10 +64,10 @@ public class CampaignModel extends BEEntityDaoObject {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.typeInt", scObject.getType().getIntValue()));
             }
             if (scObject.getStartCreateDate() != null) {
-                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.startDate", scObject.getStartCreateDate()));
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.startDate", scObject.getStartCreateDate()));
             }
             if (scObject.getEndCreateDate() != null) {
-                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.endDate", scObject.getEndCreateDate()));
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.endDate", scObject.getEndCreateDate()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));

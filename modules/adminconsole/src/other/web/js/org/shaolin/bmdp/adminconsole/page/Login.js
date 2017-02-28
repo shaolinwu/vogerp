@@ -14,6 +14,18 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         ui: elementList[prefix + "vogerplogo"]
     });
 
+    var advImagesUI = new UIMaster.ui.image
+    ({
+        ui: elementList[prefix + "advImagesUI"]
+        ,thumbnails: false
+        ,height: 300
+        ,width: "400"
+        ,mode: "slider"
+        ,slideshowAutostart: "true"
+        ,thumbnailsFullScreen: false
+        ,enableSelectSync: false
+    });
+
     var errorInfo = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "errorInfo"]
@@ -76,6 +88,13 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         ,subComponents: [prefix + "errorInfo",prefix + "userName",prefix + "password",prefix + "veriCodeQuestion",prefix + "veriCode",prefix + "actionPanel"]
     });
 
+    var middlePanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "middlePanel"]
+        ,items: []
+        ,subComponents: [prefix + "advImagesUI",prefix + "loginPanel"]
+    });
+
     var topPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "topPanel"]
@@ -93,12 +112,14 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [helpIcon,vogerplogo,errorInfo,userName,password,veriCodeQuestion,veriCode,loginBtn,registerBtn,bottomPanelInfo,topBannerPanel,topPanel,loginPanel,actionPanel,bottomPanel]
+        ,items: [helpIcon,vogerplogo,advImagesUI,errorInfo,userName,password,veriCodeQuestion,veriCode,loginBtn,registerBtn,bottomPanelInfo,topBannerPanel,topPanel,middlePanel,loginPanel,actionPanel,bottomPanel]
     });
 
     Form.helpIcon=helpIcon;
 
     Form.vogerplogo=vogerplogo;
+
+    Form.advImagesUI=advImagesUI;
 
     Form.errorInfo=errorInfo;
 
@@ -123,6 +144,28 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     Form.topPanel=topPanel;
 
     Form.vogerplogo=vogerplogo;
+
+    Form.middlePanel=middlePanel;
+
+    Form.advImagesUI=advImagesUI;
+
+    Form.loginPanel=loginPanel;
+
+    Form.errorInfo=errorInfo;
+
+    Form.userName=userName;
+
+    Form.password=password;
+
+    Form.veriCodeQuestion=veriCodeQuestion;
+
+    Form.veriCode=veriCode;
+
+    Form.actionPanel=actionPanel;
+
+    Form.loginBtn=loginBtn;
+
+    Form.registerBtn=registerBtn;
 
     Form.loginPanel=loginPanel;
 

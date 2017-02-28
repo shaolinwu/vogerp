@@ -77,7 +77,7 @@ function org_shaolin_vogerp_campaign_form_Campaign(json)
         ui: elementList[prefix + "policyUILabel"]
     });
 
-    var policyUI = new UIMaster.ui.textfield
+    var policyUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "policyUI"]
     });

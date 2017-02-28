@@ -128,139 +128,226 @@
                         x="0" y="1" align="FULL"></ns2:constraint>
                 </ns2:layoutConstraint>
 			</ns2:component>
-			<ns2:component xsi:type="ns2:UIPanelType" UIID="loginPanel">
+			
+			<ns2:component xsi:type="ns2:UIPanelType" UIID="middlePanel">
 				<ns2:layout xsi:type="ns2:TableLayoutType">
-					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-					<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+				    <ns2:rowHeightWeight>0</ns2:rowHeightWeight>
+					<ns2:columnWidthWeight>400</ns2:columnWidthWeight>
+					<ns2:columnWidthWeight>0</ns2:columnWidthWeight>
 				</ns2:layout>
-				<ns2:component xsi:type="ns2:UILabelType" UIID="errorInfo" />
-				<ns2:component xsi:type="ns2:UITextFieldType" UIID="userName">
-					<ns2:title xsi:type="ns2:StringPropertyType">
-						<ns2:value>用户名</ns2:value>
-					</ns2:title>
-					<ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-						<ns2:value>用户名/手机号</ns2:value>
-					</ns2:widgetLabel>
-					<ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
-						<ns2:value>false</ns2:value>
-					</ns2:allowBlank>
-					<ns2:allowBlankText xsi:type="ns2:StringPropertyType">
-						<ns2:value>The user name must not be null.</ns2:value>
-					</ns2:allowBlankText>
-				</ns2:component>
-				<ns2:component xsi:type="ns2:UIPasswordFieldType" UIID="password">
-					<ns2:title xsi:type="ns2:StringPropertyType">
-						<ns2:value>密码</ns2:value>
-					</ns2:title>
-					<ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-						<ns2:value>密码</ns2:value>
-					</ns2:widgetLabel>
-					<ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
-						<ns2:value>false</ns2:value>
-					</ns2:allowBlank>
-					<ns2:allowBlankText xsi:type="ns2:StringPropertyType">
-						<ns2:value>The password must not be null.</ns2:value>
-					</ns2:allowBlankText>
-				</ns2:component>
-                <ns2:component xsi:type="ns2:UILabelType" UIID="veriCodeQuestion">
-                    <ns2:text xsi:type="ns2:StringPropertyType">
-                        <ns2:value>请您点一下，谢谢</ns2:value>
-                    </ns2:text>
-                    <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-                        <ns2:value>验证问题</ns2:value>
-                    </ns2:widgetLabel>
-                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
-                        <ns2:handler functionName="genVerifiCode" />
-                    </ns2:EventListener>
-                </ns2:component>
-				<ns2:component xsi:type="ns2:UITextFieldType" UIID="veriCode">
-                    <ns2:title xsi:type="ns2:StringPropertyType">
-                        <ns2:value>回答</ns2:value>
-                    </ns2:title>
-                    <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-                        <ns2:value>回答</ns2:value>
-                    </ns2:widgetLabel>
-                    <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
-                        <ns2:value>false</ns2:value>
-                    </ns2:allowBlank>
-                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
-                        <ns2:handler functionName="verifiCode" />
-                    </ns2:EventListener>
-                </ns2:component>
-                <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
-	                <ns2:layout xsi:type="ns2:TableLayoutType">
-	                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-	                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-	                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-	                </ns2:layout>
-					<ns2:component xsi:type="ns2:UIButtonType" UIID="loginBtn">
-						<ns2:text xsi:type="ns2:StringPropertyType">
-							<ns2:value>登录</ns2:value>
-						</ns2:text>
-						<ns2:Property name="skipSetAsEnabled">
-				            <ns2:value xsi:type="ns2:BooleanPropertyType">
-						         <ns2:value>true</ns2:value>
-					        </ns2:value>
-			            </ns2:Property>
-						<ns2:EventListener xsi:type="ns2:ClickListenerType">
-							<ns2:handler functionName="verifiCode" />
-						</ns2:EventListener>
+				<ns2:component xsi:type="ns2:UIImageType" UIID="advImagesUI">
+	               <ns2:isGallery xsi:type="ns2:BooleanPropertyType">
+	                   <ns2:value>true</ns2:value>
+	               </ns2:isGallery>
+	               <ns2:Property name="value">
+	                <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           import java.util.List;
+			           import org.shaolin.bmdp.runtime.Registry;
+			           import org.shaolin.bmdp.runtime.AppContext;
+			           import org.shaolin.vogerp.campaign.be.ICampaign;
+			           import org.shaolin.vogerp.campaign.ce.CampaignType;
+			           import org.shaolin.vogerp.campaign.ICampaignService;
+			           import org.shaolin.bmdp.runtime.security.UserContext;
+			           { 
+			               ICampaignService service = (ICampaignService)AppContext.get().getService(ICampaignService.class);
+			               List result = service.getTodaysCampaign(CampaignType.FESTIVAL, UserContext.getUserContext().getUserRoles());
+			               if (result != null && result.size() > 0) {
+			                   return ((ICampaign)result.get(0)).getAdvLoginImages();
+			               } else {
+			                   result = service.getTodaysCampaign(CampaignType.ADV, UserContext.getUserContext().getUserRoles());
+			                   if (result != null && result.size() > 0) {
+			                       return ((ICampaign)result.get(0)).getAdvLoginImages();
+			                   } 
+			               }
+			               return "/images/adv/mainpage"; 
+			           }]]></expressionString>
+			         </ns2:expression>
+		           </ns2:value>
+	            </ns2:Property>
+	                  <ns2:Property name="thumbnails">
+	                    <ns2:value xsi:type="ns2:BooleanPropertyType">
+	                       <value>false</value>
+	                    </ns2:value>
+	                  </ns2:Property>
+	               	  <ns2:Property name="height">
+	                      <ns2:value xsi:type="ns2:NumericPropertyType">
+			              <value>300</value>
+			           	</ns2:value>
+	                  </ns2:Property>
+	                  <ns2:Property name="width">
+	                      <ns2:value xsi:type="ns2:StringPropertyType">
+	                        <value>400</value>
+	                     </ns2:value>
+	                  </ns2:Property>
+	                  <ns2:Property name="mode">
+	                      <ns2:value xsi:type="ns2:StringPropertyType">
+	                        <value>slider</value>
+	                     </ns2:value>
+	                  </ns2:Property>
+	                  <ns2:Property name="slideshowAutostart">
+	                      <ns2:value xsi:type="ns2:StringPropertyType">
+	                        <value>true</value>
+	                     </ns2:value>
+	                  </ns2:Property>
+	                  <ns2:Property name="thumbnailsFullScreen">
+	                      <ns2:value xsi:type="ns2:BooleanPropertyType">
+	                        <value>false</value>
+	                     </ns2:value>
+	                  </ns2:Property>
+	                  <ns2:Property name="enableSelectSync">
+		            <ns2:value xsi:type="ns2:BooleanPropertyType">
+		                <value>false</value>
+		            </ns2:value>
+		         </ns2:Property>
+	           </ns2:component>
+				<ns2:component xsi:type="ns2:UIPanelType" UIID="loginPanel">
+					<ns2:layout xsi:type="ns2:TableLayoutType">
+						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+					</ns2:layout>
+					<ns2:component xsi:type="ns2:UILabelType" UIID="errorInfo" />
+					<ns2:component xsi:type="ns2:UITextFieldType" UIID="userName">
+						<ns2:title xsi:type="ns2:StringPropertyType">
+							<ns2:value>用户名</ns2:value>
+						</ns2:title>
+						<ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+							<ns2:value>用户名/手机号</ns2:value>
+						</ns2:widgetLabel>
+						<ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+							<ns2:value>false</ns2:value>
+						</ns2:allowBlank>
+						<ns2:allowBlankText xsi:type="ns2:StringPropertyType">
+							<ns2:value>The user name must not be null.</ns2:value>
+						</ns2:allowBlankText>
 					</ns2:component>
-					<ns2:component xsi:type="ns2:UIButtonType" UIID="registerBtn">
+					<ns2:component xsi:type="ns2:UIPasswordFieldType" UIID="password">
+						<ns2:title xsi:type="ns2:StringPropertyType">
+							<ns2:value>密码</ns2:value>
+						</ns2:title>
+						<ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+							<ns2:value>密码</ns2:value>
+						</ns2:widgetLabel>
+						<ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+							<ns2:value>false</ns2:value>
+						</ns2:allowBlank>
+						<ns2:allowBlankText xsi:type="ns2:StringPropertyType">
+							<ns2:value>The password must not be null.</ns2:value>
+						</ns2:allowBlankText>
+					</ns2:component>
+	                <ns2:component xsi:type="ns2:UILabelType" UIID="veriCodeQuestion">
 	                    <ns2:text xsi:type="ns2:StringPropertyType">
-	                        <ns2:value>注册</ns2:value>
+	                        <ns2:value>请您点一下，谢谢</ns2:value>
 	                    </ns2:text>
+	                    <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+	                        <ns2:value>验证问题</ns2:value>
+	                    </ns2:widgetLabel>
 	                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
-	                        <ns2:handler functionName="Register" />
+	                        <ns2:handler functionName="genVerifiCode" />
 	                    </ns2:EventListener>
 	                </ns2:component>
+					<ns2:component xsi:type="ns2:UITextFieldType" UIID="veriCode">
+	                    <ns2:title xsi:type="ns2:StringPropertyType">
+	                        <ns2:value>回答</ns2:value>
+	                    </ns2:title>
+	                    <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+	                        <ns2:value>回答</ns2:value>
+	                    </ns2:widgetLabel>
+	                    <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+	                        <ns2:value>false</ns2:value>
+	                    </ns2:allowBlank>
+	                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
+	                        <ns2:handler functionName="verifiCode" />
+	                    </ns2:EventListener>
+	                </ns2:component>
+	                <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+		                <ns2:layout xsi:type="ns2:TableLayoutType">
+		                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+		                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+		                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+		                </ns2:layout>
+						<ns2:component xsi:type="ns2:UIButtonType" UIID="loginBtn">
+							<ns2:text xsi:type="ns2:StringPropertyType">
+								<ns2:value>登录</ns2:value>
+							</ns2:text>
+							<ns2:Property name="skipSetAsEnabled">
+					            <ns2:value xsi:type="ns2:BooleanPropertyType">
+							         <ns2:value>true</ns2:value>
+						        </ns2:value>
+				            </ns2:Property>
+							<ns2:EventListener xsi:type="ns2:ClickListenerType">
+								<ns2:handler functionName="verifiCode" />
+							</ns2:EventListener>
+						</ns2:component>
+						<ns2:component xsi:type="ns2:UIButtonType" UIID="registerBtn">
+		                    <ns2:text xsi:type="ns2:StringPropertyType">
+		                        <ns2:value>注册</ns2:value>
+		                    </ns2:text>
+		                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
+		                        <ns2:handler functionName="Register" />
+		                    </ns2:EventListener>
+		                </ns2:component>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>loginBtn</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="0" y="0" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>registerBtn</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="1" y="0" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+	                </ns2:component>
 	                <ns2:layoutConstraint>
-	                    <ns2:componentId>loginBtn</ns2:componentId>
+	                    <ns2:componentId>errorInfo</ns2:componentId>
 	                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 	                        x="0" y="0" align="FULL"></ns2:constraint>
 	                </ns2:layoutConstraint>
-	                <ns2:layoutConstraint>
-	                    <ns2:componentId>registerBtn</ns2:componentId>
+					<ns2:layoutConstraint>
+	                    <ns2:componentId>userName</ns2:componentId>
 	                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-	                        x="1" y="0" align="FULL"></ns2:constraint>
+	                        x="0" y="1" align="FULL"></ns2:constraint>
 	                </ns2:layoutConstraint>
-                </ns2:component>
-                <ns2:layoutConstraint>
-                    <ns2:componentId>errorInfo</ns2:componentId>
-                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                        x="0" y="0" align="FULL"></ns2:constraint>
-                </ns2:layoutConstraint>
+					<ns2:layoutConstraint>
+						<ns2:componentId>password</ns2:componentId>
+						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+							x="0" y="2" align="FULL"></ns2:constraint>
+					</ns2:layoutConstraint>
+					<ns2:layoutConstraint>
+	                    <ns2:componentId>veriCodeQuestion</ns2:componentId>
+	                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	                        x="0" y="3" align="FULL"></ns2:constraint>
+	                </ns2:layoutConstraint>
+					<ns2:layoutConstraint>
+	                    <ns2:componentId>veriCode</ns2:componentId>
+	                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	                        x="0" y="4" align="FULL"></ns2:constraint>
+	                </ns2:layoutConstraint>
+	                <ns2:layoutConstraint>
+	                    <ns2:componentId>actionPanel</ns2:componentId>
+	                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	                        x="0" y="5" align="FULL"></ns2:constraint>
+	                </ns2:layoutConstraint>
+				</ns2:component>
 				<ns2:layoutConstraint>
-                    <ns2:componentId>userName</ns2:componentId>
-                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                        x="0" y="1" align="FULL"></ns2:constraint>
-                </ns2:layoutConstraint>
-				<ns2:layoutConstraint>
-					<ns2:componentId>password</ns2:componentId>
+					<ns2:componentId>advImagesUI</ns2:componentId>
 					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-						x="0" y="2" align="FULL"></ns2:constraint>
+						x="0" y="0" align="FULL"></ns2:constraint>
 				</ns2:layoutConstraint>
 				<ns2:layoutConstraint>
-                    <ns2:componentId>veriCodeQuestion</ns2:componentId>
-                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                        x="0" y="3" align="FULL"></ns2:constraint>
-                </ns2:layoutConstraint>
-				<ns2:layoutConstraint>
-                    <ns2:componentId>veriCode</ns2:componentId>
-                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                        x="0" y="4" align="FULL"></ns2:constraint>
-                </ns2:layoutConstraint>
-                <ns2:layoutConstraint>
-                    <ns2:componentId>actionPanel</ns2:componentId>
-                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                        x="0" y="5" align="FULL"></ns2:constraint>
-                </ns2:layoutConstraint>
+					<ns2:componentId>loginPanel</ns2:componentId>
+					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+						x="1" y="0" align="FULL"></ns2:constraint>
+				</ns2:layoutConstraint>
+				
 			</ns2:component>
+			
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="bottomPanel">
 				<ns2:layout xsi:type="ns2:TableLayoutType">
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -288,7 +375,7 @@
 					x="0" y="1" align="FULL"></ns2:constraint>
 			</ns2:layoutConstraint>
 			<ns2:layoutConstraint>
-				<ns2:componentId>loginPanel</ns2:componentId>
+				<ns2:componentId>middlePanel</ns2:componentId>
 				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 					x="0" y="2" align="FULL"></ns2:constraint>
 			</ns2:layoutConstraint>
