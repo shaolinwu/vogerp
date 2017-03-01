@@ -70,7 +70,29 @@
 		      }
 		      ]]></ns2:expressionString>
             </ns2:ops>
-        </ns2:eventHandler>    
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="forgetPassword">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="forgetPassword-20170125-1839">
+                <ns2:exp>
+                    <expressionString><![CDATA[
+                import java.util.HashMap;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.vogerp.commonmodel.IUserService;
+                import org.shaolin.bmdp.runtime.AppContext;
+                { 
+                      HashMap input = new HashMap();
+                      input.put("editable", new Boolean(true));
+                      RefForm form = new RefForm("userForm", "org.shaolin.bmdp.adminconsole.form.ForgetPassword", input);
+                      @page.addElement(form);
+                      
+                      form.openInWindows("找回密码", null, false);
+                }
+                ]]></expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        
 		<ns2:eventHandler functionName="Login"></ns2:eventHandler>
 		<ns2:eventHandler functionName="Register"></ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
@@ -269,6 +291,7 @@
 	                <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
 		                <ns2:layout xsi:type="ns2:TableLayoutType">
 		                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+		                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 		                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 		                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 		                </ns2:layout>
@@ -293,6 +316,14 @@
 		                        <ns2:handler functionName="Register" />
 		                    </ns2:EventListener>
 		                </ns2:component>
+		                <ns2:component xsi:type="ns2:UILinkType" UIID="forgetPwdBtn">
+		                    <ns2:text xsi:type="ns2:StringPropertyType">
+		                        <ns2:value>忘记密码</ns2:value>
+		                    </ns2:text>
+		                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
+		                        <ns2:handler functionName="forgetPassword" />
+		                    </ns2:EventListener>
+		                </ns2:component>
 		                <ns2:layoutConstraint>
 		                    <ns2:componentId>loginBtn</ns2:componentId>
 		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
@@ -302,6 +333,11 @@
 		                    <ns2:componentId>registerBtn</ns2:componentId>
 		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 		                        x="1" y="0" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>forgetPwdBtn</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="0" y="1" align="FULL"></ns2:constraint>
 		                </ns2:layoutConstraint>
 	                </ns2:component>
 	                <ns2:layoutConstraint>

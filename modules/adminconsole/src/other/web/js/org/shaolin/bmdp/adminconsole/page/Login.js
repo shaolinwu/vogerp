@@ -62,6 +62,11 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         ui: elementList[prefix + "registerBtn"]
     });
 
+    var forgetPwdBtn = new UIMaster.ui.link
+    ({
+        ui: elementList[prefix + "forgetPwdBtn"]
+    });
+
     var bottomPanelInfo = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "bottomPanelInfo"]
@@ -78,7 +83,7 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "loginBtn",prefix + "registerBtn"]
+        ,subComponents: [prefix + "loginBtn",prefix + "registerBtn",prefix + "forgetPwdBtn"]
     });
 
     var loginPanel = new UIMaster.ui.panel
@@ -112,7 +117,7 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [helpIcon,vogerplogo,advImagesUI,errorInfo,userName,password,veriCodeQuestion,veriCode,loginBtn,registerBtn,bottomPanelInfo,topBannerPanel,topPanel,middlePanel,loginPanel,actionPanel,bottomPanel]
+        ,items: [helpIcon,vogerplogo,advImagesUI,errorInfo,userName,password,veriCodeQuestion,veriCode,loginBtn,registerBtn,forgetPwdBtn,bottomPanelInfo,topBannerPanel,topPanel,middlePanel,loginPanel,actionPanel,bottomPanel]
     });
 
     Form.helpIcon=helpIcon;
@@ -134,6 +139,8 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     Form.loginBtn=loginBtn;
 
     Form.registerBtn=registerBtn;
+
+    Form.forgetPwdBtn=forgetPwdBtn;
 
     Form.bottomPanelInfo=bottomPanelInfo;
 
@@ -167,6 +174,8 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
 
     Form.registerBtn=registerBtn;
 
+    Form.forgetPwdBtn=forgetPwdBtn;
+
     Form.loginPanel=loginPanel;
 
     Form.errorInfo=errorInfo;
@@ -185,11 +194,15 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
 
     Form.registerBtn=registerBtn;
 
+    Form.forgetPwdBtn=forgetPwdBtn;
+
     Form.actionPanel=actionPanel;
 
     Form.loginBtn=loginBtn;
 
     Form.registerBtn=registerBtn;
+
+    Form.forgetPwdBtn=forgetPwdBtn;
 
     Form.bottomPanel=bottomPanel;
 
@@ -206,6 +219,8 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     Form.verifiCode = org_shaolin_bmdp_adminconsole_page_Login_verifiCode;
 
     Form.showHelp = org_shaolin_bmdp_adminconsole_page_Login_showHelp;
+
+    Form.forgetPassword = org_shaolin_bmdp_adminconsole_page_Login_forgetPassword;
 
     Form.Login = org_shaolin_bmdp_adminconsole_page_Login_Login;
 
@@ -269,6 +284,17 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
 		        window.open("http://120.25.197.58:8080/xwiki");
 		      }
 		          }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_showHelp */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Login_forgetPassword(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_forgetPassword */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forgetPassword-20170125-1839",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_forgetPassword */
 
 
     /* auto generated eventlistener function declaration */
