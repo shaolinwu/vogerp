@@ -23,6 +23,8 @@
 						defaultUser.setAdvMainImages("/images/adv/mainpage/" + id);
 						defaultUser.setAdvTabImages("/images/adv/tabs/" + id);
 						defaultUser.setAdvTitleImage("/images/adv/title/" + id);
+						defaultUser.setAdvAppLuanchingImages("/images/adv/appopen/" + id);
+						
                         defaultUser.setDescURL("/images/adv/campaign/desc-"+id+".html");
                         
                         HashMap input = new HashMap();

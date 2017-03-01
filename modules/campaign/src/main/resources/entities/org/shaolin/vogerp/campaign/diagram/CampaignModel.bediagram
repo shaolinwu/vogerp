@@ -49,6 +49,11 @@
 			<bediagram:name>advLoginImages</bediagram:name>
 			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
+		<bediagram:member>
+		    <!-- 活动广告App打开页图片 -->
+			<bediagram:name>advAppLuanchingImages</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
 		<!--TODO: and more images will be added later -->
 		<bediagram:member>
 		    <!-- 活动类型 -->

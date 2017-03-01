@@ -171,4 +171,23 @@
      ]]></expressionString>
         </ns2:exp>
     </ns2:service>
+    <ns2:service name="addUserAddress">
+        <ns2:exp>
+            <expressionString><![CDATA[
+        import java.util.List;
+        import java.util.ArrayList;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.vogerp.commonmodel.IModuleService;
+        import org.shaolin.uimaster.page.ajax.json.JSONArray;
+        import org.shaolin.uimaster.page.ajax.json.JSONObject;
+        import org.shaolin.vogerp.commonmodel.be.*;
+        import org.shaolin.vogerp.commonmodel.ce.*;
+        import org.shaolin.vogerp.commonmodel.IUserService;
+        {
+            IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
+            service.addAddressInfo(@request.getParameter("json"));
+        }
+     ]]></expressionString>
+        </ns2:exp>
+    </ns2:service>
 </ns2:WebService>

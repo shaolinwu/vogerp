@@ -3,6 +3,7 @@ package org.shaolin.vogerp.commonmodel;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.shaolin.uimaster.page.ajax.json.JSONException;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
@@ -62,6 +63,8 @@ public interface IUserService {
 	public String getUserLocation(long userId);
 	
 	public boolean hasAddressConfigured(long userId);
+	
+	public void addAddressInfo(String json) throws JSONException;
 	
 	/**
 	 * Get logined user organization type.

@@ -106,6 +106,8 @@ function org_shaolin_vogerp_campaign_form_Campaign(json)
 
     var advMainImagesUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "advMainImagesUI."});
 
+    var advAppLuanchingImagesUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "advAppLuanchingImagesUI."});
+
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
@@ -117,7 +119,7 @@ function org_shaolin_vogerp_campaign_form_Campaign(json)
     ({
         ui: elementList[prefix + "fieldPanel2"]
         ,items: []
-        ,subComponents: [prefix + "advTitleImagesUI",prefix + "advTabImagesUI",prefix + "advLoginImagesUI",prefix + "advMainImagesUI",prefix + "htmlDescUI"]
+        ,subComponents: [prefix + "advTitleImagesUI",prefix + "advTabImagesUI",prefix + "advLoginImagesUI",prefix + "advMainImagesUI",prefix + "advAppLuanchingImagesUI",prefix + "htmlDescUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -130,7 +132,7 @@ function org_shaolin_vogerp_campaign_form_Campaign(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,nameUILabel,nameUI,descURLUILabel,descURLUI,typeUILabel,typeUI,partyRolesUILabel,partyRolesUI,startDateUILabel,startDateUI,endDateUILabel,endDateUI,policyUILabel,policyUI,htmlDescUI,okbtn,cancelbtn,advTitleImagesUI,advTabImagesUI,advLoginImagesUI,advMainImagesUI,fieldPanel,fieldPanel2,actionPanel]
+        ,items: [idUI,nameUILabel,nameUI,descURLUILabel,descURLUI,typeUILabel,typeUI,partyRolesUILabel,partyRolesUI,startDateUILabel,startDateUI,endDateUILabel,endDateUI,policyUILabel,policyUI,htmlDescUI,okbtn,cancelbtn,advTitleImagesUI,advTabImagesUI,advLoginImagesUI,advMainImagesUI,advAppLuanchingImagesUI,fieldPanel,fieldPanel2,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -177,6 +179,8 @@ function org_shaolin_vogerp_campaign_form_Campaign(json)
 
     Form.advMainImagesUI=advMainImagesUI;
 
+    Form.advAppLuanchingImagesUI=advAppLuanchingImagesUI;
+
     Form.fieldPanel=fieldPanel;
 
     Form.idUI=idUI;
@@ -218,6 +222,8 @@ function org_shaolin_vogerp_campaign_form_Campaign(json)
     Form.advLoginImagesUI=advLoginImagesUI;
 
     Form.advMainImagesUI=advMainImagesUI;
+
+    Form.advAppLuanchingImagesUI=advAppLuanchingImagesUI;
 
     Form.htmlDescUI=htmlDescUI;
 

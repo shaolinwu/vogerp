@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:WebService xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.campaign.page.AjaxService</entityName>
+	<systemVersion>0</systemVersion>
+	<ns2:service name="getAppLuanchingAdv">
+        <ns2:exp>
+            <expressionString><![CDATA[
+        import java.util.List;
+        import org.shaolin.bmdp.runtime.Registry;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.vogerp.campaign.be.ICampaign;
+        import org.shaolin.vogerp.campaign.ce.CampaignType;
+        import org.shaolin.vogerp.campaign.ICampaignService;
+        import org.shaolin.bmdp.runtime.security.UserContext;
+        { 
+            ICampaignService service = (ICampaignService)AppContext.get().getService(ICampaignService.class);
+            List result = service.getTodaysCampaign(CampaignType.FESTIVAL, UserContext.getUserContext().getUserRoles());
+            if (result != null && result.size() > 0) {
+                return ((ICampaign)result.get(0)).getAdvAppLuanchingImages();
+            } else {
+                result = service.getTodaysCampaign(CampaignType.ADV, UserContext.getUserContext().getUserRoles());
+                if (result != null && result.size() > 0) {
+                    return ((ICampaign)result.get(0)).getAdvAppLuanchingImages();
+                } 
+            }
+            return ""; 
+        }
+     ]]></expressionString>
+        </ns2:exp>
+    </ns2:service>
+	
+</ns2:WebService>

@@ -26,6 +26,7 @@ import org.shaolin.bmdp.utils.DateUtil;
 import org.shaolin.bmdp.utils.HttpUserUtil;
 import org.shaolin.uimaster.page.MobilitySupport;
 import org.shaolin.uimaster.page.WebConfig;
+import org.shaolin.uimaster.page.ajax.json.JSONException;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.uimaster.page.flow.WebflowConstants;
 import org.shaolin.vogerp.accounting.IAccountingService;
@@ -33,6 +34,7 @@ import org.shaolin.vogerp.accounting.internal.AccountingServiceImpl;
 import org.shaolin.vogerp.commonmodel.ICaptcherService;
 import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.IUserService;
+import org.shaolin.vogerp.commonmodel.be.AddressInfoImpl;
 import org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl;
 import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
 import org.shaolin.vogerp.commonmodel.be.ICaptcha;
@@ -46,6 +48,7 @@ import org.shaolin.vogerp.commonmodel.ce.AMemberType;
 import org.shaolin.vogerp.commonmodel.ce.EmployeeLevel;
 import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
 import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+import org.shaolin.vogerp.commonmodel.dao.CustCommonModel;
 import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
 import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
 import org.slf4j.Logger;
@@ -504,5 +507,33 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	public boolean hasAddressConfigured(long userId) {
 		List<IAddressInfo> addressInfo = getPersonalInfo(userId).getAddresses();
 		return (addressInfo != null && addressInfo.size() > 0);
+	}
+	
+	public void addAddressInfo(String json) throws JSONException {
+		if (json == null || json.trim().length() == 0) {
+			logger.warn("Address info cannot be empty");
+			return;
+		}
+		JSONObject jsonObject = new JSONObject(json);
+		long userId = jsonObject.getLong("userId");
+		if (userId <= 0) {
+			logger.warn("the user id of Address info cannot be 0!");
+			return;
+		}
+		AddressInfoImpl info = new AddressInfoImpl();
+		info.setDescription(jsonObject.getString("desc"));
+		info.setCountry(jsonObject.getString("country"));
+		info.setCity(jsonObject.getString("city"));
+		info.setDistrict(jsonObject.getString("district"));
+		info.setStreet(jsonObject.getString("street"));
+		info.setMobile(jsonObject.getString("mobile"));
+		info.setTelephone(jsonObject.getString("mobile"));
+		info.setName(jsonObject.getString("name"));
+        CustCommonModel.INSTANCE.updateAddresse(userId, info);
+        
+        //TODO: update account location.
+        IPersonalAccount account = getPersonalAccount(userId);
+        account.setLocationInfo(jsonObject.getString("city"));
+        CommonModel.INSTANCE.update(account);
 	}
 }

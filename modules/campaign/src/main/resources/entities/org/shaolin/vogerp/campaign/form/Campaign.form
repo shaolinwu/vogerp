@@ -212,6 +212,7 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
 	      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="advTitleImagesUI">
@@ -235,6 +236,12 @@
 	      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="advMainImagesUI">
 	        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
 	          <ns2:value>主页图片</ns2:value>
+	        </ns2:widgetLabel>
+	        <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.ImageUploader" />
+	      </ns2:component>
+	      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="advAppLuanchingImagesUI">
+	        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+	          <ns2:value>App打开图片</ns2:value>
 	        </ns2:widgetLabel>
 	        <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.ImageUploader" />
 	      </ns2:component>
@@ -269,8 +276,12 @@
 	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass=""></ns2:constraint>
 	      </ns2:layoutConstraint>
 	      <ns2:layoutConstraint>
-	        <ns2:componentId>htmlDescUI</ns2:componentId>
+	        <ns2:componentId>advAppLuanchingImagesUI</ns2:componentId>
 	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass=""></ns2:constraint>
+	      </ns2:layoutConstraint>
+	      <ns2:layoutConstraint>
+	        <ns2:componentId>htmlDescUI</ns2:componentId>
+	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass=""></ns2:constraint>
 	      </ns2:layoutConstraint>
     </ns2:component>
     
@@ -486,6 +497,32 @@
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="imageHsize">
          <ns2:expression>
           <expressionString>{return 110;}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
+         <ns2:expression>
+          <expressionString>{return true;}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping84">
+      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.ImageUploader"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="advAppLuanchingImagesUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.advAppLuanchingImages" paramName="imagePath"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="allowNumber">
+         <ns2:expression>
+          <expressionString>{return 5;}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="imageWsize">
+         <ns2:expression>
+          <expressionString>{return 310;}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="imageHsize">
+         <ns2:expression>
+          <expressionString>{return 550;}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
