@@ -81,7 +81,27 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack(json)
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack */
-        /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack */
+
+        
+	    {
+	       // workflow dynamic actions
+	       Form.deliveryOrder = function() {
+	          if (Form.waitDeliveryTable._selectedIndex < 0) {
+	              alert("Please select an item!");
+	              return;
+	          }
+	          Form.invokeDynamicFunction(Form.waitDeliveryTable, "deliveryOrder");
+	       };
+	       Form.receivedOrder = function() {
+	          if (Form.deliveringTable._selectedIndex < 0) {
+	              alert("Please select an item!");
+	              return;
+	          }
+	          Form.invokeDynamicFunction(Form.deliveringTable, "receivedOrder");
+	       };
+		}
+    
+            /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack */
     };
 
     Form.payGoldenOrder = org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_payGoldenOrder;
@@ -89,6 +109,8 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack(json)
     Form.checkDeliveryStatus = org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_checkDeliveryStatus;
 
     Form.openTakenGoldenOrder = org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_openTakenGoldenOrder;
+
+    Form.deliveryGOrder = org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_deliveryGOrder;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_invokeDynamicFunction;
 
@@ -149,6 +171,17 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openTakenGoldenOrder-2016-1214-1351",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_openTakenGoldenOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_deliveryGOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_deliveryGOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deliveryGOrder-2016-1214-1351",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_deliveryGOrder */
 
 
     /* auto generated eventlistener function declaration */

@@ -21,7 +21,7 @@ public class ExpressServiceImpl implements IExpressService, IServiceProvider {
 
 	private HttpSender send = new HttpSender();
 	
-	private final HashMap<String, String> venderList = new HashMap<String, String>();
+	private final HashMap<Integer, String> venderList = new HashMap<Integer, String>();
 	
 	/**
 	 * as agreement required, only 2000 queries per day.
@@ -39,7 +39,7 @@ public class ExpressServiceImpl implements IExpressService, IServiceProvider {
 		
 		IConstantService ceService = AppContext.get().getConstantService();
 		IConstantEntity venders = ceService.getConstantEntity("ExpressVendor");
-		Map<String, String> list = venders.getAllStringConstants(false);
+		Map<Integer, String> list = venders.getAllConstants(false);
 		venderList.putAll(list);
 	}
 	
@@ -48,7 +48,7 @@ public class ExpressServiceImpl implements IExpressService, IServiceProvider {
 		return IExpressService.class;
 	}
 
-	public Map<String, String> queryVendorsList() {
+	public Map<Integer, String> queryVendorsList() {
 		return venderList;
 	}
 	

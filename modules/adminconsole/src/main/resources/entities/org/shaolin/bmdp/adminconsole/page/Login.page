@@ -195,12 +195,12 @@
 	                  </ns2:Property>
 	               	  <ns2:Property name="height">
 	                      <ns2:value xsi:type="ns2:NumericPropertyType">
-			              <value>300</value>
+			              <value>320</value>
 			           	</ns2:value>
 	                  </ns2:Property>
 	                  <ns2:Property name="width">
 	                      <ns2:value xsi:type="ns2:StringPropertyType">
-	                        <value>400</value>
+	                        <value>420</value>
 	                     </ns2:value>
 	                  </ns2:Property>
 	                  <ns2:Property name="mode">

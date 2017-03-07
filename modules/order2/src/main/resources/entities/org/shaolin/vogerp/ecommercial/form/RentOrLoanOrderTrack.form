@@ -120,6 +120,71 @@
         </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
+  <ns2:eventHandler functionName="deliveryROrder">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deliveryROrder-2016-1214-1351">
+        <ns2:exp>
+            <ns2:expressionString><![CDATA[
+            import java.util.HashMap;
+            import org.shaolin.uimaster.page.AjaxContext;
+            import org.shaolin.uimaster.page.ajax.*;
+            import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+            import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+            import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
+            import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+            import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+            {
+                Table orderInfoTable = (Table)@page.getElement("waitDeliveryTable");
+                if (orderInfoTable.getSelectedRow() == null) {
+                    return;
+                }
+                RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)orderInfoTable.getSelectedRow();
+                if (defaultUser.getDeliveryInfoId() > 0) {
+			       DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)CommonModel.INSTANCE.get(defaultUser.getDeliveryInfoId(), DeliveryInfoImpl.class);
+			       defaultUser.setDeliveryInfo(deliveryInfo);
+			    }
+			    if (defaultUser.getDeliveryToInfoId() > 0) {
+			       DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)CommonModel.INSTANCE.get(defaultUser.getDeliveryToInfoId(), DeliveryInfoImpl.class);
+			       defaultUser.setDeliveryToInfo(deliveryInfo);
+			    }
+			    if (defaultUser.getDeliveryToInfo() == null) {
+			       DeliveryInfoImpl deliveryInfo = new DeliveryInfoImpl();
+			       defaultUser.setDeliveryToInfo(deliveryInfo);
+			    }
+			    
+			    Boolean editable = Boolean.TRUE;
+			    OrderStatusType status = defaultUser.getStatus();
+			    if (status.getIntValue() < OrderStatusType.TAKEN_DELIVERY.getIntValue()) {
+			        editable = Boolean.TRUE;
+			    } else {
+			        editable = Boolean.FALSE;
+			    }
+			    
+			    if (defaultUser.getType() == RentOrLoanOrderType.RENT) {
+                 HashMap input = new HashMap();
+                 input.put("order", defaultUser);
+                 input.put("beObject", defaultUser.getDeliveryInfo());
+                 input.put("beObject1", defaultUser.getDeliveryToInfo());
+                 input.put("editable", editable);
+                 RefForm form = new RefForm("deliverInfo", "org.shaolin.vogerp.commonmodel.form.E2EDeliveryInfo", input);
+                 @page.addElement(form);
+                 
+                 form.openInWindows("更新发货地址信息", null, true);
+                } else {
+                    HashMap input = new HashMap();
+                    input.put("order", defaultUser);
+                 input.put("beObject", defaultUser.getDeliveryToInfo());
+                 input.put("beObject1", defaultUser.getDeliveryInfo());
+                 input.put("editable", editable);
+                 RefForm form = new RefForm("deliverInfo", "org.shaolin.vogerp.commonmodel.form.E2EDeliveryInfo", input);
+                 @page.addElement(form);
+                 
+                 form.openInWindows("更新发货地址信息", null, true);
+                }
+            }
+            ]]></ns2:expressionString>
+        </ns2:exp>
+    </ns2:ops>
+</ns2:eventHandler>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -147,7 +212,7 @@
                            import java.util.List;
                            import org.shaolin.uimaster.page.ajax.TableConditions;
                            import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                           import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                           import org.shaolin.vogerp.ecommercial.dao.CustOrderModel;
                            import org.shaolin.bmdp.runtime.AppContext; 
                            import org.shaolin.vogerp.commonmodel.IUserService;
                            import org.shaolin.bmdp.runtime.security.UserContext;
@@ -161,9 +226,10 @@
                                     $tableCondition.addOrder("createDate", false);
                                  }
                                  RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
+                                 condition.setPublishedCustomerId(UserContext.getUserContext().getUserId());
                                  condition.setTakenCustomerId(UserContext.getUserContext().getUserId());
                                  condition.setStatus(OrderStatusType.TAKEN);
-                                 return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
+                                 return CustOrderModel.INSTANCE.searchRentOrLoanOrder(condition,
                                                $tableCondition.getOrders(),
                                                $tableCondition.getOffset(), 
                                                $tableCondition.getCount());
@@ -342,7 +408,7 @@
                            import java.util.List;
                            import org.shaolin.uimaster.page.ajax.TableConditions;
                            import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                           import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                           import org.shaolin.vogerp.ecommercial.dao.CustOrderModel;
                            import org.shaolin.bmdp.runtime.AppContext; 
                            import org.shaolin.vogerp.commonmodel.IUserService;
                            import org.shaolin.bmdp.runtime.security.UserContext;
@@ -356,9 +422,10 @@
                                     $tableCondition.addOrder("createDate", false);
                                  }
                                  RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
+                                 condition.setPublishedCustomerId(UserContext.getUserContext().getUserId());
                                  condition.setTakenCustomerId(UserContext.getUserContext().getUserId());
                                  condition.setStatus(OrderStatusType.TAKEN_PAYED);
-                                 return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
+                                 return CustOrderModel.INSTANCE.searchRentOrLoanOrder(condition,
                                                $tableCondition.getOrders(),
                                                $tableCondition.getOffset(), 
                                                $tableCondition.getCount());
@@ -497,6 +564,25 @@
                    <ns2:defaultActions>
                        <ns2:defaultOpenAction>openRentOrder</ns2:defaultOpenAction>
                    </ns2:defaultActions>
+                   <ns2:actionGroup>
+                       <ns2:type>radio</ns2:type>
+                       <ns2:action>
+                           <ns2:uiid>deliveryROrder</ns2:uiid>
+                           <ns2:title xsi:type="ns2:StringPropertyType">
+                               <ns2:value>物流管理</ns2:value>
+                           </ns2:title>
+                           <ns2:icon>ui-icon-note</ns2:icon>
+                           <ns2:function>deliveryROrder</ns2:function>
+                       </ns2:action>
+                       <ns2:action>
+                           <ns2:uiid>deliveryOrder</ns2:uiid>
+                           <ns2:title xsi:type="ns2:StringPropertyType">
+                               <ns2:value>确认发货</ns2:value>
+                           </ns2:title>
+                           <ns2:icon>ui-icon-note</ns2:icon>
+                           <ns2:function>deliveryOrder</ns2:function>
+                       </ns2:action>
+                  </ns2:actionGroup>
                </ns2:component>
                <ns2:layoutConstraint>
                    <ns2:componentId>waitDeliveryTable</ns2:componentId>
@@ -526,7 +612,7 @@
                            import java.util.List;
                            import org.shaolin.uimaster.page.ajax.TableConditions;
                            import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                           import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                           import org.shaolin.vogerp.ecommercial.dao.CustOrderModel;
                            import org.shaolin.bmdp.runtime.AppContext; 
                            import org.shaolin.vogerp.commonmodel.IUserService;
                            import org.shaolin.bmdp.runtime.security.UserContext;
@@ -540,9 +626,10 @@
                                     $tableCondition.addOrder("createDate", false);
                                  }
                                  RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
+                                 condition.setPublishedCustomerId(UserContext.getUserContext().getUserId());
                                  condition.setTakenCustomerId(UserContext.getUserContext().getUserId());
                                  condition.setStatus(OrderStatusType.TAKEN_DELIVERY);
-                                 return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
+                                 return CustOrderModel.INSTANCE.searchRentOrLoanOrder(condition,
                                                $tableCondition.getOrders(),
                                                $tableCondition.getOffset(), 
                                                $tableCondition.getCount());
@@ -691,6 +778,14 @@
                            <ns2:icon>ui-icon-note</ns2:icon>
                            <ns2:function>checkDeliveryStatus</ns2:function>
                        </ns2:action>
+                       <ns2:action>
+                           <ns2:uiid>receivedOrder</ns2:uiid>
+                           <ns2:title xsi:type="ns2:StringPropertyType">
+                               <ns2:value>确认收货</ns2:value>
+                           </ns2:title>
+                           <ns2:icon>ui-icon-note</ns2:icon>
+                           <ns2:function>receivedOrder</ns2:function>
+                       </ns2:action>
                     </ns2:actionGroup>
                </ns2:component>
                <ns2:layoutConstraint>
@@ -721,7 +816,7 @@
                            import java.util.List;
                            import org.shaolin.uimaster.page.ajax.TableConditions;
                            import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                           import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                           import org.shaolin.vogerp.ecommercial.dao.CustOrderModel;
                            import org.shaolin.bmdp.runtime.AppContext; 
                            import org.shaolin.vogerp.commonmodel.IUserService;
                            import org.shaolin.bmdp.runtime.security.UserContext;
@@ -735,9 +830,10 @@
                                     $tableCondition.addOrder("createDate", false);
                                  }
                                  RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
+                                 condition.setPublishedCustomerId(UserContext.getUserContext().getUserId());
                                  condition.setTakenCustomerId(UserContext.getUserContext().getUserId());
                                  condition.setStatus(OrderStatusType.TAKEN_COMPLETED);
-                                 return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
+                                 return CustOrderModel.INSTANCE.searchRentOrLoanOrder(condition,
                                                $tableCondition.getOrders(),
                                                $tableCondition.getOffset(), 
                                                $tableCondition.getCount());
@@ -889,6 +985,25 @@
       <ns2:componentId>funcsPanel</ns2:componentId>
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
     </ns2:layoutConstraint>
+    <ns2:constructorCode><![CDATA[
+	    {
+	       // workflow dynamic actions
+	       Form.deliveryOrder = function() {
+	          if (Form.waitDeliveryTable._selectedIndex < 0) {
+	              alert("Please select an item!");
+	              return;
+	          }
+	          Form.invokeDynamicFunction(Form.waitDeliveryTable, "deliveryOrder");
+	       };
+	       Form.receivedOrder = function() {
+	          if (Form.deliveringTable._selectedIndex < 0) {
+	              alert("Please select an item!");
+	              return;
+	          }
+	          Form.invokeDynamicFunction(Form.deliveringTable, "receivedOrder");
+	       };
+		}
+    ]]></ns2:constructorCode>
   </ns2:body>
   <ns2:mapping>
     <systemVersion>0</systemVersion>

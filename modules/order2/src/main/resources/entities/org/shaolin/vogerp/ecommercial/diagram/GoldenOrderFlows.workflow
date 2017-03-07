@@ -483,6 +483,181 @@
             </ns2:process>
             <ns2:eventDest>
             	<ns2:dest name="PrepayCallBack" flow="PrepayFlow" entity="org.shaolin.vogerp.accounting.diagram.PaymentFlows"></ns2:dest>
+            	<!-- payment goes back for delivering order. -->
+            	<ns2:dest name="cancelGOrder"></ns2:dest>
+            </ns2:eventDest>
+        </ns2:mission-node>
+        
+        <ns2:mission-node name="deliveryOrder" expiredDays="0" expiredHours="0" autoTrigger="false" multipleInvoke="true">
+            <ns2:description>确认发货</ns2:description>
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.GoldenOrderTrack"
+                actionName="deliveryOrder" actionText="发货">
+                <ns2:expression>
+                    <expressionString><![CDATA[
+			        import java.util.HashMap;
+			        import java.util.Date;
+			        import java.util.ArrayList;
+			        import org.shaolin.bmdp.runtime.AppContext; 
+			        import org.shaolin.uimaster.page.AjaxContext;
+			        import org.shaolin.uimaster.page.ajax.*;
+			        import org.shaolin.vogerp.ecommercial.be.*;
+			        import org.shaolin.vogerp.ecommercial.ce.*;
+			        import org.shaolin.vogerp.ecommercial.dao.*;
+			        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+			        import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+			        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+			        { 
+			            Table personalInfoTable = (Table)@page.getElement("waitDeliveryTable");
+		                if (personalInfoTable.getSelectedRow() == null) {
+		                    return;
+		                }
+		                GoldenOrderImpl order = (GoldenOrderImpl)personalInfoTable.getSelectedRow();
+			            DeliveryInfoImpl deliveryInfo = order.getDeliveryToInfo();
+			            if (deliveryInfo.getExpressVendor() == null || deliveryInfo.getExpressVendor().trim().length() == 0) {
+			                Dialog.showMessageDialog("请输入快递编号和选择快递商家，方便发送方确认哟！", "", Dialog.WARNING_MESSAGE, null);
+			                return false;
+			            }
+			            if (order.getStatus() != OrderStatusType.TAKEN_PAYED) {
+			                Dialog.showMessageDialog("亲，只有支付成功才能发货哟！", "", Dialog.WARNING_MESSAGE, null);
+			                return false;
+			            } else if (order.getStatus() == OrderStatusType.TAKEN_DELIVERY) {
+			                Dialog.showMessageDialog("亲，您已经发货了！", "", Dialog.INFORMATION_MESSAGE, null);
+			                return false;
+			            }
+			            HashMap result = new HashMap();
+                        result.put("order", order);
+                        return result;
+			        }
+                    ]]></expressionString>
+                </ns2:expression>
+            </ns2:uiAction>
+            <ns2:participant partyType="GenericOrganizationType.Director,0" onlyOwner="false"/>
+            <ns2:process>
+                <ns2:var name="order" category="BusinessEntity" scope="InOut">
+                    <type entityName="org.shaolin.vogerp.ecommercial.be.EOrder"></type>
+                </ns2:var>
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                    import java.util.HashMap;
+			        import java.util.Date;
+			        import java.util.ArrayList;
+			        import org.shaolin.bmdp.runtime.AppContext; 
+			        import org.shaolin.bmdp.runtime.be.ITaskEntity;
+			        import org.shaolin.uimaster.page.AjaxContext;
+			        import org.shaolin.uimaster.page.ajax.*;
+			        import org.shaolin.vogerp.ecommercial.be.*;
+			        import org.shaolin.vogerp.ecommercial.ce.*;
+			        import org.shaolin.vogerp.ecommercial.dao.*;
+			        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                    import org.shaolin.bmdp.workflow.be.NotificationImpl;
+                     {
+                         $order.setStatus(OrderStatusType.TAKEN_DELIVERY);
+			             @flowContext.save((ITaskEntity)$order);
+			             
+			             String description = $order.getDescription();
+                         NotificationImpl message = new NotificationImpl();
+                         message.setPartyId($order.getTakenCustomerId());
+                         message.setSubject("您的订单已发货，请注意查收！" + description);
+                         message.setDescription(description);
+                         message.setCreateDate(new Date());
+                         
+                         ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+                         service.addNotification(message, true);
+			             Dialog.showMessageDialog("更新成功！", "", Dialog.INFORMATION_MESSAGE, null);
+                     }
+                     ]]></expressionString>
+                </ns2:expression>
+            </ns2:process>
+            <ns2:eventDest>
+                <ns2:dest name="receivedOrder"></ns2:dest>
+            </ns2:eventDest>
+        </ns2:mission-node>
+        <ns2:mission-node name="receivedOrder" expiredDays="0" expiredHours="0" autoTrigger="false" multipleInvoke="true">
+            <ns2:description>确认收货</ns2:description>
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.GoldenOrderTrack"
+                actionName="receivedOrder" actionText="确认收货">
+                <ns2:expression>
+                    <expressionString><![CDATA[
+			        import java.util.HashMap;
+			        import java.util.Date;
+			        import java.util.ArrayList;
+			        import org.shaolin.bmdp.runtime.AppContext; 
+			        import org.shaolin.uimaster.page.AjaxContext;
+			        import org.shaolin.uimaster.page.ajax.*;
+			        import org.shaolin.vogerp.ecommercial.be.*;
+			        import org.shaolin.vogerp.ecommercial.ce.*;
+			        import org.shaolin.vogerp.ecommercial.dao.*;
+			        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+			        import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+			        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                    import org.shaolin.bmdp.workflow.be.NotificationImpl;
+			        { 
+			            Table personalInfoTable = (Table)@page.getElement("deliveringTable");
+		                if (personalInfoTable.getSelectedRow() == null) {
+		                    return;
+		                }
+		                GoldenOrderImpl order = (GoldenOrderImpl)personalInfoTable.getSelectedRow();
+			            DeliveryInfoImpl deliveryInfo = order.getDeliveryToInfo();
+			            if (deliveryInfo.getExpressVendor() == null || deliveryInfo.getExpressVendor().trim().length() == 0) {
+			                Dialog.showMessageDialog("请输入快递编号和选择快递商家，方便发送方确认哟！", "", Dialog.WARNING_MESSAGE, null);
+			                return false;
+			            }
+			            if (order.getStatus() != OrderStatusType.TAKEN_PAYED) {
+			                Dialog.showMessageDialog("亲，只有支付成功才能发货哟！", "", Dialog.WARNING_MESSAGE, null);
+			                return false;
+			            } else if (order.getStatus() == OrderStatusType.TAKEN_DELIVERY) {
+			                Dialog.showMessageDialog("亲，您已经发货了！", "", Dialog.INFORMATION_MESSAGE, null);
+			                return false;
+			            }
+			            HashMap result = new HashMap();
+                        result.put("order", order);
+                        return result;
+			        }
+                    ]]></expressionString>
+                </ns2:expression>
+            </ns2:uiAction>
+            <ns2:participant partyType="GenericOrganizationType.Director,0" onlyOwner="false"/>
+            <ns2:process>
+                <ns2:var name="order" category="BusinessEntity" scope="InOut">
+                    <type entityName="org.shaolin.vogerp.ecommercial.be.EOrder"></type>
+                </ns2:var>
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                    import java.util.HashMap;
+			        import java.util.Date;
+			        import java.util.ArrayList;
+			        import org.shaolin.bmdp.runtime.AppContext; 
+			        import org.shaolin.bmdp.runtime.be.ITaskEntity;
+			        import org.shaolin.uimaster.page.AjaxContext;
+			        import org.shaolin.uimaster.page.ajax.*;
+			        import org.shaolin.vogerp.ecommercial.be.*;
+			        import org.shaolin.vogerp.ecommercial.ce.*;
+			        import org.shaolin.vogerp.ecommercial.dao.*;
+			        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                    import org.shaolin.bmdp.workflow.be.NotificationImpl;
+                     {
+                         $order.setStatus(OrderStatusType.TAKEN_COMPLETED);
+			             @flowContext.save((ITaskEntity)$order);
+			             
+			             String description = $order.getDescription();
+                         NotificationImpl message = new NotificationImpl();
+                         message.setPartyId($order.getPublishedCustomerId());
+                         message.setSubject("您的订单已确认收货成功！" + description);
+                         message.setDescription(description);
+                         message.setCreateDate(new Date());
+                         
+                         ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+                         service.addNotification(message, true);
+			             Dialog.showMessageDialog("更新成功！", "", Dialog.INFORMATION_MESSAGE, null);
+                     }
+                     ]]></expressionString>
+                </ns2:expression>
+            </ns2:process>
+            <ns2:eventDest>
+                <ns2:dest name="endNode"></ns2:dest>
             </ns2:eventDest>
         </ns2:mission-node>
         

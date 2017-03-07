@@ -72,8 +72,8 @@
             </ns2:process>
             <ns2:eventDest>
                 <ns2:dest name="PrepayCallBack"></ns2:dest>
-                <ns2:dest name="TransferCallBack"></ns2:dest>
-            	<ns2:dest name="RefundCallBack"></ns2:dest>
+            	<ns2:dest name="deliveryOrder" flow="PublishGoldenOrder" entity="org.shaolin.vogerp.ecommercial.diagram.GoldenOrderFlows"></ns2:dest>
+            	<ns2:dest name="deliveryOrder" flow="PublishRentOrder" entity="org.shaolin.vogerp.ecommercial.diagram.RentOrderFlows"></ns2:dest>
             </ns2:eventDest>
         </ns2:mission-node>
         

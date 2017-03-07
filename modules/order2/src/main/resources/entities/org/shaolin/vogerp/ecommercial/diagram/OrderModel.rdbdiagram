@@ -471,7 +471,7 @@
           </ns2:condition>
         </ns2:conditionValue>
       </ns2:fieldMapping>
-      <ns2:fieldMapping>
+      <ns2:fieldMapping junctNextOperator="true">
         <ns2:toDataFieldPath>inObject.publishedCustomerId</ns2:toDataFieldPath>
         <ns2:conditionValue>
           <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
@@ -485,7 +485,7 @@
           </ns2:condition>
         </ns2:conditionValue>
       </ns2:fieldMapping>
-      <ns2:fieldMapping>
+      <ns2:fieldMapping junctEndOperator="true">
         <ns2:toDataFieldPath>inObject.takenCustomerId</ns2:toDataFieldPath>
         <ns2:conditionValue>
           <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
