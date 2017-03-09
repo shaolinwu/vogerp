@@ -17,7 +17,15 @@ public class CustOrderModel extends BEEntityDaoObject {
     private CustOrderModel() {
     }
 
-    
+    /**
+     * Supported for OR condition.
+     * 
+     * @param scObject
+     * @param orders
+     * @param offset
+     * @param count
+     * @return
+     */
     public List<org.shaolin.vogerp.ecommercial.be.IGoldenOrder> searchGoldenOrder(org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl scObject,
             List<Order> orders, int offset, int count) {
              Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl.class, "inObject");

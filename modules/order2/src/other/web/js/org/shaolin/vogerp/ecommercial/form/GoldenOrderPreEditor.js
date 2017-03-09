@@ -3,6 +3,16 @@
 function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var purchaseOrderLabel = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "purchaseOrderLabel"]
+    });
+
+    var saleOrderLabel = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "saleOrderLabel"]
+    });
+
     var hintsUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "hintsUI"]
@@ -27,18 +37,30 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor(json)
         ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
     });
 
+    var selectTypePanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "selectTypePanel"]
+        ,style: "display:none"
+        ,items: []
+        ,subComponents: [prefix + "purchaseOrderLabel",prefix + "saleOrderLabel"]
+    });
+
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "hintsUI",prefix + "priceSelector"]
+        ,subComponents: [prefix + "selectTypePanel",prefix + "hintsUI",prefix + "priceSelector"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [hintsUI,okbtn,cancelbtn,priceSelector,fieldPanel,actionPanel]
+        ,items: [purchaseOrderLabel,saleOrderLabel,hintsUI,okbtn,cancelbtn,priceSelector,fieldPanel,selectTypePanel,actionPanel]
     });
+
+    Form.purchaseOrderLabel=purchaseOrderLabel;
+
+    Form.saleOrderLabel=saleOrderLabel;
 
     Form.hintsUI=hintsUI;
 
@@ -50,9 +72,21 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor(json)
 
     Form.fieldPanel=fieldPanel;
 
+    Form.selectTypePanel=selectTypePanel;
+
+    Form.purchaseOrderLabel=purchaseOrderLabel;
+
+    Form.saleOrderLabel=saleOrderLabel;
+
     Form.hintsUI=hintsUI;
 
     Form.priceSelector=priceSelector;
+
+    Form.selectTypePanel=selectTypePanel;
+
+    Form.purchaseOrderLabel=purchaseOrderLabel;
+
+    Form.saleOrderLabel=saleOrderLabel;
 
     Form.actionPanel=actionPanel;
 
@@ -67,6 +101,10 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor(json)
     };
 
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_Cancel;
+
+    Form.selectedPurchaseOrder = org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_selectedPurchaseOrder;
+
+    Form.selectedSaleOrder = org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_selectedSaleOrder;
 
     Form.Next = org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_Next;
 
@@ -94,14 +132,37 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor(json)
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_Next(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_Next */
+    function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_selectedPurchaseOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_selectedPurchaseOrder */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"Next_49169030",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_Next */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedPurchaseOrder-20170106-214008",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_selectedPurchaseOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_selectedSaleOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_selectedSaleOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedSaleOrder-20170106-214008",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_selectedSaleOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_Next(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_Next */
+        var o = this;
+        var UIEntity = this;
+
+        {   
+           $(this.selectTypePanel).css("display", "block");
+           $(this.selectTypePanel).dialog();
+        }
+            }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_Next */
 
 
     /* auto generated eventlistener function declaration */

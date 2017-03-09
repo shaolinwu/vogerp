@@ -1,6 +1,6 @@
 /* null */
 /* auto generated constructor */
-function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack(json)
+function org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
     var funcsPanel = new UIMaster.ui.tab
@@ -80,7 +80,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack(json)
 
     Form.user_constructor = function()
     {
-        /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack */
+        /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack */
 
         
 	    {
@@ -105,31 +105,31 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack(json)
 	       };
 		}
     
-            /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack */
+            /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack */
     };
 
-    Form.payRentOrder = org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_payRentOrder;
+    Form.payGoldenOrder = org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_payGoldenOrder;
 
-    Form.checkDeliveryStatus = org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_checkDeliveryStatus;
+    Form.checkDeliveryStatus = org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_checkDeliveryStatus;
 
-    Form.openRentOrder = org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_openRentOrder;
+    Form.openTakenGoldenOrder = org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_openTakenGoldenOrder;
 
-    Form.deliveryROrder = org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_deliveryROrder;
+    Form.deliveryGOrder = org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_deliveryGOrder;
 
-    Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_invokeDynamicFunction;
+    Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_invokeDynamicFunction;
 
-    Form.__entityName="org.shaolin.vogerp.ecommercial.form.RentOrLoanOrderTrack";
+    Form.__entityName="org.shaolin.vogerp.ecommercial.form.MachiningOrderTrack";
 
     Form.init();
     return Form;
 };
 
     /* EventHandler Functions */
-/* Other_Func_FIRST:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack */
-/* Other_Func_LAST:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack */
+/* Other_Func_FIRST:org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack */
+/* Other_Func_LAST:org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_payRentOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_payRentOrder */
+    function org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_payGoldenOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_payGoldenOrder */
         var o = this;
         var UIEntity = this;
 
@@ -140,23 +140,23 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack(json)
         
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"payRentOrder-20160618-2044",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_payRentOrder */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"payGoldenOrder-20170218-2044",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_payGoldenOrder */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_checkDeliveryStatus(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_checkDeliveryStatus */
+    function org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_checkDeliveryStatus(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_checkDeliveryStatus */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"checkDeliveryStatus-20160618-2044",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_checkDeliveryStatus */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"checkDeliveryStatus-20170218-2044",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_checkDeliveryStatus */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_openRentOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_openRentOrder */
+    function org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_openTakenGoldenOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_openTakenGoldenOrder */
         var o = this;
         var UIEntity = this;
 
@@ -173,12 +173,12 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack(json)
         
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openRentOrder-201612133543",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_openRentOrder */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openTakenGoldenOrder-2017-0218-2351",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_openTakenGoldenOrder */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_deliveryROrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_deliveryROrder */
+    function org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_deliveryGOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_deliveryGOrder */
         var o = this;
         var UIEntity = this;
 
@@ -189,12 +189,12 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack(json)
         
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deliveryROrder-2016-1214-1351",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_deliveryROrder */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deliveryGOrder-2016-1214-1351",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_deliveryGOrder */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_invokeDynamicFunction */
+    function org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_invokeDynamicFunction */
         var o = this;
         var UIEntity = this;
 
@@ -212,7 +212,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack(json)
         
         }
         }).open();
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_invokeDynamicFunction */
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack_invokeDynamicFunction */
 
 
 

@@ -38,7 +38,7 @@
         </ns2:start-node>
         <ns2:mission-node name="publishGorder" expiredDays="5" expiredHours="0" autoTrigger="true">
             <ns2:description>发布租赁订单给所有客户</ns2:description>
-            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.RentOrLoanOrderEditor"
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.RentOrderEditor"
                 actionName="publishGorder" actionText="发布此单给大家">
                 <ns2:expression>
                     <expressionString><![CDATA[
@@ -52,12 +52,69 @@
                     import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                     import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
+                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    { 
+                        RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+                        HashMap out = (HashMap)form.ui2Data();
+                        RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)out.get("beObject");
+                        gorder.setType(RentOrLoanOrderType.RENT);
+                        gorder.setCount(1);
+			            if (gorder.getDeliveryInfo() != null) {
+			                if (gorder.getDeliveryInfo().getId() > 0) {
+				               OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
+				            } else {
+				               OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
+				            }
+				            gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
+			            }
+			            if (gorder.getId() == 0) {
+			                OrderModel.INSTANCE.create(gorder, true);
+			            } else {
+			                OrderModel.INSTANCE.update(gorder, true);
+			            }
+                        
+                        form.closeIfinWindows();
+                        @page.removeForm(@page.getEntityUiid()); 
+                        
+                        HashMap result = new HashMap();
+                        result.put("gOrder", gorder);
+                        return result;
+                    }
+                    ]]></expressionString>
+                </ns2:expression>
+                <ns2:filter>
+                  <expressionString><![CDATA[
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    {
+                       return $beObject.getStatus() == OrderStatusType.CREATED;
+                    }
+                   ]]></expressionString>
+                </ns2:filter>
+            </ns2:uiAction>
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.RLoanOrderEditor"
+                actionName="publishGorder" actionText="发布此单给大家">
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.Date;
+                    import java.util.ArrayList;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.vogerp.commonmodel.IUserService; 
+                    import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
                         RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)out.get("beObject");
                         gorder.setCount(1);
+                        gorder.setType(RentOrLoanOrderType.LOAN);
 			            if (gorder.getDeliveryInfo() != null) {
 			                if (gorder.getDeliveryInfo().getId() > 0) {
 				               OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
@@ -321,51 +378,6 @@
                     ]]></expressionString>
                 </ns2:expression>
             </ns2:uiAction>
-            <!-- 
-            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.ROOfferPriceTable"
-                actionName="acceptOfferPrice1" actionText="按最低价格成交">
-                <ns2:expression>
-                    <expressionString><![CDATA[
-                    import java.util.HashMap;
-                    import java.util.Date;
-                    import java.util.ArrayList;
-                    import org.shaolin.uimaster.page.AjaxContext;
-                    import org.shaolin.uimaster.page.ajax.*;
-                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                    import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
-                    import org.shaolin.vogerp.ecommercial.dao.*;
-                    import org.shaolin.bmdp.runtime.AppContext; 
-                    import org.shaolin.vogerp.commonmodel.IUserService; 
-                    { 
-                        RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-                        HashMap out = (HashMap)form.ui2Data();
-                        RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)out.get("beObject");
-                        if (gorder.getOfferPrices() == null || gorder.getOfferPrices().size() == 0) {
-                            @page.executeJavaScript("alert(\"当前没有客户竟价单。\");");
-                            return;
-                        }
-                        ROOfferPriceImpl selectedPrice= (ROOfferPriceImpl)out.get("selectedPrice");
-                        IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
-                        if (!service.hasAddressConfigured(selectedPrice.getTakenCustomerId())) {
-                            @page.executeJavaScript("alert(\"无法成交，因竟价客户没有配置默认地址！\");");
-                            return;
-                        }
-                        
-                        HashMap result = new HashMap();
-                        result.put("gorder", out.get("beObject"));
-                        result.put("selectedPrice", selectedPrice);
-                        result.put("offerLowestPrice", Boolean.TRUE);
-                        result.put("page", @page);
-                        
-                        form.closeIfinWindows();
-                        @page.removeForm(@page.getEntityUiid()); 
-                        
-                        return result;
-                    }
-                    ]]></expressionString>
-                </ns2:expression>
-            </ns2:uiAction>
-             -->
             <ns2:participant partyType="GenericOrganizationType.Director,0" />
             <ns2:process>
                 <ns2:var name="gorder" category="BusinessEntity" scope="InOut">
@@ -493,10 +505,10 @@
 		                if (personalInfoTable.getSelectedRow() == null) {
 		                    return;
 		                }
-		                GoldenOrderImpl order = (GoldenOrderImpl)personalInfoTable.getSelectedRow();
+		                RentOrLoanOrderImpl order = (RentOrLoanOrderImpl)personalInfoTable.getSelectedRow();
 			            DeliveryInfoImpl deliveryInfo = order.getDeliveryToInfo();
-			            if (deliveryInfo.getExpressVendor() == null || deliveryInfo.getExpressVendor().trim().length() == 0) {
-			                Dialog.showMessageDialog("请输入快递编号和选择快递商家，方便发送方确认哟！", "", Dialog.WARNING_MESSAGE, null);
+			            if (order.getDeliveryToInfoId() == 0) {
+			                Dialog.showMessageDialog("您还没有填写快递信息。请输入快递编号和选择快递商家方便对方确认哟！", "", Dialog.WARNING_MESSAGE, null);
 			                return false;
 			            }
 			            if (order.getStatus() != OrderStatusType.TAKEN_PAYED) {
@@ -582,7 +594,7 @@
 		                }
 		                GoldenOrderImpl order = (GoldenOrderImpl)personalInfoTable.getSelectedRow();
 			            DeliveryInfoImpl deliveryInfo = order.getDeliveryToInfo();
-			            if (deliveryInfo.getExpressVendor() == null || deliveryInfo.getExpressVendor().trim().length() == 0) {
+			            if (order.getDeliveryToInfoId() == 0) {
 			                Dialog.showMessageDialog("请输入快递编号和选择快递商家，方便发送方确认哟！", "", Dialog.WARNING_MESSAGE, null);
 			                return false;
 			            }
@@ -645,7 +657,40 @@
         
         <ns2:mission-node name="cancelGOrder" expiredDays="0" expiredHours="0" autoTrigger="false">
             <ns2:description>取消本订单</ns2:description>
-            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.RentOrLoanOrderEditor"
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.RLoanOrderEditor"
+                actionName="cancelGOrder" actionText="取消本订单">
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.Date;
+                    import java.util.ArrayList;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
+                    import org.shaolin.vogerp.ecommercial.dao.*;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.vogerp.commonmodel.IUserService; 
+                    { 
+                        RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+                        HashMap out = (HashMap)form.ui2Data();
+                        RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)out.get("beObject");
+                        if (gorder.getTakenCustomerId() > 0) {
+                            @page.executeJavaScript("alert(\"此订单所被客户拍下，不能取消！\");");
+                            return;
+                        }
+                        
+                        form.closeIfinWindows();
+                        @page.removeForm(@page.getEntityUiid()); 
+                        
+                        HashMap result = new HashMap();
+                        result.put("gorder", out.get("beObject"));
+                        return result;
+                    }
+                    ]]></expressionString>
+                </ns2:expression>
+            </ns2:uiAction>
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.RentOrderEditor"
                 actionName="cancelGOrder" actionText="取消本订单">
                 <ns2:expression>
                     <expressionString><![CDATA[

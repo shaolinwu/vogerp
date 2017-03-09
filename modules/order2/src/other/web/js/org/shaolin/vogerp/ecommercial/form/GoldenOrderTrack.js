@@ -90,6 +90,8 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack(json)
 	              alert("Please select an item!");
 	              return;
 	          }
+	          Form.waitDeliveryTable.syncBodyDataToServer();
+              Form.waitDeliveryTable.sync();
 	          Form.invokeDynamicFunction(Form.waitDeliveryTable, "deliveryOrder");
 	       };
 	       Form.receivedOrder = function() {
@@ -97,6 +99,8 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack(json)
 	              alert("Please select an item!");
 	              return;
 	          }
+	          Form.deliveringTable.syncBodyDataToServer();
+              Form.deliveringTable.sync();
 	          Form.invokeDynamicFunction(Form.deliveringTable, "receivedOrder");
 	       };
 		}
@@ -178,6 +182,11 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack(json)
         var o = this;
         var UIEntity = this;
 
+        {   
+            this.waitDeliveryTable.syncBodyDataToServer();
+            this.waitDeliveryTable.sync();
+        }
+        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deliveryGOrder-2016-1214-1351",UIMaster.getValue(eventsource),o.__entityName);

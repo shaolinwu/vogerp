@@ -1,6 +1,6 @@
 /* null */
 /* auto generated constructor */
-function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
+function org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
     var idUI = new UIMaster.ui.hidden
@@ -14,7 +14,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         ,vertical: true
         ,closeOthersByDefault: true
         ,items: []
-        ,subComponents: [prefix + "photoPanel",prefix + "prodcutInfoPanel",prefix + "deliveryInfoPanel"]
+        ,subComponents: [prefix + "photoPanel",prefix + "prodcutInfoPanel"]
     });
     var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
 
@@ -36,16 +36,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     var publishedCustomerIdUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "publishedCustomerIdUI"]
-    });
-
-    var isPurchaseOrderUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "isPurchaseOrderUILabel"]
-    });
-
-    var typeUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "typeUI"]
     });
 
     var descriptionUILabel = new UIMaster.ui.label
@@ -102,7 +92,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "isPurchaseOrderUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI"]
     });
     var photoPanel = new UIMaster.ui.panel
     ({
@@ -123,14 +113,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         ui: elementList[prefix + "prodcutInfoPanel"]
         ,items: []
         ,subComponents: [prefix + "htmlDescUI"]
-    });
-    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView({"prefix":prefix + "deliveryInfoUI."});
-
-    var deliveryInfoPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "deliveryInfoPanel"]
-        ,items: []
-        ,subComponents: [prefix + "deliveryInfoUI"]
     });
 
     var saveTempbtn = new UIMaster.ui.button
@@ -181,10 +163,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.isPurchaseOrderUILabel=isPurchaseOrderUILabel;
-
-    Form.typeUI=typeUI;
-
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
@@ -200,10 +178,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     Form.prodcutInfoPanel=prodcutInfoPanel;
 
     Form.htmlDescUI=htmlDescUI;
-
-    Form.deliveryInfoPanel=deliveryInfoPanel;
-
-    Form.deliveryInfoUI=deliveryInfoUI;
 
     Form.saveTempbtn=saveTempbtn;
 
@@ -229,10 +203,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.isPurchaseOrderUILabel=isPurchaseOrderUILabel;
-
-    Form.typeUI=typeUI;
-
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
@@ -249,10 +219,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.htmlDescUI=htmlDescUI;
 
-    Form.deliveryInfoPanel=deliveryInfoPanel;
-
-    Form.deliveryInfoUI=deliveryInfoUI;
-
     Form.actionPanel=actionPanel;
 
     Form.saveTempbtn=saveTempbtn;
@@ -261,7 +227,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.user_constructor = function()
     {
-        /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor */
+        /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor */
 
         
         { 
@@ -270,27 +236,27 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         }
         }
     
-            /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor */
+            /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor */
     };
 
-    Form.Save = org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Save;
+    Form.Save = org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor_Save;
 
-    Form.Cancel = org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Cancel;
+    Form.Cancel = org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor_Cancel;
 
-    Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_invokeDynamicFunction;
+    Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor_invokeDynamicFunction;
 
-    Form.__entityName="org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor";
+    Form.__entityName="org.shaolin.vogerp.ecommercial.form.GoldenSaleOrderEditor";
 
     Form.init();
     return Form;
 };
 
     /* EventHandler Functions */
-/* Other_Func_FIRST:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor */
-/* Other_Func_LAST:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor */
+/* Other_Func_FIRST:org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor */
+/* Other_Func_LAST:org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Save */
+    function org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor_Save */
         var o = this;
         var UIEntity = this;
 
@@ -304,22 +270,22 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20160416-173334",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Save */
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor_Save */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Cancel */
+    function org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor_Cancel */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160416-173334",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Cancel */
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor_Cancel */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_invokeDynamicFunction */
+    function org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor_invokeDynamicFunction */
         var o = this;
         var UIEntity = this;
 
@@ -337,7 +303,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         
         }
         }).open();
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_invokeDynamicFunction */
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor_invokeDynamicFunction */
 
 
 

@@ -33,10 +33,14 @@
                 IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
                 IPayOrder payOrder = accountingService.queryForPayOrder(defaultUser.getSerialNumber());
                 if (payOrder != null) {
-	                String json = accountingService.prepay(payOrder);
-			        @page.executeJavaScript("BC.click(" + json + ")");
+                    try {
+	                    String json = accountingService.prepay(payOrder);
+			            @page.executeJavaScript("BC.click(" + json + ")");
+			        } catch (Exception e) {
+			            Dialog.showMessageDialog("支付异常不可用！", "", Dialog.WARNING_MESSAGE, null);
+			        }
 		        } else {
-		        	@page.executeJavaScript("alert('Error occurred!');");  
+		        	Dialog.showMessageDialog("订单状态异常，支付不可用！", "", Dialog.WARNING_MESSAGE, null);
 		        }
             }
             ]]></ns2:expressionString>
@@ -90,6 +94,7 @@
             import org.shaolin.uimaster.page.AjaxContext;
             import org.shaolin.uimaster.page.ajax.*;
             import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+            import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
             {
                 TabPane tab = (TabPane)@page.getElement("funcsPanel");
                 String tableId = "waitPaymentTable";
@@ -109,7 +114,13 @@
                 HashMap input = new HashMap();
                 input.put("beObject", defaultUser);
                 input.put("editable", new Boolean(false));
-                RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor", input);
+                
+                String formName = "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor";
+                if (defaultUser.getType() == GoldenOrderType.SALE) {
+                    formName = "org.shaolin.vogerp.ecommercial.form.GoldenSaleOrderEditor";
+                }
+                
+                RefForm form = new RefForm("goldenOrderForm", formName, input);
                 @page.addElement(form);
                 
                 form.openInWindows("抢购订单详情", new TableCallBack("waitPaymentTable"), true);
@@ -119,6 +130,14 @@
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="deliveryGOrder">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+            this.waitDeliveryTable.syncBodyDataToServer();
+            this.waitDeliveryTable.sync();
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deliveryGOrder-2016-1214-1351">
         <ns2:exp>
             <ns2:expressionString><![CDATA[
@@ -158,7 +177,6 @@
 			        editable = Boolean.FALSE;
 			    }
 			    
-			    if (defaultUser.getType() == GoldenOrderType.SALE) {
                  HashMap input = new HashMap();
                  input.put("order", defaultUser);
                  input.put("beObject", defaultUser.getDeliveryInfo());
@@ -168,17 +186,6 @@
                  @page.addElement(form);
                  
                  form.openInWindows("更新物流信息", null, true);
-                } else { // PURCHASE
-                    HashMap input = new HashMap();
-                    input.put("order", defaultUser);
-                 input.put("beObject", defaultUser.getDeliveryToInfo());
-                 input.put("beObject1", defaultUser.getDeliveryInfo());
-                 input.put("editable", editable);
-                 RefForm form = new RefForm("deliverInfo", "org.shaolin.vogerp.commonmodel.form.E2EDeliveryInfo", input);
-                 @page.addElement(form);
-                 
-                 form.openInWindows("更新物流信息", null, true);
-                }
             }
             ]]></ns2:expressionString>
         </ns2:exp>
@@ -884,6 +891,8 @@
 	              alert("Please select an item!");
 	              return;
 	          }
+	          Form.waitDeliveryTable.syncBodyDataToServer();
+              Form.waitDeliveryTable.sync();
 	          Form.invokeDynamicFunction(Form.waitDeliveryTable, "deliveryOrder");
 	       };
 	       Form.receivedOrder = function() {
@@ -891,6 +900,8 @@
 	              alert("Please select an item!");
 	              return;
 	          }
+	          Form.deliveringTable.syncBodyDataToServer();
+              Form.deliveringTable.sync();
 	          Form.invokeDynamicFunction(Form.deliveringTable, "receivedOrder");
 	       };
 		}

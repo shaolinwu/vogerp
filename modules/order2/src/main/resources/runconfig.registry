@@ -6,10 +6,9 @@
     	   <node name="ecommerical_service">
 	   	       <expression><![CDATA[
 	   	       import org.shaolin.bmdp.runtime.AppContext;
-	   	       import org.shaolin.bmdp.workflow.internal.WorkflowLifecycleServiceImpl;
-	   	       import org.shaolin.bmdp.workflow.internal.CoordinatorServiceImpl;
+	   	       import org.shaolin.vogerp.ecommercial.internal.ModuleLifeCycleService;
 	   	       {
-	   	           //AppContext.get().registerLifeCycleProvider(new WorkflowLifecycleServiceImpl());
+	   	           AppContext.get().registerLifeCycleProvider(new ModuleLifeCycleService());
 	   	       }
 	   	       ]]></expression>
    	       </node>

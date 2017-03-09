@@ -16,8 +16,8 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
-  <ns2:eventHandler functionName="Next">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="Next_49169030">
+  <ns2:eventHandler functionName="selectedPurchaseOrder">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectedPurchaseOrder-20170106-214008">
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
@@ -30,6 +30,7 @@
         import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
         import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
         import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+        import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
         import org.shaolin.vogerp.ecommercial.util.OrderUtil;
         import org.shaolin.vogerp.productmodel.util.ProductUtil;
         import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
@@ -48,6 +49,7 @@
             order.setOrgId(UserContext.getUserContext().getOrgId());
             order.setSerialNumber(OrderUtil.genSerialNumber());
             order.setStatus(OrderStatusType.CREATED);
+            order.setType(GoldenOrderType.PURCHASE);
             order.setPublishedCustomerId(service.getUserId());
             order.setPublishedCustomer((PersonalInfoImpl)service.getPersonalInfo(service.getUserId()));
             order.setCreateDate(new java.util.Date());
@@ -78,12 +80,96 @@
             HashMap input = new HashMap();
             input.put("beObject", order);
             input.put("editable", new Boolean(true));
+            
             RefForm form1 = new RefForm("goldenOrderForm1", "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor", input);
             @page.addElement(form1);
             
-            form1.openInWindows("新建抢购订单", new TableCallBack("goldenOrderTable"), true);
+            form1.openInWindows("新建采购订单", new TableCallBack("goldenOrderTable"), true);
         }]]></expressionString>
       </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="selectedSaleOrder">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectedSaleOrder-20170106-214008">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import org.shaolin.bmdp.utils.DateUtil;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.bmdp.runtime.security.UserContext;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.commonmodel.IUserService; 
+        import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+        import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+        import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
+        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+        import org.shaolin.vogerp.productmodel.util.ProductUtil;
+        import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
+        { 
+            Tree tree = @page.getTree("priceSelector.productTree");
+            ProductPriceImpl price = (ProductPriceImpl)tree.getSelectedObject();
+            if (price == null) {
+                Dialog.showMessageDialog("请配制或者选择一个产品价格包。", "Information", Dialog.INFORMATION_MESSAGE, null);
+                return;
+            }
+            
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+
+            IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+            GoldenOrderImpl order = new GoldenOrderImpl();
+            order.setOrgId(UserContext.getUserContext().getOrgId());
+            order.setSerialNumber(OrderUtil.genSerialNumber());
+            order.setStatus(OrderStatusType.CREATED);
+            order.setType(GoldenOrderType.SALE);
+            order.setPublishedCustomerId(service.getUserId());
+            order.setPublishedCustomer((PersonalInfoImpl)service.getPersonalInfo(service.getUserId()));
+            order.setCreateDate(new java.util.Date());
+            order.setCount(1);
+            order.setCity(UserContext.getUserContext().getCity());
+            order.setProductId(price.getProduct().getId());
+            order.setDescription(price.getProduct().getName() + "\n" + ProductUtil.getPricePackage(price));
+            
+            String resourceId = OrderUtil.genResourceId();
+            if (price.getProduct().getHtmlDesc() != null && price.getProduct().getHtmlDesc().length() > 0) {
+               order.setHtmlDesc(price.getProduct().getHtmlDesc());
+            } else {
+               order.setHtmlDesc("/product/" + resourceId + "/desc.html");
+            }
+            if (price.getProduct().getPhotos() != null && price.getProduct().getPhotos().length() > 0) {
+               order.setPhotos(price.getProduct().getPhotos());
+            } else {
+               order.setPhotos("/product/" + resourceId + "/images");
+            }
+            
+            order.setEstimatedPrice(price.getPrice());
+            // java.util.Date expireDate = new java.util.Date();
+            // DateUtil.increaseDays(expireDate, 7);
+            // plus 7 days as default.
+            // beObject.setExpiredDate(expireDate);
+            order.setCount(1);
+            
+            HashMap input = new HashMap();
+            input.put("beObject", order);
+            input.put("editable", new Boolean(true));
+            
+            RefForm form1 = new RefForm("goldenOrderForm1", "org.shaolin.vogerp.ecommercial.form.GoldenSaleOrderEditor", input);
+            @page.addElement(form1);
+            
+            form1.openInWindows("新建销售订单", new TableCallBack("goldenOrderTable"), true);
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Next">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+           $(this.selectTypePanel).css("display", "block");
+           $(this.selectTypePanel).dialog();
+        }
+        ]]></ns2:expressionString>
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
@@ -96,8 +182,47 @@
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
+      <ns2:component xsi:type="ns2:UIPanelType" UIID="selectTypePanel">
+	      <ns2:layout xsi:type="ns2:TableLayoutType">
+	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+	        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+	        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+	      </ns2:layout>
+	      <ns2:Property name="style">
+             <ns2:value xsi:type="ns2:StringPropertyType">
+                 <value>display:none</value>
+             </ns2:value>
+          </ns2:Property>
+	      <ns2:component xsi:type="ns2:UIButtonType" UIID="purchaseOrderLabel">
+	        <ns2:UIStyle></ns2:UIStyle>
+	        <ns2:text xsi:type="ns2:StringPropertyType">
+	          <ns2:value>创建采购订单</ns2:value>
+	        </ns2:text>
+	        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+	          <ns2:handler functionName="selectedPurchaseOrder"></ns2:handler>
+	        </ns2:EventListener>
+	      </ns2:component>
+	      <ns2:component xsi:type="ns2:UIButtonType" UIID="saleOrderLabel">
+	        <ns2:UIStyle></ns2:UIStyle>
+	        <ns2:text xsi:type="ns2:StringPropertyType">
+	          <ns2:value>创建销售订单</ns2:value>
+	        </ns2:text>
+	        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+	          <ns2:handler functionName="selectedSaleOrder"></ns2:handler>
+	        </ns2:EventListener>
+	      </ns2:component>
+	      <ns2:layoutConstraint>
+	        <ns2:componentId>saleOrderLabel</ns2:componentId>
+	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+	      </ns2:layoutConstraint>
+	      <ns2:layoutConstraint>
+	        <ns2:componentId>purchaseOrderLabel</ns2:componentId>
+	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+	      </ns2:layoutConstraint>
+	  </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="hintsUI">
         <ns2:UIStyle></ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
@@ -114,6 +239,10 @@
       <ns2:layoutConstraint>
         <ns2:componentId>priceSelector</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>selectTypePanel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">

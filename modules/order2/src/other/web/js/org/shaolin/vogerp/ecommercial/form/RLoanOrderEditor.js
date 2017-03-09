@@ -1,18 +1,12 @@
 /* null */
 /* auto generated constructor */
-function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
+function org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var idUI = new UIMaster.ui.hidden
-    ({
-        ui: elementList[prefix + "idUI"]
-    });
-
     var funcsPanel = new UIMaster.ui.prenextpanel
     ({
         ui: elementList[prefix + "funcsPanel"]
         ,vertical: true
-        ,closeOthersByDefault: true
         ,items: []
         ,subComponents: [prefix + "photoPanel",prefix + "prodcutInfoPanel",prefix + "deliveryInfoPanel"]
     });
@@ -38,14 +32,14 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         ui: elementList[prefix + "publishedCustomerIdUI"]
     });
 
-    var isPurchaseOrderUILabel = new UIMaster.ui.label
+    var rentTypeUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "isPurchaseOrderUILabel"]
+        ui: elementList[prefix + "rentTypeUILabel"]
     });
 
-    var typeUI = new UIMaster.ui.combobox
+    var rentTypeUI = new UIMaster.ui.combobox
     ({
-        ui: elementList[prefix + "typeUI"]
+        ui: elementList[prefix + "rentTypeUI"]
     });
 
     var descriptionUILabel = new UIMaster.ui.label
@@ -58,14 +52,24 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         ui: elementList[prefix + "descriptionUI"]
     });
 
-    var countUILabel = new UIMaster.ui.label
+    var rentDateTypeUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "countUILabel"]
+        ui: elementList[prefix + "rentDateTypeUILabel"]
     });
 
-    var countUI = new UIMaster.ui.textfield
+    var rentDateTypeUI = new UIMaster.ui.combobox
     ({
-        ui: elementList[prefix + "countUI"]
+        ui: elementList[prefix + "rentDateTypeUI"]
+    });
+
+    var dateCountUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "dateCountUILabel"]
+    });
+
+    var dateCountUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "dateCountUI"]
         ,isNumber: true
     });
 
@@ -98,11 +102,40 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         }
 ]    });
 
+    var depositUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "depositUILabel"]
+    });
+
+    var depositUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "depositUI"]
+        ,isNumber: true
+        ,validators:[
+        {
+            func: function() {
+                
+	                    {
+	                        if (this.value.length > 0) {
+	                            if (/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(this.value)) {
+	                              return true;
+	                            } else {
+	                              return false;
+	                            }
+	                        }
+	                        return true;
+	                    }
+	                    
+            }
+            ,msg: ""
+        }
+]    });
+
     var attributePanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "isPurchaseOrderUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "rentTypeUILabel",prefix + "rentTypeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "rentDateTypeUILabel",prefix + "rentDateTypeUI",prefix + "dateCountUILabel",prefix + "dateCountUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "depositUILabel",prefix + "depositUI"]
     });
     var photoPanel = new UIMaster.ui.panel
     ({
@@ -154,16 +187,14 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "funcsPanel"]
+        ,subComponents: [prefix + "funcsPanel"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,funcsPanel,saveTempbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [funcsPanel,saveTempbtn,cancelbtn,fieldPanel,actionPanel]
     });
-
-    Form.idUI=idUI;
 
     Form.funcsPanel=funcsPanel;
 
@@ -181,21 +212,29 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.isPurchaseOrderUILabel=isPurchaseOrderUILabel;
+    Form.rentTypeUILabel=rentTypeUILabel;
 
-    Form.typeUI=typeUI;
+    Form.rentTypeUI=rentTypeUI;
 
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
 
-    Form.countUILabel=countUILabel;
+    Form.rentDateTypeUILabel=rentDateTypeUILabel;
 
-    Form.countUI=countUI;
+    Form.rentDateTypeUI=rentDateTypeUI;
+
+    Form.dateCountUILabel=dateCountUILabel;
+
+    Form.dateCountUI=dateCountUI;
 
     Form.estimatedPriceUILabel=estimatedPriceUILabel;
 
     Form.estimatedPriceUI=estimatedPriceUI;
+
+    Form.depositUILabel=depositUILabel;
+
+    Form.depositUI=depositUI;
 
     Form.prodcutInfoPanel=prodcutInfoPanel;
 
@@ -211,8 +250,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.fieldPanel=fieldPanel;
 
-    Form.idUI=idUI;
-
     Form.funcsPanel=funcsPanel;
 
     Form.photoPanel=photoPanel;
@@ -229,21 +266,29 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.isPurchaseOrderUILabel=isPurchaseOrderUILabel;
+    Form.rentTypeUILabel=rentTypeUILabel;
 
-    Form.typeUI=typeUI;
+    Form.rentTypeUI=rentTypeUI;
 
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
 
-    Form.countUILabel=countUILabel;
+    Form.rentDateTypeUILabel=rentDateTypeUILabel;
 
-    Form.countUI=countUI;
+    Form.rentDateTypeUI=rentDateTypeUI;
+
+    Form.dateCountUILabel=dateCountUILabel;
+
+    Form.dateCountUI=dateCountUI;
 
     Form.estimatedPriceUILabel=estimatedPriceUILabel;
 
     Form.estimatedPriceUI=estimatedPriceUI;
+
+    Form.depositUILabel=depositUILabel;
+
+    Form.depositUI=depositUI;
 
     Form.prodcutInfoPanel=prodcutInfoPanel;
 
@@ -261,36 +306,28 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.user_constructor = function()
     {
-        /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor */
-
-        
-        { 
-        if (this.idUI.value != "0") {
-           //this.funcsPanel.collapseTab(0);
-        }
-        }
-    
-            /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor */
+        /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor */
+        /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor */
     };
 
-    Form.Save = org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Save;
+    Form.Save = org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor_Save;
 
-    Form.Cancel = org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Cancel;
+    Form.Cancel = org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor_Cancel;
 
-    Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_invokeDynamicFunction;
+    Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor_invokeDynamicFunction;
 
-    Form.__entityName="org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor";
+    Form.__entityName="org.shaolin.vogerp.ecommercial.form.RLoanOrderEditor";
 
     Form.init();
     return Form;
 };
 
     /* EventHandler Functions */
-/* Other_Func_FIRST:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor */
-/* Other_Func_LAST:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor */
+/* Other_Func_FIRST:org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor */
+/* Other_Func_LAST:org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Save */
+    function org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor_Save */
         var o = this;
         var UIEntity = this;
 
@@ -304,22 +341,22 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20160416-173334",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Save */
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor_Save */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Cancel */
+    function org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor_Cancel */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160416-173334",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_Cancel */
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor_Cancel */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_invokeDynamicFunction */
+    function org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor_invokeDynamicFunction */
         var o = this;
         var UIEntity = this;
 
@@ -337,7 +374,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         
         }
         }).open();
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor_invokeDynamicFunction */
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor_invokeDynamicFunction */
 
 
 
