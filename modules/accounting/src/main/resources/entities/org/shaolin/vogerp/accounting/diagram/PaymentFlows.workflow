@@ -49,11 +49,16 @@
 		    				BCWebHookHandler.getLogger().warn("Payment order("+$payOrder.getSerialNumber()+") amount does not the same! PayOrder amount: " + $payOrder.getAmount() + ", Callback amount: " + momey);
 		    				return;
 		    			}
+	    				IAccountingService payService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
 		    			if ($jsonObj.getBoolean("trade_success")) {
 		    			    String transactionId = $jsonObj.getString("transaction_id");
-		    				AccountingServiceImpl.updatePayState(transactionId, $jsonObj, $payOrder);
-		    				AccountingModel.INSTANCE.update($payOrder, true);
+		    				payService.updatePayState($jsonObj, $payOrder);
+		    				
+		    				// handle call back update.
+		    				payService.notifyPaySuccess($payOrder);
 		    			} else {
+		    			    // handle call back update.
+		    				payService.notifyPayFail($payOrder);
 		    				//notify user that the trade is not successful.
 		    				JSONObject orderDetail = $jsonObj.getJSONObject("message_detail");
 		    				

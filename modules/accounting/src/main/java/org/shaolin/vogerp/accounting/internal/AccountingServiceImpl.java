@@ -1,6 +1,7 @@
 package org.shaolin.vogerp.accounting.internal;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.shaolin.uimaster.page.AjaxFactory;
 import org.shaolin.uimaster.page.ajax.json.JSONException;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.vogerp.accounting.IAccountingService;
+import org.shaolin.vogerp.accounting.PayOrderStatusListener;
 import org.shaolin.vogerp.accounting.PaymentException;
 import org.shaolin.vogerp.accounting.be.AccountVoucherImpl;
 import org.shaolin.vogerp.accounting.be.CustomerAccountImpl;
@@ -58,8 +60,28 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 
 	private Map<String, String> paymentKeyInfo;
 	
+	private List<PayOrderStatusListener> listeners = new ArrayList<PayOrderStatusListener>();
+	
 	public AccountingServiceImpl() {
 		this.registeBeeCloudApp();
+	}
+	
+	public void addListener(PayOrderStatusListener listener) {
+		if (!listeners.contains(listener)) {
+			listeners.add(listener);
+		}
+	}
+	
+	public void notifyPaySuccess(IPayOrder payOrder) {
+		for (PayOrderStatusListener listener: listeners) {
+			listener.notifySuccess(payOrder);
+		}
+	}
+	
+	public void notifyPayFail(IPayOrder payOrder) {
+		for (PayOrderStatusListener listener: listeners) {
+			listener.notifyFail(payOrder);
+		}
 	}
 	
 	/**
@@ -276,7 +298,7 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 				throw new PaymentException("Pay error: " + e.getMessage(), e);
 			}
 		}
-		throw new PaymentException("Order is not in NOT Payed state!");
+		throw new PaymentException("Order is not in unpay state!");
 	}
 	
 	private String getPaymentTitle(final IPayOrder order) {
@@ -370,19 +392,29 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		}
 	}
 	
-	public static void updatePayState(String transactionId, JSONObject jsonObj, PayOrderImpl payOrder) throws JSONException {
-		TransactionType transType = TransactionType.valueOf(jsonObj.getString("transaction_type").toUpperCase());
+	public void updatePayState(final JSONObject jsonObj, final IPayOrder payOrder) throws PaymentException {
+		TransactionType transType;
+		String transactionId;
+		try {
+			transType = TransactionType.valueOf(jsonObj.getString("transaction_type").toUpperCase());
+			transactionId = jsonObj.getString("transaction_id");
+		} catch (JSONException e) {
+			throw new PaymentException("Error to get transaction_type! payment order: " + payOrder.getSerialNumber());
+		}
 		if (transType == TransactionType.PAY && payOrder.getStatus() == PayOrderStatusType.NOTPAYED) {
 			payOrder.setStatus(PayOrderStatusType.PAYED);
 			payOrder.setThirdGenSerialNumber(transactionId);
+			AccountingModel.INSTANCE.update(payOrder, true);
 		} else if (transType == TransactionType.REFUND && payOrder.getStatus() == PayOrderStatusType.PAYED) {
 			payOrder.setStatus(PayOrderStatusType.REFUND);
 			payOrder.setThirdGenSerialNumber2(transactionId);
+			AccountingModel.INSTANCE.update(payOrder, true);
 		} else if (transType == TransactionType.TRANSFER && payOrder.getStatus() == PayOrderStatusType.PAYED) {
 			payOrder.setStatus(PayOrderStatusType.AGREEDPAYTOEND);
 			payOrder.setThirdGenSerialNumber2(transactionId);
+			AccountingModel.INSTANCE.update(payOrder, true);
 		} else {
-			logger.warn("Unsupported state of payment order: " + payOrder.getId() 
+			logger.warn("Unsupported state of payment order: " + payOrder.getSerialNumber() 
 				+ "(" + payOrder.getStatus().getDisplayName() 
 				+ "), transactionId: " + transactionId
 				+ ",transType: " + transType);
@@ -487,6 +519,9 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 		AppContext.get().register(this);
 		
 		AjaxFactory.register("BCWebHook", new BCWebHookHandler());
+		AjaxFactory.register("AliWebHook", new AlipayWebHookHandler());
+		AjaxFactory.register("WeWebHook", new WepayWebHookHandler());
+		
 	}
 
 	@Override
@@ -506,7 +541,7 @@ public class AccountingServiceImpl implements ILifeCycleProvider, IServiceProvid
 
 	@Override
 	public int getRunLevel() {
-		return 10;
+		return 8;
 	}
 
 }
