@@ -212,6 +212,10 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         var o = this;
         var UIEntity = this;
 
+	        {   
+	           $(this.selectRentOrderTypePanel).dialog("close");
+	        }
+	        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedLoanOrder-20160602",UIMaster.getValue(eventsource),o.__entityName);
@@ -223,6 +227,10 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         var o = this;
         var UIEntity = this;
 
+	        {   
+	           $(this.selectRentOrderTypePanel).dialog("close");
+	        }
+	        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedRentOrder-20160602",UIMaster.getValue(eventsource),o.__entityName);

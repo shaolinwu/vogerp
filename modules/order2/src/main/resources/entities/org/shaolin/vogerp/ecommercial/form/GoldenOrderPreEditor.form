@@ -17,6 +17,13 @@
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="selectedPurchaseOrder">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+           $(this.selectTypePanel).dialog("close");
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectedPurchaseOrder-20170106-214008">
       <ns2:exp>
         <expressionString><![CDATA[
@@ -90,6 +97,13 @@
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="selectedSaleOrder">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+           $(this.selectTypePanel).dialog("close");
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectedSaleOrder-20170106-214008">
       <ns2:exp>
         <expressionString><![CDATA[

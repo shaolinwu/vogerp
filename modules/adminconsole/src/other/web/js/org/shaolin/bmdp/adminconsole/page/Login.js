@@ -18,8 +18,8 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     ({
         ui: elementList[prefix + "advImagesUI"]
         ,thumbnails: false
-        ,height: 300
-        ,width: "400"
+        ,height: 320
+        ,width: "420"
         ,mode: "slider"
         ,slideshowAutostart: "true"
         ,thumbnailsFullScreen: false

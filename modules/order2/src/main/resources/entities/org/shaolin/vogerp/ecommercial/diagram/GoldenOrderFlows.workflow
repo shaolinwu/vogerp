@@ -358,13 +358,13 @@
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
                         if (out.get("selectedPrice") == null) {
-                            @page.executeJavaScript("alert(\"请选择一个客户出价单。\");");
+                            Dialog.showMessageDialog("请选择一个客户出价单。", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         GOOfferPriceImpl selectedPrice= (GOOfferPriceImpl)out.get("selectedPrice");
                         IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
                         if (!service.hasAddressConfigured(selectedPrice.getTakenCustomerId())) {
-                            @page.executeJavaScript("alert(\"无法成交，因竟价客户没有配置默认地址！\");");
+                            Dialog.showMessageDialog("无法成交，因竟价客户没有配置默认地址！", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         
@@ -392,62 +392,7 @@
                   ]]></expressionString>
                 </ns2:filter>
             </ns2:uiAction>
-            <!-- 
-            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.GOOfferPriceTable"
-                actionName="acceptOfferPrice1" actionText="按最低价格成交">
-                <ns2:expression>
-                    <expressionString><![CDATA[
-                    import java.util.HashMap;
-                    import java.util.Date;
-                    import java.util.ArrayList;
-                    import org.shaolin.uimaster.page.AjaxContext;
-                    import org.shaolin.uimaster.page.ajax.*;
-                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
-                    import org.shaolin.vogerp.ecommercial.be.GOOfferPriceImpl;
-                    import org.shaolin.vogerp.ecommercial.dao.*;
-                    import org.shaolin.bmdp.runtime.AppContext; 
-                    import org.shaolin.vogerp.commonmodel.IUserService; 
-                    { 
-                        RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-                        HashMap out = (HashMap)form.ui2Data();
-                        GoldenOrderImpl gorder = (GoldenOrderImpl)out.get("beObject");
-                        if (gorder.getOfferPrices() == null || gorder.getOfferPrices().size() == 0) {
-                            @page.executeJavaScript("alert(\"当前没有客户竟价单。\");");
-                            return;
-                        }
-                        GOOfferPriceImpl selectedPrice= (GOOfferPriceImpl)out.get("selectedPrice");
-                        IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
-                        if (!service.hasAddressConfigured(selectedPrice.getTakenCustomerId())) {
-                            @page.executeJavaScript("alert(\"无法成交，因竟价客户没有配置默认地址！\");");
-                            return;
-                        }
-                        
-                        HashMap result = new HashMap();
-                        result.put("gorder", out.get("beObject"));
-                        result.put("selectedPrice", selectedPrice);
-                        result.put("offerLowestPrice", Boolean.TRUE);
-                        result.put("page", @page);
-                        
-                        form.closeIfinWindows();
-                        @page.removeForm(@page.getEntityUiid()); 
-                        
-                        return result;
-                    }
-                    ]]></expressionString>
-                </ns2:expression>
-                <ns2:filter>
-                  <expressionString><![CDATA[
-                    import org.shaolin.bmdp.runtime.security.UserContext;
-                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                    {
-                       return UserContext.hasRole("GenericOrganizationType.Director,0") 
-                              && $beObject.getOrgId() == UserContext.getUserContext().getOrgId() 
-                              && $beObject.getStatus() == OrderStatusType.PUBLISHED;
-                    }
-                  ]]></expressionString>
-                </ns2:filter>
-            </ns2:uiAction>
-             -->
+            
             <ns2:participant partyType="GenericOrganizationType.Director,0" />
             <ns2:process>
                 <ns2:var name="gorder" category="BusinessEntity" scope="InOut">
@@ -480,6 +425,7 @@
                     import org.shaolin.vogerp.commonmodel.IUserService;
                     import org.shaolin.vogerp.commonmodel.IOrganizationService;
                     import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+                    import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
@@ -495,6 +441,11 @@
                             $gorder.setTakenCustomerId($selectedPrice.getTakenCustomerId());
                          }
                          $gorder.setStatus(OrderStatusType.TAKEN);
+                         if ($gorder.getType() == GoldenOrderType.SALE) {
+                             $gorder.setDeliveryToInfo((DeliveryInfoImpl)CustomerInfoUtil.createDeliveryInfo($selectedPrice.getTakenCustomerId()));
+                         } else {
+                             $gorder.setDeliveryInfo((DeliveryInfoImpl)CustomerInfoUtil.createDeliveryInfo($selectedPrice.getTakenCustomerId()));
+                         }
                          OrderModel.INSTANCE.update($gorder);
                          
                          IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class); 

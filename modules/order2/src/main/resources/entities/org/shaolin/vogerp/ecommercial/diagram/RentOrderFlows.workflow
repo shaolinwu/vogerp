@@ -355,13 +355,13 @@
                         HashMap out = (HashMap)form.ui2Data();
                         RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)out.get("beObject");
                         if (out.get("selectedPrice") == null) {
-                            @page.executeJavaScript("alert(\"请选择一个竟价单。\");");
+                            Dialog.showMessageDialog("请选择一个客户出价单。", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         ROOfferPriceImpl selectedPrice= (ROOfferPriceImpl)out.get("selectedPrice");
                         IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
                         if (!service.hasAddressConfigured(selectedPrice.getTakenCustomerId())) {
-                            @page.executeJavaScript("alert(\"无法成交，因竟价客户没有配置默认地址！\");");
+                            Dialog.showMessageDialog("无法成交，因竟价客户没有配置默认地址！", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         
@@ -419,7 +419,10 @@
                     import org.shaolin.vogerp.order.be.IPurchaseOrder;
                     import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
                     import org.shaolin.vogerp.order.be.PurchaseItemImpl;
+                    import org.shaolin.vogerp.order.ce.RentOrLoanOrderType;
                     import org.shaolin.vogerp.commonmodel.IOrganizationService;
+                    import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+                    import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
                     import org.shaolin.vogerp.accounting.ce.PayBusinessType;
                     import org.shaolin.vogerp.accounting.IAccountingService;
@@ -433,6 +436,11 @@
                             $gorder.setTakenCustomerId($selectedPrice.getTakenCustomerId());
                          }
                          $gorder.setStatus(OrderStatusType.TAKEN);
+                         if ($gorder.getType() == RentOrLoanOrderType.LOAN) {
+                             $gorder.setDeliveryToInfo((DeliveryInfoImpl)CustomerInfoUtil.createDeliveryInfo($selectedPrice.getTakenCustomerId()));
+                         } else {
+                             $gorder.setDeliveryInfo((DeliveryInfoImpl)CustomerInfoUtil.createDeliveryInfo($selectedPrice.getTakenCustomerId()));
+                         }
                          OrderModel.INSTANCE.update($gorder);
                          
                          IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);

@@ -22,6 +22,12 @@
                   import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                   import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
                   {
+                      IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+                      if (!service.hasAddressConfigured(UserContext.getUserContext().getUserId())) {
+                          Dialog.showMessageDialog("您没有配置默认地址！请到基本信息模块中添加您的地址信息。", "", Dialog.WARNING_MESSAGE, null);
+                          return;
+                      }
+                  
                       HashMap input = new HashMap();
                       input.put("editable", new Boolean(true));
                       RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrderPreEditor", input);
@@ -57,13 +63,15 @@
                         } else {
                         	input.put("editable", new Boolean(true));
                         }
-                        RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor", input);
-                        @page.addElement(form);
-                        
                         String orderName = "采购订单详情";
+                        String formName = "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor";
                         if (defaultUser.getType() == GoldenOrderType.SALE) {
                             orderName = "销售订单详情";
+                            formName = "org.shaolin.vogerp.ecommercial.form.GoldenSaleOrderEditor";
                         }
+                        RefForm form = new RefForm("goldenOrderForm", formName, input);
+                        @page.addElement(form);
+                        
                         form.openInWindows(orderName, new TableCallBack("goldenOrderTable"), true);
                     }
                     ]]></ns2:expressionString>
@@ -137,6 +145,13 @@
 	      </ns2:ops>
 	  </ns2:eventHandler>
 	  <ns2:eventHandler functionName="selectedLoanOrder">
+	      <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+	        <ns2:expressionString><![CDATA[
+	        {   
+	           $(this.selectRentOrderTypePanel).dialog("close");
+	        }
+	        ]]></ns2:expressionString>
+	      </ns2:ops>
           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectedLoanOrder-20160602">
               <ns2:exp>
                   <ns2:expressionString><![CDATA[
@@ -156,6 +171,11 @@
                   import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
                   {
                       IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+                      if (!service.hasAddressConfigured(UserContext.getUserContext().getUserId())) {
+                          Dialog.showMessageDialog("您没有配置默认地址！请到基本信息模块中添加您的地址信息。", "", Dialog.WARNING_MESSAGE, null);
+                          return;
+                      }
+                      
                       RentOrLoanOrderImpl order = new RentOrLoanOrderImpl();
                       order.setOrgId(UserContext.getUserContext().getOrgId());
                       order.setSerialNumber(OrderUtil.genSerialNumber());
@@ -183,6 +203,13 @@
           </ns2:ops>
       </ns2:eventHandler>
       <ns2:eventHandler functionName="selectedRentOrder">
+          <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+	        <ns2:expressionString><![CDATA[
+	        {   
+	           $(this.selectRentOrderTypePanel).dialog("close");
+	        }
+	        ]]></ns2:expressionString>
+	      </ns2:ops>
           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectedRentOrder-20160602">
               <ns2:exp>
                   <ns2:expressionString><![CDATA[
@@ -202,6 +229,11 @@
                   import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
                   {
                       IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+                      if (!service.hasAddressConfigured(UserContext.getUserContext().getUserId())) {
+                          Dialog.showMessageDialog("您没有配置默认地址！请到基本信息模块中添加您的地址信息。", "", Dialog.WARNING_MESSAGE, null);
+                          return;
+                      }
+                      
                       RentOrLoanOrderImpl order = new RentOrLoanOrderImpl();
                       order.setOrgId(UserContext.getUserContext().getOrgId());
                       order.setSerialNumber(OrderUtil.genSerialNumber());
@@ -284,6 +316,10 @@
                   import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
                   {
                       IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+                      if (!service.hasAddressConfigured(UserContext.getUserContext().getUserId())) {
+                          Dialog.showMessageDialog("您没有配置默认地址！请到基本信息模块中添加您的地址信息。", "", Dialog.WARNING_MESSAGE, null);
+                          return;
+                      }
                       
                       MachiningOrderImpl order = new MachiningOrderImpl();
                       order.setOrgId(UserContext.getUserContext().getOrgId());
@@ -921,7 +957,7 @@
 
                 <ns2:tab uiid="interestEOrderPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
-                        <ns2:value>竟价订单历史</ns2:value>
+                        <ns2:value>竟价历史</ns2:value>
                     </ns2:title>
                     <ns2:panel UIID="interestEOrderPanel">
                         <ns2:layout xsi:type="ns2:TableLayoutType">

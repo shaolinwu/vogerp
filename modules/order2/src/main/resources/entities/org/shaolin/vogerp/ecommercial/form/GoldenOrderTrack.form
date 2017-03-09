@@ -164,10 +164,6 @@
 			       DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)CommonModel.INSTANCE.get(defaultUser.getDeliveryToInfoId(), DeliveryInfoImpl.class);
 			       defaultUser.setDeliveryToInfo(deliveryInfo);
 			    }
-			    if (defaultUser.getDeliveryToInfo() == null) {
-			       DeliveryInfoImpl deliveryInfo = new DeliveryInfoImpl();
-			       defaultUser.setDeliveryToInfo(deliveryInfo);
-			    }
 			    
 			    Boolean editable = Boolean.TRUE;
 			    OrderStatusType status = defaultUser.getStatus();
@@ -179,8 +175,12 @@
 			    
                  HashMap input = new HashMap();
                  input.put("order", defaultUser);
-                 input.put("beObject", defaultUser.getDeliveryInfo());
-                 input.put("beObject1", defaultUser.getDeliveryToInfo());
+                 input.put("beObject1", defaultUser.getDeliveryInfo());
+                 input.put("beObject", defaultUser.getDeliveryToInfo());
+                 if (defaultUser.getType() == GoldenOrderType.SALE) {
+                     input.put("beObject", defaultUser.getDeliveryInfo());
+                     input.put("beObject1", defaultUser.getDeliveryToInfo());
+                 }
                  input.put("editable", editable);
                  RefForm form = new RefForm("deliverInfo", "org.shaolin.vogerp.commonmodel.form.E2EDeliveryInfo", input);
                  @page.addElement(form);

@@ -474,7 +474,7 @@
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping8">
       <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.DeliveryInfoSimpleView"></ns2:mappingRule>
       <ns2:UIComponent componentPath="deliveryInfoUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.deliveryInfo" paramName="beObject"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.deliveryToInfo" paramName="beObject"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
@@ -483,12 +483,12 @@
       import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
       import org.shaolin.bmdp.runtime.security.UserContext;
       {
-        if ($beObject.getDeliveryInfoId() > 0) {
-           DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)CommonModel.INSTANCE.get($beObject.getDeliveryInfoId(), DeliveryInfoImpl.class);
-           $beObject.setDeliveryInfo(deliveryInfo);
+        if ($beObject.getDeliveryToInfoId() > 0) {
+           DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)CommonModel.INSTANCE.get($beObject.getDeliveryToInfoId(), DeliveryInfoImpl.class);
+           $beObject.setDeliveryToInfo(deliveryInfo);
         }
-        if ($beObject.getDeliveryInfo() == null) {
-           $beObject.setDeliveryInfo((DeliveryInfoImpl)CustomerInfoUtil.createDeliveryInfo(UserContext.getUserContext().getUserId()));
+        if ($beObject.getDeliveryToInfo() == null) {
+           $beObject.setDeliveryToInfo((DeliveryInfoImpl)CustomerInfoUtil.createDeliveryInfo(UserContext.getUserContext().getUserId()));
         }
         @odContext.executeAllMappings();
       }]]></expressionString>

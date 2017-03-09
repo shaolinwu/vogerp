@@ -136,6 +136,10 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor(json)
         var o = this;
         var UIEntity = this;
 
+        {   
+           $(this.selectTypePanel).dialog("close");
+        }
+        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedPurchaseOrder-20170106-214008",UIMaster.getValue(eventsource),o.__entityName);
@@ -147,6 +151,10 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor(json)
         var o = this;
         var UIEntity = this;
 
+        {   
+           $(this.selectTypePanel).dialog("close");
+        }
+        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedSaleOrder-20170106-214008",UIMaster.getValue(eventsource),o.__entityName);
