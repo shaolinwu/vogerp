@@ -78,6 +78,9 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 		}
 		
 		try {
+			ShortMsgServiceImpl smsService = new ShortMsgServiceImpl();
+			serviceManger.register(smsService);
+			
 			UserServiceImpl userService = new UserServiceImpl();
 			userService.addListener(new NewUserListener());
 			serviceManger.register(userService);

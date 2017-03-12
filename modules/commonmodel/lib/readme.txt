@@ -1,0 +1,2 @@
+# please execute this unmavened jar into repository.
+mvn install:install-file -Dfile=taobao-sdk-java-auto_1455552377940-20160607.jar -DgroupId=taobao-sdk -DartifactId=java-auto -Dversion=1.0.0 -Dpackaging=jar

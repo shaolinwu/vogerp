@@ -40,6 +40,11 @@
 		/System/Vogerp/UserMemberRule/DefaultMonth 12
          -->
          <node name="Vogerp">
+            <node name="sms">
+                <item name="appkey" value="" />
+                <item name="appsecret" value="" />
+                <item name="url" value="" />
+            </node>
         	<node name="Notification">
         		<node name="Common">
         			<item name="UserRegister_SUB" value="欢迎您成为抢单达人注册新用户！" />
