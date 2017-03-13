@@ -22,7 +22,7 @@
             import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
             import org.shaolin.vogerp.accounting.be.IPayOrder;
             import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
-            import org.shaolin.vogerp.accounting.IAccountingService;
+            import org.shaolin.vogerp.accounting.IPaymentService;
             {
                 Table personalInfoTable = (Table)@page.getElement("waitPaymentTable");
                 if (personalInfoTable.getSelectedRow() == null) {
@@ -30,15 +30,15 @@
                 }
                 MachiningOrderImpl defaultUser = (MachiningOrderImpl)personalInfoTable.getSelectedRow();
                 
-                IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+                IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                 IPayOrder payOrder = accountingService.queryForPayOrder(defaultUser.getSerialNumber());
                 if (payOrder != null) {
-                    try {
-	                    String json = accountingService.prepay(payOrder);
-			            @page.executeJavaScript("BC.click(" + json + ")");
-			        } catch (Exception e) {
-			            Dialog.showMessageDialog("支付异常不可用！", "", Dialog.WARNING_MESSAGE, null);
-			        }
+                    HashMap input = new HashMap();
+	                input.put("beObject", payOrder);
+	                input.put("editable", new Boolean(true));
+	                RefForm form = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PaymentMethod", input);
+	                @page.addElement(form);
+	                form.openInWindows("支付方式选择", null, 150, 100);
 		        } else {
 		        	Dialog.showMessageDialog("订单状态异常，支付不可用！", "", Dialog.WARNING_MESSAGE, null);
 		        }
@@ -59,7 +59,7 @@
             import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
             import org.shaolin.vogerp.accounting.be.IPayOrder;
             import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
-            import org.shaolin.vogerp.accounting.IAccountingService;
+            import org.shaolin.vogerp.accounting.IPaymentService;
             {
                 Table personalInfoTable = (Table)@page.getElement("deliveringTable");
                 if (personalInfoTable.getSelectedRow() == null) {

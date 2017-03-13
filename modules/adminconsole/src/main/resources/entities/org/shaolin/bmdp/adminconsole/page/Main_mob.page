@@ -4,7 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.bmdp.adminconsole.page.Main_mob</entityName>
 	<systemVersion>0</systemVersion>
-	<description>欢迎登录抢单达人网</description>
+	<description>欢迎登录抚企加工达人网</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 		<ns2:eventHandler functionName="Submit"></ns2:eventHandler>
 		<ns2:eventHandler functionName="Logout">

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.shaolin.bmdp.runtime.AppContext;
+import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.EventProcessor;
@@ -18,35 +19,117 @@ import org.shaolin.bmdp.workflow.internal.BuiltInAttributeConstant;
 import org.shaolin.uimaster.page.ajax.handlers.IAjaxCommand;
 import org.shaolin.uimaster.page.ajax.json.JSONException;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
-import org.shaolin.vogerp.accounting.IAccountingService.TransactionType;
+import org.shaolin.vogerp.accounting.IPaymentService.TransactionType;
+import org.shaolin.vogerp.accounting.PaymentException;
+import org.shaolin.vogerp.accounting.PaymentHandler;
+import org.shaolin.vogerp.accounting.be.ICustomerAccount;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 import org.shaolin.vogerp.accounting.be.PayOrderTransactionLogImpl;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+import org.shaolin.vogerp.accounting.ce.SettlementMethodType;
 import org.shaolin.vogerp.accounting.dao.AccountingModel;
 import org.shaolin.vogerp.accounting.util.PaymentUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.domain.AlipayTradeAppPayModel;
+import com.alipay.api.request.AlipayTradeAppPayRequest;
+import com.alipay.api.request.AlipayTradeWapPayRequest;
+import com.alipay.api.response.AlipayTradeAppPayResponse;
+
 /**
- * BE WebHook data handler.
- * Check from this example.
- * https://github.com/beecloud/beecloud-java/blob/master/demo/WebRoot/webhook_receiver_example/webhook_receiver.jsp
- * 
  * We are able to debug this callback handler through Admin console by enabling 'enableDebugger'.
  * @author wushaol
  *
  */
-public class AlipayWebHookHandler implements IAjaxCommand {
+public class AlipayHandler implements IAjaxCommand, PaymentHandler {
 
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
-	private static final Logger logger = LoggerFactory.getLogger(AlipayWebHookHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(AlipayHandler.class);
 	
 	public static boolean enableDebugger = false;
 	
-	public static Logger getLogger() {
-		return logger;
+	public String APP_ID = "";
+	public String APP_PRIVATE_KEY = "";
+	public String ALIPAY_PUBLIC_KEY = "";
+	private static final String KEY_TYPE = "RSA2";
+	private static final String ALIPAY_COMM_GATEWAY = "https://openapi.alipay.com/gateway.do";
+	
+	private AlipayClient alipayClient;
+	
+	public AlipayHandler() {
+		APP_ID = Registry.getInstance().getValue("/System/payment/alipay/app_id");
+		APP_PRIVATE_KEY = Registry.getInstance().getValue("/System/payment/alipay/app_privatekey");
+		ALIPAY_PUBLIC_KEY = Registry.getInstance().getValue("/System/payment/alipay/alipay_public_key");
+		alipayClient = new DefaultAlipayClient(ALIPAY_COMM_GATEWAY, 
+				APP_ID, APP_PRIVATE_KEY, "json", "UTF-8", ALIPAY_PUBLIC_KEY, KEY_TYPE);
+	}
+	
+	/**
+	 * 
+	 * @param payOrder
+	 * @return
+	 * @throws Exception
+	 */
+	public String prepay(IPayOrder payOrder) throws PaymentException {
+		try {
+			if (UserContext.isMobileRequest() && UserContext.isAppClient()) {
+				// https://doc.open.alipay.com/docs/doc.htm?spm=a219a.7629140.0.0.I6qVQ1&treeId=54&articleId=106370&docType=1
+				AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
+				AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
+				model.setSubject(PaymentUtil.getPaymentTitle(payOrder));
+				model.setBody(payOrder.getDescription());
+				model.setOutTradeNo(payOrder.getSerialNumber());
+				model.setTimeoutExpress("500m");
+				model.setTotalAmount((payOrder.getAmount() / 100) + "");
+				model.setProductCode("QUICK_MSECURITY_PAY");
+				request.setBizModel(model);
+	//			request.setNotifyUrl("");
+				
+				// this is app payment api.
+		        AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
+		        return response.getBody(); //order information returning to client
+			} else {
+				// web payment: alipay.trade.wap.pay
+				// https://doc.open.alipay.com/docs/doc.htm?spm=a219a.7629140.0.0.WUo6cW&treeId=203&articleId=105285&docType=1
+				AlipayTradeWapPayRequest alipayRequest = new AlipayTradeWapPayRequest();
+	//		    alipayRequest.setReturnUrl("http://domain.com/CallBack/return_url.jsp");
+	//		    alipayRequest.setNotifyUrl("http://domain.com/CallBack/notify_url.jsp");
+				JSONObject json = new JSONObject();
+				json.put("out_trade_no", payOrder.getSerialNumber());
+				json.put("timeout_express", "500m");
+				json.put("product_code", "QUICK_WAP_PAY");
+				json.put("total_amount", payOrder.getAmount() / 100); //yuan
+				json.put("subject", PaymentUtil.getPaymentTitle(payOrder));
+				json.put("body", payOrder.getDescription());
+				alipayRequest.setBizContent(json.toString());
+				String form = alipayClient.pageExecute(alipayRequest).getBody();
+				
+	//		    httpResponse.setContentType("text/html;charset=" + AlipayServiceEnvConstants.CHARSET);
+	//	        httpResponse.getWriter().write(form);
+	//		    httpResponse.getWriter().flush();
+				return form;
+	        }
+		} catch (Exception e) {
+			if (e instanceof PaymentException) {
+				throw (PaymentException)e;
+			}
+			throw new PaymentException("Alipay prepay error occurred!", e);
+		}
+	}
+	
+	public String transfer(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException {
+		//TODO:
+		throw new UnsupportedOperationException();
+	}
+	
+	public String refund(final IPayOrder order) throws PaymentException {
+		//TODO:
+		throw new UnsupportedOperationException();
 	}
 	
 	/*
@@ -84,6 +167,7 @@ public class AlipayWebHookHandler implements IAjaxCommand {
 	        	return FAIL;
 	        }
 	        PayOrderTransactionLogImpl translog = new PayOrderTransactionLogImpl();
+	        translog.setPaymentMethod(SettlementMethodType.ALIPAY);
 	        translog.setLog(jsonStr);
 	        translog.setIsCorrect(true);
 	        translog.setCreateDate(new Date());
@@ -98,7 +182,7 @@ public class AlipayWebHookHandler implements IAjaxCommand {
 		    String sign = jsonObj.getString("sign");
 		    String timestamp = jsonObj.getString("timestamp");
 		    translog.setIsCorrect(PaymentUtil.verifySign(sign, timestamp));
-		    if (translog.getIsCorrect() || AlipayWebHookHandler.enableDebugger) { //for secure check.
+		    if (translog.getIsCorrect() || AlipayHandler.enableDebugger) { //for secure check.
 		    	AccountingModel.INSTANCE.create(translog, true);
 		    	String transactionId = jsonObj.getString("transaction_id");
 		    	TransactionType transType = TransactionType.valueOf(jsonObj.getString("transaction_type").toUpperCase()); 

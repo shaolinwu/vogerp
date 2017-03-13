@@ -2,13 +2,13 @@ package org.shaolin.vogerp.ecommercial.internal;
 
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
-import org.shaolin.vogerp.accounting.IAccountingService;
+import org.shaolin.vogerp.accounting.IPaymentService;
 
 public class ModuleLifeCycleService implements ILifeCycleProvider {
 
 	@Override
 	public void startService() {
-		IAccountingService payService = AppContext.get().getService(IAccountingService.class);
+		IPaymentService payService = AppContext.get().getService(IPaymentService.class);
 		payService.addListener(new OrderPaymentListener());
 		
 	}

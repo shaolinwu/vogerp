@@ -16,7 +16,9 @@
         <node name="webConstant">
             <node name="commonjs">
                 <node name="org.shaolin.vogerp.ecommercial.page.OrderManagement">
+                    <!-- 
                     <item name="beecloud" value="https://jspay.beecloud.cn/1/pay/jsbutton/returnscripts?appId=1ab7992b-26b6-4f1c-b007-02f6c325444c" />
+                     -->
                     <item name="throttle-debounce" value="/js/controls/countdown/jquery.ba-throttle-debounce.min.js" />
                     <item name="jquery.knob" value="/js/controls/countdown/jquery.knob.min.js" />
                     <item name="jquery.redcountdown" value="/js/controls/countdown/jquery.redcountdown.js" />

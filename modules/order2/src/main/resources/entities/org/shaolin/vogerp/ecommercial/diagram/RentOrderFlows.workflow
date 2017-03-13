@@ -369,6 +369,7 @@
                         result.put("gorder", out.get("beObject"));
                         result.put("selectedPrice", selectedPrice);
                         result.put("offerLowestPrice", Boolean.FALSE);
+                        result.put("page", @page);
                         
                         form.closeIfinWindows();
                         @page.removeForm(@page.getEntityUiid()); 
@@ -425,7 +426,7 @@
                     import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
                     import org.shaolin.vogerp.accounting.ce.PayBusinessType;
-                    import org.shaolin.vogerp.accounting.IAccountingService;
+                    import org.shaolin.vogerp.accounting.IPaymentService;
                     import org.shaolin.bmdp.utils.StringUtil;
                     {
                          if ($offerLowestPrice != null && $offerLowestPrice == Boolean.TRUE) {
@@ -443,7 +444,7 @@
                          }
                          OrderModel.INSTANCE.update($gorder);
                          
-                         IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+                         IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                          IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class); 
                          if ($gorder.getType() == RentOrLoanOrderType.RENT) {
 	                         IPayOrder payOrder = accountingService.createSelfPayOrder(PayBusinessType.EQUIPMENTRENTBUSI, 
@@ -453,10 +454,13 @@
 	                                                     + $gorder.getDescription());
 	                             @flowContext.save(payOrder);
                              }
-                             String json = accountingService.prepay(payOrder);
-			                 $page.getRequest().getSession().setAttribute("__payJson", json);
-			                 $page.executeJavaScript("window.open('/uimaster/jsp/paywindow.jsp')");
-			                 Dialog.showMessageDialog("请点击“刷新”按钮查看支付是否成功（本功能要求浏览器允许“弹出窗口”）。", "Information", Dialog.INFORMATION_MESSAGE, null);
+                             
+                             HashMap input = new HashMap();
+				             input.put("beObject", payOrder);
+				             input.put("editable", new Boolean(true));
+				             RefForm form = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PayOrder", input);
+				             $page.addElement(form);
+				             form.openInWindows("支付方式选择", null, 150, 100);
                          } else {
                              long orgId = orgService.getOrgIdByPartyId($selectedPrice.getTakenCustomerId());
 	                         IPayOrder payOrder = accountingService.createPayOrder(PayBusinessType.EQUIPMENTLOANBUSI, 

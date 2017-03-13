@@ -33,11 +33,10 @@
                     import org.shaolin.bmdp.runtime.AppContext;
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
                     import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
-			        import org.shaolin.vogerp.accounting.IAccountingService;
-			        import org.shaolin.vogerp.accounting.IAccountingService.TransactionType;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
+			        import org.shaolin.vogerp.accounting.IPaymentService.TransactionType;
 			        import org.shaolin.vogerp.accounting.dao.AccountingModel;
-			        import org.shaolin.vogerp.accounting.internal.AccountingServiceImpl;
-			        import org.shaolin.vogerp.accounting.internal.BCWebHookHandler;
+			        import org.shaolin.vogerp.accounting.internal.PaymentServiceImpl;
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                     import org.shaolin.uimaster.page.ajax.json.JSONObject;
@@ -46,10 +45,10 @@
 		    			if (Double.valueOf($payOrder.getAmount()).intValue() != momey) {
 		    				$translog.setIsCorrect(false);
 		    				AccountingModel.INSTANCE.update($translog, true);
-		    				BCWebHookHandler.getLogger().warn("Payment order("+$payOrder.getSerialNumber()+") amount does not the same! PayOrder amount: " + $payOrder.getAmount() + ", Callback amount: " + momey);
+		    				PaymentServiceImpl.getLogger().warn("Payment order("+$payOrder.getSerialNumber()+") amount does not the same! PayOrder amount: " + $payOrder.getAmount() + ", Callback amount: " + momey);
 		    				return;
 		    			}
-	    				IAccountingService payService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+	    				IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
 		    			if ($jsonObj.getBoolean("trade_success")) {
 		    			    String transactionId = $jsonObj.getString("transaction_id");
 		    				payService.updatePayState($jsonObj, $payOrder);
@@ -102,10 +101,8 @@
                     import org.shaolin.bmdp.runtime.AppContext;
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
                     import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
-			        import org.shaolin.vogerp.accounting.IAccountingService;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
 			        import org.shaolin.vogerp.accounting.dao.AccountingModel;
-			        import org.shaolin.vogerp.accounting.internal.AccountingServiceImpl;
-			        import org.shaolin.vogerp.accounting.internal.BCWebHookHandler;
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                     import org.shaolin.uimaster.page.ajax.json.JSONObject;
@@ -140,10 +137,8 @@
                     import org.shaolin.bmdp.runtime.AppContext;
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
                     import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
-			        import org.shaolin.vogerp.accounting.IAccountingService;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
 			        import org.shaolin.vogerp.accounting.dao.AccountingModel;
-			        import org.shaolin.vogerp.accounting.internal.AccountingServiceImpl;
-			        import org.shaolin.vogerp.accounting.internal.BCWebHookHandler;
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                     import org.shaolin.uimaster.page.ajax.json.JSONObject;
@@ -187,7 +182,7 @@
 			        import org.shaolin.vogerp.accounting.be.IPayOrder;
 			        import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 			        import org.shaolin.vogerp.accounting.ce.*;
-			        import org.shaolin.vogerp.accounting.IAccountingService;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
                     { 
                         Table orderInfoTable = (Table)@page.getElement("payOrderTable");
 	                    if (orderInfoTable.getSelectedRow() == null) {
@@ -218,7 +213,7 @@
                     import org.shaolin.bmdp.runtime.AppContext;
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
                     import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
-			        import org.shaolin.vogerp.accounting.IAccountingService;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
 			        import org.shaolin.vogerp.accounting.dao.AccountingModel;
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
@@ -270,7 +265,7 @@
 			        import org.shaolin.vogerp.accounting.be.IPayOrder;
 			        import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 			        import org.shaolin.vogerp.accounting.ce.*;
-			        import org.shaolin.vogerp.accounting.IAccountingService;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
                     { 
                         Table orderInfoTable = (Table)@page.getElement("payOrderTable");
 	                    if (orderInfoTable.getSelectedRow() == null) {
@@ -309,9 +304,9 @@
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
                     import org.shaolin.vogerp.accounting.be.ICustomerAccount;
                     import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
-			        import org.shaolin.vogerp.accounting.IAccountingService;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
                     {
-                        IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+                        IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
 		                accountingService.requestForPayOrder((IPayOrder)$beObject, RequestStatusType.REQUEST, PayOrderRequestType.WITHDRAW);
                         
                         Dialog.showMessageDialog("提现申请成功，系统将在5个工作日内处理转账到您帐户。","提醒",Dialog.INFORMATION_MESSAGE, null);
@@ -353,7 +348,7 @@
 			        import org.shaolin.vogerp.accounting.be.IPayOrder;
 			        import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 			        import org.shaolin.vogerp.accounting.ce.*;
-			        import org.shaolin.vogerp.accounting.IAccountingService;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
 			            HashMap out = (HashMap)form.ui2Data();
@@ -365,7 +360,7 @@
 	                           return;
 	                        }
                                 
-                            IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+                            IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                             String url = accountingService.transfer((IPayOrder)payrOrder, customerAccount);
                             if (customerAccount.getThirdPartyAccountType() == SettlementMethodType.ALIPAY) {
                                 @page.executeJavaScript("UIMaster.util.forwardToPage('" + url + "', true)");
@@ -401,7 +396,7 @@
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
                     import org.shaolin.vogerp.accounting.be.ICustomerAccount;
                     import org.shaolin.vogerp.accounting.be.CustomerAccountImpl;
-			        import org.shaolin.vogerp.accounting.IAccountingService;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
 			        import org.shaolin.vogerp.accounting.dao.AccountingModel;
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
@@ -455,7 +450,7 @@
                     import org.shaolin.bmdp.runtime.security.UserContext;
 			        import org.shaolin.vogerp.accounting.be.*;
 			        import org.shaolin.vogerp.accounting.ce.*;
-			        import org.shaolin.vogerp.accounting.IAccountingService;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
                     { 
                         Table orderInfoTable = (Table)@page.getElement("payOrderTable");
 	                    if (orderInfoTable.getSelectedRow() == null) {
@@ -491,10 +486,10 @@
                     import org.shaolin.bmdp.runtime.AppContext;
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
                     import org.shaolin.vogerp.accounting.ce.*;
-			        import org.shaolin.vogerp.accounting.IAccountingService;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
 			        import org.shaolin.vogerp.accounting.dao.AccountingModel;
                     {
-                        IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+                        IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
 		                accountingService.requestForPayOrder((IPayOrder)$payOrder, RequestStatusType.REQUEST, PayOrderRequestType.REFUND);
                     }
                     ]]></expressionString>
@@ -529,7 +524,7 @@
                     import org.shaolin.bmdp.runtime.security.UserContext;
 			        import org.shaolin.vogerp.accounting.be.*;
 			        import org.shaolin.vogerp.accounting.ce.*;
-			        import org.shaolin.vogerp.accounting.IAccountingService;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
@@ -574,7 +569,7 @@
                     import org.shaolin.bmdp.runtime.AppContext;
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
                     import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
-			        import org.shaolin.vogerp.accounting.IAccountingService;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
 			        import org.shaolin.vogerp.accounting.dao.AccountingModel;
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;

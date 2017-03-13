@@ -5,9 +5,9 @@
     	   <node name="accounting_model_service">
 	   	       <expression><![CDATA[
 	   	       import org.shaolin.bmdp.runtime.AppContext;
-	   	       import org.shaolin.vogerp.accounting.internal.AccountingServiceImpl;
+	   	       import org.shaolin.vogerp.accounting.internal.PaymentServiceImpl;
 	   	       {
-	   	           AppContext.get().registerLifeCycleProvider(new AccountingServiceImpl());
+	   	           AppContext.get().registerLifeCycleProvider(new PaymentServiceImpl());
 	   	       }
 	   	       ]]></expression>
    	       </node>
@@ -15,10 +15,14 @@
         <node name="webConstant">
             <node name="commonjs">
                 <node name="org.shaolin.vogerp.accounting.page.PaymentOrderManagement">
+                    <!-- 
                     <item name="beecloud" value="https://jspay.beecloud.cn/1/pay/jsbutton/returnscripts?appId=1ab7992b-26b6-4f1c-b007-02f6c325444c" />
+                     -->
                 </node>
                 <node name="org.shaolin.vogerp.accounting.page.PaymentOrderManagementByAdmin">
+                    <!-- 
                     <item name="beecloud" value="https://jspay.beecloud.cn/1/pay/jsbutton/returnscripts?appId=1ab7992b-26b6-4f1c-b007-02f6c325444c" />
+                     -->
                 </node>
             </node>
         </node>
@@ -32,6 +36,16 @@
         </node>
         <node name="payment">
             <item name="orgName" value="上海抚企信息科技有限公司" />
+            <node name="alipay">
+                 <item name="app_id" value="" />
+                 <item name="app_privatekey" value="" />
+                 <item name="alipay_public_key" value="" />
+            </node>
+            <node name="wepay">
+                 <item name="app_id" value="" />
+                 <item name="mch_id" value="" />
+                 <item name="mch_apisecurekey" value="" />
+            </node>
             <node name="beecloud">
                 <node name="common">
                     <item name="app_id" value="1ab7992b-26b6-4f1c-b007-02f6c325444c" />

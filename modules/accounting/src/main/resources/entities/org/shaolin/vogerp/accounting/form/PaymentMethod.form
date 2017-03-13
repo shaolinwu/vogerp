@@ -1,0 +1,183 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns7="http://bmdp.shaolin.org/datamodel/FlowDiagram" xmlns:ns6="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns5="http://bmdp.shaolin.org/datamodel/Workflow" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.accounting.form.PaymentMethod</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="alipayAction">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="alipayAction-20170211-201347">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+        import org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl;
+        import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
+        import org.shaolin.vogerp.accounting.be.IPayOrder;
+        import org.shaolin.vogerp.accounting.ce.SettlementMethodType;
+        import org.shaolin.vogerp.accounting.IPaymentService;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            IPayOrder payOrder = (IPayOrder)form.getInputParameter("beObject");
+            payOrder.setCustomerAPaymentMethod(SettlementMethodType.ALIPAY);
+            IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
+            String htmlform = payService.prepay(payOrder);
+            String jsExpression = "alert('" + htmlform + "')";
+            @page.executeJavaScript(jsExpression);
+            //TODO: forward to this url.
+            Dialog.showMessageDialog("请关闭本窗口，并“刷新”页面查看支付是否成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="wepayAction">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="wepayAction-20170211-201347">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+        import org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl;
+        import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
+        import org.shaolin.vogerp.accounting.be.IPayOrder;
+        import org.shaolin.vogerp.accounting.ce.SettlementMethodType;
+        import org.shaolin.vogerp.accounting.IPaymentService;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            IPayOrder payOrder = (IPayOrder)form.getInputParameter("beObject");
+            payOrder.setCustomerAPaymentMethod(SettlementMethodType.WEIXI);
+            IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
+            String url = payService.prepay(payOrder);
+            String js = "alert('" + url + "')";
+            @page.executeJavaScript(js);
+            //TODO generate url as 2d code picture to client side.
+            Dialog.showMessageDialog("请关闭本窗口，并“刷新”页面查看支付是否成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Cancel">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20170211-201346">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            form.closeIfinWindows(true);
+            @page.removeForm(@page.getEntityUiid()); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIImageType" UIID="alipayUI">
+        <ns2:Property name="width">
+           <ns2:value xsi:type="ns2:StringPropertyType">
+               <value>250px</value>
+           </ns2:value>
+        </ns2:Property>
+        <ns2:Property name="height">
+           <ns2:value xsi:type="ns2:StringPropertyType">
+               <value>80px</value>
+           </ns2:value>
+        </ns2:Property>
+        <ns2:Property name="src">
+           <ns2:value xsi:type="ns2:StringPropertyType">
+	         <value>/images/payment/alipay.jpg</value>
+           </ns2:value>
+        </ns2:Property>
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="alipayAction"></ns2:handler>
+        </ns2:EventListener>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIImageType" UIID="wepayUI">
+        <ns2:Property name="width">
+           <ns2:value xsi:type="ns2:StringPropertyType">
+               <value>250px</value>
+           </ns2:value>
+        </ns2:Property>
+        <ns2:Property name="height">
+           <ns2:value xsi:type="ns2:StringPropertyType">
+               <value>80px</value>
+           </ns2:value>
+        </ns2:Property>
+        <ns2:Property name="src">
+           <ns2:value xsi:type="ns2:StringPropertyType">
+	         <value>/images/payment/wepay.jpg</value>
+           </ns2:value>
+        </ns2:Property>
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="wepayAction"></ns2:handler>
+        </ns2:EventListener>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>alipayUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIStyle="text-align:center;"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>wepayUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIStyle="text-align:center;"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Cancel"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>Closebtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.accounting.be.PayOrder"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
+    <ns2:DataToUIMappingOperation>
+      <expressionString>{
+@odContext.executeAllMappings();
+}</expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>{
+@odContext.executeAllMappings();
+}</expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

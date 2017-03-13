@@ -158,6 +158,12 @@
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>paymentMethod</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+				<bediagram:targetEntity entityName="SettlementMethodType" />
+			</bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>isCorrect</bediagram:name>
             <bediagram:type xsi:type="bediagram:BooleanType" />
         </bediagram:member>
@@ -650,8 +656,13 @@
 			<bediagram:description>微信支付</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
-			<bediagram:value>UnionPay</bediagram:value>
+			<bediagram:value>BeeCloud</bediagram:value>
 			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>BeeCloud</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>UnionPay</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
 			<bediagram:description>银联</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>

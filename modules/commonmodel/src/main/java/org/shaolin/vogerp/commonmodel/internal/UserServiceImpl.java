@@ -328,6 +328,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			userContext.setUserName(userInfo.getFirstName() + userInfo.getLastName());
 			userContext.setUserLocale(matchedUser.getLocale());
 			userContext.setUserLocation(matchedUser.getLocationInfo());
+			userContext.setUserRequestIP(request.getRemoteAddr());
 			if (matchedUser.getLocationInfo() != null) {
 				userContext.setCity(matchedUser.getLocationInfo());
 			}

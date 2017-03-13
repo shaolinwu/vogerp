@@ -6,6 +6,10 @@ import java.util.Date;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.shaolin.bmdp.utils.DateParser;
+import org.shaolin.bmdp.utils.StringUtil;
+import org.shaolin.vogerp.accounting.be.IPayOrder;
+import org.shaolin.vogerp.accounting.ce.PayBusinessType;
+import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
 
 import cn.beecloud.BCCache;
 
@@ -25,6 +29,13 @@ public class PaymentUtil {
 				+ "-" + parse.format(parse.getHours(), 2) 
 				+ "" + parse.format(parse.getMilliSeconds(), 5)
 				+ "-" + (int)(Math.random() * 10000);
+	}
+	
+	public static String getPaymentTitle(final IPayOrder order) {
+		String title = "(" + order.getPayBusinessType().getDescription() + ")" 
+						+ order.getDescription()!=null?order.getDescription():"";
+		//title must be less then 16 Chinese words.
+		return StringUtil.escapeAsEmtpy(StringUtil.getAbbreviatoryString(title, 15));
 	}
 	
 	/**
@@ -156,5 +167,48 @@ public class PaymentUtil {
 	public static boolean verifySign(String sign, String timestamp) {
 		return verify(sign, BCCache.getAppID() + BCCache.getAppSecret(), timestamp, "UTF-8");
 	}
+	
+	/**
+	 * @param payOrder
+	 * @param formId
+	 * @return
+	 */
+	public static String getPayOperations(IPayOrder payOrder, String formId) {
+		StringBuffer sb = new StringBuffer();
+		if (payOrder.getStatus() == PayOrderStatusType.NOTPAYED) {
+            sb.append("<button type='pay' class='uimaster_button ui-btn-inline' onclick='javascript:defaultname.");
+            sb.append(formId).append("pay(this, event);'>\u652F\u4ED8</button>");
+//            sb.append("<button type='cancel' class='uimaster_button ui-btn-inline onclick='javascript:defaultname.");
+//            sb.append(formId).append("cancelPayment(this, event);'>\u53D6\u6D88</button>");
+		} else if (payOrder.getStatus() == PayOrderStatusType.PAYED && 
+				(payOrder.getPayBusinessType() == PayBusinessType.EQUIPMENTLOANBUSI 
+				|| payOrder.getPayBusinessType() == PayBusinessType.EQUIPMENTRENTBUSI
+				|| payOrder.getPayBusinessType() == PayBusinessType.GOLDENPORDERBUSI
+				|| payOrder.getPayBusinessType() == PayBusinessType.GOLDENSORDERBUSI)) {
+			sb.append("<button type='agreedpaytoend' class='uimaster_button ui-btn-inline' onclick='javascript:defaultname.");
+            sb.append(formId).append("ensurePayment(this, event);'>\u786E\u8BA4\u4ED8\u6B3E</button>");
+			sb.append("<button type='refund' class='uimaster_button ui-btn-inline' onclick='javascript:defaultname.");
+            sb.append(formId).append("refund(this, event);'>\u7533\u8BF7\u9000\u6B3E</button>");
+		} else if (payOrder.getStatus() == PayOrderStatusType.REFUND) {
+			//no actions
+		} else if (payOrder.getStatus() == PayOrderStatusType.AGREEDPAYTOEND) {
+			//no actions
+		} else if (payOrder.getStatus() == PayOrderStatusType.CANCELLED) {
+			//no actions
+		} 
+		return sb.toString();
+	}
+	
+	public static String getReceivedPayOperations(IPayOrder payOrder, String formId) {
+		StringBuffer sb = new StringBuffer();
+		if (payOrder.getStatus() == PayOrderStatusType.AGREEDPAYTOEND) {
+            sb.append("<button type='pay' class='uimaster_button ui-btn-inline' onclick='javascript:defaultname.");
+            sb.append(formId).append("withdrawPayOrder(this, event);'>\u63D0\u73B0</button>");
+		} else if (payOrder.getStatus() == PayOrderStatusType.WITHDRAWN) {
+			
+		}
+		return sb.toString();
+	}
+	
 
 }

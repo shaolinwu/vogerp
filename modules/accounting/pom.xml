@@ -43,17 +43,25 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-
+		<dependency>
+	        <groupId>javax.servlet</groupId>
+	        <artifactId>javax.servlet-api</artifactId>
+	    </dependency>
+		<!--
+		# please import this unmavened jar into repository.
+mvn install:install-file -Dfile=lib/alipay-sdk-java20170209153223.jar -DgroupId=alipay -DartifactId=java-sdk -Dversion=1.0.0 -Dpackaging=jar
+		-->
+		<dependency>
+			<groupId>alipay</groupId>
+			<artifactId>java-sdk</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 		<!-- BeeCloud -->
 		<dependency>
 			<groupId>cn.beecloud</groupId>
 			<artifactId>beecloud-java-sdk</artifactId>
 			<version>3.4.7</version>
 		</dependency>
-		<dependency>
-	        <groupId>javax.servlet</groupId>
-	        <artifactId>javax.servlet-api</artifactId>
-	    </dependency>
     </dependencies>
 
     <build>

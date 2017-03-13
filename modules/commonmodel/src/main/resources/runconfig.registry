@@ -18,7 +18,9 @@
                     <item name="baidumap" value="https://api.map.baidu.com/api?v=2.0&amp;ak=kT8czcw0fydHdXiGPGBOckX1" />
                 </node>
                 <node name="org.shaolin.vogerp.commonmodel.page.CustomerInformation">
+                    <!-- 
                     <item name="beecloud" value="https://jspay.beecloud.cn/1/pay/jsbutton/returnscripts?appId=1ab7992b-26b6-4f1c-b007-02f6c325444c" />
+                     -->
                 </node>
                 <node name="org.shaolin.vogerp.commonmodel.page.GlobalStatistic">
                     <item name="raphael-min" value="/js/controls/map/raphael-min.js" />

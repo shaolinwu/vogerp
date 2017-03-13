@@ -26,7 +26,7 @@
         import org.shaolin.vogerp.commonmodel.ce.AMemberFunctionType;
         import org.shaolin.vogerp.accounting.be.IPayOrder;
         import org.shaolin.vogerp.accounting.ce.PayBusinessType;
-        import org.shaolin.vogerp.accounting.IAccountingService;
+        import org.shaolin.vogerp.accounting.IPaymentService;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             HashMap out = (HashMap)form.ui2Data();
@@ -44,13 +44,16 @@
             //make a payment!
             IMemberService memberService = (IMemberService)AppContext.get().getService(IMemberService.class);
             double price = memberService.getServicePrice(defaultUser, AMemberFunctionType.A);
-            IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+            IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
             IPayOrder payOrder = accountingService.createSelfPayOrder(PayBusinessType.MEMBERBUSI, 1, null, price);
-	        String json = accountingService.prepay(payOrder);
-            //@page.executeJavaScript("BC.click(" + json + ")");
-            @page.getRequest().getSession().setAttribute("__payJson", json);
-		    @page.executeJavaScript("window.open('/uimaster/jsp/paywindow.jsp')");
-            Dialog.showMessageDialog("请您-刷新页面-查看支付是否成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
+	        
+	        HashMap input = new HashMap();
+            input.put("beObject", payOrder);
+            input.put("editable", new Boolean(true));
+            RefForm form1 = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PaymentMethod", input);
+            @page.addElement(form1);
+            form1.openInWindows("支付方式选择", null, 150, 100);
+            
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>

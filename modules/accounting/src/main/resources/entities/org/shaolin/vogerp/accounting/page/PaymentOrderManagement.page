@@ -79,7 +79,7 @@
 		         import org.shaolin.uimaster.page.ajax.*;
 		         import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 		         import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
-		         import org.shaolin.vogerp.accounting.IAccountingService;
+		         import org.shaolin.vogerp.accounting.IPaymentService;
 		         {
 		             Table orderInfoTable = (Table)@page.getElement("payOrderTable");
 		             if (orderInfoTable.getSelectedRow() == null) {
@@ -87,7 +87,7 @@
 		             }
 		             PayOrderImpl order = (PayOrderImpl)orderInfoTable.getSelectedRow();
 		             if (order.getStatus() == PayOrderStatusType.NOTPAYED) {
-		                 IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+		                 IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
 		                 String json = accountingService.prepay(order);
 		                 @page.getRequest().getSession().setAttribute("__payJson", json);
 		                 @page.executeJavaScript("window.open('/uimaster/jsp/paywindow.jsp')");
@@ -127,7 +127,7 @@
                  import org.shaolin.uimaster.page.ajax.*;
                  import org.shaolin.vogerp.accounting.be.PayOrderImpl;
                  import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
-                 import org.shaolin.vogerp.accounting.IAccountingService;
+                 import org.shaolin.vogerp.accounting.IPaymentService;
                  import org.shaolin.bmdp.runtime.AppContext;
                  {
                      Table orderInfoTable = (Table)@page.getElement("payOrderTable");
@@ -136,7 +136,7 @@
                      }
                      PayOrderImpl payOrder = (PayOrderImpl)orderInfoTable.getSelectedRow();
                      if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
-                        IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+                        IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                         //String returnUrl = accountingService.ensurePayment(payOrder);
                         //@page.executeJavaScript("UIMaster.util.forwardToPage(\"" + returnUrl + "\");");
                      } else {
@@ -174,7 +174,7 @@
                  import org.shaolin.uimaster.page.ajax.*;
                  import org.shaolin.vogerp.accounting.be.PayOrderImpl;
                  import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
-                 import org.shaolin.vogerp.accounting.IAccountingService;
+                 import org.shaolin.vogerp.accounting.IPaymentService;
                  import org.shaolin.bmdp.runtime.AppContext;
                  {
                      Table orderInfoTable = (Table)@page.getElement("payOrderTable");
@@ -183,7 +183,7 @@
                      }
                      PayOrderImpl payOrder = (PayOrderImpl)orderInfoTable.getSelectedRow();
                      if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
-	                    IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+	                    IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
 	                    String returnUrl = accountingService.refund(payOrder);
 	                    @page.executeJavaScript("UIMaster.util.forwardToPage(\"" + returnUrl + "\");");
                      } else {
@@ -323,6 +323,16 @@
                                 <ns2:uiType xsi:type="ns2:UITableColHTMLType">
                                     <ns2:type>Label</ns2:type>
                                 </ns2:uiType>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+						            <ns2:expression xsi:type="ns2:ExpressionType">
+						                <ns2:expressionString><![CDATA[
+						                import org.shaolin.bmdp.utils.StringUtil;
+						                import org.shaolin.uimaster.page.od.formats.FormatUtil;
+						                {
+						                   return FormatUtil.getCurrency($rowBE.getAmount() / 100, null, true);
+						                }]]></ns2:expressionString>
+						            </ns2:expression>
+						        </ns2:rowExpression>
                             </ns2:column>
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
@@ -422,9 +432,9 @@
                                 <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
 		                           <ns2:expression xsi:type="ns2:ExpressionType">
 		                                <ns2:expressionString><![CDATA[
-		                                import org.shaolin.vogerp.accounting.internal.AccountingServiceImpl;
+		                                import org.shaolin.vogerp.accounting.util.PaymentUtil;
 		                                {
-		                                   return AccountingServiceImpl.getPayOperations($rowBE, $formId);
+		                                   return PaymentUtil.getPayOperations($rowBE, $formId);
 		                                }]]></ns2:expressionString>
 		                            </ns2:expression>
 		                        </ns2:rowExpression>
@@ -503,6 +513,16 @@
                                 <ns2:uiType xsi:type="ns2:UITableColHTMLType">
                                     <ns2:type>Label</ns2:type>
                                 </ns2:uiType>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+						            <ns2:expression xsi:type="ns2:ExpressionType">
+						                <ns2:expressionString><![CDATA[
+						                import org.shaolin.bmdp.utils.StringUtil;
+						                import org.shaolin.uimaster.page.od.formats.FormatUtil;
+						                {
+						                   return FormatUtil.getCurrency($rowBE.getAmount() / 100, null, true);
+						                }]]></ns2:expressionString>
+						            </ns2:expression>
+						        </ns2:rowExpression>
                             </ns2:column>
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
@@ -602,9 +622,9 @@
                                 <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
 		                           <ns2:expression xsi:type="ns2:ExpressionType">
 		                                <ns2:expressionString><![CDATA[
-		                                import org.shaolin.vogerp.accounting.internal.AccountingServiceImpl;
+		                                import org.shaolin.vogerp.accounting.util.PaymentUtil;
 		                                {
-		                                   return AccountingServiceImpl.getReceivedPayOperations($rowBE, $formId);
+		                                   return PaymentUtil.getReceivedPayOperations($rowBE, $formId);
 		                                }]]></ns2:expressionString>
 		                            </ns2:expression>
 		                        </ns2:rowExpression>

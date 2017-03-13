@@ -69,7 +69,7 @@
                     import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 			        import org.shaolin.vogerp.accounting.be.IPayOrder;
 			        import org.shaolin.vogerp.accounting.ce.PayBusinessType;
-			        import org.shaolin.vogerp.accounting.IAccountingService;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
@@ -94,34 +94,10 @@
 	                        @page.removeForm(@page.getEntityUiid()); 
                         }
                         
-                        //make a payment!
-			            IMemberService memberService = (IMemberService)AppContext.get().getService(IMemberService.class);
-			            IAssignedMember member = memberService.getUserMember(templLegalInfo.getOrgId());
-			            if (member == null) {
-			            	AssignedMemberImpl assignedMember = new AssignedMemberImpl();
-							assignedMember.setOrgId(templLegalInfo.getOrgId());
-							assignedMember.setType(AMemberType.GENERAL);
-							assignedMember.setDescription("Defualt");
-							Date assingedDate = new Date();
-							DateUtil.increaseMonths(assingedDate, Registry.getInstance().getValue("/System/Vogerp/UserMemberRule/DefaultMonth", 6));
-							assignedMember.setEndtime(assingedDate);
-							assignedMember.setStarttime(new Date());
-							CommonModel.INSTANCE.create(assignedMember);
-							member = assignedMember;
-			            }
-			            double price = memberService.getServicePrice(member, AMemberFunctionType.A);
-			            IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
-			            IPayOrder payOrder = accountingService.createPayAdminOrder(PayBusinessType.MEMBERBUSI, UserContext.getUserContext().getUserId(), "AM-"+templLegalInfo.getId(), price);
-                        String json = accountingService.prepay(payOrder);
-	                    @page.getRequest().getSession().setAttribute("__payJson", json);
-	                    
-                        Dialog.showMessageDialog("提交审核中, 请您支付("+price+")元会员费用，谢谢（本功能要求浏览器允许“弹出窗口”）！", "", Dialog.INFORMATION_MESSAGE, null);
-	                    @page.executeJavaScript("window.open('/uimaster/jsp/paywindow.jsp')");
-                        
                         HashMap result = new HashMap();
                         result.put("orgLegalinfo", out.get("beObject"));
                         result.put("orgInfo", out.get("orgInfo"));
-                        result.put("payOrder", payOrder);
+                        result.put("page", @page);
                         return result;
                     }
                     ]]></expressionString>
@@ -135,25 +111,66 @@
                 <ns2:var name="orgInfo" category="BusinessEntity" scope="Out">
                     <type entityName="org.shaolin.vogerp.commonmodel.be.Organization"></type>
                 </ns2:var>
-                <ns2:var name="payOrder" category="BusinessEntity" scope="Out">
-                    <type entityName="org.shaolin.vogerp.accounting.be.PayOrder"></type>
+                <ns2:var name="page" category="JavaClass" scope="InOut">
+                    <type entityName="org.shaolin.uimaster.page.AjaxContext"></type>
                 </ns2:var>
                 <ns2:expression>
                     <expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.Date;
                     import java.util.List;
+                    import java.util.ArrayList;
+                    import org.shaolin.bmdp.runtime.Registry;
                     import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.utils.DateUtil;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.ecommercial.dao.*;
                     import org.shaolin.vogerp.commonmodel.IUserService; 
-                    import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
+                    import org.shaolin.vogerp.commonmodel.be.*;
+			        import org.shaolin.vogerp.commonmodel.ce.*;
+                    import org.shaolin.vogerp.commonmodel.IMemberService;
+                    import org.shaolin.vogerp.commonmodel.IOrganizationService;
                     import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+			        import org.shaolin.vogerp.accounting.be.IPayOrder;
+			        import org.shaolin.vogerp.accounting.ce.PayBusinessType;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
                     {
-                       $orgInfo.setVeriState(OrgVerifyStatusType.VERIFYING);
-                       CommonModel.INSTANCE.update($orgInfo);
+                         //make a payment!
+			            IMemberService memberService = (IMemberService)AppContext.get().getService(IMemberService.class);
+			            IAssignedMember member = memberService.getUserMember($orgInfo.getId());
+			            if (member == null) {
+			            	AssignedMemberImpl assignedMember = new AssignedMemberImpl();
+							assignedMember.setOrgId($orgInfo.getId());
+							assignedMember.setType(AMemberType.GENERAL);
+							assignedMember.setDescription("Defualt");
+							Date assingedDate = new Date();
+							DateUtil.increaseMonths(assingedDate, Registry.getInstance().getValue("/System/Vogerp/UserMemberRule/DefaultMonth", 6));
+							assignedMember.setEndtime(assingedDate);
+							assignedMember.setStarttime(new Date());
+							CommonModel.INSTANCE.create(assignedMember);
+							member = assignedMember;
+			            }
+			            double price = memberService.getServicePrice(member, AMemberFunctionType.A);
+			            IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
+			            IPayOrder payOrder = accountingService.createPayAdminOrder(PayBusinessType.MEMBERBUSI, UserContext.getUserContext().getUserId(), "AM-"+$orgLegalinfo.getId(), price);
+                        $orgInfo.setVeriState(OrgVerifyStatusType.VERIFYING);
+                        CommonModel.INSTANCE.update($orgInfo);
                        
-                       $orgLegalinfo.setVeriState($orgInfo.getVeriState());
-        			   $orgLegalinfo.setVerifierId($orgInfo.getVerifierId());
+                        $orgLegalinfo.setVeriState($orgInfo.getVeriState());
+        			    $orgLegalinfo.setVerifierId($orgInfo.getVerifierId());
         			   
-        			   @flowContext.save($orgLegalinfo);
-        			   @flowContext.save($payOrder);
+        			    @flowContext.save($orgLegalinfo);
+        			    @flowContext.save(payOrder);
+        			    
+                        HashMap input = new HashMap();
+		                input.put("beObject", payOrder);
+		                input.put("editable", new Boolean(true));
+		                RefForm form1 = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PaymentMethod", input);
+		                $page.addElement(form1);
+		                form1.openInWindows("支付方式选择", null, 150, 100);
+                        Dialog.showMessageDialog("提交审核中...请您支付("+price+")元会员验证费用, 谢谢！", "", Dialog.INFORMATION_MESSAGE, null);
                     }
                     ]]></expressionString>
                 </ns2:expression>

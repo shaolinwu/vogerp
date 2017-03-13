@@ -1,32 +1,47 @@
 package org.shaolin.vogerp.accounting.internal;
 
 import java.io.BufferedReader;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.shaolin.bmdp.runtime.AppContext;
+import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.EventProcessor;
 import org.shaolin.bmdp.runtime.spi.FlowEvent;
+import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.bmdp.workflow.be.NotificationImpl;
 import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
 import org.shaolin.bmdp.workflow.internal.BuiltInAttributeConstant;
 import org.shaolin.uimaster.page.ajax.handlers.IAjaxCommand;
 import org.shaolin.uimaster.page.ajax.json.JSONException;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
-import org.shaolin.vogerp.accounting.IAccountingService.TransactionType;
+import org.shaolin.vogerp.accounting.IPaymentService.TransactionType;
+import org.shaolin.vogerp.accounting.PaymentException;
+import org.shaolin.vogerp.accounting.PaymentHandler;
+import org.shaolin.vogerp.accounting.be.ICustomerAccount;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 import org.shaolin.vogerp.accounting.be.PayOrderTransactionLogImpl;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+import org.shaolin.vogerp.accounting.ce.SettlementMethodType;
 import org.shaolin.vogerp.accounting.dao.AccountingModel;
 import org.shaolin.vogerp.accounting.util.PaymentUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import cn.beecloud.BCEumeration;
+import cn.beecloud.BCPay;
+import cn.beecloud.BeeCloud;
+import cn.beecloud.bean.BCRefund;
+import cn.beecloud.bean.TransferParameter;
 
 /**
  * BE WebHook data handler.
@@ -37,30 +52,154 @@ import org.slf4j.LoggerFactory;
  * @author wushaol
  *
  */
-public class BCWebHookHandler implements IAjaxCommand {
+public class BCpayHandler implements IAjaxCommand, PaymentHandler {
 
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
-	private static final Logger logger = LoggerFactory.getLogger(BCWebHookHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(BCpayHandler.class);
 	
 	public static boolean enableDebugger = false;
 	
-	public static Logger getLogger() {
-		return logger;
+	private final Map<String, String> paymentKeyInfo;
+	
+	/**
+	 * BeeCloud live register
+	 */
+	public BCpayHandler() {
+		paymentKeyInfo = new HashMap<String, String>(
+				Registry.getInstance().getNodeItems("/System/payment/beecloud/common"));
+		String appId = paymentKeyInfo.get("app_id");
+		String appSecret = paymentKeyInfo.get("app_secret");
+		String masterSecret = paymentKeyInfo.get("master_secret");
+		//live model
+		BeeCloud.registerApp(appId, null, appSecret, masterSecret);
+	}
+	
+	public String prepay(final IPayOrder order) throws PaymentException {
+		if (order.getStatus() == PayOrderStatusType.NOTPAYED) {
+			try {
+				Map<String, String> attributes = new HashMap<String, String>(
+						Registry.getInstance().getNodeItems("/System/payment/beecloud/buttonPay"));
+				attributes.putAll(paymentKeyInfo);
+				attributes.put("out_trade_no", order.getSerialNumber());
+				//title must be less then 16 Chinese words.
+				attributes.put("title", PaymentUtil.getPaymentTitle(order));
+				attributes.put("amount", ((int)order.getAmount()) + "");//it's fen unit.
+				String sign = PaymentUtil.beeCloudSign(attributes.get("app_id"),
+						attributes.get("title"), 
+						attributes.get("amount"), 
+						attributes.get("out_trade_no"), 
+						attributes.get("app_secret"));
+				attributes.put("sign", sign);
+				attributes.put("return_url", order.getPayReturnUrl());
+				JSONObject json = new JSONObject(attributes); 
+				return json.toString();
+			} catch (Exception e) {
+				throw new PaymentException("Pay error: " + e.getMessage(), e);
+			}
+		}
+		throw new PaymentException("Order is not in unpay state!");
+	}
+	
+	public String transfer(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException {
+		TransferParameter param = new TransferParameter();
+		if (customerAccount.getThirdPartyAccountType() == SettlementMethodType.WEIXI) {
+			//weixipay
+			param.setChannel(BCEumeration.TRANSFER_CHANNEL.WX_TRANSFER);
+			param.setTransferNo("Tsf" + order.getSerialNumber()); 
+			// PaymentUtil.genWeiXiTransferNumber()
+			// request 10 numbers as transfer number.
+		} else if (customerAccount.getThirdPartyAccountType() == SettlementMethodType.ALIPAY) {
+			//alipay
+			param.setChannel(BCEumeration.TRANSFER_CHANNEL.ALI_TRANSFER);
+			param.setTransferNo("Tsf" + order.getSerialNumber());
+		}
+		param.setChannelUserId(customerAccount.getThirdPartyAccount());
+		param.setChannelUserName(customerAccount.getThirdPartyAccountName());
+		param.setTotalFee(((int)order.getAmount()));
+		param.setDescription("\u62A2\u5355\u8FBE\u4EBA\u8F6C\u5E10\u8BA2\u5355: " + order.getOrderSerialNumber() + ": " + 
+				(order.getDescription()!=null ? StringUtil.escapeAsEmtpy(StringUtil.getAbbreviatoryString(order.getDescription(), 15)) : ""));
+		param.setAccountName(Registry.getInstance().getValue("/System/payment/orgName"));
+		try {
+			String url = BCPay.startTransfer(param);
+			if (customerAccount.getThirdPartyAccountType() == SettlementMethodType.WEIXI) {
+				String result = url;
+				//TODO: check result.
+			}
+			return url;
+		} catch (Exception e) {
+			throw new PaymentException("Transfer URL error: " + e.getMessage(), e);
+		}
+	}
+	
+	public String refund(final IPayOrder order) throws PaymentException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String billNo = order.getSerialNumber();
+		String refundNo = sdf.format(new Date()) + System.currentTimeMillis();
+	
+		BCRefund bcRefund = new BCRefund(billNo, refundNo, ((int)order.getAmount()));
+		try {
+			BCRefund refund = BCPay.startBCRefund(bcRefund);
+			if (refund.getAliRefundUrl() != null) {//Alipay
+				return refund.getAliRefundUrl();
+			} else {
+				//TODO refund result
+				if (refund.isNeedApproval() != null && refund.isNeedApproval()) {//Pre refund
+					System.out.println("Pre refund suuccessful!");
+					System.out.println(refund.getObjectId());
+				} else {//refund directly
+					System.out.println("refund directly");
+					System.out.println(refund.getObjectId());
+				}
+				return "";
+			}
+		} catch (Exception e) {
+			throw new PaymentException("Refund error: " + e.getMessage(), e);
+		}
+	}
+	
+	public String queryForPayStatus(final IPayOrder order) throws PaymentException {
+		Map<String, String> attributes = new HashMap<String, String>(
+				Registry.getInstance().getNodeItems("/System/payment/beecloud/queryBills"));
+		attributes.putAll(paymentKeyInfo);
+		attributes.put("amount", ((int)order.getAmount()) + "");//it's fen unit.
+		attributes.put("out_trade_no", order.getSerialNumber());
+		attributes.put("title", PaymentUtil.getPaymentTitle(order));
+		String sign = PaymentUtil.sign(attributes.get("app_id"), 
+				attributes.get("title"), 
+				attributes.get("amount"), 
+				order.getSerialNumber(), 
+				attributes.get("app_secret"));
+		attributes.put("sign", sign);
+		
+		JSONObject optional = new JSONObject();
+		try {
+			optional.put("out_trade_no", order.getSerialNumber());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		attributes.put("optional", optional.toString());
+		JSONObject json = new JSONObject(attributes); 
+		try {
+			json.put("amount", ((int)order.getAmount()) + "");
+		} catch (JSONException e) {
+		}
+		
+		return json.toString();
 	}
 	
 	/*
 	 * Key	Type	Example
 	 * sign	String	32 bits in lower case.
 	 * timestamp	Long	1426817510111
-	 * channel_type	String	‘WX’ or 'ALI’ or 'UN’ or 'KUAIQIAN’ or 'JD’ or 'BD’ or 'YEE’ or 'PAYPAL’ or 'BC’
-	 * sub_channel_type	String	'WX_APP’ or 'WX_NATIVE’ or 'WX_JSAPI’ or 'WX_SCAN’ or 'ALI_APP’ or 'ALI_SCAN’ or 
-	 * 			                'ALI_WEB’ or 'ALI_QRCODE’ or 'ALI_OFFLINE_QRCODE’ or 'ALI_WAP’ or 'UN_APP’ or 
-	 *                          'UN_WEB’ or 'PAYPAL_SANDBOX’ or 'PAYPAL_LIVE’ or 'JD_WAP’ or 'JD_WEB’ or 'YEE_WAP’ or 
-	 *                          'YEE_WEB’ or 'YEE_NOBANKCARD’ or 'KUAIQIAN_WAP’ or 'KUAIQIAN_WEB’ or 'BD_APP’ or 
-	 *                          'BD_WEB’ or 'BD_WAP’ or 'BC_TRANSFER’ or 'ALI_TRANSFER’
-	 * transaction_type	String	 'PAY’ or 'REFUND’ or 'TRANSFER'
-	 * transaction_id	String	 '201506101035040000001’
+	 * channel_type	String	ï¿½WXï¿½ or 'ALIï¿½ or 'UNï¿½ or 'KUAIQIANï¿½ or 'JDï¿½ or 'BDï¿½ or 'YEEï¿½ or 'PAYPALï¿½ or 'BCï¿½
+	 * sub_channel_type	String	'WX_APPï¿½ or 'WX_NATIVEï¿½ or 'WX_JSAPIï¿½ or 'WX_SCANï¿½ or 'ALI_APPï¿½ or 'ALI_SCANï¿½ or 
+	 * 			                'ALI_WEBï¿½ or 'ALI_QRCODEï¿½ or 'ALI_OFFLINE_QRCODEï¿½ or 'ALI_WAPï¿½ or 'UN_APPï¿½ or 
+	 *                          'UN_WEBï¿½ or 'PAYPAL_SANDBOXï¿½ or 'PAYPAL_LIVEï¿½ or 'JD_WAPï¿½ or 'JD_WEBï¿½ or 'YEE_WAPï¿½ or 
+	 *                          'YEE_WEBï¿½ or 'YEE_NOBANKCARDï¿½ or 'KUAIQIAN_WAPï¿½ or 'KUAIQIAN_WEBï¿½ or 'BD_APPï¿½ or 
+	 *                          'BD_WEBï¿½ or 'BD_WAPï¿½ or 'BC_TRANSFERï¿½ or 'ALI_TRANSFERï¿½
+	 * transaction_type	String	 'PAYï¿½ or 'REFUNDï¿½ or 'TRANSFER'
+	 * transaction_id	String	 '201506101035040000001ï¿½
 	 * transaction_fee	Integer	  1 means 0.01 yuan
 	 * trade_success	Bool	  true
 	 * message_detail	Map(JSON) {orderId:xxxx}
@@ -98,7 +237,7 @@ public class BCWebHookHandler implements IAjaxCommand {
 		    String sign = jsonObj.getString("sign");
 		    String timestamp = jsonObj.getString("timestamp");
 		    translog.setIsCorrect(PaymentUtil.verifySign(sign, timestamp));
-		    if (translog.getIsCorrect() || BCWebHookHandler.enableDebugger) { //for secure check.
+		    if (translog.getIsCorrect() || BCpayHandler.enableDebugger) { //for secure check.
 		    	AccountingModel.INSTANCE.create(translog, true);
 		    	String transactionId = jsonObj.getString("transaction_id");
 		    	TransactionType transType = TransactionType.valueOf(jsonObj.getString("transaction_type").toUpperCase()); 

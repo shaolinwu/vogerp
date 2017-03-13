@@ -293,13 +293,13 @@
                     import org.shaolin.vogerp.order.be.*;
                     import org.shaolin.vogerp.accounting.be.*;
                     import org.shaolin.vogerp.accounting.ce.*;
-                    import org.shaolin.vogerp.accounting.IAccountingService;
+                    import org.shaolin.vogerp.accounting.IPaymentService;
                     import org.shaolin.bmdp.utils.StringUtil;
                     {
                          $gorder.setStatus(OrderStatusType.TAKEN);
                          OrderModel.INSTANCE.update($gorder);
                          
-                         IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+                         IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                          IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class); 
                          IPayOrder payOrder = accountingService.createSelfPayOrder(PayBusinessType.MACHININGBUSI, 
                          						$gorder.getPublishedCustomerId(), $gorder.getSerialNumber(), $gorder.getEndPrice());
@@ -308,11 +308,13 @@
 	                                                    + $gorder.getDescription());
 	                         @flowContext.save(payOrder);
                          }
-                         String json = accountingService.prepay(payOrder);
-		                 $page.getRequest().getSession().setAttribute("__payJson", json);
-		                 $page.executeJavaScript("window.open('/uimaster/jsp/paywindow.jsp')");
-		                 Dialog.showMessageDialog("请点击“刷新”按钮查看支付是否成功（本功能要求浏览器允许“弹出窗口”）。", "Information", Dialog.INFORMATION_MESSAGE, null);
-                         
+                         HashMap input = new HashMap();
+			             input.put("beObject", payOrder);
+			             input.put("editable", new Boolean(true));
+			             RefForm form = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PayOrder", input);
+			             $page.addElement(form);
+			             form.openInWindows("支付方式选择", null, 150, 100);
+			             
                          String description = $gorder.getDescription();
                          NotificationImpl message = new NotificationImpl();
                          message.setPartyId($gorder.getPublishedCustomerId());

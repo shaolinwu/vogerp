@@ -2,51 +2,172 @@ package org.shaolin.vogerp.accounting.internal;
 
 import java.io.BufferedReader;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.shaolin.bmdp.runtime.AppContext;
+import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.EventProcessor;
 import org.shaolin.bmdp.runtime.spi.FlowEvent;
+import org.shaolin.bmdp.utils.HttpSender;
+import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.bmdp.workflow.be.NotificationImpl;
 import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
 import org.shaolin.bmdp.workflow.internal.BuiltInAttributeConstant;
 import org.shaolin.uimaster.page.ajax.handlers.IAjaxCommand;
 import org.shaolin.uimaster.page.ajax.json.JSONException;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
-import org.shaolin.vogerp.accounting.IAccountingService.TransactionType;
+import org.shaolin.vogerp.accounting.IPaymentService.TransactionType;
+import org.shaolin.vogerp.accounting.PaymentException;
+import org.shaolin.vogerp.accounting.PaymentHandler;
+import org.shaolin.vogerp.accounting.be.ICustomerAccount;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 import org.shaolin.vogerp.accounting.be.PayOrderTransactionLogImpl;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+import org.shaolin.vogerp.accounting.ce.SettlementMethodType;
 import org.shaolin.vogerp.accounting.dao.AccountingModel;
 import org.shaolin.vogerp.accounting.util.PaymentUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * BE WebHook data handler.
- * Check from this example.
- * https://github.com/beecloud/beecloud-java/blob/master/demo/WebRoot/webhook_receiver_example/webhook_receiver.jsp
- * 
  * We are able to debug this callback handler through Admin console by enabling 'enableDebugger'.
  * @author wushaol
  *
  */
-public class WepayWebHookHandler implements IAjaxCommand {
+public class WepayHandler implements IAjaxCommand, PaymentHandler {
 
-	private static final String SUCCESS = "success";
-	private static final String FAIL = "fail";
-	private static final Logger logger = LoggerFactory.getLogger(WepayWebHookHandler.class);
+	private static final String UNIFIEDPAY_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+	private static final String SUCCESS = "SUCCESS";
+	private static final String FAIL = "FAIL";
+	private static final Logger logger = LoggerFactory.getLogger(WepayHandler.class);
 	
 	public static boolean enableDebugger = false;
 	
-	public static Logger getLogger() {
-		return logger;
+	private final String APP_ID;
+	
+	private final String MCH_ID;
+	
+	private final String MCH_APISECURE_KEY;
+	
+	private final HttpSender sender;
+	
+	public WepayHandler() {
+		APP_ID = Registry.getInstance().getValue("/System/payment/wepay/app_id");
+		MCH_ID = Registry.getInstance().getValue("/System/payment/wepay/mch_id");
+		MCH_APISECURE_KEY = Registry.getInstance().getValue("/System/payment/wepay/mch_apisecurekey");
+		
+		sender = new HttpSender();
+	}
+	
+	/**
+	 * for test purpose
+	 * 
+	 * @param appId
+	 * @param mchId
+	 * @param apiKey
+	 */
+	public WepayHandler(String appId, String mchId, String apiKey) {
+		this.APP_ID = appId;
+		this.MCH_ID = mchId;
+		this.MCH_APISECURE_KEY = apiKey;
+		sender = new HttpSender();
+	}
+	
+	/**
+	 * we invoke weixin unified api for prepayment.
+	 * https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_1
+	 * 
+	 * @param payOrder
+	 * @return
+	 * @throws Exception
+	 */
+	public String prepay(IPayOrder payOrder) throws PaymentException {
+		try {
+			HashMap<String, Object> values = new HashMap<String, Object>();
+			values.put("appid", APP_ID);
+			values.put("body", StringUtil.truncateString(payOrder.getDescription(), 120));
+			values.put("mch_id", MCH_ID);
+			values.put("nonce_str", StringUtil.genRandomAlphaBits(32));
+			values.put("out_trade_no", payOrder.getSerialNumber());
+			values.put("spbill_create_ip", UserContext.getUserContext().getRequestIP());
+			values.put("total_fee", payOrder.getAmount() + ""); //fen
+			values.put("trade_type", UserContext.isAppClient() ?"APP" :"NATIVE");
+			values.put("notify_url", "https://www.vogerp.com/uimaster/ajaxservice?serviceName=WepayWebHook");
+			// optional.
+	//		JSONObject detail = new JSONObject();
+	//		detail.put("cost_price", payOrder.getAmount());
+	//		detail.put("goods_name", StringUtil.truncateString(payOrder.getDescription(), 100));
+	//		detail.put("quantity", 1);
+	//		json.put("detail", detail);
+			
+			// https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=4_3
+			// all parameters must be keeping in order.
+			StringBuffer keyValues = new StringBuffer();
+			keyValues.append("appid=").append(APP_ID);
+			keyValues.append("&body=").append(values.get("body"));
+			keyValues.append("&mch_id=").append(values.get("mch_id"));
+			keyValues.append("&nonce_str=").append(values.get("nonce_str"));
+			keyValues.append("&notify_url=").append(values.get("notify_url"));
+			keyValues.append("&out_trade_no=").append(values.get("out_trade_no"));
+			keyValues.append("&spbill_create_ip=").append(values.get("spbill_create_ip"));
+			keyValues.append("&total_fee=").append(values.get("total_fee"));
+			keyValues.append("&trade_type=").append(values.get("trade_type"));
+		    //key setting path ：pay.weixin.qq.com-->API security-->password	
+			keyValues.append("&key=").append(MCH_APISECURE_KEY);
+			
+			values.put("sign", PaymentUtil.string2MD5(keyValues.toString()).toUpperCase());
+			String result = sender.doPostSSL(UNIFIEDPAY_URL, StringUtil.convertMapToXML(values, "xml"), "UTF-8", "text/xml");
+			//xml format
+			Map resultMap = StringUtil.xml2map(result);
+			// invoke result
+			if (SUCCESS.equalsIgnoreCase(resultMap.get("return_code").toString())) {
+				// business result
+				PayOrderTransactionLogImpl translog = new PayOrderTransactionLogImpl();
+		        translog.setLog(resultMap.toString());
+		        translog.setPaymentMethod(SettlementMethodType.WEIXI);
+		        
+				if (SUCCESS.equalsIgnoreCase(resultMap.get("result_code").toString())) {
+					translog.setIsCorrect(true);
+					translog.setCreateDate(new Date());
+					AccountingModel.INSTANCE.create(translog, true);
+					resultMap.get("prepay_id");
+					return resultMap.get("code_url").toString(); // for end user payment url which will be generated as 2 dimension code picture!
+				} else {
+					translog.setIsCorrect(false);
+					translog.setCreateDate(new Date());	
+					AccountingModel.INSTANCE.create(translog, true);
+	
+					throw new PaymentException("Wepay prepay operation failed: " + resultMap.toString() 
+					+ ", payment order: " + payOrder.getSerialNumber());
+				}
+			} else {
+				throw new PaymentException("Wepay prepay order fail to sign: " + resultMap.toString() 
+											+ ", payment order: " + payOrder.getSerialNumber());
+			}
+		} catch (Exception e) {
+			if (e instanceof PaymentException) {
+				throw (PaymentException)e;
+			}
+			throw new PaymentException("Weixi prepay error occurred!", e);
+		}
+	}
+	
+	public String transfer(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException {
+		//TODO:
+		throw new UnsupportedOperationException();
+	}
+	
+	public String refund(final IPayOrder order) throws PaymentException {
+		//TODO:
+		throw new UnsupportedOperationException();
 	}
 	
 	/*
@@ -98,7 +219,7 @@ public class WepayWebHookHandler implements IAjaxCommand {
 		    String sign = jsonObj.getString("sign");
 		    String timestamp = jsonObj.getString("timestamp");
 		    translog.setIsCorrect(PaymentUtil.verifySign(sign, timestamp));
-		    if (translog.getIsCorrect() || WepayWebHookHandler.enableDebugger) { //for secure check.
+		    if (translog.getIsCorrect() || WepayHandler.enableDebugger) { //for secure check.
 		    	AccountingModel.INSTANCE.create(translog, true);
 		    	String transactionId = jsonObj.getString("transaction_id");
 		    	TransactionType transType = TransactionType.valueOf(jsonObj.getString("transaction_type").toUpperCase()); 
