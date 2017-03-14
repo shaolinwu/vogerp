@@ -99,8 +99,15 @@ public class PaymentUtil {
 	}
 
 	/**
-	 * must keeping the sequence.
+	 * BeeCould
 	 * 
+	 * @param sign
+	 * @param text
+	 * @param key
+	 * @param input_charset
+	 * @return
+	 */
+    /**
 	 * @param appId
 	 * @param title
 	 * @param amount
@@ -137,15 +144,14 @@ public class PaymentUtil {
 
 	}
 
-	public static String convertMD5(String inStr) {
-		char[] a = inStr.toCharArray();
-		for (int i = 0; i < a.length; i++) {
-			a[i] = (char) (a[i] ^ 't');
-		}
-		String s = new String(a);
-		return s;
+    
+	public static boolean verify(String sign, String text, String key, String input_charset) {
+		text = text + key;
+		String mysign = DigestUtils.md5Hex(getContentBytes(text, input_charset));
+		long timeDifference = System.currentTimeMillis() - Long.valueOf(key);
+		return (mysign.equals(sign) && timeDifference <= 300000);
 	}
-	
+
 	public static byte[] getContentBytes(String content, String charset) {
 		if (charset == null || "".equals(charset)) {
 			return content.getBytes();
@@ -156,14 +162,7 @@ public class PaymentUtil {
 			throw new RuntimeException("MD5 signature is wrong! charset: " + charset);
 		}
 	}
-
-	public static boolean verify(String sign, String text, String key, String input_charset) {
-		text = text + key;
-		String mysign = DigestUtils.md5Hex(getContentBytes(text, input_charset));
-		long timeDifference = System.currentTimeMillis() - Long.valueOf(key);
-		return (mysign.equals(sign) && timeDifference <= 300000);
-	}
-
+	
 	public static boolean verifySign(String sign, String timestamp) {
 		return verify(sign, BCCache.getAppID() + BCCache.getAppSecret(), timestamp, "UTF-8");
 	}

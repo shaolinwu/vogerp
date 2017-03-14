@@ -1,6 +1,7 @@
 package org.shaolin.vogerp.accounting.internal;
 
 import java.io.BufferedReader;
+import java.security.MessageDigest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -60,8 +61,11 @@ public class WepayHandler implements IAjaxCommand, PaymentHandler {
 	private final HttpSender sender;
 	
 	public WepayHandler() {
+		// \u767B\u5F55\u5FAE\u4FE1\u516C\u4F17\u5E73\u53F0\uFF0C\u5728\u3010\u5F00\u53D1-->\u57FA\u672C\u914D\u7F6E\u3011\u4E2D\u67E5\u770B
 		APP_ID = Registry.getInstance().getValue("/System/payment/wepay/app_id");
+		// \u767B\u5F55\u5FAE\u4FE1\u516C\u4F17\u5E73\u53F0\uFF0C\u5728\u3010\u5FAE\u4FE1\u652F\u4ED8-->\u5546\u6237\u4FE1\u606F\u3011\u4E2D\u67E5\u770B
 		MCH_ID = Registry.getInstance().getValue("/System/payment/wepay/mch_id");
+		// \u767B\u5F55\u5FAE\u4FE1\u652F\u4ED8\u5546\u6237\u5E73\u53F0\uFF0C\u5728\u3010\u8D26\u6237\u8BBE\u7F6E-->API\u5B89\u5168\u3011\u4E2D\u8BBE\u7F6E
 		MCH_APISECURE_KEY = Registry.getInstance().getValue("/System/payment/wepay/mch_apisecurekey");
 		
 		sender = new HttpSender();
@@ -98,7 +102,7 @@ public class WepayHandler implements IAjaxCommand, PaymentHandler {
 			values.put("nonce_str", StringUtil.genRandomAlphaBits(32));
 			values.put("out_trade_no", payOrder.getSerialNumber());
 			values.put("spbill_create_ip", UserContext.getUserContext().getRequestIP());
-			values.put("total_fee", payOrder.getAmount() + ""); //fen
+			values.put("total_fee", ((int)payOrder.getAmount()) + ""); //fen
 			values.put("trade_type", UserContext.isAppClient() ?"APP" :"NATIVE");
 			values.put("notify_url", "https://www.vogerp.com/uimaster/ajaxservice?serviceName=WepayWebHook");
 			// optional.
@@ -122,8 +126,8 @@ public class WepayHandler implements IAjaxCommand, PaymentHandler {
 			keyValues.append("&trade_type=").append(values.get("trade_type"));
 		    //key setting path ：pay.weixin.qq.com-->API security-->password	
 			keyValues.append("&key=").append(MCH_APISECURE_KEY);
-			
-			values.put("sign", PaymentUtil.string2MD5(keyValues.toString()).toUpperCase());
+			// take this link for verification. https://pay.weixin.qq.com/wiki/tools/signverify/
+			values.put("sign", encodeMD5(keyValues.toString(), "UTF-8").toUpperCase());
 			String result = sender.doPostSSL(UNIFIEDPAY_URL, StringUtil.convertMapToXML(values, "xml"), "UTF-8", "text/xml");
 			//xml format
 			Map resultMap = StringUtil.xml2map(result);
@@ -300,5 +304,48 @@ public class WepayHandler implements IAjaxCommand, PaymentHandler {
 	public boolean needUserSession() {
 		return false;
 	}
+	
+	/**
+	 * Wepay signed with MD5 encoder.
+	 * 
+	 * @param origin
+	 * @param charsetname
+	 * @return
+	 */
+    private static String encodeMD5(String origin, String charsetname) {  
+        String resultString = null;  
+        try {  
+            resultString = new String(origin);  
+            MessageDigest md = MessageDigest.getInstance("MD5");  
+            if (charsetname == null || "".equals(charsetname))  
+                resultString = byteArrayToHexString(md.digest(resultString  
+                        .getBytes()));  
+            else  
+                resultString = byteArrayToHexString(md.digest(resultString  
+                        .getBytes(charsetname)));  
+        } catch (Exception exception) {  
+        }  
+        return resultString;  
+    }  
+  
+	private static final String hexDigits[] = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d",
+			"e", "f" };
+    
+    private static String byteArrayToHexString(byte b[]) {  
+        StringBuffer resultSb = new StringBuffer();  
+        for (int i = 0; i < b.length; i++)  
+            resultSb.append(byteToHexString(b[i]));  
+  
+        return resultSb.toString();  
+    }  
+  
+    private static String byteToHexString(byte b) {  
+        int n = b;  
+        if (n < 0)  
+            n += 256;  
+        int d1 = n / 16;  
+        int d2 = n % 16;  
+        return hexDigits[d1] + hexDigits[d2];  
+    } 
 
 }
