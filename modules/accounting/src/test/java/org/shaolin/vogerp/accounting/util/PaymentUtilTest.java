@@ -40,9 +40,9 @@ public class PaymentUtilTest {
 		payOrder.setUserId(3462);
 		payOrder.setEndUserId(3);
 		payOrder.setOrderSerialNumber("GOSN-2017-02-22-1000335-1971");
-		payOrder.setSerialNumber("PayO2017031317008598572");
-		payOrder.setDescription("[吴更申]四组圆盘自动磨砂机LC-ZP904A 颜色: 橙,单位: 张");
-		payOrder.setAmount(2000.0);
+		payOrder.setSerialNumber("PayO2017031317008598576");
+		payOrder.setDescription("[吴更申]");
+		payOrder.setAmount(2000);
 		payOrder.setPayBusinessType(PayBusinessType.GOLDENPORDERBUSI);
 		payOrder.setStatus(PayOrderStatusType.NOTPAYED);
 		payOrder.setCustomerAPaymentMethod(SettlementMethodType.WEIXI);

@@ -19,6 +19,13 @@ function org_shaolin_vogerp_accounting_form_PaymentMethod(json)
         ,src: "/images/payment/wepay.jpg"
     });
 
+    var hintUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "hintUI"]
+        ,value: "??????????????“??”???????????"
+        ,text: "??????????????“??”???????????"
+    });
+
     var cancelbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "cancelbtn"]
@@ -31,22 +38,31 @@ function org_shaolin_vogerp_accounting_form_PaymentMethod(json)
         ,subComponents: [prefix + "cancelbtn"]
     });
 
+    var wepayQRCodeUI = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "wepayQRCodeUI"]
+        ,items: []
+        ,subComponents: []
+    });
+
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "alipayUI",prefix + "wepayUI"]
+        ,subComponents: [prefix + "alipayUI",prefix + "wepayUI",prefix + "hintUI",prefix + "wepayQRCodeUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [alipayUI,wepayUI,cancelbtn,fieldPanel,actionPanel]
+        ,items: [alipayUI,wepayUI,hintUI,cancelbtn,fieldPanel,wepayQRCodeUI,actionPanel]
     });
 
     Form.alipayUI=alipayUI;
 
     Form.wepayUI=wepayUI;
+
+    Form.hintUI=hintUI;
 
     Form.cancelbtn=cancelbtn;
 
@@ -55,6 +71,12 @@ function org_shaolin_vogerp_accounting_form_PaymentMethod(json)
     Form.alipayUI=alipayUI;
 
     Form.wepayUI=wepayUI;
+
+    Form.hintUI=hintUI;
+
+    Form.wepayQRCodeUI=wepayQRCodeUI;
+
+    Form.wepayQRCodeUI=wepayQRCodeUI;
 
     Form.actionPanel=actionPanel;
 
@@ -69,6 +91,8 @@ function org_shaolin_vogerp_accounting_form_PaymentMethod(json)
     Form.alipayAction = org_shaolin_vogerp_accounting_form_PaymentMethod_alipayAction;
 
     Form.wepayAction = org_shaolin_vogerp_accounting_form_PaymentMethod_wepayAction;
+
+    Form.genWepayQRCode = org_shaolin_vogerp_accounting_form_PaymentMethod_genWepayQRCode;
 
     Form.Cancel = org_shaolin_vogerp_accounting_form_PaymentMethod_Cancel;
 
@@ -104,6 +128,19 @@ function org_shaolin_vogerp_accounting_form_PaymentMethod(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"wepayAction-20170211-201347",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_PaymentMethod_wepayAction */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_accounting_form_PaymentMethod_genWepayQRCode(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_form_PaymentMethod_genWepayQRCode */
+        var o = this;
+        var UIEntity = this;
+
+        {   
+            UIMaster.require("/js/qrcode.min.js");
+            var qrcode = new QRCode(this.wepayQRCodeUI, {width:150, height:150});
+            qrcode.makeCode(eventsource);
+        }
+            }/* Gen_Last:org_shaolin_vogerp_accounting_form_PaymentMethod_genWepayQRCode */
 
 
     /* auto generated eventlistener function declaration */

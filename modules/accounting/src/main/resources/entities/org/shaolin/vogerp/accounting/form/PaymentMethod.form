@@ -21,11 +21,12 @@
             IPayOrder payOrder = (IPayOrder)form.getInputParameter("beObject");
             payOrder.setCustomerAPaymentMethod(SettlementMethodType.ALIPAY);
             IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
-            String htmlform = payService.prepay(payOrder);
-            String jsExpression = "alert('" + htmlform + "')";
-            @page.executeJavaScript(jsExpression);
-            //TODO: forward to this url.
-            Dialog.showMessageDialog("请关闭本窗口，并“刷新”页面查看支付是否成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
+            try {
+               String htmlform = payService.prepay(payOrder);
+               //TODO: forward to this url.
+            } catch (Exception e) {
+               Dialog.showMessageDialog("支付异常！", "", Dialog.WARNING_MESSAGE, null);
+            }
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -49,13 +50,26 @@
             IPayOrder payOrder = (IPayOrder)form.getInputParameter("beObject");
             payOrder.setCustomerAPaymentMethod(SettlementMethodType.WEIXI);
             IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
-            String url = payService.prepay(payOrder);
-            String js = "alert('" + url + "')";
-            @page.executeJavaScript(js);
-            //TODO generate url as 2d code picture to client side.
-            Dialog.showMessageDialog("请关闭本窗口，并“刷新”页面查看支付是否成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
+            try {
+	            String url = payService.prepay(payOrder);
+	            // generate url as 2d code picture to client side.
+	            @page.executeJavaScript("defaultname." + @page.getEntityUiid() + ".genWepayQRCode('"+url+"');");
+            } catch (Exception e) {
+               Dialog.showMessageDialog("支付异常！", "", Dialog.WARNING_MESSAGE, null);
+            }
         }]]></expressionString>
       </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="genWepayQRCode">
+  	<ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+            UIMaster.require("/js/qrcode.min.js");
+            var qrcode = new QRCode(this.wepayQRCodeUI, {width:150, height:150});
+            qrcode.makeCode(eventsource);
+        }
+        ]]></ns2:expressionString>
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="Cancel">
@@ -80,6 +94,8 @@
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
@@ -124,6 +140,24 @@
           <ns2:handler functionName="wepayAction"></ns2:handler>
         </ns2:EventListener>
       </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="hintUI">
+         <ns2:Property name="value">
+           <ns2:value xsi:type="ns2:StringPropertyType">
+               <value>支付完成后，请关闭本窗口，并“刷新”页面查看支付是否成功。</value>
+           </ns2:value>
+         </ns2:Property>
+         <ns2:Property name="text">
+           <ns2:value xsi:type="ns2:StringPropertyType">
+               <value>支付完成后，请关闭本窗口，并“刷新”页面查看支付是否成功。</value>
+           </ns2:value>
+         </ns2:Property>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIPanelType" UIID="wepayQRCodeUI">
+	      <ns2:layout xsi:type="ns2:TableLayoutType">
+	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+	        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+	      </ns2:layout>
+      </ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>alipayUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIStyle="text-align:center;"></ns2:constraint>
@@ -131,6 +165,14 @@
       <ns2:layoutConstraint>
         <ns2:componentId>wepayUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIStyle="text-align:center;"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>hintUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIStyle="text-align:center;"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>wepayQRCodeUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIStyle="text-align:center;"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
