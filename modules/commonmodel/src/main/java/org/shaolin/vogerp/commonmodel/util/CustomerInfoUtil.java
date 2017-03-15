@@ -6,7 +6,6 @@ import java.util.List;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
-import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
@@ -14,31 +13,36 @@ import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
 import org.shaolin.vogerp.commonmodel.be.IContactInfo;
 import org.shaolin.vogerp.commonmodel.be.IDeliveryInfo;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
+import org.shaolin.vogerp.commonmodel.ce.OrgType;
 import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
 
 public class CustomerInfoUtil {
 
 	public static String getCustomerBasicInfo(IPersonalInfo customer) {
-		return customer.getFirstName() + customer.getLastName();
+		return customer.getLastName() + customer.getFirstName();
 	}
 	
 	public static String getCustomerEnterpriseBasicInfo(IPersonalInfo customer) {
 		if (customer.getOrganization() != null) {
+			if (customer.getOrganization().getOrgType() == OrgType.INDIVIDUAL) {
+				return getCustomerBasicInfo(customer) + "[\u4E2A\u4EBA\u7528\u6237]";
+			}
 			return customer.getOrganization().getDescription() + 
 					(customer.getOrganization().getVeriState()==OrgVerifyStatusType.VERIFIED?"[\u8BA4\u8BC1\u7528\u6237]":"");
 		} else {
-			return getCustomerBasicInfo(customer) + 
-					(customer.getOrganization().getVeriState()==OrgVerifyStatusType.VERIFIED?"[\u8BA4\u8BC1\u7528\u6237]":"");
+			return getCustomerBasicInfo(customer);
 		}
 	}
 	
 	public static String getSecureCustomerBasicInfo(IPersonalInfo customer) {
 		if (customer.getOrganization() != null) {
+			if (customer.getOrganization().getOrgType() == OrgType.INDIVIDUAL) {
+				return getCustomerBasicInfo(customer) + "[\u4E2A\u4EBA\u7528\u6237]";
+			}
 			return StringUtil.truncateString(customer.getOrganization().getName(), 5, "...") + 
 					(customer.getOrganization().getVeriState()==OrgVerifyStatusType.VERIFIED?"[\u8BA4\u8BC1\u7528\u6237]":"");
 		} else {
-			return getCustomerBasicInfo(customer) + 
-					(customer.getOrganization().getVeriState()==OrgVerifyStatusType.VERIFIED?"[\u8BA4\u8BC1\u7528\u6237]":"");
+			return getCustomerBasicInfo(customer);
 		}
 	}
 	
@@ -96,9 +100,7 @@ public class CustomerInfoUtil {
     	sb.append(address.getName()).append("--");
     	sb.append(CEUtil.toCEValue(address.getProvince()).getValue()).append(" ");
     	sb.append(CEUtil.toCEValue(address.getCity()).getValue()).append(" ");
-    	if (address.getDistrict() != null && address.getDistrict().length() > 0
-    			&& !address.getDistrict().equals(""+IConstantEntity.CONSTANT_DEFAULT_INT_VALUE)
-    			&& !address.getDistrict().equals(""+IConstantEntity.CONSTANT_DEFAULT_VALUE)) {
+    	if (address.getDistrict() != null && !"-1".equals(address.getDistrict())) {
     		sb.append(CEUtil.toCEValue(address.getDistrict()).getValue()).append(" ");
     	}
     	sb.append(address.getStreet()).append(" ");

@@ -13,6 +13,13 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
         ui: elementList[prefix + "errorInfo"]
     });
 
+    var selectModeUI = new UIMaster.ui.radiobuttongroup
+    ({
+        ui: elementList[prefix + "selectModeUI"]
+        ,horizontalLayout: true
+        ,value: "0"
+    });
+
     var veriCodeQuestionUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "veriCodeQuestionUILabel"]
@@ -57,6 +64,8 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
     var registerInfo = new org_shaolin_bmdp_adminconsole_form_RegisterInfo({"prefix":prefix + "registerInfo."});
 
+    var registerCompanyInfo = new org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo({"prefix":prefix + "registerCompanyInfo."});
+
     var bottomPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "bottomPanel"]
@@ -76,7 +85,7 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
         ui: elementList[prefix + "loginPanel"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
-        ,subComponents: [prefix + "errorInfo",prefix + "registerInfo",prefix + "verifyCodePanel"]
+        ,subComponents: [prefix + "errorInfo",prefix + "selectModeUI",prefix + "registerInfo",prefix + "registerCompanyInfo",prefix + "verifyCodePanel"]
     });
 
     var topPanel = new UIMaster.ui.panel
@@ -89,12 +98,14 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [vogerplogo,errorInfo,veriCodeQuestionUILabel,veriCodeQuestion,veriCodeUILabel,veriCode,termsUI,registerBtn,loginBtn,bottomPanelInfo,registerInfo,topPanel,loginPanel,verifyCodePanel,bottomPanel]
+        ,items: [vogerplogo,errorInfo,selectModeUI,veriCodeQuestionUILabel,veriCodeQuestion,veriCodeUILabel,veriCode,termsUI,registerBtn,loginBtn,bottomPanelInfo,registerInfo,registerCompanyInfo,topPanel,loginPanel,verifyCodePanel,bottomPanel]
     });
 
     Form.vogerplogo=vogerplogo;
 
     Form.errorInfo=errorInfo;
+
+    Form.selectModeUI=selectModeUI;
 
     Form.veriCodeQuestionUILabel=veriCodeQuestionUILabel;
 
@@ -114,6 +125,8 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
     Form.registerInfo=registerInfo;
 
+    Form.registerCompanyInfo=registerCompanyInfo;
+
     Form.topPanel=topPanel;
 
     Form.vogerplogo=vogerplogo;
@@ -122,7 +135,11 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
     Form.errorInfo=errorInfo;
 
+    Form.selectModeUI=selectModeUI;
+
     Form.registerInfo=registerInfo;
+
+    Form.registerCompanyInfo=registerCompanyInfo;
 
     Form.verifyCodePanel=verifyCodePanel;
 
@@ -163,10 +180,18 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_bmdp_adminconsole_page_Registration */
-        /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_Registration */
+
+        
+		        { 
+		        $(this.registerCompanyInfo.Form).parent().css("display", "none");
+		        }
+		    
+            /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_Registration */
     };
 
     Form.genVerifiCode = org_shaolin_bmdp_adminconsole_page_Registration_genVerifiCode;
+
+    Form.switchRegisterUserPanel = org_shaolin_bmdp_adminconsole_page_Registration_switchRegisterUserPanel;
 
     Form.verifiCode = org_shaolin_bmdp_adminconsole_page_Registration_verifiCode;
 
@@ -208,12 +233,40 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Registration_switchRegisterUserPanel(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Registration_switchRegisterUserPanel */
+        var o = this;
+        var UIEntity = this;
+
+		        {   
+		            if (this.selectModeUI.getValue() == "0") {
+		                $(this.registerInfo.Form).parent().css("display", "block");
+		                $(this.registerCompanyInfo.Form).parent().css("display", "none");
+		            } else {
+		                $(this.registerInfo.Form).parent().css("display", "none");
+		                $(this.registerCompanyInfo.Form).parent().css("display", "block");
+		            }
+		        }
+		            }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Registration_switchRegisterUserPanel */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Registration_verifiCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Registration_verifiCode */
         var o = this;
         var UIEntity = this;
 
 		        {   
-		            var constraint_result = this.Form.validate();
+		            if (this.selectModeUI.getValue() == "0") {
+		                var constraint_result = this.registerInfo.Form.validate();
+			            if (constraint_result != true && constraint_result != null) {
+			                return false;
+			            }
+		            } else {
+		               var constraint_result = this.registerCompanyInfo.Form.validate();
+			            if (constraint_result != true && constraint_result != null) {
+			                return false;
+			            }
+		            }
+		            var constraint_result = this.veriCode.validate();
 		            if (constraint_result != true && constraint_result != null) {
 		                return false;
 		            }
@@ -287,7 +340,22 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
         constraint_result = this.Form.validate();
 {
-			// hello, my first js.
+			constraint_result = true;
+			if (this.selectModeUI.getValue() == "0") {
+                var constraint_result = this.registerInfo.Form.validate();
+	            if (constraint_result != true && constraint_result != null) {
+	                return false;
+	            }
+            } else {
+               var constraint_result = this.registerCompanyInfo.Form.validate();
+	            if (constraint_result != true && constraint_result != null) {
+	                return false;
+	            }
+            }
+            var constraint_result = this.veriCode.validate();
+            if (constraint_result != true && constraint_result != null) {
+                return false;
+            }
 			}        
         myForm._outname.value = "Register";
         myForm.target = "_self";
@@ -315,6 +383,7 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
         var UIEntity = this;
 {
+            constraint_result = true;
             // hello, my first js.
             }        
         myForm._outname.value = "Login";

@@ -46,6 +46,7 @@ import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
 import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
 import org.shaolin.vogerp.commonmodel.ce.AMemberType;
 import org.shaolin.vogerp.commonmodel.ce.EmployeeLevel;
+import org.shaolin.vogerp.commonmodel.ce.OrgType;
 import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
 import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 import org.shaolin.vogerp.commonmodel.dao.CustCommonModel;
@@ -121,13 +122,22 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 				|| registerInfo.getPhoneNumber().equals("null")) {
 			return false;
 		}
+		if (registerInfo.getUserType() == null || registerInfo.getUserType() == OrgType.NOT_SPECIFIED) {
+			logger.debug("Does not specify the user type! " + registerInfo.getPhoneNumber());
+			return false;
+		}
 		PersonalAccountImpl account = new PersonalAccountImpl();
 		account.setUserName(registerInfo.getPhoneNumber());
 		List<IPersonalAccount> result = CommonModel.INSTANCE.searchUserAccount(account, null, 0, 1);
 		if (result.size() > 0) {
 			return false;
 		}
-		// save registered info.
+		String rawPassword = registerInfo.getPassword();
+		try {
+			registerInfo.setPassword(PasswordVerifier.getPasswordHash(registerInfo.getPassword()));
+		} catch (NoSuchAlgorithmException e) {
+			// impossible
+		}
 		CommonModel.INSTANCE.create(registerInfo);
 		
 		// create organization
@@ -136,10 +146,11 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		org.setDescription(registerInfo.getOrgName());
 		org.setOrgCode(genOrgCode());
 		org.setParentId(1);
+		org.setOrgType(registerInfo.getUserType());
 		if (registerInfo.getOrgType() != null && registerInfo.getOrgType().length() > 0) {
 			org.setType(registerInfo.getOrgType());
 		} else {
-			org.setType("org.shaolin.vogerp.productmodel.ce.ProductType,1");
+			org.setType("org.shaolin.vogerp.productmodel.ce.ProductType,1");//MachineryManufacturing
 		}
 		CommonModel.INSTANCE.create(org);
 		registerInfo.setOrgId(org.getId());
@@ -158,6 +169,14 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		userInfo.setBirthday(new Date());
 		userInfo.setEmpLevel(EmployeeLevel.SENIOR);
 		userInfo.setEmpId("000001");
+		
+		if (registerInfo.getUserType() == OrgType.COMPANY) {
+			registerInfo.getAddress().setName(registerInfo.getOrgName());
+			registerInfo.getAddress().setMobile(registerInfo.getPhoneNumber());
+			List<IAddressInfo> addresses = new ArrayList<IAddressInfo>();
+			addresses.add(registerInfo.getAddress());
+			userInfo.setAddresses(addresses);
+		}
 		// userInfo.setp registerInfo.getPhoneNumber() 
 		// registerInfo.getAddress();
 		CommonModel.INSTANCE.create(userInfo);
@@ -167,11 +186,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		PersonalAccountImpl newAccount = new PersonalAccountImpl();
 		newAccount.setPersonalId(userInfo.getId());
 		newAccount.setUserName(registerInfo.getPhoneNumber());
-		try {
-			newAccount.setPassword(PasswordVerifier.getPasswordHash(registerInfo.getPassword()));
-		} catch (NoSuchAlgorithmException e) {
-			return false;
-		}
+		newAccount.setPassword(registerInfo.getPassword());
 		newAccount.setLoginIP(HttpUserUtil.getIP(request));
 		this.setLocationInfo(newAccount);
 		CommonModel.INSTANCE.create(newAccount);
@@ -201,6 +216,8 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		// rebuild transaction again.
 		HibernateUtil.getSession();
 		
+		//set the raw password back!
+		registerInfo.setPassword(rawPassword);
 		// send notification.
 		return true;
 	}

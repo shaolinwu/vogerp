@@ -1,6 +1,6 @@
 /* null */
 /* auto generated constructor */
-function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
+function org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
     var phoneNumberUILabel = new UIMaster.ui.label
@@ -98,17 +98,31 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
         ui: elementList[prefix + "nameUI"]
     });
 
+    var industryUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "industryUILabel"]
+    });
+
+    var industryUI = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "industryUI"]
+      ,allowBlank:false
+      ,allowBlankText:"?????????"
+    });
+
+    var addressInfo = new org_shaolin_bmdp_adminconsole_form_AddressInfo({"prefix":prefix + "addressInfo."});
+
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "phoneNumberUILabel",prefix + "phoneNumberUI",prefix + "passwordUILabel",prefix + "passwordUI",prefix + "password1UILabel",prefix + "password1UI",prefix + "nameUILabel",prefix + "nameUI"]
+        ,subComponents: [prefix + "phoneNumberUILabel",prefix + "phoneNumberUI",prefix + "passwordUILabel",prefix + "passwordUI",prefix + "password1UILabel",prefix + "password1UI",prefix + "nameUILabel",prefix + "nameUI",prefix + "industryUILabel",prefix + "industryUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [phoneNumberUILabel,phoneNumberUI,passwordUILabel,passwordUI,password1UILabel,password1UI,nameUILabel,nameUI,fieldPanel]
+        ,items: [phoneNumberUILabel,phoneNumberUI,passwordUILabel,passwordUI,password1UILabel,password1UI,nameUILabel,nameUI,industryUILabel,industryUI,addressInfo,fieldPanel]
     });
 
     Form.phoneNumberUILabel=phoneNumberUILabel;
@@ -126,6 +140,12 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
     Form.nameUILabel=nameUILabel;
 
     Form.nameUI=nameUI;
+
+    Form.industryUILabel=industryUILabel;
+
+    Form.industryUI=industryUI;
+
+    Form.addressInfo=addressInfo;
 
     Form.fieldPanel=fieldPanel;
 
@@ -145,28 +165,32 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
 
     Form.nameUI=nameUI;
 
+    Form.industryUILabel=industryUILabel;
+
+    Form.industryUI=industryUI;
+
     Form.user_constructor = function()
     {
-        /* Construct_FIRST:org_shaolin_bmdp_adminconsole_form_RegisterInfo */
-        /* Construct_LAST:org_shaolin_bmdp_adminconsole_form_RegisterInfo */
+        /* Construct_FIRST:org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo */
+        /* Construct_LAST:org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo */
     };
 
-    Form.verifiPhoneNumber = org_shaolin_bmdp_adminconsole_form_RegisterInfo_verifiPhoneNumber;
+    Form.verifiPhoneNumber = org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo_verifiPhoneNumber;
 
-    Form.invokeDynamicFunction = org_shaolin_bmdp_adminconsole_form_RegisterInfo_invokeDynamicFunction;
+    Form.invokeDynamicFunction = org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo_invokeDynamicFunction;
 
-    Form.__entityName="org.shaolin.bmdp.adminconsole.form.RegisterInfo";
+    Form.__entityName="org.shaolin.bmdp.adminconsole.form.RegisterCompanyInfo";
 
     Form.init();
     return Form;
 };
 
     /* EventHandler Functions */
-/* Other_Func_FIRST:org_shaolin_bmdp_adminconsole_form_RegisterInfo */
-/* Other_Func_LAST:org_shaolin_bmdp_adminconsole_form_RegisterInfo */
+/* Other_Func_FIRST:org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo */
+/* Other_Func_LAST:org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_bmdp_adminconsole_form_RegisterInfo_verifiPhoneNumber(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_form_RegisterInfo_verifiPhoneNumber */
+    function org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo_verifiPhoneNumber(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo_verifiPhoneNumber */
         var o = this;
         var UIEntity = this;
 
@@ -183,11 +207,11 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifiPhoneNumber-20160101-1112432",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_form_RegisterInfo_verifiPhoneNumber */
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo_verifiPhoneNumber */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_bmdp_adminconsole_form_RegisterInfo_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_form_RegisterInfo_invokeDynamicFunction */
+    function org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo_invokeDynamicFunction */
         var o = this;
         var UIEntity = this;
 
@@ -205,7 +229,7 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
         
         }
         }).open();
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_form_RegisterInfo_invokeDynamicFunction */
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo_invokeDynamicFunction */
 
 
 

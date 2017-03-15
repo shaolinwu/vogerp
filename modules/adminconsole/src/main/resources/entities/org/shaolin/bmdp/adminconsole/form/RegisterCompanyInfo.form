@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
-  <entityName>org.shaolin.bmdp.adminconsole.form.RegisterInfo</entityName>
+  <entityName>org.shaolin.bmdp.adminconsole.form.RegisterCompanyInfo</entityName>
   <systemVersion>0</systemVersion>
-  <!-- 个人注册 -->
+  <!-- 公司注册 -->
   <ns2:eventHandler functionName="verifiPhoneNumber">
     <ns2:ops xsi:type="ns2:OpExecuteScriptType">
         <ns2:expressionString><![CDATA[
@@ -49,10 +49,12 @@
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
       <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -182,8 +184,9 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="nameUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>名称</ns2:value>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>org_shaolin_bmdp_adminconsole_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.bmdp.adminconsole.be.RegisterInfo.orgName</ns2:key>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="nameUI">
@@ -192,13 +195,29 @@
             <ns2:value>false</ns2:value>
         </ns2:allowBlank>
         <ns2:allowBlankText xsi:type="ns2:StringPropertyType">
-            <ns2:value>名称不能为空！</ns2:value>
+            <ns2:value>公司名称不能为空！</ns2:value>
         </ns2:allowBlankText>
         <ns2:maxLength xsi:type="ns2:NumericPropertyType">
             <type>int</type>
             <value>40</value>
         </ns2:maxLength>
       </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="industryUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>行业</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="industryUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
+        <ns2:allowBlankText xsi:type="ns2:StringPropertyType">
+            <ns2:value>行业类型不能为空！</ns2:value>
+        </ns2:allowBlankText>
+      </ns2:component>
+      
       <ns2:layoutConstraint>
         <ns2:componentId>phoneNumberUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
@@ -231,10 +250,25 @@
         <ns2:componentId>nameUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>industryUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>industryUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="addressInfo">
+        <ns2:referenceEntity entityName="org.shaolin.bmdp.adminconsole.form.AddressInfo"></ns2:referenceEntity>
     </ns2:component>
     <ns2:layoutConstraint>
       <ns2:componentId>fieldPanel</ns2:componentId>
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>addressInfo</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
   </ns2:body>
   <ns2:mapping>
@@ -244,6 +278,12 @@
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="Internal" name="values" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="Internal" name="displayItems" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
     </ns2:DataEntity>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
@@ -260,12 +300,33 @@
       <ns2:UIComponent componentPath="passwordUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.password" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="industryUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.orgType" paramName="Value"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values" paramName="OptionValues"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
+        <ns2:mappingRule entityName="org.shaolin.bmdp.adminconsole.form.AddressInfo"></ns2:mappingRule>
+        <ns2:UIComponent componentPath="addressInfo" paramName="UIWidgetType"></ns2:UIComponent>
+        <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.address" paramName="beObject"></ns2:DataComponent>
+    </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
       import java.util.ArrayList;
       import org.shaolin.bmdp.runtime.AppContext;
       import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+      import org.shaolin.vogerp.commonmodel.be.AddressInfoImpl;
       {
+          ArrayList values = new ArrayList();
+          ArrayList displayItems = new ArrayList();
+          CEOperationUtil.getCEComboBox(values, displayItems, 
+               AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.productmodel.ce.ProductType"));
+          $values = values;
+          $displayItems = displayItems;
+          
+          $beObject.setAddress(new AddressInfoImpl());
           @odContext.executeAllMappings();
       }   
     ]]></expressionString>

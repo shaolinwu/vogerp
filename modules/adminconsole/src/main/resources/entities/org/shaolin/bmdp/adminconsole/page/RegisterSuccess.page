@@ -21,7 +21,7 @@
 				</ns2:layout>
 				<ns2:component xsi:type="ns2:UIImageType" UIID="vogerplogo">
                     <ns2:title xsi:type="ns2:StringPropertyType">
-                        <ns2:value>Vogue Enterprise Service</ns2:value>
+                        <ns2:value>抚企加工达人</ns2:value>
                     </ns2:title>
                     <ns2:src xsi:type="ns2:ImagePropertyType">
                         <ns2:location>/qd-logo.png</ns2:location>

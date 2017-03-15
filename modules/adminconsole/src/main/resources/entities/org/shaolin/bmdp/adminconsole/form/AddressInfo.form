@@ -1,0 +1,380 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns7="http://bmdp.shaolin.org/datamodel/FlowDiagram" xmlns:ns6="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns5="http://bmdp.shaolin.org/datamodel/Workflow" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.bmdp.adminconsole.form.AddressInfo</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="Save">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveDetail-20160615-215501">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
+        import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
+        import org.shaolin.vogerp.commonmodel.dao.CustCommonModel;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            HashMap out = (HashMap)form.ui2Data();
+
+            String pid = @page.getHidden("parentIdUI").getValue();
+            long parentId = Long.valueOf(pid).longValue();
+            IAddressInfo defaultUser = (IAddressInfo)out.get("beObject");
+            CustCommonModel.INSTANCE.updateAddresse(parentId, defaultUser);
+
+            form.closeIfinWindows();
+            @page.removeForm(@page.getEntityUiid()); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Cancel">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20160615-215501">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            form.closeIfinWindows(true);
+            @page.removeForm(@page.getEntityUiid()); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="selectProvince">
+     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectProvince-201604102211">
+        <ns2:exp>
+         <expressionString><![CDATA[
+              import java.util.HashMap;
+              import java.util.ArrayList;
+              import org.shaolin.bmdp.runtime.AppContext;
+              import org.shaolin.uimaster.page.AjaxContext;
+              import org.shaolin.uimaster.page.ajax.*;
+              import org.shaolin.bmdp.runtime.ce.CEUtil;
+              import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+              import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+              import org.shaolin.bmdp.runtime.spi.IConstantService;
+              import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+              {
+                  ComboBox cityListUI = @page.getComboBox("provinceUI");
+                  
+                  IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
+                  ArrayList values1 = new ArrayList();
+                  ArrayList displayItems1 = new ArrayList();
+                  CEOperationUtil.getCEItems(values1, displayItems1, cs.getChildren(CEUtil.toCEValue("CityList,"+ cityListUI.getValue())));
+                  
+                  ComboBox citySubListUI = @page.getComboBox("cityUI");
+                  citySubListUI.clearValue();
+                  citySubListUI.setOptions(displayItems1, values1);
+                  
+                  ArrayList values2 = new ArrayList();
+                  ArrayList displayItems2 = new ArrayList();
+                  IConstantEntity item = cs.getChildren(CEUtil.toCEValue(values1.get(0).toString()));
+                  if (item != null) {
+                     CEOperationUtil.getCEItems(values2, displayItems2, item);
+                  }
+                  ComboBox districtUI = @page.getComboBox("districtUI");
+                  districtUI.clearValue();
+                  districtUI.setOptions(displayItems2, values2);
+              }
+              ]]></expressionString>
+        </ns2:exp>
+     </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="selectCity">
+     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectCity-201604152311">
+        <ns2:exp>
+         <expressionString><![CDATA[
+              import java.util.HashMap;
+              import java.util.ArrayList;
+              import org.shaolin.bmdp.runtime.AppContext;
+              import org.shaolin.uimaster.page.AjaxContext;
+              import org.shaolin.uimaster.page.ajax.*;
+              import org.shaolin.bmdp.runtime.ce.CEUtil;
+              import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+              import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+              import org.shaolin.bmdp.runtime.spi.IConstantService;
+              import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+              {
+                  ComboBox cityListUI = @page.getComboBox("cityUI");
+                  IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
+                  ArrayList values1 = new ArrayList();
+                  ArrayList displayItems1 = new ArrayList();
+                  IConstantEntity item = cs.getChildren(CEUtil.toCEValue(cityListUI.getValue()));
+                  if (item != null) {
+                     CEOperationUtil.getCEItems(values1, displayItems1, item);
+                  }
+                  ComboBox citySubListUI = @page.getComboBox("districtUI");
+                  citySubListUI.clearValue();
+                  citySubListUI.setOptions(displayItems1, values1);
+                  
+              }
+              ]]></expressionString>
+        </ns2:exp>
+     </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="idUI">
+        <ns2:secure>
+          <ns2:value>true</ns2:value>
+        </ns2:secure>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="parentIdUI">
+        <ns2:secure>
+          <ns2:value>true</ns2:value>
+        </ns2:secure>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="mobileUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>公司坐机</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="mobileUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="countryUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.commonmodel.be.AddressInfo.country</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="countryUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="provinceUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.commonmodel.be.AddressInfo.province</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="provinceUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
+        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
+          <ns2:handler functionName="selectProvince"></ns2:handler>
+        </ns2:EventListener>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="cityUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.commonmodel.be.AddressInfo.city</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="cityUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
+        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
+          <ns2:handler functionName="selectCity"></ns2:handler>
+        </ns2:EventListener>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="districtUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>区/县</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="districtUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="streetUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.commonmodel.be.AddressInfo.street</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="streetUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>mobileUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>mobileUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>provinceUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>provinceUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cityUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cityUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>districtUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>districtUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>streetUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>streetUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.commonmodel.be.AddressInfo"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="Internal" name="cityValues" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="Internal" name="cityDisplayItems" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="Internal" name="districtValues" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="Internal" name="districtDisplayItems" category="JavaClass">
+      <type entityName="java.util.ArrayList"></type>
+    </ns2:DataEntity>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping11">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="mobileUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.mobile" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="provinceUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEValue">
+         <ns2:expression>
+          <expressionString>$beObject.getProvince()!=null ? org.shaolin.bmdp.runtime.ce.CEUtil.toCEValue($beObject.getProvince()) : null</expressionString>
+         </ns2:expression>
+         <ns2:uiToDataExpression name="">
+           <ns2:expression>
+             <expressionString>{$beObject.setProvince(@CEValue.getEntityName() + "," + String.valueOf(@CEValue.getIntValue()));}</expressionString>
+           </ns2:expression>
+         </ns2:uiToDataExpression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
+        <ns2:expression>
+          <expressionString>"CityList"</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ContainsNotSpecified">
+        <ns2:expression>
+          <expressionString>false</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="cityUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.city" paramName="Value"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="cityValues" paramName="OptionValues"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="cityDisplayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="districtUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.district" paramName="Value"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="districtValues" paramName="OptionValues"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="districtDisplayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping6">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="streetUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.street" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:DataToUIMappingOperation>
+      <expressionString><![CDATA[
+      import java.util.ArrayList;
+      import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.bmdp.runtime.ce.CEUtil;
+      import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
+      import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+      import org.shaolin.bmdp.runtime.spi.IConstantService;
+      import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+      {
+          if ($beObject.getProvince() == null) {
+             $beObject.setProvince("CityList,110000");
+          }
+          $cityValues = new ArrayList();
+          $cityDisplayItems = new ArrayList();
+          IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
+          IConstantEntity item = cs.getChildren(CEUtil.toCEValue($beObject.getProvince()));
+          if (item != null) {
+             CEOperationUtil.getCEItems($cityValues, $cityDisplayItems, item);
+          }
+          
+          if ($beObject.getCity() == null || $beObject.getCity().length() == 0
+             || $beObject.getCity().equals("-1")) {
+             $beObject.setCity($cityValues.get(0).toString());
+          }
+          $districtValues = new ArrayList();
+          $districtDisplayItems = new ArrayList();
+          item = cs.getChildren(CEUtil.toCEValue($beObject.getCity()));
+          if (item != null) {
+             CEOperationUtil.getCEItems($districtValues, $districtDisplayItems, item);
+          }
+          
+		  @odContext.executeAllMappings();
+	  }
+	  ]]></expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>{
+    @odContext.executeAllMappings();
+    if ($beObject.getDistrict() == null || $beObject.getDistrict().length() == 0) {
+        $beObject.setDistrict("-1");
+    } 
+}</expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

@@ -4,7 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.bmdp.adminconsole.page.Registration</entityName>
 	<systemVersion>0</systemVersion>
-	<description>用户注册</description>
+	<description>加工达人用户注册</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 	    <ns2:eventHandler functionName="genVerifiCode">
             <ns2:ops xsi:type="ns2:OpCallAjaxType" name="genVerifiCode-20151227-1839">
@@ -24,11 +24,37 @@
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
+        <ns2:eventHandler functionName="switchRegisterUserPanel">
+            <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+		        <ns2:expressionString><![CDATA[
+		        {   
+		            if (this.selectModeUI.getValue() == "0") {
+		                $(this.registerInfo.Form).parent().css("display", "block");
+		                $(this.registerCompanyInfo.Form).parent().css("display", "none");
+		            } else {
+		                $(this.registerInfo.Form).parent().css("display", "none");
+		                $(this.registerCompanyInfo.Form).parent().css("display", "block");
+		            }
+		        }
+		        ]]></ns2:expressionString>
+		    </ns2:ops>
+		</ns2:eventHandler>
         <ns2:eventHandler functionName="verifiCode">
             <ns2:ops xsi:type="ns2:OpExecuteScriptType">
 		        <ns2:expressionString><![CDATA[
 		        {   
-		            var constraint_result = this.Form.validate();
+		            if (this.selectModeUI.getValue() == "0") {
+		                var constraint_result = this.registerInfo.Form.validate();
+			            if (constraint_result != true && constraint_result != null) {
+			                return false;
+			            }
+		            } else {
+		               var constraint_result = this.registerCompanyInfo.Form.validate();
+			            if (constraint_result != true && constraint_result != null) {
+			                return false;
+			            }
+		            }
+		            var constraint_result = this.veriCode.validate();
 		            if (constraint_result != true && constraint_result != null) {
 		                return false;
 		            }
@@ -112,11 +138,59 @@
 				    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 				</ns2:layout>
 				<ns2:component xsi:type="ns2:UILabelType" UIID="errorInfo" />
+				<ns2:component xsi:type="ns2:UIRadioButtonGroupType" UIID="selectModeUI">
+				    <ns2:Property name="horizontalLayout" >
+			         <ns2:value xsi:type="ns2:BooleanPropertyType">
+			            <value>true</value>
+			         </ns2:value>
+			        </ns2:Property>
+			        <ns2:Property name="value" >
+			         <ns2:value xsi:type="ns2:StringPropertyType">
+			            <value>0</value>
+			         </ns2:value>
+			        </ns2:Property>
+			        <ns2:Property name="optionValue">
+			            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+					         <ns2:expression>
+					           <expressionString><![CDATA[
+					           import java.util.ArrayList;
+					           { 
+					               ArrayList options = new ArrayList();
+					               options.add("0");
+					               options.add("1");
+					               return options; 
+					           }]]></expressionString>
+					         </ns2:expression>
+				        </ns2:value>
+		            </ns2:Property>
+		            <ns2:Property name="optionDisplayValue">
+			            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+					         <ns2:expression>
+					           <expressionString><![CDATA[
+					           import java.util.ArrayList;
+					           { 
+					               ArrayList options = new ArrayList();
+					               options.add("个人用户");
+					               options.add("工商企业用户");
+					               return options; 
+					           }]]></expressionString>
+					         </ns2:expression>
+				        </ns2:value>
+		            </ns2:Property>
+			        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
+			          <ns2:handler functionName="switchRegisterUserPanel"></ns2:handler>
+			        </ns2:EventListener>
+				</ns2:component>
 				<ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="registerInfo">
                     <ns2:referenceEntity entityName="org.shaolin.bmdp.adminconsole.form.RegisterInfo"></ns2:referenceEntity>
+                </ns2:component>
+                <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="registerCompanyInfo">
+                    <ns2:referenceEntity entityName="org.shaolin.bmdp.adminconsole.form.RegisterCompanyInfo"></ns2:referenceEntity>
                 </ns2:component>
                 <ns2:component xsi:type="ns2:UIPanelType" UIID="verifyCodePanel">
 	                <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -235,19 +309,29 @@
 	                </ns2:layoutConstraint>
 	            </ns2:component>
 	            <ns2:layoutConstraint>
-                    <ns2:componentId>errorInfo</ns2:componentId>
+                    <ns2:componentId>selectModeUI</ns2:componentId>
                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                         x="0" y="0" align="FULL"></ns2:constraint>
                 </ns2:layoutConstraint>
                 <ns2:layoutConstraint>
-                    <ns2:componentId>registerInfo</ns2:componentId>
+                    <ns2:componentId>errorInfo</ns2:componentId>
                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                         x="0" y="1" align="FULL"></ns2:constraint>
+                </ns2:layoutConstraint>
+                <ns2:layoutConstraint>
+                    <ns2:componentId>registerInfo</ns2:componentId>
+                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                        x="0" y="2" align="FULL"></ns2:constraint>
+                </ns2:layoutConstraint>
+                <ns2:layoutConstraint>
+                    <ns2:componentId>registerCompanyInfo</ns2:componentId>
+                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                        x="0" y="3" align="FULL"></ns2:constraint>
                 </ns2:layoutConstraint>
 				<ns2:layoutConstraint>
                     <ns2:componentId>verifyCodePanel</ns2:componentId>
                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                        x="0" y="2" align="FULL"></ns2:constraint>
+                        x="0" y="4" align="FULL"></ns2:constraint>
                 </ns2:layoutConstraint>
 			</ns2:component>
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="bottomPanel">
@@ -281,6 +365,11 @@
 				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 					x="0" y="2" align="FULL"></ns2:constraint>
 			</ns2:layoutConstraint>
+			<ns2:constructorCode><![CDATA[
+		        { 
+		        $(this.registerCompanyInfo.Form).parent().css("display", "none");
+		        }]]>
+		    </ns2:constructorCode>
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>
@@ -295,9 +384,14 @@
 			<ns2:UIComponent componentPath="errorInfo" paramName="UIWidgetType"></ns2:UIComponent>
 			<ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="errorCode" paramName="StringData"></ns2:DataComponent>
 		</ns2:ComponentMapping>
-        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
+        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
             <ns2:mappingRule entityName="org.shaolin.bmdp.adminconsole.form.RegisterInfo"></ns2:mappingRule>
             <ns2:UIComponent componentPath="registerInfo" paramName="UIWidgetType"></ns2:UIComponent>
+            <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="registerInfo" paramName="beObject"></ns2:DataComponent>
+        </ns2:ComponentMapping>
+        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
+            <ns2:mappingRule entityName="org.shaolin.bmdp.adminconsole.form.RegisterCompanyInfo"></ns2:mappingRule>
+            <ns2:UIComponent componentPath="registerCompanyInfo" paramName="UIWidgetType"></ns2:UIComponent>
             <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="registerInfo" paramName="beObject"></ns2:DataComponent>
         </ns2:ComponentMapping>
 	</ns2:ODMapping>
@@ -324,14 +418,44 @@
 	<ns2:out name="Register" functionName="Register" validate="true">
 		<ns2:clientAction xsi:type="ns2:ExpressionType">
 			<ns2:expressionString><![CDATA[{
-			// hello, my first js.
+			constraint_result = true;
+			if (this.selectModeUI.getValue() == "0") {
+                var constraint_result = this.registerInfo.Form.validate();
+	            if (constraint_result != true && constraint_result != null) {
+	                return false;
+	            }
+            } else {
+               var constraint_result = this.registerCompanyInfo.Form.validate();
+	            if (constraint_result != true && constraint_result != null) {
+	                return false;
+	            }
+            }
+            var constraint_result = this.veriCode.validate();
+            if (constraint_result != true && constraint_result != null) {
+                return false;
+            }
 			}]]></ns2:expressionString>
 		</ns2:clientAction>
-		<ns2:serverOperation xsi:type="ns2:ExpressionType" />
+		<ns2:serverOperation xsi:type="ns2:ExpressionType">
+		    <ns2:expressionString><![CDATA[
+			import org.shaolin.bmdp.runtime.AppContext;
+			import org.shaolin.bmdp.page.ajax.*;
+			import org.shaolin.vogerp.commonmodel.ce.OrgType;
+			{
+			  if ("0".equals(@page.getRadioBtnGroup("selectModeUI").getValue())) {
+			     @odContext.executeMapping("simpleMapping3");
+			     $registerInfo.setUserType(OrgType.INDIVIDUAL);
+			  } else {
+			     @odContext.executeMapping("simpleMapping4");
+			     $registerInfo.setUserType(OrgType.COMPANY);
+			  }
+			}]]></ns2:expressionString>
+		</ns2:serverOperation>
 	</ns2:out>
 	<ns2:out name="Login" functionName="Login" validate="false">
         <ns2:clientAction xsi:type="ns2:ExpressionType">
             <ns2:expressionString><![CDATA[{
+            constraint_result = true;
             // hello, my first js.
             }]]></ns2:expressionString>
         </ns2:clientAction>
