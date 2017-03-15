@@ -49,6 +49,7 @@
             
             form.closeIfinWindows();
             @page.removeForm(@page.getEntityUiid()); 
+            Dialog.showMessageDialog("更新成功！", "", Dialog.INFORMATION_MESSAGE, null);
         }
         ]]></expressionString>
       </ns2:exp>
