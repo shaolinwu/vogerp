@@ -171,6 +171,10 @@
                   import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
                   {
                       IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+                      if (!service.isEnterpriseUser(UserContext.getUserContext().getUserId())) {
+                          Dialog.showMessageDialog("只有企业用户才能发租赁订单!", "", Dialog.WARNING_MESSAGE, null);
+                          return;
+                      }
                       if (!service.hasAddressConfigured(UserContext.getUserContext().getUserId())) {
                           Dialog.showMessageDialog("您没有配置默认地址！请到基本信息模块中添加您的地址信息。", "", Dialog.WARNING_MESSAGE, null);
                           return;
@@ -229,6 +233,10 @@
                   import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
                   {
                       IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+                      if (!service.isEnterpriseUser(UserContext.getUserContext().getUserId())) {
+                          Dialog.showMessageDialog("只有企业用户才能发租赁订单!", "", Dialog.WARNING_MESSAGE, null);
+                          return;
+                      }
                       if (!service.hasAddressConfigured(UserContext.getUserContext().getUserId())) {
                           Dialog.showMessageDialog("您没有配置默认地址！请到基本信息模块中添加您的地址信息。", "", Dialog.WARNING_MESSAGE, null);
                           return;

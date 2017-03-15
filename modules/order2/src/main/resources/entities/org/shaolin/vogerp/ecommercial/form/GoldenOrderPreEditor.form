@@ -122,6 +122,12 @@
         import org.shaolin.vogerp.productmodel.util.ProductUtil;
         import org.shaolin.vogerp.productmodel.be.ProductPriceImpl;
         { 
+            IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+            if (!service.isEnterpriseUser(UserContext.getUserContext().getUserId())) {
+                Dialog.showMessageDialog("只有企业用户才能发销售订单!", "", Dialog.WARNING_MESSAGE, null);
+                return;
+            }
+            
             Tree tree = @page.getTree("priceSelector.productTree");
             ProductPriceImpl price = (ProductPriceImpl)tree.getSelectedObject();
             if (price == null) {
@@ -131,7 +137,6 @@
             
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
 
-            IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
             GoldenOrderImpl order = new GoldenOrderImpl();
             order.setOrgId(UserContext.getUserContext().getOrgId());
             order.setSerialNumber(OrderUtil.genSerialNumber());

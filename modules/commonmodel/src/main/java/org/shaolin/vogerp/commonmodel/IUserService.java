@@ -66,6 +66,10 @@ public interface IUserService {
 	
 	public void addAddressInfo(String json) throws JSONException;
 	
+	public boolean isEnterpriseUser(long userId);
+	
+	public boolean isIndividualUser(long userId);
+	
 	/**
 	 * Get logined user organization type.
 	 * 

@@ -403,6 +403,22 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 	}
 	
+	public boolean isEnterpriseUser(long userId) {
+		IPersonalInfo personInfo = getPersonalInfo(userId);
+		if (personInfo != null && personInfo.getOrganization() != null) {
+			return personInfo.getOrganization().getOrgType() == OrgType.COMPANY;
+		}
+		return false;
+	}
+	
+	public boolean isIndividualUser(long userId) {
+		IPersonalInfo personInfo = getPersonalInfo(userId);
+		if (personInfo != null && personInfo.getOrganization() != null) {
+			return personInfo.getOrganization().getOrgType() == OrgType.INDIVIDUAL;
+		}
+		return true; //by default
+	}
+	
 	@Override
 	public boolean isOnline(long userId) {
 		return onlineUserIds.contains(userId);
