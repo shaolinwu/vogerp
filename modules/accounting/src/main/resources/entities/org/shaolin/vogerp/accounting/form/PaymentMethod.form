@@ -10,6 +10,7 @@
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.bmdp.runtime.security.UserContext;
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
         import org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl;
         import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
@@ -23,7 +24,13 @@
             IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
             try {
                String htmlform = payService.prepay(payOrder);
-               //TODO: forward to this url.
+               if (UserContext.isAppClient()) {
+                   @page.executeJavaScript("UIMaster.appPay('"+htmlform+"', 'alipay')");
+               } else {
+	               @page.getRequest().getSession().setAttribute("__htmlform", htmlform);
+	               @page.executeJavaScript("window.open('/uimaster/jsp/alipaywindow.jsp')");
+	               Dialog.showMessageDialog("如您支付完成，请点击“刷新”按钮查看支付是否成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
+               }
             } catch (Exception e) {
                Dialog.showMessageDialog("支付异常！", "", Dialog.WARNING_MESSAGE, null);
             }
@@ -39,6 +46,7 @@
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.bmdp.runtime.security.UserContext;
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
         import org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl;
         import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
@@ -52,8 +60,12 @@
             IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
             try {
 	            String url = payService.prepay(payOrder);
-	            // generate url as 2d code picture to client side.
-	            @page.executeJavaScript("defaultname." + @page.getEntityUiid() + ".genWepayQRCode('"+url+"');");
+	            if (UserContext.isAppClient()) {
+	                @page.executeJavaScript("UIMaster.appPay('"+url+"', 'wepay')");
+	            } else {
+		            // generate url as 2d code picture to client side.
+		            @page.executeJavaScript("defaultname." + @page.getEntityUiid() + ".genWepayQRCode('"+url+"');");
+	            }
             } catch (Exception e) {
                Dialog.showMessageDialog("支付异常！", "", Dialog.WARNING_MESSAGE, null);
             }
