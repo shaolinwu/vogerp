@@ -69,14 +69,21 @@ public class CustCommonModel extends BEEntityDaoObject {
     	IPersonalInfo customer = userService.getPersonalInfo(customerId);
 		List<IAddressInfo> existing = customer.getAddresses();
 		if (item.getId() == 0) {
+			if (item.getDistrict() != null && ("-1".equals(item.getDistrict()) || !"null".equals(item.getDistrict()))) {
+				item.setDistrict(null);
+			}
 			customer.getAddresses().add(item);
+			CommonModel.INSTANCE.update(customer);
 		} else {
 			for (IAddressInfo b: existing) {
 				if (b.getId() == item.getId()) {
 					b.setCountry(item.getCountry());
 					b.setProvince(item.getProvince());
 					b.setCity(item.getCity());
-					b.setDistrict(item.getDistrict());
+					if (item.getDistrict() != null && item.getDistrict().trim().length() >= 0
+			    			&& !"-1".equals(item.getDistrict()) && !"null".equals(item.getDistrict())) {
+						b.setDistrict(item.getDistrict());
+					}
 					b.setXian(item.getXian());
 					b.setStreet(item.getStreet());
 					b.setBlock(item.getBlock());
@@ -87,11 +94,11 @@ public class CustCommonModel extends BEEntityDaoObject {
 					b.setMobile(item.getMobile());
 					b.setTelephone(item.getTelephone());
 					b.setEmail(item.getEmail());
+					CommonModel.INSTANCE.update(b);
 					break;
 				}
 			}
 		}
-		CommonModel.INSTANCE.update(customer);
     }
     
     public void updateAddresses(long customerId, List<IAddressInfo> list) {

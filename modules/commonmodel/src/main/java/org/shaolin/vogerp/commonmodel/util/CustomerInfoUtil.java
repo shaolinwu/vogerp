@@ -100,14 +100,15 @@ public class CustomerInfoUtil {
     	sb.append(address.getName()).append("--");
     	sb.append(CEUtil.toCEValue(address.getProvince()).getValue()).append(" ");
     	sb.append(CEUtil.toCEValue(address.getCity()).getValue()).append(" ");
-    	if (address.getDistrict() != null && !"-1".equals(address.getDistrict())) {
+    	if (address.getDistrict() != null && address.getDistrict().trim().length() > 0
+    			&& !"-1".equals(address.getDistrict()) && !"null".equals(address.getDistrict())) {
     		sb.append(CEUtil.toCEValue(address.getDistrict()).getValue()).append(" ");
     	}
     	sb.append(address.getStreet()).append(" ");
-    	if (address.getBlock() != null) {
+    	if (address.getBlock() != null && address.getBlock().trim().length() > 0) {
     		sb.append(address.getBlock()).append(" ");
     	}
-    	if (address.getDescription() != null && address.getDescription().length() > 0) {
+    	if (address.getDescription() != null && address.getDescription().trim().length() > 0) {
     		sb.append("(").append(address.getDescription()).append(")");
     	}
     	return sb.toString();

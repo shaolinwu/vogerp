@@ -24,7 +24,7 @@
                         RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.MemberServiceRule", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("建立会员服务", new TableCallBack("mserviceInfoTable"));
+                        form.openInWindows("建立会员服务", new TableCallBack("mserviceInfoTable"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -51,7 +51,7 @@
                         RefForm form = new RefForm("userForm", "org.shaolin.vogerp.commonmodel.form.MemberServiceRule", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("编辑会员服务", new TableCallBack("mserviceInfoTable"));
+                        form.openInWindows("编辑会员服务", new TableCallBack("mserviceInfoTable"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>

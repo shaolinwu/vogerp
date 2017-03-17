@@ -160,7 +160,9 @@
           <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.AddressInfoTable"></ns2:mappingRule>
           <ns2:UIComponent componentPath="addressForm" paramName="UIWidgetType"></ns2:UIComponent>
           <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalInfo.id" paramName="parentId"></ns2:DataComponent>
+          <!-- 
           <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalInfo.addresses" paramName="list"></ns2:DataComponent>
+           -->
           <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
 	        <ns2:expression>
 	          <expressionString>Boolean.TRUE</expressionString>
