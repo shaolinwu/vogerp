@@ -13,8 +13,11 @@ import org.shaolin.uimaster.page.od.formats.FormatUtil;
 import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
 import org.shaolin.vogerp.ecommercial.be.IEOrder;
 import org.shaolin.vogerp.ecommercial.be.IGoldenOrder;
+import org.shaolin.vogerp.ecommercial.be.IMachOrderComponent;
+import org.shaolin.vogerp.ecommercial.be.IMachiningOrder;
 import org.shaolin.vogerp.ecommercial.be.IOfferPrice;
 import org.shaolin.vogerp.ecommercial.be.IRentOrLoanOrder;
+import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
 import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
 import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
 import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
@@ -91,6 +94,23 @@ public class OrderUtil {
 	            }
 				rorder.getOfferPrices().add(newPrice);
 				OrderModel.INSTANCE.update(rorder, true);
+			} else if  (eorder instanceof MachiningOrderImpl) {
+				MachiningOrderImpl rorder = OrderModel.INSTANCE.get(eorder.getId(), MachiningOrderImpl.class);
+				if (rorder == null || rorder.getStatus() != OrderStatusType.PUBLISHED) {
+					return -1;
+				}
+				if (rorder.getOfferPrices() == null) {
+					rorder.setOfferPrices(new ArrayList());
+				}
+				// check whether has offered price already.
+				List<IOfferPrice> priceList = rorder.getOfferPrices();
+	            for (IOfferPrice price : priceList) {
+	            	if (price.getTakenCustomerId() == newPrice.getTakenCustomerId()) {
+	            		return -2;
+	            	}
+	            }
+				rorder.getOfferPrices().add(newPrice);
+				OrderModel.INSTANCE.update(rorder, true);
 			} 
 			// commit the update.
 			return 1;
@@ -152,6 +172,8 @@ public class OrderUtil {
 			} else {
 				sb.append("\u7684\u51FA\u79DF\u8BA2\u5355");
 			}
+		} else if (order instanceof IMachiningOrder) {
+			sb.append("\u7684\u52A0\u5DE5\u8BA2\u5355");
 		} 
 		sb.append("</span>");
 		sb.append("<span class='vogerp_desc'>").append(order.getDescription()).append("</span>");
@@ -183,4 +205,15 @@ public class OrderUtil {
 		return sb.toString();
 	}
 	
+	public static double getMachiningOrderEstimatedPrice(final IMachiningOrder morder) {
+		double totalPrice = 0;
+		List<IMachOrderComponent> components = morder.getComponents();
+		if (components != null && components.size() > 0) {
+			for (IMachOrderComponent comp : components) {
+				totalPrice += (comp.getPrice() * comp.getEstiWeight());
+			}
+		}
+		totalPrice += morder.getTaxRate() * totalPrice;
+		return totalPrice;
+	}
 }

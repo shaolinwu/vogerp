@@ -189,7 +189,7 @@ function org_shaolin_vogerp_coupon_form_CouponSettingForm(json)
 						var selectedDiscountProductId = $(productHidden[0]).val();
 						$("input[name='selectedDiscountProductId']").val(selectedDiscountProductId);
 					} else {
-						alert("请选中一个奖项");
+						alert("???????");
 						return ;
 					}
 				}
@@ -212,7 +212,7 @@ function org_shaolin_vogerp_coupon_form_CouponSettingForm(json)
 						var selectedDiscountProductId = $(productHidden[0]).val();
 						$("input[name='selectedDiscountProductId']").val(selectedDiscountProductId);
 					} else {
-						alert("请选中一个奖项");
+						alert("???????");
 						return ;
 					}
 				}
@@ -227,7 +227,12 @@ function org_shaolin_vogerp_coupon_form_CouponSettingForm(json)
         var o = this;
         var UIEntity = this;
 
-        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing? ^_^',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+        var constraint_result = this.Form.validate();
+        if (constraint_result != true && constraint_result != null) {
+            return false;
+        }
+
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:WORKFLOW_COMFORMATION_MSG,messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 

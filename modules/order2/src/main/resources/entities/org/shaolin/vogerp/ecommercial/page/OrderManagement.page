@@ -128,12 +128,41 @@
                         RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.ROOfferPriceTable", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("租赁订单出价历史", new TableCallBack("goldenOrderTable"), true);
+                        form.openInWindows("租赁订单出价历史", new TableCallBack("rentOrderTable"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
+        <ns2:eventHandler functionName="acceptMachiningOrder">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="acceptMachiningOrder-2017-0124-1351">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
+                    {
+                        Table orderInfoTable = (Table)@page.getElement("machiningTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        MachiningOrderImpl defaultUser = (MachiningOrderImpl)orderInfoTable.getSelectedRow();
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("list", defaultUser.getOfferPrices());
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.MOOfferPriceTable", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("加工订单出价历史", new TableCallBack("machiningTable"), true);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        
       <ns2:eventHandler functionName="createRentOrder">
           <ns2:ops xsi:type="ns2:OpExecuteScriptType">
 	        <ns2:expressionString><![CDATA[
@@ -557,23 +586,15 @@
                                 <ns2:defaultNewAction>createMachiningOrder</ns2:defaultNewAction>
                                 <ns2:defaultOpenAction>openMachiningOrder</ns2:defaultOpenAction>
                             </ns2:defaultActions>
-                            <ns2:actionGroup>
+                             <ns2:actionGroup>
                                 <ns2:type>radio</ns2:type>
                                 <ns2:action>
-		                            <ns2:uiid>deliveryMOrder</ns2:uiid>
-		                            <ns2:title xsi:type="ns2:StringPropertyType">
-		                                <ns2:value>收货地址</ns2:value>
-		                            </ns2:title>
-		                            <ns2:icon>ui-icon-note</ns2:icon>
-		                            <ns2:function>deliveryMOrder</ns2:function>
-		                        </ns2:action>
-                                <ns2:action>
-                                    <ns2:uiid>openMOrderTracker</ns2:uiid>
+                                    <ns2:uiid>acceptMachiningOrder</ns2:uiid>
                                     <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>状态</ns2:value>
+                                        <ns2:value>竞价历史</ns2:value>
                                     </ns2:title>
                                     <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>openMOrderTracker</ns2:function>
+                                    <ns2:function>acceptMachiningOrder</ns2:function>
                                 </ns2:action>
                              </ns2:actionGroup>
                         </ns2:component>

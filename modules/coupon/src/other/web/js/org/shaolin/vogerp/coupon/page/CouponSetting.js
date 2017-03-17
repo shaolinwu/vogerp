@@ -143,11 +143,11 @@ function org_shaolin_vogerp_coupon_page_CouponSetting(json)
 					{
 			        	var couponTypeId = $("input[name='selectedCouponTypeId']");
 			        	if (typeof(conponTypeId) != undefined) {
-			        		if (!confirm("删除奖项会删除下面的优惠产品！！")) {
+			        		if (!confirm("????????????????")) {
 					        	return ;
 			        		}
 			        	} else {
-			        		alert("请选中一个奖项");
+			        		alert("???????");
 			        		return ;
 			        	}
 					}    }/* Gen_Last:org_shaolin_vogerp_coupon_page_CouponSetting_deleteCouponType */

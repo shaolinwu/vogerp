@@ -193,7 +193,7 @@
                        String description = $gOrder.getDescription();
                        NotificationImpl message = new NotificationImpl();
                        message.setPartyId($gOrder.getPublishedCustomerId());
-			           message.setSubject(subject + "发布新的租赁订单！");
+			           message.setSubject("您发布新的租赁订单！" +subject);
 		               message.setDescription(description);
 			           message.setCreateDate(new Date());
                        
@@ -314,7 +314,7 @@
                           
                           NotificationImpl message = new NotificationImpl();
                           message.setPartyId($goldenOrder.getPublishedCustomerId());
-                          message.setSubject($goldenOrder.getSerialNumber() + "有新的出价信息。");
+                          message.setSubject("您有新的出价信息. "+ $goldenOrder.getSerialNumber());
                           message.setDescription($goldenOrder.getDescription());
                           message.setCreateDate(new java.util.Date());
 	                      
@@ -769,7 +769,7 @@
                              if ($gorder.getTakenCustomerId() > 0) {
                                  NotificationImpl message = new NotificationImpl();
                                  message.setPartyId($gorder.getTakenCustomerId());
-                                 message.setSubject($gorder.getSerialNumber() + "租赁单取消");
+                                 message.setSubject("您的租赁单已取消！" + $gorder.getSerialNumber());
                                  message.setDescription($gorder.getDescription());
                                  message.setCreateDate(new Date());
                                  

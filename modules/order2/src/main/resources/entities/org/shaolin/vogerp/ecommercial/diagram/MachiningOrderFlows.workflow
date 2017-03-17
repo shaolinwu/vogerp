@@ -39,7 +39,7 @@
         <ns2:mission-node name="publishGorder" expiredDays="0" expiredHours="0" autoTrigger="true">
             <ns2:description>评估加工订单</ns2:description>
             <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.MachiningOrder"
-                actionName="publishGorder" actionText="评估订单">
+                actionName="publishGorder" actionText="下单">
                 <ns2:expression>
                     <expressionString><![CDATA[
                     import java.util.HashMap;
@@ -124,21 +124,21 @@
                          ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
                          service.addNotificationToAdmin(message, true);
                          
-                         Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
+                         Dialog.showMessageDialog("您的加工订单已发送给管理员做评估，我们将尽快给您回复！", "", Dialog.INFORMATION_MESSAGE, null);
                      }
                      ]]></expressionString>
                 </ns2:expression>
             </ns2:process>
             <ns2:eventDest>
-                <ns2:dest name="offerPrice"></ns2:dest>
+                <ns2:dest name="estimatePrice"></ns2:dest>
             	<ns2:dest name="cancelGOrder"></ns2:dest>
             </ns2:eventDest>
         </ns2:mission-node>
         
-        <ns2:mission-node name="offerPrice" expiredDays="0" expiredHours="0" autoTrigger="false" multipleInvoke="true">
-            <ns2:description>加工订单估价</ns2:description>
+        <ns2:mission-node name="estimatePrice" expiredDays="0" expiredHours="0" autoTrigger="false" multipleInvoke="true">
+            <ns2:description>加工订单管理员估价</ns2:description>
             <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.MachiningOrderByAdmin"
-                actionName="offerPrice" actionText="出价">
+                actionName="estimatePrice" actionText="完成估价">
                 <ns2:expression>
                     <expressionString><![CDATA[
 			        import java.util.HashMap;
@@ -157,11 +157,10 @@
 			            HashMap out = (HashMap)form.ui2Data();
 			
 			            MachiningOrderImpl order = (MachiningOrderImpl)out.get("beObject");
-			            if (order.getEndPrice() <= 0) {
+			            if (order.getEstimatedPrice() <= 0) {
 			            	Dialog.showMessageDialog("出价必需大于0", "", Dialog.WARNING_MESSAGE, null);
 			                return;
 			            }
-			            order.setEstimatedPrice(order.getEndPrice());
 			            
 			            form.closeIfinWindows();
 			            @page.removeForm(@page.getEntityUiid()); 
@@ -203,7 +202,7 @@
                           
                           NotificationImpl message = new NotificationImpl();
                           message.setPartyId($goldenOrder.getPublishedCustomerId());
-                          message.setSubject($goldenOrder.getSerialNumber() + "有新的加工订单报价信息。");
+                          message.setSubject("您有新的加工订单报价信息。" + $goldenOrder.getSerialNumber());
                           message.setDescription($goldenOrder.getDescription());
                           message.setCreateDate(new java.util.Date());
 	                      
@@ -216,7 +215,131 @@
                 </ns2:expression>
             </ns2:process>
             <ns2:eventDest>
-                <!-- multiple time for offering a price. -->
+                <ns2:dest name="offerPrice"></ns2:dest>
+            </ns2:eventDest>
+        </ns2:mission-node>
+        
+        <ns2:mission-node name="offerPrice" expiredDays="0" expiredHours="0" autoTrigger="false" multipleInvoke="true">
+            <ns2:description>抢购加工订单竟价</ns2:description>
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.MOOfferPrice"
+                actionName="offerPrice" actionText="竟价">
+                <ns2:expression>
+                    <expressionString><![CDATA[
+			        import java.util.HashMap;
+			        import java.util.Date;
+			        import java.util.ArrayList;
+			        import org.shaolin.uimaster.page.AjaxContext;
+			        import org.shaolin.uimaster.page.ajax.*;
+			        import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
+			        import org.shaolin.vogerp.ecommercial.be.MOOfferPriceImpl;
+			        import org.shaolin.vogerp.ecommercial.dao.*;
+			        import org.shaolin.bmdp.runtime.AppContext; 
+			        import org.shaolin.vogerp.commonmodel.IUserService; 
+			        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+			        { 
+			            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+			            HashMap out = (HashMap)form.ui2Data();
+			
+			            MachiningOrderImpl order = (MachiningOrderImpl)out.get("beObject");
+			            
+			            MOOfferPriceImpl offerPrice = new MOOfferPriceImpl();
+			            IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+			            offerPrice.setTakenCustomerId(service.getUserId());
+			            offerPrice.setPrice(Double.valueOf(@page.getTextField("priceUI").getValue()));
+			            offerPrice.setCreateDate(new Date());
+			            offerPrice.setSamplePhoto(@page.getHidden("samplePhotoUI.imagePathUI").getValue());
+			            offerPrice.setLeaveWords(@page.getTextArea("leaveWordUI").getValue());
+			            offerPrice.setSessionId(OrderUtil.genConversationId());
+			            
+			            int state = OrderUtil.addAPrice(order, offerPrice);
+			            if (state == -1) {
+			                form.closeIfinWindows();
+			                @page.removeForm(@page.getEntityUiid()); 
+			                Dialog.showMessageDialog("竞价失败，请刷新订单状态！", "提醒", Dialog.WARNING_MESSAGE, null);
+			                return;
+			            } else if (state == -2) {
+			                form.closeIfinWindows();
+			                @page.removeForm(@page.getEntityUiid()); 
+			                Dialog.showMessageDialog("您已出价一次，不可重复竞价！", "提醒", Dialog.WARNING_MESSAGE, null);
+			                return;
+			            } 
+			            
+			            form.closeIfinWindows();
+			            @page.removeForm(@page.getEntityUiid()); 
+			            //disable竞价按钮。Button offerPriceBtn = @page.getButton("offerPriceBtn");
+			            
+			            HashMap result = new HashMap();
+			            result.put("goldenOrder", order);
+			            result.put("offerPrice", offerPrice);
+			            return result;
+			        }
+                    ]]></expressionString>
+                </ns2:expression>
+                <ns2:filter>
+                  <expressionString><![CDATA[
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    {
+                       return UserContext.hasRole("GenericOrganizationType.Director,0") 
+                              && $beObject.getOrgId() != UserContext.getUserContext().getOrgId() 
+                              && $beObject.getStatus() == OrderStatusType.PUBLISHED;
+                    }
+                  ]]></expressionString>
+                </ns2:filter>
+            </ns2:uiAction>
+            <ns2:participant partyType="GenericOrganizationType.Director,0" onlyOwner="false"/>
+            <ns2:process>
+                <ns2:var name="goldenOrder" category="BusinessEntity" scope="InOut">
+                    <type entityName="org.shaolin.vogerp.ecommercial.be.GoldenOrder"></type>
+                </ns2:var>
+                <ns2:var name="offerPrice" category="BusinessEntity" scope="InOut">
+                    <type entityName="org.shaolin.vogerp.ecommercial.be.GOOfferPrice"></type>
+                </ns2:var>
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                     import java.util.List;
+                     import java.util.ArrayList;
+                     import org.shaolin.uimaster.page.ajax.*;
+                     import org.shaolin.bmdp.runtime.AppContext; 
+                     import org.shaolin.bmdp.runtime.security.UserContext;
+                     import org.shaolin.vogerp.ecommercial.ce.EOrderType;
+                     import org.shaolin.vogerp.ecommercial.be.InterestEOrderImpl;
+                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
+                     import org.shaolin.bmdp.workflow.ws.ChatService;
+                     {
+                          InterestEOrderImpl condition = new InterestEOrderImpl();
+                          condition.setOrgId(UserContext.getUserContext().getOrgId());
+                          condition.setOrderId($goldenOrder.getId());
+                          condition.setType(EOrderType.MACHININGORDER);
+                          long result = OrderModel.INSTANCE.searchInterestEOrderCount(condition);
+                          if (result == 0) {
+                             OrderModel.INSTANCE.create(condition);
+                          }
+			              
+                          String message0 = $offerPrice.getLeaveWords();
+                          long from = $offerPrice.getTakenCustomerId();
+                          long to = $goldenOrder.getPublishedCustomerId();
+                          String sessionId = $offerPrice.getSessionId();
+                          org.shaolin.bmdp.workflow.ws.ChatService.sendOffLine(message0, from, to, sessionId);
+                          
+                          NotificationImpl message = new NotificationImpl();
+                          message.setPartyId($goldenOrder.getPublishedCustomerId());
+                          message.setSubject("您的加工单有新的竞价信息! " +$goldenOrder.getSerialNumber());
+                          message.setDescription($goldenOrder.getDescription());
+                          message.setCreateDate(new java.util.Date());
+	                      
+	                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+	                      service.addNotification(message, true);
+	                      
+	                      Dialog.showMessageDialog("出价成功！", "", Dialog.INFORMATION_MESSAGE, null);
+                     }
+                     ]]></expressionString>
+                </ns2:expression>
+            </ns2:process>
+            <ns2:eventDest>
+            	<!-- multiple time for offering a price. -->
                 <ns2:dest name="offerPrice"></ns2:dest>
             	<ns2:dest name="acceptPrice"></ns2:dest>
 	            <ns2:dest name="cancelGOrder"></ns2:dest>

@@ -63,7 +63,6 @@ function org_shaolin_bmdp_adminconsole_form_AddressInfo(json)
     var districtUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "districtUI"]
-      ,allowBlank:false
     });
 
     var streetUILabel = new UIMaster.ui.label

@@ -627,9 +627,12 @@
       import java.util.ArrayList;
       import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
       import org.shaolin.vogerp.ecommercial.be.MachOrderComponentImpl;
+      import org.shaolin.vogerp.ecommercial.util.OrderUtil;
       {
          $beObject.setComponents(new ArrayList());
          @odContext.executeAllMappings();
+         
+         $beObject.setEstimatedPrice(OrderUtil.getMachiningOrderEstimatedPrice($beObject));
       }]]></expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>

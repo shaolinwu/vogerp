@@ -127,13 +127,13 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
 				};
 				
 				this.loadLotteryBox = function(imageUrls) {
-					//假设ajax请求返回该字符串，需要修改
+					//??ajax?????????????
 					
 					var imageUrlArr = imageUrls.split(",");
 					var rowNum = 3;
 					for (var m = 0; m < rowNum; m++) {
 						for (var n = 0; n < 3; n++) {
-							//随机取一张图片
+							//???????
 							var index = Math.floor(Math.random() * imageUrlArr.length);
 							var imageUrl = imageUrlArr[index];
 							$couponPan.append("<div id=\"lotteryForm_" + n + "-" + m + "\" class=\"lotteryForm_couponImage\"><img data-src=\"" + imageUrl + "\" /></div>");
@@ -294,7 +294,12 @@ function org_shaolin_vogerp_coupon_form_LotteryForm(json)
         var o = this;
         var UIEntity = this;
 
-        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing? ^_^',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+        var constraint_result = this.Form.validate();
+        if (constraint_result != true && constraint_result != null) {
+            return false;
+        }
+
+        new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:WORKFLOW_COMFORMATION_MSG,messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 
         // cal ajax function. 
 

@@ -192,7 +192,7 @@
                        String description = $gOrder.getDescription();
                        NotificationImpl message = new NotificationImpl();
                        message.setPartyId($gOrder.getPublishedCustomerId());
-			           message.setSubject(subject + "发布新的抢购订单！");
+			           message.setSubject("您发布了新的抢购订单！" + subject);
 		               message.setDescription(description);
 			           message.setCreateDate(new Date());
                        
@@ -212,7 +212,7 @@
         </ns2:mission-node>
         
         <ns2:mission-node name="offerPrice" expiredDays="0" expiredHours="0" autoTrigger="false" multipleInvoke="true">
-            <ns2:description>抢购订单竟价</ns2:description>
+            <ns2:description>抢购采购或销售订单竟价</ns2:description>
             <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.GOOfferPrice"
                 actionName="offerPrice" actionText="竟价">
                 <ns2:expression>
@@ -318,7 +318,7 @@
                           
                           NotificationImpl message = new NotificationImpl();
                           message.setPartyId($goldenOrder.getPublishedCustomerId());
-                          message.setSubject($goldenOrder.getSerialNumber() + "有新的竞价信息。");
+                          message.setSubject("您的抢购订单有新的竞价信息! " +$goldenOrder.getSerialNumber());
                           message.setDescription($goldenOrder.getDescription());
                           message.setCreateDate(new java.util.Date());
 	                      
@@ -793,7 +793,7 @@
 	                         if ($gorder.getTakenCustomerId() > 0) {
 		                         NotificationImpl message = new NotificationImpl();
 		                         message.setPartyId($gorder.getTakenCustomerId());
-		                         message.setSubject($gorder.getSerialNumber() + "抢购单取消");
+		                         message.setSubject("抢购单取消。" + $gorder.getSerialNumber());
 		                         message.setDescription($gorder.getDescription());
 		                         message.setCreateDate(new Date());
 		                         
@@ -905,7 +905,7 @@
 	                         if ($gorder.getPublishedCustomerId() > 0) {
 		                         NotificationImpl message = new NotificationImpl();
 		                         message.setPartyId($gorder.getPublishedCustomerId());
-		                         message.setSubject($gorder.getSerialNumber() + "抢购单由于不适合抢单规定，已被管理员禁用此单！");
+		                         message.setSubject("抢购单("+$gorder.getSerialNumber()+")由于不适合抢单规定，已被管理员禁用此单！");
 		                         message.setDescription($gorder.getDescription());
 		                         message.setCreateDate(new Date());
 		                         

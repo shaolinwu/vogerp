@@ -635,11 +635,11 @@ function org_shaolin_vogerp_coupon_page_CouponInfo(json)
 					    	"menuItem:share:email", "menuItem:openWithSafari", "menuItem:openWithQQBrowser", "menuItem:readMode", "menuItem:copyUrl"]
 					});
 					wx.onMenuShareTimeline({
-						title: '测试测试-我的分享小功能-朋友圈',
+						title: '????-???????-???',
 						link: 'http://www.vogerp.com/uimaster/jsp/main.html',
 						imgUrl: 'http://www.mr-prize.com/uimaster/images/coupon/front/couponIcon/50off.png',
 						success: function () { 
-							//设置优惠券状态为已生效
+							//???????????
 							othis = this;
 							var eventsource = $("#couponPanel");
 							UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"effectCoupon-20160112-232035",UIMaster.getValue(eventsource),othis.__entityName);

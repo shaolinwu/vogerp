@@ -55,7 +55,7 @@
       import org.shaolin.uimaster.page.ajax.json.JSONObject;
       {
        IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
-       userService.logout(@request.getSession());
+       service.logout(@request.getSession());
       }
      ]]></expressionString>
 		</ns2:exp>

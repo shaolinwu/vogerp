@@ -39,6 +39,21 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
         ui: elementList[prefix + "materialTypeUILabel"]
     });
 
+    var createModelUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "createModelUILabel"]
+    });
+
+    var needCreateModelUI = new UIMaster.ui.checkbox
+    ({
+        ui: elementList[prefix + "needCreateModelUI"]
+    });
+
+    var notifybtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "notifybtn"]
+    });
+
     var cancelbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "cancelbtn"]
@@ -52,14 +67,14 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "cancelbtn"]
+        ,subComponents: [prefix + "notifybtn",prefix + "cancelbtn"]
     });
 
     var attributePanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI",prefix + "createModelUILabel",prefix + "needCreateModelUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -72,7 +87,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,countUILabel,countUI,materialTypeUILabel,cancelbtn,photoUI,materialTypeUI,fieldPanel,attributePanel,actionPanel]
+        ,items: [serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,countUILabel,countUI,materialTypeUILabel,createModelUILabel,needCreateModelUI,notifybtn,cancelbtn,photoUI,materialTypeUI,fieldPanel,attributePanel,actionPanel]
     });
 
     Form.serialNumberUILabel=serialNumberUILabel;
@@ -88,6 +103,12 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     Form.countUI=countUI;
 
     Form.materialTypeUILabel=materialTypeUILabel;
+
+    Form.createModelUILabel=createModelUILabel;
+
+    Form.needCreateModelUI=needCreateModelUI;
+
+    Form.notifybtn=notifybtn;
 
     Form.cancelbtn=cancelbtn;
 
@@ -117,6 +138,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.materialTypeUI=materialTypeUI;
 
+    Form.createModelUILabel=createModelUILabel;
+
+    Form.needCreateModelUI=needCreateModelUI;
+
     Form.attributePanel=attributePanel;
 
     Form.serialNumberUILabel=serialNumberUILabel;
@@ -135,7 +160,13 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.materialTypeUI=materialTypeUI;
 
+    Form.createModelUILabel=createModelUILabel;
+
+    Form.needCreateModelUI=needCreateModelUI;
+
     Form.actionPanel=actionPanel;
+
+    Form.notifybtn=notifybtn;
 
     Form.cancelbtn=cancelbtn;
 
@@ -146,6 +177,8 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     };
 
     Form.Save = org_shaolin_vogerp_ecommercial_form_MachiningOrder_Save;
+
+    Form.NotifyHurly = org_shaolin_vogerp_ecommercial_form_MachiningOrder_NotifyHurly;
 
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_MachiningOrder_Cancel;
 
@@ -170,6 +203,17 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20170125-215225",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachiningOrder_Save */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_MachiningOrder_NotifyHurly(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachiningOrder_NotifyHurly */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"NotifyHurly-20170125-215225",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachiningOrder_NotifyHurly */
 
 
     /* auto generated eventlistener function declaration */

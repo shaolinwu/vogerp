@@ -53,6 +53,10 @@
             <bediagram:type xsi:type="bediagram:DoubleType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>needInvoice</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BooleanType" />
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>productId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
@@ -336,6 +340,10 @@
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>needCreateModel</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BooleanType" />
+        </bediagram:member>
+        <bediagram:member>
             <!-- 制造材料 MachiningMaterialType ce-->
             <bediagram:name>materialType</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
@@ -415,6 +423,13 @@
 	
 	<bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
         <common:entityName>ROOfferPrice</common:entityName>
+        <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
+            <bediagram:targetEntity entityName="OfferPrice" />
+        </bediagram:parentObject>
+    </bediagram:beEntity>
+    
+    <bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
+        <common:entityName>MOOfferPrice</common:entityName>
         <bediagram:parentObject xsi:type="bediagram:BEObjRefType">
             <bediagram:targetEntity entityName="OfferPrice" />
         </bediagram:parentObject>
@@ -500,6 +515,11 @@
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>RentOrLoanOrder</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>租赁订单</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>MachiningOrder</bediagram:value>
             <bediagram:intValue>1</bediagram:intValue>
             <bediagram:description>租赁订单</bediagram:description>
         </bediagram:constantValue>

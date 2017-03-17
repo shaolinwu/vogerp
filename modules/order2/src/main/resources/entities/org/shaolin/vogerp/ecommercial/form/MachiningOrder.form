@@ -28,6 +28,19 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
+  <ns2:eventHandler functionName="NotifyHurly">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="NotifyHurly-20170125-215225">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+           //TODO:
+           Dialog.showMessageDialog("通知已发管理员，我们将尽快给您回复！", "", Dialog.INFORMATION_MESSAGE, null);
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
   <ns2:eventHandler functionName="Cancel">
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20170125-215225">
       <ns2:exp>
@@ -59,6 +72,7 @@
         </ns2:component>
         <ns2:component xsi:type="ns2:UIPanelType" UIID="attributePanel">
           <ns2:layout xsi:type="ns2:TableLayoutType">
+            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -110,6 +124,15 @@
 	      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="materialTypeUI">
 	         <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox" />
 	      </ns2:component>
+	      <ns2:component xsi:type="ns2:UILabelType" UIID="createModelUILabel">
+	        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+	        <ns2:text xsi:type="ns2:StringPropertyType">
+	          <ns2:value>是否设计建模图</ns2:value>
+	        </ns2:text>
+	      </ns2:component>
+	      <ns2:component xsi:type="ns2:UICheckBoxType" UIID="needCreateModelUI">
+	        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+	      </ns2:component>
           <ns2:layoutConstraint>
             <ns2:componentId>serialNumberUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
@@ -142,6 +165,14 @@
             <ns2:componentId>materialTypeUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
+          <ns2:layoutConstraint>
+            <ns2:componentId>createModelUILabel</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
+          </ns2:layoutConstraint>
+          <ns2:layoutConstraint>
+            <ns2:componentId>needCreateModelUI</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass=""></ns2:constraint>
+          </ns2:layoutConstraint>
        </ns2:component>
        <ns2:layoutConstraint>
         <ns2:componentId>photoUI</ns2:componentId>
@@ -156,7 +187,21 @@
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="notifybtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="NotifyHunly"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>太慢了，催一催</ns2:value>
+        </ns2:text>
+        <ns2:editable xsi:type="ns2:ExpressionPropertyType">
+          <ns2:expression>
+            <expressionString>{return $editable;}</expressionString>
+          </ns2:expression>
+        </ns2:editable>
+      </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="Cancel"></ns2:handler>
@@ -167,8 +212,12 @@
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:componentId>notifybtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
@@ -247,6 +296,11 @@
           <expressionString>{return Boolean.FALSE;}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISelect"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="needCreateModelUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.needCreateModel" paramName="Value"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>{

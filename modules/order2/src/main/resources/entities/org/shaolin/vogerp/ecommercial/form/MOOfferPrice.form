@@ -1,0 +1,362 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.ecommercial.form.MOOfferPrice</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="offerPrice" needAlert="true">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {
+            var constraint_result = this.Form.validate();
+            if (constraint_result != true && constraint_result != null) {
+                return false;
+            }
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="offerPrice-20160124-17574">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import java.util.Date;
+        import java.util.ArrayList;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.ecommercial.be.MachiningOrderImp;
+        import org.shaolin.vogerp.ecommercial.be.MOOfferPriceImpl;
+        import org.shaolin.vogerp.ecommercial.dao.*;
+        import org.shaolin.bmdp.runtime.AppContext; 
+        import org.shaolin.vogerp.commonmodel.IUserService; 
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            form.closeIfinWindows();
+            @page.removeForm(@page.getEntityUiid()); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="refreshPrice">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="refreshPrice-20160211-201444">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.List;
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.ecommercial.be.IMachiningOrder;
+        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+        {
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            HashMap out = (HashMap)form.ui2Data();
+            IMachiningOrder gorder = (IMachiningOrder)out.get("beObject");
+            Label priceUI = @page.getLabel("currPriceUI");
+            priceUI.setValue(String.valueOf(OrderUtil.getLowestOfferPrice(gorder, true)));
+            
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="Cancel">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20160124-175742">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            @page.getImage("samplePhotoUI.photoUI").clearAll(); 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            form.closeIfinWindows(true);
+            @page.removeForm(@page.getEntityUiid()); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="currPriceUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.ecommercial.be.GOOfferPrice.currPriceUI</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="currPriceUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler></ns2:handler>
+        </ns2:EventListener>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="priceUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>出价（必须小于当前价格！）</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="priceUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
+        <ns2:maxLength xsi:type="ns2:NumericPropertyType">
+            <type>int</type>
+            <value>10</value>
+        </ns2:maxLength>
+        <ns2:validator xsi:type="ns2:ValidatorsPropertyType">
+           <ns2:validator xsi:type="ns2:ValidatorPropertyType">
+                   <isFuncRef>false</isFuncRef>
+                   <funcCode><![CDATA[
+                   {
+                       if (this.value.length > 0) {
+                           if (/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(this.value)) {
+                             return true;
+                           } else {
+                             return false;
+                           }
+                       }
+                       return true;
+                   }
+                   ]]></funcCode>
+                   <errMsg></errMsg>
+           </ns2:validator>
+        </ns2:validator>
+        <ns2:Property name="isNumber">
+           <ns2:value xsi:type="ns2:BooleanPropertyType">
+               <value>true</value>
+           </ns2:value>
+        </ns2:Property>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="leaveWordUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>说点啥</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UITextAreaType" UIID="leaveWordUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>        
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+            <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
+        <ns2:maxLength xsi:type="ns2:NumericPropertyType">
+            <type>int</type>
+            <value>100</value>
+        </ns2:maxLength>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="samplePhotoUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
+          <ns2:key>org.shaolin.vogerp.ecommercial.be.GOOfferPrice.samplePhoto</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="samplePhotoUI">
+         <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.ImageUploader" />
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="deliveryInfoUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>您的物流地址</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="deliveryInfoUI">
+         <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.DeliveryInfoSimpleView" />
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="resultUILabel">
+        <ns2:UIStyle></ns2:UIStyle>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+            <ns2:value></ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>currPriceUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>currPriceUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>priceUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass=""></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>priceUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>leaveWordUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>leaveWordUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>samplePhotoUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>samplePhotoUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>deliveryInfoUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>deliveryInfoUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>resultUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <!-- 
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Save"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:editable xsi:type="ns2:ExpressionPropertyType">
+          <ns2:expression>
+            <expressionString>{return $editable;}</expressionString>
+          </ns2:expression>
+        </ns2:editable>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>OKbtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+       -->
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Cancel"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>Closebtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.ecommercial.be.MachiningOrder"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithCurrency"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="currPriceUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Currency">
+        <ns2:expression>
+          <expressionString>{if ($beObject.getEndPrice() > 0) {return $beObject.getEndPrice();} else { return $beObject.getEstimatedPrice();} }</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithCurrency"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="priceUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Currency">
+        <ns2:expression>
+          <expressionString><![CDATA[
+          import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+          {
+            if ($beObject.getEndPrice() > 0) {
+               return $beObject.getEndPrice()-1;
+            } if ($beObject.getOfferPrices() != null && $beObject.getOfferPrices().size() > 0) {
+               return OrderUtil.getLowestOfferPrice($beObject) - 1;
+            } else { 
+               return $beObject.getEstimatedPrice() - 1;
+            } 
+          }]]></expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
+      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.ImageUploader"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="samplePhotoUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="imagePath">
+         <ns2:expression>
+          <expressionString><![CDATA[
+          {
+            int i = (int)(Math.random() * 10000);
+            return "/images/gorder/" + $beObject.getId() + "/" + i; 
+          }]]></expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="allowNumber">
+         <ns2:expression>
+          <expressionString><![CDATA[
+          {
+            return 3; 
+          }]]></expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
+      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.DeliveryInfoSimpleView"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="deliveryInfoUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.deliveryToInfo" paramName="beObject"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:DataToUIMappingOperation>
+      <expressionString><![CDATA[
+      import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+      import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+      import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+      import org.shaolin.bmdp.runtime.security.UserContext;
+      {
+        if ($beObject.getDeliveryToInfoId() > 0) {
+           DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)CommonModel.INSTANCE.get($beObject.getDeliveryToInfoId(), DeliveryInfoImpl.class);
+           $beObject.setDeliveryToInfo(deliveryInfo);
+        }
+        if ($beObject.getDeliveryToInfo() == null) {
+           $beObject.setDeliveryToInfo((DeliveryInfoImpl)CustomerInfoUtil.createDeliveryInfo(UserContext.getUserContext().getUserId()));
+        }
+      
+        @odContext.executeAllMappings();
+      }]]></expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString><![CDATA[
+      {
+        @odContext.executeAllMappings();
+      }]]></expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

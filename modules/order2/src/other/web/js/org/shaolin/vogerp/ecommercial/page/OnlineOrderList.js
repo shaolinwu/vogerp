@@ -12,7 +12,18 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "goldenOrderInfoPanel",prefix + "gsaleOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "loanOrderInfoPanel"]
+        ,subComponents: [prefix + "machiningOrderInfoPanel",prefix + "goldenOrderInfoPanel",prefix + "gsaleOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "loanOrderInfoPanel"]
+    });
+    var machingOrderTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "machingOrderTable"]
+    });
+
+    var machiningOrderInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "machiningOrderInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "machingOrderTable"]
     });
     var goldenOrderTable = new UIMaster.ui.objectlist
     ({
@@ -79,6 +90,10 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList(json)
 
     Form.functionsTab=functionsTab;
 
+    Form.machiningOrderInfoPanel=machiningOrderInfoPanel;
+
+    Form.machingOrderTable=machingOrderTable;
+
     Form.goldenOrderInfoPanel=goldenOrderInfoPanel;
 
     Form.goldenOrderTable=goldenOrderTable;
@@ -127,6 +142,8 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList(json)
     Form.publishOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_publishOrder;
 
     Form.openLoanOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openLoanOrder;
+
+    Form.openMachingOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openMachingOrder;
 
     Form.initPageJs = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_initPageJs;
 
@@ -230,6 +247,17 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openLoanOrder-20160124-15666",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openLoanOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openMachingOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openMachingOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openMachingOrder-20170125-1218",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_openMachingOrder */
 
 
     function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_initPageJs(){/* Gen_First:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_initPageJs */
