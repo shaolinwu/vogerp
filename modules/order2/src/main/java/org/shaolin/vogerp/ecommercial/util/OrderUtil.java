@@ -76,7 +76,7 @@ public class OrderUtil {
 	            	}
 	            }
 				gorder.getOfferPrices().add(newPrice);
-				OrderModel.INSTANCE.update(gorder);
+				OrderModel.INSTANCE.update(gorder, true); // we have manually committed the transaction here since it's 1 to n mapping. otherwise, will be wrong!
 			} else if (eorder instanceof RentOrLoanOrderImpl) {
 				RentOrLoanOrderImpl rorder = OrderModel.INSTANCE.get(eorder.getId(), RentOrLoanOrderImpl.class);
 				if (rorder == null || rorder.getStatus() != OrderStatusType.PUBLISHED) {
@@ -93,7 +93,7 @@ public class OrderUtil {
 	            	}
 	            }
 				rorder.getOfferPrices().add(newPrice);
-				OrderModel.INSTANCE.update(rorder, true);
+				OrderModel.INSTANCE.update(rorder, true);// we have manually committed the transaction here since it's 1 to n mapping. otherwise, will be wrong!
 			} else if  (eorder instanceof MachiningOrderImpl) {
 				MachiningOrderImpl rorder = OrderModel.INSTANCE.get(eorder.getId(), MachiningOrderImpl.class);
 				if (rorder == null || rorder.getStatus() != OrderStatusType.PUBLISHED) {
@@ -110,7 +110,7 @@ public class OrderUtil {
 	            	}
 	            }
 				rorder.getOfferPrices().add(newPrice);
-				OrderModel.INSTANCE.update(rorder, true);
+				OrderModel.INSTANCE.update(rorder, true);// we have manually committed the transaction here since it's 1 to n mapping. otherwise, will be wrong!
 			} 
 			// commit the update.
 			return 1;

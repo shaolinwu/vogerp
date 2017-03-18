@@ -73,7 +73,7 @@ public class CustCommonModel extends BEEntityDaoObject {
 				item.setDistrict(null);
 			}
 			customer.getAddresses().add(item);
-			CommonModel.INSTANCE.update(customer);
+			CommonModel.INSTANCE.update(customer, true); // we have manually committed the transaction here since it's 1 to n mapping. otherwise, will be wrong!
 		} else {
 			for (IAddressInfo b: existing) {
 				if (b.getId() == item.getId()) {
@@ -94,7 +94,7 @@ public class CustCommonModel extends BEEntityDaoObject {
 					b.setMobile(item.getMobile());
 					b.setTelephone(item.getTelephone());
 					b.setEmail(item.getEmail());
-					CommonModel.INSTANCE.update(b);
+					CommonModel.INSTANCE.update(b, true);
 					break;
 				}
 			}
