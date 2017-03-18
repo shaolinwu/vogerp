@@ -216,6 +216,7 @@
             </ns2:process>
             <ns2:eventDest>
                 <ns2:dest name="offerPrice"></ns2:dest>
+                <ns2:dest name="cancelGOrder"></ns2:dest>
             </ns2:eventDest>
         </ns2:mission-node>
         
@@ -364,11 +365,17 @@
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
-                        MachiningOrderImpl gorder = (MachiningOrderImpl)out.get("beObject");
+                        if (out.get("selectedPrice") == null) {
+                            Dialog.showMessageDialog("请选择一个客户出价单。", "", Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
                         
+                        MachiningOrderImpl gorder = (MachiningOrderImpl)out.get("beObject");
                         HashMap result = new HashMap();
                         result.put("gorder", out.get("beObject"));
                         result.put("page", @page);
+                        result.put("selectedPrice", out.get("selectedPrice"));
+                        result.put("offerLowestPrice", Boolean.FALSE);
                         
                         form.closeIfinWindows();
                         @page.removeForm(@page.getEntityUiid()); 
@@ -390,6 +397,12 @@
             <ns2:process>
                 <ns2:var name="gorder" category="BusinessEntity" scope="InOut">
                     <type entityName="org.shaolin.vogerp.ecommercial.be.MachiningOrder"></type>
+                </ns2:var>
+                <ns2:var name="offerLowestPrice" category="JavaPrimitive" scope="InOut">
+                    <type entityName="java.lang.Boolean"></type>
+                </ns2:var>
+                <ns2:var name="selectedPrice" category="BusinessEntity" scope="InOut">
+                    <type entityName="org.shaolin.vogerp.ecommercial.be.GOOfferPrice"></type>
                 </ns2:var>
                 <ns2:var name="page" category="JavaClass" scope="InOut">
                     <type entityName="org.shaolin.uimaster.page.AjaxContext"></type>
@@ -419,13 +432,22 @@
                     import org.shaolin.vogerp.accounting.IPaymentService;
                     import org.shaolin.bmdp.utils.StringUtil;
                     {
+                         if ($offerLowestPrice != null && $offerLowestPrice == Boolean.TRUE) {
+                            $gorder.setEndPrice(OrderUtil.getLowestOfferPrice($gorder, true));
+                            $gorder.setTakenCustomerId(OrderUtil.getLowestOfferPriceCustId($gorder));
+                         } else {
+                            $gorder.setEndPrice($selectedPrice.getPrice());
+                            $gorder.setTakenCustomerId($selectedPrice.getTakenCustomerId());
+                         }
                          $gorder.setStatus(OrderStatusType.TAKEN);
                          OrderModel.INSTANCE.update($gorder);
                          
                          IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
-                         IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class); 
-                         IPayOrder payOrder = accountingService.createSelfPayOrder(PayBusinessType.MACHININGBUSI, 
-                         						$gorder.getPublishedCustomerId(), $gorder.getSerialNumber(), $gorder.getEndPrice());
+                         IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
+                         long orgId = orgService.getOrgIdByPartyId($selectedPrice.getTakenCustomerId()); 
+                         IPayOrder payOrder = accountingService.createPayOrder(PayBusinessType.MACHININGBUSI, 
+                             						orgId, $selectedPrice.getTakenCustomerId(), UserContext.getUserContext().getUserId(),
+                             						$gorder.getSerialNumber(), $gorder.getEndPrice());
                          if (payOrder.getDescription() == null) {
 	                         payOrder.setDescription("[" + $gorder.getPublishedCustomer().getOrganization().getDescription() + "]" 
 	                                                    + $gorder.getDescription());
@@ -445,8 +467,15 @@
                          message.setDescription(description);
                          message.setCreateDate(new Date());
                          
+                         NotificationImpl message1 = new NotificationImpl();
+                         message1.setPartyId($gorder.getTakenCustomerId());
+                         message1.setSubject("加工订单已确认，等待付款中！订单信息： " + description);
+                         message1.setDescription(description);
+                         message1.setCreateDate(new Date());
+                         
                          ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
                          service.addNotification(message, true);
+                         service.addNotification(message1, true);
                          
                          Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
                     }

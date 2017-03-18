@@ -159,7 +159,7 @@ public class OrderUtil {
 	public static String getOrderHTMLInfo(IEOrder order) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<div>");
-		sb.append("<span class='vogerp_city'>\u6765\u81EA").append(CEUtil.getValue(order.getCity()));
+		sb.append("<div class='vogerp_city'>\u6765\u81EA").append(CEUtil.getValue(order.getCity()));
 		if (order instanceof IGoldenOrder) {
 			if (((IGoldenOrder)order).getType() == GoldenOrderType.PURCHASE) {
 				sb.append("\u7684\u91C7\u8D2D\u8BA2\u5355");
@@ -175,8 +175,8 @@ public class OrderUtil {
 		} else if (order instanceof IMachiningOrder) {
 			sb.append("\u7684\u52A0\u5DE5\u8BA2\u5355");
 		} 
-		sb.append("</span>");
-		sb.append("<span class='vogerp_desc'>").append(order.getDescription()).append("</span>");
+		sb.append("</div>");
+		sb.append("<div class='vogerp_desc'>").append(order.getDescription()).append("</div>");
 		sb.append("</div>");
 		
 		return sb.toString();

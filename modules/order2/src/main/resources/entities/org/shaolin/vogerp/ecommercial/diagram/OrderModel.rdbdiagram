@@ -64,6 +64,8 @@
     <ns2:column name="ISPURCHASEORDER" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="PRODUCTID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="ORDERID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="TAXRATE" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="INVOICETYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="EXPIREDDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="STATE" type="INTEGER" length="2" default="1"></ns2:column>
@@ -91,6 +93,8 @@
       <ns2:fieldMapping beFieldName="type" columnName="ISPURCHASEORDER"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="orderId" columnName="ORDERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="productId" columnName="PRODUCTID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="invoiceType" columnName="INVOICETYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="taxRate" columnName="TAXRATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="deliveryInfoId" columnName="DELIVERYINFOID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="deliveryToInfoId" columnName="DELIVERYTOINFOID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
@@ -184,6 +188,8 @@
     <ns2:column name="DATECOUNT" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="DEPOSIT" type="DECIMAL" default="0"></ns2:column>
     <ns2:column name="CITY" type="VARCHAR" length="50" isNull="true"></ns2:column>
+    <ns2:column name="TAXRATE" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="INVOICETYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="STARTDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="EXPIREDDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
@@ -214,6 +220,8 @@
       <ns2:fieldMapping beFieldName="htmlDesc" columnName="HTMLDESC"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="status" columnName="STATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="taxRate" columnName="TAXRATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="invoiceType" columnName="INVOICETYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="dateType" columnName="DATETYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="deposit" columnName="DEPOSIT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="dateCount" columnName="DATECOUNT"></ns2:fieldMapping>
@@ -344,6 +352,7 @@
     <ns2:column name="ESTIMATEDPRICE" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="ENDPRICE" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="TAXRATE" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="INVOICETYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="PUBLISHEDCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="TAKENCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="DELIVERYINFOID" type="BIGINT" isNull="true"></ns2:column>
@@ -372,6 +381,7 @@
       <ns2:fieldMapping beFieldName="estimatedPrice" columnName="ESTIMATEDPRICE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="endPrice" columnName="ENDPRICE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="taxRate" columnName="TAXRATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="invoiceType" columnName="INVOICETYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="publishedCustomerId" columnName="PUBLISHEDCUSTOMERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="takenCustomerId" columnName="TAKENCUSTOMERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="deliveryInfoId" columnName="DELIVERYINFOID"></ns2:fieldMapping>
@@ -388,6 +398,35 @@
       <ns2:fieldMapping beFieldName="_sessionId" columnName="_sessionId"></ns2:fieldMapping>
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_MACHININGORDER0" mappingType="One-to-One" beFieldName="publishedCustomer" columnName="PUBLISHEDCUSTOMERID"></ns2:fieldMapping>
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_MACHININGORDER_ITEMS" collectionElement="org.shaolin.vogerp.ecommercial.be.MachOrderComponent" mappingType="One-to-Many" beFieldName="components"></ns2:fieldMapping>
+      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_MACHININGORDER_ITEMS1" collectionElement="org.shaolin.vogerp.ecommercial.be.MOOfferPrice" mappingType="One-to-Many" beFieldName="offerPrices"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>ECOM_MOOfferPrice</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="PRICE" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="SAMPLEPHOTO" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="LEAVEWORDS" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="SESSIONID" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="TAKENCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.ecommercial.be.MOOfferPrice"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="price" columnName="PRICE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="samplePhoto" columnName="SAMPLEPHOTO"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="leaveWords" columnName="LEAVEWORDS"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="sessionId" columnName="SESSIONID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="takenCustomerId" columnName="TAKENCUSTOMERID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_GOOfferPrice1" mappingType="One-to-One" beFieldName="takenCustomer" columnName="TAKENCUSTOMERID"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
   <ns2:table>
@@ -428,6 +467,7 @@
   <ns2:joinTable name="ECOM_RENTORDER_ITEMS" srcTable="ECOM_RENTORLOANORDER" srcPKColumn="offerPrices" tarTable="ECOM_ROOfferPrice" tarPKColumn="id"></ns2:joinTable>
   <ns2:joinTable name="ECOM_GOLDENORDER_ITEMS1" srcTable="ECOM_GOLDENORDER" srcPKColumn="pricePackage" tarTable="ECOM_GoldenOrderItem" tarPKColumn="id"></ns2:joinTable>
   <ns2:joinTable name="ECOM_MACHININGORDER_ITEMS" srcTable="ECOM_MACHININGORDER" srcPKColumn="components" tarTable="ECOM_MACHORDERCOMPONENT" tarPKColumn="id"></ns2:joinTable>
+  <ns2:joinTable name="ECOM_MACHININGORDER_ITEMS1" srcTable="ECOM_MACHININGORDER" srcPKColumn="offerPrices" tarTable="ECOM_MOOfferPrice" tarPKColumn="id"></ns2:joinTable>
   
   <ns2:query queryName="searchGoldenOrder">
     <ns2:searchResult name="outObject" category="BusinessEntity">

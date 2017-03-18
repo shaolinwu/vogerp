@@ -57,6 +57,12 @@
             <bediagram:type xsi:type="bediagram:BooleanType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>invoiceType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="InvoiceType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>productId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
@@ -463,6 +469,19 @@
     </bediagram:beEntity>   
 	
 	<bediagram:ceEntity>
+        <common:entityName>InvoiceType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>Normal</bediagram:value>
+            <bediagram:intValue>0</bediagram:intValue>
+            <bediagram:description>普票</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>AVT</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>增票</bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
+	<bediagram:ceEntity>
         <common:entityName>OrderStatusType</common:entityName>
         <bediagram:constantValue>
             <bediagram:value>Created</bediagram:value>
@@ -520,8 +539,8 @@
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>MachiningOrder</bediagram:value>
-            <bediagram:intValue>1</bediagram:intValue>
-            <bediagram:description>租赁订单</bediagram:description>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>加工订单</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
     

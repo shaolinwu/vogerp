@@ -60,6 +60,11 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
         ,style: "display:none;"
     });
 
+    var closeDialogBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "closeDialogBtn"]
+    });
+
     var viewbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "viewbtn"]
@@ -94,6 +99,13 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
         ,subComponents: [prefix + "viewbtn",prefix + "savebtn",prefix + "cancelbtn"]
     });
 
+    var attributePanel1 = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "attributePanel1"]
+        ,items: []
+        ,subComponents: [prefix + "selectMComponentTable",prefix + "closeDialogBtn"]
+    });
+
     var attributePanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "attributePanel"]
@@ -105,13 +117,13 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "photoUI",prefix + "attributePanel",prefix + "componentTable",prefix + "machineToolTable",prefix + "skinTable",prefix + "thirdComponentTable",prefix + "selectMComponentTable"]
+        ,subComponents: [prefix + "photoUI",prefix + "attributePanel",prefix + "componentTable",prefix + "machineToolTable",prefix + "skinTable",prefix + "thirdComponentTable",prefix + "attributePanel1"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [selectTableUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,countUILabel,countUI,materialTypeUILabel,taxRateUILabel,taxRateUI,selectMComponentTable,viewbtn,savebtn,cancelbtn,photoUI,materialTypeUI,componentTable,machineToolTable,skinTable,thirdComponentTable,fieldPanel,attributePanel,actionPanel]
+        ,items: [selectTableUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,countUILabel,countUI,materialTypeUILabel,taxRateUILabel,taxRateUI,selectMComponentTable,closeDialogBtn,viewbtn,savebtn,cancelbtn,photoUI,materialTypeUI,componentTable,machineToolTable,skinTable,thirdComponentTable,fieldPanel,attributePanel,attributePanel1,actionPanel]
     });
 
     Form.selectTableUI=selectTableUI;
@@ -135,6 +147,8 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     Form.taxRateUI=taxRateUI;
 
     Form.selectMComponentTable=selectMComponentTable;
+
+    Form.closeDialogBtn=closeDialogBtn;
 
     Form.viewbtn=viewbtn;
 
@@ -188,7 +202,11 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
     Form.thirdComponentTable=thirdComponentTable;
 
+    Form.attributePanel1=attributePanel1;
+
     Form.selectMComponentTable=selectMComponentTable;
+
+    Form.closeDialogBtn=closeDialogBtn;
 
     Form.attributePanel=attributePanel;
 
@@ -212,6 +230,12 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
     Form.taxRateUI=taxRateUI;
 
+    Form.attributePanel1=attributePanel1;
+
+    Form.selectMComponentTable=selectMComponentTable;
+
+    Form.closeDialogBtn=closeDialogBtn;
+
     Form.actionPanel=actionPanel;
 
     Form.viewbtn=viewbtn;
@@ -225,8 +249,8 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
         /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin */
 
         
-       $(this.selectMComponentTable).parent().css("display", "none");
-       $(this.selectMComponentTable).css("display", "block");
+       $(this.attributePanel1).parent().css("display", "none");
+       $(this.attributePanel1).css("display", "block");
        var othis = this;
        var overrideSelectOne = function(tableId) {
            if (tableId.indexOf("componentTable.itemTable") != -1) {
@@ -256,6 +280,8 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_Cancel;
 
     Form.showSelectOneTable = org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_showSelectOneTable;
+
+    Form.CloseDialog = org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_CloseDialog;
 
     Form.selectedOne = org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_selectedOne;
 
@@ -316,33 +342,48 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
         { 
             var othis = this;
             if (IS_MOBILEVIEW) {
-               $(othis.selectMComponentTable).parent().dialog({
+               $(othis.attributePanel1).parent().dialog({
                     height: ($(window.top).height()),
 					width: "100%",
 					modal: true,
 					closeOnEscape: true,
 					open: function(event, ui) {
-					   $(othis.selectMComponentTable).parent().css("display", "block");
+					   $(othis.attributePanel1).parent().css("display", "block");
 					},
 					beforeClose: function() {
-					   $(othis.selectMComponentTable).parent().css("display", "none");
+					   $(othis.attributePanel1).parent().css("display", "none");
 					}
 				});
             } else {
-               $(othis.selectMComponentTable).parent().dialog({
+               $(othis.attributePanel1).parent().dialog({
                     height: "300",
 					width: "400",
 					modal: true,
 					closeOnEscape: true,
 					open: function(event, ui) {
-					   $(othis.selectMComponentTable).parent().css("display", "block");
+					   $(othis.attributePanel1).parent().css("display", "block");
 					},
 					beforeClose: function() {
-					   $(othis.selectMComponentTable).parent().css("display", "none");
+					   $(othis.attributePanel1).parent().css("display", "none");
 					}
 				});
             }
         }    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_showSelectOneTable */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_CloseDialog(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_CloseDialog */
+        var o = this;
+        var UIEntity = this;
+
+        { 
+            var othis = this;
+            if (IS_MOBILEVIEW) {
+               $(othis.attributePanel1).parent().dialog("close");
+            } else {
+               $(othis.attributePanel1).parent().dialog("close");
+            }
+        }    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin_CloseDialog */
 
 
     /* auto generated eventlistener function declaration */

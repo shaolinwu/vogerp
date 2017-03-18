@@ -406,7 +406,7 @@
                       input.put("beObject", order);
                       input.put("editable", new Boolean(true));
                       String formUI = "org.shaolin.vogerp.ecommercial.form.MachiningOrder";
-                      if (order.getEndPrice() > 0) {
+                      if (order.getEstimatedPrice() > 0) {
                          formUI = "org.shaolin.vogerp.ecommercial.form.MachiningOrderWithResult";
                          input.put("editable", new Boolean(false));
                       }
@@ -1039,6 +1039,7 @@
                                         import org.shaolin.vogerp.ecommercial.ce.EOrderType;
                                         import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
                                         import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                                        import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
                                         import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                                         import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                                         {
@@ -1046,8 +1047,12 @@
                                                 GoldenOrderImpl gorder = (GoldenOrderImpl)OrderModel.INSTANCE.get($rowBE.getOrderId(), GoldenOrderImpl.class);
                                                 $rowBE.setOrder(gorder);
                                                 return OrderUtil.getOrderHTMLInfo(gorder);
-                                            } else {
+                                            } else if ($rowBE.getType() == EOrderType.RENTORLOANORDER) {
                                                 RentOrLoanOrderImpl rorder = (RentOrLoanOrderImpl)OrderModel.INSTANCE.get($rowBE.getOrderId(), RentOrLoanOrderImpl.class);
+                                                $rowBE.setOrder(rorder);
+                                                return OrderUtil.getOrderHTMLInfo(rorder);
+                                            } else if ($rowBE.getType() == EOrderType.MACHININGORDER) {
+                                                MachiningOrderImpl rorder = (MachiningOrderImpl)OrderModel.INSTANCE.get($rowBE.getOrderId(), MachiningOrderImpl.class);
                                                 $rowBE.setOrder(rorder);
                                                 return OrderUtil.getOrderHTMLInfo(rorder);
                                             }
