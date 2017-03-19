@@ -245,7 +245,7 @@
 			            
 			            MOOfferPriceImpl offerPrice = new MOOfferPriceImpl();
 			            IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
-			            offerPrice.setTakenCustomerId(service.getUserId());
+			            offerPrice.setTakenCustomerId(service.getUserId());//offer customer Id.
 			            offerPrice.setPrice(Double.valueOf(@page.getTextField("priceUI").getValue()));
 			            offerPrice.setCreateDate(new Date());
 			            offerPrice.setSamplePhoto(@page.getHidden("samplePhotoUI.imagePathUI").getValue());
@@ -291,10 +291,10 @@
             <ns2:participant partyType="GenericOrganizationType.Director,0" onlyOwner="false"/>
             <ns2:process>
                 <ns2:var name="goldenOrder" category="BusinessEntity" scope="InOut">
-                    <type entityName="org.shaolin.vogerp.ecommercial.be.GoldenOrder"></type>
+                    <type entityName="org.shaolin.vogerp.ecommercial.be.MachiningOrder"></type>
                 </ns2:var>
                 <ns2:var name="offerPrice" category="BusinessEntity" scope="InOut">
-                    <type entityName="org.shaolin.vogerp.ecommercial.be.GOOfferPrice"></type>
+                    <type entityName="org.shaolin.vogerp.ecommercial.be.MOOfferPrice"></type>
                 </ns2:var>
                 <ns2:expression>
                     <expressionString><![CDATA[
@@ -349,7 +349,7 @@
         
         <ns2:mission-node name="acceptPrice" expiredDays="0" expiredHours="0" autoTrigger="false">
             <ns2:description>同意接受系统估价</ns2:description>
-            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.MachiningOrderWithResult"
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.MOOfferPriceTable"
                 actionName="acceptOfferPrice" actionText="同意成交订单">
                 <ns2:expression>
                     <expressionString><![CDATA[
@@ -389,7 +389,7 @@
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     {
                        return $beObject.getStatus() == OrderStatusType.PUBLISHED 
-                           && $beObject.getPublishedCustomerId() == UserContext.getUserContext().getOrgId();
+                           && $beObject.getOrgId() == UserContext.getUserContext().getOrgId();
                     }
                 ]]></expressionString></ns2:filter>
             </ns2:uiAction>
@@ -402,7 +402,7 @@
                     <type entityName="java.lang.Boolean"></type>
                 </ns2:var>
                 <ns2:var name="selectedPrice" category="BusinessEntity" scope="InOut">
-                    <type entityName="org.shaolin.vogerp.ecommercial.be.GOOfferPrice"></type>
+                    <type entityName="org.shaolin.vogerp.ecommercial.be.MOOfferPrice"></type>
                 </ns2:var>
                 <ns2:var name="page" category="JavaClass" scope="InOut">
                     <type entityName="org.shaolin.uimaster.page.AjaxContext"></type>
@@ -456,7 +456,7 @@
                          HashMap input = new HashMap();
 			             input.put("beObject", payOrder);
 			             input.put("editable", new Boolean(true));
-			             RefForm form = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PayOrder", input);
+			             RefForm form = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PaymentMethod", input);
 			             $page.addElement(form);
 			             form.openInWindows("支付方式选择", null, 150, 100);
 			             

@@ -155,12 +155,12 @@
       <ns2:component xsi:type="ns2:UILabelType" UIID="hintUI">
          <ns2:Property name="value">
            <ns2:value xsi:type="ns2:StringPropertyType">
-               <value>支付完成后，请关闭本窗口，并“刷新”页面查看支付是否成功。</value>
+               <value>支付完成后，请关闭本窗口，并“刷新”页面查看支付是否成功。在网页里选择微信支付的用户，请扫描二维码支付。</value>
            </ns2:value>
          </ns2:Property>
          <ns2:Property name="text">
            <ns2:value xsi:type="ns2:StringPropertyType">
-               <value>支付完成后，请关闭本窗口，并“刷新”页面查看支付是否成功。</value>
+               <value>支付完成后，请关闭本窗口，并“刷新”页面查看支付是否成功。在网页里选择微信支付的用户，请扫描二维码支付。</value>
            </ns2:value>
          </ns2:Property>
       </ns2:component>

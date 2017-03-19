@@ -8,6 +8,11 @@ function org_shaolin_vogerp_ecommercial_form_MOOfferPriceTable(json)
         ui: elementList[prefix + "parentIdUI"]
     });
 
+    var takenCustomerIdUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "takenCustomerIdUI"]
+    });
+
     var itemTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "itemTable"]
@@ -34,16 +39,18 @@ function org_shaolin_vogerp_ecommercial_form_MOOfferPriceTable(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "parentIdUI",prefix + "itemTable"]
+        ,subComponents: [prefix + "parentIdUI",prefix + "takenCustomerIdUI",prefix + "itemTable"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentIdUI,itemTable,chatbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [parentIdUI,takenCustomerIdUI,itemTable,chatbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.parentIdUI=parentIdUI;
+
+    Form.takenCustomerIdUI=takenCustomerIdUI;
 
     Form.itemTable=itemTable;
 
@@ -54,6 +61,8 @@ function org_shaolin_vogerp_ecommercial_form_MOOfferPriceTable(json)
     Form.fieldPanel=fieldPanel;
 
     Form.parentIdUI=parentIdUI;
+
+    Form.takenCustomerIdUI=takenCustomerIdUI;
 
     Form.itemTable=itemTable;
 
@@ -98,7 +107,7 @@ function org_shaolin_vogerp_ecommercial_form_MOOfferPriceTable(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160325-11284",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20170225-1184",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MOOfferPriceTable_Cancel */
 
 
@@ -109,7 +118,7 @@ function org_shaolin_vogerp_ecommercial_form_MOOfferPriceTable(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"chat-20160325-1129",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"chat-20170225-1129",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MOOfferPriceTable_chat */
 
 

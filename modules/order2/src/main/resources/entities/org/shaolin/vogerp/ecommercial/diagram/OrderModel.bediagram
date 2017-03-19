@@ -53,10 +53,6 @@
             <bediagram:type xsi:type="bediagram:DoubleType" />
         </bediagram:member>
         <bediagram:member>
-            <bediagram:name>needInvoice</bediagram:name>
-            <bediagram:type xsi:type="bediagram:BooleanType" />
-        </bediagram:member>
-        <bediagram:member>
             <bediagram:name>invoiceType</bediagram:name>
             <bediagram:type xsi:type="bediagram:CEObjRefType">
                 <bediagram:targetEntity entityName="InvoiceType" />
@@ -350,6 +346,11 @@
             <bediagram:type xsi:type="bediagram:BooleanType" />
         </bediagram:member>
         <bediagram:member>
+            <!-- 公差描述对加工单非常重要 -->
+            <bediagram:name>differentiation</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
             <!-- 制造材料 MachiningMaterialType ce-->
             <bediagram:name>materialType</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
@@ -391,7 +392,7 @@
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
-            <!-- the golden order is taken by the customer. -->
+            <!-- the order has an offered price by the customer. we should rename it as customerId rather than taken...-->
             <bediagram:name>takenCustomerId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
@@ -400,6 +401,11 @@
             <bediagram:type xsi:type="bediagram:BEObjRefType">
                 <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo" />
             </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <!-- the order is taken by this customer.-->
+            <bediagram:name>isTaken</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BooleanType" />
         </bediagram:member>
         <bediagram:member>
             <bediagram:name>price</bediagram:name>
@@ -471,13 +477,18 @@
 	<bediagram:ceEntity>
         <common:entityName>InvoiceType</common:entityName>
         <bediagram:constantValue>
-            <bediagram:value>Normal</bediagram:value>
+            <bediagram:value>NoNeed</bediagram:value>
             <bediagram:intValue>0</bediagram:intValue>
+            <bediagram:description>不需要</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Normal</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
             <bediagram:description>普票</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>AVT</bediagram:value>
-            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:intValue>2</bediagram:intValue>
             <bediagram:description>增票</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>

@@ -116,6 +116,11 @@
           <ns2:value>true</ns2:value>
         </ns2:secure>
       </ns2:component>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="takenCustomerIdUI">
+        <ns2:secure>
+          <ns2:value>true</ns2:value>
+        </ns2:secure>
+      </ns2:component>
       <ns2:component xsi:type="ns2:UITableType" UIID="itemTable">
         <ns2:beElement>org.shaolin.vogerp.ecommercial.be.GOOfferPrice</ns2:beElement>
         <ns2:defaultRowSize>20</ns2:defaultRowSize>
@@ -135,8 +140,14 @@
           <ns2:expression>
             <expressionString><![CDATA[
         import java.util.List;
+        import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+        import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
         {
-            return $table.getListData();
+            long orderId = Long.valueOf(@page.getHidden("parentIdUI").getValue()).longValue();
+            GoldenOrderImpl order = (GoldenOrderImpl)OrderModel.INSTANCE.get(orderId, GoldenOrderImpl.class);
+            OrderUtil.markTakenStatus(order);
+            return order.getOfferPrices();
         }]]></expressionString>
           </ns2:expression>
         </ns2:query>
@@ -167,7 +178,7 @@
                  import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                  {
                      String message = CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getTakenCustomer());
-                     if ($beObject.getTakenCustomerId() == $rowBE.getTakenCustomerId()) {
+                     if ($rowBE.getIsTaken()) {
                          message = message + "(已拍下)";
                      }
                      return message;
@@ -338,13 +349,20 @@
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="parentIdUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.id" paramName="Number"></ns2:DataComponent>
+    </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
       import org.shaolin.vogerp.ecommercial.be.GOOfferPriceImpl;
+      import org.shaolin.vogerp.ecommercial.util.OrderUtil;
       {
         if ($selectedPrice == null) {
            $selectedPrice = new GOOfferPriceImpl();
         }
+        OrderUtil.markTakenStatus($beObject);
 		@odContext.executeAllMappings();
 	  }
 	  ]]></expressionString>

@@ -24,6 +24,16 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
         ,showMaxLength: 100
     });
 
+    var differentiationUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "differentiationUILabel"]
+    });
+
+    var differentiationUI = new UIMaster.ui.textarea
+    ({
+        ui: elementList[prefix + "differentiationUI"]
+    });
+
     var countUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "countUILabel"]
@@ -47,6 +57,16 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     var needCreateModelUI = new UIMaster.ui.checkbox
     ({
         ui: elementList[prefix + "needCreateModelUI"]
+    });
+
+    var invoiceTypeUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "invoiceTypeUILabel"]
+    });
+
+    var invoiceTypeUI = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "invoiceTypeUI"]
     });
 
     var notifybtn = new UIMaster.ui.button
@@ -74,7 +94,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI",prefix + "createModelUILabel",prefix + "needCreateModelUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "differentiationUILabel",prefix + "differentiationUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI",prefix + "createModelUILabel",prefix + "needCreateModelUI",prefix + "invoiceTypeUILabel",prefix + "invoiceTypeUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -87,7 +107,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,countUILabel,countUI,materialTypeUILabel,createModelUILabel,needCreateModelUI,notifybtn,cancelbtn,photoUI,materialTypeUI,fieldPanel,attributePanel,actionPanel]
+        ,items: [serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,differentiationUILabel,differentiationUI,countUILabel,countUI,materialTypeUILabel,createModelUILabel,needCreateModelUI,invoiceTypeUILabel,invoiceTypeUI,notifybtn,cancelbtn,photoUI,materialTypeUI,fieldPanel,attributePanel,actionPanel]
     });
 
     Form.serialNumberUILabel=serialNumberUILabel;
@@ -98,6 +118,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.descriptionUI=descriptionUI;
 
+    Form.differentiationUILabel=differentiationUILabel;
+
+    Form.differentiationUI=differentiationUI;
+
     Form.countUILabel=countUILabel;
 
     Form.countUI=countUI;
@@ -107,6 +131,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     Form.createModelUILabel=createModelUILabel;
 
     Form.needCreateModelUI=needCreateModelUI;
+
+    Form.invoiceTypeUILabel=invoiceTypeUILabel;
+
+    Form.invoiceTypeUI=invoiceTypeUI;
 
     Form.notifybtn=notifybtn;
 
@@ -130,6 +158,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.descriptionUI=descriptionUI;
 
+    Form.differentiationUILabel=differentiationUILabel;
+
+    Form.differentiationUI=differentiationUI;
+
     Form.countUILabel=countUILabel;
 
     Form.countUI=countUI;
@@ -141,6 +173,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     Form.createModelUILabel=createModelUILabel;
 
     Form.needCreateModelUI=needCreateModelUI;
+
+    Form.invoiceTypeUILabel=invoiceTypeUILabel;
+
+    Form.invoiceTypeUI=invoiceTypeUI;
 
     Form.attributePanel=attributePanel;
 
@@ -152,6 +188,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.descriptionUI=descriptionUI;
 
+    Form.differentiationUILabel=differentiationUILabel;
+
+    Form.differentiationUI=differentiationUI;
+
     Form.countUILabel=countUILabel;
 
     Form.countUI=countUI;
@@ -163,6 +203,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     Form.createModelUILabel=createModelUILabel;
 
     Form.needCreateModelUI=needCreateModelUI;
+
+    Form.invoiceTypeUILabel=invoiceTypeUILabel;
+
+    Form.invoiceTypeUI=invoiceTypeUI;
 
     Form.actionPanel=actionPanel;
 

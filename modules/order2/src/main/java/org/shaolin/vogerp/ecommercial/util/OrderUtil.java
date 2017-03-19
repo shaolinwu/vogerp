@@ -156,6 +156,22 @@ public class OrderUtil {
 		return custId;
 	}
 	
+	public static void markTakenStatus(IEOrder order) {
+		if (order.getTakenCustomerId() <= 0) {
+			return;
+		}
+		if (order.getOfferPrices() != null) {
+			List<IOfferPrice> offerPrices = order.getOfferPrices();
+			for (IOfferPrice p : offerPrices) {
+				if (p.getTakenCustomerId() == order.getTakenCustomerId()) {
+					p.setIsTaken(true);
+					break;
+				}
+			}
+		}
+	}
+	
+	
 	public static String getOrderHTMLInfo(IEOrder order) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<div>");
