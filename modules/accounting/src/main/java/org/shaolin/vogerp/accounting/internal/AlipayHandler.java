@@ -191,30 +191,32 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 			// already notified.
 			return SUCCESS;
 		}
-		AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
-		request.setBizContent("{\"out_trade_no\":\""+order.getSerialNumber()+"\"}");
 		try {
+			AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
+			request.setBizContent("{\"out_trade_no\":\""+order.getSerialNumber()+"\"}");
 			AlipayTradeQueryResponse response = alipayClient.execute(request);
-			JSONObject jsonObj = new JSONObject(response.getBody());
-			
-			String transactionId = jsonObj.getString("out_trade_no");
-			jsonObj.put("transaction_fee", jsonObj.get("total_amount"));
-			jsonObj.put("trade_success", true);
-			jsonObj.put("transaction_id", transactionId);
-			jsonObj.put("message_detail", "");
-			jsonObj.put("transaction_type", TransactionType.PAY.toString());
-			
-			PayOrderTransactionLogImpl translog = new PayOrderTransactionLogImpl();
-	        translog.setPaymentMethod(SettlementMethodType.WEIXI);
-	        translog.setLog(jsonObj.toString());
-	        translog.setCreateDate(new Date());
-	    	if ("TRADE_SUCCESS".equalsIgnoreCase(jsonObj.getString("trade_state"))) {
-	    		jsonObj.put("trade_success", true);
-	    		translog.setIsCorrect(true);
-	    		updatePayOrder(translog, transactionId, jsonObj);
-	    		AccountingModel.INSTANCE.create(translog, true);
-	    		return SUCCESS;
-	    	}
+			if(response.isSuccess()) { 
+				JSONObject jsonObj = new JSONObject(response.getBody());
+				
+				String transactionId = jsonObj.getString("out_trade_no");
+				jsonObj.put("transaction_fee", jsonObj.getDouble("total_amount"));
+				jsonObj.put("trade_success", true);
+				jsonObj.put("transaction_id", transactionId);
+				jsonObj.put("message_detail", "");
+				jsonObj.put("transaction_type", TransactionType.PAY.toString());
+				
+				PayOrderTransactionLogImpl translog = new PayOrderTransactionLogImpl();
+		        translog.setPaymentMethod(SettlementMethodType.WEIXI);
+		        translog.setLog(jsonObj.toString());
+		        translog.setCreateDate(new Date());
+		    	if ("TRADE_SUCCESS".equalsIgnoreCase(jsonObj.getString("trade_state"))) {
+		    		jsonObj.put("trade_success", true);
+		    		translog.setIsCorrect(true);
+		    		updatePayOrder(translog, transactionId, jsonObj);
+		    		AccountingModel.INSTANCE.create(translog, true);
+		    		return SUCCESS;
+		    	}
+			}
 	    	return FAIL;
 		} catch (AlipayApiException e) {
 			throw new PaymentException("Alipay query error occurred!", e);

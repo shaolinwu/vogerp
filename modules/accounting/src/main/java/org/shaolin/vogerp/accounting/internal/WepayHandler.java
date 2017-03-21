@@ -229,7 +229,6 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 			
 			StringBuffer keyValues = new StringBuffer();
 			keyValues.append("appid=").append(APP_ID);
-			keyValues.append("&body=").append(values.get("body"));
 			keyValues.append("&mch_id=").append(values.get("mch_id"));
 			keyValues.append("&nonce_str=").append(values.get("nonce_str"));
 			keyValues.append("&out_trade_no=").append(values.get("out_trade_no"));
@@ -243,8 +242,20 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 			if (SUCCESS.equalsIgnoreCase(resultMap.get("return_code").toString()) 
 				&& SUCCESS.equalsIgnoreCase(resultMap.get("result_code").toString()) ) {
 				JSONObject jsonObj = new JSONObject(resultMap);
+				if (!SUCCESS.equals(jsonObj.getString("trade_state"))) {
+					//TODO:
+//					SUCCESS
+//					REFUND
+//					NOTPAY
+//					CLOSED
+//					REVOKED—cancelled
+//					USERPAYING
+//					PAYERROR
+					// not payed!
+					return FAIL;
+				}
 				String transactionId = jsonObj.getString("out_trade_no");
-	    		jsonObj.put("transaction_fee", jsonObj.get("total_fee"));
+	    		jsonObj.put("transaction_fee", jsonObj.getInt("total_fee"));
 				jsonObj.put("transaction_id", transactionId);
 				jsonObj.put("transaction_type", TransactionType.PAY.toString());
 				jsonObj.put("message_detail", "");
