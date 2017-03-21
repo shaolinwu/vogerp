@@ -1,12 +1,16 @@
 package org.shaolin.vogerp.accounting.internal;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,9 +25,9 @@ import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.bmdp.workflow.be.NotificationImpl;
 import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
 import org.shaolin.bmdp.workflow.internal.BuiltInAttributeConstant;
-import org.shaolin.uimaster.page.ajax.handlers.IAjaxCommand;
 import org.shaolin.uimaster.page.ajax.json.JSONException;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
+import org.shaolin.vogerp.accounting.IPaymentService;
 import org.shaolin.vogerp.accounting.IPaymentService.TransactionType;
 import org.shaolin.vogerp.accounting.PaymentException;
 import org.shaolin.vogerp.accounting.PaymentHandler;
@@ -34,7 +38,6 @@ import org.shaolin.vogerp.accounting.be.PayOrderTransactionLogImpl;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
 import org.shaolin.vogerp.accounting.ce.SettlementMethodType;
 import org.shaolin.vogerp.accounting.dao.AccountingModel;
-import org.shaolin.vogerp.accounting.util.PaymentUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,9 +46,13 @@ import org.slf4j.LoggerFactory;
  * @author wushaol
  *
  */
-public class WepayHandler implements IAjaxCommand, PaymentHandler {
+public class WepayHandler extends HttpServlet implements PaymentHandler {
 
+	private String charset = "UTF-8";
+	
+	private static final String WEPAY_WEB_HOOK = "https://www.vogerp.com/uimaster/WepayWebHook.do";//no parameter as required!
 	private static final String UNIFIEDPAY_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+	private static final String UNIFIEDQUERY_URL = "https://api.mch.weixin.qq.com/pay/orderquery";
 	private static final String SUCCESS = "SUCCESS";
 	private static final String FAIL = "FAIL";
 	private static final Logger logger = LoggerFactory.getLogger(WepayHandler.class);
@@ -70,7 +77,7 @@ public class WepayHandler implements IAjaxCommand, PaymentHandler {
 		
 		sender = new HttpSender();
 	}
-	
+
 	/**
 	 * for test purpose
 	 * 
@@ -85,6 +92,31 @@ public class WepayHandler implements IAjaxCommand, PaymentHandler {
 		sender = new HttpSender();
 	}
 	
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		process(request, response);
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		process(request, response);
+	}
+	
+	protected void process(HttpServletRequest request, HttpServletResponse response) throws IOException
+    {
+		if (request.getProtocol().compareTo("HTTP/1.0") == 0) {
+			response.setHeader("Pragma", "no-cache");
+		} else if (request.getProtocol().compareTo("HTTP/1.1") == 0) {
+			response.setHeader("Cache-Control", "no-cache");
+		}
+		response.setDateHeader("Expires", 0);
+		response.setCharacterEncoding(charset);
+		request.setCharacterEncoding(charset);
+	
+		response.getWriter().write(execute(request, response));
+    }
+	
+	
 	/**
 	 * we invoke weixin unified api for prepayment.
 	 * https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_1
@@ -93,8 +125,14 @@ public class WepayHandler implements IAjaxCommand, PaymentHandler {
 	 * @return
 	 * @throws Exception
 	 */
-	public String prepay(IPayOrder payOrder) throws PaymentException {
+	public String prepay(final IPayOrder payOrder) throws PaymentException {
+		if (payOrder.getStatus() != PayOrderStatusType.NOTPAYED) {
+			return "";
+		}
 		try {
+			payOrder.setCustomerAPaymentMethod(SettlementMethodType.WEIXI);
+			AccountingModel.INSTANCE.update(payOrder);
+			
 			HashMap<String, Object> values = new HashMap<String, Object>();
 			values.put("appid", APP_ID);
 			values.put("body", StringUtil.truncateString(payOrder.getDescription(), 120));
@@ -104,7 +142,7 @@ public class WepayHandler implements IAjaxCommand, PaymentHandler {
 			values.put("spbill_create_ip", UserContext.getUserContext().getRequestIP());
 			values.put("total_fee", ((int)payOrder.getAmount()) + ""); //fen
 			values.put("trade_type", UserContext.isAppClient() ?"APP" :"NATIVE");
-			values.put("notify_url", "https://www.vogerp.com/uimaster/ajaxservice?serviceName=WepayWebHook");
+			values.put("notify_url", WEPAY_WEB_HOOK);
 			// optional.
 	//		JSONObject detail = new JSONObject();
 	//		detail.put("cost_price", payOrder.getAmount());
@@ -174,28 +212,71 @@ public class WepayHandler implements IAjaxCommand, PaymentHandler {
 		throw new UnsupportedOperationException();
 	}
 	
-	/*
-	 * Key	Type	Example
-	 * sign	String	32 bits in lower case.
-	 * timestamp	Long	1426817510111
-	 * channel_type	String	�WX� or 'ALI� or 'UN� or 'KUAIQIAN� or 'JD� or 'BD� or 'YEE� or 'PAYPAL� or 'BC�
-	 * sub_channel_type	String	'WX_APP� or 'WX_NATIVE� or 'WX_JSAPI� or 'WX_SCAN� or 'ALI_APP� or 'ALI_SCAN� or 
-	 * 			                'ALI_WEB� or 'ALI_QRCODE� or 'ALI_OFFLINE_QRCODE� or 'ALI_WAP� or 'UN_APP� or 
-	 *                          'UN_WEB� or 'PAYPAL_SANDBOX� or 'PAYPAL_LIVE� or 'JD_WAP� or 'JD_WEB� or 'YEE_WAP� or 
-	 *                          'YEE_WEB� or 'YEE_NOBANKCARD� or 'KUAIQIAN_WAP� or 'KUAIQIAN_WEB� or 'BD_APP� or 
-	 *                          'BD_WEB� or 'BD_WAP� or 'BC_TRANSFER� or 'ALI_TRANSFER�
-	 * transaction_type	String	 'PAY� or 'REFUND� or 'TRANSFER'
-	 * transaction_id	String	 '201506101035040000001�
-	 * transaction_fee	Integer	  1 means 0.01 yuan
-	 * trade_success	Bool	  true
-	 * message_detail	Map(JSON) {orderId:xxxx}
-	 * optional	        Map(JSON) {"agent_id": "Alice"}
-	 * 
-	 * (non-Javadoc)
-	 * @see org.shaolin.uimaster.page.ajax.handlers.IAjaxCommand#execute(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	/**
+	 * https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_2
 	 */
-	@Override
-	public Object execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String query(final IPayOrder payOrder) throws PaymentException {
+		if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
+			// already notified.
+			return SUCCESS;
+		}
+		try {
+			HashMap<String, Object> values = new HashMap<String, Object>();
+			values.put("appid", APP_ID);
+			values.put("mch_id", MCH_ID);
+			values.put("out_trade_no", payOrder.getSerialNumber());
+			values.put("nonce_str", StringUtil.genRandomAlphaBits(32));
+			
+			StringBuffer keyValues = new StringBuffer();
+			keyValues.append("appid=").append(APP_ID);
+			keyValues.append("&body=").append(values.get("body"));
+			keyValues.append("&mch_id=").append(values.get("mch_id"));
+			keyValues.append("&nonce_str=").append(values.get("nonce_str"));
+			keyValues.append("&out_trade_no=").append(values.get("out_trade_no"));
+		    //key setting path ：pay.weixin.qq.com-->API security-->password	
+			keyValues.append("&key=").append(MCH_APISECURE_KEY);
+			// take this link for verification. https://pay.weixin.qq.com/wiki/tools/signverify/
+			values.put("sign", encodeMD5(keyValues.toString(), "UTF-8").toUpperCase());
+			String result = sender.doPostSSL(UNIFIEDQUERY_URL, StringUtil.convertMapToXML(values, "xml"), "UTF-8", "text/xml");
+			//xml format
+			Map resultMap = StringUtil.xml2map(result);
+			if (SUCCESS.equalsIgnoreCase(resultMap.get("return_code").toString()) 
+				&& SUCCESS.equalsIgnoreCase(resultMap.get("result_code").toString()) ) {
+				JSONObject jsonObj = new JSONObject(resultMap);
+				String transactionId = jsonObj.getString("out_trade_no");
+	    		jsonObj.put("transaction_fee", jsonObj.get("total_fee"));
+				jsonObj.put("transaction_id", transactionId);
+				jsonObj.put("transaction_type", TransactionType.PAY.toString());
+				jsonObj.put("message_detail", "");
+				if (logger.isInfoEnabled()) {
+					logger.info("Received a callback payment: " + transactionId);
+				}
+				PayOrderTransactionLogImpl translog = new PayOrderTransactionLogImpl();
+		        translog.setPaymentMethod(SettlementMethodType.WEIXI);
+		        translog.setLog(jsonObj.toString());
+		        translog.setCreateDate(new Date());
+		    	if (SUCCESS.equalsIgnoreCase(resultMap.get("trade_state").toString())) {
+		    		jsonObj.put("trade_success", true);
+		    		translog.setIsCorrect(true);
+		    		updatePayOrder(translog, jsonObj, transactionId);
+		    	} else {
+		    		translog.setIsCorrect(false);
+		    	}
+		    	AccountingModel.INSTANCE.create(translog, true);
+				
+				return resultMap.get("trade_state").toString();
+			}
+			return FAIL;
+		} catch (Exception e) {
+			if (e instanceof PaymentException) {
+				throw (PaymentException)e;
+			}
+			throw new PaymentException("Weixi query error occurred!", e);
+		}
+	}
+	
+	private String execute(HttpServletRequest request, HttpServletResponse response) {
+		PayOrderTransactionLogImpl translog = null;
 		try {
 			StringBuffer json = new StringBuffer();
 		    String line = null;
@@ -208,101 +289,134 @@ public class WepayHandler implements IAjaxCommand, PaymentHandler {
 	        if (jsonStr.trim().length() == 0) {
 	        	return FAIL;
 	        }
-	        PayOrderTransactionLogImpl translog = new PayOrderTransactionLogImpl();
+	        translog = new PayOrderTransactionLogImpl();
+	        translog.setPaymentMethod(SettlementMethodType.WEIXI);
 	        translog.setLog(jsonStr);
-	        translog.setIsCorrect(true);
 	        translog.setCreateDate(new Date());
 	        
-	        JSONObject jsonObj = null;
-	        try {
-	        	jsonObj = new JSONObject(jsonStr);
-	        } catch (JSONException e) {
-	        	logger.info("Error json: " + jsonStr +", exception message: "+ e.getMessage());
-	        	return FAIL;
+	        //it's a sortable map
+	        StringBuffer keyValues = new StringBuffer();
+	        Map resultMap = StringUtil.xml2map(jsonStr);
+	        Set keys = resultMap.keySet();
+	        for (Object key : keys) {
+				keyValues.append(key).append("=").append(resultMap.get(key)).append("&");
 	        }
+	        keyValues.append("key=").append(MCH_APISECURE_KEY);
+	        JSONObject jsonObj = new JSONObject(resultMap);
 		    String sign = jsonObj.getString("sign");
-		    String timestamp = jsonObj.getString("timestamp");
-		    translog.setIsCorrect(PaymentUtil.verifySign(sign, timestamp));
-		    if (translog.getIsCorrect() || WepayHandler.enableDebugger) { //for secure check.
-		    	AccountingModel.INSTANCE.create(translog, true);
-		    	String transactionId = jsonObj.getString("transaction_id");
-		    	TransactionType transType = TransactionType.valueOf(jsonObj.getString("transaction_type").toUpperCase()); 
-				if (logger.isInfoEnabled()) {
-					logger.info("Received a callback payment: " + transactionId + ", transType: " + transType.name());
+		    if (sign.equals(encodeMD5(keyValues.toString(), "UTF-8").toUpperCase()) || WepayHandler.enableDebugger) { //for secure check.
+		    	
+		    	if (SUCCESS.equalsIgnoreCase(resultMap.get("return_code").toString())) {
+		    		translog.setIsCorrect(true);
+		    		
+		    		String transactionId = jsonObj.getString("out_trade_no");
+		    		jsonObj.put("transaction_fee", jsonObj.get("total_fee"));
+					jsonObj.put("trade_success", true);
+					jsonObj.put("transaction_id", transactionId);
+					jsonObj.put("message_detail", "");
+					jsonObj.put("transaction_type", TransactionType.PAY.toString());
+					if (logger.isInfoEnabled()) {
+						logger.info("Received a callback payment: " + transactionId);
+					}
+					
+			    	return updatePayOrder(translog, jsonObj, transactionId);
+				} else {
+					translog.setIsCorrect(false);
 				}
-				JSONObject orderDetail = jsonObj.getJSONObject("message_detail");
-		    	PayOrderImpl payOrder = new PayOrderImpl();
-		    	payOrder.setSerialNumber(transactionId);
-		    	List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(payOrder, null, 0, 1);
-		    	if (result != null && result.size() > 0) {
-		    		payOrder = (PayOrderImpl)result.get(0);
-		    		if (UserContext.getUserRoles() == null) {
-		    			//add payment callback role.
-		    			UserContext.addUserRule(CEUtil.toCEValue("Admin,10"));
-		    		}
-		    		//got adding this logic into workflow mission for tracing.
-		    		if (transType == TransactionType.PAY) {
-		    			if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
-		    				// already notified.
-		    				return SUCCESS;
-		    			}
-		    			FlowEvent e = new FlowEvent("PayFlowConsumer");
-		    			e.setAttribute("payOrder", payOrder);
-		    			e.setAttribute("translog", translog);
-		    			e.setAttribute("jsonObj", jsonObj);
-		    			e.setAttribute(BuiltInAttributeConstant.KEY_AdhocNodeName, "PrepayCallBack");
-		    			EventProcessor processor = (EventProcessor)AppContext.get().getService(
-		    					Class.forName("org.shaolin.bmdp.workflow.internal.WorkFlowEventProcessor"));
-		    			processor.process(e);
-		    			
-		    		} else if(transType == TransactionType.TRANSFER) {
-		    			//TODO:
-		    			FlowEvent e = new FlowEvent("TransferFlowConsumer");
-		    			e.setAttribute("payOrder", payOrder);
-		    			e.setAttribute("translog", translog);
-		    			e.setAttribute("jsonObj", jsonObj);
-		    			e.setAttribute(BuiltInAttributeConstant.KEY_AdhocNodeName, "TransferCallBack");
-		    			
-		    			EventProcessor processor = (EventProcessor)AppContext.get().getService(
-		    					Class.forName("org.shaolin.bmdp.workflow.internal.WorkFlowEventProcessor"));
-		    			processor.process(e);
-		    			
-		    		} else if(transType == TransactionType.REFUND) {
-		    			//TODO:
-		    			FlowEvent e = new FlowEvent("RefundFlowConsumer");
-		    			e.setAttribute("payOrder", payOrder);
-		    			e.setAttribute("translog", translog);
-		    			e.setAttribute("jsonObj", jsonObj);
-		    			e.setAttribute(BuiltInAttributeConstant.KEY_AdhocNodeName, "RefundCallBack");
-		    			
-		    			EventProcessor processor = (EventProcessor)AppContext.get().getService(
-		    					Class.forName("org.shaolin.bmdp.workflow.internal.WorkFlowEventProcessor"));
-		    			processor.process(e);
-		    		}
-		    	} else {
-		    		logger.warn("Payment order does not exist! id: " + transactionId);
-		    		// send notification to admin!
-		    		ICoordinatorService coorService = AppContext.get().getService(ICoordinatorService.class);
-		    		NotificationImpl message = new NotificationImpl();
-		    		message.setSubject("\u652F\u4ED8\u5F02\u5E38\u5355\u901A\u77E5\uFF01");
-		    		message.setDescription("\u652F\u4ED8\u8BA2\u5355\u4E0D\u5B58\u5728. id: " + transactionId + ",Details: " + orderDetail.toString());
-		    		message.setCreateDate(new Date());
-		    		coorService.addNotificationToAdmin(message, false);
-		    	}
-		    	//we have to send a success string back to Beecloud as required. 
+		    	//we have to send a success string back to Wepay as required. 
 				return SUCCESS;
 		    } else {
 		    	translog.setIsCorrect(false);
-		    	AccountingModel.INSTANCE.create(translog, true);
 		    }
 		} catch (Exception e) {
 			logger.warn("Error occurred while calling back from BeeCloud: " + e.getMessage(), e);
+		} finally {
+			if (translog != null) {
+				AccountingModel.INSTANCE.create(translog, true);
+			}
 		}
 		return FAIL;
+	}
+
+	private String updatePayOrder(PayOrderTransactionLogImpl translog, JSONObject jsonObj, String transactionId)
+			throws Exception {
+		PayOrderImpl payOrder = new PayOrderImpl();
+		payOrder.setSerialNumber(transactionId);
+		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(payOrder, null, 0, 1);
+		if (result != null && result.size() > 0) {
+			payOrder = (PayOrderImpl)result.get(0);
+			if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
+				// already notified.
+				return SUCCESS;
+			}
+			int momey = jsonObj.getInt("transaction_fee");//this is fun unit.
+			if (Double.valueOf(payOrder.getAmount()).intValue() != momey) {
+				translog.setIsCorrect(false);
+				logger.warn("Payment order("+payOrder.getSerialNumber()+") amount does not the same! PayOrder amount: " + payOrder.getAmount() + ", Callback amount: " + momey);
+				return FAIL;
+			}
+			updatePayState(jsonObj, payOrder);
+			// handle call back update.
+			IPaymentService payService = AppContext.get().getService(IPaymentService.class);
+			payService.notifyPaySuccess(payOrder);
+			
+			if (UserContext.getUserRoles() == null) {
+				//add payment callback role.
+				UserContext.addUserRule(CEUtil.toCEValue("Admin,10"));
+			}
+			FlowEvent e = new FlowEvent("PayFlowConsumer");
+			e.setAttribute("payOrder", payOrder);
+			e.setAttribute("jsonObj", jsonObj);
+			e.setAttribute(BuiltInAttributeConstant.KEY_AdhocNodeName, "PrepayCallBack");
+			EventProcessor processor = (EventProcessor)AppContext.get().getService(
+					Class.forName("org.shaolin.bmdp.workflow.internal.WorkFlowEventProcessor"));
+			processor.process(e);
+			return SUCCESS;
+			//got adding this logic into workflow mission for tracing.
+		} else {
+			logger.warn("Payment order does not exist! id: " + transactionId);
+			// send notification to admin!
+			ICoordinatorService coorService = AppContext.get().getService(ICoordinatorService.class);
+			NotificationImpl message = new NotificationImpl();
+			message.setSubject("\u652F\u4ED8\u5F02\u5E38\u5355\u901A\u77E5\uFF01");
+			message.setDescription("\u652F\u4ED8\u8BA2\u5355\u4E0D\u5B58\u5728. id: " + transactionId);
+			message.setCreateDate(new Date());
+			coorService.addNotificationToAdmin(message, false);
+			return FAIL;
+		}
 	}
 	
 	public boolean needUserSession() {
 		return false;
+	}
+	
+	private void updatePayState(final JSONObject jsonObj, final IPayOrder payOrder) throws PaymentException {
+		TransactionType transType;
+		String transactionId;
+		try {
+			transType = TransactionType.valueOf(jsonObj.getString("transaction_type").toUpperCase());
+			transactionId = jsonObj.getString("transaction_id");
+		} catch (JSONException e) {
+			throw new PaymentException("Error to get transaction_type! payment order: " + payOrder.getSerialNumber());
+		}
+		if (transType == TransactionType.PAY && payOrder.getStatus() == PayOrderStatusType.NOTPAYED) {
+			payOrder.setStatus(PayOrderStatusType.PAYED);
+			payOrder.setThirdGenSerialNumber(transactionId);
+			AccountingModel.INSTANCE.update(payOrder, true);
+		} else if (transType == TransactionType.REFUND && payOrder.getStatus() == PayOrderStatusType.PAYED) {
+			payOrder.setStatus(PayOrderStatusType.REFUND);
+			payOrder.setThirdGenSerialNumber2(transactionId);
+			AccountingModel.INSTANCE.update(payOrder, true);
+		} else if (transType == TransactionType.TRANSFER && payOrder.getStatus() == PayOrderStatusType.PAYED) {
+			payOrder.setStatus(PayOrderStatusType.AGREEDPAYTOEND);
+			payOrder.setThirdGenSerialNumber2(transactionId);
+			AccountingModel.INSTANCE.update(payOrder, true);
+		} else {
+			logger.warn("Unsupported state of payment order: " + payOrder.getSerialNumber() 
+				+ "(" + payOrder.getStatus().getDisplayName() 
+				+ "), transactionId: " + transactionId
+				+ ",transType: " + transType);
+		}
 	}
 	
 	/**

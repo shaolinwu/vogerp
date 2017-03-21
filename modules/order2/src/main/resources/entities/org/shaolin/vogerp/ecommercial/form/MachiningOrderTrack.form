@@ -215,6 +215,7 @@
                            import java.util.List;
                            import org.shaolin.uimaster.page.ajax.TableConditions;
                            import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                           import org.shaolin.vogerp.ecommercial.be.IMachiningOrder;
                            import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
                            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                            import org.shaolin.bmdp.runtime.AppContext; 
@@ -222,6 +223,7 @@
                            import org.shaolin.bmdp.runtime.security.UserContext;
                            import org.shaolin.vogerp.ecommercial.ce.GOrderType;
                            import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                           import org.shaolin.vogerp.accounting.IPaymentService;
                            {
                                  if ($tableCondition == null) {
                                     $tableCondition = TableConditions.createCondition(new MachiningOrderImpl());
@@ -232,10 +234,16 @@
                                  MachiningOrderImpl condition = (MachiningOrderImpl)$tableCondition.getCondition();
                                  condition.setPublishedCustomerId(UserContext.getUserContext().getUserId());
                                  condition.setStatus(OrderStatusType.TAKEN);
-                                 return OrderModel.INSTANCE.searchMachiningOrder(condition,
+                                 List result = OrderModel.INSTANCE.searchMachiningOrder(condition,
                                                $tableCondition.getOrders(),
                                                $tableCondition.getOffset(), 
                                                $tableCondition.getCount());
+                                 // sync payorder status.
+                                 IPaymentService payservice = (IPaymentService)AppContext.get().getService(IPaymentService.class);
+                                 for (int i=0; i<result.size(); i++) {
+                                     payservice.queryForPayStatus(((IMachiningOrder)result.get(i)).getSerialNumber());
+                                 }
+                                 return result;
                            }]]></ns2:expressionString>
                        </ns2:expression>
                    </ns2:query>

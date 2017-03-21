@@ -12,8 +12,6 @@ import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.bmdp.workflow.be.NotificationImpl;
 import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
 import org.shaolin.uimaster.page.AjaxFactory;
-import org.shaolin.uimaster.page.ajax.json.JSONException;
-import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.vogerp.accounting.IPaymentService;
 import org.shaolin.vogerp.accounting.PayOrderStatusListener;
 import org.shaolin.vogerp.accounting.PaymentException;
@@ -41,6 +39,10 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	private static final Logger logger = LoggerFactory.getLogger(PaymentServiceImpl.class);
 	
 	private List<PayOrderStatusListener> listeners = new ArrayList<PayOrderStatusListener>();
+	
+	private BCpayHandler behandler;
+	private AlipayHandler alipayHandler;
+	private WepayHandler wepayHandler;
 	
 	public PaymentServiceImpl() {
 	}
@@ -141,8 +143,42 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		return null;
 	}
 	
+	public String queryForPayStatus(final String busiOrderSerialNumber) throws PaymentException {
+		PayOrderImpl order0 = new PayOrderImpl();
+		order0.setOrderSerialNumber(busiOrderSerialNumber);
+		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order0, null, 0, 1);
+		if (result == null || result.size() == 0) {
+			return "-1";
+		}
+		IPayOrder order = result.get(0);
+		if (order.getCustomerAPaymentMethod() == SettlementMethodType.NOT_SPECIFIED) {
+			return "-1"; // not started.
+		}
+		if (SettlementMethodType.ALIPAY == order.getCustomerAPaymentMethod()) {
+			return alipayHandler.query(order);
+		} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
+			return wepayHandler.query(order);
+		} else if (SettlementMethodType.BEECLOUD == order.getCustomerAPaymentMethod()) {
+			return behandler.query(order);
+		} else {
+			throw new PaymentException("Unsupported query method: " + order.getCustomerAPaymentMethod());
+		}
+	}
+	
 	public String queryForPayStatus(final IPayOrder order) throws PaymentException {
-		return "";
+		if (order.getCustomerAPaymentMethod() == SettlementMethodType.NOT_SPECIFIED) {
+			return "-1"; // not started.
+		}
+		
+		if (SettlementMethodType.ALIPAY == order.getCustomerAPaymentMethod()) {
+			return alipayHandler.query(order);
+		} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
+			return wepayHandler.query(order);
+		} else if (SettlementMethodType.BEECLOUD == order.getCustomerAPaymentMethod()) {
+			return behandler.query(order);
+		} else {
+			throw new PaymentException("Unsupported query method: " + order.getCustomerAPaymentMethod());
+		}
 	}
 	
 	public IPayOrder queryForPayOrder(final String orderSerialNumber) {
@@ -246,44 +282,11 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		}
 	}
 	
-	public void updatePayState(final JSONObject jsonObj, final IPayOrder payOrder) throws PaymentException {
-		TransactionType transType;
-		String transactionId;
-		try {
-			transType = TransactionType.valueOf(jsonObj.getString("transaction_type").toUpperCase());
-			transactionId = jsonObj.getString("transaction_id");
-		} catch (JSONException e) {
-			throw new PaymentException("Error to get transaction_type! payment order: " + payOrder.getSerialNumber());
-		}
-		if (transType == TransactionType.PAY && payOrder.getStatus() == PayOrderStatusType.NOTPAYED) {
-			payOrder.setStatus(PayOrderStatusType.PAYED);
-			payOrder.setThirdGenSerialNumber(transactionId);
-			AccountingModel.INSTANCE.update(payOrder, true);
-		} else if (transType == TransactionType.REFUND && payOrder.getStatus() == PayOrderStatusType.PAYED) {
-			payOrder.setStatus(PayOrderStatusType.REFUND);
-			payOrder.setThirdGenSerialNumber2(transactionId);
-			AccountingModel.INSTANCE.update(payOrder, true);
-		} else if (transType == TransactionType.TRANSFER && payOrder.getStatus() == PayOrderStatusType.PAYED) {
-			payOrder.setStatus(PayOrderStatusType.AGREEDPAYTOEND);
-			payOrder.setThirdGenSerialNumber2(transactionId);
-			AccountingModel.INSTANCE.update(payOrder, true);
-		} else {
-			logger.warn("Unsupported state of payment order: " + payOrder.getSerialNumber() 
-				+ "(" + payOrder.getStatus().getDisplayName() 
-				+ "), transactionId: " + transactionId
-				+ ",transType: " + transType);
-		}
-	}
-	
 	@Override
 	public Class getServiceInterface() {
 		return IPaymentService.class;
 	}
 
-	private BCpayHandler behandler;
-	private AlipayHandler alipayHandler;
-	private WepayHandler wepayHandler;
-	
 	@Override
 	public void startService() {
 		String isDisabled = Registry.getInstance().getValue("/System/modules/disable/accounting");
@@ -300,9 +303,6 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		this.wepayHandler = new WepayHandler();
 		
 		AjaxFactory.register("BCWebHook", behandler);
-		AjaxFactory.register("AlipayWebHook", alipayHandler);
-		AjaxFactory.register("WepayWebHook", wepayHandler);
-		
 	}
 
 	@Override

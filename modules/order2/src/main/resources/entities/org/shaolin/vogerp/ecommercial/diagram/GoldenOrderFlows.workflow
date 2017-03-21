@@ -464,7 +464,7 @@
 				             input.put("editable", new Boolean(true));
 				             RefForm form = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PaymentMethod", input);
 				             $page.addElement(form);
-				             form.openInWindows("支付方式选择", null, 150, 100);
+				             form.openInWindows("支付方式选择", null, true);
                          } else {
 	                         long orgId = orgService.getOrgIdByPartyId($selectedPrice.getTakenCustomerId());
                              IPayOrder payOrder = accountingService.createPayOrder(PayBusinessType.GOLDENSORDERBUSI, 

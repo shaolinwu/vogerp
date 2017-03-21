@@ -39,11 +39,11 @@ public interface IPaymentService {
 	
 	public void cancelPayment(final IPayOrder order) throws PaymentException;
 	
-	public void updatePayState(JSONObject jsonObj, IPayOrder payOrder) throws PaymentException;
-	
 	public void requestForPayOrder(final IPayOrder order, final RequestStatusType state, final PayOrderRequestType type);
 	
 	public String queryForPayStatus(final IPayOrder order) throws PaymentException;
+	
+	public String queryForPayStatus(final String busiOrderSerialNumber) throws PaymentException;
 	
 	public IPayOrder queryForPayOrder(final String orderSerialNumber);
 	

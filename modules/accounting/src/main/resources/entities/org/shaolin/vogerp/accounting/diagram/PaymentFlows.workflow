@@ -20,9 +20,6 @@
                 <ns2:var name="payOrder" category="BusinessEntity" scope="Out">
                     <type entityName="org.shaolin.vogerp.accounting.be.PayOrder"></type>
                 </ns2:var>
-                <ns2:var name="translog" category="BusinessEntity" scope="Out">
-                    <type entityName="org.shaolin.vogerp.accounting.be.PayOrderTransactionLog"></type>
-                </ns2:var>
                 <ns2:var name="jsonObj" category="JavaClass" scope="Out">
                     <type entityName="org.shaolin.uimaster.page.ajax.json.JSONObject"></type>
                 </ns2:var>
@@ -41,35 +38,7 @@
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                     import org.shaolin.uimaster.page.ajax.json.JSONObject;
                     {
-                        int momey = $jsonObj.getInt("transaction_fee");//this is yuan unit.
-		    			if (Double.valueOf($payOrder.getAmount()).intValue() != momey) {
-		    				$translog.setIsCorrect(false);
-		    				AccountingModel.INSTANCE.update($translog, true);
-		    				PaymentServiceImpl.getLogger().warn("Payment order("+$payOrder.getSerialNumber()+") amount does not the same! PayOrder amount: " + $payOrder.getAmount() + ", Callback amount: " + momey);
-		    				return;
-		    			}
-	    				IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
-		    			if ($jsonObj.getBoolean("trade_success")) {
-		    			    String transactionId = $jsonObj.getString("transaction_id");
-		    				payService.updatePayState($jsonObj, $payOrder);
-		    				
-		    				// handle call back update.
-		    				payService.notifyPaySuccess($payOrder);
-		    			} else {
-		    			    // handle call back update.
-		    				payService.notifyPayFail($payOrder);
-		    				//notify user that the trade is not successful.
-		    				JSONObject orderDetail = $jsonObj.getJSONObject("message_detail");
-		    				
-		    				ICoordinatorService coorService = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
-		    				NotificationImpl message = new NotificationImpl();
-		    				message.setPartyId($payOrder.getUserId());
-		    				//message.setOrgId($payOrder.getOrderId());
-		    				message.setSubject("您有支付操作异常订单: " + $payOrder.getSerialNumber());
-		    				message.setDescription(orderDetail.toString());
-		    				message.setCreateDate(new Date());
-		    				coorService.addNotification(message, false);
-		    			}
+                        // only notified when success for deriving workflow.
                     }
                     ]]></expressionString>
                 </ns2:expression>
@@ -78,6 +47,7 @@
                 <ns2:dest name="PrepayCallBack"></ns2:dest>
             	<ns2:dest name="deliveryOrder" flow="PublishGoldenOrder" entity="org.shaolin.vogerp.ecommercial.diagram.GoldenOrderFlows"></ns2:dest>
             	<ns2:dest name="deliveryOrder" flow="PublishRentOrder" entity="org.shaolin.vogerp.ecommercial.diagram.RentOrderFlows"></ns2:dest>
+            	<ns2:dest name="deliveryOrder" flow="PublishRentOrder" entity="org.shaolin.vogerp.ecommercial.diagram.MachiningOrderFlows"></ns2:dest>
             </ns2:eventDest>
         </ns2:mission-node>
         

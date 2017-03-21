@@ -10,4 +10,6 @@ public interface PaymentHandler {
 	public String refund(IPayOrder payOrder) throws PaymentException;
 	
 	public String transfer(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException;
+	
+	public String query(final IPayOrder order) throws PaymentException;
 }

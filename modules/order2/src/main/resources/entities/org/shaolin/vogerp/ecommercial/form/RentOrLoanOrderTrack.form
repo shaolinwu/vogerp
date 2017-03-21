@@ -229,6 +229,7 @@
                            import org.shaolin.bmdp.runtime.security.UserContext;
                            import org.shaolin.vogerp.ecommercial.ce.GOrderType;
                            import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                           import org.shaolin.vogerp.accounting.IPaymentService;
                            {
                                  if ($tableCondition == null) {
                                     $tableCondition = TableConditions.createCondition(new RentOrLoanOrderImpl());
@@ -240,10 +241,17 @@
                                  condition.setPublishedCustomerId(UserContext.getUserContext().getUserId());
                                  condition.setTakenCustomerId(UserContext.getUserContext().getUserId());
                                  condition.setStatus(OrderStatusType.TAKEN);
-                                 return CustOrderModel.INSTANCE.searchRentOrLoanOrder(condition,
+                                 List result = CustOrderModel.INSTANCE.searchRentOrLoanOrder(condition,
                                                $tableCondition.getOrders(),
                                                $tableCondition.getOffset(), 
                                                $tableCondition.getCount());
+                                               
+                                 // sync payorder status.
+                                 IPaymentService payservice = (IPaymentService)AppContext.get().getService(IPaymentService.class);
+                                 for (int i=0; i<result.size(); i++) {
+                                     payservice.queryForPayStatus(((RentOrLoanOrderImpl)result.get(i)).getSerialNumber());
+                                 }
+                                 return result;
                            }]]></ns2:expressionString>
                        </ns2:expression>
                    </ns2:query>

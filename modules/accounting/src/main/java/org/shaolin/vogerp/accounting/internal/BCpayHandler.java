@@ -78,6 +78,9 @@ public class BCpayHandler implements IAjaxCommand, PaymentHandler {
 	public String prepay(final IPayOrder order) throws PaymentException {
 		if (order.getStatus() == PayOrderStatusType.NOTPAYED) {
 			try {
+				order.setCustomerAPaymentMethod(SettlementMethodType.ALIPAY);
+				AccountingModel.INSTANCE.update(order);
+				
 				Map<String, String> attributes = new HashMap<String, String>(
 						Registry.getInstance().getNodeItems("/System/payment/beecloud/buttonPay"));
 				attributes.putAll(paymentKeyInfo);
@@ -186,6 +189,10 @@ public class BCpayHandler implements IAjaxCommand, PaymentHandler {
 		}
 		
 		return json.toString();
+	}
+	
+	public String query(final IPayOrder order) throws PaymentException {
+		throw new UnsupportedOperationException();
 	}
 	
 	/*

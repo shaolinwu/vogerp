@@ -28,7 +28,7 @@
                    @page.executeJavaScript("UIMaster.appPay('"+htmlform+"', 'alipay')");
                } else {
 	               @page.getRequest().getSession().setAttribute("__htmlform", htmlform);
-	               @page.executeJavaScript("window.open('/uimaster/jsp/alipaywindow.jsp')");
+	               @page.executeJavaScript("UIMaster.util.forwardToPage('/uimaster/jsp/alipaywindow.jsp', true)");
 	               Dialog.showMessageDialog("如您支付完成，请点击“刷新”按钮查看支付是否成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
                }
             } catch (Exception e) {

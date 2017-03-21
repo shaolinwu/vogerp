@@ -32,6 +32,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     var differentiationUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "differentiationUI"]
+        ,showMaxLength: 100
     });
 
     var countUILabel = new UIMaster.ui.label
