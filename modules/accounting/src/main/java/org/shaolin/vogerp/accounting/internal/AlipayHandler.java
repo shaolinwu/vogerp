@@ -115,6 +115,10 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 		if (payOrder.getStatus() != PayOrderStatusType.NOTPAYED) {
 			return "";
 		}
+		if (payOrder.getCustomerAPaymentMethod() == SettlementMethodType.WEIXI) {
+			throw new PaymentException("It's already payed by Weixi!");
+		}
+		// TODO: check order status.
 		try {
 			payOrder.setCustomerAPaymentMethod(SettlementMethodType.ALIPAY);
 			AccountingModel.INSTANCE.update(payOrder);

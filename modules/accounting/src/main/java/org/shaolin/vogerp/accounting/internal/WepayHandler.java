@@ -129,6 +129,10 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 		if (payOrder.getStatus() != PayOrderStatusType.NOTPAYED) {
 			return "";
 		}
+		if (payOrder.getCustomerAPaymentMethod() == SettlementMethodType.ALIPAY) {
+			throw new PaymentException("It's already payed by Ali!");
+		}
+		//TODO: check order status!
 		try {
 			payOrder.setCustomerAPaymentMethod(SettlementMethodType.WEIXI);
 			AccountingModel.INSTANCE.update(payOrder);
