@@ -200,26 +200,25 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 			request.setBizContent("{\"out_trade_no\":\""+order.getSerialNumber()+"\"}");
 			AlipayTradeQueryResponse response = alipayClient.execute(request);
 			if(response.isSuccess()) { 
-				JSONObject jsonObj = new JSONObject(response.getBody());
-				
-				String transactionId = jsonObj.getString("out_trade_no");
-				jsonObj.put("transaction_fee", jsonObj.getDouble("total_amount"));
-				jsonObj.put("trade_success", true);
-				jsonObj.put("transaction_id", transactionId);
-				jsonObj.put("message_detail", "");
-				jsonObj.put("transaction_type", TransactionType.PAY.toString());
-				
-				PayOrderTransactionLogImpl translog = new PayOrderTransactionLogImpl();
-		        translog.setPaymentMethod(SettlementMethodType.WEIXI);
-		        translog.setLog(jsonObj.toString());
-		        translog.setCreateDate(new Date());
-		    	if ("TRADE_SUCCESS".equalsIgnoreCase(jsonObj.getString("trade_state"))) {
-		    		jsonObj.put("trade_success", true);
+				JSONObject responseInfo = new JSONObject(response.getBody());
+				JSONObject jsonObj = responseInfo.getJSONObject("alipay_trade_query_response");
+				if (jsonObj.has("trade_state") && "TRADE_SUCCESS".equalsIgnoreCase(jsonObj.getString("trade_state"))) {
+					String transactionId = jsonObj.getString("out_trade_no");
+					jsonObj.put("transaction_fee", jsonObj.getDouble("total_amount"));
+					jsonObj.put("transaction_id", transactionId);
+					jsonObj.put("trade_success", true);
+					jsonObj.put("message_detail", "");
+					jsonObj.put("transaction_type", TransactionType.PAY.toString());
+					
+					PayOrderTransactionLogImpl translog = new PayOrderTransactionLogImpl();
+			        translog.setPaymentMethod(SettlementMethodType.ALIPAY);
+			        translog.setLog(jsonObj.toString());
+			        translog.setCreateDate(new Date());
 		    		translog.setIsCorrect(true);
 		    		updatePayOrder(translog, transactionId, jsonObj);
 		    		AccountingModel.INSTANCE.create(translog, true);
 		    		return SUCCESS;
-		    	}
+				}
 			}
 	    	return FAIL;
 		} catch (AlipayApiException e) {

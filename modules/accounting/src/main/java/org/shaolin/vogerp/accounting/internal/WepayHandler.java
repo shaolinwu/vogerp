@@ -246,7 +246,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 			if (SUCCESS.equalsIgnoreCase(resultMap.get("return_code").toString()) 
 				&& SUCCESS.equalsIgnoreCase(resultMap.get("result_code").toString()) ) {
 				JSONObject jsonObj = new JSONObject(resultMap);
-				if (!SUCCESS.equals(jsonObj.getString("trade_state"))) {
+				if (!jsonObj.has("trade_state") || !SUCCESS.equals(jsonObj.getString("trade_state"))) {
 					//TODO:
 //					SUCCESS
 //					REFUND
