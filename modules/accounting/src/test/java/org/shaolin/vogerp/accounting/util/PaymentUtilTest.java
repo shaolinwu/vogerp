@@ -31,7 +31,7 @@ public class PaymentUtilTest {
 		AppContext.register(new AppServiceManagerImpl("test", PaymentUtilTest.class.getClassLoader()));
 		Registry.getInstance().initRegistry();
 		UserContext userContext = new UserContext();
-		userContext.setUserRequestIP("120.25.146.49");
+		userContext.setUserRequestIP("211.161.242.69");
 		UserContext.register(null, userContext, null, null, true);
 		
 		PayOrderImpl payOrder = new PayOrderImpl();
@@ -40,8 +40,8 @@ public class PaymentUtilTest {
 		payOrder.setUserId(3462);
 		payOrder.setEndUserId(3);
 		payOrder.setOrderSerialNumber("GOSN-2017-02-22-1000335-1971");
-		payOrder.setSerialNumber("PayO2017031317008598576");
-		payOrder.setDescription("[吴更申]");
+		payOrder.setSerialNumber("PayO2017031317008598372");
+		payOrder.setDescription("aaaa");
 		payOrder.setAmount(2000);
 		payOrder.setPayBusinessType(PayBusinessType.GOLDENPORDERBUSI);
 		payOrder.setStatus(PayOrderStatusType.NOTPAYED);

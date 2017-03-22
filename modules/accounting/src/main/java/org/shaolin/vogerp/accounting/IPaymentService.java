@@ -43,10 +43,8 @@ public interface IPaymentService {
 	
 	public String queryForPayStatus(final IPayOrder order) throws PaymentException;
 	
-	public String queryForPayStatus(final String busiOrderSerialNumber) throws PaymentException;
-	
 	public IPayOrder queryForPayOrder(final String orderSerialNumber);
 	
-	public PayOrderStatusType queryForPayOrderState(String orderSeriaNumber);
+	public PayOrderStatusType queryForPayStatus(final String busiOrderSerialNumber) throws PaymentException;
 	
 }

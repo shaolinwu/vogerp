@@ -140,6 +140,10 @@
             </bediagram:type>
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>payStatus</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>offerPrices</bediagram:name>
             <bediagram:type xsi:type="bediagram:BEListType">
                 <bediagram:elementType xsi:type="bediagram:BEObjRefType">

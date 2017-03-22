@@ -18,6 +18,7 @@ import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.EventProcessor;
 import org.shaolin.bmdp.runtime.spi.FlowEvent;
+import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.bmdp.workflow.be.NotificationImpl;
 import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
 import org.shaolin.bmdp.workflow.internal.BuiltInAttributeConstant;
@@ -56,9 +57,9 @@ import com.alipay.api.response.AlipayTradeQueryResponse;
  */
 public class AlipayHandler extends HttpServlet implements PaymentHandler {
 
-	private String charset = "UTF-8";
-	private static final String SUCCESS = "success";
-	private static final String FAIL = "failure";
+	private static String charset = "UTF-8";
+	public static final String SUCCESS = "success";
+	public static final String FAIL = "failure";
 	private static final Logger logger = LoggerFactory.getLogger(AlipayHandler.class);
 	
 	public static boolean enableDebugger = false;
@@ -69,7 +70,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 	private static final String KEY_TYPE = "RSA2";
 	private static final String ALIPAY_COMM_GATEWAY = "https://openapi.alipay.com/gateway.do";
 	
-	private static final String ALIPAY_NotifyUrl = "https://www.vogerp.com/uimaster/AlipayWebHook.do";
+	private static final String ALIPAY_NotifyUrl = "https://www.vogerp.com/uimaster/AlipayHandler";
 	
 	private AlipayClient alipayClient;
 	
@@ -115,10 +116,6 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 		if (payOrder.getStatus() != PayOrderStatusType.NOTPAYED) {
 			return "";
 		}
-		if (payOrder.getCustomerAPaymentMethod() == SettlementMethodType.WEIXI) {
-			throw new PaymentException("It's already payed by Weixi!");
-		}
-		// TODO: check order status.
 		try {
 			payOrder.setCustomerAPaymentMethod(SettlementMethodType.ALIPAY);
 			AccountingModel.INSTANCE.update(payOrder);
@@ -128,8 +125,8 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 				AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
 				AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
 				model.setSubject(PaymentUtil.getPaymentTitle(payOrder));
-				model.setBody(payOrder.getDescription());
-				model.setOutTradeNo(payOrder.getSerialNumber());
+				model.setBody(StringUtil.string2Unicode(StringUtil.truncateString(payOrder.getDescription(), 20)));
+				model.setOutTradeNo(payOrder.getSerialNumber());//FIXME: must be unique requested every time!
 				model.setTimeoutExpress("500m");
 				model.setTotalAmount((payOrder.getAmount() / 100) + "");
 				model.setProductCode("QUICK_MSECURITY_PAY");
@@ -283,7 +280,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 			} else {
 				translog.setIsCorrect(false);
 			}
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			logger.warn("Error occurred while calling back from Alipay: " + e.getMessage(), e);
 		} finally {
 			if (translog != null) {

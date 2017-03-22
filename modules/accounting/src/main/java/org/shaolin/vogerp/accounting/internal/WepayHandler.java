@@ -50,11 +50,11 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 
 	private String charset = "UTF-8";
 	
-	private static final String WEPAY_WEB_HOOK = "https://www.vogerp.com/uimaster/WepayWebHook.do";//no parameter as required!
+	private static final String WEPAY_WEB_HOOK = "https://www.vogerp.com/uimaster/WepayHandler";//no parameter as required!
 	private static final String UNIFIEDPAY_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 	private static final String UNIFIEDQUERY_URL = "https://api.mch.weixin.qq.com/pay/orderquery";
-	private static final String SUCCESS = "SUCCESS";
-	private static final String FAIL = "FAIL";
+	public static final String SUCCESS = "SUCCESS";
+	public static final String FAIL = "FAIL";
 	private static final Logger logger = LoggerFactory.getLogger(WepayHandler.class);
 	
 	public static boolean enableDebugger = false;
@@ -129,20 +129,16 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 		if (payOrder.getStatus() != PayOrderStatusType.NOTPAYED) {
 			return "";
 		}
-		if (payOrder.getCustomerAPaymentMethod() == SettlementMethodType.ALIPAY) {
-			throw new PaymentException("It's already payed by Ali!");
-		}
-		//TODO: check order status!
 		try {
 			payOrder.setCustomerAPaymentMethod(SettlementMethodType.WEIXI);
 			AccountingModel.INSTANCE.update(payOrder);
 			
 			HashMap<String, Object> values = new HashMap<String, Object>();
 			values.put("appid", APP_ID);
-			values.put("body", StringUtil.truncateString(payOrder.getDescription(), 120));
+			values.put("body", StringUtil.string2Unicode(StringUtil.truncateString(payOrder.getDescription(), 20)));
 			values.put("mch_id", MCH_ID);
 			values.put("nonce_str", StringUtil.genRandomAlphaBits(32));
-			values.put("out_trade_no", payOrder.getSerialNumber());
+			values.put("out_trade_no", payOrder.getSerialNumber());//FIXME: must be unique requested every time!
 			values.put("spbill_create_ip", UserContext.getUserContext().getRequestIP());
 			values.put("total_fee", ((int)payOrder.getAmount()) + ""); //fen
 			values.put("trade_type", UserContext.isAppClient() ?"APP" :"NATIVE");
@@ -343,7 +339,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 		    } else {
 		    	translog.setIsCorrect(false);
 		    }
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			logger.warn("Error occurred while calling back from BeeCloud: " + e.getMessage(), e);
 		} finally {
 			if (translog != null) {

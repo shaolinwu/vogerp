@@ -232,6 +232,7 @@
                            import org.shaolin.vogerp.ecommercial.ce.GOrderType;
                            import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                            import org.shaolin.vogerp.accounting.IPaymentService;
+                           import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
                            {
                                  if ($tableCondition == null) {
                                     $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
@@ -250,7 +251,9 @@
                                  // sync payorder status.
                                  IPaymentService payservice = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                                  for (int i=0; i<result.size(); i++) {
-                                     payservice.queryForPayStatus(((GoldenOrderImpl)result.get(i)).getSerialNumber());
+                                     GoldenOrderImpl order = ((GoldenOrderImpl)result.get(i));
+                                     PayOrderStatusType state = payservice.queryForPayStatus(order.getSerialNumber());
+                                     order.setPayStatus("("+state.getDisplayName()+")");
                                  }
                                  return result;
                            }]]></ns2:expressionString>
@@ -261,7 +264,15 @@
                            <ns2:value>序列号</ns2:value>
                        </ns2:title>
                        <ns2:beFieldId>rowBE.serialNumber</ns2:beFieldId>
-                       <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                       <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                       <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                           <ns2:expression xsi:type="ns2:ExpressionType">
+                               <ns2:expressionString><![CDATA[
+                               {
+                                   return $rowBE.getSerialNumber() + $rowBE.getPayStatus();
+                               }]]></ns2:expressionString>
+                           </ns2:expression>
+                       </ns2:rowExpression>
                    </ns2:column>
                    <ns2:column xsi:type="ns2:UITableColumnType">
                        <ns2:title xsi:type="ns2:StringPropertyType">
@@ -314,7 +325,17 @@
                            <ns2:value>描述</ns2:value>
                        </ns2:title>
                        <ns2:beFieldId>rowBE.description</ns2:beFieldId>
-                       <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                       <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                       <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                           <ns2:expression xsi:type="ns2:ExpressionType">
+                               <ns2:expressionString><![CDATA[
+                               import org.shaolin.bmdp.utils.StringUtil;
+				               {
+				                  return StringUtil.escape(StringUtil.getAbbreviatoryString($rowBE.getDescription(), 10));
+				               }
+                               ]]></ns2:expressionString>
+                           </ns2:expression>
+                       </ns2:rowExpression>
                    </ns2:column>
                    <ns2:column xsi:type="ns2:UITableColumnType">
                        <ns2:title xsi:type="ns2:StringPropertyType">

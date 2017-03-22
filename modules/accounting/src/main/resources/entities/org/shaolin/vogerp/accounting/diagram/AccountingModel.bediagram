@@ -682,7 +682,8 @@
         <bediagram:constantValue>
             <bediagram:value>Payed</bediagram:value>
             <bediagram:intValue>2</bediagram:intValue>
-            <bediagram:description>支付给平台</bediagram:description>
+            <!-- 已支付给平台 -->
+            <bediagram:description>已支付</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Refunding</bediagram:value>

@@ -73,6 +73,7 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 			final double amount) {
 		PayOrderImpl order = new PayOrderImpl();
 		order.setOrderSerialNumber(orderSerialNumber);
+		order.setEnabled(true);
 		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order, null, 0, 1);
 		if (result != null && result.size() > 0) {
 			return result.get(0);
@@ -94,6 +95,7 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 			final long endUserId, final String orderSerialNumber, final double amount) {
 		PayOrderImpl order = new PayOrderImpl();
 		order.setOrderSerialNumber(orderSerialNumber);
+		order.setEnabled(true);
 		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order, null, 0, 1);
 		if (result != null && result.size() > 0) {
 			return result.get(0);
@@ -115,6 +117,7 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 			final String orderSerialNumber, final double amount) {
 		PayOrderImpl order = new PayOrderImpl();
 		order.setOrderSerialNumber(orderSerialNumber);
+		order.setEnabled(true);
 		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order, null, 0, 1);
 		if (result != null && result.size() > 0) {
 			return result.get(0);
@@ -136,6 +139,7 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	public PayOrderStatusType queryForPayOrderState(String orderSeriaNumber) {
 		PayOrderImpl order = new PayOrderImpl();
 		order.setSerialNumber(orderSeriaNumber);
+		order.setEnabled(true);
 		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order, null, 0, 1);
 		if (result != null && result.size() > 0) {
 			return result.get(0).getStatus();
@@ -143,26 +147,33 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		return null;
 	}
 	
-	public String queryForPayStatus(final String busiOrderSerialNumber) throws PaymentException {
+	public PayOrderStatusType queryForPayStatus(final String busiOrderSerialNumber) throws PaymentException {
 		PayOrderImpl order0 = new PayOrderImpl();
 		order0.setOrderSerialNumber(busiOrderSerialNumber);
+		order0.setEnabled(true);
 		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order0, null, 0, 1);
 		if (result == null || result.size() == 0) {
-			return "-1";
+			return PayOrderStatusType.NOT_SPECIFIED;
 		}
 		IPayOrder order = result.get(0);
-		if (order.getCustomerAPaymentMethod() == SettlementMethodType.NOT_SPECIFIED) {
-			return "-1"; // not started.
+		if (order.getStatus() == PayOrderStatusType.NOTPAYED) {
+			String state = "";
+			if (SettlementMethodType.ALIPAY == order.getCustomerAPaymentMethod()) {
+				state = alipayHandler.query(order);
+			} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
+				state = wepayHandler.query(order);
+	//		} else if (SettlementMethodType.BEECLOUD == order.getCustomerAPaymentMethod()) {
+	//			return behandler.query(order);
+			} else {
+				throw new PaymentException("Unsupported query method: " + order.getCustomerAPaymentMethod());
+			}
+			
+			if (WepayHandler.SUCCESS.equalsIgnoreCase(state)) {
+				PayOrderImpl a = AccountingModel.INSTANCE.get(order.getId(), PayOrderImpl.class);
+				return a.getStatus();
+			}
 		}
-		if (SettlementMethodType.ALIPAY == order.getCustomerAPaymentMethod()) {
-			return alipayHandler.query(order);
-		} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
-			return wepayHandler.query(order);
-		} else if (SettlementMethodType.BEECLOUD == order.getCustomerAPaymentMethod()) {
-			return behandler.query(order);
-		} else {
-			throw new PaymentException("Unsupported query method: " + order.getCustomerAPaymentMethod());
-		}
+		return order.getStatus();
 	}
 	
 	public String queryForPayStatus(final IPayOrder order) throws PaymentException {
@@ -184,6 +195,7 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	public IPayOrder queryForPayOrder(final String orderSerialNumber) {
 		PayOrderImpl order = new PayOrderImpl();
 		order.setOrderSerialNumber(orderSerialNumber);
+		order.setEnabled(true);
 		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order, null, 0, 1);
 		if (result != null && result.size() > 0) {
 			return result.get(0);
@@ -226,9 +238,27 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	 * {@link BCpayHandler}
 	 */
 	public String prepay(final IPayOrder order) throws PaymentException {
+		if (order.getStatus() != PayOrderStatusType.NOTPAYED) {
+			throw new PaymentException("PayOrder is not in NOTPAY state! current state: " + order.getStatus());
+		}
+		
 		if (SettlementMethodType.ALIPAY == order.getCustomerAPaymentMethod()) {
+			if (order.getCustomerAPaymentMethod() == SettlementMethodType.WEIXI) {
+				if (WepayHandler.SUCCESS == wepayHandler.query(order)) {
+					throw new PaymentException("It's already payed by Weixi!");
+				} else {
+					// cancel weixi pay request!
+				}
+			}
 			return alipayHandler.prepay(order);
 		} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
+			if (order.getCustomerAPaymentMethod() == SettlementMethodType.ALIPAY) {
+				if (AlipayHandler.SUCCESS == alipayHandler.query(order)) {
+					throw new PaymentException("It's already payed by Ali!");
+				} else {
+					// cancel alipay request!
+				}
+			}
 			return wepayHandler.prepay(order);
 		} else if (SettlementMethodType.BEECLOUD == order.getCustomerAPaymentMethod()) {
 			return behandler.prepay(order);
