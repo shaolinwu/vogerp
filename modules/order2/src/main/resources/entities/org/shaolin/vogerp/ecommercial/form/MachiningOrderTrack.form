@@ -117,10 +117,10 @@
                 HashMap input = new HashMap();
                 input.put("beObject", defaultUser);
                 input.put("editable", new Boolean(false));
-                RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor", input);
+                RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.MachiningOrderWithResult", input);
                 @page.addElement(form);
                 
-                form.openInWindows("抢购订单详情", new TableCallBack("waitPaymentTable"), true);
+                form.openInWindows("加工订单详情", new TableCallBack("waitPaymentTable"), true);
             }
             ]]></ns2:expressionString>
         </ns2:exp>
