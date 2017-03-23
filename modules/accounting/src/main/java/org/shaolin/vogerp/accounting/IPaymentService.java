@@ -1,6 +1,5 @@
 package org.shaolin.vogerp.accounting;
 
-import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.vogerp.accounting.be.ICustomerAccount;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
 import org.shaolin.vogerp.accounting.ce.PayBusinessType;
@@ -41,10 +40,24 @@ public interface IPaymentService {
 	
 	public void requestForPayOrder(final IPayOrder order, final RequestStatusType state, final PayOrderRequestType type);
 	
-	public String queryForPayStatus(final IPayOrder order) throws PaymentException;
-	
 	public IPayOrder queryForPayOrder(final String orderSerialNumber);
 	
+	/**
+	 * Query for a payment state!
+	 * 
+	 * @param order
+	 * @return
+	 * @throws PaymentException
+	 */
+	public PayOrderStatusType queryForPayStatus(final IPayOrder order) throws PaymentException;
+	
+	/**
+	 * Query for a payment state by business order serial number!
+	 * 
+	 * @param busiOrderSerialNumber
+	 * @return
+	 * @throws PaymentException
+	 */
 	public PayOrderStatusType queryForPayStatus(final String busiOrderSerialNumber) throws PaymentException;
 	
 }

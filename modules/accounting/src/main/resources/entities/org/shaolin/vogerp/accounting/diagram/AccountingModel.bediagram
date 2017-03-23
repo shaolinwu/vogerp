@@ -68,6 +68,14 @@
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>
+            <!-- this attribute is purposed on the order number of third payment interface. 
+                 because we can't use serialNumber as outTradeNo for multiple times(user could try multiple times indeed).
+                 outTradeNo must be guaranteed as an unique everytime when we make a payment.
+              -->
+            <bediagram:name>outTradeNo</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>description</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>

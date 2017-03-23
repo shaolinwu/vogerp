@@ -176,20 +176,29 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		return order.getStatus();
 	}
 	
-	public String queryForPayStatus(final IPayOrder order) throws PaymentException {
-		if (order.getCustomerAPaymentMethod() == SettlementMethodType.NOT_SPECIFIED) {
-			return "-1"; // not started.
+	public PayOrderStatusType queryForPayStatus(final IPayOrder oldorder) throws PaymentException {
+		if (oldorder.getCustomerAPaymentMethod() == SettlementMethodType.NOT_SPECIFIED) {
+			return PayOrderStatusType.NOT_SPECIFIED;
 		}
-		
-		if (SettlementMethodType.ALIPAY == order.getCustomerAPaymentMethod()) {
-			return alipayHandler.query(order);
-		} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
-			return wepayHandler.query(order);
-		} else if (SettlementMethodType.BEECLOUD == order.getCustomerAPaymentMethod()) {
-			return behandler.query(order);
-		} else {
-			throw new PaymentException("Unsupported query method: " + order.getCustomerAPaymentMethod());
+		PayOrderImpl order = AccountingModel.INSTANCE.get(oldorder.getId(), PayOrderImpl.class);
+		if (order.getStatus() == PayOrderStatusType.NOTPAYED) {
+			String state = "";
+			if (SettlementMethodType.ALIPAY == order.getCustomerAPaymentMethod()) {
+				state = alipayHandler.query(order);
+			} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
+				state = wepayHandler.query(order);
+	//		} else if (SettlementMethodType.BEECLOUD == order.getCustomerAPaymentMethod()) {
+	//			return behandler.query(order);
+			} else {
+				throw new PaymentException("Unsupported query method: " + order.getCustomerAPaymentMethod());
+			}
+			
+			if (WepayHandler.SUCCESS.equalsIgnoreCase(state)) {
+				PayOrderImpl a = AccountingModel.INSTANCE.get(order.getId(), PayOrderImpl.class);
+				return a.getStatus();
+			}
 		}
+		return order.getStatus();
 	}
 	
 	public IPayOrder queryForPayOrder(final String orderSerialNumber) {
@@ -243,22 +252,8 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		}
 		
 		if (SettlementMethodType.ALIPAY == order.getCustomerAPaymentMethod()) {
-			if (order.getCustomerAPaymentMethod() == SettlementMethodType.WEIXI) {
-				if (WepayHandler.SUCCESS == wepayHandler.query(order)) {
-					throw new PaymentException("It's already payed by Weixi!");
-				} else {
-					// cancel weixi pay request!
-				}
-			}
 			return alipayHandler.prepay(order);
 		} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
-			if (order.getCustomerAPaymentMethod() == SettlementMethodType.ALIPAY) {
-				if (AlipayHandler.SUCCESS == alipayHandler.query(order)) {
-					throw new PaymentException("It's already payed by Ali!");
-				} else {
-					// cancel alipay request!
-				}
-			}
 			return wepayHandler.prepay(order);
 		} else if (SettlementMethodType.BEECLOUD == order.getCustomerAPaymentMethod()) {
 			return behandler.prepay(order);

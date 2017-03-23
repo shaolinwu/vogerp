@@ -110,6 +110,9 @@ public class AccountingModel extends BEEntityDaoObject {
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
             }
+            if (scObject.getOutTradeNo() != null && scObject.getOutTradeNo().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.outTradeNo", scObject.getOutTradeNo()));
+            }
             if (scObject.getOrderSerialNumber() != null && scObject.getOrderSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orderSerialNumber", scObject.getOrderSerialNumber()));
             }
@@ -143,6 +146,9 @@ public class AccountingModel extends BEEntityDaoObject {
             }
             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getOutTradeNo() != null && scObject.getOutTradeNo().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.outTradeNo", scObject.getOutTradeNo()));
             }
             if (scObject.getOrderSerialNumber() != null && scObject.getOrderSerialNumber().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orderSerialNumber", scObject.getOrderSerialNumber()));

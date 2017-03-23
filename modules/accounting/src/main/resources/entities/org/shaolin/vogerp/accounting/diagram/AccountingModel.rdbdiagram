@@ -37,7 +37,8 @@
     <ns2:column name="ORGID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="USERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="ORDERSERIALNUMBER" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="SERIALNUMBER" type="VARCHAR" length="5" isNull="true"></ns2:column>
+    <ns2:column name="SERIALNUMBER" type="VARCHAR" length="50" isNull="true"></ns2:column>
+    <ns2:column name="OUTTRADENO" type="VARCHAR" length="50" isNull="true"></ns2:column>
     <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="AMOUNT" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="PAYRETURNURL" type="VARCHAR" isNull="true"></ns2:column>
@@ -65,6 +66,7 @@
       <ns2:fieldMapping beFieldName="userId" columnName="USERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="orderSerialNumber" columnName="ORDERSERIALNUMBER"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="serialNumber" columnName="SERIALNUMBER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="outTradeNo" columnName="OUTTRADENO"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="amount" columnName="AMOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="status" columnName="STATUS"></ns2:fieldMapping>
@@ -452,6 +454,20 @@
         </ns2:conditionValue>
       </ns2:fieldMapping>
       <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.outTradeNo</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+             <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.outTradeNo</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getOutTradeNo() != null && scObject.getOutTradeNo().length() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
         <ns2:toDataFieldPath>inObject.orderSerialNumber</ns2:toDataFieldPath>
         <ns2:conditionValue>
           <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
@@ -625,7 +641,6 @@
       </ns2:searchConditionData>
     </ns2:searchConditionMapping>
   </ns2:query>
-  
   
   <ns2:query queryName="searchDoubleEntry">
     <ns2:searchResult name="outObject" category="BusinessEntity">

@@ -118,6 +118,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 		}
 		try {
 			payOrder.setCustomerAPaymentMethod(SettlementMethodType.ALIPAY);
+			payOrder.setOutTradeNo(PaymentUtil.genOutTradeNumber());
 			AccountingModel.INSTANCE.update(payOrder);
 			
 			if (UserContext.isMobileRequest() && UserContext.isAppClient()) {
@@ -126,7 +127,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 				AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
 				model.setSubject(PaymentUtil.getPaymentTitle(payOrder));
 				model.setBody(StringUtil.string2Unicode(StringUtil.truncateString(payOrder.getDescription(), 20)));
-				model.setOutTradeNo(payOrder.getSerialNumber());//FIXME: must be unique requested every time!
+				model.setOutTradeNo(payOrder.getOutTradeNo());//must be unique requested every time!
 				model.setTimeoutExpress("500m");
 				model.setTotalAmount((payOrder.getAmount() / 100) + "");
 				model.setProductCode("QUICK_MSECURITY_PAY");
@@ -143,7 +144,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 			    alipayRequest.setNotifyUrl(ALIPAY_NotifyUrl);
 //    		    alipayRequest.setReturnUrl("http://domain.com/CallBack/return_url.jsp");
 				JSONObject json = new JSONObject();
-				json.put("out_trade_no", payOrder.getSerialNumber());
+				json.put("out_trade_no", payOrder.getOutTradeNo());
 				json.put("timeout_express", "500m");
 				json.put("product_code", "QUICK_WAP_PAY");
 				json.put("total_amount", payOrder.getAmount() / 100); //yuan with double.
@@ -194,15 +195,15 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 		}
 		try {
 			AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
-			request.setBizContent("{\"out_trade_no\":\""+order.getSerialNumber()+"\"}");
+			request.setBizContent("{\"out_trade_no\":\""+order.getOutTradeNo()+"\"}");
 			AlipayTradeQueryResponse response = alipayClient.execute(request);
 			if(response.isSuccess()) { 
 				JSONObject responseInfo = new JSONObject(response.getBody());
 				JSONObject jsonObj = responseInfo.getJSONObject("alipay_trade_query_response");
 				if (jsonObj.has("trade_state") && "TRADE_SUCCESS".equalsIgnoreCase(jsonObj.getString("trade_state"))) {
-					String transactionId = jsonObj.getString("out_trade_no");
+					String out_trade_no = jsonObj.getString("out_trade_no");
 					jsonObj.put("transaction_fee", jsonObj.getDouble("total_amount"));
-					jsonObj.put("transaction_id", transactionId);
+					jsonObj.put("transaction_id", out_trade_no);
 					jsonObj.put("trade_success", true);
 					jsonObj.put("message_detail", "");
 					jsonObj.put("transaction_type", TransactionType.PAY.toString());
@@ -212,7 +213,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 			        translog.setLog(jsonObj.toString());
 			        translog.setCreateDate(new Date());
 		    		translog.setIsCorrect(true);
-		    		updatePayOrder(translog, transactionId, jsonObj);
+		    		updatePayOrder(translog, out_trade_no, jsonObj);
 		    		AccountingModel.INSTANCE.create(translog, true);
 		    		return SUCCESS;
 				}
@@ -262,18 +263,18 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 					translog.setIsCorrect(true);
 					AccountingModel.INSTANCE.create(translog, true);
 					
-					String transactionId = params.get("out_trade_no");
+					String out_trade_no = params.get("out_trade_no");
 					JSONObject jsonObj = new JSONObject(requestParams);
 					jsonObj.put("transaction_fee", jsonObj.get("total_amount"));
 					jsonObj.put("trade_success", true);
-					jsonObj.put("transaction_id", transactionId);
+					jsonObj.put("transaction_id", out_trade_no);
 					jsonObj.put("message_detail", "");
 					jsonObj.put("transaction_type", TransactionType.PAY.toString());
 					
 					if (logger.isInfoEnabled()) {
-						logger.info("Received a callback payment: " + transactionId);
+						logger.info("Received a callback payment: " + out_trade_no);
 					}
-					return updatePayOrder(translog, transactionId, jsonObj);
+					return updatePayOrder(translog, out_trade_no, jsonObj);
 				} else {
 					translog.setIsCorrect(false);
 				}
@@ -290,10 +291,10 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 		return FAIL;
 	}
 
-	private String updatePayOrder(PayOrderTransactionLogImpl translog, String transactionId, JSONObject jsonObj)
+	private String updatePayOrder(PayOrderTransactionLogImpl translog, String out_trade_no, JSONObject jsonObj)
 			throws Exception {
 		PayOrderImpl payOrder = new PayOrderImpl();
-		payOrder.setSerialNumber(transactionId);
+		payOrder.setOutTradeNo(out_trade_no);
 		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(payOrder, null, 0, 1);
 		if (result != null && result.size() > 0) {
 			payOrder = (PayOrderImpl)result.get(0);
@@ -324,12 +325,12 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 					Class.forName("org.shaolin.bmdp.workflow.internal.WorkFlowEventProcessor"));
 			processor.process(e);
 		} else {
-			logger.warn("Payment order does not exist! id: " + transactionId);
+			logger.warn("Payment order does not exist! id: " + out_trade_no);
 			// send notification to admin!
 			ICoordinatorService coorService = AppContext.get().getService(ICoordinatorService.class);
 			NotificationImpl message = new NotificationImpl();
 			message.setSubject("\u652F\u4ED8\u5F02\u5E38\u5355\u901A\u77E5\uFF01");
-			message.setDescription("\u652F\u4ED8\u8BA2\u5355\u4E0D\u5B58\u5728. id: " + transactionId);
+			message.setDescription("\u652F\u4ED8\u8BA2\u5355\u4E0D\u5B58\u5728. id: " + out_trade_no);
 			message.setCreateDate(new Date());
 			coorService.addNotificationToAdmin(message, false);
 		}

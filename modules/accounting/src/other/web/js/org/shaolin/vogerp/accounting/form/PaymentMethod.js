@@ -113,6 +113,14 @@ function org_shaolin_vogerp_accounting_form_PaymentMethod(json)
         var o = this;
         var UIEntity = this;
 
+        {   
+           if (this.alipayActionFlag && this.alipayActionFlag == "1") {
+              alert("\u4E0D\u53EF\u91CD\u590D\u63D0\u4EA4! \u8BF7\u5237\u65B0\u9875\u9762\uFF0C\u91CD\u65B0\u652F\u4ED8\uFF01");
+              return;
+           }
+           this.alipayActionFlag = "1";
+        }
+        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"alipayAction-20170211-201347",UIMaster.getValue(eventsource),o.__entityName);
@@ -124,6 +132,14 @@ function org_shaolin_vogerp_accounting_form_PaymentMethod(json)
         var o = this;
         var UIEntity = this;
 
+        {   
+           if (this.wepayActionFlag && this.wepayActionFlag == "1") {
+              alert("\u4E0D\u53EF\u91CD\u590D\u63D0\u4EA4! \u8BF7\u5237\u65B0\u9875\u9762\uFF0C\u91CD\u65B0\u652F\u4ED8\uFF01");
+              return;
+           }
+           this.wepayActionFlag = "1";
+        }
+        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"wepayAction-20170211-201347",UIMaster.getValue(eventsource),o.__entityName);

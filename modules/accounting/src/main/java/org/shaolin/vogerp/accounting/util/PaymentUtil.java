@@ -59,6 +59,17 @@ public class PaymentUtil {
 	}
 	
 	/**
+	 * Weixi does not support '-' symbol in the serial number.
+	 * 
+	 * @return
+	 */
+	public synchronized static String genOutTradeNumber() {
+		DateParser parse = new DateParser(new Date());
+		return "OTN" + parse.format(parse.getYear(), 4) + parse.format(parse.getMonth(), 2) + parse.format(parse.getDays(), 2) 
+				+ parse.format(parse.getHours(), 2) + parse.format(parse.getMilliSeconds(), 5) + (int)(Math.random() * 10000);
+	}
+	
+	/**
 	 * BeeCloud MD5
 	 *
 	 * @param appId

@@ -38,6 +38,7 @@ import org.shaolin.vogerp.accounting.be.PayOrderTransactionLogImpl;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
 import org.shaolin.vogerp.accounting.ce.SettlementMethodType;
 import org.shaolin.vogerp.accounting.dao.AccountingModel;
+import org.shaolin.vogerp.accounting.util.PaymentUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -131,6 +132,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 		}
 		try {
 			payOrder.setCustomerAPaymentMethod(SettlementMethodType.WEIXI);
+			payOrder.setOutTradeNo(PaymentUtil.genOutTradeNumber());
 			AccountingModel.INSTANCE.update(payOrder);
 			
 			HashMap<String, Object> values = new HashMap<String, Object>();
@@ -138,7 +140,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 			values.put("body", StringUtil.string2Unicode(StringUtil.truncateString(payOrder.getDescription(), 20)));
 			values.put("mch_id", MCH_ID);
 			values.put("nonce_str", StringUtil.genRandomAlphaBits(32));
-			values.put("out_trade_no", payOrder.getSerialNumber());//FIXME: must be unique requested every time!
+			values.put("out_trade_no", payOrder.getOutTradeNo());//must be unique requested every time!
 			values.put("spbill_create_ip", UserContext.getUserContext().getRequestIP());
 			values.put("total_fee", ((int)payOrder.getAmount()) + ""); //fen
 			values.put("trade_type", UserContext.isAppClient() ?"APP" :"NATIVE");
@@ -224,7 +226,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 			HashMap<String, Object> values = new HashMap<String, Object>();
 			values.put("appid", APP_ID);
 			values.put("mch_id", MCH_ID);
-			values.put("out_trade_no", payOrder.getSerialNumber());
+			values.put("out_trade_no", payOrder.getOutTradeNo());
 			values.put("nonce_str", StringUtil.genRandomAlphaBits(32));
 			
 			StringBuffer keyValues = new StringBuffer();
@@ -254,13 +256,13 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 					// not payed!
 					return FAIL;
 				}
-				String transactionId = jsonObj.getString("out_trade_no");
+				String out_trade_no = jsonObj.getString("out_trade_no");
 	    		jsonObj.put("transaction_fee", jsonObj.getInt("total_fee"));
-				jsonObj.put("transaction_id", transactionId);
+				jsonObj.put("transaction_id", out_trade_no);
 				jsonObj.put("transaction_type", TransactionType.PAY.toString());
 				jsonObj.put("message_detail", "");
 				if (logger.isInfoEnabled()) {
-					logger.info("Received a callback payment: " + transactionId);
+					logger.info("Received a callback payment: " + out_trade_no);
 				}
 				PayOrderTransactionLogImpl translog = new PayOrderTransactionLogImpl();
 		        translog.setPaymentMethod(SettlementMethodType.WEIXI);
@@ -269,7 +271,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 		    	if (SUCCESS.equalsIgnoreCase(resultMap.get("trade_state").toString())) {
 		    		jsonObj.put("trade_success", true);
 		    		translog.setIsCorrect(true);
-		    		updatePayOrder(translog, jsonObj, transactionId);
+		    		updatePayOrder(translog, jsonObj, out_trade_no);
 		    	} else {
 		    		translog.setIsCorrect(false);
 		    	}
@@ -320,17 +322,17 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 		    	if (SUCCESS.equalsIgnoreCase(resultMap.get("return_code").toString())) {
 		    		translog.setIsCorrect(true);
 		    		
-		    		String transactionId = jsonObj.getString("out_trade_no");
+		    		String out_trade_no = jsonObj.getString("out_trade_no");
 		    		jsonObj.put("transaction_fee", jsonObj.get("total_fee"));
 					jsonObj.put("trade_success", true);
-					jsonObj.put("transaction_id", transactionId);
+					jsonObj.put("transaction_id", out_trade_no);
 					jsonObj.put("message_detail", "");
 					jsonObj.put("transaction_type", TransactionType.PAY.toString());
 					if (logger.isInfoEnabled()) {
-						logger.info("Received a callback payment: " + transactionId);
+						logger.info("Received a callback payment: " + out_trade_no);
 					}
 					
-			    	return updatePayOrder(translog, jsonObj, transactionId);
+			    	return updatePayOrder(translog, jsonObj, out_trade_no);
 				} else {
 					translog.setIsCorrect(false);
 				}
@@ -349,10 +351,10 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 		return FAIL;
 	}
 
-	private String updatePayOrder(PayOrderTransactionLogImpl translog, JSONObject jsonObj, String transactionId)
+	private String updatePayOrder(PayOrderTransactionLogImpl translog, JSONObject jsonObj, String out_trade_no)
 			throws Exception {
 		PayOrderImpl payOrder = new PayOrderImpl();
-		payOrder.setSerialNumber(transactionId);
+		payOrder.setOutTradeNo(out_trade_no);
 		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(payOrder, null, 0, 1);
 		if (result != null && result.size() > 0) {
 			payOrder = (PayOrderImpl)result.get(0);
@@ -385,12 +387,12 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 			return SUCCESS;
 			//got adding this logic into workflow mission for tracing.
 		} else {
-			logger.warn("Payment order does not exist! id: " + transactionId);
+			logger.warn("Payment order does not exist! id: " + out_trade_no);
 			// send notification to admin!
 			ICoordinatorService coorService = AppContext.get().getService(ICoordinatorService.class);
 			NotificationImpl message = new NotificationImpl();
 			message.setSubject("\u652F\u4ED8\u5F02\u5E38\u5355\u901A\u77E5\uFF01");
-			message.setDescription("\u652F\u4ED8\u8BA2\u5355\u4E0D\u5B58\u5728. id: " + transactionId);
+			message.setDescription("\u652F\u4ED8\u8BA2\u5355\u4E0D\u5B58\u5728. id: " + out_trade_no);
 			message.setCreateDate(new Date());
 			coorService.addNotificationToAdmin(message, false);
 			return FAIL;
