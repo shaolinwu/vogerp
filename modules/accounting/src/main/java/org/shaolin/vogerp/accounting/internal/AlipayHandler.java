@@ -200,7 +200,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 			if(response.isSuccess()) { 
 				JSONObject responseInfo = new JSONObject(response.getBody());
 				JSONObject jsonObj = responseInfo.getJSONObject("alipay_trade_query_response");
-				if (jsonObj.has("trade_state") && "TRADE_SUCCESS".equalsIgnoreCase(jsonObj.getString("trade_state"))) {
+				if (jsonObj.has("trade_status") && "TRADE_SUCCESS".equalsIgnoreCase(jsonObj.getString("trade_status"))) {
 					String out_trade_no = jsonObj.getString("out_trade_no");
 					jsonObj.put("transaction_fee", jsonObj.getDouble("total_amount"));
 					jsonObj.put("transaction_id", out_trade_no);
@@ -254,17 +254,17 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 	        translog.setPaymentMethod(SettlementMethodType.ALIPAY);
 	        translog.setLog(params.toString());
 	        translog.setCreateDate(new Date());
-			if (AlipaySignature.rsaCheckV2(params, ALIPAY_PUBLIC_KEY, "UTF-8", KEY_TYPE) || AlipayHandler.enableDebugger) {
+			if (AlipaySignature.rsaCheckV1(params, ALIPAY_PUBLIC_KEY, "UTF-8", KEY_TYPE) || AlipayHandler.enableDebugger) {
 //				params.get("out_trade_no");
 //				params.get("trade_no");
 //				params.get("trade_status");
 				
-				if (params.get("trade_status").equals("TRADE_SUCCESS")) {
+				if (params.containsKey("trade_status") && params.get("trade_status").equals("TRADE_SUCCESS")) {
 					translog.setIsCorrect(true);
 					AccountingModel.INSTANCE.create(translog, true);
 					
 					String out_trade_no = params.get("out_trade_no");
-					JSONObject jsonObj = new JSONObject(requestParams);
+					JSONObject jsonObj = new JSONObject(new HashMap(requestParams));
 					jsonObj.put("transaction_fee", jsonObj.get("total_amount"));
 					jsonObj.put("trade_success", true);
 					jsonObj.put("transaction_id", out_trade_no);

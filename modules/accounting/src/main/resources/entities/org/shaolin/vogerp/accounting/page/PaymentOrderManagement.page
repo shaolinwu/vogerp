@@ -675,18 +675,6 @@
         <ns2:clientAction xsi:type="ns2:ExpressionType">
             <ns2:expressionString><![CDATA[
 			{
-				BC.err = function(data) {
-                    //注册错误信息接受
-                    alert(data["ERROR"]);
-                }
-                /**
-                 * click调用错误返回：默认行为console.log(err)
-                 */
-                BC.err = function(err) {
-                    //err 为object, 例 ｛”ERROR“ : "xxxx"｝;
-                    console.log(err);
-                    alert(err["ERROR"]);
-                }
 			}
 			]]></ns2:expressionString>
         </ns2:clientAction>

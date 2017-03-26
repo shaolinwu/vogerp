@@ -187,9 +187,9 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 				state = alipayHandler.query(order);
 			} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
 				state = wepayHandler.query(order);
-	//		} else if (SettlementMethodType.BEECLOUD == order.getCustomerAPaymentMethod()) {
-	//			return behandler.query(order);
-			} else {
+			} else if (SettlementMethodType.NOT_SPECIFIED == order.getCustomerAPaymentMethod()) {
+				return PayOrderStatusType.NOTPAYED;
+			}  else {
 				throw new PaymentException("Unsupported query method: " + order.getCustomerAPaymentMethod());
 			}
 			
