@@ -623,6 +623,10 @@
 			<bediagram:name>id</bediagram:name>
 			<bediagram:type xsi:type="bediagram:LongType" />
 		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>userId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
 		<!-- compressed address info -->
 		<bediagram:member>
 			<bediagram:name>address</bediagram:name>

@@ -3,80 +3,18 @@
 function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var funcsPanel = new UIMaster.ui.tab
+    var paymentTable = new UIMaster.ui.objectlist
     ({
-        ui: elementList[prefix + "funcsPanel"]
-        ,items: []
-        ,subComponents: [prefix + "waitPaymentPanel",prefix + "waitDeliveryPanel",prefix + "deliveringPanel",prefix + "completedPanel"]
-    });
-    var waitPaymentTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "waitPaymentTable"]
-    });
-
-    var waitPaymentPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "waitPaymentPanel"]
-        ,items: []
-        ,subComponents: [prefix + "waitPaymentTable"]
-    });
-    var waitDeliveryTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "waitDeliveryTable"]
-    });
-
-    var waitDeliveryPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "waitDeliveryPanel"]
-        ,items: []
-        ,subComponents: [prefix + "waitDeliveryTable"]
-    });
-    var deliveringTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "deliveringTable"]
-    });
-
-    var deliveringPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "deliveringPanel"]
-        ,items: []
-        ,subComponents: [prefix + "deliveringTable"]
-    });
-    var completedTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "completedTable"]
-    });
-
-    var completedPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "completedPanel"]
-        ,items: []
-        ,subComponents: [prefix + "completedTable"]
+        ui: elementList[prefix + "paymentTable"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [funcsPanel]
+        ,items: [paymentTable]
     });
 
-    Form.funcsPanel=funcsPanel;
-
-    Form.waitPaymentPanel=waitPaymentPanel;
-
-    Form.waitPaymentTable=waitPaymentTable;
-
-    Form.waitDeliveryPanel=waitDeliveryPanel;
-
-    Form.waitDeliveryTable=waitDeliveryTable;
-
-    Form.deliveringPanel=deliveringPanel;
-
-    Form.deliveringTable=deliveringTable;
-
-    Form.completedPanel=completedPanel;
-
-    Form.completedTable=completedTable;
+    Form.paymentTable=paymentTable;
 
     Form.user_constructor = function()
     {
@@ -84,37 +22,14 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack(json)
 
         
 	    {
-	       // workflow dynamic actions
-	       Form.deliveryOrder = function() {
-	          if (Form.waitDeliveryTable._selectedIndex < 0) {
-	              alert("Please select an item!");
-	              return;
-	          }
-	          Form.waitDeliveryTable.syncBodyDataToServer();
-              Form.waitDeliveryTable.sync();
-	          Form.invokeDynamicFunction(Form.waitDeliveryTable, "deliveryOrder");
-	       };
-	       Form.receivedOrder = function() {
-	          if (Form.deliveringTable._selectedIndex < 0) {
-	              alert("Please select an item!");
-	              return;
-	          }
-	          Form.deliveringTable.syncBodyDataToServer();
-              Form.deliveringTable.sync();
-	          Form.invokeDynamicFunction(Form.deliveringTable, "receivedOrder");
-	       };
 		}
     
             /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack */
     };
 
-    Form.payGoldenOrder = org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_payGoldenOrder;
-
-    Form.checkDeliveryStatus = org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_checkDeliveryStatus;
-
     Form.openTakenGoldenOrder = org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_openTakenGoldenOrder;
 
-    Form.deliveryGOrder = org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_deliveryGOrder;
+    Form.orderTrackDetail = org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_orderTrackDetail;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_invokeDynamicFunction;
 
@@ -129,46 +44,13 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack(json)
 /* Other_Func_LAST:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_payGoldenOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_payGoldenOrder */
-        var o = this;
-        var UIEntity = this;
-
-        {   
-            this.waitPaymentTable.syncBodyDataToServer();
-            this.waitPaymentTable.sync();
-        }
-        
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"payGoldenOrder-20160618-2044",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_payGoldenOrder */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_checkDeliveryStatus(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_checkDeliveryStatus */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"checkDeliveryStatus-20160618-2044",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_checkDeliveryStatus */
-
-
-    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_openTakenGoldenOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_openTakenGoldenOrder */
         var o = this;
         var UIEntity = this;
 
         {   
-            this.waitPaymentTable.syncBodyDataToServer();
-            this.waitPaymentTable.sync();
-            this.waitDeliveryTable.syncBodyDataToServer();
-            this.waitDeliveryTable.sync();
-            this.deliveringTable.syncBodyDataToServer();
-            this.deliveringTable.sync();
-            this.completedTable.syncBodyDataToServer();
-            this.completedTable.sync();
+            this.paymentTable.syncBodyDataToServer();
+            this.paymentTable.sync();
         }
         
         // cal ajax function. 
@@ -178,19 +60,19 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack(json)
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_deliveryGOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_deliveryGOrder */
+    function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_orderTrackDetail(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_orderTrackDetail */
         var o = this;
         var UIEntity = this;
 
         {   
-            this.waitDeliveryTable.syncBodyDataToServer();
-            this.waitDeliveryTable.sync();
+            this.paymentTable.syncBodyDataToServer();
+            this.paymentTable.sync();
         }
         
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deliveryGOrder-2016-1214-1351",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_deliveryGOrder */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"orderTrackDetail-2017-0219-1651",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_orderTrackDetail */
 
 
     /* auto generated eventlistener function declaration */

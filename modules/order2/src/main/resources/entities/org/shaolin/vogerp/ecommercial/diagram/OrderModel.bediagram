@@ -140,6 +140,13 @@
             </bediagram:type>
         </bediagram:member>
         <bediagram:member>
+            <!-- the order status after taking. -->
+            <bediagram:name>takenStatus</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="OrderStatusType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>payStatus</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>

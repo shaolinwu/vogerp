@@ -61,7 +61,6 @@
                         gorder.setCount(1);
 			            if (gorder.getDeliveryInfo() == null) {
 					        gorder.setDeliveryInfo((DeliveryInfoImpl)CustomerInfoUtil.createDeliveryInfo(UserContext.getUserContext().getUserId()));
-				            OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
 				            gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
 			            }
 			            if (gorder.getId() == 0) {
@@ -108,13 +107,14 @@
                      import org.shaolin.bmdp.workflow.be.NotificationImpl;
                      import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
                      import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
+                     import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                      {
                          PersonalInfoImpl condition = new PersonalInfoImpl();
                          condition.setId($gOrder.getPublishedCustomerId());
                          List result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, 1);
                          IPersonalInfo publisher = (IPersonalInfo)result.get(0);
                          
-                         String subject = org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil.getCustomerEnterpriseBasicInfo(publisher);
+                         String subject = CustomerInfoUtil.getCustomerEnterpriseBasicInfo(publisher);
                          String description = $gOrder.getDescription();
                          NotificationImpl message = new NotificationImpl();
 					     message.setSubject(subject + "发布新的加工订单！");
@@ -359,9 +359,12 @@
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.be.MOOfferPriceImpl;
                     import org.shaolin.vogerp.ecommercial.dao.*;
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.vogerp.commonmodel.IUserService; 
+                    import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl; 
+                    import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
@@ -369,8 +372,17 @@
                             Dialog.showMessageDialog("请选择一个客户出价单。", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
+                        MOOfferPriceImpl selectedPrice= (MOOfferPriceImpl)out.get("selectedPrice");
+                        IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+                        if (!service.hasAddressConfigured(selectedPrice.getTakenCustomerId())) {
+                            Dialog.showMessageDialog("无法成交，因竟价客户没有配置默认地址！", "", Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
                         
                         MachiningOrderImpl gorder = (MachiningOrderImpl)out.get("beObject");
+                        gorder.setDeliveryToInfo((DeliveryInfoImpl)CustomerInfoUtil.createDeliveryInfo(selectedPrice.getTakenCustomerId()));
+                        gorder.setDeliveryToInfoId(gorder.getDeliveryToInfo().getId());
+                        
                         HashMap result = new HashMap();
                         result.put("gorder", out.get("beObject"));
                         result.put("page", @page);
@@ -517,13 +529,15 @@
                     }
                     ]]></expressionString>
                 </ns2:expression>
-                <ns2:filter><expressionString><![CDATA[
-                    import org.shaolin.bmdp.runtime.security.UserContext;
-                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                    {
-                       return $beObject.getStatus() == OrderStatusType.PUBLISHED;
-                    }
-                ]]></expressionString></ns2:filter>
+                <ns2:filter>
+	                <expressionString><![CDATA[
+	                    import org.shaolin.bmdp.runtime.security.UserContext;
+	                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+	                    {
+	                       return $beObject.getStatus() == OrderStatusType.PUBLISHED;
+	                    }
+	                ]]></expressionString>
+                </ns2:filter>
             </ns2:uiAction>
             <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.MachiningOrderByAdmin"
                 actionName="cancelGOrder" actionText="取消本订单">

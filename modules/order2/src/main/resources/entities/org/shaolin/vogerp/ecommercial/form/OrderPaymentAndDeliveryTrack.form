@@ -1,0 +1,212 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns7="http://bmdp.shaolin.org/datamodel/FlowDiagram" xmlns:ns6="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns5="http://bmdp.shaolin.org/datamodel/Workflow" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.ecommercial.form.OrderPaymentAndDeliveryTrack</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="payOrder">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="payOrder-20170218-2044">
+        <ns2:exp>
+            <ns2:expressionString><![CDATA[
+            import java.util.HashMap;
+            import org.shaolin.uimaster.page.AjaxContext;
+            import org.shaolin.uimaster.page.ajax.*;
+            import org.shaolin.bmdp.runtime.AppContext;
+            import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+            import org.shaolin.vogerp.ecommercial.be.IEOrder;
+            import org.shaolin.vogerp.accounting.be.IPayOrder;
+            import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+            import org.shaolin.vogerp.accounting.IPaymentService;
+            {
+                RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+                IEOrder order = (IEOrder)form.getInputParameter("order");
+                
+                IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
+                IPayOrder payOrder = accountingService.queryForPayOrder(order.getSerialNumber());
+                if (payOrder != null) {
+                    if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
+                        Dialog.showMessageDialog("您的订单已支付成功！请刷新页面。", "", Dialog.INFORMATION_MESSAGE, null);
+                        return;
+                    }
+                    HashMap input = new HashMap();
+	                input.put("beObject", payOrder);
+	                input.put("editable", new Boolean(true));
+	                RefForm form1 = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PaymentMethod", input);
+	                @page.addElement(form1);
+	                form1.openInWindows("支付方式选择", null, true);
+		        } else {
+		        	Dialog.showMessageDialog("订单状态异常，支付不可用！", "", Dialog.WARNING_MESSAGE, null);
+		        }
+            }
+            ]]></ns2:expressionString>
+        </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="addProductionNote">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="addProductionNote-20170325-215225">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            
+        
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  
+  <ns2:eventHandler functionName="Cancel">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20170125-215225">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            form.closeIfinWindows(true);
+            @page.removeForm(@page.getEntityUiid()); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+       <ns2:layout xsi:type="ns2:TableLayoutType">
+         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+       </ns2:layout>
+       <ns2:component xsi:type="ns2:UICustWidgetType" UIID="trackFormUI">
+         <ns2:custType>org.shaolin.vogerp.ecommercial.uiwidget.OrderPaymentAndDeliveryUI</ns2:custType>
+         <ns2:Property name="takener">
+            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                 <ns2:expression>
+                   <expressionString><![CDATA[
+                   { 
+                       return $takener; 
+                   }]]></expressionString>
+                 </ns2:expression>
+            </ns2:value>
+         </ns2:Property>
+         <ns2:Property name="provider">
+            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                 <ns2:expression>
+                   <expressionString><![CDATA[
+                   { 
+                       return $provider; 
+                   }]]></expressionString>
+                 </ns2:expression>
+            </ns2:value>
+         </ns2:Property>
+         <ns2:Property name="order">
+            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                 <ns2:expression>
+                   <expressionString><![CDATA[
+                   { 
+                       return $order; 
+                   }]]></expressionString>
+                 </ns2:expression>
+            </ns2:value>
+         </ns2:Property>
+       </ns2:component>
+       <ns2:component xsi:type="ns2:UIPanelType" UIID="addProductInfo">
+	      <ns2:layout xsi:type="ns2:TableLayoutType">
+	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+	        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+	      </ns2:layout>
+	    </ns2:component>
+	    <ns2:component xsi:type="ns2:UIPanelType" UIID="addDeliveryInfo">
+	      <ns2:layout xsi:type="ns2:TableLayoutType">
+	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+	        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+	      </ns2:layout>
+	    </ns2:component>
+        <ns2:layoutConstraint>
+	      <ns2:componentId>trackFormUI</ns2:componentId>
+	      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+	    </ns2:layoutConstraint>
+	    <ns2:layoutConstraint>
+	      <ns2:componentId>addProductInfo</ns2:componentId>
+	      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+	    </ns2:layoutConstraint>
+	    <ns2:layoutConstraint>
+	      <ns2:componentId>addDeliveryInfo</ns2:componentId>
+	      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL"></ns2:constraint>
+	    </ns2:layoutConstraint>
+    </ns2:component> 
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Cancel"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>Closebtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:constructorCode><![CDATA[
+	    {
+	       // workflow dynamic actions
+	       Form.deliveryOrder = function() {
+	          Form.invokeDynamicFunction(Form.trackFormUI, "deliveryOrder");
+	       };
+	       Form.receivedOrder = function() {
+	          Form.invokeDynamicFunction(Form.trackFormUI, "receivedOrder");
+	       };
+		}
+    ]]></ns2:constructorCode>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="order" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.ecommercial.be.EOrder"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="takener" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="provider" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
+    <ns2:DataToUIMappingOperation>
+      <expressionString>{
+@odContext.executeAllMappings();
+}</expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString>{
+@odContext.executeAllMappings();
+}</expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

@@ -57,11 +57,6 @@ function org_shaolin_vogerp_ecommercial_form_MOOfferPrice(json)
         ui: elementList[prefix + "samplePhotoUILabel"]
     });
 
-    var deliveryInfoUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "deliveryInfoUILabel"]
-    });
-
     var resultUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "resultUILabel"]
@@ -74,8 +69,6 @@ function org_shaolin_vogerp_ecommercial_form_MOOfferPrice(json)
 
     var samplePhotoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "samplePhotoUI."});
 
-    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView({"prefix":prefix + "deliveryInfoUI."});
-
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
@@ -87,13 +80,13 @@ function org_shaolin_vogerp_ecommercial_form_MOOfferPrice(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "currPriceUILabel",prefix + "currPriceUI",prefix + "priceUILabel",prefix + "priceUI",prefix + "leaveWordUILabel",prefix + "leaveWordUI",prefix + "samplePhotoUILabel",prefix + "samplePhotoUI",prefix + "deliveryInfoUILabel",prefix + "deliveryInfoUI",prefix + "resultUILabel"]
+        ,subComponents: [prefix + "currPriceUILabel",prefix + "currPriceUI",prefix + "priceUILabel",prefix + "priceUI",prefix + "leaveWordUILabel",prefix + "leaveWordUI",prefix + "samplePhotoUILabel",prefix + "samplePhotoUI",prefix + "resultUILabel"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [currPriceUILabel,currPriceUI,priceUILabel,priceUI,leaveWordUILabel,leaveWordUI,samplePhotoUILabel,deliveryInfoUILabel,resultUILabel,cancelbtn,samplePhotoUI,deliveryInfoUI,fieldPanel,actionPanel]
+        ,items: [currPriceUILabel,currPriceUI,priceUILabel,priceUI,leaveWordUILabel,leaveWordUI,samplePhotoUILabel,resultUILabel,cancelbtn,samplePhotoUI,fieldPanel,actionPanel]
     });
 
     Form.currPriceUILabel=currPriceUILabel;
@@ -110,15 +103,11 @@ function org_shaolin_vogerp_ecommercial_form_MOOfferPrice(json)
 
     Form.samplePhotoUILabel=samplePhotoUILabel;
 
-    Form.deliveryInfoUILabel=deliveryInfoUILabel;
-
     Form.resultUILabel=resultUILabel;
 
     Form.cancelbtn=cancelbtn;
 
     Form.samplePhotoUI=samplePhotoUI;
-
-    Form.deliveryInfoUI=deliveryInfoUI;
 
     Form.fieldPanel=fieldPanel;
 
@@ -137,10 +126,6 @@ function org_shaolin_vogerp_ecommercial_form_MOOfferPrice(json)
     Form.samplePhotoUILabel=samplePhotoUILabel;
 
     Form.samplePhotoUI=samplePhotoUI;
-
-    Form.deliveryInfoUILabel=deliveryInfoUILabel;
-
-    Form.deliveryInfoUI=deliveryInfoUI;
 
     Form.resultUILabel=resultUILabel;
 

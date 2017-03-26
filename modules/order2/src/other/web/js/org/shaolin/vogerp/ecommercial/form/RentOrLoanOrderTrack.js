@@ -3,80 +3,18 @@
 function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var funcsPanel = new UIMaster.ui.tab
+    var paymentTable = new UIMaster.ui.objectlist
     ({
-        ui: elementList[prefix + "funcsPanel"]
-        ,items: []
-        ,subComponents: [prefix + "waitPaymentPanel",prefix + "waitDeliveryPanel",prefix + "deliveringPanel",prefix + "completedPanel"]
-    });
-    var waitPaymentTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "waitPaymentTable"]
-    });
-
-    var waitPaymentPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "waitPaymentPanel"]
-        ,items: []
-        ,subComponents: [prefix + "waitPaymentTable"]
-    });
-    var waitDeliveryTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "waitDeliveryTable"]
-    });
-
-    var waitDeliveryPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "waitDeliveryPanel"]
-        ,items: []
-        ,subComponents: [prefix + "waitDeliveryTable"]
-    });
-    var deliveringTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "deliveringTable"]
-    });
-
-    var deliveringPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "deliveringPanel"]
-        ,items: []
-        ,subComponents: [prefix + "deliveringTable"]
-    });
-    var completedTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "completedTable"]
-    });
-
-    var completedPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "completedPanel"]
-        ,items: []
-        ,subComponents: [prefix + "completedTable"]
+        ui: elementList[prefix + "paymentTable"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [funcsPanel]
+        ,items: [paymentTable]
     });
 
-    Form.funcsPanel=funcsPanel;
-
-    Form.waitPaymentPanel=waitPaymentPanel;
-
-    Form.waitPaymentTable=waitPaymentTable;
-
-    Form.waitDeliveryPanel=waitDeliveryPanel;
-
-    Form.waitDeliveryTable=waitDeliveryTable;
-
-    Form.deliveringPanel=deliveringPanel;
-
-    Form.deliveringTable=deliveringTable;
-
-    Form.completedPanel=completedPanel;
-
-    Form.completedTable=completedTable;
+    Form.paymentTable=paymentTable;
 
     Form.user_constructor = function()
     {
@@ -84,37 +22,14 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack(json)
 
         
 	    {
-	       // workflow dynamic actions
-	       Form.deliveryOrder = function() {
-	          if (Form.waitDeliveryTable._selectedIndex < 0) {
-	              alert("Please select an item!");
-	              return;
-	          }
-	          Form.waitDeliveryTable.syncBodyDataToServer();
-              Form.waitDeliveryTable.sync();
-	          Form.invokeDynamicFunction(Form.waitDeliveryTable, "deliveryOrder");
-	       };
-	       Form.receivedOrder = function() {
-	          if (Form.deliveringTable._selectedIndex < 0) {
-	              alert("Please select an item!");
-	              return;
-	          }
-	          Form.deliveringTable.syncBodyDataToServer();
-              Form.deliveringTable.sync();
-	          Form.invokeDynamicFunction(Form.deliveringTable, "receivedOrder");
-	       };
 		}
     
             /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack */
     };
 
-    Form.payRentOrder = org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_payRentOrder;
-
-    Form.checkDeliveryStatus = org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_checkDeliveryStatus;
-
     Form.openRentOrder = org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_openRentOrder;
 
-    Form.deliveryROrder = org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_deliveryROrder;
+    Form.orderTrackDetail = org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_orderTrackDetail;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_invokeDynamicFunction;
 
@@ -129,68 +44,35 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack(json)
 /* Other_Func_LAST:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_payRentOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_payRentOrder */
-        var o = this;
-        var UIEntity = this;
-
-        {   
-            this.waitPaymentTable.syncBodyDataToServer();
-            this.waitPaymentTable.sync();
-        }
-        
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"payRentOrder-20160618-2044",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_payRentOrder */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_checkDeliveryStatus(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_checkDeliveryStatus */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"checkDeliveryStatus-20160618-2044",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_checkDeliveryStatus */
-
-
-    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_openRentOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_openRentOrder */
         var o = this;
         var UIEntity = this;
 
         {   
-            this.waitPaymentTable.syncBodyDataToServer();
-            this.waitPaymentTable.sync();
-            this.waitDeliveryTable.syncBodyDataToServer();
-            this.waitDeliveryTable.sync();
-            this.deliveringTable.syncBodyDataToServer();
-            this.deliveringTable.sync();
-            this.completedTable.syncBodyDataToServer();
-            this.completedTable.sync();
+            this.paymentTable.syncBodyDataToServer();
+            this.paymentTable.sync();
         }
         
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openRentOrder-201612133543",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openRentOrder-2016-12133543",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_openRentOrder */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_deliveryROrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_deliveryROrder */
+    function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_orderTrackDetail(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_orderTrackDetail */
         var o = this;
         var UIEntity = this;
 
         {   
-            this.waitDeliveryTable.syncBodyDataToServer();
-            this.waitDeliveryTable.sync();
+            this.paymentTable.syncBodyDataToServer();
+            this.paymentTable.sync();
         }
         
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deliveryROrder-2016-1214-1351",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_deliveryROrder */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"orderTrackDetail-2017-0219-1151",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_orderTrackDetail */
 
 
     /* auto generated eventlistener function declaration */

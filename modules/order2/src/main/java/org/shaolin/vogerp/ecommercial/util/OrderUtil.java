@@ -6,10 +6,14 @@ import java.util.List;
 
 import org.shaolin.bmdp.i18n.LocaleContext;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
+import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.utils.DateParser;
 import org.shaolin.bmdp.utils.LockManager;
 import org.shaolin.uimaster.page.exception.FormatException;
 import org.shaolin.uimaster.page.od.formats.FormatUtil;
+import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
 import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
 import org.shaolin.vogerp.ecommercial.be.IEOrder;
 import org.shaolin.vogerp.ecommercial.be.IGoldenOrder;
@@ -174,7 +178,7 @@ public class OrderUtil {
 	
 	public static String getOrderHTMLInfo(IEOrder order) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<div>");
+		sb.append("<div class='vogerp_order'>");
 		sb.append("<div class='vogerp_city'>\u6765\u81EA").append(CEUtil.getValue(order.getCity()));
 		if (order instanceof IGoldenOrder) {
 			if (((IGoldenOrder)order).getType() == GoldenOrderType.PURCHASE) {
@@ -232,4 +236,31 @@ public class OrderUtil {
 		totalPrice += morder.getTaxRate() * totalPrice;
 		return totalPrice;
 	}
+	
+	public static void setPublishedUserAddress(final IEOrder order) {
+		if (order.getDeliveryInfoId() > 0) {
+			DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl) CommonModel.INSTANCE.get(order.getDeliveryInfoId(),
+					DeliveryInfoImpl.class);
+			order.setDeliveryInfo(deliveryInfo);
+		}
+		if (order.getDeliveryInfo() == null) {
+			order.setDeliveryInfo(
+					(DeliveryInfoImpl) CustomerInfoUtil.createDeliveryInfo(UserContext.getUserContext().getUserId()));
+			order.setDeliveryInfoId(order.getDeliveryInfo().getId());
+		}
+	}
+	
+	public static void setTakenUserAddress(final IEOrder order, final long userId) {
+		if (order.getDeliveryToInfoId() > 0) {
+			DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl) CommonModel.INSTANCE.get(order.getDeliveryToInfoId(),
+					DeliveryInfoImpl.class);
+			order.setDeliveryToInfo(deliveryInfo);
+		}
+		if (order.getDeliveryToInfo() == null) {
+			order.setDeliveryToInfo(
+					(DeliveryInfoImpl) CustomerInfoUtil.createDeliveryInfo(UserContext.getUserContext().getUserId()));
+			order.setDeliveryToInfoId(order.getDeliveryToInfo().getId());
+		}
+	}
+	
 }

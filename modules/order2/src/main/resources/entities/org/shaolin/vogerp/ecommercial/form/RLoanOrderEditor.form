@@ -579,14 +579,10 @@
       import org.shaolin.vogerp.ecommercial.dao.OrderModel;
       import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
       import org.shaolin.bmdp.runtime.security.UserContext;
+      import org.shaolin.vogerp.ecommercial.util.OrderUtil;
       {
-        if ($beObject.getDeliveryInfoId() > 0) {
-           DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)CommonModel.INSTANCE.get($beObject.getDeliveryInfoId(), DeliveryInfoImpl.class);
-           $beObject.setDeliveryInfo(deliveryInfo);
-        }
-        if ($beObject.getDeliveryInfo() == null) {
-           $beObject.setDeliveryInfo((DeliveryInfoImpl)CustomerInfoUtil.createDeliveryInfo(UserContext.getUserContext().getUserId()));
-        }
+        OrderUtil.setPublishedUserAddress($beObject);
+        
         @odContext.executeAllMappings();
       }</expressionString>
     </ns2:DataToUIMappingOperation>
