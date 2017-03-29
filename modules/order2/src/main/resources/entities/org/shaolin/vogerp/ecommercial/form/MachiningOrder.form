@@ -359,9 +359,13 @@
       </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
-      <expressionString>{
-@odContext.executeAllMappings();
-}</expressionString>
+      <expressionString><![CDATA[
+      import org.shaolin.bmdp.runtime.security.UserContext;
+      import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+      {
+        OrderUtil.setPublishedUserAddress($beObject);
+        @odContext.executeAllMappings();
+      }]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString>{

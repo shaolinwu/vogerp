@@ -333,7 +333,6 @@
       import org.shaolin.bmdp.runtime.security.UserContext;
       import org.shaolin.vogerp.ecommercial.util.OrderUtil;
       {
-        //$delieryInfo = (DeliveryInfoImpl) CustomerInfoUtil.createDeliveryInfo(UserContext.getUserContext().getUserId());
         
         @odContext.executeAllMappings();
       }]]></expressionString>

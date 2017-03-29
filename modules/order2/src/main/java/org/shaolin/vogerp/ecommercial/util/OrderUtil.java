@@ -12,6 +12,7 @@ import org.shaolin.bmdp.utils.LockManager;
 import org.shaolin.uimaster.page.exception.FormatException;
 import org.shaolin.uimaster.page.od.formats.FormatUtil;
 import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+import org.shaolin.vogerp.commonmodel.be.IDeliveryInfo;
 import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
 import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
@@ -243,24 +244,70 @@ public class OrderUtil {
 					DeliveryInfoImpl.class);
 			order.setDeliveryInfo(deliveryInfo);
 		}
-		if (order.getDeliveryInfo() == null) {
+		if (order.getDeliveryInfoId() == 0) {
 			order.setDeliveryInfo(
 					(DeliveryInfoImpl) CustomerInfoUtil.createDeliveryInfo(UserContext.getUserContext().getUserId()));
 			order.setDeliveryInfoId(order.getDeliveryInfo().getId());
+			CommonModel.INSTANCE.create(order.getDeliveryInfo());
 		}
 	}
 	
 	public static void setTakenUserAddress(final IEOrder order, final long userId) {
-		if (order.getDeliveryToInfoId() > 0) {
-			DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl) CommonModel.INSTANCE.get(order.getDeliveryToInfoId(),
+		if (order.getDeliveryInfoId() > 0 && order.getDeliveryInfo() == null) {
+			DeliveryInfoImpl deliveryInfo = CommonModel.INSTANCE.get(order.getDeliveryInfoId(),
 					DeliveryInfoImpl.class);
-			order.setDeliveryToInfo(deliveryInfo);
+			order.setDeliveryInfo(deliveryInfo);
 		}
-		if (order.getDeliveryToInfo() == null) {
-			order.setDeliveryToInfo(
-					(DeliveryInfoImpl) CustomerInfoUtil.createDeliveryInfo(UserContext.getUserContext().getUserId()));
-			order.setDeliveryToInfoId(order.getDeliveryToInfo().getId());
-		}
+		IDeliveryInfo endUser = CustomerInfoUtil.createDeliveryInfo(userId);
+		order.getDeliveryInfo().setToUserId(userId);
+		order.getDeliveryInfo().setToAddress(endUser.getAddress());
+		order.getDeliveryInfo().setToName(endUser.getName());
+		order.getDeliveryInfo().setToMobileNumber(endUser.getMobileNumber());
+		
+		CommonModel.INSTANCE.update(order.getDeliveryInfo());
 	}
 	
+	public static void reverseDeliveryAddress(final IEOrder order) {
+		if (order.getDeliveryInfoId() > 0 && order.getDeliveryInfo() == null) {
+			DeliveryInfoImpl deliveryInfo = CommonModel.INSTANCE.get(order.getDeliveryInfoId(),
+					DeliveryInfoImpl.class);
+			order.setDeliveryInfo(deliveryInfo);
+		}
+		
+		IDeliveryInfo info = order.getDeliveryInfo();
+		
+		long userId = info.getUserId();
+		String address = info.getAddress();
+		String name = info.getName();
+		String mNumber = info.getMobileNumber();
+		
+		info.setUserId(info.getToUserId());
+		info.setAddress(info.getToAddress());
+		info.setName(info.getToName());
+		info.setMobileNumber(info.getToMobileNumber());
+		
+		info.setToUserId(userId);
+		info.setToAddress(address);
+		info.setToName(name);
+		info.setToMobileNumber(mNumber);
+		
+		CommonModel.INSTANCE.update(info);
+	}
+	
+	public static String getOrderStatusInfo(final IEOrder order) {
+		String color = "black";
+        if (order.getStatus() == OrderStatusType.PUBLISHED) {
+           color = "blue";
+        } else if (order.getStatus() == OrderStatusType.TAKEN) {
+           color = "green";
+        } else if (order.getStatus() == OrderStatusType.FORBIDDEN
+        		|| order.getStatus() == OrderStatusType.CANCELLED) {
+            color = "red";
+         }
+        String state = "<span style='color:"+color+";'>" + order.getStatus().getDisplayName() + "</span>";
+        if (order.getOfferPrices() != null && order.getOfferPrices().size() > 0) {
+           return state + "(\u5DF2\u7ADE\u4EF7<span style='color:red;'>" +order.getOfferPrices().size()+ "</span>\u6B21)";
+        }
+        return state;
+	}
 }

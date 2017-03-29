@@ -97,7 +97,6 @@ public class CustomerInfoUtil {
     
     public static String addressToString(IAddressInfo address) {
     	StringBuffer sb = new StringBuffer();
-    	sb.append(address.getName()).append("--");
     	sb.append(CEUtil.toCEValue(address.getProvince()).getValue()).append(" ");
     	sb.append(CEUtil.toCEValue(address.getCity()).getValue()).append(" ");
     	if (address.getDistrict() != null && address.getDistrict().trim().length() > 0
@@ -133,7 +132,6 @@ public class CustomerInfoUtil {
     		deliveryInfo.setMobileNumber(info.getMobile());
     		deliveryInfo.setComment(info.getDescription());
     	}
-    	CommonModel.INSTANCE.create(deliveryInfo);
     	return deliveryInfo;
     }
     
@@ -154,7 +152,6 @@ public class CustomerInfoUtil {
     			}
     		}
     	}
-    	CommonModel.INSTANCE.create(deliveryInfo);
     	return deliveryInfo;
     }
 }

@@ -349,11 +349,13 @@
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                     import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
                     import org.shaolin.vogerp.ecommercial.dao.*;
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.vogerp.commonmodel.IUserService; 
                     import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl; 
                     import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
@@ -368,8 +370,10 @@
                             Dialog.showMessageDialog("无法成交，因竟价客户没有配置默认地址！", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
-                        gorder.setDeliveryToInfo((DeliveryInfoImpl)CustomerInfoUtil.createDeliveryInfo(selectedPrice.getTakenCustomerId()));
-                        gorder.setDeliveryToInfoId(gorder.getDeliveryToInfo().getId());
+                        OrderUtil.setTakenUserAddress(gorder, selectedPrice.getTakenCustomerId());
+                        if (gorder.getType() == RentOrLoanOrderType.RENT) {
+                            OrderUtil.reverseDeliveryAddress(gorder);
+                        }
                         
                         HashMap result = new HashMap();
                         result.put("gorder", out.get("beObject"));

@@ -115,6 +115,8 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
     Form.createGOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_createGOrder;
 
+    Form.createCopyGOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_createCopyGOrder;
+
     Form.openGoldenOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_openGoldenOrder;
 
     Form.acceptGoldenOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_acceptGoldenOrder;
@@ -132,6 +134,8 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     Form.openRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_openRentOrder;
 
     Form.createMachiningOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_createMachiningOrder;
+
+    Form.createCopyMachiningOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_createCopyMachiningOrder;
 
     Form.openMachiningOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_openMachiningOrder;
 
@@ -158,10 +162,43 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         var o = this;
         var UIEntity = this;
 
+	        {   
+	          var o = this;
+	          if (this.goldenOrderTable.selectedIndex >= 0) {
+		          new UIMaster.ui.dialog({
+		              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
+		              message:'\u662F\u5426\u6309\u7167\u9009\u4E2D\u8BA2\u5355\u590D\u5236\u4E00\u6761\u5417?',
+		              messageType:UIMaster.ui.dialog.Information,
+		              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+		              title:'',
+		              height:150,
+		              width:300,
+		              handler: function() {
+		                  UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createCopyGOrder-20160602",UIMaster.getValue(eventsource),o.__entityName);
+		              },
+		              noHandler: function() {
+		                  UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createGOrder-20160602",UIMaster.getValue(eventsource),o.__entityName);
+		              },
+		          }).open();
+		          return;
+	          } 
+	        }
+	        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createGOrder-20160602",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_createGOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_createCopyGOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_createCopyGOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createCopyGOrder-20160602",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_createCopyGOrder */
 
 
     /* auto generated eventlistener function declaration */
@@ -266,10 +303,43 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         var o = this;
         var UIEntity = this;
 
+	        {   
+	          var o = this;
+	          if (this.machiningTable.selectedIndex >= 0) {
+		          new UIMaster.ui.dialog({
+		              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
+		              message:'\u662F\u5426\u6309\u7167\u9009\u4E2D\u8BA2\u5355\u590D\u5236\u4E00\u6761\u5417?',
+		              messageType:UIMaster.ui.dialog.Information,
+		              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+		              title:'',
+		              height:150,
+		              width:300,
+		              handler: function() {
+		                  UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createCopyMachiningOrder-20170125",UIMaster.getValue(eventsource),o.__entityName);
+		              },
+		              noHandler: function() {
+		                  UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createMachiningOrder-20170125",UIMaster.getValue(eventsource),o.__entityName);
+		              },
+		          }).open();
+		          return;
+	          } 
+	        }
+	        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createMachiningOrder-20170125",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_createMachiningOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_createCopyMachiningOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_createCopyMachiningOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createCopyMachiningOrder-20170125",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_createCopyMachiningOrder */
 
 
     /* auto generated eventlistener function declaration */

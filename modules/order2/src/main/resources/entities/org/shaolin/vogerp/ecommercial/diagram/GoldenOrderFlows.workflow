@@ -114,12 +114,8 @@
                         HashMap out = (HashMap)form.ui2Data();
                         GoldenOrderImpl gorder = (GoldenOrderImpl)out.get("beObject");
                         gorder.setType(GoldenOrderType.SALE);
-                        if (gorder.getDeliveryInfo() != null) {
-			                if (gorder.getDeliveryInfo().getId() > 0) {
-			                   OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
-			                } else {
-			                   OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
-			                }
+                        if (gorder.getDeliveryInfo() != null && gorder.getDeliveryInfo().getId() == 0) {
+		                    OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
 			                gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
 			            }
 			            if (gorder.getId() == 0) {
@@ -235,8 +231,6 @@
 			            HashMap out = (HashMap)form.ui2Data();
 			
 			            GoldenOrderImpl order = (GoldenOrderImpl)out.get("beObject");
-			            //order.setDeliveryToInfo((DeliveryInfoImpl)out.get("delieryInfo"));
-			            //order.setDeliveryToInfoId(order.getDeliveryToInfo().getId());
 			            
 			            GOOfferPriceImpl offerPrice = new GOOfferPriceImpl();
 			            IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
@@ -359,10 +353,12 @@
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
                     import org.shaolin.vogerp.ecommercial.be.GOOfferPriceImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
                     import org.shaolin.vogerp.ecommercial.dao.*;
                     import org.shaolin.vogerp.commonmodel.IUserService; 
                     import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                     import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
@@ -377,8 +373,10 @@
                             return;
                         }
                         GoldenOrderImpl order = (GoldenOrderImpl)out.get("beObject");
-                        order.setDeliveryToInfo((DeliveryInfoImpl)CustomerInfoUtil.createDeliveryInfo(selectedPrice.getTakenCustomerId()));
-                        order.setDeliveryToInfoId(order.getDeliveryToInfo().getId());
+                        OrderUtil.setTakenUserAddress(order, selectedPrice.getTakenCustomerId());
+                        if (order.getType() == GoldenOrderType.PURCHASE) {
+                            OrderUtil.reverseDeliveryAddress(order);
+                        }
                         
                         HashMap result = new HashMap();
                         result.put("gorder", out.get("beObject"));

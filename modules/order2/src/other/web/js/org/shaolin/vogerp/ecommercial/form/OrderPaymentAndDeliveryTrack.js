@@ -8,6 +8,31 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
         ui: elementList[prefix + "trackFormUI"]
     });
 
+    var descProgressUI = new UIMaster.ui.textarea
+    ({
+        ui: elementList[prefix + "descProgressUI"]
+    });
+
+    var descProgressbtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "descProgressbtn"]
+    });
+
+    var expressVendorUI = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "expressVendorUI"]
+    });
+
+    var expressNumberUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "expressNumberUI"]
+    });
+
+    var expressbtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "expressbtn"]
+    });
+
     var cancelbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "cancelbtn"]
@@ -23,15 +48,17 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
     var addDeliveryInfo = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "addDeliveryInfo"]
+        ,style: "display:none"
         ,items: []
-        ,subComponents: []
+        ,subComponents: [prefix + "expressVendorUI",prefix + "expressNumberUI",prefix + "expressbtn"]
     });
 
     var addProductInfo = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "addProductInfo"]
+        ,style: "display:none"
         ,items: []
-        ,subComponents: []
+        ,subComponents: [prefix + "descProgressUI",prefix + "descProgressbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -44,10 +71,20 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [trackFormUI,cancelbtn,fieldPanel,addProductInfo,addDeliveryInfo,actionPanel]
+        ,items: [trackFormUI,descProgressUI,descProgressbtn,expressVendorUI,expressNumberUI,expressbtn,cancelbtn,fieldPanel,addProductInfo,addDeliveryInfo,actionPanel]
     });
 
     Form.trackFormUI=trackFormUI;
+
+    Form.descProgressUI=descProgressUI;
+
+    Form.descProgressbtn=descProgressbtn;
+
+    Form.expressVendorUI=expressVendorUI;
+
+    Form.expressNumberUI=expressNumberUI;
+
+    Form.expressbtn=expressbtn;
 
     Form.cancelbtn=cancelbtn;
 
@@ -57,11 +94,31 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
 
     Form.addProductInfo=addProductInfo;
 
+    Form.descProgressUI=descProgressUI;
+
+    Form.descProgressbtn=descProgressbtn;
+
     Form.addDeliveryInfo=addDeliveryInfo;
+
+    Form.expressVendorUI=expressVendorUI;
+
+    Form.expressNumberUI=expressNumberUI;
+
+    Form.expressbtn=expressbtn;
 
     Form.addProductInfo=addProductInfo;
 
+    Form.descProgressUI=descProgressUI;
+
+    Form.descProgressbtn=descProgressbtn;
+
     Form.addDeliveryInfo=addDeliveryInfo;
+
+    Form.expressVendorUI=expressVendorUI;
+
+    Form.expressNumberUI=expressNumberUI;
+
+    Form.expressbtn=expressbtn;
 
     Form.actionPanel=actionPanel;
 
@@ -76,6 +133,7 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
 	       // workflow dynamic actions
 	       Form.deliveryOrder = function() {
 	          Form.invokeDynamicFunction(Form.trackFormUI, "deliveryOrder");
+	          $(Form.addDeliveryInfo).dialog("close");
 	       };
 	       Form.receivedOrder = function() {
 	          Form.invokeDynamicFunction(Form.trackFormUI, "receivedOrder");
@@ -88,6 +146,10 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
     Form.payOrder = org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_payOrder;
 
     Form.addProductionNote = org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_addProductionNote;
+
+    Form.savePregressNote = org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_savePregressNote;
+
+    Form.updateExpress = org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_updateExpress;
 
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_Cancel;
 
@@ -122,10 +184,38 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
         var o = this;
         var UIEntity = this;
 
+        {   
+           $(this.addProductInfo).css("display", "block");
+           $(this.addProductInfo).dialog();
+        }
+            }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_addProductionNote */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_savePregressNote(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_savePregressNote */
+        var o = this;
+        var UIEntity = this;
+
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"addProductionNote-20170325-215225",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_addProductionNote */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"savePregressNote-20170325-215225",UIMaster.getValue(eventsource),o.__entityName);
+
+        {   
+           $(this.addProductInfo).dialog("close");
+        }
+            }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_savePregressNote */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_updateExpress(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_updateExpress */
+        var o = this;
+        var UIEntity = this;
+
+        {   
+           $(this.addDeliveryInfo).css("display", "block");
+           $(this.addDeliveryInfo).dialog();
+        }
+            }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_updateExpress */
 
 
     /* auto generated eventlistener function declaration */

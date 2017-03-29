@@ -347,9 +347,14 @@
     <ns2:column name="ADDRESS" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="NAME" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="MOBILENUMBER" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="TOUSERID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="TOADDRESS" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="TONAME" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="TOMOBILENUMBER" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="COMMENT" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="EXPRESSVENDOR" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="EXPRESSNUMBER" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="PROGRESSNOTE" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
@@ -363,10 +368,14 @@
       <ns2:fieldMapping beFieldName="address" columnName="ADDRESS"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="name" columnName="NAME"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="mobileNumber" columnName="MOBILENUMBER"></ns2:fieldMapping>
-      
+      <ns2:fieldMapping beFieldName="toUserId" columnName="TOUSERID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="toAddress" columnName="TOADDRESS"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="toName" columnName="TONAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="toMobileNumber" columnName="TOMOBILENUMBER"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="comment" columnName="COMMENT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="expressVendor" columnName="EXPRESSVENDOR"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="expressNumber" columnName="EXPRESSNUMBER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="progressNote" columnName="PROGRESSNOTE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>

@@ -59,10 +59,6 @@
                         HashMap out = (HashMap)form.ui2Data();
                         MachiningOrderImpl gorder = (MachiningOrderImpl)out.get("beObject");
                         gorder.setCount(1);
-			            if (gorder.getDeliveryInfo() == null) {
-					        gorder.setDeliveryInfo((DeliveryInfoImpl)CustomerInfoUtil.createDeliveryInfo(UserContext.getUserContext().getUserId()));
-				            gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
-			            }
 			            if (gorder.getId() == 0) {
 			                OrderModel.INSTANCE.create(gorder, true);
 			            } else {
@@ -365,6 +361,7 @@
                     import org.shaolin.vogerp.commonmodel.IUserService; 
                     import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl; 
                     import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
@@ -380,8 +377,8 @@
                         }
                         
                         MachiningOrderImpl gorder = (MachiningOrderImpl)out.get("beObject");
-                        gorder.setDeliveryToInfo((DeliveryInfoImpl)CustomerInfoUtil.createDeliveryInfo(selectedPrice.getTakenCustomerId()));
-                        gorder.setDeliveryToInfoId(gorder.getDeliveryToInfo().getId());
+                        OrderUtil.setTakenUserAddress(gorder, selectedPrice.getTakenCustomerId());
+                        OrderUtil.reverseDeliveryAddress(gorder);
                         
                         HashMap result = new HashMap();
                         result.put("gorder", out.get("beObject"));

@@ -640,12 +640,35 @@
 			<bediagram:name>mobileNumber</bediagram:name>
 			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
+		
+		<!-- delivery to the end user. -->
+		<bediagram:member>
+			<bediagram:name>toUserId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>toAddress</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>toName</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>toMobileNumber</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		
 		<bediagram:member>
 			<bediagram:name>expressVendor</bediagram:name>
 			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
 		<bediagram:member>
 			<bediagram:name>expressNumber</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>progressNote</bediagram:name>
 			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
 		<bediagram:member>

@@ -574,10 +574,6 @@
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>
-      import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
-      import org.shaolin.vogerp.commonmodel.dao.CommonModel;
-      import org.shaolin.vogerp.ecommercial.dao.OrderModel;
-      import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
       import org.shaolin.bmdp.runtime.security.UserContext;
       import org.shaolin.vogerp.ecommercial.util.OrderUtil;
       {

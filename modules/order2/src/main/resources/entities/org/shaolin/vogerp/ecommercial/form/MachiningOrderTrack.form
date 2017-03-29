@@ -67,15 +67,58 @@
                 
                 HashMap input = new HashMap();
                 input.put("order", defaultUser);
-                PersonalInfoImpl pInfo = (PersonalInfoImpl)OrderModel.INSTANCE.get(defaultUser.getTakenCustomerId(), PersonalInfoImpl.class);
-                input.put("provider", pInfo);
-                input.put("takener", defaultUser.getPublishedCustomer());
                 
                 input.put("editable", new Boolean(true));
                 RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.OrderPaymentAndDeliveryTrack", input);
                 @page.addElement(form);
                 
                 form.openInWindows("订单拍下详情", null, true);
+            }
+            ]]></ns2:expressionString>
+        </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="updateAddress">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+            this.paymentTable.syncBodyDataToServer();
+            this.paymentTable.sync();
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="updateAddress-2017-0219-1131">
+        <ns2:exp>
+            <ns2:expressionString><![CDATA[
+            import java.util.HashMap;
+            import org.shaolin.bmdp.runtime.AppContext;
+            import org.shaolin.uimaster.page.AjaxContext;
+            import org.shaolin.uimaster.page.ajax.*;
+            import org.shaolin.bmdp.runtime.security.UserContext;
+            import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
+            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+            import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+            import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+            import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+            {
+                Table t = (Table)@page.getElement("paymentTable");
+                if (t.getSelectedRow() == null) {
+                    return;
+                }
+                MachiningOrderImpl defaultUser = (MachiningOrderImpl)t.getSelectedRow();
+                DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)OrderModel.INSTANCE.get(defaultUser.getDeliveryInfoId(), DeliveryInfoImpl.class);
+                
+                HashMap input = new HashMap();
+                input.put("beObject", deliveryInfo);
+                input.put("editable", new Boolean(true));
+                String formName = "org.shaolin.vogerp.commonmodel.form.SelectDeliveryInfo";
+                if (deliveryInfo.getToUserId() == UserContext.getUserContext().getUserId()) {
+                   formName = "org.shaolin.vogerp.commonmodel.form.SelectReceiverInfo";
+                }
+                RefForm form = new RefForm("addressInfoForm", formName, input);
+                @page.addElement(form);
+                
+                form.openInWindows("地址详情", null, true);
             }
             ]]></ns2:expressionString>
         </ns2:exp>
@@ -118,6 +161,7 @@
                     }
                     MachiningOrderImpl condition = (MachiningOrderImpl)$tableCondition.getCondition();
                     condition.setPublishedCustomerId(UserContext.getUserContext().getUserId());
+                    condition.setTakenCustomerId(UserContext.getUserContext().getUserId());
                     condition.setStatus(OrderStatusType.TAKEN);
                     List result = OrderModel.INSTANCE.searchMachiningOrder(condition,
                                   $tableCondition.getOrders(),
@@ -243,6 +287,14 @@
               </ns2:title>
               <ns2:icon>ui-icon-note</ns2:icon>
               <ns2:function>orderTrackDetail</ns2:function>
+          </ns2:action>
+          <ns2:action>
+              <ns2:uiid>updateAddress</ns2:uiid>
+              <ns2:title xsi:type="ns2:StringPropertyType">
+                  <ns2:value>更新地址</ns2:value>
+              </ns2:title>
+              <ns2:icon>ui-icon-note</ns2:icon>
+              <ns2:function>updateAddress</ns2:function>
           </ns2:action>
        </ns2:actionGroup>
      </ns2:component>

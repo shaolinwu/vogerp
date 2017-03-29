@@ -31,6 +31,8 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack(json)
 
     Form.orderTrackDetail = org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_orderTrackDetail;
 
+    Form.updateAddress = org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_updateAddress;
+
     Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_invokeDynamicFunction;
 
     Form.__entityName="org.shaolin.vogerp.ecommercial.form.GoldenOrderTrack";
@@ -73,6 +75,22 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"orderTrackDetail-2017-0219-1651",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_orderTrackDetail */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_updateAddress(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_updateAddress */
+        var o = this;
+        var UIEntity = this;
+
+        {   
+            this.paymentTable.syncBodyDataToServer();
+            this.paymentTable.sync();
+        }
+        
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"updateAddress-2017-0219-1141",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack_updateAddress */
 
 
     /* auto generated eventlistener function declaration */

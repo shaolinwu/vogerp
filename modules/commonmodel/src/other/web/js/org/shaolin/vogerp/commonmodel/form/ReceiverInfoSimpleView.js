@@ -1,6 +1,6 @@
 /* null */
 /* auto generated constructor */
-function org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView(json)
+function org_shaolin_vogerp_commonmodel_form_ReceiverInfoSimpleView(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
     var idUI = new UIMaster.ui.hidden
@@ -93,50 +93,50 @@ function org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView(json)
 
     Form.user_constructor = function()
     {
-        /* Construct_FIRST:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView */
-        /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView */
+        /* Construct_FIRST:org_shaolin_vogerp_commonmodel_form_ReceiverInfoSimpleView */
+        /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_ReceiverInfoSimpleView */
     };
 
-    Form.openList = org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_openList;
+    Form.openList = org_shaolin_vogerp_commonmodel_form_ReceiverInfoSimpleView_openList;
 
-    Form.refershSelectedAddress = org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_refershSelectedAddress;
+    Form.refershSelectedAddress = org_shaolin_vogerp_commonmodel_form_ReceiverInfoSimpleView_refershSelectedAddress;
 
-    Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_invokeDynamicFunction;
+    Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_ReceiverInfoSimpleView_invokeDynamicFunction;
 
-    Form.__entityName="org.shaolin.vogerp.commonmodel.form.DeliveryInfoSimpleView";
+    Form.__entityName="org.shaolin.vogerp.commonmodel.form.ReceiverInfoSimpleView";
 
     Form.init();
     return Form;
 };
 
     /* EventHandler Functions */
-/* Other_Func_FIRST:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView */
-/* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView */
+/* Other_Func_FIRST:org_shaolin_vogerp_commonmodel_form_ReceiverInfoSimpleView */
+/* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_ReceiverInfoSimpleView */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_openList(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_openList */
+    function org_shaolin_vogerp_commonmodel_form_ReceiverInfoSimpleView_openList(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ReceiverInfoSimpleView_openList */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openList-20161216-225330",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_openList */
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ReceiverInfoSimpleView_openList */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_refershSelectedAddress(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_refershSelectedAddress */
+    function org_shaolin_vogerp_commonmodel_form_ReceiverInfoSimpleView_refershSelectedAddress(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ReceiverInfoSimpleView_refershSelectedAddress */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"refershSelectedAddress-20161216",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_refershSelectedAddress */
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ReceiverInfoSimpleView_refershSelectedAddress */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_invokeDynamicFunction */
+    function org_shaolin_vogerp_commonmodel_form_ReceiverInfoSimpleView_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_ReceiverInfoSimpleView_invokeDynamicFunction */
         var o = this;
         var UIEntity = this;
 
@@ -154,7 +154,7 @@ function org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView(json)
         
         }
         }).open();
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView_invokeDynamicFunction */
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ReceiverInfoSimpleView_invokeDynamicFunction */
 
 
 

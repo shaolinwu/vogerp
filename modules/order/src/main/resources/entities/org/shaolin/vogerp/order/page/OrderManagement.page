@@ -72,8 +72,6 @@
                     {
                         IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
                         PurchaseOrderImpl defaultUser = new PurchaseOrderImpl();
-                        DeliveryInfoImpl deliveryInfo = new DeliveryInfoImpl();
-                        defaultUser.setDeliveryInfo(deliveryInfo);
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
                         input.put("personalInfo", userService.getPersonalInfo(UserContext.getUserContext().getUserId()));
