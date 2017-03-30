@@ -39,7 +39,8 @@
 			                Dialog.showMessageDialog("您还没有填写快递信息。请输入快递编号和选择快递商家,方便对方确认哟！", "", Dialog.WARNING_MESSAGE, null);
 			                return false;
 			            }
-			            if (order.getTakenStatus() == OrderStatusType.TAKEN_PAYED) {
+			            if (order.getTakenStatus() == OrderStatusType.NOT_SPECIFIED
+			                || order.getTakenStatus() == OrderStatusType.TAKEN_PAYED) {
 				            String expressVendor = @page.getComboBox("expressVendorUI").getValue();
 				            String expressNumber = @page.getTextField("expressNumberUI").getValue();
 				            order.getDeliveryInfo().setExpressVendor(expressVendor);

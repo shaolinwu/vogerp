@@ -31,7 +31,7 @@
             input.put(RefForm.RECONFIG_OVERRIDE, prefix + "SavePrice");
             RefForm newForm = new RefForm("priceForm", "org.shaolin.vogerp.productmodel.form.ProductPrice", input);
             @page.addElement(newForm);
-            newForm.openInWindows("新建价格包", null, 690, 500);
+            newForm.openInWindows("新建价格包", null, true);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -125,7 +125,7 @@
             input.put(RefForm.RECONFIG_OVERRIDE, prefix + "SavePriceUpdate");
             RefForm newForm = new RefForm("priceForm", "org.shaolin.vogerp.productmodel.form.ProductPrice", input);
             @page.addElement(newForm);
-            newForm.openInWindows("编辑价格包", null, 690, 500);
+            newForm.openInWindows("编辑价格包", null, true);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>

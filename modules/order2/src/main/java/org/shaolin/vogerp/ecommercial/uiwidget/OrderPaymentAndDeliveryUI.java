@@ -123,7 +123,7 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
             PayOrderStatusType state = payservice.queryForPayStatus(order.getSerialNumber());
 			if (state == PayOrderStatusType.NOTPAYED) {
 				context.generateHTML("<tr class=\"order_step\">");
-				if (isCurrProvider) {
+				if (isCurrTaker) {
 					context.generateHTML("<td>1.\u7B49\u5F85\u652F\u4ED8</td><td>1.<button onclick=\""+funcRef+"payOrder(defaultname." + htmlId + ");\" class=\"ui-btn-inline\">\u652F\u4ED8</button></td>");
 				} else {
 					context.generateHTML("<td>1.\u7B49\u5F85\u652F\u4ED8</td><td>1." + state.getDisplayName() + "</td>");
@@ -176,7 +176,7 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
 				context.generateHTML("</td><td>3.\u7B49\u5F85\u53D1\u8D27</td>");
 				context.generateHTML("</tr>");
 				context.generateHTML("<tr class=\"\">");
-				context.generateHTML("<td><td>4.\u6536\u6B3E\u8DDF\u8E2A</td><td>4.\u786E\u8BA4\u6536\u8D27</td>");
+				context.generateHTML("<td>4.\u6536\u6B3E\u8DDF\u8E2A</td><td>4.\u786E\u8BA4\u6536\u8D27</td>");
 				context.generateHTML("</tr>");
 			}
 			

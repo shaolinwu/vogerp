@@ -69,7 +69,7 @@
                 input.put("order", defaultUser);
                 
                 input.put("editable", new Boolean(true));
-                RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.OrderPaymentAndDeliveryTrack", input);
+                RefForm form = new RefForm("orderTrackForm", "org.shaolin.vogerp.ecommercial.form.OrderPaymentAndDeliveryTrack", input);
                 @page.addElement(form);
                 
                 form.openInWindows("订单拍下详情", null, true);

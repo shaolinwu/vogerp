@@ -54,13 +54,13 @@
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             HashMap output = (HashMap)form.ui2Data();
             ProductCharacteristicImpl defaultUser = (ProductCharacteristicImpl)output.get("beObject");
+            form.closeIfinWindows();
+            @page.removeForm(@page.getEntityUiid()); 
             
             String formId = "priceForm.";//an potential bug here without this productInfoForm.infoPanel1.
             ((Label)@page.getElementByAbsoluteId(formId + "packagesUI")).setValue(CEOperationUtil.toHTMLString(defaultUser.getCeValues()));
             ((Hidden)@page.getElementByAbsoluteId(formId + "packagesValueUI")).setValue(defaultUser.getCeValues());
             
-            form.closeIfinWindows();
-            @page.removeForm(@page.getEntityUiid()); 
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -111,19 +111,21 @@
         </ns2:secure>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="costUILabel">
-        <ns2:UIStyle></ns2:UIStyle>
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>成本价格</ns2:value>
+          <ns2:value>成本价格(亲，方便我们核算您的成本利润哟)</ns2:value>
         </ns2:text>
-        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-          <ns2:value>亲，方便我们核算您的成本利润哟。</ns2:value>
-        </ns2:widgetLabel>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="costUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
         <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
            <ns2:value>false</ns2:value>
         </ns2:allowBlank>
+        <ns2:Property name="isNumber">
+            <ns2:value xsi:type="ns2:BooleanPropertyType">
+                <value>true</value>
+            </ns2:value>
+         </ns2:Property>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="priceUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -137,6 +139,11 @@
         <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
            <ns2:value>false</ns2:value>
         </ns2:allowBlank>
+        <ns2:Property name="isNumber">
+           <ns2:value xsi:type="ns2:BooleanPropertyType">
+               <value>true</value>
+           </ns2:value>
+        </ns2:Property>
         <ns2:validator xsi:type="ns2:ValidatorsPropertyType">
             <ns2:validator xsi:type="ns2:ValidatorPropertyType">
                     <isFuncRef>false</isFuncRef>
@@ -165,21 +172,39 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="exceedAmountUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:Property name="isNumber">
+           <ns2:value xsi:type="ns2:BooleanPropertyType">
+               <value>true</value>
+           </ns2:value>
+        </ns2:Property>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="discountUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.productmodel.be.ProductPrice.discount</ns2:key>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>折扣(比如: 0.1)</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="discountUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:Property name="isNumber">
+           <ns2:value xsi:type="ns2:BooleanPropertyType">
+               <value>true</value>
+           </ns2:value>
+        </ns2:Property>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="commentUILabel">
+        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>填写价格属性(比如: 尺寸、颜色和型号等)</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UITextAreaType" UIID="commentUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="packagesUILabel">
         <ns2:UIStyle>uimaster_leftform_widget pricepackagelabel</ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>勾选价格属性</ns2:value>
+          <ns2:value>勾选价格属性描述</ns2:value>
         </ns2:text>
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="selectPricePackage"></ns2:handler>
@@ -191,18 +216,9 @@
            <ns2:value>false</ns2:value>
         </ns2:allowBlank>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="commentUILabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:bundle>手动填写价格属性</ns2:bundle>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UITextAreaType" UIID="commentUI">
-        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-      </ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>costUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>costUI</ns2:componentId>
@@ -210,7 +226,7 @@
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>priceUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>priceUI</ns2:componentId>
@@ -218,7 +234,7 @@
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>exceedAmountUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>exceedAmountUI</ns2:componentId>
@@ -226,26 +242,26 @@
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>discountUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>discountUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>packagesUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>packagesUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
         <ns2:componentId>commentUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>commentUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>packagesUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass=""></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>packagesUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>

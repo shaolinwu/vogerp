@@ -33,6 +33,11 @@
         import org.shaolin.vogerp.productmodel.util.ProductUtil;
         {      
             Table constantTable = @page.getTable("infoPanel1.itemTable");
+            if (constantTable.getListData().size() == 0) {
+                Dialog.showMessageDialog("请配制至少一个产品价格包!", "提示", Dialog.WARNING_MESSAGE, null);
+                return;
+            }
+            
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             HashMap input = (HashMap)form.ui2Data();
             ProductImpl defaultUser = (ProductImpl)input.get("beObject");
