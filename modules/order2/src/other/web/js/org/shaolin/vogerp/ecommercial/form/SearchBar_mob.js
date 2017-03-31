@@ -3,9 +3,9 @@
 function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var citiesCbxIU = new UIMaster.ui.label
+    var citiesCbxUI = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "citiesCbxIU"]
+        ui: elementList[prefix + "citiesCbxUI"]
     });
 
     var productTypeUI = new UIMaster.ui.label
@@ -22,7 +22,7 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
     ({
         ui: elementList[prefix + "firstRow"]
         ,items: []
-        ,subComponents: [prefix + "citiesCbxIU",prefix + "productTypeUI"]
+        ,subComponents: [prefix + "citiesCbxUI",prefix + "productTypeUI"]
     });
 
     var root = new UIMaster.ui.panel
@@ -35,10 +35,10 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [citiesCbxIU,productTypeUI,searchContext,root,firstRow]
+        ,items: [citiesCbxUI,productTypeUI,searchContext,root,firstRow]
     });
 
-    Form.citiesCbxIU=citiesCbxIU;
+    Form.citiesCbxUI=citiesCbxUI;
 
     Form.productTypeUI=productTypeUI;
 
@@ -48,7 +48,7 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
 
     Form.firstRow=firstRow;
 
-    Form.citiesCbxIU=citiesCbxIU;
+    Form.citiesCbxUI=citiesCbxUI;
 
     Form.productTypeUI=productTypeUI;
 
@@ -56,7 +56,7 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
 
     Form.firstRow=firstRow;
 
-    Form.citiesCbxIU=citiesCbxIU;
+    Form.citiesCbxUI=citiesCbxUI;
 
     Form.productTypeUI=productTypeUI;
 

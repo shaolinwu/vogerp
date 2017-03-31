@@ -26,6 +26,7 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
     var costUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "costUI"]
+        ,isNumber: true
     });
 
     var priceUILabel = new UIMaster.ui.label
@@ -36,6 +37,7 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
     var priceUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "priceUI"]
+        ,isNumber: true
         ,validators:[
         {
             func: function() {
@@ -64,6 +66,7 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
     var exceedAmountUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "exceedAmountUI"]
+        ,isNumber: true
     });
 
     var discountUILabel = new UIMaster.ui.label
@@ -74,16 +77,7 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
     var discountUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "discountUI"]
-    });
-
-    var packagesUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "packagesUILabel"]
-    });
-
-    var packagesUI = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "packagesUI"]
+        ,isNumber: true
     });
 
     var commentUILabel = new UIMaster.ui.label
@@ -94,6 +88,16 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
     var commentUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "commentUI"]
+    });
+
+    var packagesUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "packagesUILabel"]
+    });
+
+    var packagesUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "packagesUI"]
     });
 
     var okbtn = new UIMaster.ui.button
@@ -117,13 +121,13 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "packagesValueUI",prefix + "productTypeUI",prefix + "costUILabel",prefix + "costUI",prefix + "priceUILabel",prefix + "priceUI",prefix + "exceedAmountUILabel",prefix + "exceedAmountUI",prefix + "discountUILabel",prefix + "discountUI",prefix + "packagesUILabel",prefix + "packagesUI",prefix + "commentUILabel",prefix + "commentUI"]
+        ,subComponents: [prefix + "idUI",prefix + "packagesValueUI",prefix + "productTypeUI",prefix + "costUILabel",prefix + "costUI",prefix + "priceUILabel",prefix + "priceUI",prefix + "exceedAmountUILabel",prefix + "exceedAmountUI",prefix + "discountUILabel",prefix + "discountUI",prefix + "commentUILabel",prefix + "commentUI",prefix + "packagesUILabel",prefix + "packagesUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,packagesValueUI,productTypeUI,costUILabel,costUI,priceUILabel,priceUI,exceedAmountUILabel,exceedAmountUI,discountUILabel,discountUI,packagesUILabel,packagesUI,commentUILabel,commentUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,packagesValueUI,productTypeUI,costUILabel,costUI,priceUILabel,priceUI,exceedAmountUILabel,exceedAmountUI,discountUILabel,discountUI,commentUILabel,commentUI,packagesUILabel,packagesUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -148,13 +152,13 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
 
     Form.discountUI=discountUI;
 
-    Form.packagesUILabel=packagesUILabel;
-
-    Form.packagesUI=packagesUI;
-
     Form.commentUILabel=commentUILabel;
 
     Form.commentUI=commentUI;
+
+    Form.packagesUILabel=packagesUILabel;
+
+    Form.packagesUI=packagesUI;
 
     Form.okbtn=okbtn;
 
@@ -184,13 +188,13 @@ function org_shaolin_vogerp_productmodel_form_ProductPrice(json)
 
     Form.discountUI=discountUI;
 
-    Form.packagesUILabel=packagesUILabel;
-
-    Form.packagesUI=packagesUI;
-
     Form.commentUILabel=commentUILabel;
 
     Form.commentUI=commentUI;
+
+    Form.packagesUILabel=packagesUILabel;
+
+    Form.packagesUI=packagesUI;
 
     Form.actionPanel=actionPanel;
 

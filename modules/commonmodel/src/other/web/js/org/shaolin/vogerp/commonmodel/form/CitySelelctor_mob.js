@@ -32,11 +32,16 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
         ui: elementList[prefix + "cancelbtn"]
     });
 
+    var cleanbtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "cleanbtn"]
+    });
+
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "cancelbtn"]
+        ,subComponents: [prefix + "cancelbtn",prefix + "cleanbtn"]
     });
 
     var citySubListPanel = new UIMaster.ui.panel
@@ -58,7 +63,7 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentUI,clickEventUI,cityListUI,citySubListUI,cancelbtn,cityListPanel,citySubListPanel,actionPanel]
+        ,items: [parentUI,clickEventUI,cityListUI,citySubListUI,cancelbtn,cleanbtn,cityListPanel,citySubListPanel,actionPanel]
     });
 
     Form.parentUI=parentUI;
@@ -70,6 +75,8 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
     Form.citySubListUI=citySubListUI;
 
     Form.cancelbtn=cancelbtn;
+
+    Form.cleanbtn=cleanbtn;
 
     Form.cityListPanel=cityListPanel;
 
@@ -83,6 +90,8 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
 
     Form.cancelbtn=cancelbtn;
 
+    Form.cleanbtn=cleanbtn;
+
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob */
@@ -92,6 +101,8 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
     Form.selectSubItem = org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_selectSubItem;
 
     Form.selectedCity = org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_selectedCity;
+
+    Form.Clean = org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_Clean;
 
     Form.Cancel = org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_Cancel;
 
@@ -127,6 +138,17 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedCity-201604152311",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_selectedCity */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_Clean(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_Clean */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"Clean-201703122311",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_Clean */
 
 
     /* auto generated eventlistener function declaration */

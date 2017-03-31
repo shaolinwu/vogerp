@@ -14,15 +14,13 @@
           import org.shaolin.uimaster.page.AjaxContext;
           import org.shaolin.uimaster.page.ajax.*;
           {
-              String parentId = @page.getEntityUiid() + ".citiesCbxIU";
               HashMap input = new HashMap();
-              input.put("parentUIID", parentId);
               input.put("parentUIID", @page.getEntityUiid() + ".citiesCbxUI");
               input.put("editable", new Boolean(true));
               RefForm form = new RefForm("cityListForm", "org.shaolin.vogerp.commonmodel.form.CitySelelctor_mob", input);
               @page.addElement(form);
               
-              form.openInWindows("\u9009\u62E9\u57CE\u5E02", new FunctionCallBack(@page, "selectedCity-201604102211"), true);
+              form.openInWindows("选择城市", new FunctionCallBack(@page, "selectedCity-201604102211"), true);
           }
           ]]></expressionString>
     </ns2:exp>
@@ -51,12 +49,14 @@
           import org.shaolin.bmdp.runtime.AppContext;
           import org.shaolin.uimaster.page.AjaxContext;
           import org.shaolin.uimaster.page.ajax.*;
+          import org.shaolin.bmdp.runtime.security.UserContext;
           {
               HashMap input = new HashMap();
               input.put("parentTypeUIID", @page.getEntityUiid() + ".productTypeUI");
               input.put("parentSubTypeUIID", @page.getEntityUiid() + ".productTypeUI");
-              input.put("parentSubType2UIID", @page.getEntityUiid() + ".productTypeUI");
+              input.put("parentSubType2UIID", @page.getEntityUiid() + ".productType1UI");
               input.put("ceName", "org.shaolin.vogerp.productmodel.ce.ProductType");
+              input.put("pvalue", UserContext.getUserContext().getOrgType());
               input.put("editable", new Boolean(false));
               RefForm form = new RefForm("productTypeForm", "org.shaolin.vogerp.productmodel.form.ProductHierarchySelector2", input);
               @page.addElement(form);
@@ -123,7 +123,7 @@
 	     <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 	     <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 	   </ns2:layout>
-	    <ns2:component xsi:type="ns2:UILabelType" UIID="citiesCbxIU">
+	    <ns2:component xsi:type="ns2:UILabelType" UIID="citiesCbxUI">
 	       <ns2:text xsi:type="ns2:StringPropertyType">
 	           <ns2:value>选择城市</ns2:value>
 	        </ns2:text>
@@ -139,8 +139,10 @@
 	         <ns2:handler functionName="selectProductType"></ns2:handler>
 	       </ns2:EventListener>
 	     </ns2:component>
+	     <ns2:component xsi:type="ns2:UIHiddenType" UIID="productType1UI">
+	     </ns2:component>
 	     <ns2:layoutConstraint>
-	         <ns2:componentId>citiesCbxIU</ns2:componentId>
+	         <ns2:componentId>citiesCbxUI</ns2:componentId>
 	         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 	          x="0" y="0" align="FULL"></ns2:constraint>
 	     </ns2:layoutConstraint>
