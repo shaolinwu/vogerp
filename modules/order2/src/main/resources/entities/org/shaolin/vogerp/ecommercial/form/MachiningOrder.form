@@ -106,6 +106,9 @@
                    <value>100</value>
                </ns2:value>
             </ns2:Property>
+            <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+               <ns2:value>false</ns2:value>
+            </ns2:allowBlank>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="differentiationUILabel">
 	        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -135,6 +138,9 @@
 	               <value>true</value>
 	           </ns2:value>
 	        </ns2:Property>
+	        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+               <ns2:value>false</ns2:value>
+            </ns2:allowBlank>
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UILabelType" UIID="materialTypeUILabel">
 	        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>

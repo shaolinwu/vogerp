@@ -255,11 +255,16 @@ function org_shaolin_vogerp_commonmodel_form_ImageSearcher(json)
             if (this.photoUI.galleryTop.slides && this.photoUI.galleryTop.slides.length > 0) {
 	            var slide = this.photoUI.galleryTop.slides[this.photoUI.galleryTop.activeIndex];
 				var url = $(slide).attr("img");
-				var output = "vogerp-output-" + Math.round((Math.random()*1000),0) + url.substring(url.lastIndexOf("."));
-	            $("<a id='downloadImg' href='" +url+ "' style='display:none;' crossOrigin='Anonymous' download='"+output+"'/>Download</a>").appendTo($(document.body));
-				var imgObject = $('#downloadImg');
-	            imgObject[0].click();
-	            imgObject.remove();
+				if (MobileAppMode) {
+				    _mobContext.downloadImage(url);
+				} else {
+				    var output = "vogerp-output-" + Math.round((Math.random()*1000),0) + url.substring(url.lastIndexOf("."));
+		            $("<a id='downloadImg' href='" +url+ "' style='display:none;' crossOrigin='Anonymous' download='"+output+"'/>Download</a>").appendTo($(document.body));
+					var imgObject = $('#downloadImg');
+		            imgObject[0].click();
+		            imgObject.remove();
+				}
+				
             }
          }
             }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_ImageSearcher_download */

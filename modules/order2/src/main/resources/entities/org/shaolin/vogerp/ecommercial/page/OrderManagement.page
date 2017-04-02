@@ -128,10 +128,11 @@
                         
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
-                        if (defaultUser.getStatus() == OrderStatusType.FORBIDDEN) {
-                            input.put("editable", new Boolean(false));
-                        } else {
+                        if (defaultUser.getStatus() == OrderStatusType.PUBLISHED
+                            || defaultUser.getStatus() == OrderStatusType.CREATED) {
                         	input.put("editable", new Boolean(true));
+                        } else {
+                            input.put("editable", new Boolean(false));
                         }
                         String orderName = "采购订单详情";
                         String formName = "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor";
@@ -388,10 +389,11 @@
                       
                       HashMap input = new HashMap();
                       input.put("beObject", defaultUser);
-                      if (defaultUser.getStatus() == OrderStatusType.FORBIDDEN) {
-                          input.put("editable", new Boolean(false));
+                      if (defaultUser.getStatus() == OrderStatusType.PUBLISHED
+                            || defaultUser.getStatus() == OrderStatusType.CREATED) {
+	                      input.put("editable", new Boolean(true));
                       } else {
-                      	input.put("editable", new Boolean(true));
+                          input.put("editable", new Boolean(false));
                       }
                       String formName = "org.shaolin.vogerp.ecommercial.form.RentOrderEditor";
                       if (defaultUser.getType() == RentOrLoanOrderType.LOAN) {
@@ -509,6 +511,7 @@
                       HashMap input = new HashMap();
                       input.put("beObject", order);
                       input.put("editable", new Boolean(true));
+                      
                       String formUI = "org.shaolin.vogerp.ecommercial.form.MachiningOrder";
                       RefForm form = new RefForm("mOrderForm", formUI, input);
                       @page.addElement(form);
@@ -539,7 +542,13 @@
                       
                       HashMap input = new HashMap();
                       input.put("beObject", order);
-                      input.put("editable", new Boolean(true));
+                      if (order.getStatus() == OrderStatusType.PUBLISHED
+                            || order.getStatus() == OrderStatusType.CREATED) {
+	                      input.put("editable", new Boolean(true));
+                      } else {
+                          input.put("editable", new Boolean(false));
+                      }
+                      
                       String formUI = "org.shaolin.vogerp.ecommercial.form.MachiningOrder";
                       if (order.getEstimatedPrice() > 0) {
                          formUI = "org.shaolin.vogerp.ecommercial.form.MachiningOrderWithResult";

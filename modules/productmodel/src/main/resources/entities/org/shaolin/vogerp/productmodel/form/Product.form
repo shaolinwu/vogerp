@@ -34,7 +34,7 @@
         {      
             Table constantTable = @page.getTable("infoPanel1.itemTable");
             if (constantTable.getListData().size() == 0) {
-                Dialog.showMessageDialog("请配制至少一个产品价格包!", "提示", Dialog.WARNING_MESSAGE, null);
+                Dialog.showMessageDialog("配制至少一个产品价格包! 请在价格包中添加。", "提示", Dialog.WARNING_MESSAGE, null);
                 return;
             }
             

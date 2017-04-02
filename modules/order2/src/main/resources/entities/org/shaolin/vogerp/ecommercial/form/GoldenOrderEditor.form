@@ -171,6 +171,9 @@
                    <value>true</value>
                </ns2:value>
             </ns2:Property>
+            <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+               <ns2:value>false</ns2:value>
+            </ns2:allowBlank>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="estimatedPriceUILabel">
             <ns2:UIStyle></ns2:UIStyle>

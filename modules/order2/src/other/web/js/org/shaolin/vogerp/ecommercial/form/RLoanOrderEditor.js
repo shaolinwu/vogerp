@@ -60,6 +60,7 @@ function org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor(json)
     var rentDateTypeUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "rentDateTypeUI"]
+      ,allowBlank:false
     });
 
     var dateCountUILabel = new UIMaster.ui.label
