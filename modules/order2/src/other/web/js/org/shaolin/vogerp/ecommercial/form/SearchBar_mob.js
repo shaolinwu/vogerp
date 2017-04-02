@@ -13,6 +13,11 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
         ui: elementList[prefix + "productTypeUI"]
     });
 
+    var productType1UI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "productType1UI"]
+    });
+
     var searchContext = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "searchContext"]
@@ -22,7 +27,7 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
     ({
         ui: elementList[prefix + "firstRow"]
         ,items: []
-        ,subComponents: [prefix + "citiesCbxUI",prefix + "productTypeUI"]
+        ,subComponents: [prefix + "citiesCbxUI",prefix + "productTypeUI",prefix + "productType1UI"]
     });
 
     var root = new UIMaster.ui.panel
@@ -35,12 +40,14 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [citiesCbxUI,productTypeUI,searchContext,root,firstRow]
+        ,items: [citiesCbxUI,productTypeUI,productType1UI,searchContext,root,firstRow]
     });
 
     Form.citiesCbxUI=citiesCbxUI;
 
     Form.productTypeUI=productTypeUI;
+
+    Form.productType1UI=productType1UI;
 
     Form.searchContext=searchContext;
 
@@ -52,6 +59,8 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
 
     Form.productTypeUI=productTypeUI;
 
+    Form.productType1UI=productType1UI;
+
     Form.searchContext=searchContext;
 
     Form.firstRow=firstRow;
@@ -59,6 +68,8 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
     Form.citiesCbxUI=citiesCbxUI;
 
     Form.productTypeUI=productTypeUI;
+
+    Form.productType1UI=productType1UI;
 
     Form.user_constructor = function()
     {
