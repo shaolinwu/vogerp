@@ -82,10 +82,10 @@
                          $order.setStatus(OrderStatusType.TAKEN_DELIVERY);
 			             @flowContext.save((ITaskEntity)$order);
 			             
-			             String description = $order.getDescription();
+			             String description = "("+OrderUtil.getOrderLink($order)+")" + $order.getDescription();
                          NotificationImpl message = new NotificationImpl();
                          message.setPartyId($order.getTakenCustomerId());
-                         message.setSubject("您的订单已发货，请注意查收！" + description);
+                         message.setSubject("您的订单已发货，请注意查收！");
                          message.setDescription(description);
                          message.setCreateDate(new Date());
                          
@@ -159,10 +159,10 @@
                          $order.setStatus(OrderStatusType.TAKEN_COMPLETED);
 			             @flowContext.save((ITaskEntity)$order);
 			             
-			             String description = $order.getDescription();
+			             String description = "("+OrderUtil.getOrderLink($order)+")" + $order.getDescription();
                          NotificationImpl message = new NotificationImpl();
                          message.setPartyId($order.getPublishedCustomerId());
-                         message.setSubject("您的订单已确认收货成功！" + description);
+                         message.setSubject("您的订单已确认收货成功！");
                          message.setDescription(description);
                          message.setCreateDate(new Date());
                          

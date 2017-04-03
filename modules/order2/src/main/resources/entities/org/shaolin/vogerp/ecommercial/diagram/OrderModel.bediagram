@@ -575,12 +575,12 @@
         <bediagram:constantValue>
             <bediagram:value>Loan</bediagram:value>
             <bediagram:intValue>0</bediagram:intValue>
-            <bediagram:description>租入订单</bediagram:description>
+            <bediagram:description>求租订单</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Rent</bediagram:value>
             <bediagram:intValue>1</bediagram:intValue>
-            <bediagram:description>租出订单</bediagram:description>
+            <bediagram:description>出租订单</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
     

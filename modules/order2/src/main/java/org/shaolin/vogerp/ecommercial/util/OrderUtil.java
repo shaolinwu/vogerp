@@ -9,6 +9,7 @@ import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.utils.DateParser;
 import org.shaolin.bmdp.utils.LockManager;
+import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.uimaster.page.exception.FormatException;
 import org.shaolin.uimaster.page.od.formats.FormatUtil;
 import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
@@ -309,5 +310,33 @@ public class OrderUtil {
            return state + "(\u5DF2\u7ADE\u4EF7<span style='color:red;'>" +order.getOfferPrices().size()+ "</span>\u6B21)";
         }
         return state;
+	}
+	
+	public static String getOrderLink(final IEOrder order) {
+		StringBuilder sb = new StringBuilder();
+		try {
+			JSONObject param = new JSONObject();
+			param.put("orderId", order.getId() + "");
+			param.put("type", order.getClass().getSimpleName());
+			sb.append("<a href='#' onclick=\"javascript:UIMaster.util.invokeWebService('org.shaolin.vogerp.ecommercial.page.AjaxService', 'openEOrderForDetail', \"").append(param.toString()).append("\");\">");
+			sb.append(order.getSerialNumber()).append("</a>");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return sb.toString();
+	}
+	
+	public static String getOrderOfferPriceLink(final IEOrder order) {
+		StringBuilder sb = new StringBuilder();
+		try {
+			JSONObject param = new JSONObject();
+			param.put("orderId", order.getId() + "");
+			param.put("type", order.getClass().getSimpleName());
+			sb.append("<a href='#' onclick=\"javascript:UIMaster.util.invokeWebService('org.shaolin.vogerp.ecommercial.page.AjaxService', 'openPriceOfferingDetail', \"").append(param.toString()).append("\");\">");
+			sb.append(order.getSerialNumber()).append("</a>");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return sb.toString();
 	}
 }

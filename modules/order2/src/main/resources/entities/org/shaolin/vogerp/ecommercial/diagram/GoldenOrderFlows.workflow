@@ -163,6 +163,7 @@
                     import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
                     import org.shaolin.vogerp.ecommercial.be.GOrderSearchCriteriaImpl;
                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                     import org.shaolin.vogerp.order.be.*;
                     import org.shaolin.vogerp.commonmodel.dao.CommonModel;
                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
@@ -185,7 +186,7 @@
                        IPersonalInfo publisher = userService.getPersonalInfo($gOrder.getPublishedCustomerId());
                        
                        String subject = org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil.getCustomerEnterpriseBasicInfo(publisher);
-                       String description = $gOrder.getDescription();
+                       String description = "("+OrderUtil.getOrderLink($gOrder)+")" + $gOrder.getDescription();
                        NotificationImpl message = new NotificationImpl();
                        message.setPartyId($gOrder.getPublishedCustomerId());
 			           message.setSubject("您发布了新的抢购订单！" + subject);
@@ -296,6 +297,7 @@
                      import org.shaolin.vogerp.ecommercial.ce.EOrderType;
                      import org.shaolin.vogerp.ecommercial.be.InterestEOrderImpl;
                      import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                      import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                      import org.shaolin.bmdp.workflow.be.NotificationImpl;
                      import org.shaolin.bmdp.workflow.ws.ChatService;
@@ -317,8 +319,8 @@
                           
                           NotificationImpl message = new NotificationImpl();
                           message.setPartyId($goldenOrder.getPublishedCustomerId());
-                          message.setSubject("您的抢购订单有新的竞价信息! " +$goldenOrder.getSerialNumber());
-                          message.setDescription($goldenOrder.getDescription());
+                          message.setSubject("您的抢购订单("+$goldenOrder.getSerialNumber()+")有新的竞价信息! ");
+                          message.setDescription(OrderUtil.getOrderOfferPriceLink($goldenOrder) + $goldenOrder.getDescription());
                           message.setCreateDate(new java.util.Date());
 	                      
 	                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
@@ -482,10 +484,10 @@
 	                                                     + $gorder.getDescription());
 		                         @flowContext.save(payOrder);
 	                         }
-	                         String description = $gorder.getDescription();
+	                         String description = "("+OrderUtil.getOrderLink($gorder)+")" + $gorder.getDescription();
 	                         NotificationImpl message = new NotificationImpl();
 	                         message.setPartyId($gorder.getTakenCustomerId());
-	                         message.setSubject("恭喜您成功抢购订单！等待付款中...订单信息： " + description);
+	                         message.setSubject("恭喜您成功抢购订单！等待付款中...");
 	                         message.setDescription(description);
 	                         message.setCreateDate(new Date());
 	                         
@@ -619,6 +621,7 @@
                     import org.shaolin.vogerp.commonmodel.IUserService;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
@@ -633,8 +636,8 @@
 	                         if ($gorder.getTakenCustomerId() > 0) {
 		                         NotificationImpl message = new NotificationImpl();
 		                         message.setPartyId($gorder.getTakenCustomerId());
-		                         message.setSubject("抢购单取消。" + $gorder.getSerialNumber());
-		                         message.setDescription($gorder.getDescription());
+		                         message.setSubject("抢购单取消!");
+		                         message.setDescription(OrderUtil.getOrderLink($gorder) + $gorder.getDescription());
 		                         message.setCreateDate(new Date());
 		                         
 		                         ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
@@ -750,8 +753,8 @@
 	                         if ($gorder.getPublishedCustomerId() > 0) {
 		                         NotificationImpl message = new NotificationImpl();
 		                         message.setPartyId($gorder.getPublishedCustomerId());
-		                         message.setSubject("抢购单("+$gorder.getSerialNumber()+")由于不适合抢单规定，已被管理员禁用此单！");
-		                         message.setDescription($gorder.getDescription());
+		                         message.setSubject("抢购单由于不适合抢单规定，已被管理员禁用此单！");
+		                         message.setDescription(OrderUtil.getOrderLink($gorder) + $gorder.getDescription());
 		                         message.setCreateDate(new Date());
 		                         
 		                         ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);

@@ -168,7 +168,7 @@
                         input.put("beObject", defaultUser);
                         input.put("list", defaultUser.getOfferPrices());
                         input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GOOfferPriceTable", input);
+                        RefForm form = new RefForm("offerPriceTable", "org.shaolin.vogerp.ecommercial.form.GOOfferPriceTable", input);
                         @page.addElement(form);
                         
                         form.openInWindows("抢购订单出价历史", new TableCallBack("goldenOrderTable"), true);
@@ -196,7 +196,7 @@
                         input.put("beObject", defaultUser);
                         input.put("list", defaultUser.getOfferPrices());
                         input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.ROOfferPriceTable", input);
+                        RefForm form = new RefForm("offerPriceTable", "org.shaolin.vogerp.ecommercial.form.ROOfferPriceTable", input);
                         @page.addElement(form);
                         
                         form.openInWindows("租赁订单出价历史", new TableCallBack("rentOrderTable"), true);
@@ -224,7 +224,7 @@
                         input.put("beObject", defaultUser);
                         input.put("list", defaultUser.getOfferPrices());
                         input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.MOOfferPriceTable", input);
+                        RefForm form = new RefForm("offerPriceTable", "org.shaolin.vogerp.ecommercial.form.MOOfferPriceTable", input);
                         @page.addElement(form);
                         
                         form.openInWindows("加工订单出价历史", new TableCallBack("machiningTable"), true);

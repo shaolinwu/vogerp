@@ -191,6 +191,7 @@
                      import org.shaolin.vogerp.ecommercial.ce.EOrderType;
                      import org.shaolin.vogerp.ecommercial.be.InterestEOrderImpl;
                      import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                      import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                      import org.shaolin.bmdp.workflow.be.NotificationImpl;
                      {
@@ -198,8 +199,8 @@
                           
                           NotificationImpl message = new NotificationImpl();
                           message.setPartyId($goldenOrder.getPublishedCustomerId());
-                          message.setSubject("您有新的加工订单报价信息。" + $goldenOrder.getSerialNumber());
-                          message.setDescription($goldenOrder.getDescription());
+                          message.setSubject("您有新的加工订单报价信息。");
+                          message.setDescription(OrderUtil.getOrderLink($goldenOrder) + $goldenOrder.getDescription());
                           message.setCreateDate(new java.util.Date());
 	                      
 	                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
@@ -302,6 +303,7 @@
                      import org.shaolin.vogerp.ecommercial.ce.EOrderType;
                      import org.shaolin.vogerp.ecommercial.be.InterestEOrderImpl;
                      import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                      import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                      import org.shaolin.bmdp.workflow.be.NotificationImpl;
                      import org.shaolin.bmdp.workflow.ws.ChatService;
@@ -323,8 +325,8 @@
                           
                           NotificationImpl message = new NotificationImpl();
                           message.setPartyId($goldenOrder.getPublishedCustomerId());
-                          message.setSubject("您的加工单有新的竞价信息! " +$goldenOrder.getSerialNumber());
-                          message.setDescription($goldenOrder.getDescription());
+                          message.setSubject("您的加工订单("+$goldenOrder.getSerialNumber()+")有新的竞价信息! ");
+                          message.setDescription(OrderUtil.getOrderOfferPriceLink($goldenOrder) + $goldenOrder.getDescription());
                           message.setCreateDate(new java.util.Date());
 	                      
 	                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
@@ -469,10 +471,10 @@
 			             $page.addElement(form);
 			             form.openInWindows("支付方式选择", null, true);
 			             
-                         String description = $gorder.getDescription();
+                         String description = "("+OrderUtil.getOrderLink($gorder)+")" + $gorder.getDescription();
                          NotificationImpl message = new NotificationImpl();
                          message.setPartyId($gorder.getPublishedCustomerId());
-                         message.setSubject("加工订单已确认，等待付款中！订单信息： " + description);
+                         message.setSubject("加工订单已确认，等待付款中!");
                          message.setDescription(description);
                          message.setCreateDate(new Date());
                          
