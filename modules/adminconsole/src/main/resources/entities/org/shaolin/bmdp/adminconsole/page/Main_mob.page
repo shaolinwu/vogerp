@@ -503,6 +503,16 @@
 				</ns2:layoutConstraint>
 			<ns2:constructorCode><![CDATA[
 			   {
+			     // notify user open up the GPS.
+	            if(navigator.geolocation){
+			        navigator.geolocation.getCurrentPosition(
+		                function(p){
+		                },
+		                function(e){
+		                }
+			        );
+			    }
+			    
 			     var o = this;
 			     o.clearSelectedTab = function() {
 			        $(o.bottomPanel).children().each(function(){

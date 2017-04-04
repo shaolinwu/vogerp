@@ -50,7 +50,9 @@
             PersonalAccountImpl loginAccount = new PersonalAccountImpl();
             loginAccount.setUserName($registerInfo.getPhoneNumber());
             loginAccount.setPassword($registerInfo.getPassword());
-            
+            loginAccount.setLatitude($registerInfo.getLatitude());
+	        loginAccount.setLongitude($registerInfo.getLongitude());
+	        
             $errorCode = service.login(loginAccount, $getRequest());
         } else {
             $errorCode = IUserService.USER_REGISTER_FAIL;
@@ -125,6 +127,18 @@
         <expressionString><![CDATA[""]]></expressionString>
       </default>
     </ns2:variables>
+    <ns2:variables name="latitude" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="longitude" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
     <ns2:out xsi:type="ns2:DisplayOutType" name="Submit">
       <ns2:next>
         <ns2:destNode>Authentication</ns2:destNode>
@@ -141,6 +155,16 @@
         <ns2:outDataMappingToNode name="verifyCode">
           <expression>
             <expressionString><![CDATA[$verifyCode]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="longitude">
+          <expression>
+            <expressionString><![CDATA[$longitude]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="latitude">
+          <expression>
+            <expressionString><![CDATA[$latitude]]></expressionString>
           </expression>
         </ns2:outDataMappingToNode>
       </ns2:next>
@@ -177,6 +201,18 @@
         <expressionString><![CDATA[""]]></expressionString>
       </default>
     </ns2:variables>
+    <ns2:variables name="latitude" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="longitude" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
     <ns2:operation>
       <expressionString><![CDATA[
       import org.shaolin.bmdp.runtime.AppContext;
@@ -188,7 +224,10 @@
       	    PersonalAccountImpl loginAccount = new PersonalAccountImpl();
 	        loginAccount.setUserName($userName);
 	        loginAccount.setPassword($password);
-	        
+	        if ($latitude != null && $latitude.trim().length() > 0) {
+		        loginAccount.setLatitude(Double.parseDouble($latitude));
+		        loginAccount.setLongitude(Double.parseDouble($longitude));
+	        }
 	        $errorCode = service.login(loginAccount, $getRequest());
       	} else {
       	    $errorCode = IUserService.USER_LOGIN_PASSWORDRULES_VERICODEINCORRECT;

@@ -484,6 +484,14 @@
                 <bediagram:targetEntity entityName="OrgType" />
             </bediagram:type>
         </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>longitude</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>latitude</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
         
         <!-- company user -->
         <bediagram:member>

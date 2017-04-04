@@ -188,6 +188,8 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		newAccount.setUserName(registerInfo.getPhoneNumber());
 		newAccount.setPassword(registerInfo.getPassword());
 		newAccount.setLoginIP(HttpUserUtil.getIP(request));
+		newAccount.setLatitude(registerInfo.getLatitude());
+		newAccount.setLongitude(registerInfo.getLongitude());
 		this.setLocationInfo(newAccount);
 		CommonModel.INSTANCE.create(newAccount);
 		
@@ -267,7 +269,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	}
 	
 	@Override
-	public String login(IPersonalAccount user, HttpServletRequest request) {
+	public String login(final IPersonalAccount user, final HttpServletRequest request) {
 		if (user.getUserName() == null || user.getUserName().trim().length() == 0) {
 			return USER_LOGIN_PASSWORDRULES_PASSWORDINCORRECT;
 		}
@@ -322,6 +324,8 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			matchedUser.setAttempt(0);
 			matchedUser.setIsLocked(false);
 			matchedUser.setLoginedCount(matchedUser.getLoginedCount() + 1);
+			matchedUser.setLatitude(user.getLatitude());
+			matchedUser.setLongitude(user.getLongitude());
 			CommonModel.INSTANCE.update(matchedUser);
 			
 			HttpSession session = request.getSession(true);

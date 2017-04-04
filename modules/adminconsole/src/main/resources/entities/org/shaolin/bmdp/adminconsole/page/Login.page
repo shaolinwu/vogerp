@@ -32,6 +32,20 @@
 		            if (constraint_result != true && constraint_result != null) {
 		                return false;
 		            }
+		            
+		            if(navigator.geolocation){
+				        var latitudeInfo = this.latitudeInfo;
+				        var longitudeInfo = this.longitudeInfo;
+				        navigator.geolocation.getCurrentPosition(
+			                function(p){
+			                    latitudeInfo.setValue(p.coords.latitude);
+			                    longitudeInfo.setValue(p.coords.longitude);
+			                },
+			                function(e){
+			                    var msg = e.code + "\n" + e.message;
+			                }
+				        );
+				    }
 		        }
 		        ]]></ns2:expressionString>
 		    </ns2:ops>
@@ -234,6 +248,8 @@
 						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 					</ns2:layout>
+					<ns2:component xsi:type="ns2:UIHiddenType" UIID="latitudeInfo" />
+				    <ns2:component xsi:type="ns2:UIHiddenType" UIID="longitudeInfo" />
 					<ns2:component xsi:type="ns2:UILabelType" UIID="errorInfo" />
 					<ns2:component xsi:type="ns2:UITextFieldType" UIID="userName">
 						<ns2:title xsi:type="ns2:StringPropertyType">
@@ -420,6 +436,19 @@
 				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 					x="0" y="3" align="FULL"></ns2:constraint>
 			</ns2:layoutConstraint>
+			<ns2:constructorCode><![CDATA[
+		        { 
+		            // notify user open up the GPS.
+		            if(navigator.geolocation){
+				        navigator.geolocation.getCurrentPosition(
+			                function(p){
+			                },
+			                function(e){
+			                }
+				        );
+				    }
+		        }]]>
+		    </ns2:constructorCode>
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>
@@ -430,6 +459,12 @@
 			<ns2:type entityName="java.lang.String" />
 		</ns2:DataEntity>
 		<ns2:DataEntity category="JavaClass" name="verifyCode" scope="InOut">
+            <ns2:type entityName="java.lang.String" />
+        </ns2:DataEntity>
+        <ns2:DataEntity category="JavaClass" name="latitude" scope="InOut">
+            <ns2:type entityName="java.lang.String" />
+        </ns2:DataEntity>
+        <ns2:DataEntity category="JavaClass" name="longitude" scope="InOut">
             <ns2:type entityName="java.lang.String" />
         </ns2:DataEntity>
 		<ns2:DataEntity category="JavaClass" name="errorCode" scope="In">
@@ -470,6 +505,24 @@
                 paramName="UIWidgetType"></ns2:UIComponent>
             <ns2:DataComponent xsi:type="ns2:ComponentParamType"
                 componentPath="verifyCode" paramName="StringData"></ns2:DataComponent>
+        </ns2:ComponentMapping>
+        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
+            name="simpleMapping4">
+            <ns2:mappingRule
+                entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+            <ns2:UIComponent componentPath="latitudeInfo"
+                paramName="UIWidgetType"></ns2:UIComponent>
+            <ns2:DataComponent xsi:type="ns2:ComponentParamType"
+                componentPath="latitude" paramName="StringData"></ns2:DataComponent>
+        </ns2:ComponentMapping>
+        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
+            name="simpleMapping5">
+            <ns2:mappingRule
+                entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+            <ns2:UIComponent componentPath="longitudeInfo"
+                paramName="UIWidgetType"></ns2:UIComponent>
+            <ns2:DataComponent xsi:type="ns2:ComponentParamType"
+                componentPath="longitude" paramName="StringData"></ns2:DataComponent>
         </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>

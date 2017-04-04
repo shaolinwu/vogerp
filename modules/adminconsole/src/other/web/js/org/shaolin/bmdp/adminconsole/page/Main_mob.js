@@ -214,6 +214,16 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
         
 			   {
+			     // notify user open up the GPS.
+	            if(navigator.geolocation){
+			        navigator.geolocation.getCurrentPosition(
+		                function(p){
+		                },
+		                function(e){
+		                }
+			        );
+			    }
+			    
 			     var o = this;
 			     o.clearSelectedTab = function() {
 			        $(o.bottomPanel).children().each(function(){

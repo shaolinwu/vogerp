@@ -286,7 +286,21 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_bmdp_adminconsole_page_Main */
-        /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_Main */
+
+        
+		        { 
+		            // notify user open up the GPS.
+		            if(navigator.geolocation){
+				        navigator.geolocation.getCurrentPosition(
+			                function(p){
+			                },
+			                function(e){
+			                }
+				        );
+				    }
+		        }
+		    
+            /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_Main */
     };
 
     Form.Submit = org_shaolin_bmdp_adminconsole_page_Main_Submit;

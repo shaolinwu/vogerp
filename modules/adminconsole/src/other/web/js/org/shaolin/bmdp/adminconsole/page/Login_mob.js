@@ -8,6 +8,16 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
         ui: elementList[prefix + "vogerplogo"]
     });
 
+    var latitudeInfo = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "latitudeInfo"]
+    });
+
+    var longitudeInfo = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "longitudeInfo"]
+    });
+
     var errorInfo = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "errorInfo"]
@@ -71,7 +81,7 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
     ({
         ui: elementList[prefix + "loginPanel"]
         ,items: []
-        ,subComponents: [prefix + "errorInfo",prefix + "userName",prefix + "password",prefix + "veriCodeQuestion",prefix + "veriCode",prefix + "actionPanel"]
+        ,subComponents: [prefix + "latitudeInfo",prefix + "longitudeInfo",prefix + "errorInfo",prefix + "userName",prefix + "password",prefix + "veriCodeQuestion",prefix + "veriCode",prefix + "actionPanel"]
     });
 
     var topPanel = new UIMaster.ui.panel
@@ -84,10 +94,14 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [vogerplogo,errorInfo,userName,password,veriCodeQuestion,veriCode,loginBtn,registerBtn,forgetPwdBtn,bottomPanelInfo,topPanel,loginPanel,actionPanel,bottomPanel]
+        ,items: [vogerplogo,latitudeInfo,longitudeInfo,errorInfo,userName,password,veriCodeQuestion,veriCode,loginBtn,registerBtn,forgetPwdBtn,bottomPanelInfo,topPanel,loginPanel,actionPanel,bottomPanel]
     });
 
     Form.vogerplogo=vogerplogo;
+
+    Form.latitudeInfo=latitudeInfo;
+
+    Form.longitudeInfo=longitudeInfo;
 
     Form.errorInfo=errorInfo;
 
@@ -112,6 +126,10 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
     Form.vogerplogo=vogerplogo;
 
     Form.loginPanel=loginPanel;
+
+    Form.latitudeInfo=latitudeInfo;
+
+    Form.longitudeInfo=longitudeInfo;
 
     Form.errorInfo=errorInfo;
 
@@ -146,7 +164,21 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_bmdp_adminconsole_page_Login_mob */
-        /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_Login_mob */
+
+        
+		        { 
+		            // notify user open up the GPS.
+		            if(navigator.geolocation){
+				        navigator.geolocation.getCurrentPosition(
+			                function(p){
+			                },
+			                function(e){
+			                }
+				        );
+				    }
+		        }
+		    
+            /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_Login_mob */
     };
 
     Form.genVerifiCode = org_shaolin_bmdp_adminconsole_page_Login_mob_genVerifiCode;
@@ -200,6 +232,19 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
 		            if (constraint_result != true && constraint_result != null) {
 		                return false;
 		            }
+				    if(navigator.geolocation){
+				        var latitudeInfo = this.latitudeInfo;
+				        var longitudeInfo = this.longitudeInfo;
+				        navigator.geolocation.getCurrentPosition(
+			                function(p){
+			                    latitudeInfo.setValue(p.coords.latitude);
+			                    longitudeInfo.setValue(p.coords.longitude);
+			                },
+			                function(e){
+			                    var msg = e.code + "\n" + e.message;
+			                }
+				        );
+				    }
 		        }
 		        
         // cal ajax function. 

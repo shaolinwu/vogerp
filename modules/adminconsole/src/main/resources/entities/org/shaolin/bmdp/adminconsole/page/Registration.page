@@ -58,6 +58,20 @@
 		            if (constraint_result != true && constraint_result != null) {
 		                return false;
 		            }
+		            
+		            if(navigator.geolocation){
+				        var latitudeInfo = this.latitudeInfo;
+				        var longitudeInfo = this.longitudeInfo;
+				        navigator.geolocation.getCurrentPosition(
+			                function(p){
+			                    latitudeInfo.setValue(p.coords.latitude);
+			                    longitudeInfo.setValue(p.coords.longitude);
+			                },
+			                function(e){
+			                    var msg = e.code + "\n" + e.message;
+			                }
+				        );
+				    }
 		        }
 		        ]]></ns2:expressionString>
 		    </ns2:ops>
@@ -106,6 +120,8 @@
 				<ns2:rowHeightWeight>80</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			</ns2:layout>
+			<ns2:component xsi:type="ns2:UIHiddenType" UIID="latitudeInfo" />
+		    <ns2:component xsi:type="ns2:UIHiddenType" UIID="longitudeInfo" />
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="topPanel">
 				<ns2:layout xsi:type="ns2:TableLayoutType">
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -367,7 +383,16 @@
 			</ns2:layoutConstraint>
 			<ns2:constructorCode><![CDATA[
 		        { 
-		        $(this.registerCompanyInfo.Form).parent().css("display", "none");
+		            $(this.registerCompanyInfo.Form).parent().css("display", "none");
+		            // notify user open up the GPS.
+		            if(navigator.geolocation){
+				        navigator.geolocation.getCurrentPosition(
+			                function(p){
+			                },
+			                function(e){
+			                }
+				        );
+				    }
 		        }]]>
 		    </ns2:constructorCode>
 		</ns2:body>
@@ -379,10 +404,20 @@
 		<ns2:DataEntity category="JavaClass" name="registerInfo" scope="InOut">
             <ns2:type entityName="org.shaolin.vogerp.commonmodel.be.RegisterInfoImpl" />
         </ns2:DataEntity>
-		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
 			<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
 			<ns2:UIComponent componentPath="errorInfo" paramName="UIWidgetType"></ns2:UIComponent>
 			<ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="errorCode" paramName="StringData"></ns2:DataComponent>
+		</ns2:ComponentMapping>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+			<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithFloatNumber"></ns2:mappingRule>
+			<ns2:UIComponent componentPath="latitudeInfo" paramName="UIWidgetType"></ns2:UIComponent>
+			<ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="registerInfo.latitude" paramName="FloatNumber"></ns2:DataComponent>
+		</ns2:ComponentMapping>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+			<ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithFloatNumber"></ns2:mappingRule>
+			<ns2:UIComponent componentPath="longitudeInfo" paramName="UIWidgetType"></ns2:UIComponent>
+			<ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="registerInfo.longitude" paramName="FloatNumber"></ns2:DataComponent>
 		</ns2:ComponentMapping>
         <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
             <ns2:mappingRule entityName="org.shaolin.bmdp.adminconsole.form.RegisterInfo"></ns2:mappingRule>

@@ -563,6 +563,19 @@
                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                     x="0" y="2" align="FULL"></ns2:constraint>
             </ns2:layoutConstraint>
+            <ns2:constructorCode><![CDATA[
+		        { 
+		            // notify user open up the GPS.
+		            if(navigator.geolocation){
+				        navigator.geolocation.getCurrentPosition(
+			                function(p){
+			                },
+			                function(e){
+			                }
+				        );
+				    }
+		        }]]>
+		    </ns2:constructorCode>
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>
