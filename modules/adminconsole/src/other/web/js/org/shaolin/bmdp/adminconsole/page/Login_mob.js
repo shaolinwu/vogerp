@@ -169,10 +169,15 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
 		        { 
 		            // notify user open up the GPS.
 		            if(navigator.geolocation){
+				        var latitudeInfo = this.latitudeInfo;
+				        var longitudeInfo = this.longitudeInfo;
 				        navigator.geolocation.getCurrentPosition(
 			                function(p){
+			                    latitudeInfo.setValue(p.coords.latitude);
+			                    longitudeInfo.setValue(p.coords.longitude);
 			                },
 			                function(e){
+			                    var msg = e.code + "\n" + e.message;
 			                }
 				        );
 				    }
@@ -232,19 +237,6 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
 		            if (constraint_result != true && constraint_result != null) {
 		                return false;
 		            }
-				    if(navigator.geolocation){
-				        var latitudeInfo = this.latitudeInfo;
-				        var longitudeInfo = this.longitudeInfo;
-				        navigator.geolocation.getCurrentPosition(
-			                function(p){
-			                    latitudeInfo.setValue(p.coords.latitude);
-			                    longitudeInfo.setValue(p.coords.longitude);
-			                },
-			                function(e){
-			                    var msg = e.code + "\n" + e.message;
-			                }
-				        );
-				    }
 		        }
 		        
         // cal ajax function. 

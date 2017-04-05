@@ -218,8 +218,11 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 	            if(navigator.geolocation){
 			        navigator.geolocation.getCurrentPosition(
 		                function(p){
+		                   console.log("latitude: " + p.coords.latitude);
 		                },
 		                function(e){
+		                   var msg = e.code + "\n" + e.message;
+		                   console.log(msg);
 		                }
 			        );
 			    }
