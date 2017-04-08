@@ -53,6 +53,7 @@
             
             form.closeIfinWindows();
             @page.removeForm(@page.getEntityUiid()); 
+            Dialog.showMessageDialog("导入产品需要一些时间，请您稍等并刷新页面。谢谢！", "Information", Dialog.INFORMATION_MESSAGE, null);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
