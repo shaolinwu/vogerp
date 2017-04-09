@@ -237,18 +237,28 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         
 		        { 
 		            // notify user open up the GPS.
-		            if(navigator.geolocation){
-				        var latitudeInfo = this.latitudeInfo;
-				        var longitudeInfo = this.longitudeInfo;
-				        navigator.geolocation.getCurrentPosition(
-			                function(p){
-			                    latitudeInfo.setValue(p.coords.latitude);
-			                    longitudeInfo.setValue(p.coords.longitude);
-			                },
-			                function(e){
-			                    var msg = e.code + "\n" + e.message;
-			                }
-				        );
+		            $("<div style='display:none;' id='mapcontainer'><div>").appendTo($(document.forms[0]));
+				    var map = new AMap.Map('mapcontainer');
+				    map.plugin('AMap.Geolocation', function() {
+				        var geolocation = new AMap.Geolocation({
+				            enableHighAccuracy: true,
+				            timeout: 10000,
+				            buttonOffset: new AMap.Pixel(10, 20),
+				            zoomToAccuracy: false,
+				            buttonPosition:'RB'
+				        });
+				        map.addControl(geolocation);
+				        geolocation.getCurrentPosition();
+				        AMap.event.addListener(geolocation, 'complete', onComplete);
+				        AMap.event.addListener(geolocation, 'error', onError);
+				    });
+				    function onComplete(data) {
+				        longitudeInfo.setValue(data.position.getLng());
+			            latitudeInfo.setValue(data.position.getLat());
+			            console.log("latitudeInfo: " + data.position.getLng() + ", longitudeInfo: " + data.position.getLat());
+				    }
+				    function onError(data) {
+				        console.log("geolocation fails: " + data.message);
 				    }
 		        }
 		    
