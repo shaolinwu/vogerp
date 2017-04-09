@@ -72,6 +72,8 @@
     <ns2:column name="PHOTOS" type="VARCHAR" default="1"></ns2:column>
     <ns2:column name="HTMLDESC" type="VARCHAR" length="255" isNull="true"></ns2:column>
     <ns2:column name="CITY" type="VARCHAR" length="50" isNull="true"></ns2:column>
+    <ns2:column name="LONGITUDE" type="DECIMAL" length="10" isNull="true"></ns2:column>
+    <ns2:column name="LATITUDE" type="DECIMAL" length="10" isNull="true"></ns2:column>
     <ns2:column name="PROMOTED" type="INTEGER" length="2"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="_sessionId" type="VARCHAR" length="38" default="0"></ns2:column>
@@ -103,6 +105,8 @@
       <ns2:fieldMapping beFieldName="status" columnName="STATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="takenStatus" columnName="STATE1"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="city" columnName="CITY"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="longitude" columnName="LONGITUDE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="latitude" columnName="LATITUDE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="promoted" columnName="PROMOTED"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_sessionId" columnName="_sessionId"></ns2:fieldMapping>
@@ -133,6 +137,8 @@
     <ns2:column name="PHOTOS" type="VARCHAR" default="1"></ns2:column>
     <ns2:column name="HTMLDESC" type="VARCHAR" length="255" isNull="true"></ns2:column>
     <ns2:column name="CITY" type="VARCHAR" length="50" isNull="true"></ns2:column>
+    <ns2:column name="LONGITUDE" type="DECIMAL" length="10" isNull="true"></ns2:column>
+    <ns2:column name="LATITUDE" type="DECIMAL" length="10" isNull="true"></ns2:column>
     <ns2:column name="promoted" type="INTEGER" length="2" default="0"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="_sessionId" type="VARCHAR" length="38" default="0"></ns2:column>
@@ -158,6 +164,8 @@
       <ns2:fieldMapping beFieldName="htmlDesc" columnName="HTMLDESC"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="status" columnName="STATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="city" columnName="CITY"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="longitude" columnName="LONGITUDE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="latitude" columnName="LATITUDE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="promoted" columnName="PROMOTED"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_sessionId" columnName="_sessionId"></ns2:fieldMapping>
@@ -188,6 +196,8 @@
     <ns2:column name="DATECOUNT" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="DEPOSIT" type="DECIMAL" default="0"></ns2:column>
     <ns2:column name="CITY" type="VARCHAR" length="50" isNull="true"></ns2:column>
+    <ns2:column name="LONGITUDE" type="DECIMAL" length="10" isNull="true"></ns2:column>
+    <ns2:column name="LATITUDE" type="DECIMAL" length="10" isNull="true"></ns2:column>
     <ns2:column name="TAXRATE" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="INVOICETYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="STARTDATE" type="DATETIME" isNull="true"></ns2:column>
@@ -226,6 +236,8 @@
       <ns2:fieldMapping beFieldName="deposit" columnName="DEPOSIT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="dateCount" columnName="DATECOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="city" columnName="CITY"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="longitude" columnName="LONGITUDE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="latitude" columnName="LATITUDE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="promoted" columnName="PROMOTED"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_sessionId" columnName="_sessionId"></ns2:fieldMapping>
@@ -362,6 +374,8 @@
     <ns2:column name="STATE" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="STATE1" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="CITY" type="VARCHAR" length="50" isNull="true"></ns2:column>
+    <ns2:column name="LONGITUDE" type="DECIMAL" length="10" isNull="true"></ns2:column>
+    <ns2:column name="LATITUDE" type="DECIMAL" length="10" isNull="true"></ns2:column>
     <ns2:column name="NeedCreateModel" type="INTEGER" length="1" default="1"></ns2:column>
     <ns2:column name="MODELFILE" type="VARCHAR" length="50" isNull="true"></ns2:column>
     <ns2:column name="MATERIALTYPE" type="INTEGER" length="50" default="1"></ns2:column>
@@ -396,6 +410,8 @@
       <ns2:fieldMapping beFieldName="modelFile" columnName="MODELFILE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="materialType" columnName="MATERIALTYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="city" columnName="CITY"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="longitude" columnName="LONGITUDE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="latitude" columnName="LATITUDE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_sessionId" columnName="_sessionId"></ns2:fieldMapping>
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_MACHININGORDER0" mappingType="One-to-One" beFieldName="publishedCustomer" columnName="PUBLISHEDCUSTOMERID"></ns2:fieldMapping>

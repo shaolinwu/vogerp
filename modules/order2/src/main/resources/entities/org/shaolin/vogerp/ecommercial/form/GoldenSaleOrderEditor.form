@@ -103,6 +103,30 @@
           <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.ImageUploader" />
         </ns2:component>
         <ns2:component xsi:type="ns2:UIPanelType" UIID="attributePanel">
+          <ns2:Property name="title">
+            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+		         <ns2:expression>
+		           <expressionString><![CDATA[
+		           import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+		           import org.shaolin.bmdp.runtime.AppContext;
+		           import org.shaolin.bmdp.workflow.be.ITaskHistory;
+		           import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+		           { 
+		               if ($beObject.getStatus() == OrderStatusType.VERIFYING) {
+		                  return "您的订单处于审核状态中，请稍等哟！";
+		               } else if ($beObject.getSessionId() != null && $beObject.getSessionId().length() > 0 
+		                          && $beObject.getStatus() == OrderStatusType.CREATED) {
+		                  ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+		                  ITaskHistory task = service.getLastHisTaskBySessionId($beObject.getSessionId());
+		                  if (task != null) {
+		                      return "对不起，您的订单审核未通过！原因： " +task.getComments()+ " 请更新订单后，重新点击下单。谢谢！";
+		                  }
+		               }
+		               return null;
+		           }]]></expressionString>
+		         </ns2:expression>
+	        </ns2:value>
+          </ns2:Property>
           <ns2:layout xsi:type="ns2:TableLayoutType">
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>

@@ -28,7 +28,7 @@
                     import org.shaolin.bmdp.runtime.ce.CEUtil;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     {
-                      $gOrder.setStatus(OrderStatusType.PUBLISHED);
+                      $gOrder.setStatus(OrderStatusType.VERIFYING);
                       @flowContext.save($gOrder);
                       //assign task id to sales order. this object is passed from blow action actually.
                     }]]></expressionString>
@@ -39,7 +39,7 @@
         <ns2:mission-node name="publishGorder" expiredDays="5" expiredHours="0" autoTrigger="true">
             <ns2:description>发布租赁订单给所有客户</ns2:description>
             <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.RentOrderEditor"
-                actionName="publishGorder" actionText="发布此单给大家">
+                actionName="publishGorder" actionText="下单">
                 <ns2:expression>
                     <expressionString><![CDATA[
                     import java.util.HashMap;
@@ -53,12 +53,14 @@
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                     import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
                     import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
                         RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)out.get("beObject");
                         gorder.setType(RentOrLoanOrderType.RENT);
+                        gorder.setStatus(OrderStatusType.VERIFYING);
                         gorder.setCount(1);
 			            if (gorder.getDeliveryInfo() != null) {
 			                if (gorder.getDeliveryInfo().getId() > 0) {
@@ -94,7 +96,7 @@
                 </ns2:filter>
             </ns2:uiAction>
             <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.RLoanOrderEditor"
-                actionName="publishGorder1" actionText="发布此单给大家">
+                actionName="publishGorder1" actionText="下单">
                 <ns2:expression>
                     <expressionString><![CDATA[
                     import java.util.HashMap;
@@ -108,6 +110,7 @@
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                     import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
                     import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
@@ -115,6 +118,7 @@
                         RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)out.get("beObject");
                         gorder.setCount(1);
                         gorder.setType(RentOrLoanOrderType.LOAN);
+                        gorder.setStatus(OrderStatusType.VERIFYING);
 			            if (gorder.getDeliveryInfo() != null) {
 			                if (gorder.getDeliveryInfo().getId() > 0) {
 				               OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
@@ -194,7 +198,7 @@
                        String description = "("+OrderUtil.getOrderLink($gOrder)+")" + $gOrder.getDescription();
                        NotificationImpl message = new NotificationImpl();
                        message.setPartyId($gOrder.getPublishedCustomerId());
-			           message.setSubject("您发布新的租赁订单！" +subject);
+			           message.setSubject("您发布新的租赁订单！审核中。。。" +subject);
 		               message.setDescription(description);
 			           message.setCreateDate(new Date());
                        
@@ -207,7 +211,128 @@
                 </ns2:expression>
             </ns2:process>
             <ns2:eventDest>
-                <ns2:dest name="offerPrice"></ns2:dest>
+                <ns2:dest name="verifyROrder"></ns2:dest>
+            </ns2:eventDest>
+        </ns2:mission-node>
+        
+        <ns2:mission-node name="verifyROrder" expiredDays="0" expiredHours="0" autoTrigger="false" multipleInvoke="true">
+            <ns2:description>审核加工单</ns2:description>
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.page.OrderManagementByAdmin"
+                actionName="verifyROrder" actionText="审核通过" isHidden="true">
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.Date;
+                    import java.util.ArrayList;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.commonmodel.IUserService; 
+                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+                    import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+                    { 
+                        Table orderInfoTable = (Table)@page.getElement("rentOrderTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)orderInfoTable.getSelectedRow();
+                        if (defaultUser.getStatus() != OrderStatusType.VERIFYING) {
+                            Dialog.showMessageDialog("操作失败！", "订单状态: " + defaultUser.getStatus().getDisplayName(), Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
+                        defaultUser.setStatus(OrderStatusType.PUBLISHED);
+                        
+                        HashMap result = new HashMap();
+                        result.put("order", defaultUser);
+                        return result;
+                    }
+                    ]]></expressionString>
+                </ns2:expression>
+            </ns2:uiAction>
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.page.OrderManagementByAdmin"
+                actionName="unverifiedROrder" actionText="审核不通过" isHidden="true">
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.Date;
+                    import java.util.ArrayList;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.commonmodel.IUserService; 
+                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+                    import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+                    { 
+                        Table orderInfoTable = (Table)@page.getElement("rentOrderTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)orderInfoTable.getSelectedRow();
+                        if (defaultUser.getStatus() != OrderStatusType.VERIFYING) {
+                            Dialog.showMessageDialog("操作失败！", "订单状态: " + defaultUser.getStatus().getDisplayName(), Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
+                        defaultUser.setStatus(OrderStatusType.CREATED);
+                        
+                        HashMap result = new HashMap();
+                        result.put("order", defaultUser);
+                        return result;
+                    }
+                    ]]></expressionString>
+                </ns2:expression>
+            </ns2:uiAction>
+            <ns2:participant partyType="Admin,0"/>
+            <ns2:process>
+                <ns2:var name="order" category="BusinessEntity" scope="InOut">
+                    <type entityName="org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder"></type>
+                </ns2:var>
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                     import java.util.List;
+                     import java.util.ArrayList;
+                     import org.shaolin.uimaster.page.ajax.*;
+                     import org.shaolin.bmdp.runtime.AppContext;
+                     import org.shaolin.bmdp.runtime.security.UserContext;
+                     import org.shaolin.vogerp.ecommercial.ce.EOrderType;
+                     import org.shaolin.vogerp.ecommercial.be.InterestEOrderImpl;
+                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
+                     {
+                          @flowContext.save($order);
+                          
+                          NotificationImpl message = new NotificationImpl();
+                          message.setPartyId($order.getPublishedCustomerId());
+                          if ($order.getStatus() == OrderStatusType.PUBLISHED) {
+                          	  message.setSubject("您的加工订单通过审核! 推送给所有在线用户...");
+	                          message.setDescription(OrderUtil.getOrderLink($order) + $order.getDescription());
+                          } else if ($order.getStatus() == OrderStatusType.CREATED) {
+                              message.setSubject("您的加工订单审核失败! 请打开订单查看详情。");
+                              message.setDescription(OrderUtil.getOrderLink($order) + @flowContext.getEvent().getComments());
+                          }
+                          message.setCreateDate(new java.util.Date());
+	                      
+	                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+	                      service.addNotification(message, true);
+	                      
+	                      Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
+                     }
+                     ]]></expressionString>
+                </ns2:expression>
+            </ns2:process>
+            <ns2:eventDest>
+            	<ns2:dest name="verifyROrder"></ns2:dest>
+            	<ns2:dest name="publishGorder"></ns2:dest>
             	<ns2:dest name="cancelGOrder"></ns2:dest>
             </ns2:eventDest>
         </ns2:mission-node>

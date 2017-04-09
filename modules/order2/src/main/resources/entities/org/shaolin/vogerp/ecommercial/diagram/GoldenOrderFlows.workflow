@@ -4,8 +4,7 @@
 	xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram"
 	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Workflow" xmlns="http://bmdp.shaolin.org/datamodel/Common"
 	xsi:schemaLocation="">
-	<entityName>org.shaolin.vogerp.ecommercial.diagram.GoldenOrderFlows
-	</entityName>
+	<entityName>org.shaolin.vogerp.ecommercial.diagram.GoldenOrderFlows</entityName>
 	<systemVersion>0</systemVersion>
 	<description>抢订单流程</description>
 	<ns2:conf>
@@ -27,7 +26,7 @@
                     import org.shaolin.bmdp.runtime.ce.CEUtil;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     {
-                      $gOrder.setStatus(OrderStatusType.PUBLISHED);
+                      $gOrder.setStatus(OrderStatusType.VERIFYING);
                       @flowContext.save($gOrder);
                       //assign task id to sales order. this object is passed from blow action actually.
                     }]]></expressionString>
@@ -39,7 +38,7 @@
 			expiredHours="0" autoTrigger="true">
 			<ns2:description>发布抢购单给所有客户</ns2:description>
 			<ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor"
-				actionName="publishGorder" actionText="发布此单给大家">
+				actionName="publishGorder" actionText="下单">
 				<ns2:expression>
 					<expressionString><![CDATA[
                     import java.util.HashMap;
@@ -53,12 +52,14 @@
                     import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
                     import org.shaolin.vogerp.ecommercial.be.GOOfferPriceImpl;
                     import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
                         GoldenOrderImpl gorder = (GoldenOrderImpl)out.get("beObject");
                         gorder.setType(GoldenOrderType.PURCHASE);
+                        gorder.setStatus(OrderStatusType.VERIFYING);
                         if (gorder.getDeliveryInfo() != null) {
 			                if (gorder.getDeliveryInfo().getId() > 0) {
 			                   OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
@@ -94,7 +95,7 @@
 			</ns2:uiAction>
 			<ns2:uiAction
 				actionPage="org.shaolin.vogerp.ecommercial.form.GoldenSaleOrderEditor"
-				actionName="publishGorder1" actionText="发布此单给大家">
+				actionName="publishGorder1" actionText="下单">
 				<ns2:expression>
 					<expressionString><![CDATA[
                     import java.util.HashMap;
@@ -108,12 +109,14 @@
                     import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
                     import org.shaolin.vogerp.ecommercial.be.GOOfferPriceImpl;
                     import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
                         GoldenOrderImpl gorder = (GoldenOrderImpl)out.get("beObject");
                         gorder.setType(GoldenOrderType.SALE);
+                        gorder.setStatus(OrderStatusType.VERIFYING);
                         if (gorder.getDeliveryInfo() != null && gorder.getDeliveryInfo().getId() == 0) {
 		                    OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
 			                gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
@@ -189,7 +192,7 @@
                        String description = "("+OrderUtil.getOrderLink($gOrder)+")" + $gOrder.getDescription();
                        NotificationImpl message = new NotificationImpl();
                        message.setPartyId($gOrder.getPublishedCustomerId());
-			           message.setSubject("您发布了新的抢购订单！" + subject);
+			           message.setSubject("您发布了新的抢购订单！审核中。。。" + subject);
 		               message.setDescription(description);
 			           message.setCreateDate(new Date());
                        
@@ -202,11 +205,131 @@
 				</ns2:expression>
 			</ns2:process>
 			<ns2:eventDest>
-				<ns2:dest name="offerPrice"></ns2:dest>
-				<ns2:dest name="cancelGOrder"></ns2:dest>
-				<ns2:dest name="forbiddenGOrder"></ns2:dest>
+				<ns2:dest name="verifyGOrder"></ns2:dest>
 			</ns2:eventDest>
 		</ns2:mission-node>
+		
+		<ns2:mission-node name="verifyGOrder" expiredDays="0" expiredHours="0" autoTrigger="false" multipleInvoke="true">
+            <ns2:description>审核加工单</ns2:description>
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.page.OrderManagementByAdmin"
+                actionName="verifiedGOrder" actionText="审核通过" isHidden="true">
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.Date;
+                    import java.util.ArrayList;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.commonmodel.IUserService; 
+                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+                    import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+                    { 
+                        Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
+                        if (defaultUser.getStatus() != OrderStatusType.VERIFYING) {
+                            Dialog.showMessageDialog("操作失败！", "订单状态: " + defaultUser.getStatus().getDisplayName(), Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
+                        defaultUser.setStatus(OrderStatusType.PUBLISHED);
+                        
+                        HashMap result = new HashMap();
+                        result.put("order", defaultUser);
+                        return result;
+                    }
+                    ]]></expressionString>
+                </ns2:expression>
+            </ns2:uiAction>
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.page.OrderManagementByAdmin"
+                actionName="unverifiedGOrder" actionText="审核不通过" isHidden="true">
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.Date;
+                    import java.util.ArrayList;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.commonmodel.IUserService; 
+                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+                    import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+                    { 
+                        Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
+                        if (defaultUser.getStatus() != OrderStatusType.VERIFYING) {
+                            Dialog.showMessageDialog("操作失败！", "订单状态: " + defaultUser.getStatus().getDisplayName(), Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
+                        defaultUser.setStatus(OrderStatusType.CREATED);
+                        
+                        HashMap result = new HashMap();
+                        result.put("order", defaultUser);
+                        return result;
+                    }
+                    ]]></expressionString>
+                </ns2:expression>
+            </ns2:uiAction>
+            <ns2:participant partyType="Admin,0"/>
+            <ns2:process>
+                <ns2:var name="order" category="BusinessEntity" scope="InOut">
+                    <type entityName="org.shaolin.vogerp.ecommercial.be.GoldenOrder"></type>
+                </ns2:var>
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                     import java.util.List;
+                     import java.util.ArrayList;
+                     import org.shaolin.uimaster.page.ajax.*;
+                     import org.shaolin.bmdp.runtime.AppContext;
+                     import org.shaolin.bmdp.runtime.security.UserContext;
+                     import org.shaolin.vogerp.ecommercial.ce.EOrderType;
+                     import org.shaolin.vogerp.ecommercial.be.InterestEOrderImpl;
+                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
+                     {
+                          @flowContext.save($order);
+                          
+                          NotificationImpl message = new NotificationImpl();
+                          message.setPartyId($order.getPublishedCustomerId());
+                          if ($order.getStatus() == OrderStatusType.PUBLISHED) {
+                          	  message.setSubject("您的加工订单通过审核! 推送给所有在线用户...");
+	                          message.setDescription(OrderUtil.getOrderLink($order) + $order.getDescription());
+                          } else if ($order.getStatus() == OrderStatusType.CREATED) {
+                              message.setSubject("您的加工订单审核失败! 请打开订单查看详情。");
+                              message.setDescription(OrderUtil.getOrderLink($order) + @flowContext.getEvent().getComments());
+                          }
+                          message.setCreateDate(new java.util.Date());
+	                      
+	                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+	                      service.addNotification(message, true);
+	                      
+	                      Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
+                     }
+                     ]]></expressionString>
+                </ns2:expression>
+            </ns2:process>
+            <ns2:eventDest>
+            	<ns2:dest name="verifyGOrder"></ns2:dest>
+            	<ns2:dest name="publishGorder"></ns2:dest>
+            	<ns2:dest name="cancelGOrder"></ns2:dest>
+            </ns2:eventDest>
+        </ns2:mission-node>
 
 		<ns2:mission-node name="offerPrice" expiredDays="0"
 			expiredHours="0" autoTrigger="false" multipleInvoke="true">
@@ -710,8 +833,7 @@
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     {
                        // only admin
-                       return UserContext.hasRole("org.shaolin.vogerp.commonmodel.ce.GenericOrganizationType,3;Admin,0") 
-                              && $beObject.getStatus() == OrderStatusType.PUBLISHED
+                       return UserContext.hasRole("Admin,0") && ($beObject.getStatus() == OrderStatusType.PUBLISHED || $beObject.getStatus() == OrderStatusType.CREATED);
                     }
                 ]]></expressionString>
 				</ns2:filter>
@@ -749,6 +871,8 @@
 	                         	OrderModel.INSTANCE.update((GoldenOrderImpl)$gorder);
 	                         } else if ($gorder instanceof RentOrLoanOrderImpl) {
 	                            OrderModel.INSTANCE.update((RentOrLoanOrderImpl)$gorder);
+	                         } else if ($gorder instanceof MachiningOrderImpl) {
+	                            OrderModel.INSTANCE.update((MachiningOrderImpl)$gorder);
 	                         }
 	                         if ($gorder.getPublishedCustomerId() > 0) {
 		                         NotificationImpl message = new NotificationImpl();

@@ -62,6 +62,8 @@
             order.setCreateDate(new java.util.Date());
             order.setCount(1);
             order.setCity(UserContext.getUserContext().getCity());
+            order.setLongitude(UserContext.getUserContext().getLongitude());
+            order.setLatitude(UserContext.getUserContext().getLatitude());
             order.setProductId(price.getProduct().getId());
             order.setDescription(price.getProduct().getName() + "\n" + ProductUtil.getPricePackage(price));
             
@@ -147,6 +149,8 @@
             order.setCreateDate(new java.util.Date());
             order.setCount(1);
             order.setCity(UserContext.getUserContext().getCity());
+            order.setLongitude(UserContext.getUserContext().getLongitude());
+            order.setLatitude(UserContext.getUserContext().getLatitude());
             order.setProductId(price.getProduct().getId());
             order.setDescription(price.getProduct().getName() + "\n" + ProductUtil.getPricePackage(price));
             

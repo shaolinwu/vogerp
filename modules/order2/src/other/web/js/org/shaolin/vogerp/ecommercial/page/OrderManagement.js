@@ -141,6 +141,8 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
     Form.responseOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_responseOrder;
 
+    Form.capSettings = org_shaolin_vogerp_ecommercial_page_OrderManagement_capSettings;
+
     Form.initPageJs = org_shaolin_vogerp_ecommercial_page_OrderManagement_initPageJs;
 
     Form.finalizePageJs = org_shaolin_vogerp_ecommercial_page_OrderManagement_finalizePageJs;
@@ -362,6 +364,17 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"responseOrder-20160618-2044",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_responseOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_capSettings(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_capSettings */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"capSettings-20170404-1029",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_capSettings */
 
 
     function org_shaolin_vogerp_ecommercial_page_OrderManagement_initPageJs(){/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_initPageJs */

@@ -8,7 +8,7 @@ function org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor(json)
         ui: elementList[prefix + "funcsPanel"]
         ,vertical: true
         ,items: []
-        ,subComponents: [prefix + "photoPanel",prefix + "prodcutInfoPanel",prefix + "deliveryInfoPanel"]
+        ,subComponents: [prefix + "photoPanel",prefix + "deliveryInfoPanel",prefix + "prodcutInfoPanel"]
     });
     var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
 
@@ -30,16 +30,6 @@ function org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor(json)
     var publishedCustomerIdUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "publishedCustomerIdUI"]
-    });
-
-    var rentTypeUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "rentTypeUILabel"]
-    });
-
-    var rentTypeUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "rentTypeUI"]
     });
 
     var descriptionUILabel = new UIMaster.ui.label
@@ -136,13 +126,21 @@ function org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "rentTypeUILabel",prefix + "rentTypeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "rentDateTypeUILabel",prefix + "rentDateTypeUI",prefix + "dateCountUILabel",prefix + "dateCountUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "depositUILabel",prefix + "depositUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "rentDateTypeUILabel",prefix + "rentDateTypeUI",prefix + "dateCountUILabel",prefix + "dateCountUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "depositUILabel",prefix + "depositUI"]
     });
     var photoPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "photoPanel"]
         ,items: []
         ,subComponents: [prefix + "photoUI",prefix + "attributePanel"]
+    });
+    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView({"prefix":prefix + "deliveryInfoUI."});
+
+    var deliveryInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "deliveryInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "deliveryInfoUI"]
     });
     var htmlDescUI = new UIMaster.ui.textarea
     ({
@@ -157,14 +155,6 @@ function org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor(json)
         ui: elementList[prefix + "prodcutInfoPanel"]
         ,items: []
         ,subComponents: [prefix + "htmlDescUI"]
-    });
-    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView({"prefix":prefix + "deliveryInfoUI."});
-
-    var deliveryInfoPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "deliveryInfoPanel"]
-        ,items: []
-        ,subComponents: [prefix + "deliveryInfoUI"]
     });
 
     var saveTempbtn = new UIMaster.ui.button
@@ -213,10 +203,6 @@ function org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor(json)
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.rentTypeUILabel=rentTypeUILabel;
-
-    Form.rentTypeUI=rentTypeUI;
-
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
@@ -237,13 +223,13 @@ function org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor(json)
 
     Form.depositUI=depositUI;
 
-    Form.prodcutInfoPanel=prodcutInfoPanel;
-
-    Form.htmlDescUI=htmlDescUI;
-
     Form.deliveryInfoPanel=deliveryInfoPanel;
 
     Form.deliveryInfoUI=deliveryInfoUI;
+
+    Form.prodcutInfoPanel=prodcutInfoPanel;
+
+    Form.htmlDescUI=htmlDescUI;
 
     Form.saveTempbtn=saveTempbtn;
 
@@ -267,10 +253,6 @@ function org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor(json)
 
     Form.publishedCustomerIdUI=publishedCustomerIdUI;
 
-    Form.rentTypeUILabel=rentTypeUILabel;
-
-    Form.rentTypeUI=rentTypeUI;
-
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
@@ -291,13 +273,13 @@ function org_shaolin_vogerp_ecommercial_form_RLoanOrderEditor(json)
 
     Form.depositUI=depositUI;
 
-    Form.prodcutInfoPanel=prodcutInfoPanel;
-
-    Form.htmlDescUI=htmlDescUI;
-
     Form.deliveryInfoPanel=deliveryInfoPanel;
 
     Form.deliveryInfoUI=deliveryInfoUI;
+
+    Form.prodcutInfoPanel=prodcutInfoPanel;
+
+    Form.htmlDescUI=htmlDescUI;
 
     Form.actionPanel=actionPanel;
 

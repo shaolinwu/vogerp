@@ -18,7 +18,6 @@ import org.shaolin.bmdp.runtime.cache.CacheManager;
 import org.shaolin.bmdp.runtime.cache.ICache;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.security.UserContext.OnlineUserChecker;
-import org.shaolin.bmdp.runtime.spi.IConstantService;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.bmdp.utils.DateParser;
@@ -226,14 +225,14 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 
 	private void setLocationInfo(PersonalAccountImpl newAccount) {
 		try {//could be slow.
-			String jsonStr = HttpUserUtil.getRealLocationInfo(newAccount.getLoginIP(), "UTF-8");
-			JSONObject json = new JSONObject(jsonStr);
-			String regionId = json.getJSONObject("data").getString("region_id");
-			String cityId = json.getJSONObject("data").getString("city_id");
-			if (regionId != null && regionId.trim().length() > 0) {
-				IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
-				String entityName = cs.getChildren("CityList", Integer.parseInt(regionId)).getEntityName();
-				newAccount.setLocationInfo(entityName +","+cityId);
+			String result = WebConfig.getUserCityInfo(newAccount.getLoginIP());
+			newAccount.setLocationInfo(result);
+			if (newAccount.getLatitude() == 0D) {
+				double[] coordinations = WebConfig.getUserLocation(newAccount.getLoginIP());
+				if (coordinations != null && coordinations.length == 2) {
+					newAccount.setLongitude(coordinations[0]);
+					newAccount.setLatitude(coordinations[1]);
+				}
 			}
 		} catch (Exception e) {
 		}
@@ -314,18 +313,18 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 				return USER_LOGIN_PASSWORDRULES_PASSWORDINCORRECT;
 			}
 			
-			String userIP = HttpUserUtil.getIP(request);
-			if (matchedUser.getLoginIP() == null ||
-					!matchedUser.getLoginIP().equals(userIP)) {
-				matchedUser.setLoginIP(userIP);
-				this.setLocationInfo((PersonalAccountImpl)matchedUser);
-			}
 			matchedUser.setLastLogin(new Date());
 			matchedUser.setAttempt(0);
 			matchedUser.setIsLocked(false);
 			matchedUser.setLoginedCount(matchedUser.getLoginedCount() + 1);
 			matchedUser.setLatitude(user.getLatitude());
 			matchedUser.setLongitude(user.getLongitude());
+			String userIP = HttpUserUtil.getIP(request);
+			if (matchedUser.getLoginIP() == null ||
+					!matchedUser.getLoginIP().equals(userIP)) {
+				matchedUser.setLoginIP(userIP);
+				this.setLocationInfo((PersonalAccountImpl)matchedUser);
+			}
 			CommonModel.INSTANCE.update(matchedUser);
 			
 			HttpSession session = request.getSession(true);

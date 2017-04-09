@@ -71,6 +71,20 @@
           <ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.CADUploader" />
         </ns2:component>
         <ns2:component xsi:type="ns2:UIPanelType" UIID="attributePanel">
+          <ns2:Property name="title">
+            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+		         <ns2:expression>
+		           <expressionString><![CDATA[
+		           import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+		           { 
+		               if ($beObject.getStatus() == OrderStatusType.VERIFYING) {
+		                  return "您的订单处于审核状态中，请稍等哟！";
+		               }
+		               return "";
+		           }]]></expressionString>
+		         </ns2:expression>
+	        </ns2:value>
+          </ns2:Property>
           <ns2:layout xsi:type="ns2:TableLayoutType">
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>

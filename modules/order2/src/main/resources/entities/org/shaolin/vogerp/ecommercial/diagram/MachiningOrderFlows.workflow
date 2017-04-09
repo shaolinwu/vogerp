@@ -28,18 +28,18 @@
                     import org.shaolin.bmdp.runtime.ce.CEUtil;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     {
-                      $gOrder.setStatus(OrderStatusType.PUBLISHED);
+                      $gOrder.setStatus(OrderStatusType.VERIFYING);
                       @flowContext.save($gOrder);
                       //assign task id to sales order. this object is passed from blow action actually.
                     }]]></expressionString>
                 </ns2:expression>
             </ns2:process>
-            <ns2:dest name="publishGorder"></ns2:dest>
+            <ns2:dest name="publishMOrder"></ns2:dest>
         </ns2:start-node>
-        <ns2:mission-node name="publishGorder" expiredDays="0" expiredHours="0" autoTrigger="true">
+        <ns2:mission-node name="publishMOrder" expiredDays="0" expiredHours="0" autoTrigger="true">
             <ns2:description>评估加工订单</ns2:description>
             <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.MachiningOrder"
-                actionName="publishGorder" actionText="下单">
+                actionName="publishMOrder" actionText="下单">
                 <ns2:expression>
                     <expressionString><![CDATA[
                     import java.util.HashMap;
@@ -52,6 +52,7 @@
                     import org.shaolin.vogerp.commonmodel.IUserService; 
                     import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                     import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
                     { 
@@ -59,6 +60,7 @@
                         HashMap out = (HashMap)form.ui2Data();
                         MachiningOrderImpl gorder = (MachiningOrderImpl)out.get("beObject");
                         gorder.setCount(1);
+                        gorder.setStatus(OrderStatusType.VERIFYING);
 			            if (gorder.getId() == 0) {
 			                OrderModel.INSTANCE.create(gorder, true);
 			            } else {
@@ -113,7 +115,7 @@
                          String subject = CustomerInfoUtil.getCustomerEnterpriseBasicInfo(publisher);
                          String description = $gOrder.getDescription();
                          NotificationImpl message = new NotificationImpl();
-					     message.setSubject(subject + "发布新的加工订单！");
+					     message.setSubject(subject + "发布新的加工订单！审核中。。。");
 				         message.setDescription(description);
 					     message.setCreateDate(new Date());
                          
@@ -126,6 +128,128 @@
                 </ns2:expression>
             </ns2:process>
             <ns2:eventDest>
+                <ns2:dest name="verifyMOrder"></ns2:dest>
+            </ns2:eventDest>
+         </ns2:mission-node>
+        
+         <ns2:mission-node name="verifyMOrder" expiredDays="0" expiredHours="0" autoTrigger="false" multipleInvoke="true">
+            <ns2:description>审核加工单</ns2:description>
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.page.OrderManagementByAdmin"
+                actionName="verifiedMOrder" actionText="审核通过" isHidden="true">
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.Date;
+                    import java.util.ArrayList;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.commonmodel.IUserService; 
+                    import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+                    import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+                    { 
+                        Table orderInfoTable = (Table)@page.getElement("machiningTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        MachiningOrderImpl defaultUser = (MachiningOrderImpl)orderInfoTable.getSelectedRow();
+                        if (defaultUser.getStatus() != OrderStatusType.VERIFYING) {
+                            Dialog.showMessageDialog("操作失败！", "订单状态: " + defaultUser.getStatus().getDisplayName(), Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
+                        defaultUser.setStatus(OrderStatusType.PUBLISHED);
+                        
+                        HashMap result = new HashMap();
+                        result.put("order", defaultUser);
+                        return result;
+                    }
+                    ]]></expressionString>
+                </ns2:expression>
+            </ns2:uiAction>
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.page.OrderManagementByAdmin"
+                actionName="unverifiedMOrder" actionText="审核不通过" isHidden="true" sendNote="true">
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.Date;
+                    import java.util.ArrayList;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.commonmodel.IUserService; 
+                    import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+                    import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+                    { 
+                        Table orderInfoTable = (Table)@page.getElement("machiningTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            return;
+                        }
+                        MachiningOrderImpl defaultUser = (MachiningOrderImpl)orderInfoTable.getSelectedRow();
+                        if (defaultUser.getStatus() != OrderStatusType.VERIFYING) {
+                            Dialog.showMessageDialog("操作失败！", "订单状态: " + defaultUser.getStatus().getDisplayName(), Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
+                        defaultUser.setStatus(OrderStatusType.CREATED);
+                        
+                        HashMap result = new HashMap();
+                        result.put("order", defaultUser);
+                        return result;
+                    }
+                    ]]></expressionString>
+                </ns2:expression>
+            </ns2:uiAction>
+            <ns2:participant partyType="Admin,0"/>
+            <ns2:process>
+                <ns2:var name="order" category="BusinessEntity" scope="InOut">
+                    <type entityName="org.shaolin.vogerp.ecommercial.be.MachiningOrder"></type>
+                </ns2:var>
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                     import java.util.List;
+                     import java.util.ArrayList;
+                     import org.shaolin.uimaster.page.ajax.*;
+                     import org.shaolin.bmdp.runtime.AppContext;
+                     import org.shaolin.bmdp.runtime.security.UserContext;
+                     import org.shaolin.vogerp.ecommercial.ce.EOrderType;
+                     import org.shaolin.vogerp.ecommercial.be.InterestEOrderImpl;
+                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
+                     {
+                          @flowContext.save($order);
+                          
+                          NotificationImpl message = new NotificationImpl();
+                          message.setPartyId($order.getPublishedCustomerId());
+                          if ($order.getStatus() == OrderStatusType.PUBLISHED) {
+                          	  message.setSubject("您的加工订单通过审核! 推送给所有在线用户...");
+	                          message.setDescription(OrderUtil.getOrderLink($order) + $order.getDescription());
+                          } else if ($order.getStatus() == OrderStatusType.CREATED) {
+                             message.setSubject("您的加工订单审核失败! 请打开订单查看详情。");
+                             message.setDescription(OrderUtil.getOrderLink($order) + @flowContext.getEvent().getComments());
+                          }
+                          message.setCreateDate(new java.util.Date());
+	                      
+	                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+	                      service.addNotification(message, true);
+	                      
+	                      Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
+                     }
+                     ]]></expressionString>
+                </ns2:expression>
+            </ns2:process>
+            <ns2:eventDest>
+            	<ns2:dest name="verifyMOrder"></ns2:dest>
+            	<ns2:dest name="publishMOrder"></ns2:dest>
                 <ns2:dest name="estimatePrice"></ns2:dest>
             	<ns2:dest name="cancelGOrder"></ns2:dest>
             </ns2:eventDest>

@@ -34,34 +34,6 @@
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
-        <ns2:eventHandler functionName="promoteGSOrder">
-            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="promoteGSOrder-20161017-2229">
-                <ns2:exp>
-                    <ns2:expressionString><![CDATA[
-                    import java.util.HashMap;
-                    import org.shaolin.bmdp.runtime.AppContext;
-                    import org.shaolin.uimaster.page.AjaxContext;
-                    import org.shaolin.uimaster.page.ajax.*;
-                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
-                    import org.shaolin.vogerp.commonmodel.IUserService;
-                    {
-                        Table orderInfoTable = (Table)@page.getElement("gsaleOrderTable");
-                        if (orderInfoTable.getSelectedRow() == null) {
-                            return;
-                        }
-                        GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
-                        HashMap input = new HashMap();
-                        input.put("beObject", defaultUser);
-                        input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.OrderPromotion", input);
-                        @page.addElement(form);
-                        
-                        form.openInWindows("在线客户营销", null, true);
-                    }
-                    ]]></ns2:expressionString>
-                </ns2:exp>
-            </ns2:ops>
-        </ns2:eventHandler>
         <ns2:eventHandler functionName="promoteRentOrder">
             <ns2:ops xsi:type="ns2:OpCallAjaxType" name="promoteRentOrder-20161017-2229">
                 <ns2:exp>
@@ -90,34 +62,6 @@
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
-        <ns2:eventHandler functionName="promoteLoanOrder">
-            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="promoteLoanOrder-20161017-2229">
-                <ns2:exp>
-                    <ns2:expressionString><![CDATA[
-                    import java.util.HashMap;
-                    import org.shaolin.bmdp.runtime.AppContext;
-                    import org.shaolin.uimaster.page.AjaxContext;
-                    import org.shaolin.uimaster.page.ajax.*;
-                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                    import org.shaolin.vogerp.commonmodel.IUserService;
-                    {
-                        Table orderInfoTable = (Table)@page.getElement("loanOrderTable");
-                        if (orderInfoTable.getSelectedRow() == null) {
-                            return;
-                        }
-                        RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)orderInfoTable.getSelectedRow();
-                        HashMap input = new HashMap();
-                        input.put("beObject", defaultUser);
-                        input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.OrderPromotion", input);
-                        @page.addElement(form);
-                        
-                        form.openInWindows("在线客户营销", null, true);
-                    }
-                    ]]></ns2:expressionString>
-                </ns2:exp>
-            </ns2:ops>
-        </ns2:eventHandler>
 		<ns2:eventHandler functionName="openGoldenOrder">
             <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openGoldenOrder-20161017-2229">
                 <ns2:exp>
@@ -127,6 +71,7 @@
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
                     import org.shaolin.vogerp.commonmodel.IUserService;
                     {
                         Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
@@ -136,39 +81,17 @@
                         GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
-                        input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GoldenOrder", input);
-                        @page.addElement(form);
                         
-                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, true);
-                    }
-                    ]]></ns2:expressionString>
-                </ns2:exp>
-            </ns2:ops>
-        </ns2:eventHandler>
-        <ns2:eventHandler functionName="openSaleGoldenOrder">
-            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openSaleGoldenOrder-20161017-2229">
-                <ns2:exp>
-                    <ns2:expressionString><![CDATA[
-                    import java.util.HashMap;
-                    import org.shaolin.bmdp.runtime.AppContext;
-                    import org.shaolin.uimaster.page.AjaxContext;
-                    import org.shaolin.uimaster.page.ajax.*;
-                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
-                    import org.shaolin.vogerp.commonmodel.IUserService;
-                    {
-                        Table orderInfoTable = (Table)@page.getElement("gsaleOrderTable");
-                        if (orderInfoTable.getSelectedRow() == null) {
-                            return;
+                        String orderName = "采购订单详情";
+                        String formName = "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor";
+                        if (defaultUser.getType() == GoldenOrderType.SALE) {
+                            orderName = "销售订单详情";
+                            formName = "org.shaolin.vogerp.ecommercial.form.GoldenSaleOrderEditor";
                         }
-                        GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
-                        HashMap input = new HashMap();
-                        input.put("beObject", defaultUser);
-                        input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("saleOrder", "org.shaolin.vogerp.ecommercial.form.GoldenOrder", input);
+                        RefForm form = new RefForm("goldenOrderForm", formName, input);
                         @page.addElement(form);
                         
-                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, true);
+                        form.openInWindows(orderName, new TableCallBack("goldenOrderTable"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -183,6 +106,7 @@
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
                     import org.shaolin.vogerp.commonmodel.IUserService;
                     {
                         Table orderInfoTable = (Table)@page.getElement("rentOrderTable");
@@ -193,38 +117,15 @@
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
                         input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.RentOrLoanOrder", input);
-                        @page.addElement(form);
                         
-                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, true);
-                    }
-                    ]]></ns2:expressionString>
-                </ns2:exp>
-            </ns2:ops>
-        </ns2:eventHandler>
-        <ns2:eventHandler functionName="openLoanOrder">
-            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openLoanOrder-20161017-2229">
-                <ns2:exp>
-                    <ns2:expressionString><![CDATA[
-                    import java.util.HashMap;
-                    import org.shaolin.bmdp.runtime.AppContext;
-                    import org.shaolin.uimaster.page.AjaxContext;
-                    import org.shaolin.uimaster.page.ajax.*;
-                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                    import org.shaolin.vogerp.commonmodel.IUserService;
-                    {
-                        Table orderInfoTable = (Table)@page.getElement("loanOrderTable");
-                        if (orderInfoTable.getSelectedRow() == null) {
-                            return;
-                        }
-                        RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)orderInfoTable.getSelectedRow();
-                        HashMap input = new HashMap();
-                        input.put("beObject", defaultUser);
-                        input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.RentOrLoanOrder", input);
-                        @page.addElement(form);
-                        
-                        form.openInWindows("\u8BA2\u5355\u8BE6\u7EC6\u4FE1\u606F", null, true);
+                        String formName = "org.shaolin.vogerp.ecommercial.form.RentOrderEditor";
+	                      if (defaultUser.getType() == RentOrLoanOrderType.LOAN) {
+	               	         formName = "org.shaolin.vogerp.ecommercial.form.RLoanOrderEditor";
+	               	      }
+	                      RefForm form = new RefForm("rentOrLoanOrder", formName, input);
+	                      @page.addElement(form);
+	                      
+	                      form.openInWindows("设备租赁订单详情", new TableCallBack("rentOrderTable"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -244,19 +145,6 @@
 		        ]]></ns2:expressionString>
 		    </ns2:ops>
         </ns2:eventHandler>
-        <ns2:eventHandler functionName="disableSaleGoldenOrder">
-            <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-		        <ns2:expressionString><![CDATA[
-		        {
-		            new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
-		        	
-	        				UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forbiddenGOrder",UIMaster.getValue(eventsource),o.__entityName);
-			            }
-			        }).open();   
-		        }
-		        ]]></ns2:expressionString>
-		    </ns2:ops>
-        </ns2:eventHandler>
         <ns2:eventHandler functionName="disableRentOrder">
             <ns2:ops xsi:type="ns2:OpExecuteScriptType">
 		        <ns2:expressionString><![CDATA[
@@ -266,19 +154,6 @@
 	        				UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forbiddenGOrder",UIMaster.getValue(eventsource),o.__entityName);
 			            }
 			        }).open();   
-		        }
-		        ]]></ns2:expressionString>
-		    </ns2:ops>
-        </ns2:eventHandler>
-        <ns2:eventHandler functionName="disableLoanOrder">
-            <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-		        <ns2:expressionString><![CDATA[
-		        {   
-		            new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
-		        	
-	        				UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forbiddenGOrder",UIMaster.getValue(eventsource),o.__entityName);
-			            }
-			        }).open();
 		        }
 		        ]]></ns2:expressionString>
 		    </ns2:ops>
@@ -296,36 +171,6 @@
                   import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                   {
                       Table personalInfoTable = (Table)@page.getElement("goldenOrderTable");
-                      if (personalInfoTable.getSelectedRow() == null) {
-                          return;
-                      }
-                      GoldenOrderImpl defaultUser = (GoldenOrderImpl)personalInfoTable.getSelectedRow();
-                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
-                      
-                      HashMap input = new HashMap();
-                      input.put("sessionId", defaultUser.getSessionId());
-                      input.put("editable", new Boolean(true));
-                      RefForm form = new RefForm("goldenOrderForm", "org.shaolin.bmdp.workflow.form.SessionTracker", input);
-                      @page.addElement(form);
-                      
-                      form.openInWindows("订单跟踪", null, true);
-                  }
-                  ]]></ns2:expressionString>
-              </ns2:exp>
-          </ns2:ops>
-      </ns2:eventHandler>
-      <ns2:eventHandler functionName="openGSOrderTracker">
-          <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openGSOrderTracker-20161017-2229">
-              <ns2:exp>
-                  <ns2:expressionString><![CDATA[
-                  import java.util.HashMap;
-                  import org.shaolin.uimaster.page.AjaxContext;
-                  import org.shaolin.uimaster.page.ajax.*;
-                  import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
-                  import org.shaolin.bmdp.runtime.AppContext;
-                  import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
-                  {
-                      Table personalInfoTable = (Table)@page.getElement("gsaleOrderTable");
                       if (personalInfoTable.getSelectedRow() == null) {
                           return;
                       }
@@ -374,36 +219,6 @@
               </ns2:exp>
           </ns2:ops>
         </ns2:eventHandler>
-        <ns2:eventHandler functionName="openLoanOrderTracker">
-          <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openLoanOrderTracker-20161017-2229">
-              <ns2:exp>
-                  <ns2:expressionString><![CDATA[
-                  import java.util.HashMap;
-                  import org.shaolin.uimaster.page.AjaxContext;
-                  import org.shaolin.uimaster.page.ajax.*;
-                  import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                  import org.shaolin.bmdp.runtime.AppContext;
-                  import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
-                  {
-                      Table personalInfoTable = (Table)@page.getElement("loanOrderTable");
-                      if (personalInfoTable.getSelectedRow() == null) {
-                          return;
-                      }
-                      RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)personalInfoTable.getSelectedRow();
-                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
-                      
-                      HashMap input = new HashMap();
-                      input.put("sessionId", defaultUser.getSessionId());
-                      input.put("editable", new Boolean(true));
-                      RefForm form = new RefForm("goldenOrderForm", "org.shaolin.bmdp.workflow.form.SessionTracker", input);
-                      @page.addElement(form);
-                      
-                      form.openInWindows("订单跟踪", null, true);
-                  }
-                  ]]></ns2:expressionString>
-              </ns2:exp>
-          </ns2:ops>
-        </ns2:eventHandler>
         <ns2:eventHandler functionName="openMachiningOrder">
           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openMachiningOrder-20170125-1011">
               <ns2:exp>
@@ -429,7 +244,7 @@
                       RefForm form = new RefForm("mOrderForm", formUI, input);
                       @page.addElement(form);
                       
-                      form.openInWindows("编辑加工订单", null, true);
+                      form.openInWindows("编辑加工订单", new TableCallBack("machiningTable"), true);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>
@@ -465,775 +280,7 @@
 		    </ns2:component>  
 			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
 			    <ns2:ajaxLoad>true</ns2:ajaxLoad>
-                <ns2:tab uiid="goldenOrderInfoPanel">
-                    <ns2:title xsi:type="ns2:StringPropertyType">
-                        <ns2:value>采购订单</ns2:value>
-                    </ns2:title>
-                    <ns2:panel UIID="goldenOrderInfoPanel">
-		                <ns2:layout xsi:type="ns2:TableLayoutType">
-		                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-		                    <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-		                </ns2:layout>
-		                <ns2:component xsi:type="ns2:UITableType" UIID="goldenOrderTable">
-		                    <ns2:beElement>org.shaolin.vogerp.ecommercial.be.GoldenOrder</ns2:beElement>
-		                    <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
-		                    <ns2:defaultRowSize>10</ns2:defaultRowSize>
-		                    <ns2:showActionBar>true</ns2:showActionBar>
-		                    <ns2:showFilter>true</ns2:showFilter>
-		                    <ns2:query xsi:type="ns2:ExpressionPropertyType">
-		                        <ns2:expression xsi:type="ns2:ExpressionType">
-		                            <ns2:expressionString><![CDATA[
-		                            import java.util.List;
-		                            import org.shaolin.uimaster.page.ajax.TableConditions;
-		                            import org.shaolin.vogerp.ecommercial.ce.*;
-		                            import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
-		                            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
-		                            import org.shaolin.bmdp.runtime.AppContext; 
-                                    import org.shaolin.vogerp.commonmodel.IUserService;
-                                    import org.shaolin.bmdp.runtime.security.UserContext;
-                                    import org.shaolin.vogerp.ecommercial.ce.GOrderType;
-		                            {
-		                                  if ($tableCondition == null) {
-		                                     $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
-		                                     $tableCondition.setCount(10);
-		                                     $tableCondition.addOrder("statusInt", true);
-                                             $tableCondition.addOrder("createDate", false);
-		                                  }
-		                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
-		                                  condition.setStatus(OrderStatusType.PUBLISHED);
-		                                  condition.setType(GoldenOrderType.PURCHASE);
-		                                  return OrderModel.INSTANCE.searchGoldenOrder(condition,
-		                                                $tableCondition.getOrders(),
-		                                                $tableCondition.getOffset(), 
-		                                                $tableCondition.getCount());
-		                            }]]></ns2:expressionString>
-		                        </ns2:expression>
-		                    </ns2:query>
-		                    <ns2:column xsi:type="ns2:UITableColumnType">
-		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>序列号</ns2:value>
-		                        </ns2:title>
-		                        <ns2:beFieldId>rowBE.serialNumber</ns2:beFieldId>
-		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-		                    </ns2:column>
-		                    <ns2:column xsi:type="ns2:UITableColumnType">
-		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>描述</ns2:value>
-		                        </ns2:title>
-		                        <ns2:beFieldId>rowBE.description</ns2:beFieldId>
-		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-		                    </ns2:column>
-		                    <ns2:column xsi:type="ns2:UITableColumnType">
-		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>状态</ns2:value>
-		                        </ns2:title>
-		                        <ns2:beFieldId>rowBE.status</ns2:beFieldId>
-		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
-		                        <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-                                   <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import java.lang.StringBuffer;
-                                        import org.shaolin.bmdp.utils.DateUtil;
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                                        import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
-                                        import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
-                                        import org.shaolin.vogerp.ecommercial.dao.OrderModel;
-                                        {
-                                           if ($rowBE.getStatus() == OrderStatusType.TAKEN) {
-                                              PersonalInfoImpl user = (PersonalInfoImpl)OrderModel.INSTANCE.get($rowBE.getTakenCustomerId(), PersonalInfoImpl.class);
-                                              $rowBE.setTakenCustomer(user);
-                                              return $rowBE.getStatus().getDisplayName() + "("+CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getTakenCustomer())+")";
-                                           } else {
-                                              return $rowBE.getStatus().getDisplayName();
-                                           }
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:rowExpression>
-                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                                        {
-                                            $rowBE.setStatus((OrderStatusType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.ecommercial.ce.OrderStatusType").getByIntValue(Integer.valueOf($value).intValue()));
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
-		                    </ns2:column>
-		                    <ns2:column xsi:type="ns2:UITableColumnType">
-		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>参与过营销</ns2:value>
-		                        </ns2:title>
-		                        <ns2:beFieldId>rowBE.promoted</ns2:beFieldId>
-		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                                        {
-                                            if ($value == null || $value.trim().length() == 0) {
-                                            	$value = "0";
-                                            }
-                                            $rowBE.setPromoted(Integer.parseInt($value));
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
-		                    </ns2:column>
-		                    <ns2:column xsi:type="ns2:UITableColumnType">
-		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>建立时间</ns2:value>
-		                        </ns2:title>
-		                        <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
-		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType">
-		                          <ns2:type>DateRange</ns2:type>
-		                          <ns2:startCondition>rowBE.startCreateDate</ns2:startCondition> 
-		                          <ns2:endCondition>rowBE.endCreateDate</ns2:endCondition>
-		                        </ns2:uiType>
-		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-		                            <ns2:expression xsi:type="ns2:ExpressionType">
-		                                <ns2:expressionString><![CDATA[
-		                                import org.shaolin.uimaster.page.od.formats.FormatUtil;
-		                                import java.util.Date;
-		                                {
-		                                    if ($value == null || "".equals($value)) {
-		                                        if ("rowBE.startCreateDate".equals($filterId)) {
-		                                            $rowBE.setStartCreateDate(null);
-		                                        } else {
-		                                            $rowBE.setEndCreateDate(null);
-		                                        }
-		                                    } else {
-		                                        Date d = (Date)FormatUtil.convertUIToData(FormatUtil.DATE, $value);
-		                                        if ("rowBE.startCreateDate".equals($filterId)) {
-		                                            $rowBE.setStartCreateDate(d);
-		                                        } else {
-		                                            $rowBE.setEndCreateDate(d);
-		                                        }
-		                                    }
-		                                }]]></ns2:expressionString>
-		                            </ns2:expression>
-		                        </ns2:updateCondition>
-		                    </ns2:column>
-		                    <ns2:defaultActions>
-		                        <ns2:defaultOpenAction>openGoldenOrder</ns2:defaultOpenAction>
-		                    </ns2:defaultActions>
-		                    <ns2:actionGroup>
-                                <ns2:type>radio</ns2:type>
-                                <ns2:action>
-                                    <ns2:uiid>promoteGOrder</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>在线客户营销</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>promoteGOrder</ns2:function>
-                                </ns2:action>
-                                <ns2:action>
-                                    <ns2:uiid>openGOrderTracker</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>状态跟踪</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>openGOrderTracker</ns2:function>
-                                </ns2:action>
-                                <ns2:action>
-                                    <ns2:uiid>disableGoldenOrder</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>禁止该订单</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>disableGoldenOrder</ns2:function>
-                                </ns2:action>
-                             </ns2:actionGroup>
-		                </ns2:component>
-		                <ns2:layoutConstraint>
-		                    <ns2:componentId>goldenOrderTable</ns2:componentId>
-		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-		                        x="0" y="0" align="FULL"></ns2:constraint>
-		                </ns2:layoutConstraint>
-                    </ns2:panel>
-                  </ns2:tab>
-                  <ns2:tab uiid="gsaleOrderInfoPanel">
-                    <ns2:title xsi:type="ns2:StringPropertyType">
-                        <ns2:value>销售订单</ns2:value>
-                    </ns2:title>
-                    <ns2:panel UIID="gsaleOrderInfoPanel">
-                        <ns2:layout xsi:type="ns2:TableLayoutType">
-                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-                        </ns2:layout>
-                        <ns2:component xsi:type="ns2:UITableType" UIID="gsaleOrderTable">
-                            <ns2:beElement>org.shaolin.vogerp.ecommercial.be.GoldenOrder</ns2:beElement>
-                            <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
-                            <ns2:defaultRowSize>10</ns2:defaultRowSize>
-                            <ns2:showActionBar>true</ns2:showActionBar>
-                            <ns2:showFilter>true</ns2:showFilter>
-                            <ns2:query xsi:type="ns2:ExpressionPropertyType">
-                                <ns2:expression xsi:type="ns2:ExpressionType">
-                                    <ns2:expressionString><![CDATA[
-                                    import java.util.List;
-                                    import org.shaolin.uimaster.page.ajax.TableConditions;
-                                    import org.shaolin.vogerp.ecommercial.ce.*;
-                                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
-                                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
-                                    import org.shaolin.bmdp.runtime.AppContext; 
-                                    import org.shaolin.vogerp.commonmodel.IUserService;
-                                    import org.shaolin.bmdp.runtime.security.UserContext;
-                                    import org.shaolin.vogerp.ecommercial.ce.GOrderType;
-                                    {
-                                          if ($tableCondition == null) {
-                                             $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
-                                             $tableCondition.setCount(10);
-                                             $tableCondition.addOrder("statusInt", true);
-                                             $tableCondition.addOrder("createDate", false);
-                                          }
-                                          GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
-                                          condition.setStatus(OrderStatusType.PUBLISHED);
-                                          condition.setType(GoldenOrderType.SALE);
-                                          return OrderModel.INSTANCE.searchGoldenOrder(condition,
-                                                        $tableCondition.getOrders(),
-                                                        $tableCondition.getOffset(), 
-                                                        $tableCondition.getCount());
-                                    }]]></ns2:expressionString>
-                                </ns2:expression>
-                            </ns2:query>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>序列号</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.serialNumber</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-                            </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>发布人</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.publishedCustomerId</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        {
-                                            return org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getPublishedCustomer());
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:rowExpression>
-                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        {
-                                            if (!"".equals($value) && !"null".equals($value)) {
-                                                //$rowBE.getCustomer().setName($value);
-                                            } else {
-                                                //`$rowBE.getCustomer().setName(null);
-                                            }
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
-                            </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>描述</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.description</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-                            </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>参与过营销</ns2:value>
-		                        </ns2:title>
-		                        <ns2:beFieldId>rowBE.promoted</ns2:beFieldId>
-		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                                        {
-                                            if ($value == null || $value.trim().length() == 0) {
-                                            	$value = "0";
-                                            }
-                                            $rowBE.setPromoted(Integer.parseInt($value));
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
-		                    </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>状态</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.status</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
-                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-                                   <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import java.lang.StringBuffer;
-                                        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                                        import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
-                                        {
-                                            return $rowBE.getStatus().getDisplayName();
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:rowExpression>
-                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                                        {
-                                            $rowBE.setStatus((OrderStatusType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.ecommercial.ce.OrderStatusType").getByIntValue(Integer.valueOf($value).intValue()));
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
-                            </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>建立时间</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
-                                  <ns2:type>DateRange</ns2:type>
-                                  <ns2:startCondition>rowBE.startCreateDate</ns2:startCondition> 
-                                  <ns2:endCondition>rowBE.endCreateDate</ns2:endCondition>
-                                </ns2:uiType>
-                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.uimaster.page.od.formats.FormatUtil;
-                                        import java.util.Date;
-                                        {
-                                            if ($value == null || "".equals($value)) {
-                                                if ("rowBE.startCreateDate".equals($filterId)) {
-                                                    $rowBE.setStartCreateDate(null);
-                                                } else {
-                                                    $rowBE.setEndCreateDate(null);
-                                                }
-                                            } else {
-                                                Date d = (Date)FormatUtil.convertUIToData(FormatUtil.DATE, $value);
-                                                if ("rowBE.startCreateDate".equals($filterId)) {
-                                                    $rowBE.setStartCreateDate(d);
-                                                } else {
-                                                    $rowBE.setEndCreateDate(d);
-                                                }
-                                            }
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
-                            </ns2:column>
-                            <ns2:defaultActions>
-                                <ns2:defaultOpenAction>openTakenGoldenOrder</ns2:defaultOpenAction>
-                            </ns2:defaultActions>
-                            <ns2:actionGroup>
-                                <ns2:type>radio</ns2:type>
-                                <ns2:action>
-                                    <ns2:uiid>promoteGSOrder</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>在线客户营销</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>promoteGSOrder</ns2:function>
-                                </ns2:action>
-                                <ns2:action>
-                                    <ns2:uiid>openGSOrderTracker</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>状态跟踪</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>openGSOrderTracker</ns2:function>
-                                </ns2:action>
-                                <ns2:action>
-                                    <ns2:uiid>disableTakenGoldenOrder</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>禁止该订单</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>disableTakenGoldenOrder</ns2:function>
-                                </ns2:action>
-                             </ns2:actionGroup>
-                        </ns2:component>
-                        <ns2:layoutConstraint>
-                            <ns2:componentId>gsaleOrderTable</ns2:componentId>
-                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                                x="0" y="0" align="FULL"></ns2:constraint>
-                        </ns2:layoutConstraint>
-                    </ns2:panel>
-                  </ns2:tab>
-                  <ns2:tab uiid="rentOrderInfoPanel">
-                    <ns2:title xsi:type="ns2:StringPropertyType">
-                        <ns2:value>租赁订单</ns2:value>
-                    </ns2:title>
-                    <ns2:panel UIID="rentOrderInfoPanel">
-                        <ns2:layout xsi:type="ns2:TableLayoutType">
-                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-                        </ns2:layout>
-                        <ns2:component xsi:type="ns2:UITableType" UIID="rentOrderTable">
-                            <ns2:beElement>org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder</ns2:beElement>
-                            <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
-                            <ns2:defaultRowSize>10</ns2:defaultRowSize>
-                            <ns2:showActionBar>true</ns2:showActionBar>
-                            <ns2:showFilter>true</ns2:showFilter>
-                            <ns2:query xsi:type="ns2:ExpressionPropertyType">
-                                <ns2:expression xsi:type="ns2:ExpressionType">
-                                    <ns2:expressionString><![CDATA[
-                                    import java.util.List;
-                                    import org.shaolin.uimaster.page.ajax.TableConditions;
-                                    import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
-                                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
-                                    import org.shaolin.bmdp.runtime.AppContext; 
-                                    import org.shaolin.vogerp.commonmodel.IUserService;
-                                    import org.shaolin.bmdp.runtime.security.UserContext;
-                                    import org.shaolin.vogerp.ecommercial.ce.GOrderType;
-                                    {
-                                          if ($tableCondition == null) {
-                                             $tableCondition = TableConditions.createCondition(new RentOrLoanOrderImpl());
-                                             $tableCondition.setCount(10);
-                                             $tableCondition.addOrder("statusInt", true);
-                                             $tableCondition.addOrder("createDate", false);
-                                          }
-                                          RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
-                                          condition.setType(RentOrLoanOrderType.RENT);
-                                          return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
-                                                        $tableCondition.getOrders(),
-                                                        $tableCondition.getOffset(), 
-                                                        $tableCondition.getCount());
-                                    }]]></ns2:expressionString>
-                                </ns2:expression>
-                            </ns2:query>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>序列号</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.serialNumber</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-                            </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>描述</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.description</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-                            </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>参与过营销</ns2:value>
-		                        </ns2:title>
-		                        <ns2:beFieldId>rowBE.promoted</ns2:beFieldId>
-		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                                        {
-                                            if ($value == null || $value.trim().length() == 0) {
-                                            	$value = "0";
-                                            }
-                                            $rowBE.setPromoted(Integer.parseInt($value));
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
-		                    </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>状态</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.status</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
-                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                                        {
-                                            $rowBE.setStatus((OrderStatusType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.ecommercial.ce.OrderStatusType").getByIntValue(Integer.valueOf($value).intValue()));
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
-                            </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>建立时间</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
-                                  <ns2:type>DateRange</ns2:type>
-                                  <ns2:startCondition>rowBE.startCreateDate</ns2:startCondition> 
-                                  <ns2:endCondition>rowBE.endCreateDate</ns2:endCondition>
-                                </ns2:uiType>
-                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.uimaster.page.od.formats.FormatUtil;
-                                        import java.util.Date;
-                                        {
-                                            if ($value == null || "".equals($value)) {
-                                                if ("rowBE.startCreateDate".equals($filterId)) {
-                                                    $rowBE.setStartCreateDate(null);
-                                                } else {
-                                                    $rowBE.setEndCreateDate(null);
-                                                }
-                                            } else {
-                                                Date d = (Date)FormatUtil.convertUIToData(FormatUtil.DATE, $value);
-                                                if ("rowBE.startCreateDate".equals($filterId)) {
-                                                    $rowBE.setStartCreateDate(d);
-                                                } else {
-                                                    $rowBE.setEndCreateDate(d);
-                                                }
-                                            }
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
-                            </ns2:column>
-                            <ns2:defaultActions>
-                                <ns2:defaultOpenAction>openRentOrder</ns2:defaultOpenAction>
-                            </ns2:defaultActions>
-                            <ns2:actionGroup>
-                                <ns2:type>radio</ns2:type>
-                                <ns2:action>
-                                    <ns2:uiid>promoteRentOrder</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>在线客户营销</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>promoteRentOrder</ns2:function>
-                                </ns2:action>
-                                <ns2:action>
-                                    <ns2:uiid>openRentOrderTracker</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>状态跟踪</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>openRentOrderTracker</ns2:function>
-                                </ns2:action>
-                                <ns2:action>
-                                    <ns2:uiid>disableRentOrder</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>禁止该订单</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>disableRentOrder</ns2:function>
-                                </ns2:action>
-                             </ns2:actionGroup>
-                        </ns2:component>
-                        <ns2:layoutConstraint>
-                            <ns2:componentId>rentOrderTable</ns2:componentId>
-                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                                x="0" y="0" align="FULL"></ns2:constraint>
-                        </ns2:layoutConstraint>
-                    </ns2:panel>
-                </ns2:tab>
-                <ns2:tab uiid="loanOrderInfoPanel">
-                    <ns2:title xsi:type="ns2:StringPropertyType">
-                        <ns2:value>求租订单</ns2:value>
-                    </ns2:title>
-                    <ns2:panel UIID="loanOrderInfoPanel">
-                        <ns2:layout xsi:type="ns2:TableLayoutType">
-                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-                        </ns2:layout>
-                        <ns2:component xsi:type="ns2:UITableType" UIID="loanOrderTable">
-                            <ns2:beElement>org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder</ns2:beElement>
-                            <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
-                            <ns2:defaultRowSize>10</ns2:defaultRowSize>
-                            <ns2:showActionBar>true</ns2:showActionBar>
-                            <ns2:showFilter>true</ns2:showFilter>
-                            <ns2:query xsi:type="ns2:ExpressionPropertyType">
-                                <ns2:expression xsi:type="ns2:ExpressionType">
-                                    <ns2:expressionString><![CDATA[
-                                    import java.util.List;
-                                    import org.shaolin.uimaster.page.ajax.TableConditions;
-                                    import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
-                                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
-                                    import org.shaolin.bmdp.runtime.AppContext; 
-                                    import org.shaolin.vogerp.commonmodel.IUserService;
-                                    import org.shaolin.bmdp.runtime.security.UserContext;
-                                    import org.shaolin.vogerp.ecommercial.ce.GOrderType;
-                                    {
-                                          if ($tableCondition == null) {
-                                             $tableCondition = TableConditions.createCondition(new RentOrLoanOrderImpl());
-                                             $tableCondition.setCount(10);
-                                             $tableCondition.addOrder("statusInt", true);
-                                             $tableCondition.addOrder("createDate", false);
-                                          }
-                                          RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
-                                          condition.setType(RentOrLoanOrderType.LOAN);
-                                          return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
-                                                        $tableCondition.getOrders(),
-                                                        $tableCondition.getOffset(), 
-                                                        $tableCondition.getCount());
-                                    }]]></ns2:expressionString>
-                                </ns2:expression>
-                            </ns2:query>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>序列号</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.serialNumber</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-                            </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>发布人</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.publishedCustomerId</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        {
-                                            return org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getPublishedCustomer());
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:rowExpression>
-                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        {
-                                            if (!"".equals($value) && !"null".equals($value)) {
-                                                //$rowBE.getCustomer().setName($value);
-                                            } else {
-                                                //`$rowBE.getCustomer().setName(null);
-                                            }
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
-                            </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>描述</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.description</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-                            </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-		                        <ns2:title xsi:type="ns2:StringPropertyType">
-		                            <ns2:value>参与过营销</ns2:value>
-		                        </ns2:title>
-		                        <ns2:beFieldId>rowBE.promoted</ns2:beFieldId>
-		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                                        {
-                                            if ($value == null || $value.trim().length() == 0) {
-                                            	$value = "0";
-                                            }
-                                            $rowBE.setPromoted(Integer.parseInt($value));
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
-		                    </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>状态</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.status</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
-                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-                                   <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import java.lang.StringBuffer;
-                                        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                                        import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
-                                        {
-                                            return $rowBE.getStatus().getDisplayName();
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:rowExpression>
-                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                                        {
-                                            $rowBE.setStatus((OrderStatusType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.ecommercial.ce.OrderStatusType").getByIntValue(Integer.valueOf($value).intValue()));
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
-                            </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>建立时间</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
-                                  <ns2:type>DateRange</ns2:type>
-                                  <ns2:startCondition>rowBE.startCreateDate</ns2:startCondition> 
-                                  <ns2:endCondition>rowBE.endCreateDate</ns2:endCondition>
-                                </ns2:uiType>
-                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.uimaster.page.od.formats.FormatUtil;
-                                        import java.util.Date;
-                                        {
-                                            if ($value == null || "".equals($value)) {
-                                                if ("rowBE.startCreateDate".equals($filterId)) {
-                                                    $rowBE.setStartCreateDate(null);
-                                                } else {
-                                                    $rowBE.setEndCreateDate(null);
-                                                }
-                                            } else {
-                                                Date d = (Date)FormatUtil.convertUIToData(FormatUtil.DATE, $value);
-                                                if ("rowBE.startCreateDate".equals($filterId)) {
-                                                    $rowBE.setStartCreateDate(d);
-                                                } else {
-                                                    $rowBE.setEndCreateDate(d);
-                                                }
-                                            }
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
-                            </ns2:column>
-                            <ns2:defaultActions>
-                                <ns2:defaultOpenAction>openLoanOrder</ns2:defaultOpenAction>
-                            </ns2:defaultActions>
-                            <ns2:actionGroup>
-                                <ns2:type>radio</ns2:type>
-                                <ns2:action>
-                                    <ns2:uiid>promoteLoanOrder</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>在线客户营销</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>promoteLoanOrder</ns2:function>
-                                </ns2:action>
-                                <ns2:action>
-                                    <ns2:uiid>openLoanOrderTracker</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>状态跟踪</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>openLoanOrderTracker</ns2:function>
-                                </ns2:action>
-                                <ns2:action>
-                                    <ns2:uiid>disableLoanOrder</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>禁止该订单</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>disableLoanOrder</ns2:function>
-                                </ns2:action>
-                             </ns2:actionGroup>
-                        </ns2:component>
-                        <ns2:layoutConstraint>
-                            <ns2:componentId>loanOrderTable</ns2:componentId>
-                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                                x="0" y="0" align="FULL"></ns2:constraint>
-                        </ns2:layoutConstraint>
-                    </ns2:panel>
-                </ns2:tab>
-                
-                <ns2:tab uiid="machiningInfoPanel">
+			    <ns2:tab uiid="machiningInfoPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
                         <ns2:value>加工订单</ns2:value>
                     </ns2:title>
@@ -1254,6 +301,7 @@
                                     import java.util.List;
                                     import org.shaolin.uimaster.page.ajax.TableConditions;
                                     import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
+                                    import org.shaolin.vogerp.ecommercial.ce.*;
                                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                                     import org.shaolin.bmdp.runtime.AppContext; 
                                     import org.shaolin.vogerp.commonmodel.IUserService;
@@ -1383,6 +431,22 @@
                                     <ns2:icon>ui-icon-note</ns2:icon>
                                     <ns2:function>openMOrderTracker</ns2:function>
                                 </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>verifiedMOrder</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>验证通过</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>verifiedMOrder</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>unverifiedMOrder</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>验证不通过</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>unverifiedMOrder</ns2:function>
+                                </ns2:action>
                              </ns2:actionGroup>
                         </ns2:component>
                         <ns2:layoutConstraint>
@@ -1392,6 +456,426 @@
                         </ns2:layoutConstraint>
                     </ns2:panel>
                 </ns2:tab>
+                <ns2:tab uiid="goldenOrderInfoPanel">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>抢购订单</ns2:value>
+                    </ns2:title>
+                    <ns2:panel UIID="goldenOrderInfoPanel">
+		                <ns2:layout xsi:type="ns2:TableLayoutType">
+		                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+		                    <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+		                </ns2:layout>
+		                <ns2:component xsi:type="ns2:UITableType" UIID="goldenOrderTable">
+		                    <ns2:beElement>org.shaolin.vogerp.ecommercial.be.GoldenOrder</ns2:beElement>
+		                    <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+		                    <ns2:defaultRowSize>10</ns2:defaultRowSize>
+		                    <ns2:showActionBar>true</ns2:showActionBar>
+		                    <ns2:showFilter>true</ns2:showFilter>
+		                    <ns2:query xsi:type="ns2:ExpressionPropertyType">
+		                        <ns2:expression xsi:type="ns2:ExpressionType">
+		                            <ns2:expressionString><![CDATA[
+		                            import java.util.List;
+		                            import org.shaolin.uimaster.page.ajax.TableConditions;
+		                            import org.shaolin.vogerp.ecommercial.ce.*;
+		                            import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+		                            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+		                            import org.shaolin.bmdp.runtime.AppContext; 
+                                    import org.shaolin.vogerp.commonmodel.IUserService;
+                                    import org.shaolin.bmdp.runtime.security.UserContext;
+                                    import org.shaolin.vogerp.ecommercial.ce.GOrderType;
+		                            {
+		                                  if ($tableCondition == null) {
+		                                     $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
+		                                     $tableCondition.setCount(10);
+		                                     $tableCondition.addOrder("statusInt", true);
+                                             $tableCondition.addOrder("createDate", false);
+		                                  }
+		                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
+		                                  condition.setType(GoldenOrderType.PURCHASE);
+		                                  return OrderModel.INSTANCE.searchGoldenOrder(condition,
+		                                                $tableCondition.getOrders(),
+		                                                $tableCondition.getOffset(), 
+		                                                $tableCondition.getCount());
+		                            }]]></ns2:expressionString>
+		                        </ns2:expression>
+		                    </ns2:query>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>序列号</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.serialNumber</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>类型</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.type</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
+                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.runtime.AppContext;
+                                        import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
+                                        {
+                                            $rowBE.setType((GoldenOrderType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.ecommercial.ce.GoldenOrderType").getByIntValue(Integer.valueOf($value).intValue()));
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:updateCondition>
+                            </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>描述</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.description</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>状态</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.status</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
+		                        <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                                   <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import java.lang.StringBuffer;
+                                        import org.shaolin.bmdp.utils.DateUtil;
+                                        import org.shaolin.bmdp.runtime.AppContext;
+                                        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                                        import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+                                        import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+                                        import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                        {
+                                           if ($rowBE.getStatus() == OrderStatusType.TAKEN) {
+                                              PersonalInfoImpl user = (PersonalInfoImpl)OrderModel.INSTANCE.get($rowBE.getTakenCustomerId(), PersonalInfoImpl.class);
+                                              $rowBE.setTakenCustomer(user);
+                                              return $rowBE.getStatus().getDisplayName() + "("+CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getTakenCustomer())+")";
+                                           } else {
+                                              return $rowBE.getStatus().getDisplayName();
+                                           }
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:rowExpression>
+                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.runtime.AppContext;
+                                        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                                        {
+                                            $rowBE.setStatus((OrderStatusType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.ecommercial.ce.OrderStatusType").getByIntValue(Integer.valueOf($value).intValue()));
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:updateCondition>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>参与过营销</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.promoted</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.runtime.AppContext;
+                                        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                                        {
+                                            if ($value == null || $value.trim().length() == 0) {
+                                            	$value = "0";
+                                            }
+                                            $rowBE.setPromoted(Integer.parseInt($value));
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:updateCondition>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>建立时间</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+		                          <ns2:type>DateRange</ns2:type>
+		                          <ns2:startCondition>rowBE.startCreateDate</ns2:startCondition> 
+		                          <ns2:endCondition>rowBE.endCreateDate</ns2:endCondition>
+		                        </ns2:uiType>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+		                            <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.uimaster.page.od.formats.FormatUtil;
+		                                import java.util.Date;
+		                                {
+		                                    if ($value == null || "".equals($value)) {
+		                                        if ("rowBE.startCreateDate".equals($filterId)) {
+		                                            $rowBE.setStartCreateDate(null);
+		                                        } else {
+		                                            $rowBE.setEndCreateDate(null);
+		                                        }
+		                                    } else {
+		                                        Date d = (Date)FormatUtil.convertUIToData(FormatUtil.DATE, $value);
+		                                        if ("rowBE.startCreateDate".equals($filterId)) {
+		                                            $rowBE.setStartCreateDate(d);
+		                                        } else {
+		                                            $rowBE.setEndCreateDate(d);
+		                                        }
+		                                    }
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:updateCondition>
+		                    </ns2:column>
+		                    <ns2:defaultActions>
+		                        <ns2:defaultOpenAction>openGoldenOrder</ns2:defaultOpenAction>
+		                    </ns2:defaultActions>
+		                    <ns2:actionGroup>
+                                <ns2:type>radio</ns2:type>
+                                <ns2:action>
+                                    <ns2:uiid>verifiedGOrder</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>验证通过</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>verifiedGOrder</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>unverifiedGOrder</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>验证不通过</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>unverifiedGOrder</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>promoteGOrder</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>在线客户营销</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>promoteGOrder</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>openGOrderTracker</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>状态跟踪</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>openGOrderTracker</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>disableGoldenOrder</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>禁止该订单</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>disableGoldenOrder</ns2:function>
+                                </ns2:action>
+                             </ns2:actionGroup>
+		                </ns2:component>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>goldenOrderTable</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="0" y="0" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+                    </ns2:panel>
+                  </ns2:tab>
+                  <ns2:tab uiid="rentOrderInfoPanel">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>租赁订单</ns2:value>
+                    </ns2:title>
+                    <ns2:panel UIID="rentOrderInfoPanel">
+                        <ns2:layout xsi:type="ns2:TableLayoutType">
+                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+                        </ns2:layout>
+                        <ns2:component xsi:type="ns2:UITableType" UIID="rentOrderTable">
+                            <ns2:beElement>org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder</ns2:beElement>
+                            <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+                            <ns2:defaultRowSize>10</ns2:defaultRowSize>
+                            <ns2:showActionBar>true</ns2:showActionBar>
+                            <ns2:showFilter>true</ns2:showFilter>
+                            <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                                <ns2:expression xsi:type="ns2:ExpressionType">
+                                    <ns2:expressionString><![CDATA[
+                                    import java.util.List;
+                                    import org.shaolin.uimaster.page.ajax.TableConditions;
+                                    import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
+                                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.bmdp.runtime.AppContext; 
+                                    import org.shaolin.vogerp.commonmodel.IUserService;
+                                    import org.shaolin.bmdp.runtime.security.UserContext;
+                                    import org.shaolin.vogerp.ecommercial.ce.GOrderType;
+                                    {
+                                          if ($tableCondition == null) {
+                                             $tableCondition = TableConditions.createCondition(new RentOrLoanOrderImpl());
+                                             $tableCondition.setCount(10);
+                                             $tableCondition.addOrder("statusInt", true);
+                                             $tableCondition.addOrder("createDate", false);
+                                          }
+                                          RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
+                                          return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
+                                                        $tableCondition.getOrders(),
+                                                        $tableCondition.getOffset(), 
+                                                        $tableCondition.getCount());
+                                    }]]></ns2:expressionString>
+                                </ns2:expression>
+                            </ns2:query>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>序列号</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.serialNumber</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>类型</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.type</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
+                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.runtime.AppContext;
+                                        import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
+                                        {
+                                            $rowBE.setType((RentOrLoanOrderType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType").getByIntValue(Integer.valueOf($value).intValue()));
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:updateCondition>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>描述</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.description</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>参与过营销</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.promoted</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.runtime.AppContext;
+                                        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                                        {
+                                            if ($value == null || $value.trim().length() == 0) {
+                                            	$value = "0";
+                                            }
+                                            $rowBE.setPromoted(Integer.parseInt($value));
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:updateCondition>
+		                    </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>状态</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.status</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
+                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.runtime.AppContext;
+                                        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                                        {
+                                            $rowBE.setStatus((OrderStatusType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.ecommercial.ce.OrderStatusType").getByIntValue(Integer.valueOf($value).intValue()));
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:updateCondition>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>建立时间</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                  <ns2:type>DateRange</ns2:type>
+                                  <ns2:startCondition>rowBE.startCreateDate</ns2:startCondition> 
+                                  <ns2:endCondition>rowBE.endCreateDate</ns2:endCondition>
+                                </ns2:uiType>
+                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.uimaster.page.od.formats.FormatUtil;
+                                        import java.util.Date;
+                                        {
+                                            if ($value == null || "".equals($value)) {
+                                                if ("rowBE.startCreateDate".equals($filterId)) {
+                                                    $rowBE.setStartCreateDate(null);
+                                                } else {
+                                                    $rowBE.setEndCreateDate(null);
+                                                }
+                                            } else {
+                                                Date d = (Date)FormatUtil.convertUIToData(FormatUtil.DATE, $value);
+                                                if ("rowBE.startCreateDate".equals($filterId)) {
+                                                    $rowBE.setStartCreateDate(d);
+                                                } else {
+                                                    $rowBE.setEndCreateDate(d);
+                                                }
+                                            }
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:updateCondition>
+                            </ns2:column>
+                            <ns2:defaultActions>
+                                <ns2:defaultOpenAction>openRentOrder</ns2:defaultOpenAction>
+                            </ns2:defaultActions>
+                            <ns2:actionGroup>
+                                <ns2:type>radio</ns2:type>
+                                <ns2:action>
+                                    <ns2:uiid>verifiedROrder</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>验证通过</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>verifiedROrder</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>unverifiedROrder</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>验证不通过</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>unverifiedROrder</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>promoteRentOrder</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>在线客户营销</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>promoteRentOrder</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>openRentOrderTracker</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>状态跟踪</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>openRentOrderTracker</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>disableRentOrder</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>禁止该订单</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>disableRentOrder</ns2:function>
+                                </ns2:action>
+                             </ns2:actionGroup>
+                        </ns2:component>
+                        <ns2:layoutConstraint>
+                            <ns2:componentId>rentOrderTable</ns2:componentId>
+                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                                x="0" y="0" align="FULL"></ns2:constraint>
+                        </ns2:layoutConstraint>
+                    </ns2:panel>
+                </ns2:tab>
+                
           </ns2:component>
           <ns2:layoutConstraint>
              <ns2:componentId>conditionPanel</ns2:componentId>
@@ -1403,6 +887,61 @@
              <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                  x="0" y="1" align="FULL"></ns2:constraint>
           </ns2:layoutConstraint>
+          <ns2:constructorCode><![CDATA[
+		    {
+		       var o = this;
+               var UIEntity = this;
+		       // workflow dynamic actions
+		       Form.verifiedMOrder = function() {
+		          new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.INPUT_DIALOG2,message:"\u7559\u8A00\uFF1A",messageType:UIMaster.ui.dialog.Information,optionType:UIMaster.ui.dialog.OK_CANCEL_OPTION,title:'',height:200,width:300,handler: function() {
+		             
+			          UIMaster.actionComment = encodeURI(this.value);
+			          UIMaster.triggerServerEvent(UIMaster.getUIID(Form.machiningTable),"verifiedMOrder",UIMaster.getValue(Form.machiningTable),o.__entityName);
+		          
+		          }}).open();
+		       };
+		       Form.unverifiedMOrder = function() {
+		          new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.INPUT_DIALOG2,message:"\u7559\u8A00\uFF1A",messageType:UIMaster.ui.dialog.Information,optionType:UIMaster.ui.dialog.OK_CANCEL_OPTION,title:'',height:200,width:300,handler: function() {
+		          
+		              UIMaster.actionComment = encodeURI(this.value);
+		              UIMaster.triggerServerEvent(UIMaster.getUIID(Form.machiningTable),"unverifiedMOrder",UIMaster.getValue(Form.machiningTable),o.__entityName);
+		          
+		          }}).open();
+		       };
+		       Form.verifiedGOrder = function() {
+		          new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.INPUT_DIALOG2,message:"\u7559\u8A00\uFF1A",messageType:UIMaster.ui.dialog.Information,optionType:UIMaster.ui.dialog.OK_CANCEL_OPTION,title:'',height:200,width:300,handler: function() {
+		          
+		             UIMaster.actionComment = encodeURI(this.value);
+		             UIMaster.triggerServerEvent(UIMaster.getUIID(Form.goldenOrderTable),"verifiedGOrder",UIMaster.getValue(Form.goldenOrderTable),o.__entityName);
+		          
+		          }}).open();
+		       };
+		       Form.unverifiedGOrder = function() {
+		          new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.INPUT_DIALOG2,message:"\u7559\u8A00\uFF1A",messageType:UIMaster.ui.dialog.Information,optionType:UIMaster.ui.dialog.OK_CANCEL_OPTION,title:'',height:200,width:300,handler: function() {
+		          
+			          UIMaster.actionComment = encodeURI(this.value);
+			          UIMaster.triggerServerEvent(UIMaster.getUIID(Form.goldenOrderTable),"unverifiedGOrder",UIMaster.getValue(Form.goldenOrderTable),o.__entityName);
+		          
+		          }}).open();
+		       };
+		       Form.verifiedROrder = function() {
+		          new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.INPUT_DIALOG2,message:"\u7559\u8A00\uFF1A",messageType:UIMaster.ui.dialog.Information,optionType:UIMaster.ui.dialog.OK_CANCEL_OPTION,title:'',height:200,width:300,handler: function() {
+		          
+			          UIMaster.actionComment = encodeURI(this.value);
+			          UIMaster.triggerServerEvent(UIMaster.getUIID(Form.rentOrderTable),"verifyROrder",UIMaster.getValue(Form.rentOrderTable),o.__entityName);
+		          
+		          }}).open();
+		       };
+		       Form.unverifiedROrder = function() {
+		          new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.INPUT_DIALOG2,message:"\u7559\u8A00\uFF1A",messageType:UIMaster.ui.dialog.Information,optionType:UIMaster.ui.dialog.OK_CANCEL_OPTION,title:'',height:200,width:300,handler: function() {
+		          
+		             UIMaster.actionComment = encodeURI(this.value);
+		             UIMaster.triggerServerEvent(UIMaster.getUIID(Form.rentOrderTable),"unverifiedROrder",UIMaster.getValue(Form.rentOrderTable),o.__entityName);
+		          
+		          }}).open();
+		       };
+			}
+	    ]]></ns2:constructorCode>
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>

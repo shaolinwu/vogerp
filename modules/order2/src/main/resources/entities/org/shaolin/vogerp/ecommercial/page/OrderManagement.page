@@ -128,8 +128,7 @@
                         
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
-                        if (defaultUser.getStatus() == OrderStatusType.PUBLISHED
-                            || defaultUser.getStatus() == OrderStatusType.CREATED) {
+                        if (defaultUser.getStatus() == OrderStatusType.CREATED) {
                         	input.put("editable", new Boolean(true));
                         } else {
                             input.put("editable", new Boolean(false));
@@ -286,6 +285,7 @@
                       order.setStatus(OrderStatusType.CREATED);
                       order.setType(RentOrLoanOrderType.LOAN);
                       order.setDateType(RentDateType.MONTHLY);
+                      order.setDateCount(1);
                       order.setPublishedCustomerId(service.getUserId());
                       order.setPublishedCustomer((PersonalInfoImpl)service.getPersonalInfo(service.getUserId()));
                       String resourceId = OrderUtil.genResourceId();
@@ -293,6 +293,8 @@
                       order.setPhotos("/product/" + resourceId + "/images");
                       order.setCreateDate(new java.util.Date());
                       order.setCity(UserContext.getUserContext().getCity());
+                      order.setLongitude(UserContext.getUserContext().getLongitude());
+                      order.setLatitude(UserContext.getUserContext().getLatitude());
                       
                       HashMap input = new HashMap();
                       input.put("beObject", order);
@@ -300,7 +302,7 @@
                       RefForm form = new RefForm("rentOrLoanOrder", "org.shaolin.vogerp.ecommercial.form.RentOrderEditor", input);
                       @page.addElement(form);
                       
-                      form.openInWindows("新建租入订单", new TableCallBack("rentOrderTable"), true);
+                      form.openInWindows("新建设备求租订单", new TableCallBack("rentOrderTable"), true);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>
@@ -348,6 +350,7 @@
                       order.setStatus(OrderStatusType.CREATED);
                       order.setType(RentOrLoanOrderType.RENT);
                       order.setDateType(RentDateType.MONTHLY);
+                      order.setDateCount(1);
                       order.setPublishedCustomerId(service.getUserId());
                       order.setPublishedCustomer((PersonalInfoImpl)service.getPersonalInfo(service.getUserId()));
                       String resourceId = OrderUtil.genResourceId();
@@ -355,6 +358,8 @@
                       order.setPhotos("/product/" + resourceId + "/images");
                       order.setCreateDate(new java.util.Date());
                       order.setCity(UserContext.getUserContext().getCity());
+                      order.setLongitude(UserContext.getUserContext().getLongitude());
+                      order.setLatitude(UserContext.getUserContext().getLatitude());
                       
                       HashMap input = new HashMap();
                       input.put("beObject", order);
@@ -362,7 +367,7 @@
                       RefForm form = new RefForm("rentOrLoanOrder", "org.shaolin.vogerp.ecommercial.form.RLoanOrderEditor", input);
                       @page.addElement(form);
                       
-                      form.openInWindows("新建租出订单", new TableCallBack("rentOrderTable"), true);
+                      form.openInWindows("新建空闲设备出租订单", new TableCallBack("rentOrderTable"), true);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>
@@ -389,8 +394,7 @@
                       
                       HashMap input = new HashMap();
                       input.put("beObject", defaultUser);
-                      if (defaultUser.getStatus() == OrderStatusType.PUBLISHED
-                            || defaultUser.getStatus() == OrderStatusType.CREATED) {
+                      if (defaultUser.getStatus() == OrderStatusType.CREATED) {
 	                      input.put("editable", new Boolean(true));
                       } else {
                           input.put("editable", new Boolean(false));
@@ -402,7 +406,7 @@
                       RefForm form = new RefForm("rentOrLoanOrder", formName, input);
                       @page.addElement(form);
                       
-                      form.openInWindows("租赁订单详情", new TableCallBack("rentOrderTable"), true);
+                      form.openInWindows("设备租赁订单详情", new TableCallBack("rentOrderTable"), true);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>
@@ -468,6 +472,8 @@
                       order.setCount(1);
                       order.setCreateDate(new java.util.Date());
                       order.setCity(UserContext.getUserContext().getCity());
+                      order.setLongitude(UserContext.getUserContext().getLongitude());
+                      order.setLatitude(UserContext.getUserContext().getLatitude());
                       
                       HashMap input = new HashMap();
                       input.put("editable", new Boolean(true));
@@ -542,8 +548,7 @@
                       
                       HashMap input = new HashMap();
                       input.put("beObject", order);
-                      if (order.getStatus() == OrderStatusType.PUBLISHED
-                            || order.getStatus() == OrderStatusType.CREATED) {
+                      if (order.getStatus() == OrderStatusType.CREATED) {
 	                      input.put("editable", new Boolean(true));
                       } else {
                           input.put("editable", new Boolean(false));
@@ -588,6 +593,29 @@
                       @page.addElement(form);
                       
                       form.openInWindows("回复订单", null, true);
+                  }
+                  ]]></ns2:expressionString>
+              </ns2:exp>
+          </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="capSettings">
+          <ns2:ops xsi:type="ns2:OpCallAjaxType" name="capSettings-20170404-1029">
+              <ns2:exp>
+                  <ns2:expressionString><![CDATA[
+                  import java.util.HashMap;
+                  import org.shaolin.uimaster.page.AjaxContext;
+                  import org.shaolin.uimaster.page.ajax.*;
+                  import org.shaolin.vogerp.ecommercial.be.InterestEOrderImpl;
+                  import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                  import org.shaolin.bmdp.runtime.AppContext;
+                  import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                  {
+                      HashMap input = new HashMap();
+                      input.put("editable", new Boolean(true));
+                      RefForm form = new RefForm("settings", "org.shaolin.vogerp.ecommercial.form.InterestSettings", input);
+                      @page.addElement(form);
+                      
+                      form.openInWindows("喜好设置", null, true);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>
@@ -738,6 +766,14 @@
                                     </ns2:title>
                                     <ns2:icon>ui-icon-note</ns2:icon>
                                     <ns2:function>acceptMachiningOrder</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>capSettings</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>喜好设置</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>capSettings</ns2:function>
                                 </ns2:action>
                              </ns2:actionGroup>
                         </ns2:component>
@@ -1186,7 +1222,7 @@
 			      <ns2:component xsi:type="ns2:UIButtonType" UIID="loanOrderLabel">
 			        <ns2:UIStyle></ns2:UIStyle>
 			        <ns2:text xsi:type="ns2:StringPropertyType">
-			          <ns2:value>创建求租订单</ns2:value>
+			          <ns2:value>创建设备求租订单</ns2:value>
 			        </ns2:text>
 			        <ns2:EventListener xsi:type="ns2:ClickListenerType">
 			          <ns2:handler functionName="selectedLoanOrder"></ns2:handler>
@@ -1195,7 +1231,7 @@
 			      <ns2:component xsi:type="ns2:UIButtonType" UIID="rentOrderLabel">
 			        <ns2:UIStyle></ns2:UIStyle>
 			        <ns2:text xsi:type="ns2:StringPropertyType">
-			          <ns2:value>创建出租订单</ns2:value>
+			          <ns2:value>创建设备出租订单</ns2:value>
 			        </ns2:text>
 			        <ns2:EventListener xsi:type="ns2:ClickListenerType">
 			          <ns2:handler functionName="selectedRentOrder"></ns2:handler>
