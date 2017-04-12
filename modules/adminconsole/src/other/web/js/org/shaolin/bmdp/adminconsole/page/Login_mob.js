@@ -186,10 +186,10 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
 				    function onComplete(data) {
 				        longitudeInfo.setValue(data.position.getLng());
 			            latitudeInfo.setValue(data.position.getLat());
-			            alert("latitudeInfo: " + data.position.getLng() + ", longitudeInfo: " + data.position.getLat());
+			            console.log("latitudeInfo: " + data.position.getLng() + ", longitudeInfo: " + data.position.getLat());
 				    }
 				    function onError(data) {
-				        alert("geolocation fails: " + data.message);
+				        console.log("geolocation fails: " + data.message);
 				    }
 		        }
 		    
