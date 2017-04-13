@@ -16,15 +16,15 @@
               import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
               import org.shaolin.bmdp.runtime.spi.IConstantService;
 	          {
-	              AList cityListUI = @page.getList("cityListUI");
+	              ComboBox cityListUI = @page.getComboBox("cityListUI");
 	              
 	              IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
 	              ArrayList values1 = new ArrayList();
 		          ArrayList displayItems1 = new ArrayList();
 		          CEOperationUtil.getCEItems(values1, displayItems1, cs.getChildren(CEUtil.toCEValue(cityListUI.getValue())));
 		          
-	              AList citySubListUI = @page.getList("citySubListUI");
-                  citySubListUI.clearValues();
+	              ComboBox citySubListUI = @page.getComboBox("citySubListUI");
+                  citySubListUI.clearValue();
                   citySubListUI.setOptions(displayItems1, values1);
 	          }
 	          ]]></expressionString>
@@ -42,8 +42,8 @@
               import org.shaolin.uimaster.page.ajax.*;
               {
                   RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-                  AList cityListUI = @page.getList("cityListUI");
-                  AList citySubListUI = @page.getList("citySubListUI");
+                  ComboBox cityListUI = @page.getComboBox("cityListUI");
+                  ComboBox citySubListUI = @page.getComboBox("citySubListUI");
                   String parentId = @page.getHidden("parentUI").getValue();
               
                   TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(parentId);
@@ -69,8 +69,6 @@
               {
                  RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                  String parentId = @page.getHidden("parentUI").getValue();
-	             form.closeIfinWindows(true);
-	             @page.removeForm(@page.getEntityUiid()); 
                  
                  TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(parentId);
                  textWidget.setValue("");
@@ -78,6 +76,9 @@
                     ((Label)textWidget).setValue("");
                     ((Label)textWidget).setDisplayValue("选择城市");
                  }
+                 
+                 form.closeIfinWindows(true);
+	             @page.removeForm(@page.getEntityUiid()); 
               }
               ]]></expressionString>
         </ns2:exp>
@@ -94,6 +95,18 @@
               import org.shaolin.uimaster.page.ajax.*;
               {
                  RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+                 
+                 ComboBox cityListUI = @page.getComboBox("cityListUI");
+                 ComboBox citySubListUI = @page.getComboBox("citySubListUI");
+                 String parentId = @page.getHidden("parentUI").getValue();
+             
+                 TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(parentId);
+                 textWidget.setValue(citySubListUI.getValue());
+                 if (textWidget instanceof Label) {
+                    ((Label)textWidget).setValue(citySubListUI.getValue());
+                    ((Label)textWidget).setDisplayValue(citySubListUI.getSelectedDisplayValue());
+                 }
+                 
 	             form.closeIfinWindows(true);
 	             @page.removeForm(@page.getEntityUiid()); 
               }
@@ -126,23 +139,7 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
-      <ns2:component xsi:type="ns2:UIListType" UIID="cityListUI">
-        <ns2:Property name="horizontalLayout" >
-         <ns2:value xsi:type="ns2:BooleanPropertyType">
-            <value>true</value>
-         </ns2:value>
-        </ns2:Property>
-        <ns2:Property name="colCount" >
-         <ns2:value xsi:type="ns2:NumericPropertyType">
-            <type>int</type>
-            <value>6</value>
-         </ns2:value>
-        </ns2:Property>
-        <ns2:size xsi:type="ns2:ExpressionPropertyType">
-          <ns2:expression>
-            <expressionString>{return 10;}</expressionString>
-          </ns2:expression>
-        </ns2:size>
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="cityListUI">
         <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
           <ns2:handler functionName="selectSubItem"></ns2:handler>
         </ns2:EventListener>
@@ -160,23 +157,7 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
-      <ns2:component xsi:type="ns2:UIListType" UIID="citySubListUI">
-        <ns2:Property name="horizontalLayout" >
-         <ns2:value xsi:type="ns2:BooleanPropertyType">
-            <value>true</value>
-         </ns2:value>
-        </ns2:Property>
-        <ns2:Property name="colCount" >
-         <ns2:value xsi:type="ns2:NumericPropertyType">
-            <type>int</type>
-            <value>6</value>
-         </ns2:value>
-         <ns2:size xsi:type="ns2:ExpressionPropertyType">
-          <ns2:expression>
-            <expressionString>{return 10;}</expressionString>
-          </ns2:expression>
-        </ns2:size>
-        </ns2:Property>
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="citySubListUI">
         <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
           <ns2:handler functionName="selectedCity"></ns2:handler>
         </ns2:EventListener>
@@ -239,6 +220,9 @@
     <ns2:DataEntity scope="InOut" name="clickEventUI" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="selectedProvince" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
+    </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="selectedCity" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
@@ -265,14 +249,16 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="clickEventUI" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIMultipleChoice"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
       <ns2:UIComponent componentPath="cityListUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="selectedProvince" paramName="Value"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values" paramName="OptionValues"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIMultipleChoice"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
       <ns2:UIComponent componentPath="citySubListUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="selectedCity" paramName="Value"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values1" paramName="OptionValues"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems1" paramName="OptionDisplayValues"></ns2:DataComponent>
     </ns2:ComponentMapping>
@@ -281,18 +267,12 @@
       import java.util.ArrayList;
       import org.shaolin.bmdp.runtime.AppContext;
       import org.shaolin.bmdp.runtime.ce.CEUtil;
+      import org.shaolin.bmdp.runtime.ce.IConstantEntity;
       import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
       import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
       import org.shaolin.bmdp.runtime.spi.IConstantService;
       import org.shaolin.bmdp.runtime.security.UserContext;
       {
-          if ($selectedCity == null) {
-              $selectedCity = UserContext.getUserContext().getCity();
-          }
-          if ($selectedCity == null) {
-              $selectedCity = "CityBJ0,110100";//bejing.
-          }
-          
           ArrayList values = new ArrayList();
           ArrayList displayItems = new ArrayList();
           CEOperationUtil.getCEItems(values, displayItems, AppContext.get().getConstantService().getConstantEntity("CityList"));
@@ -300,6 +280,18 @@
           $displayItems = displayItems;
           
           IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
+          if ($selectedCity == null) {
+              $selectedCity = UserContext.getUserContext().getCity();
+          }
+          if ($selectedCity == null) {
+              $selectedCity = "CityBJ0,110100";//bejing.
+          }
+          // @odContext.log("$selectedCity: " + $selectedCity);
+          IConstantEntity cityItem = CEUtil.toCEValue($selectedCity);
+          IConstantEntity pce = cs.getParent(cityItem);
+          $selectedProvince = pce.getEntityName() +","+ cs.getParentsIntValue(cityItem);
+          // @odContext.log("$selectedProvince: " + $selectedProvince);
+          
           ArrayList values1 = new ArrayList();
           ArrayList displayItems1 = new ArrayList();
           CEOperationUtil.getCEItems(values1, displayItems1, CEUtil.toCEValue($selectedCity));

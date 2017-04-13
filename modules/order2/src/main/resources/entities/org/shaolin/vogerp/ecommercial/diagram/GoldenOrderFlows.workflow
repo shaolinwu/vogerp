@@ -38,7 +38,7 @@
 			expiredHours="0" autoTrigger="true">
 			<ns2:description>发布抢购单给所有客户</ns2:description>
 			<ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor"
-				actionName="publishGorder" actionText="下单">
+				actionName="publishGorder" actionText="发布">
 				<ns2:expression>
 					<expressionString><![CDATA[
                     import java.util.HashMap;
@@ -95,7 +95,7 @@
 			</ns2:uiAction>
 			<ns2:uiAction
 				actionPage="org.shaolin.vogerp.ecommercial.form.GoldenSaleOrderEditor"
-				actionName="publishGorder1" actionText="下单">
+				actionName="publishGorder1" actionText="发布">
 				<ns2:expression>
 					<expressionString><![CDATA[
                     import java.util.HashMap;

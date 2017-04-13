@@ -9,6 +9,8 @@ import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.utils.DateParser;
 import org.shaolin.bmdp.utils.LockManager;
+import org.shaolin.uimaster.page.AjaxContext;
+import org.shaolin.uimaster.page.ajax.RadioButtonGroup;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.uimaster.page.exception.FormatException;
 import org.shaolin.uimaster.page.od.formats.FormatUtil;
@@ -339,4 +341,51 @@ public class OrderUtil {
 		}
 		return sb.toString();
 	}
+	
+	public static void updateSearchCriteria(AjaxContext page, IEOrder condition) {
+		if (page != null) {
+			RadioButtonGroup buttonGroup = page.getRadioBtnGroup("searchBar.selectFilterUI");
+			if ("1".equals(buttonGroup.getValue()) && UserContext.getUserContext().getLongitude() > 0) {
+				// $page.getHidden("searchBar.areaScopeUI").setValue(100);
+				// 12 kilometres = 0.1
+				double maxlong = UserContext.getUserContext().getLongitude() + 0.1;
+				double maxlati = UserContext.getUserContext().getLatitude() + 0.1;
+				double minlong = UserContext.getUserContext().getLongitude() - 0.1;
+				double minlati = UserContext.getUserContext().getLatitude() - 0.1;
+
+				condition.setCity(null);
+				condition.setMaxLongitude(maxlong);
+				condition.setMaxLatitude(maxlati);
+				condition.setMinLongitude(minlong);
+				condition.setMinLatitude(minlati);
+			} else if ("2".equals(buttonGroup.getValue())) {
+				String city = page.getHidden("searchBar.citiesCbxUI").getValue();
+				if (city != null && city.length() > 0) {
+					condition.setCity(city);
+					condition.setMaxLongitude(0);
+					condition.setMaxLatitude(0);
+					condition.setMinLongitude(0);
+					condition.setMinLatitude(0);
+				}
+			} else if ("3".equals(buttonGroup.getValue())) {
+				condition.setCity(null);
+				condition.setMaxLongitude(0);
+				condition.setMaxLatitude(0);
+				condition.setMinLongitude(0);
+				condition.setMinLatitude(0);
+			}
+		} else if (UserContext.getUserContext().getLongitude() > 0) {
+			double maxlong = UserContext.getUserContext().getLongitude() + 0.1;
+			double maxlati = UserContext.getUserContext().getLatitude() + 0.1;
+			double minlong = UserContext.getUserContext().getLongitude() - 0.1;
+			double minlati = UserContext.getUserContext().getLatitude() - 0.1;
+
+			condition.setMaxLongitude(maxlong);
+			condition.setMaxLatitude(maxlati);
+			condition.setMinLongitude(minlong);
+			condition.setMinLatitude(minlati);
+		}
+	}
+	
+	
 }

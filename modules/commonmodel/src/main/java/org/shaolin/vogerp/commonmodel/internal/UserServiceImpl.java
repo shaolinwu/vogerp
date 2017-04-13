@@ -2,6 +2,7 @@ package org.shaolin.vogerp.commonmodel.internal;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -226,8 +227,12 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	private void setLocationInfo(PersonalAccountImpl newAccount) {
 		try {//could be slow.
 			String result = WebConfig.getUserCityInfo(newAccount.getLoginIP());
-			newAccount.setLocationInfo(result);
+			logger.info("Search for city location from ip: " + newAccount.getLoginIP() + ", result: " + result);
+			if(result != null && result.trim().length() > 0) {
+				newAccount.setLocationInfo(result);
+			}
 			double[] coordinations = WebConfig.getUserLocation(newAccount.getLoginIP());
+			logger.info("Search for geo-location from ip: " + newAccount.getLoginIP() + ", result: " + Arrays.toString(coordinations));
 			if (coordinations != null && coordinations.length == 2) {
 				newAccount.setLongitude(coordinations[0]);
 				newAccount.setLatitude(coordinations[1]);
@@ -319,8 +324,8 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 				matchedUser.setLongitude(user.getLongitude());
 			}
 			String userIP = HttpUserUtil.getIP(request);
-			if (matchedUser.getLoginIP() == null ||
-					!matchedUser.getLoginIP().equals(userIP)) {
+			if ((matchedUser.getLocationInfo() == null || matchedUser.getLocationInfo().trim().length() == 0)
+					 || matchedUser.getLoginIP() == null || !matchedUser.getLoginIP().equals(userIP)) {
 				matchedUser.setLoginIP(userIP);
 				this.setLocationInfo((PersonalAccountImpl)matchedUser);
 			}

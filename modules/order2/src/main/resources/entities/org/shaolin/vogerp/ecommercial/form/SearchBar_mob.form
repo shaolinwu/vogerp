@@ -19,7 +19,8 @@
           { 
              RadioButtonGroup buttonGroup = @page.getRadioBtnGroup("selectFilterUI");
              if ("1".equals(buttonGroup.getValue())) {
-                // 
+                //TODO: allow to set a scope of longtitude and lantitudu.
+                //@page.getHidden("areaScopeUI").setValue(100);
              } else if ("2".equals(buttonGroup.getValue())) {
                   HashMap input = new HashMap();
 	              input.put("parentUIID", @page.getEntityUiid() + ".citiesCbxUI");
@@ -29,17 +30,9 @@
 	              
 	              form.openInWindows("选择城市", new FunctionCallBack(@page, "selectedCity-201604102211"), true);
              } else if ("3".equals(buttonGroup.getValue())) {
-                  HashMap input = new HashMap();
-	              input.put("parentTypeUIID", @page.getEntityUiid() + ".productTypeUI");
-	              input.put("parentSubTypeUIID", @page.getEntityUiid() + ".productTypeUI");
-	              input.put("parentSubType2UIID", @page.getEntityUiid() + ".productType1UI");
-	              input.put("ceName", "org.shaolin.vogerp.productmodel.ce.ProductType");
-	              input.put("pvalue", UserContext.getUserContext().getOrgType());
-	              input.put("editable", new Boolean(false));
-	              RefForm form = new RefForm("productTypeForm", "org.shaolin.vogerp.productmodel.form.ProductHierarchySelector2", input);
-	              @page.addElement(form);
-	              
-	              form.openInWindows("\u9009\u62E9\u57CE\u5E02", new FunctionCallBack(@page, "selectedProductType-201604102211"), true);
+                  @page.getHidden("citiesCbxUI").setValue(null);
+                  @page.getHidden("productTypeUI").setValue(null);
+                  @page.getHidden("productType1UI").setValue(null);
              }
           }
           ]]></expressionString>
@@ -127,15 +120,17 @@
 	               ArrayList list = new ArrayList();
 	               list.add("按登录区域");
 	               list.add("按城市");
-	               list.add("按产品类型");
+	               list.add("按全国");
 	               return list; 
 	           }]]></expressionString>
 	         </ns2:expression>
            </ns2:value>
         </ns2:Property>
+        <!-- 
         <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
           <ns2:handler functionName="selectFilterCondition"></ns2:handler>
         </ns2:EventListener>
+         -->
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="selectFilterCondition"></ns2:handler>
         </ns2:EventListener>
@@ -151,6 +146,8 @@
         </ns2:text>
      </ns2:component>
      <ns2:component xsi:type="ns2:UIHiddenType" UIID="productType1UI">
+     </ns2:component>
+     <ns2:component xsi:type="ns2:UIHiddenType" UIID="areaScopeUI">
      </ns2:component>
      <ns2:layoutConstraint>
          <ns2:componentId>selectFilterUI</ns2:componentId>

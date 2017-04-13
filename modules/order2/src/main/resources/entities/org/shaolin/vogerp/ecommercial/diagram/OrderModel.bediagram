@@ -38,6 +38,23 @@
             <bediagram:name>latitude</bediagram:name>
             <bediagram:type xsi:type="bediagram:DoubleType" />
         </bediagram:member>
+        <!-- for search criteria only! -->
+        <bediagram:member>
+            <bediagram:name>maxLongitude</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>maxLatitude</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>minLongitude</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>minLatitude</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
         
         <!-- numbers of the good -->
         <bediagram:member>

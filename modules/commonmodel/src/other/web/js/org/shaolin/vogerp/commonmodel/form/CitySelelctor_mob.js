@@ -13,18 +13,14 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
         ui: elementList[prefix + "clickEventUI"]
     });
 
-    var cityListUI = new UIMaster.ui.list
+    var cityListUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "cityListUI"]
-        ,horizontalLayout: true
-        ,colCount: 6
     });
 
-    var citySubListUI = new UIMaster.ui.list
+    var citySubListUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "citySubListUI"]
-        ,horizontalLayout: true
-        ,colCount: 6
     });
 
     var cancelbtn = new UIMaster.ui.button

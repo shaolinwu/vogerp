@@ -39,7 +39,7 @@
         <ns2:mission-node name="publishMOrder" expiredDays="0" expiredHours="0" autoTrigger="true">
             <ns2:description>评估加工订单</ns2:description>
             <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.MachiningOrder"
-                actionName="publishMOrder" actionText="下单">
+                actionName="publishMOrder" actionText="发布">
                 <ns2:expression>
                     <expressionString><![CDATA[
                     import java.util.HashMap;

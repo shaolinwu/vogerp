@@ -26,17 +26,22 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
         ui: elementList[prefix + "productType1UI"]
     });
 
+    var areaScopeUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "areaScopeUI"]
+    });
+
     var root = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "root"]
         ,items: []
-        ,subComponents: [prefix + "selectFilterUI",prefix + "citiesCbxUI",prefix + "productTypeUI",prefix + "productType1UI"]
+        ,subComponents: [prefix + "selectFilterUI",prefix + "citiesCbxUI",prefix + "productTypeUI",prefix + "productType1UI",prefix + "areaScopeUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [selectFilterUI,citiesCbxUI,productTypeUI,productType1UI,root]
+        ,items: [selectFilterUI,citiesCbxUI,productTypeUI,productType1UI,areaScopeUI,root]
     });
 
     Form.selectFilterUI=selectFilterUI;
@@ -46,6 +51,8 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
     Form.productTypeUI=productTypeUI;
 
     Form.productType1UI=productType1UI;
+
+    Form.areaScopeUI=areaScopeUI;
 
     Form.root=root;
 
@@ -56,6 +63,8 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
     Form.productTypeUI=productTypeUI;
 
     Form.productType1UI=productType1UI;
+
+    Form.areaScopeUI=areaScopeUI;
 
     Form.user_constructor = function()
     {

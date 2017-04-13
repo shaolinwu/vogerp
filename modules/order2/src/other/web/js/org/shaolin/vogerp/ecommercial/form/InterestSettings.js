@@ -3,11 +3,30 @@
 function org_shaolin_vogerp_ecommercial_form_InterestSettings(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var machiningListUI = new UIMaster.ui.combobox
+    var machiningListUI = new UIMaster.ui.list
     ({
         ui: elementList[prefix + "machiningListUI"]
-        ,horizontalLayout: true
-        ,colCount: 6
+        ,colCount: 10
+        ,size: 10
+        ,multiple: false
+    });
+
+    var moveToRightBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "moveToRightBtn"]
+    });
+
+    var removeSelectedBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "removeSelectedBtn"]
+    });
+
+    var selectedMachiningListUI = new UIMaster.ui.list
+    ({
+        ui: elementList[prefix + "selectedMachiningListUI"]
+        ,colCount: 10
+        ,size: 10
+        ,multiple: false
     });
 
     var changePricebtn = new UIMaster.ui.button
@@ -27,20 +46,33 @@ function org_shaolin_vogerp_ecommercial_form_InterestSettings(json)
         ,subComponents: [prefix + "changePricebtn",prefix + "cancelbtn"]
     });
 
+    var buttonPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "buttonPanel"]
+        ,items: []
+        ,subComponents: [prefix + "moveToRightBtn",prefix + "removeSelectedBtn"]
+    });
+
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "machiningListUI"]
+        ,subComponents: [prefix + "machiningListUI",prefix + "buttonPanel",prefix + "selectedMachiningListUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [machiningListUI,changePricebtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [machiningListUI,moveToRightBtn,removeSelectedBtn,selectedMachiningListUI,changePricebtn,cancelbtn,fieldPanel,buttonPanel,actionPanel]
     });
 
     Form.machiningListUI=machiningListUI;
+
+    Form.moveToRightBtn=moveToRightBtn;
+
+    Form.removeSelectedBtn=removeSelectedBtn;
+
+    Form.selectedMachiningListUI=selectedMachiningListUI;
 
     Form.changePricebtn=changePricebtn;
 
@@ -49,6 +81,20 @@ function org_shaolin_vogerp_ecommercial_form_InterestSettings(json)
     Form.fieldPanel=fieldPanel;
 
     Form.machiningListUI=machiningListUI;
+
+    Form.buttonPanel=buttonPanel;
+
+    Form.moveToRightBtn=moveToRightBtn;
+
+    Form.removeSelectedBtn=removeSelectedBtn;
+
+    Form.selectedMachiningListUI=selectedMachiningListUI;
+
+    Form.buttonPanel=buttonPanel;
+
+    Form.moveToRightBtn=moveToRightBtn;
+
+    Form.removeSelectedBtn=removeSelectedBtn;
 
     Form.actionPanel=actionPanel;
 
@@ -61,8 +107,6 @@ function org_shaolin_vogerp_ecommercial_form_InterestSettings(json)
         /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_InterestSettings */
         /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_InterestSettings */
     };
-
-    Form.ChangePrice = org_shaolin_vogerp_ecommercial_form_InterestSettings_ChangePrice;
 
     Form.Save = org_shaolin_vogerp_ecommercial_form_InterestSettings_Save;
 
@@ -79,17 +123,6 @@ function org_shaolin_vogerp_ecommercial_form_InterestSettings(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_ecommercial_form_InterestSettings */
 /* Other_Func_LAST:org_shaolin_vogerp_ecommercial_form_InterestSettings */
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_InterestSettings_ChangePrice(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_InterestSettings_ChangePrice */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"ChangePrice-20170111-163402",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_InterestSettings_ChangePrice */
-
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_form_InterestSettings_Save(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_InterestSettings_Save */

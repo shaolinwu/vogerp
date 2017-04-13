@@ -555,7 +555,7 @@
                       }
                       
                       String formUI = "org.shaolin.vogerp.ecommercial.form.MachiningOrder";
-                      if (order.getEstimatedPrice() > 0) {
+                      if (order.getEstimatedPrice() > 0 && order.getStatus() != OrderStatusType.CREATED) {
                          formUI = "org.shaolin.vogerp.ecommercial.form.MachiningOrderWithResult";
                          input.put("editable", new Boolean(false));
                       }
