@@ -4,7 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.ecommercial.page.OnlineOrderList_mob</entityName>
 	<systemVersion>0</systemVersion>
-	<description>抢单达人页主</description>
+	<description>加工达人主页</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 	    <ns2:eventHandler functionName="openGoldenOrder">
             <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openGoldenOrder-20160124-6546">

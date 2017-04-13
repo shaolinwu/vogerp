@@ -252,6 +252,7 @@
             	<ns2:dest name="publishMOrder"></ns2:dest>
                 <ns2:dest name="estimatePrice"></ns2:dest>
             	<ns2:dest name="cancelGOrder"></ns2:dest>
+            	<ns2:dest name="forbiddenMOrder"></ns2:dest>
             </ns2:eventDest>
         </ns2:mission-node>
         
@@ -338,6 +339,7 @@
             <ns2:eventDest>
                 <ns2:dest name="offerPrice"></ns2:dest>
                 <ns2:dest name="cancelGOrder"></ns2:dest>
+                <ns2:dest name="forbiddenMOrder"></ns2:dest>
             </ns2:eventDest>
         </ns2:mission-node>
         
@@ -466,13 +468,14 @@
                 <ns2:dest name="offerPrice"></ns2:dest>
             	<ns2:dest name="acceptPrice"></ns2:dest>
 	            <ns2:dest name="cancelGOrder"></ns2:dest>
+	            <ns2:dest name="forbiddenMOrder"></ns2:dest>
             </ns2:eventDest>
         </ns2:mission-node>
         
         <ns2:mission-node name="acceptPrice" expiredDays="0" expiredHours="0" autoTrigger="false">
             <ns2:description>同意接受系统估价</ns2:description>
             <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.MOOfferPriceTable"
-                actionName="acceptOfferPrice" actionText="同意成交订单">
+                actionName="acceptOfferPrice" actionText="同意成交">
                 <ns2:expression>
                     <expressionString><![CDATA[
                     import java.util.HashMap;
@@ -748,6 +751,105 @@
             </ns2:process>
             <ns2:dest name="endNode"></ns2:dest>
         </ns2:mission-node>
+        
+        <ns2:mission-node name="forbiddenMOrder" expiredDays="0"
+			expiredHours="0" autoTrigger="false">
+			<ns2:description>禁用订单</ns2:description>
+			<!-- dynamic action -->
+			<ns2:uiAction
+				actionPage="org.shaolin.vogerp.ecommercial.page.OrderManagementByAdmin"
+				actionName="forbiddenMOrder" actionText="禁用订单">
+				<ns2:expression>
+					<expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.Date;
+                    import java.util.ArrayList;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.*;
+                    import org.shaolin.vogerp.ecommercial.dao.*;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.vogerp.commonmodel.IUserService; 
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    { 
+                        Table orderInfoTable = (Table)@page.getElement("machiningTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("没有订单选中！", "Error", Dialog.ERROR_MESSAGE, null);
+                            return;
+                        }
+                        IEOrder order = (IEOrder)orderInfoTable.getSelectedRow();
+                        if (order.getStatus() != OrderStatusType.PUBLISHED) {
+                           Dialog.showMessageDialog("只有处于发布状态的订单可以禁用！", "Error", Dialog.ERROR_MESSAGE, null);
+                           return;
+                        }
+                        
+                        HashMap result = new HashMap();
+                        result.put("gorder", order);
+                        return result;
+                    }
+                    ]]></expressionString>
+				</ns2:expression>
+				<ns2:filter>
+					<expressionString><![CDATA[
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    {
+                       // only admin
+                       return UserContext.hasRole("Admin,0") && ($beObject.getStatus() == OrderStatusType.PUBLISHED || $beObject.getStatus() == OrderStatusType.CREATED);
+                    }
+                ]]></expressionString>
+				</ns2:filter>
+			</ns2:uiAction>
+			<ns2:participant partyType="GenericOrganizationType.Director,0" />
+			<ns2:process>
+				<ns2:var name="gorder" category="BusinessEntity" scope="InOut">
+					<type entityName="org.shaolin.vogerp.ecommercial.be.EOrder"></type>
+				</ns2:var>
+				<ns2:expression>
+					<expressionString><![CDATA[
+                    import java.util.List;
+                    import java.util.ArrayList;
+                    import java.util.Date;
+                    import java.util.HashMap;
+                    import org.shaolin.bmdp.utils.DateUtil;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.order.be.IPurchaseOrder;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
+                    import org.shaolin.vogerp.ecommercial.be.*;
+                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                    import org.shaolin.bmdp.workflow.be.NotificationImpl;
+                    {
+                         if ($gorder.getId() == 0) {
+                            return;
+                         }
+                         if ($gorder.getStatus() == OrderStatusType.PUBLISHED) {
+	                         $gorder.setStatus(OrderStatusType.FORBIDDEN);
+	                         
+	                         if ($gorder instanceof MachiningOrderImpl) {
+	                            OrderModel.INSTANCE.update((MachiningOrderImpl)$gorder);
+	                         } 
+	                         if ($gorder.getPublishedCustomerId() > 0) {
+		                         NotificationImpl message = new NotificationImpl();
+		                         message.setPartyId($gorder.getPublishedCustomerId());
+		                         message.setSubject("抢购单由于不适合抢单规定，已被管理员禁用此单！");
+		                         message.setDescription(OrderUtil.getOrderLink($gorder) + $gorder.getDescription());
+		                         message.setCreateDate(new Date());
+		                         
+		                         ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+		                         service.addNotification(message, true);
+	                         }
+	                         Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
+                         }
+                    }
+                    ]]></expressionString>
+				</ns2:expression>
+			</ns2:process>
+			<ns2:dest name="endNode"></ns2:dest>
+		</ns2:mission-node>
         
         <ns2:end-node name="endNode"></ns2:end-node>
         </ns2:flow>

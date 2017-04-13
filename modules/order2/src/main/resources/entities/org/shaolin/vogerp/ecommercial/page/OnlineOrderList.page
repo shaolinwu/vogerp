@@ -4,9 +4,9 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.ecommercial.page.OnlineOrderList</entityName>
 	<systemVersion>0</systemVersion>
-	<description>抢单达人主页</description>
+	<description>加工达人主页</description>
 	<descriptionExpr>
-	   <expressionString><![CDATA[{return "抢单达人主页";}]]></expressionString>
+	   <expressionString><![CDATA[{return "加工达人主页";}]]></expressionString>
 	</descriptionExpr>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 	    <ns2:eventHandler functionName="openGoldenOrder">

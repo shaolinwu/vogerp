@@ -149,6 +149,8 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
 
     Form.openRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openRentOrder;
 
+    Form.disableMOrder = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableMOrder;
+
     Form.disableGoldenOrder = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableGoldenOrder;
 
     Form.disableRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableRentOrder;
@@ -220,6 +222,21 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
 
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableMOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableMOrder */
+        var o = this;
+        var UIEntity = this;
+
+		        {   
+		        	new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+		        	
+	        				UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forbiddenMOrder",UIMaster.getValue(eventsource),o.__entityName);
+			            }
+			        }).open();
+		        }
+		            }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableMOrder */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableGoldenOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableGoldenOrder */
         var o = this;
         var UIEntity = this;
@@ -242,7 +259,7 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
 		        {
 		            new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 		        	
-	        				UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forbiddenGOrder",UIMaster.getValue(eventsource),o.__entityName);
+	        				UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forbiddenROrder",UIMaster.getValue(eventsource),o.__entityName);
 			            }
 			        }).open();   
 		        }

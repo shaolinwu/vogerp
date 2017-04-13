@@ -131,7 +131,19 @@
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
-        
+        <ns2:eventHandler functionName="disableMOrder">
+            <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+		        <ns2:expressionString><![CDATA[
+		        {   
+		        	new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
+		        	
+	        				UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forbiddenMOrder",UIMaster.getValue(eventsource),o.__entityName);
+			            }
+			        }).open();
+		        }
+		        ]]></ns2:expressionString>
+		    </ns2:ops>
+        </ns2:eventHandler>
         <ns2:eventHandler functionName="disableGoldenOrder">
             <ns2:ops xsi:type="ns2:OpExecuteScriptType">
 		        <ns2:expressionString><![CDATA[
@@ -151,7 +163,7 @@
 		        {
 		            new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:'Are you sure continuing?',messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,handler: function() {
 		        	
-	        				UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forbiddenGOrder",UIMaster.getValue(eventsource),o.__entityName);
+	        				UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forbiddenROrder",UIMaster.getValue(eventsource),o.__entityName);
 			            }
 			        }).open();   
 		        }
@@ -446,6 +458,14 @@
                                     </ns2:title>
                                     <ns2:icon>ui-icon-note</ns2:icon>
                                     <ns2:function>unverifiedMOrder</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>disableMOrder</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>禁止该订单</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>disableMOrder</ns2:function>
                                 </ns2:action>
                              </ns2:actionGroup>
                         </ns2:component>

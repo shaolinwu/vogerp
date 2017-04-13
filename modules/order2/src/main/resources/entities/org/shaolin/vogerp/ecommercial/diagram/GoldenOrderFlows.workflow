@@ -206,6 +206,7 @@
 			</ns2:process>
 			<ns2:eventDest>
 				<ns2:dest name="verifyGOrder"></ns2:dest>
+				<ns2:dest name="forbiddenGOrder"></ns2:dest>
 			</ns2:eventDest>
 		</ns2:mission-node>
 		
@@ -459,6 +460,7 @@
 				<ns2:dest name="offerPrice"></ns2:dest>
 				<ns2:dest name="acceptPrice"></ns2:dest>
 				<ns2:dest name="cancelGOrder"></ns2:dest>
+				<ns2:dest name="forbiddenGOrder"></ns2:dest>
 			</ns2:eventDest>
 		</ns2:mission-node>
 
@@ -795,21 +797,7 @@
                     import org.shaolin.vogerp.commonmodel.IUserService; 
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     { 
-                        String tableId = "goldenOrderTable";
-                        TabPane tabPanel = (TabPane)@page.getElement("functionsTab");
-                        if (tabPanel.getSelectedIndex() == 0) {
-                           tableId = "goldenOrderTable";
-                        } else if (tabPanel.getSelectedIndex() == 1) {
-                           tableId = "gsaleOrderTable";
-                        } else if (tabPanel.getSelectedIndex() == 2) {
-                           tableId = "rentOrderTable";
-                        } else if (tabPanel.getSelectedIndex() == 2) {
-                           tableId = "loanOrderTable";
-                        } else {
-                           Dialog.showMessageDialog("未支持的订单类型！", "Error", Dialog.ERROR_MESSAGE, null);
-                           return;
-                        }
-                        Table orderInfoTable = (Table)@page.getElement(tableId);
+                        Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
                         if (orderInfoTable.getSelectedRow() == null) {
                             Dialog.showMessageDialog("没有订单选中！", "Error", Dialog.ERROR_MESSAGE, null);
                             return;
@@ -819,7 +807,6 @@
                            Dialog.showMessageDialog("只有处于发布状态的订单可以禁用！", "Error", Dialog.ERROR_MESSAGE, null);
                            return;
                         }
-                        order.setDescription("[管理员留言： "+ @page.getTextArea("comment").getValue()+"]"+ order.getDescription());
                         
                         HashMap result = new HashMap();
                         result.put("gorder", order);
@@ -869,11 +856,7 @@
 	                         
 	                         if ($gorder instanceof GoldenOrderImpl) {
 	                         	OrderModel.INSTANCE.update((GoldenOrderImpl)$gorder);
-	                         } else if ($gorder instanceof RentOrLoanOrderImpl) {
-	                            OrderModel.INSTANCE.update((RentOrLoanOrderImpl)$gorder);
-	                         } else if ($gorder instanceof MachiningOrderImpl) {
-	                            OrderModel.INSTANCE.update((MachiningOrderImpl)$gorder);
-	                         }
+	                         } 
 	                         if ($gorder.getPublishedCustomerId() > 0) {
 		                         NotificationImpl message = new NotificationImpl();
 		                         message.setPartyId($gorder.getPublishedCustomerId());
