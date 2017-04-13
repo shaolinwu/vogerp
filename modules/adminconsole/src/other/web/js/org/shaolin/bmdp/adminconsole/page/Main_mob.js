@@ -265,7 +265,10 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 		            o.realCounter.text("("+e+")");
 		            o.realCounter.c = e;
 		         });
-		         o.nodesocket.on('notifyFrom', function(e) {
+		         o.nodesocket.on('notifyhistory', function(e) {
+		            o.realCounter.text("("+(++o.realCounter.c)+")");
+		         });
+		         o.nodesocket.on('notifySingleItem', function(e) {
 		            o.realCounter.text("("+(++o.realCounter.c)+")");
 		         });
 			   }
