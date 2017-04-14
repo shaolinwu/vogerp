@@ -34,6 +34,24 @@
                   @page.getHidden("productTypeUI").setValue(null);
                   @page.getHidden("productType1UI").setValue(null);
              }
+             
+             TabPane tab = (TabPane)@page.getElementByAbsoluteId("functionsTab");
+             if (tab != null) {
+                 String tableUiid = "";
+                 if (tab.getSelectedIndex() == 0) {
+                    tableUiid = "machingOrderTable";
+                 } else if (tab.getSelectedIndex() == 1) {
+                    tableUiid = "goldenOrderTable";
+                 } else if (tab.getSelectedIndex() == 2) {
+                    tableUiid = "gsaleOrderTable";
+                 } else if (tab.getSelectedIndex() == 3) {
+                    tableUiid = "rentOrderTable";
+                 } else if (tab.getSelectedIndex() == 4) {
+                    tableUiid = "loanOrderTable";
+                 } 
+                 Table t = (Table)@page.getElementByAbsoluteId(tableUiid);
+                 t.refresh();
+             }
           }
           ]]></expressionString>
     </ns2:exp>

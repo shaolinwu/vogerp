@@ -319,6 +319,33 @@
             
             <ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
                 <ns2:ajaxLoad>true</ns2:ajaxLoad>
+                <ns2:tabSelectedAction xsi:type="ns2:ExpressionPropertyType">
+		             <ns2:expression xsi:type="ns2:ExpressionType">
+		                 <ns2:expressionString><![CDATA[
+		                 import java.util.List;
+                         import org.shaolin.uimaster.page.AjaxContext;
+                         import org.shaolin.uimaster.page.ajax.*;
+		                 {
+		                     TabPane tab = (TabPane)@page.getElement("functionsTab");
+				             if (tab != null) {
+				                 String tableUiid = "";
+				                 if (tab.getSelectedIndex() == 0) {
+				                    tableUiid = "machingOrderTable";
+				                 } else if (tab.getSelectedIndex() == 1) {
+				                    tableUiid = "goldenOrderTable";
+				                 } else if (tab.getSelectedIndex() == 2) {
+				                    tableUiid = "gsaleOrderTable";
+				                 } else if (tab.getSelectedIndex() == 3) {
+				                    tableUiid = "rentOrderTable";
+				                 } else if (tab.getSelectedIndex() == 4) {
+				                    tableUiid = "loanOrderTable";
+				                 } 
+				                 Table t = (Table)@page.getElement(tableUiid);
+				                 t.refresh();
+				             }
+		                 }]]></ns2:expressionString>
+		             </ns2:expression>
+		         </ns2:tabSelectedAction>
                 <ns2:tab uiid="machiningOrderInfoPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
                         <ns2:value>加工订单</ns2:value>
