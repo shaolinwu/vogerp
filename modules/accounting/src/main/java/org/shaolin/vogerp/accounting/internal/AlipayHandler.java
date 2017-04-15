@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alipay.api.request.AlipayTradeRefundRequest;
+import com.alipay.api.response.AlipayTradeRefundResponse;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
@@ -177,8 +179,32 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 	 * alipay.trade.refund
 	 */
 	public String refund(final IPayOrder order) throws PaymentException {
-		//TODO:
-		throw new UnsupportedOperationException();
+
+		try {
+			AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
+			JSONObject json = new JSONObject();
+			json.put("out_trade_no", order.getOutTradeNo());
+//			json.put("trade_no", order.getOutTradeNo());
+			json.put("refund_amount", (order.getAmount() / 100) + "");
+			json.put("refund_reason", ""); //TODO Need to add a pop-up box on front page when refund, fill refund reason.
+//			json.put("out_request_no", order.getAmount());
+//			json.put("operator_id", "system");
+//			json.put("store_id", "system");
+//			json.put("terminal_id", "system");
+
+
+			request.setBizContent(json.toString());
+			AlipayTradeRefundResponse response = alipayClient.execute(request);
+			if(response.isSuccess()){
+				// TODO successful post process
+				return SUCCESS;
+			} else {
+				// TODO failed post process
+				return FAIL;
+			}
+		} catch (Exception e) {
+			throw new PaymentException("Alipay prepay error occurred!", e);
+		}
 	}
 	
 	/**

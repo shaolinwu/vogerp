@@ -2,6 +2,8 @@ package org.shaolin.vogerp.accounting.internal;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyStore;
 import java.security.MessageDigest;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,11 +11,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.net.ssl.SSLContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContexts;
+import org.apache.http.util.EntityUtils;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
@@ -54,6 +67,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 	private static final String WEPAY_WEB_HOOK = "https://www.vogerp.com/uimaster/WepayHandler";//no parameter as required!
 	private static final String UNIFIEDPAY_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 	private static final String UNIFIEDQUERY_URL = "https://api.mch.weixin.qq.com/pay/orderquery";
+	private static final String REFUND_URL = "https://api.mch.weixin.qq.com/secapi/pay/refund";
 	public static final String SUCCESS = "SUCCESS";
 	public static final String FAIL = "FAIL";
 	private static final Logger logger = LoggerFactory.getLogger(WepayHandler.class);
@@ -208,10 +222,94 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 		//TODO:
 		throw new UnsupportedOperationException();
 	}
-	
+
+	/**
+	 * https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_4
+	 *
+	 * @param order
+	 * @return
+	 * @throws PaymentException
+	 */
 	public String refund(final IPayOrder order) throws PaymentException {
-		//TODO:
-		throw new UnsupportedOperationException();
+		try {
+			HashMap<String, Object> values = new HashMap<String, Object>();
+			values.put("appid", APP_ID);
+			values.put("mch_id", MCH_ID);
+			values.put("nonce_str", StringUtil.genRandomAlphaBits(32));
+//			values.put("transaction_id", order.getOutTradeNo());
+			values.put("out_trade_no", order.getOutTradeNo());
+			values.put("out_refund_no", PaymentUtil.genRefundSerialNumber()); //
+			values.put("total_fee", ((int)order.getAmount()) + ""); //fen
+			values.put("refund_fee", ((int)order.getAmount()) + "");
+			values.put("op_user_id", "system"); //operator user id
+
+			StringBuffer keyValues = new StringBuffer();
+			keyValues.append("appid=").append(APP_ID);
+			keyValues.append("&mch_id=").append(values.get("mch_id"));
+			keyValues.append("&nonce_str=").append(values.get("nonce_str"));
+			keyValues.append("&transaction_id=").append(values.get("transaction_id"));
+			keyValues.append("&out_trade_no=").append(values.get("out_trade_no"));
+			keyValues.append("&out_refund_no=").append(values.get("out_refund_no"));
+			keyValues.append("&total_fee=").append(values.get("total_fee"));
+			keyValues.append("&refund_fee=").append(values.get("refund_fee"));
+			keyValues.append("&op_user_id=").append(values.get("op_user_id"));
+			//key setting path ：pay.weixin.qq.com-->API security-->password
+			keyValues.append("&key=").append(MCH_APISECURE_KEY);
+			values.put("sign", encodeMD5(keyValues.toString(), "UTF-8").toUpperCase());
+
+			// HttpClient need to load keyStore
+			KeyStore keyStore  = KeyStore.getInstance("PKCS12");
+			InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("cert/wepay/apiclient_cert.p12");
+			try {
+				keyStore.load(inputStream, MCH_ID.toCharArray());
+			} finally {
+				inputStream.close();
+			}
+
+			CloseableHttpResponse response = null;
+			String result = null;
+			try {
+				SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, MCH_ID.toCharArray()).build();
+				SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+						sslcontext, SSLConnectionSocketFactory.getDefaultHostnameVerifier());
+				CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+
+				HttpPost httpPost = new HttpPost(REFUND_URL);
+				StringEntity entity = new StringEntity(StringUtil.convertMapToXML(values, "xml"), "utf-8");
+				entity.setContentEncoding("utf-8");
+				entity.setContentType("");
+				httpPost.setEntity(entity);
+				response = httpClient.execute(httpPost);
+
+				int statusCode = response.getStatusLine().getStatusCode();
+				HttpEntity httpEntity = response.getEntity();
+				if (statusCode == HttpStatus.SC_OK && null != httpEntity) {
+					result = EntityUtils.toString(httpEntity, "utf-8");
+				}
+			} finally {
+				if (response != null) {
+					EntityUtils.consume(response.getEntity());
+				}
+			}
+
+//			String result = sender.doPostSSL(REFUND_URL, StringUtil.convertMapToXML(values, "xml"), "UTF-8", "text/xml");
+			//xml format
+			Map resultMap = StringUtil.xml2map(result);
+			// invoke result
+			if (SUCCESS.equalsIgnoreCase(resultMap.get("return_code").toString())) {
+				// TODO successful post process
+				return SUCCESS;
+			} else {
+				// TODO failed post process
+				throw new PaymentException("Wepay prepay order fail to sign: " + resultMap.toString()
+						+ ", payment order: " + order.getSerialNumber());
+			}
+		} catch (Exception e) {
+			if (e instanceof PaymentException) {
+				throw (PaymentException)e;
+			}
+			throw new PaymentException("Weixi refund error occurred!", e);
+		}
 	}
 	
 	/**

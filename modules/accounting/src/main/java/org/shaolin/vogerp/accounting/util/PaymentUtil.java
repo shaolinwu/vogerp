@@ -68,6 +68,12 @@ public class PaymentUtil {
 		return "OTN" + parse.format(parse.getYear(), 4) + parse.format(parse.getMonth(), 2) + parse.format(parse.getDays(), 2) 
 				+ parse.format(parse.getHours(), 2) + parse.format(parse.getMilliSeconds(), 5) + (int)(Math.random() * 10000);
 	}
+
+	public synchronized static String genRefundSerialNumber() {
+		DateParser parse = new DateParser(new Date());
+		return "RFD" + parse.format(parse.getYear(), 4) + parse.format(parse.getMonth(), 2) + parse.format(parse.getDays(), 2)
+				+ parse.format(parse.getHours(), 2) + parse.format(parse.getMilliSeconds(), 5) + (int)(Math.random() * 10000);
+	}
 	
 	/**
 	 * BeeCloud MD5

@@ -16,3 +16,6 @@ hbm
 */target/*
 
 /modules/productmodel/src/test/resources/product
+
+modules/**/src/main/java\\org
+modules/**/src/test/java\\org
