@@ -28,16 +28,11 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
         ui: elementList[prefix + "cancelbtn"]
     });
 
-    var cleanbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "cleanbtn"]
-    });
-
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "cancelbtn",prefix + "cleanbtn"]
+        ,subComponents: [prefix + "cancelbtn"]
     });
 
     var citySubListPanel = new UIMaster.ui.panel
@@ -59,7 +54,7 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentUI,clickEventUI,cityListUI,citySubListUI,cancelbtn,cleanbtn,cityListPanel,citySubListPanel,actionPanel]
+        ,items: [parentUI,clickEventUI,cityListUI,citySubListUI,cancelbtn,cityListPanel,citySubListPanel,actionPanel]
     });
 
     Form.parentUI=parentUI;
@@ -72,8 +67,6 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
 
     Form.cancelbtn=cancelbtn;
 
-    Form.cleanbtn=cleanbtn;
-
     Form.cityListPanel=cityListPanel;
 
     Form.cityListUI=cityListUI;
@@ -85,8 +78,6 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
     Form.actionPanel=actionPanel;
 
     Form.cancelbtn=cancelbtn;
-
-    Form.cleanbtn=cleanbtn;
 
     Form.user_constructor = function()
     {

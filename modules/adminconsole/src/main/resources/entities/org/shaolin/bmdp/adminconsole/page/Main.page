@@ -167,6 +167,22 @@
             </ns2:component>
             <ns2:component xsi:type="ns2:UIHiddenType" UIID="tempSessionIdUI">
             </ns2:component>
+            <ns2:component xsi:type="ns2:UIHiddenType" UIID="partyIdUI">
+    		</ns2:component>
+            <ns2:component xsi:type="ns2:UIHiddenType" UIID="serverURLUI">
+		       <ns2:Property name="value">
+		           <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           import org.shaolin.bmdp.runtime.Registry;
+			           { 
+			               Registry instance = Registry.getInstance();
+			               return instance.getValue("/System/webConstant/websocketServer"); 
+			           }]]></expressionString>
+			         </ns2:expression>
+		           </ns2:value>
+		        </ns2:Property>
+		    </ns2:component>
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="topPanel">
 				<ns2:UISkin xsi:type="ns2:UISkinType">
 					<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
@@ -566,35 +582,52 @@
             <ns2:constructorCode><![CDATA[
 		        { 
 		            // notify user open up the GPS.
-		            if(navigator.geolocation){
-				        navigator.geolocation.getCurrentPosition(
-			                function(p){
-			                   console.log("latitude: " + p.coords.latitude);
-			                },
-			                function(e){
-			                   var msg = e.code + "\n" + e.message;
-			                   console.log(msg);
-			                }
-				        );
+		            $("<div style='display:none;' id='mapcontainer'><div>").appendTo($(document.forms[0]));
+				    var map = new AMap.Map('mapcontainer');
+				    map.plugin('AMap.Geolocation', function() {
+				        var geolocation = new AMap.Geolocation({
+				            enableHighAccuracy: true,
+				            timeout: 10000,
+				            buttonOffset: new AMap.Pixel(10, 20),
+				            zoomToAccuracy: false,
+				            buttonPosition:'RB'
+				        });
+				        map.addControl(geolocation);
+				        geolocation.getCurrentPosition();
+				        AMap.event.addListener(geolocation, 'complete', onComplete);
+				        AMap.event.addListener(geolocation, 'error', onError);
+				    });
+				    function onComplete(data) {
+			            console.log("latitudeInfo: " + data.position.getLng() + ", longitudeInfo: " + data.position.getLat());
 				    }
+				    function onError(data) {
+				        console.log("geolocation fails: " + data.message);
+				    }
+				    
+				    this.nodesocket = io.connect(this.serverURLUI.value);
+				     this.nodesocket.on('connect', function(e) {
+			            var msg = {partyId: o.partyIdUI.value};
+			            o.nodesocket.emit('register', msg); //for registering web socket after refreshing page only.
+			         });
 		        }]]>
 		    </ns2:constructorCode>
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>
-		<ns2:DataEntity category="JavaClass" name="treeCondition"
-			scope="Internal">
+		<ns2:DataEntity category="JavaClass" name="treeCondition" scope="Internal">
 			<ns2:type entityName="org.shaolin.uimaster.page.ajax.TreeConditions" />
 			<ns2:default>
 				<ns2:expressionString><![CDATA[org.shaolin.uimaster.page.ajax.TreeConditions.createCondition()]]></ns2:expressionString>
 			</ns2:default>
 		</ns2:DataEntity>
-		<ns2:DataEntity category="JavaClass" name="userAccount"
-			scope="In">
+		<ns2:DataEntity category="JavaClass" name="userAccount" scope="In">
 			<ns2:type entityName="org.shaolin.bmdp.runtime.security.UserContext" />
 		</ns2:DataEntity>
 		<ns2:DataEntity scope="InOut" name="notificator" category="BusinessEntity">
 	        <type entityName="org.shaolin.bmdp.workflow.be.Notification"></type>
+	    </ns2:DataEntity>
+	    <ns2:DataEntity scope="InOut" name="partyId" category="JavaPrimitive">
+	      <type entityName="java.lang.String"></type>
 	    </ns2:DataEntity>
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
 			<ns2:mappingRule entityName="org.shaolin.bmdp.adminconsole.form.UserAccount"></ns2:mappingRule>
@@ -608,6 +641,11 @@
 				</ns2:expression>
 			</ns2:DataComponent>
 		</ns2:ComponentMapping>
+		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
+	      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+	      <ns2:UIComponent componentPath="partyIdUI" paramName="UIWidgetType"></ns2:UIComponent>
+	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="partyId" paramName="StringData"></ns2:DataComponent>
+	    </ns2:ComponentMapping>
 		<!-- 
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
           <ns2:mappingRule entityName="org.shaolin.bmdp.adminconsole.form.CurrentStatus"></ns2:mappingRule>

@@ -5,9 +5,13 @@
             <node name="commonjs">
                 <node name="org.shaolin.bmdp.adminconsole.page.Main_mob">
                     <item name="socket.io" value="/js/socket.io.js" />
+                    <item name="gdwebapi" value="https://webapi.amap.com/maps?key=77c70d659febc8be861e724d925a9fe1&amp;v=1.3" />
+                    <item name="gdwebtool" value="https://cache.amap.com/lbs/static/addToolbar.js" />
                 </node>
                 <node name="org.shaolin.bmdp.adminconsole.page.Main">
                     <item name="socket.io" value="/js/socket.io.js" />
+                    <item name="gdwebapi" value="https://webapi.amap.com/maps?key=77c70d659febc8be861e724d925a9fe1&amp;v=1.3" />
+                    <item name="gdwebtool" value="https://cache.amap.com/lbs/static/addToolbar.js" />
                 </node>
                 <node name="org.shaolin.bmdp.adminconsole.page.Login_mob">
                     <item name="gdwebapi" value="https://webapi.amap.com/maps?key=77c70d659febc8be861e724d925a9fe1&amp;v=1.3" />

@@ -6,23 +6,31 @@ function org_shaolin_vogerp_commonmodel_page_AboutTeam(json)
     var textUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "textUI"]
-        ,htmlValue: "????? ??????????????????? ????? www.vogerp.com 2.0.release 2017-05-01"
+        ,htmlValue: "????? ??????????????????? "
+    });
+
+    var text1UI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "text1UI"]
+        ,htmlValue: "????? www.vogerp.com 2.0.release 2017-05-01"
     });
 
     var contactUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "contactUI"]
-        ,htmlValue: "????: 159-2146-0670  ???  021-"
+        ,htmlValue: "????: 159-2146-0670  ???  021-31009779"
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [textUI,contactUI]
+        ,items: [textUI,text1UI,contactUI]
     });
 
     Form.textUI=textUI;
+
+    Form.text1UI=text1UI;
 
     Form.contactUI=contactUI;
 

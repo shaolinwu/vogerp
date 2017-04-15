@@ -317,6 +317,12 @@
                           if ($order.getStatus() == OrderStatusType.PUBLISHED) {
                           	  message.setSubject("您的加工订单通过审核! 推送给所有在线用户...");
 	                          message.setDescription(OrderUtil.getOrderLink($order) + $order.getDescription());
+	                          
+	                          //promote to other interested users as well!
+	                          message.setLatitude($order.getLatitude());
+		                      message.setLongitude($order.getLongitude());
+		                      message.setPartyType(UserContext.getUserContext().getOrgType());
+		                      //TODO: add product type as well
                           } else if ($order.getStatus() == OrderStatusType.CREATED) {
                               message.setSubject("您的加工订单审核失败! 请打开订单查看详情。");
                               message.setDescription(OrderUtil.getOrderLink($order) + @flowContext.getEvent().getComments());

@@ -384,7 +384,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
             for (UserActionListener listener: listeners) {
     			listener.loggedIn(matchedUser, userInfo);
     		}
-            
+            registerOnlineUser(userContext);
             
 			boolean hasCookie = false;
 			Cookie[] cookies = request.getCookies();
@@ -428,6 +428,19 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	private HttpSender sender = new HttpSender();
 	private Registry instance = Registry.getInstance();
 	private String websocketServer = instance.getValue("/System/webConstant/websocketServer");
+	
+	private void registerOnlineUser(final UserContext userContext) {
+		try {
+			String param = "&partyId=" + userContext.getUserId() + "&latitude=" + userContext.getLatitude() + "&longitude=" + userContext.getLongitude();
+			if (websocketServer.startsWith("https")) {
+				sender.doGetSSL(websocketServer + "/uimaster/onlineinfo?type=register" + param, "UTF-8");
+			} else {
+				sender.get(websocketServer + "/uimaster/onlineinfo?type=register" + param);
+			}
+		} catch (Exception e) {
+			logger.warn("Fail to register online user info!", e);
+		}
+	}
 	
 	/**
 	 * all online user ids stored in node.js for distribution.
