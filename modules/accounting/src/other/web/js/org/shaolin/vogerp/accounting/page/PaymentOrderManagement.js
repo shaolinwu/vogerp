@@ -206,18 +206,6 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
         var UIEntity = this;
 
 			{
-				BC.err = function(data) {
-                    //????????
-                    alert(data["ERROR"]);
-                }
-                /**
-                 * click???????????console.log(err)
-                 */
-                BC.err = function(err) {
-                    //err ?object, ? ?”ERROR“ : "xxxx"?;
-                    console.log(err);
-                    alert(err["ERROR"]);
-                }
 			}
 			
     }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_initPageJs */

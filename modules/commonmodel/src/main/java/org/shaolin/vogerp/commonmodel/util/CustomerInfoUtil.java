@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
-import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
@@ -15,6 +14,7 @@ import org.shaolin.vogerp.commonmodel.be.IDeliveryInfo;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 import org.shaolin.vogerp.commonmodel.ce.OrgType;
 import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
+import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 
 public class CustomerInfoUtil {
 
@@ -97,7 +97,6 @@ public class CustomerInfoUtil {
     
     public static String addressToString(IAddressInfo address) {
     	StringBuffer sb = new StringBuffer();
-    	sb.append(address.getName()).append("--");
     	sb.append(CEUtil.toCEValue(address.getProvince()).getValue()).append(" ");
     	sb.append(CEUtil.toCEValue(address.getCity()).getValue()).append(" ");
     	if (address.getDistrict() != null && address.getDistrict().trim().length() > 0
@@ -116,6 +115,7 @@ public class CustomerInfoUtil {
     
     public static IDeliveryInfo createDeliveryInfo(long userId) {
     	DeliveryInfoImpl deliveryInfo = new DeliveryInfoImpl();
+    	deliveryInfo.setUserId(userId);
     	IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
     	List<IAddressInfo> list = userService.getPersonalInfo(userId).getAddresses();
     	if (list != null && list.size() > 0) {
@@ -137,6 +137,7 @@ public class CustomerInfoUtil {
     
     public static IDeliveryInfo createDeliveryInfo(long userId, long addressId) {
     	DeliveryInfoImpl deliveryInfo = new DeliveryInfoImpl();
+    	deliveryInfo.setUserId(userId);
     	IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
     	List<IAddressInfo> list = userService.getPersonalInfo(userId).getAddresses();
     	if (list != null && list.size() > 0) {

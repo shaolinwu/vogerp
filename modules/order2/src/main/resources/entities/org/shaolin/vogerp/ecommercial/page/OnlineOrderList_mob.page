@@ -4,7 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.ecommercial.page.OnlineOrderList_mob</entityName>
 	<systemVersion>0</systemVersion>
-	<description>抢单达人页主</description>
+	<description>加工达人主页</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 	    <ns2:eventHandler functionName="openGoldenOrder">
             <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openGoldenOrder-20160124-6546">
@@ -319,6 +319,33 @@
             
             <ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
                 <ns2:ajaxLoad>true</ns2:ajaxLoad>
+                <ns2:tabSelectedAction xsi:type="ns2:ExpressionPropertyType">
+		             <ns2:expression xsi:type="ns2:ExpressionType">
+		                 <ns2:expressionString><![CDATA[
+		                 import java.util.List;
+                         import org.shaolin.uimaster.page.AjaxContext;
+                         import org.shaolin.uimaster.page.ajax.*;
+		                 {
+		                     TabPane tab = (TabPane)@page.getElement("functionsTab");
+				             if (tab != null) {
+				                 String tableUiid = "";
+				                 if (tab.getSelectedIndex() == 0) {
+				                    tableUiid = "machingOrderTable";
+				                 } else if (tab.getSelectedIndex() == 1) {
+				                    tableUiid = "goldenOrderTable";
+				                 } else if (tab.getSelectedIndex() == 2) {
+				                    tableUiid = "gsaleOrderTable";
+				                 } else if (tab.getSelectedIndex() == 3) {
+				                    tableUiid = "rentOrderTable";
+				                 } else if (tab.getSelectedIndex() == 4) {
+				                    tableUiid = "loanOrderTable";
+				                 } 
+				                 Table t = (Table)@page.getElement(tableUiid);
+				                 t.refresh();
+				             }
+		                 }]]></ns2:expressionString>
+		             </ns2:expression>
+		         </ns2:tabSelectedAction>
                 <ns2:tab uiid="machiningOrderInfoPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
                         <ns2:value>加工订单</ns2:value>
@@ -338,9 +365,12 @@
 		                        <ns2:expression xsi:type="ns2:ExpressionType">
 		                            <ns2:expressionString><![CDATA[
 		                            import java.util.List;
-		                            import org.shaolin.uimaster.page.ajax.TableConditions;
+		                            import org.shaolin.uimaster.page.AjaxContext;
+                                    import org.shaolin.uimaster.page.ajax.*;
+									import org.shaolin.bmdp.runtime.security.UserContext;
 		                            import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
 		                            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+		                            import org.shaolin.vogerp.ecommercial.util.OrderUtil;
 		                            import org.shaolin.bmdp.runtime.AppContext;
 									import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
 									import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
@@ -354,6 +384,11 @@
 		                                  }
 		                                  MachiningOrderImpl condition = (MachiningOrderImpl)$tableCondition.getCondition();
 		                                  condition.setStatus(OrderStatusType.PUBLISHED);
+		                                  OrderUtil.updateSearchCriteria($page, condition);
+		                                  if ($page != null) {
+		                                      //$page.log(UserContext.getUserContext().getLongitude() + "");
+		                                  }
+		                                  
 		                                  return OrderModel.INSTANCE.searchMachiningOrder(condition,
 	                                                $tableCondition.getOrders(),
 	                                                $tableCondition.getOffset(), 
@@ -439,9 +474,13 @@
 		                        <ns2:expression xsi:type="ns2:ExpressionType">
 		                            <ns2:expressionString><![CDATA[
 		                            import java.util.List;
-		                            import org.shaolin.uimaster.page.ajax.TableConditions;
-		                            import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+		                            import org.shaolin.uimaster.page.AjaxContext;
+                                    import org.shaolin.uimaster.page.ajax.*;
+									import org.shaolin.bmdp.runtime.security.UserContext;
+		                            import org.shaolin.vogerp.ecommercial.be.*;
+		                            import org.shaolin.vogerp.ecommercial.ce.*;
 		                            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+		                            import org.shaolin.vogerp.ecommercial.util.OrderUtil;
 		                            import org.shaolin.bmdp.runtime.AppContext;
 									import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
 									import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
@@ -453,22 +492,15 @@
 		                                     $tableCondition.addOrder("statusInt", true);
 		                                     $tableCondition.addOrder("createDate", false);
 		                                  }
-		                                  // switch to uimaster node.
-		                                  IAppServiceManager masterApp = (IAppServiceManager)IServerServiceManager.INSTANCE.getApplication(
-		                                                              IServerServiceManager.INSTANCE.getMasterNodeName());
-								          IAppServiceManager currentContext = AppContext.get();
-								          try {
-								              AppContext.register(masterApp);
-			                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
-			                                  condition.setStatus(OrderStatusType.PUBLISHED);
-			                                  condition.setType(GoldenOrderType.PURCHASE);
-			                                  return OrderModel.INSTANCE.searchGoldenOrder(condition,
-		                                                $tableCondition.getOrders(),
-		                                                $tableCondition.getOffset(), 
-		                                                $tableCondition.getCount());
-		                                  } finally {
-								              AppContext.register(currentContext);
-								          }
+		                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
+		                                  condition.setStatus(OrderStatusType.PUBLISHED);
+		                                  condition.setType(GoldenOrderType.PURCHASE);
+		                                  OrderUtil.updateSearchCriteria($page, condition);
+		                                  
+		                                  return OrderModel.INSTANCE.searchGoldenOrder(condition,
+	                                                $tableCondition.getOrders(),
+	                                                $tableCondition.getOffset(), 
+	                                                $tableCondition.getCount());
 		                            }]]></ns2:expressionString>
 		                        </ns2:expression>
 		                    </ns2:query>
@@ -566,9 +598,13 @@
                                 <ns2:expression xsi:type="ns2:ExpressionType">
                                     <ns2:expressionString><![CDATA[
                                     import java.util.List;
-                                    import org.shaolin.uimaster.page.ajax.TableConditions;
-                                    import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                                    import org.shaolin.uimaster.page.AjaxContext;
+                                    import org.shaolin.uimaster.page.ajax.*;
+									import org.shaolin.bmdp.runtime.security.UserContext;
+                                    import org.shaolin.vogerp.ecommercial.be.*;
+                                    import org.shaolin.vogerp.ecommercial.ce.*;
                                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                                     import org.shaolin.bmdp.runtime.AppContext;
                                     import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
                                     import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
@@ -580,22 +616,15 @@
                                              $tableCondition.addOrder("statusInt", true);
                                              $tableCondition.addOrder("createDate", false);
                                           }
-                                          // switch to uimaster node.
-                                          IAppServiceManager masterApp = (IAppServiceManager)IServerServiceManager.INSTANCE.getApplication(
-                                                                      IServerServiceManager.INSTANCE.getMasterNodeName());
-                                          IAppServiceManager currentContext = AppContext.get();
-                                          try {
-                                              AppContext.register(masterApp);
-                                              GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
-                                              condition.setStatus(OrderStatusType.PUBLISHED);
-                                              condition.setType(GoldenOrderType.SALE);
-                                              return OrderModel.INSTANCE.searchGoldenOrder(condition,
-                                                        $tableCondition.getOrders(),
-                                                        $tableCondition.getOffset(), 
-                                                        $tableCondition.getCount());
-                                          } finally {
-                                              AppContext.register(currentContext);
-                                          }
+                                          GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
+                                          condition.setStatus(OrderStatusType.PUBLISHED);
+                                          condition.setType(GoldenOrderType.SALE);
+                                          OrderUtil.updateSearchCriteria($page, condition);
+		                                  
+                                          return OrderModel.INSTANCE.searchGoldenOrder(condition,
+                                                    $tableCondition.getOrders(),
+                                                    $tableCondition.getOffset(), 
+                                                    $tableCondition.getCount());
                                     }]]></ns2:expressionString>
                                 </ns2:expression>
                             </ns2:query>
@@ -693,10 +722,13 @@
                                 <ns2:expression xsi:type="ns2:ExpressionType">
                                     <ns2:expressionString><![CDATA[
                                     import java.util.List;
-                                    import org.shaolin.uimaster.page.ajax.TableConditions;
-                                    import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
+                                    import org.shaolin.uimaster.page.AjaxContext;
+                                    import org.shaolin.uimaster.page.ajax.*;
+									import org.shaolin.bmdp.runtime.security.UserContext;
                                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.vogerp.ecommercial.ce.*;
+                                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                                     import org.shaolin.bmdp.runtime.AppContext;
                                     import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
                                     import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
@@ -707,21 +739,15 @@
                                              $tableCondition.addOrder("statusInt", true);
                                              $tableCondition.addOrder("createDate", false);
                                           }
-                                          // switch to uimaster node.
-                                          IAppServiceManager masterApp = (IAppServiceManager)IServerServiceManager.INSTANCE.getApplication(
-                                                                      IServerServiceManager.INSTANCE.getMasterNodeName());
-                                          IAppServiceManager currentContext = AppContext.get();
-                                          try {
-                                              AppContext.register(masterApp);
-                                              RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
-                                              condition.setType(RentOrLoanOrderType.RENT);
-                                              return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
-                                                        $tableCondition.getOrders(),
-                                                        $tableCondition.getOffset(), 
-                                                        $tableCondition.getCount());
-                                          } finally {
-                                              AppContext.register(currentContext);
-                                          }
+                                          RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
+                                          condition.setType(RentOrLoanOrderType.RENT);
+                                          condition.setStatus(OrderStatusType.PUBLISHED);
+                                          OrderUtil.updateSearchCriteria($page, condition);
+                                          
+                                          return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
+                                                    $tableCondition.getOrders(),
+                                                    $tableCondition.getOffset(), 
+                                                    $tableCondition.getCount());
                                     }]]></ns2:expressionString>
                                 </ns2:expression>
                             </ns2:query>
@@ -819,10 +845,13 @@
                                 <ns2:expression xsi:type="ns2:ExpressionType">
                                     <ns2:expressionString><![CDATA[
                                     import java.util.List;
-                                    import org.shaolin.uimaster.page.ajax.TableConditions;
-                                    import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
+                                    import org.shaolin.uimaster.page.AjaxContext;
+                                    import org.shaolin.uimaster.page.ajax.*;
+									import org.shaolin.bmdp.runtime.security.UserContext;
+                                    import org.shaolin.vogerp.ecommercial.ce.*; 
                                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                                     import org.shaolin.bmdp.runtime.AppContext;
                                     import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
                                     import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
@@ -833,21 +862,15 @@
                                              $tableCondition.addOrder("statusInt", true);
                                              $tableCondition.addOrder("createDate", false);
                                           }
-                                          // switch to uimaster node.
-                                          IAppServiceManager masterApp = (IAppServiceManager)IServerServiceManager.INSTANCE.getApplication(
-                                                                      IServerServiceManager.INSTANCE.getMasterNodeName());
-                                          IAppServiceManager currentContext = AppContext.get();
-                                          try {
-                                              AppContext.register(masterApp);
-                                              RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
-                                              condition.setType(RentOrLoanOrderType.LOAN);
-                                              return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
-                                                        $tableCondition.getOrders(),
-                                                        $tableCondition.getOffset(), 
-                                                        $tableCondition.getCount());
-                                          } finally {
-                                              AppContext.register(currentContext);
-                                          }
+                                          RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
+                                          condition.setType(RentOrLoanOrderType.LOAN);
+                                          condition.setStatus(OrderStatusType.PUBLISHED);
+                                          OrderUtil.updateSearchCriteria($page, condition);
+		                                  
+                                          return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
+                                                    $tableCondition.getOrders(),
+                                                    $tableCondition.getOffset(), 
+                                                    $tableCondition.getCount());
                                     }]]></ns2:expressionString>
                                 </ns2:expression>
                             </ns2:query>

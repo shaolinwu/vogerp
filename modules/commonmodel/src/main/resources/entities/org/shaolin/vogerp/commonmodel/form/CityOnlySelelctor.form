@@ -38,7 +38,7 @@
           <ns2:handler functionName="selectSubItem"></ns2:handler>
         </ns2:EventListener>
       </ns2:component>
-	     <ns2:layoutConstraint>
+	  <ns2:layoutConstraint>
         <ns2:componentId>cityListUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>

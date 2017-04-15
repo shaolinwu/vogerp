@@ -13,6 +13,16 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
         ui: elementList[prefix + "tempSessionIdUI"]
     });
 
+    var partyIdUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "partyIdUI"]
+    });
+
+    var serverURLUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "serverURLUI"]
+    });
+
     var vogerplogo = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "vogerplogo"]
@@ -156,12 +166,16 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [tempSentPartyIdUI,tempSessionIdUI,vogerplogo,searchContext,searchButton,userIcon,userLogout,taskIcon,notificationIcon,helpIcon,functionTree,functionsTab,bottomPanelInfo,citySelector,userFormContent,notificationFormContent,topPanel,topMiddlePanel,topRightPanel,userForm,notificationForm,middlePanel,treePanel,pagePanel,bottomPanel]
+        ,items: [tempSentPartyIdUI,tempSessionIdUI,partyIdUI,serverURLUI,vogerplogo,searchContext,searchButton,userIcon,userLogout,taskIcon,notificationIcon,helpIcon,functionTree,functionsTab,bottomPanelInfo,citySelector,userFormContent,notificationFormContent,topPanel,topMiddlePanel,topRightPanel,userForm,notificationForm,middlePanel,treePanel,pagePanel,bottomPanel]
     });
 
     Form.tempSentPartyIdUI=tempSentPartyIdUI;
 
     Form.tempSessionIdUI=tempSessionIdUI;
+
+    Form.partyIdUI=partyIdUI;
+
+    Form.serverURLUI=serverURLUI;
 
     Form.vogerplogo=vogerplogo;
 
@@ -286,7 +300,40 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_bmdp_adminconsole_page_Main */
-        /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_Main */
+
+        
+		        { 
+		            // notify user open up the GPS.
+		            $("<div style='display:none;' id='mapcontainer'><div>").appendTo($(document.forms[0]));
+				    var map = new AMap.Map('mapcontainer');
+				    map.plugin('AMap.Geolocation', function() {
+				        var geolocation = new AMap.Geolocation({
+				            enableHighAccuracy: true,
+				            timeout: 10000,
+				            buttonOffset: new AMap.Pixel(10, 20),
+				            zoomToAccuracy: false,
+				            buttonPosition:'RB'
+				        });
+				        map.addControl(geolocation);
+				        geolocation.getCurrentPosition();
+				        AMap.event.addListener(geolocation, 'complete', onComplete);
+				        AMap.event.addListener(geolocation, 'error', onError);
+				    });
+				    function onComplete(data) {
+			            console.log("latitudeInfo: " + data.position.getLng() + ", longitudeInfo: " + data.position.getLat());
+				    }
+				    function onError(data) {
+				        console.log("geolocation fails: " + data.message);
+				    }
+				    
+				    this.nodesocket = io.connect(this.serverURLUI.value);
+				     this.nodesocket.on('connect', function(e) {
+			            var msg = {partyId: o.partyIdUI.value};
+			            o.nodesocket.emit('register', msg); //for registering web socket after refreshing page only.
+			         });
+		        }
+		    
+            /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_Main */
     };
 
     Form.Submit = org_shaolin_bmdp_adminconsole_page_Main_Submit;

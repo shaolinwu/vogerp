@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.shaolin.bmdp.i18n.LocaleContext;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -30,14 +33,18 @@ import org.apache.http.util.EntityUtils;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
+import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.EventProcessor;
 import org.shaolin.bmdp.runtime.spi.FlowEvent;
+import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.utils.HttpSender;
 import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.bmdp.workflow.be.NotificationImpl;
 import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
 import org.shaolin.bmdp.workflow.internal.BuiltInAttributeConstant;
+import org.shaolin.uimaster.page.AjaxActionHelper;
+import org.shaolin.uimaster.page.WebConfig;
 import org.shaolin.uimaster.page.ajax.json.JSONException;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.vogerp.accounting.IPaymentService;
@@ -128,7 +135,26 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 		response.setCharacterEncoding(charset);
 		request.setCharacterEncoding(charset);
 	
-		response.getWriter().write(execute(request, response));
+		AppContext.register(IServerServiceManager.INSTANCE.getApplication(
+        		IServerServiceManager.INSTANCE.getMasterNodeName()));
+
+		HttpSession session = request.getSession();
+		UserContext currentUserContext = new UserContext();
+		currentUserContext.setOrgCode(Registry.getInstance().getValue("/System/webConstant/defaultOrgCode"));
+		currentUserContext.setUserRequestIP(request.getRemoteAddr());
+		String userLocale = WebConfig.getUserLocale(request);
+		List<IConstantEntity> userRoles = new ArrayList<IConstantEntity>();
+		userRoles.add(CEUtil.toCEValue("Admin,10"));
+		//add user-context thread bind
+        UserContext.register(session, currentUserContext, userLocale, userRoles, false);
+		LocaleContext.createLocaleContext(userLocale);
+		try {
+			response.getWriter().write(execute(request, response));
+		} finally {
+			AjaxActionHelper.removeAjaxContext();
+			UserContext.unregister();
+			LocaleContext.clearLocaleContext();
+		}
     }
 	
 	
@@ -470,11 +496,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 			// handle call back update.
 			IPaymentService payService = AppContext.get().getService(IPaymentService.class);
 			payService.notifyPaySuccess(payOrder);
-			
-			if (UserContext.getUserRoles() == null) {
-				//add payment callback role.
-				UserContext.addUserRule(CEUtil.toCEValue("Admin,10"));
-			}
+
 			FlowEvent e = new FlowEvent("PayFlowConsumer");
 			e.setAttribute("payOrder", payOrder);
 			e.setAttribute("jsonObj", jsonObj);

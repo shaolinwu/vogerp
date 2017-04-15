@@ -34,6 +34,12 @@
        PersonalAccountImpl loginAccount = new PersonalAccountImpl();
        loginAccount.setUserName(@request.getParameter("username"));
        loginAccount.setPassword(@request.getParameter("pwd"));
+       String la = @request.getParameter("latitude");
+       String lg = @request.getParameter("longitude");
+       if (la != null && la.trim().length() > 0) {
+	       loginAccount.setLatitude(Double.parseDouble(la));
+	       loginAccount.setLongitude(Double.parseDouble(lg));
+       }
        //TODO: verification code.
        String result = service.login(loginAccount, @request);
        if (result != null && result.length() == 0) {

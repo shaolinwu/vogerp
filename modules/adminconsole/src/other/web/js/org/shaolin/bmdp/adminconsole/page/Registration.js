@@ -3,6 +3,16 @@
 function org_shaolin_bmdp_adminconsole_page_Registration(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var latitudeInfo = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "latitudeInfo"]
+    });
+
+    var longitudeInfo = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "longitudeInfo"]
+    });
+
     var vogerplogo = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "vogerplogo"]
@@ -98,8 +108,12 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [vogerplogo,errorInfo,selectModeUI,veriCodeQuestionUILabel,veriCodeQuestion,veriCodeUILabel,veriCode,termsUI,registerBtn,loginBtn,bottomPanelInfo,registerInfo,registerCompanyInfo,topPanel,loginPanel,verifyCodePanel,bottomPanel]
+        ,items: [latitudeInfo,longitudeInfo,vogerplogo,errorInfo,selectModeUI,veriCodeQuestionUILabel,veriCodeQuestion,veriCodeUILabel,veriCode,termsUI,registerBtn,loginBtn,bottomPanelInfo,registerInfo,registerCompanyInfo,topPanel,loginPanel,verifyCodePanel,bottomPanel]
     });
+
+    Form.latitudeInfo=latitudeInfo;
+
+    Form.longitudeInfo=longitudeInfo;
 
     Form.vogerplogo=vogerplogo;
 
@@ -183,7 +197,22 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
         
 		        { 
-		        $(this.registerCompanyInfo.Form).parent().css("display", "none");
+		            $(this.registerCompanyInfo.Form).parent().css("display", "none");
+		            // notify user open up the GPS.
+		            if(navigator.geolocation){
+				        var latitudeInfo = this.latitudeInfo;
+				        var longitudeInfo = this.longitudeInfo;
+				        navigator.geolocation.getCurrentPosition(
+			                function(p){
+			                    latitudeInfo.setValue(p.coords.latitude);
+			                    longitudeInfo.setValue(p.coords.longitude);
+			                },
+			                function(e){
+			                    var msg = e.code + "\n" + e.message;
+			                    console.log(msg);
+			                }
+				        );
+				    }
 		        }
 		    
             /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_Registration */

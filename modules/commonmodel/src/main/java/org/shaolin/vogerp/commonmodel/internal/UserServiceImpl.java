@@ -2,6 +2,7 @@ package org.shaolin.vogerp.commonmodel.internal;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -18,17 +19,18 @@ import org.shaolin.bmdp.runtime.cache.CacheManager;
 import org.shaolin.bmdp.runtime.cache.ICache;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.security.UserContext.OnlineUserChecker;
-import org.shaolin.bmdp.runtime.spi.IConstantService;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.bmdp.utils.DateParser;
 import org.shaolin.bmdp.utils.DateUtil;
+import org.shaolin.bmdp.utils.HttpSender;
 import org.shaolin.bmdp.utils.HttpUserUtil;
 import org.shaolin.uimaster.page.MobilitySupport;
 import org.shaolin.uimaster.page.WebConfig;
 import org.shaolin.uimaster.page.ajax.json.JSONException;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.uimaster.page.flow.WebflowConstants;
+import org.shaolin.uimaster.page.od.formats.FormatUtil;
 import org.shaolin.vogerp.accounting.IAccountingService;
 import org.shaolin.vogerp.accounting.internal.AccountingServiceImpl;
 import org.shaolin.vogerp.commonmodel.ICaptcherService;
@@ -67,8 +69,6 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	
 	// for boosting the user login speed and getting hot user details.
     private final ICache<Long, PersonalInfoImpl> userSecondaryCache;
-	
-	private static List<Long> onlineUserIds = new ArrayList<Long>();
 	
 	public UserServiceImpl() {
 		UserContext.setOnlineUserChecker(this);
@@ -188,6 +188,8 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		newAccount.setUserName(registerInfo.getPhoneNumber());
 		newAccount.setPassword(registerInfo.getPassword());
 		newAccount.setLoginIP(HttpUserUtil.getIP(request));
+		newAccount.setLatitude(registerInfo.getLatitude());
+		newAccount.setLongitude(registerInfo.getLongitude());
 		this.setLocationInfo(newAccount);
 		CommonModel.INSTANCE.create(newAccount);
 		
@@ -224,16 +226,19 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 
 	private void setLocationInfo(PersonalAccountImpl newAccount) {
 		try {//could be slow.
-			String jsonStr = HttpUserUtil.getRealLocationInfo(newAccount.getLoginIP(), "UTF-8");
-			JSONObject json = new JSONObject(jsonStr);
-			String regionId = json.getJSONObject("data").getString("region_id");
-			String cityId = json.getJSONObject("data").getString("city_id");
-			if (regionId != null && regionId.trim().length() > 0) {
-				IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
-				String entityName = cs.getChildren("CityList", Integer.parseInt(regionId)).getEntityName();
-				newAccount.setLocationInfo(entityName +","+cityId);
+			String result = WebConfig.getUserCityInfo(newAccount.getLoginIP());
+			logger.info("Search for city location from ip: " + newAccount.getLoginIP() + ", result: " + result);
+			if(result != null && result.trim().length() > 0) {
+				newAccount.setLocationInfo(result);
+			}
+			double[] coordinations = WebConfig.getUserLocation(newAccount.getLoginIP());
+			logger.info("Search for geo-location from ip: " + newAccount.getLoginIP() + ", result: " + Arrays.toString(coordinations));
+			if (coordinations != null && coordinations.length == 2) {
+				newAccount.setLongitude(coordinations[0]);
+				newAccount.setLatitude(coordinations[1]);
 			}
 		} catch (Exception e) {
+			logger.warn("Failed to access user Location info: " + e.getMessage());
 		}
 	}
 	
@@ -267,7 +272,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	}
 	
 	@Override
-	public String login(IPersonalAccount user, HttpServletRequest request) {
+	public String login(final IPersonalAccount user, final HttpServletRequest request) {
 		if (user.getUserName() == null || user.getUserName().trim().length() == 0) {
 			return USER_LOGIN_PASSWORDRULES_PASSWORDINCORRECT;
 		}
@@ -297,7 +302,6 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 					matchedUser.setIsLocked(true);
 					matchedUser.setAttempt( matchedUser.getAttempt() + 1);
 					CommonModel.INSTANCE.update(matchedUser);
-					onlineUserIds.remove(matchedUser.getInfo().getId());
 					return USER_LOGIN_PASSWORDRULES_ACCOUNTLOCKED;
 				}
 			}
@@ -305,23 +309,26 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 				if (!PasswordVerifier.getPasswordHash(user.getPassword()).equals(matchedUser.getPassword())) {
 					matchedUser.setAttempt( matchedUser.getAttempt() + 1);
 					CommonModel.INSTANCE.update(matchedUser);
-					onlineUserIds.remove(matchedUser.getInfo().getId());
 					return USER_LOGIN_PASSWORDRULES_PASSWORDINCORRECT;
 				}
 			} catch (NoSuchAlgorithmException e) {
 				return USER_LOGIN_PASSWORDRULES_PASSWORDINCORRECT;
 			}
 			
-			String userIP = HttpUserUtil.getIP(request);
-			if (matchedUser.getLoginIP() == null ||
-					!matchedUser.getLoginIP().equals(userIP)) {
-				matchedUser.setLoginIP(userIP);
-				this.setLocationInfo((PersonalAccountImpl)matchedUser);
-			}
 			matchedUser.setLastLogin(new Date());
 			matchedUser.setAttempt(0);
 			matchedUser.setIsLocked(false);
 			matchedUser.setLoginedCount(matchedUser.getLoginedCount() + 1);
+			if (user.getLatitude() > 0d) {
+				matchedUser.setLatitude(user.getLatitude());
+				matchedUser.setLongitude(user.getLongitude());
+			}
+			String userIP = HttpUserUtil.getIP(request);
+			if ((matchedUser.getLocationInfo() == null || matchedUser.getLocationInfo().trim().length() == 0)
+					 || matchedUser.getLoginIP() == null || !matchedUser.getLoginIP().equals(userIP)) {
+				matchedUser.setLoginIP(userIP);
+				this.setLocationInfo((PersonalAccountImpl)matchedUser);
+			}
 			CommonModel.INSTANCE.update(matchedUser);
 			
 			HttpSession session = request.getSession(true);
@@ -336,19 +343,18 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	        	userSecondaryCache.put(userId, userInfo);
 	        }
 			
-			if (!onlineUserIds.contains(userInfo.getId())) {
-				onlineUserIds.add(userInfo.getId());
-			}
 			UserContext userContext = new UserContext();
 			userContext.setUserId(userInfo.getId());
 			userContext.setUserAccount(matchedUser.getUserName());
-			userContext.setUserName(userInfo.getFirstName() + userInfo.getLastName());
+			userContext.setUserName(userInfo.getFirstName());
 			userContext.setUserLocale(matchedUser.getLocale());
 			userContext.setUserLocation(matchedUser.getLocationInfo());
 			userContext.setUserRequestIP(request.getRemoteAddr());
 			if (matchedUser.getLocationInfo() != null) {
 				userContext.setCity(matchedUser.getLocationInfo());
 			}
+			userContext.setLatitude(matchedUser.getLatitude());
+			userContext.setLongitude(matchedUser.getLongitude());
 			userContext.setUserRoles(CEOperationUtil.toCElist(userInfo.getType()));
 			if (matchedUser.getLastLogin() != null) {
 				DateParser parse = new DateParser(matchedUser.getLastLogin());
@@ -378,7 +384,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
             for (UserActionListener listener: listeners) {
     			listener.loggedIn(matchedUser, userInfo);
     		}
-            
+            registerOnlineUser(userContext);
             
 			boolean hasCookie = false;
 			Cookie[] cookies = request.getCookies();
@@ -419,13 +425,51 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		return true; //by default
 	}
 	
+	private HttpSender sender = new HttpSender();
+	private Registry instance = Registry.getInstance();
+	private String websocketServer = instance.getValue("/System/webConstant/websocketServer");
+	
+	private void registerOnlineUser(final UserContext userContext) {
+		try {
+			String param = "&partyId=" + userContext.getUserId() + "&latitude=" + userContext.getLatitude() + "&longitude=" + userContext.getLongitude();
+			if (websocketServer.startsWith("https")) {
+				sender.doGetSSL(websocketServer + "/uimaster/onlineinfo?type=register" + param, "UTF-8");
+			} else {
+				sender.get(websocketServer + "/uimaster/onlineinfo?type=register" + param);
+			}
+		} catch (Exception e) {
+			logger.warn("Fail to register online user info!", e);
+		}
+	}
+	
+	/**
+	 * all online user ids stored in node.js for distribution.
+	 */
 	@Override
 	public boolean isOnline(long userId) {
-		return onlineUserIds.contains(userId);
+		try {
+			if (websocketServer.startsWith("https")) {
+				return "true".equals(sender.doGetSSL(websocketServer + "/uimaster/onlineinfo?type=checkUserOnline&userId=" + userId, "UTF-8"));
+			} else {
+				return "true".equals(sender.get(websocketServer + "/uimaster/onlineinfo?type=checkUserOnline&userId=" + userId));
+			}
+		} catch (Exception e) {
+			logger.warn("Error to access online user info!", e);
+			return false;
+		}
 	}
 	
 	public int getOnlineUsers() {
-		return onlineUserIds.size();
+		try {
+			if (websocketServer.startsWith("https")) {
+				return Integer.parseInt(sender.doGetSSL(websocketServer + "/uimaster/onlineinfo?type=userCount", "UTF-8"));
+			} else {
+				return Integer.parseInt(sender.get(websocketServer + "/uimaster/onlineinfo?type=userCount"));
+			}
+		} catch (Exception e) {
+			logger.warn("Error to access online user count!", e);
+		}
+		return 0;
 	}
 	
 	public String getUserLocation(long userId) {
@@ -481,7 +525,16 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	public void logout(HttpSession session) {
 		Object userContext = session.getAttribute(WebflowConstants.USER_SESSION_KEY);
 		if (userContext != null) {
-			onlineUserIds.remove(((UserContext)userContext).getUserId());
+			long userId = ((UserContext)userContext).getUserId();
+			try {
+				if (websocketServer.startsWith("https")) {
+					sender.doGetSSL(websocketServer + "/uimaster/onlineinfo?type=logout&userId=" + userId, "UTF-8");
+				} else {
+					sender.get(websocketServer + "/uimaster/onlineinfo?type=logout&userId=" + userId);
+				}
+			} catch (Throwable e) {
+				logger.warn("Error to access online user count!", e);
+			}
 		}
 		session.removeAttribute(WebflowConstants.USER_SESSION_KEY);
 		session.removeAttribute(WebflowConstants.USER_LOCALE_KEY);

@@ -1,6 +1,7 @@
 package org.shaolin.vogerp.accounting.internal;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,19 +12,25 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.shaolin.bmdp.i18n.LocaleContext;
 import com.alipay.api.request.AlipayTradeRefundRequest;
 import com.alipay.api.response.AlipayTradeRefundResponse;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
+import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.EventProcessor;
 import org.shaolin.bmdp.runtime.spi.FlowEvent;
+import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.bmdp.workflow.be.NotificationImpl;
 import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
 import org.shaolin.bmdp.workflow.internal.BuiltInAttributeConstant;
+import org.shaolin.uimaster.page.AjaxActionHelper;
+import org.shaolin.uimaster.page.WebConfig;
 import org.shaolin.uimaster.page.ajax.json.JSONException;
 import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.vogerp.accounting.IPaymentService;
@@ -105,7 +112,26 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 		response.setCharacterEncoding(charset);
 		request.setCharacterEncoding(charset);
 	
-		response.getWriter().write(execute(request, response));
+		AppContext.register(IServerServiceManager.INSTANCE.getApplication(
+        		IServerServiceManager.INSTANCE.getMasterNodeName()));
+
+		HttpSession session = request.getSession();
+		UserContext currentUserContext = new UserContext();
+		currentUserContext.setOrgCode(Registry.getInstance().getValue("/System/webConstant/defaultOrgCode"));
+		currentUserContext.setUserRequestIP(request.getRemoteAddr());
+		String userLocale = WebConfig.getUserLocale(request);
+		List<IConstantEntity> userRoles = new ArrayList<IConstantEntity>();
+		userRoles.add(CEUtil.toCEValue("Admin,10"));
+		//add user-context thread bind
+        UserContext.register(session, currentUserContext, userLocale, userRoles, false);
+		LocaleContext.createLocaleContext(userLocale);
+		try {
+			response.getWriter().write(execute(request, response));
+		} finally {
+			AjaxActionHelper.removeAjaxContext();
+			UserContext.unregister();
+			LocaleContext.clearLocaleContext();
+		}
     }
 	
 	/**
@@ -226,7 +252,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 			if(response.isSuccess()) { 
 				JSONObject responseInfo = new JSONObject(response.getBody());
 				JSONObject jsonObj = responseInfo.getJSONObject("alipay_trade_query_response");
-				if (jsonObj.has("trade_state") && "TRADE_SUCCESS".equalsIgnoreCase(jsonObj.getString("trade_state"))) {
+				if (jsonObj.has("trade_status") && "TRADE_SUCCESS".equalsIgnoreCase(jsonObj.getString("trade_status"))) {
 					String out_trade_no = jsonObj.getString("out_trade_no");
 					jsonObj.put("transaction_fee", jsonObj.getDouble("total_amount"));
 					jsonObj.put("transaction_id", out_trade_no);
@@ -280,17 +306,17 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 	        translog.setPaymentMethod(SettlementMethodType.ALIPAY);
 	        translog.setLog(params.toString());
 	        translog.setCreateDate(new Date());
-			if (AlipaySignature.rsaCheckV2(params, ALIPAY_PUBLIC_KEY, "UTF-8", KEY_TYPE) || AlipayHandler.enableDebugger) {
+			if (AlipaySignature.rsaCheckV1(params, ALIPAY_PUBLIC_KEY, "UTF-8", KEY_TYPE) || AlipayHandler.enableDebugger) {
 //				params.get("out_trade_no");
 //				params.get("trade_no");
 //				params.get("trade_status");
 				
-				if (params.get("trade_status").equals("TRADE_SUCCESS")) {
+				if (params.containsKey("trade_status") && params.get("trade_status").equals("TRADE_SUCCESS")) {
 					translog.setIsCorrect(true);
 					AccountingModel.INSTANCE.create(translog, true);
 					
 					String out_trade_no = params.get("out_trade_no");
-					JSONObject jsonObj = new JSONObject(requestParams);
+					JSONObject jsonObj = new JSONObject(new HashMap(requestParams));
 					jsonObj.put("transaction_fee", jsonObj.get("total_amount"));
 					jsonObj.put("trade_success", true);
 					jsonObj.put("transaction_id", out_trade_no);
@@ -338,11 +364,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 			// handle call back update.
 			IPaymentService payService = AppContext.get().getService(IPaymentService.class);
 			payService.notifyPaySuccess(payOrder);
-			
-			if (UserContext.getUserRoles() == null) {
-				//add payment callback role.
-				UserContext.addUserRule(CEUtil.toCEValue("Admin,10"));
-			}
+
 			FlowEvent e = new FlowEvent("PayFlowConsumer");
 			e.setAttribute("payOrder", payOrder);
 			e.setAttribute("jsonObj", jsonObj);

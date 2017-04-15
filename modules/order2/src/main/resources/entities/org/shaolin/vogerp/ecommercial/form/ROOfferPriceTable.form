@@ -17,7 +17,7 @@
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="chat">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="chat-20160615-112849">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="chat-20160615-112819">
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
@@ -32,6 +32,7 @@
         import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
         import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
         import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+        import org.shaolin.uimaster.page.ajax.json.JSONObject;
         { 
             Table orderInfoTable = (Table)@page.getElement("itemTable");
             if (orderInfoTable.getSelectedRow() == null) {
@@ -65,10 +66,23 @@
                input.put("isEditable", Boolean.FALSE);
             }
             
-            RefForm chatForm = new RefForm("chatWindow", "org.shaolin.bmdp.workflow.form.ChatWindow", input);
-            @page.addElement(chatForm);
-            
-            chatForm.openInWindows("回复", null, true);
+            if (UserContext.isMobileRequest() && UserContext.isAppClient()) {
+                //invokes App native javascript api.
+                input.put("orgId", defaultUser.getOrgId() + "");
+                input.put("taskId", defaultUser.getTaskId() + "");
+                input.put("sessionId", defaultUser.getSessionId());
+                input.put("sentPartyId", defaultUser.getSentPartyId()+ "");
+                input.put("receivedPartyId", defaultUser.getReceivedPartyId()+ "");
+                input.put("isAdmin", UserContext.getUserContext().isAdmin() + "");
+                input.remove("beObject");
+                String json = (new JSONObject(input)).toString();
+                @page.executeJavaScript("var j=JSON.stringify("+ json +");_mobContext.openChatWindow(j);");
+            } else {
+	            RefForm chatForm = new RefForm("chatWindow", "org.shaolin.bmdp.workflow.form.ChatWindow", input);
+	            @page.addElement(chatForm);
+	            
+	            chatForm.openInWindows("回复", null, true);
+            }
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>

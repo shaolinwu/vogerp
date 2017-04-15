@@ -62,6 +62,8 @@
             order.setCreateDate(new java.util.Date());
             order.setCount(1);
             order.setCity(UserContext.getUserContext().getCity());
+            order.setLongitude(UserContext.getUserContext().getLongitude());
+            order.setLatitude(UserContext.getUserContext().getLatitude());
             order.setProductId(price.getProduct().getId());
             order.setDescription(price.getProduct().getName() + "\n" + ProductUtil.getPricePackage(price));
             
@@ -147,6 +149,8 @@
             order.setCreateDate(new java.util.Date());
             order.setCount(1);
             order.setCity(UserContext.getUserContext().getCity());
+            order.setLongitude(UserContext.getUserContext().getLongitude());
+            order.setLatitude(UserContext.getUserContext().getLatitude());
             order.setProductId(price.getProduct().getId());
             order.setDescription(price.getProduct().getName() + "\n" + ProductUtil.getPricePackage(price));
             
@@ -191,6 +195,57 @@
         ]]></ns2:expressionString>
     </ns2:ops>
   </ns2:eventHandler>
+  <ns2:eventHandler functionName="addProduct">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="addProduct-20170306-114008">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import java.util.ArrayList;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.AjaxActionHelper;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.bmdp.runtime.security.UserContext;
+        import org.shaolin.vogerp.productmodel.be.ProductImpl;
+        import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
+        import org.shaolin.vogerp.productmodel.util.ProductUtil;
+        {
+            ProductImpl defaultUser = new ProductImpl();
+            defaultUser.setSerialNumber(ProductUtil.genSerialNumber());
+            defaultUser.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+            String resId = ProductUtil.genResourceId();
+            defaultUser.setHtmlDesc("/product/" + resId + "/desc.html");
+            defaultUser.setPhotos("/product/" + resId + "/images");
+            
+            HashMap input = new HashMap();
+            input.put("beObject", defaultUser);
+            input.put("costList", new ArrayList());
+            input.put("priceList", new ArrayList());
+            input.put("editable", new Boolean(true));
+            RefForm form = new RefForm("productInfoForm", "org.shaolin.vogerp.productmodel.form.Product", input);
+            @page.addElement(form);
+            
+            form.openInWindows("\u6DFB\u52A0\u4EA7\u54C1", new FunctionCallBack(@page, "refreshProductTree-20170306-114008"), true);
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="refreshProductTree">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="refreshProductTree-20170306-114008">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import java.util.ArrayList;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.AjaxActionHelper;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.bmdp.runtime.security.UserContext;
+        {
+           Tree productTree = @page.getTree("priceSelector.productTree");
+           productTree.refresh();
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -199,6 +254,7 @@
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -242,26 +298,62 @@
 	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
 	      </ns2:layoutConstraint>
 	  </ns2:component>
+	  <ns2:component xsi:type="ns2:UIPanelType" UIID="productPanel">
+	      <ns2:layout xsi:type="ns2:TableLayoutType">
+	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+	        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+	      </ns2:layout>
+	      <ns2:component xsi:type="ns2:UIButtonType" UIID="addProductBtn">
+	        <ns2:text xsi:type="ns2:StringPropertyType">
+	          <ns2:value>添加产品...</ns2:value>
+	        </ns2:text>
+	        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+	          <ns2:handler functionName="addProduct"></ns2:handler>
+	        </ns2:EventListener>
+	      </ns2:component>
+	      <ns2:layoutConstraint>
+	        <ns2:componentId>addProductBtn</ns2:componentId>
+	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+	      </ns2:layoutConstraint>
+	      <!-- 
+	      <ns2:component xsi:type="ns2:UIButtonType" UIID="refreshProductBtn">
+	        <ns2:text xsi:type="ns2:StringPropertyType">
+	          <ns2:value>刷新产品树</ns2:value>
+	        </ns2:text>
+	        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+	          <ns2:handler functionName="refreshProductTree"></ns2:handler>
+	        </ns2:EventListener>
+	      </ns2:component>
+	      <ns2:layoutConstraint>
+	        <ns2:componentId>refreshProductBtn</ns2:componentId>
+	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+	      </ns2:layoutConstraint>
+	       -->
+	  </ns2:component>   
       <ns2:component xsi:type="ns2:UILabelType" UIID="hintsUI">
         <ns2:UIStyle></ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>请选择一个产品价格包。</ns2:value>
+          <ns2:value>请选择一个产品价格包来创建您的订单。</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="priceSelector">
         <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductPricePackageSelector" />
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>hintsUI</ns2:componentId>
+        <ns2:componentId>productPanel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>priceSelector</ns2:componentId>
+        <ns2:componentId>hintsUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>selectTypePanel</ns2:componentId>
+        <ns2:componentId>priceSelector</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>selectTypePanel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">

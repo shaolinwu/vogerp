@@ -65,6 +65,18 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getCity() != null && scObject.getCity().trim().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
             }
+            if (scObject.getMaxLongitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.longitude", scObject.getMaxLongitude()));
+            }
+            if (scObject.getMinLongitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.longitude", scObject.getMinLongitude()));
+            }
+            if (scObject.getMaxLatitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.latitude", scObject.getMaxLatitude()));
+            }
+            if (scObject.getMinLatitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.latitude", scObject.getMinLatitude()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -104,6 +116,18 @@ public class OrderModel extends BEEntityDaoObject {
             }
             if (scObject.getCity() != null && scObject.getCity().trim().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
+            }
+            if (scObject.getMaxLongitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.longitude", scObject.getMaxLongitude()));
+            }
+            if (scObject.getMinLongitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.longitude", scObject.getMinLongitude()));
+            }
+            if (scObject.getMaxLatitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.latitude", scObject.getMaxLatitude()));
+            }
+            if (scObject.getMinLatitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.latitude", scObject.getMinLatitude()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
@@ -149,6 +173,18 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getCity() != null && scObject.getCity().trim().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
             }
+            if (scObject.getMaxLongitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.longitude", scObject.getMaxLongitude()));
+            }
+            if (scObject.getMinLongitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.longitude", scObject.getMinLongitude()));
+            }
+            if (scObject.getMaxLatitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.latitude", scObject.getMaxLatitude()));
+            }
+            if (scObject.getMinLatitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.latitude", scObject.getMinLatitude()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -188,6 +224,18 @@ public class OrderModel extends BEEntityDaoObject {
             }
             if (scObject.getCity() != null && scObject.getCity().trim().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
+            }
+            if (scObject.getMaxLongitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.longitude", scObject.getMaxLongitude()));
+            }
+            if (scObject.getMinLongitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.longitude", scObject.getMinLongitude()));
+            }
+            if (scObject.getMaxLatitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.latitude", scObject.getMaxLatitude()));
+            }
+            if (scObject.getMinLatitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.latitude", scObject.getMinLatitude()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
@@ -230,6 +278,18 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getCity() != null && scObject.getCity().trim().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
             }
+            if (scObject.getMaxLongitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.longitude", scObject.getMaxLongitude()));
+            }
+            if (scObject.getMinLongitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.longitude", scObject.getMinLongitude()));
+            }
+            if (scObject.getMaxLatitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.latitude", scObject.getMaxLatitude()));
+            }
+            if (scObject.getMinLatitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.latitude", scObject.getMinLatitude()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -266,6 +326,18 @@ public class OrderModel extends BEEntityDaoObject {
             }
             if (scObject.getCity() != null && scObject.getCity().trim().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
+            }
+            if (scObject.getMaxLongitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.longitude", scObject.getMaxLongitude()));
+            }
+            if (scObject.getMinLongitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.longitude", scObject.getMinLongitude()));
+            }
+            if (scObject.getMaxLatitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.latitude", scObject.getMaxLatitude()));
+            }
+            if (scObject.getMinLatitude() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.latitude", scObject.getMinLatitude()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));

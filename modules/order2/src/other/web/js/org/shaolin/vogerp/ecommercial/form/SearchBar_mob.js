@@ -3,62 +3,68 @@
 function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var citiesCbxIU = new UIMaster.ui.label
+    var selectFilterUI = new UIMaster.ui.radiobuttongroup
     ({
-        ui: elementList[prefix + "citiesCbxIU"]
+        ui: elementList[prefix + "selectFilterUI"]
+        ,horizontalLayout: true
+        ,colCount: 3
+        ,value: "1"
     });
 
-    var productTypeUI = new UIMaster.ui.label
+    var citiesCbxUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "citiesCbxUI"]
+    });
+
+    var productTypeUI = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "productTypeUI"]
     });
 
-    var searchContext = new UIMaster.ui.textfield
+    var productType1UI = new UIMaster.ui.hidden
     ({
-        ui: elementList[prefix + "searchContext"]
+        ui: elementList[prefix + "productType1UI"]
     });
 
-    var firstRow = new UIMaster.ui.panel
+    var areaScopeUI = new UIMaster.ui.hidden
     ({
-        ui: elementList[prefix + "firstRow"]
-        ,items: []
-        ,subComponents: [prefix + "citiesCbxIU",prefix + "productTypeUI"]
+        ui: elementList[prefix + "areaScopeUI"]
     });
 
     var root = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "root"]
         ,items: []
-        ,subComponents: [prefix + "firstRow",prefix + "searchContext"]
+        ,subComponents: [prefix + "selectFilterUI",prefix + "citiesCbxUI",prefix + "productTypeUI",prefix + "productType1UI",prefix + "areaScopeUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [citiesCbxIU,productTypeUI,searchContext,root,firstRow]
+        ,items: [selectFilterUI,citiesCbxUI,productTypeUI,productType1UI,areaScopeUI,root]
     });
 
-    Form.citiesCbxIU=citiesCbxIU;
+    Form.selectFilterUI=selectFilterUI;
+
+    Form.citiesCbxUI=citiesCbxUI;
 
     Form.productTypeUI=productTypeUI;
 
-    Form.searchContext=searchContext;
+    Form.productType1UI=productType1UI;
+
+    Form.areaScopeUI=areaScopeUI;
 
     Form.root=root;
 
-    Form.firstRow=firstRow;
+    Form.selectFilterUI=selectFilterUI;
 
-    Form.citiesCbxIU=citiesCbxIU;
-
-    Form.productTypeUI=productTypeUI;
-
-    Form.searchContext=searchContext;
-
-    Form.firstRow=firstRow;
-
-    Form.citiesCbxIU=citiesCbxIU;
+    Form.citiesCbxUI=citiesCbxUI;
 
     Form.productTypeUI=productTypeUI;
+
+    Form.productType1UI=productType1UI;
+
+    Form.areaScopeUI=areaScopeUI;
 
     Form.user_constructor = function()
     {
@@ -66,15 +72,11 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
         /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_SearchBar_mob */
     };
 
-    Form.selectCity = org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectCity;
+    Form.selectFilterCondition = org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectFilterCondition;
 
     Form.selectedCity = org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectedCity;
 
-    Form.selectProductType = org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectProductType;
-
     Form.selectedProductType = org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectedProductType;
-
-    Form.search = org_shaolin_vogerp_ecommercial_form_SearchBar_mob_search;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_SearchBar_mob_invokeDynamicFunction;
 
@@ -89,14 +91,14 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
 /* Other_Func_LAST:org_shaolin_vogerp_ecommercial_form_SearchBar_mob */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectCity(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectCity */
+    function org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectFilterCondition(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectFilterCondition */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectCity-201604102211",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectCity */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectFilterCondition-20170409-1411",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectFilterCondition */
 
 
     /* auto generated eventlistener function declaration */
@@ -111,17 +113,6 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectProductType(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectProductType */
-        var o = this;
-        var UIEntity = this;
-
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectProductType-201604102211",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectProductType */
-
-
-    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectedProductType(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectedProductType */
         var o = this;
         var UIEntity = this;
@@ -130,23 +121,6 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedProductType-201604102211",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectedProductType */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_SearchBar_mob_search(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_SearchBar_mob_search */
-        var o = this;
-        var UIEntity = this;
-
-        {   
-        if (event.keyCode != 13) {
-          return;
-        }
-        }
-        
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"search-20160410-2211",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_SearchBar_mob_search */
 
 
     /* auto generated eventlistener function declaration */

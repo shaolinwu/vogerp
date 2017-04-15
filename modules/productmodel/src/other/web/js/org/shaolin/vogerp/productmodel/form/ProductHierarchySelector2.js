@@ -50,11 +50,16 @@ function org_shaolin_vogerp_productmodel_form_ProductHierarchySelector2(json)
         ui: elementList[prefix + "cancelbtn"]
     });
 
+    var cleanbtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "cleanbtn"]
+    });
+
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "cancelbtn"]
+        ,subComponents: [prefix + "cancelbtn",prefix + "cleanbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -67,7 +72,7 @@ function org_shaolin_vogerp_productmodel_form_ProductHierarchySelector2(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentTypeUI,parentSubTypeUI,parentSubType2UI,productNameUI,ceNameUI,typeUI,subtypeUI,sub2typeUI,cancelbtn,fieldPanel,actionPanel]
+        ,items: [parentTypeUI,parentSubTypeUI,parentSubType2UI,productNameUI,ceNameUI,typeUI,subtypeUI,sub2typeUI,cancelbtn,cleanbtn,fieldPanel,actionPanel]
     });
 
     Form.parentTypeUI=parentTypeUI;
@@ -87,6 +92,8 @@ function org_shaolin_vogerp_productmodel_form_ProductHierarchySelector2(json)
     Form.sub2typeUI=sub2typeUI;
 
     Form.cancelbtn=cancelbtn;
+
+    Form.cleanbtn=cleanbtn;
 
     Form.fieldPanel=fieldPanel;
 
@@ -110,6 +117,8 @@ function org_shaolin_vogerp_productmodel_form_ProductHierarchySelector2(json)
 
     Form.cancelbtn=cancelbtn;
 
+    Form.cleanbtn=cleanbtn;
+
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_productmodel_form_ProductHierarchySelector2 */
@@ -121,6 +130,8 @@ function org_shaolin_vogerp_productmodel_form_ProductHierarchySelector2(json)
     Form.selectSub2Item = org_shaolin_vogerp_productmodel_form_ProductHierarchySelector2_selectSub2Item;
 
     Form.selectItem = org_shaolin_vogerp_productmodel_form_ProductHierarchySelector2_selectItem;
+
+    Form.Clean = org_shaolin_vogerp_productmodel_form_ProductHierarchySelector2_Clean;
 
     Form.Cancel = org_shaolin_vogerp_productmodel_form_ProductHierarchySelector2_Cancel;
 
@@ -167,6 +178,17 @@ function org_shaolin_vogerp_productmodel_form_ProductHierarchySelector2(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectItem_20160804_5435",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductHierarchySelector2_selectItem */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_productmodel_form_ProductHierarchySelector2_Clean(eventsource,event) {/* Gen_First:org_shaolin_vogerp_productmodel_form_ProductHierarchySelector2_Clean */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"Clean-20170304_54356",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_productmodel_form_ProductHierarchySelector2_Clean */
 
 
     /* auto generated eventlistener function declaration */

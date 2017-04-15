@@ -33,6 +33,11 @@
         import org.shaolin.vogerp.productmodel.util.ProductUtil;
         {      
             Table constantTable = @page.getTable("infoPanel1.itemTable");
+            if (constantTable.getListData().size() == 0) {
+                Dialog.showMessageDialog("配制至少一个产品价格包! 请在价格包中添加。", "提示", Dialog.WARNING_MESSAGE, null);
+                return;
+            }
+            
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             HashMap input = (HashMap)form.ui2Data();
             ProductImpl defaultUser = (ProductImpl)input.get("beObject");
@@ -247,6 +252,7 @@
 	                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 	                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 	                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+	                 <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 	                 <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 	                 <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 	               </ns2:layout>
@@ -297,6 +303,15 @@
                        <ns2:value>false</ns2:value>
                      </ns2:allowBlank>
 	               </ns2:component>
+	               <ns2:component xsi:type="ns2:UILabelType" UIID="priceInfoLabel">
+	                 <ns2:UIStyle></ns2:UIStyle>
+	                 <ns2:text xsi:type="ns2:StringPropertyType">
+	                   <ns2:value>配制价格包*</ns2:value>
+	                 </ns2:text>
+	               </ns2:component>
+	               <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="infoPanel1">
+		              <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductPriceTable" />
+		           </ns2:component>
 	               <ns2:layoutConstraint>
 	                 <ns2:componentId>serialNumberUILabel</ns2:componentId>
 	                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
@@ -329,21 +344,20 @@
 	                 <ns2:componentId>descriptionUI</ns2:componentId>
 	                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
 	               </ns2:layoutConstraint>
+	               <ns2:layoutConstraint>
+	                 <ns2:componentId>priceInfoLabel</ns2:componentId>
+	                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass=""></ns2:constraint>
+	               </ns2:layoutConstraint>
+	               <ns2:layoutConstraint>
+	                 <ns2:componentId>infoPanel1</ns2:componentId>
+	                 <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_full_cell"></ns2:constraint>
+	               </ns2:layoutConstraint>
                </ns2:component>
                <ns2:layoutConstraint>
                  <ns2:componentId>attributePanel</ns2:componentId>
                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
                </ns2:layoutConstraint>
             </ns2:panel>
-         </ns2:tab>
-         <ns2:tab uiid="infoPanel1">
-             <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
-                 <ns2:bundle>org_shaolin_vogerp_productmodel_i18n</ns2:bundle>
-                 <ns2:key>org.shaolin.vogerp.productmodel.form.Product.infoPanel1</ns2:key>
-             </ns2:title>
-             <ns2:refEntity UIID="infoPanel1">
-                <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductPriceTable" />
-             </ns2:refEntity>
          </ns2:tab>
          <ns2:tab uiid="htmlPanel">
              <ns2:title xsi:type="ns2:StringPropertyType">

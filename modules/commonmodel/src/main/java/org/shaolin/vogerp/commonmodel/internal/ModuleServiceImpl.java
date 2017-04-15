@@ -421,6 +421,7 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	
 	void updateWebFlowLinks(List<IModuleGroup> all) throws ParsingException {
 		// list the nodes under the root node.
+		List<String> duplicatedNodes = new ArrayList<String>();
         List<PageNodeType> webNodes = new ArrayList<PageNodeType>();
         for (int i=0;i<all.size();i++) {
             ModuleGroupImpl mg = (ModuleGroupImpl)all.get(i);
@@ -449,7 +450,9 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
             		webNode.setSourceEntity(tarEntityName);
             		
             		String path = accessURL.substring(chunkNameIndex + "_chunkname=".length(), _nodenameIndex - 1);
-            		if (UIFlowCacheManager.getInstance().findWebNode(path, webNode.getName()) == null) {
+            		
+            		if (!duplicatedNodes.contains(webNode.getName())) {
+            			duplicatedNodes.add(webNode.getName());
             			webNodes.add(webNode);
             		}
             	}

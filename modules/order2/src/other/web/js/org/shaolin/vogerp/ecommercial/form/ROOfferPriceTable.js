@@ -112,7 +112,7 @@ function org_shaolin_vogerp_ecommercial_form_ROOfferPriceTable(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"chat-20160615-112849",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"chat-20160615-112819",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_ROOfferPriceTable_chat */
 
 

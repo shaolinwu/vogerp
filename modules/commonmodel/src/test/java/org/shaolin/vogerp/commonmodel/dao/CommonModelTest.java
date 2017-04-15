@@ -18,21 +18,21 @@ public class CommonModelTest {
     @Test
     public void testauthenticateUserInfo() throws Exception {
     	JSONObject item = new JSONObject();
-    	item.put("name", " Ö÷Ò³");
+    	item.put("name", " ï¿½ï¿½Ò³");
     	item.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
     	item.put("_nodename", "OnlineOrderList");
     	item.put("_page", "org.shaolin.vogerp.ecommercial.page.OnlineOrderList");
     	item.put("_framename", "onlineOrderList");
     	
     	JSONObject item1 = new JSONObject();
-    	item1.put("name", "¶©µ¥");
+    	item1.put("name", "ï¿½ï¿½ï¿½ï¿½");
     	item1.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
     	item1.put("_nodename", "OrderManagement");
     	item1.put("_page", "org.shaolin.vogerp.ecommercial.page.OrderManagement");
     	item1.put("_framename", "goldenOrderManager");
     	
     	JSONObject item2 = new JSONObject();
-    	item2.put("name", "²úÆ·");
+    	item2.put("name", "ï¿½ï¿½Æ·");
     	item2.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
     	item2.put("_nodename", "ProductManagement");
     	item2.put("_page", "org.shaolin.vogerp.productmodel.page.ProductManagement");

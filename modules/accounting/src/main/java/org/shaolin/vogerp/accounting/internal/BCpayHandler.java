@@ -257,10 +257,6 @@ public class BCpayHandler implements IAjaxCommand, PaymentHandler {
 		    	List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(payOrder, null, 0, 1);
 		    	if (result != null && result.size() > 0) {
 		    		payOrder = (PayOrderImpl)result.get(0);
-		    		if (UserContext.getUserRoles() == null) {
-		    			//add payment callback role.
-		    			UserContext.addUserRule(CEUtil.toCEValue("Admin,10"));
-		    		}
 		    		//got adding this logic into workflow mission for tracing.
 		    		if (transType == TransactionType.PAY) {
 		    			if (payOrder.getStatus() == PayOrderStatusType.PAYED) {

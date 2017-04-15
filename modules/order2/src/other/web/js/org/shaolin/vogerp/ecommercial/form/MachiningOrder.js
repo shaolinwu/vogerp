@@ -43,6 +43,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     var countUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "countUI"]
+        ,isNumber: true
     });
 
     var materialTypeUILabel = new UIMaster.ui.label

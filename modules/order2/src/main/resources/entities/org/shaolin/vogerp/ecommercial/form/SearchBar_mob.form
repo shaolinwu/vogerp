@@ -5,24 +5,53 @@
  xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
  <entityName>org.shaolin.vogerp.ecommercial.form.SearchBar_mob</entityName>
  <systemVersion>0</systemVersion>
- <ns2:eventHandler functionName="selectCity">
-   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectCity-201604102211">
+  <ns2:eventHandler functionName="selectFilterCondition">
+   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectFilterCondition-20170409-1411">
     <ns2:exp>
      <expressionString><![CDATA[
           import java.util.HashMap;
           import org.shaolin.bmdp.runtime.AppContext;
           import org.shaolin.uimaster.page.AjaxContext;
           import org.shaolin.uimaster.page.ajax.*;
-          {
-              String parentId = @page.getEntityUiid() + ".citiesCbxIU";
-              HashMap input = new HashMap();
-              input.put("parentUIID", parentId);
-              input.put("parentUIID", @page.getEntityUiid() + ".citiesCbxUI");
-              input.put("editable", new Boolean(true));
-              RefForm form = new RefForm("cityListForm", "org.shaolin.vogerp.commonmodel.form.CitySelelctor_mob", input);
-              @page.addElement(form);
-              
-              form.openInWindows("\u9009\u62E9\u57CE\u5E02", new FunctionCallBack(@page, "selectedCity-201604102211"), true);
+          import org.shaolin.vogerp.commonmodel.IUserService;
+          import org.shaolin.bmdp.runtime.AppContext;
+          import org.shaolin.bmdp.runtime.security.UserContext;
+          { 
+             RadioButtonGroup buttonGroup = @page.getRadioBtnGroup("selectFilterUI");
+             if ("1".equals(buttonGroup.getValue())) {
+                //TODO: allow to set a scope of longtitude and lantitudu.
+                //@page.getHidden("areaScopeUI").setValue(100);
+             } else if ("2".equals(buttonGroup.getValue())) {
+                  HashMap input = new HashMap();
+	              input.put("parentUIID", @page.getEntityUiid() + ".citiesCbxUI");
+	              input.put("editable", new Boolean(true));
+	              RefForm form = new RefForm("cityListForm", "org.shaolin.vogerp.commonmodel.form.CitySelelctor_mob", input);
+	              @page.addElement(form);
+	              
+	              form.openInWindows("选择城市", new FunctionCallBack(@page, "selectedCity-201604102211"), true);
+             } else if ("3".equals(buttonGroup.getValue())) {
+                  @page.getHidden("citiesCbxUI").setValue(null);
+                  @page.getHidden("productTypeUI").setValue(null);
+                  @page.getHidden("productType1UI").setValue(null);
+             }
+             
+             TabPane tab = (TabPane)@page.getElementByAbsoluteId("functionsTab");
+             if (tab != null) {
+                 String tableUiid = "";
+                 if (tab.getSelectedIndex() == 0) {
+                    tableUiid = "machingOrderTable";
+                 } else if (tab.getSelectedIndex() == 1) {
+                    tableUiid = "goldenOrderTable";
+                 } else if (tab.getSelectedIndex() == 2) {
+                    tableUiid = "gsaleOrderTable";
+                 } else if (tab.getSelectedIndex() == 3) {
+                    tableUiid = "rentOrderTable";
+                 } else if (tab.getSelectedIndex() == 4) {
+                    tableUiid = "loanOrderTable";
+                 } 
+                 Table t = (Table)@page.getElementByAbsoluteId(tableUiid);
+                 t.refresh();
+             }
           }
           ]]></expressionString>
     </ns2:exp>
@@ -43,30 +72,6 @@
     </ns2:exp>
    </ns2:ops>
   </ns2:eventHandler>
-  <ns2:eventHandler functionName="selectProductType">
-   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectProductType-201604102211">
-    <ns2:exp>
-     <expressionString><![CDATA[
-          import java.util.HashMap;
-          import org.shaolin.bmdp.runtime.AppContext;
-          import org.shaolin.uimaster.page.AjaxContext;
-          import org.shaolin.uimaster.page.ajax.*;
-          {
-              HashMap input = new HashMap();
-              input.put("parentTypeUIID", @page.getEntityUiid() + ".productTypeUI");
-              input.put("parentSubTypeUIID", @page.getEntityUiid() + ".productTypeUI");
-              input.put("parentSubType2UIID", @page.getEntityUiid() + ".productTypeUI");
-              input.put("ceName", "org.shaolin.vogerp.productmodel.ce.ProductType");
-              input.put("editable", new Boolean(false));
-              RefForm form = new RefForm("productTypeForm", "org.shaolin.vogerp.productmodel.form.ProductHierarchySelector2", input);
-              @page.addElement(form);
-              
-              form.openInWindows("\u9009\u62E9\u57CE\u5E02", new FunctionCallBack(@page, "selectedProductType-201604102211"), true);
-          }
-          ]]></expressionString>
-    </ns2:exp>
-   </ns2:ops>
-  </ns2:eventHandler>
   <ns2:eventHandler functionName="selectedProductType">
    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectedProductType-201604102211">
     <ns2:exp>
@@ -82,30 +87,6 @@
     </ns2:exp>
    </ns2:ops>
   </ns2:eventHandler>
-  <ns2:eventHandler functionName="search">
-   <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-        <ns2:expressionString><![CDATA[
-        {   
-        if (event.keyCode != 13) {
-          return;
-        }
-        }
-        ]]></ns2:expressionString>
-    </ns2:ops>
-   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="search-20160410-2211">
-    <ns2:exp>
-     <expressionString><![CDATA[
-          import org.shaolin.uimaster.page.AjaxContext;
-          import org.shaolin.uimaster.page.ajax.*;
-          import org.shaolin.vogerp.commonmodel.IUserService;
-          import org.shaolin.bmdp.runtime.AppContext;
-          { 
-              System.out.println("Searching for :" + @page.getTextField("searchContext").getValue());
-          }
-          ]]></expressionString>
-    </ns2:exp>
-   </ns2:ops>
-  </ns2:eventHandler>
  <ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
   <ns2:layout xsi:type="ns2:TableLayoutType">
    <ns2:rowHeightWeight>0</ns2:rowHeightWeight>
@@ -114,56 +95,82 @@
   <ns2:component xsi:type="ns2:UIPanelType" UIID="root">
    <ns2:layout xsi:type="ns2:TableLayoutType">
      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-     <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
    </ns2:layout>
-   <ns2:component xsi:type="ns2:UIPanelType" UIID="firstRow">
-	   <ns2:layout xsi:type="ns2:TableLayoutType">
-	     <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-	     <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-	     <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-	   </ns2:layout>
-	    <ns2:component xsi:type="ns2:UILabelType" UIID="citiesCbxIU">
-	       <ns2:text xsi:type="ns2:StringPropertyType">
-	           <ns2:value>选择城市</ns2:value>
-	        </ns2:text>
-	       <ns2:EventListener xsi:type="ns2:ClickListenerType">
-	         <ns2:handler functionName="selectCity"></ns2:handler>
-	       </ns2:EventListener>
-	     </ns2:component>
-	     <ns2:component xsi:type="ns2:UILabelType" UIID="productTypeUI">
-	       <ns2:text xsi:type="ns2:StringPropertyType">
-	           <ns2:value>选择产品类型</ns2:value>
-	        </ns2:text>
-	       <ns2:EventListener xsi:type="ns2:ClickListenerType">
-	         <ns2:handler functionName="selectProductType"></ns2:handler>
-	       </ns2:EventListener>
-	     </ns2:component>
-	     <ns2:layoutConstraint>
-	         <ns2:componentId>citiesCbxIU</ns2:componentId>
-	         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-	          x="0" y="0" align="FULL"></ns2:constraint>
-	     </ns2:layoutConstraint>
-	     <ns2:layoutConstraint>
-	         <ns2:componentId>productTypeUI</ns2:componentId>
-	         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-	          x="1" y="0" align="FULL"></ns2:constraint>
-	     </ns2:layoutConstraint>
-    </ns2:component>
-     <ns2:component xsi:type="ns2:UITextFieldType" UIID="searchContext">
-        <ns2:EventListener xsi:type="ns2:KeyPressListenerType">
-            <ns2:handler functionName="search" />
+   <ns2:component xsi:type="ns2:UIRadioButtonGroupType" UIID="selectFilterUI">
+        <ns2:Property name="horizontalLayout" >
+         <ns2:value xsi:type="ns2:BooleanPropertyType">
+            <value>true</value>
+         </ns2:value>
+        </ns2:Property>
+        <ns2:Property name="colCount" >
+	         <ns2:value xsi:type="ns2:NumericPropertyType">
+	            <type>int</type>
+	            <value>3</value>
+	         </ns2:value>
+         </ns2:Property>
+         <ns2:Property name="value" >
+	         <ns2:value xsi:type="ns2:StringPropertyType">
+	            <value>1</value>
+	         </ns2:value>
+         </ns2:Property>
+         <ns2:Property name="optionValue">
+           <ns2:value xsi:type="ns2:ExpressionPropertyType">
+	         <ns2:expression>
+	           <expressionString><![CDATA[
+	           import java.util.ArrayList;
+	           { 
+	               ArrayList list = new ArrayList();
+	               list.add("1");
+	               list.add("2");
+	               list.add("3");
+	               return list; 
+	           }]]></expressionString>
+	         </ns2:expression>
+           </ns2:value>
+         </ns2:Property>
+         <ns2:Property name="optionDisplayValue">
+           <ns2:value xsi:type="ns2:ExpressionPropertyType">
+	         <ns2:expression>
+	           <expressionString><![CDATA[
+	           import java.util.ArrayList;
+	           { 
+	               ArrayList list = new ArrayList();
+	               list.add("按登录区域");
+	               list.add("按城市");
+	               list.add("按全国");
+	               return list; 
+	           }]]></expressionString>
+	         </ns2:expression>
+           </ns2:value>
+        </ns2:Property>
+        <!-- 
+        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
+          <ns2:handler functionName="selectFilterCondition"></ns2:handler>
         </ns2:EventListener>
+         -->
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="selectFilterCondition"></ns2:handler>
+        </ns2:EventListener>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="citiesCbxUI">
+       <ns2:text xsi:type="ns2:StringPropertyType">
+           <ns2:value>选择城市</ns2:value>
+        </ns2:text>
+     </ns2:component>
+     <ns2:component xsi:type="ns2:UIHiddenType" UIID="productTypeUI">
+       <ns2:text xsi:type="ns2:StringPropertyType">
+           <ns2:value>选择产品类型</ns2:value>
+        </ns2:text>
+     </ns2:component>
+     <ns2:component xsi:type="ns2:UIHiddenType" UIID="productType1UI">
+     </ns2:component>
+     <ns2:component xsi:type="ns2:UIHiddenType" UIID="areaScopeUI">
      </ns2:component>
      <ns2:layoutConstraint>
-         <ns2:componentId>firstRow</ns2:componentId>
+         <ns2:componentId>selectFilterUI</ns2:componentId>
          <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
           x="0" y="0" align="FULL"></ns2:constraint>
-     </ns2:layoutConstraint>
-     <ns2:layoutConstraint>
-	     <ns2:componentId>searchContext</ns2:componentId>
-	     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-	      x="0" y="1" align="FULL"></ns2:constraint>
      </ns2:layoutConstraint>
   </ns2:component>
   <ns2:layoutConstraint>

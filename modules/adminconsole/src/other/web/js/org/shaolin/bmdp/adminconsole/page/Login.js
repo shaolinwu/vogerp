@@ -26,6 +26,16 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         ,enableSelectSync: false
     });
 
+    var latitudeInfo = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "latitudeInfo"]
+    });
+
+    var longitudeInfo = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "longitudeInfo"]
+    });
+
     var errorInfo = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "errorInfo"]
@@ -90,7 +100,7 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     ({
         ui: elementList[prefix + "loginPanel"]
         ,items: []
-        ,subComponents: [prefix + "errorInfo",prefix + "userName",prefix + "password",prefix + "veriCodeQuestion",prefix + "veriCode",prefix + "actionPanel"]
+        ,subComponents: [prefix + "latitudeInfo",prefix + "longitudeInfo",prefix + "errorInfo",prefix + "userName",prefix + "password",prefix + "veriCodeQuestion",prefix + "veriCode",prefix + "actionPanel"]
     });
 
     var middlePanel = new UIMaster.ui.panel
@@ -117,7 +127,7 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [helpIcon,vogerplogo,advImagesUI,errorInfo,userName,password,veriCodeQuestion,veriCode,loginBtn,registerBtn,forgetPwdBtn,bottomPanelInfo,topBannerPanel,topPanel,middlePanel,loginPanel,actionPanel,bottomPanel]
+        ,items: [helpIcon,vogerplogo,advImagesUI,latitudeInfo,longitudeInfo,errorInfo,userName,password,veriCodeQuestion,veriCode,loginBtn,registerBtn,forgetPwdBtn,bottomPanelInfo,topBannerPanel,topPanel,middlePanel,loginPanel,actionPanel,bottomPanel]
     });
 
     Form.helpIcon=helpIcon;
@@ -125,6 +135,10 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     Form.vogerplogo=vogerplogo;
 
     Form.advImagesUI=advImagesUI;
+
+    Form.latitudeInfo=latitudeInfo;
+
+    Form.longitudeInfo=longitudeInfo;
 
     Form.errorInfo=errorInfo;
 
@@ -158,6 +172,10 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
 
     Form.loginPanel=loginPanel;
 
+    Form.latitudeInfo=latitudeInfo;
+
+    Form.longitudeInfo=longitudeInfo;
+
     Form.errorInfo=errorInfo;
 
     Form.userName=userName;
@@ -177,6 +195,10 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     Form.forgetPwdBtn=forgetPwdBtn;
 
     Form.loginPanel=loginPanel;
+
+    Form.latitudeInfo=latitudeInfo;
+
+    Form.longitudeInfo=longitudeInfo;
 
     Form.errorInfo=errorInfo;
 
@@ -211,7 +233,36 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_bmdp_adminconsole_page_Login */
-        /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_Login */
+
+        
+		        { 
+		            // notify user open up the GPS.
+		            $("<div style='display:none;' id='mapcontainer'><div>").appendTo($(document.forms[0]));
+				    var map = new AMap.Map('mapcontainer');
+				    map.plugin('AMap.Geolocation', function() {
+				        var geolocation = new AMap.Geolocation({
+				            enableHighAccuracy: true,
+				            timeout: 10000,
+				            buttonOffset: new AMap.Pixel(10, 20),
+				            zoomToAccuracy: false,
+				            buttonPosition:'RB'
+				        });
+				        map.addControl(geolocation);
+				        geolocation.getCurrentPosition();
+				        AMap.event.addListener(geolocation, 'complete', onComplete);
+				        AMap.event.addListener(geolocation, 'error', onError);
+				    });
+				    function onComplete(data) {
+				        longitudeInfo.setValue(data.position.getLng());
+			            latitudeInfo.setValue(data.position.getLat());
+			            console.log("latitudeInfo: " + data.position.getLng() + ", longitudeInfo: " + data.position.getLat());
+				    }
+				    function onError(data) {
+				        console.log("geolocation fails: " + data.message);
+				    }
+		        }
+		    
+            /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_Login */
     };
 
     Form.genVerifiCode = org_shaolin_bmdp_adminconsole_page_Login_genVerifiCode;

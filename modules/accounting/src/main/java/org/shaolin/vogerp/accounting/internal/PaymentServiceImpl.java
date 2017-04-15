@@ -153,7 +153,7 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		order0.setEnabled(true);
 		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order0, null, 0, 1);
 		if (result == null || result.size() == 0) {
-			return PayOrderStatusType.NOT_SPECIFIED;
+			return PayOrderStatusType.NOTPAYED;
 		}
 		IPayOrder order = result.get(0);
 		if (order.getStatus() == PayOrderStatusType.NOTPAYED) {
@@ -162,8 +162,8 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 				state = alipayHandler.query(order);
 			} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
 				state = wepayHandler.query(order);
-	//		} else if (SettlementMethodType.BEECLOUD == order.getCustomerAPaymentMethod()) {
-	//			return behandler.query(order);
+			} else if (SettlementMethodType.NOT_SPECIFIED == order.getCustomerAPaymentMethod()) {
+				return PayOrderStatusType.NOTPAYED;
 			} else {
 				throw new PaymentException("Unsupported query method: " + order.getCustomerAPaymentMethod());
 			}
@@ -178,7 +178,7 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	
 	public PayOrderStatusType queryForPayStatus(final IPayOrder oldorder) throws PaymentException {
 		if (oldorder.getCustomerAPaymentMethod() == SettlementMethodType.NOT_SPECIFIED) {
-			return PayOrderStatusType.NOT_SPECIFIED;
+			return PayOrderStatusType.NOTPAYED;
 		}
 		PayOrderImpl order = AccountingModel.INSTANCE.get(oldorder.getId(), PayOrderImpl.class);
 		if (order.getStatus() == PayOrderStatusType.NOTPAYED) {
@@ -187,9 +187,9 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 				state = alipayHandler.query(order);
 			} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
 				state = wepayHandler.query(order);
-	//		} else if (SettlementMethodType.BEECLOUD == order.getCustomerAPaymentMethod()) {
-	//			return behandler.query(order);
-			} else {
+			} else if (SettlementMethodType.NOT_SPECIFIED == order.getCustomerAPaymentMethod()) {
+				return PayOrderStatusType.NOTPAYED;
+			}  else {
 				throw new PaymentException("Unsupported query method: " + order.getCustomerAPaymentMethod());
 			}
 			

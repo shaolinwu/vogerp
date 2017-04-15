@@ -76,8 +76,8 @@
       <ns2:UIComponent componentPath="descriptionUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
         <ns2:expression>
-          <expressionString>{return org.shaolin.bmdp.utils.StringUtil.escape(org.shaolin.bmdp.utils.StringUtil.getAbbreviatoryString("[" 
-          + beObject.getStatus().getDisplayName() +"]"+ beObject.getDescription(), 30));}</expressionString>
+          <expressionString><![CDATA[{return org.shaolin.bmdp.utils.StringUtil.escape(org.shaolin.bmdp.utils.StringUtil.getAbbreviatoryString("[" 
+          + beObject.getStatus().getDisplayName() +"]"+ beObject.getDescription(), 30));}]]></expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
@@ -91,8 +91,10 @@
       <ns2:UIComponent componentPath="publishedCityUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
         <ns2:expression>
-          <expressionString>org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil.getCustomerCity($beObject.getPublishedCustomer()) 
-          + "["+org.shaolin.uimaster.page.od.formats.FormatUtil.formatDateTime($beObject.getCreateDate())+"]"</expressionString>
+          <expressionString><![CDATA[
+            {
+            return org.shaolin.bmdp.runtime.ce.CEUtil.getValue($beObject.getCity()) + "["+org.shaolin.uimaster.page.od.formats.FormatUtil.formatDateTime($beObject.getCreateDate())+"]";
+            }]]></expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>

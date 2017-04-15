@@ -25,11 +25,37 @@
             <bediagram:name>description</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
-        <!-- published city -->
+        <!-- published city for geographic query-->
         <bediagram:member>
             <bediagram:name>city</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>longitude</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>latitude</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <!-- for search criteria only! -->
+        <bediagram:member>
+            <bediagram:name>maxLongitude</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>maxLatitude</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>minLongitude</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>minLatitude</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        
         <!-- numbers of the good -->
         <bediagram:member>
             <bediagram:name>count</bediagram:name>
@@ -95,16 +121,6 @@
             </bediagram:type>
         </bediagram:member>
         <bediagram:member>
-            <bediagram:name>deliveryToInfoId</bediagram:name>
-            <bediagram:type xsi:type="bediagram:LongType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>deliveryToInfo</bediagram:name>
-            <bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.DeliveryInfo" />
-            </bediagram:type>
-        </bediagram:member>
-        <bediagram:member>
             <bediagram:name>startCreateDate</bediagram:name>
             <bediagram:type xsi:type="bediagram:DateTimeType" />
         </bediagram:member>
@@ -135,6 +151,13 @@
         </bediagram:member>
         <bediagram:member>
             <bediagram:name>status</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="OrderStatusType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <!-- the order status after taking. -->
+            <bediagram:name>takenStatus</bediagram:name>
             <bediagram:type xsi:type="bediagram:CEObjRefType">
                 <bediagram:targetEntity entityName="OrderStatusType" />
             </bediagram:type>
@@ -476,7 +499,19 @@
                 <bediagram:targetEntity entityName="EOrder" />
             </bediagram:type>
         </bediagram:member>
-    </bediagram:beEntity>   
+    </bediagram:beEntity>
+    
+    <bediagram:beEntity needPersist="true" needOrgId="true" needUIEntity="true">
+        <common:entityName>InterestSetting</common:entityName>
+        <bediagram:member>
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>machineTypes</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+    </bediagram:beEntity>
 	
 	<bediagram:ceEntity>
         <common:entityName>InvoiceType</common:entityName>
@@ -504,8 +539,13 @@
             <bediagram:description>建立</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
-            <bediagram:value>Published</bediagram:value>
+            <bediagram:value>Verifying</bediagram:value>
             <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>审核中</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Published</bediagram:value>
+            <bediagram:intValue>11</bediagram:intValue>
             <bediagram:description>发布</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
@@ -578,12 +618,12 @@
         <bediagram:constantValue>
             <bediagram:value>Loan</bediagram:value>
             <bediagram:intValue>0</bediagram:intValue>
-            <bediagram:description>租入订单</bediagram:description>
+            <bediagram:description>求租订单</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Rent</bediagram:value>
             <bediagram:intValue>1</bediagram:intValue>
-            <bediagram:description>租出订单</bediagram:description>
+            <bediagram:description>出租订单</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
     
@@ -617,16 +657,6 @@
             <bediagram:value>Monthly</bediagram:value>
             <bediagram:intValue>3</bediagram:intValue>
             <bediagram:description>月</bediagram:description>
-        </bediagram:constantValue>
-        <bediagram:constantValue>
-            <bediagram:value>Seasonly</bediagram:value>
-            <bediagram:intValue>4</bediagram:intValue>
-            <bediagram:description>季</bediagram:description>
-        </bediagram:constantValue>
-        <bediagram:constantValue>
-            <bediagram:value>Yearly</bediagram:value>
-            <bediagram:intValue>5</bediagram:intValue>
-            <bediagram:description>年</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
     

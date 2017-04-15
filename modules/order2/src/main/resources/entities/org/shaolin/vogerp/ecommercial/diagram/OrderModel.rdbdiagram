@@ -8,7 +8,7 @@
     <entityName>ECOM_GOrderSearchCriteria</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="ORDERID" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="ORDERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="CITY" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="PRODUCTTYPE" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
@@ -29,7 +29,7 @@
     <entityName>ECOM_ROrderSearchCriteria</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="ORDERID" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="ORDERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="CITY" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="PRODUCTTYPE" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
@@ -55,23 +55,25 @@
     <ns2:column name="SERIALNUMBER" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="COUNT" type="INTEGER" isNull="true"></ns2:column>
-    <ns2:column name="ESTIMATEDPRICE" type="DECIMAL" isNull="true"></ns2:column>
-    <ns2:column name="ENDPRICE" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="ESTIMATEDPRICE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
+    <ns2:column name="ENDPRICE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="PUBLISHEDCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="TAKENCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="DELIVERYINFOID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="DELIVERYTOINFOID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="ISPURCHASEORDER" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="PRODUCTID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="ORDERID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="TAXRATE" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="TAXRATE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="INVOICETYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="EXPIREDDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="STATE" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:column name="STATE1" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="PHOTOS" type="VARCHAR" default="1"></ns2:column>
     <ns2:column name="HTMLDESC" type="VARCHAR" length="255" isNull="true"></ns2:column>
     <ns2:column name="CITY" type="VARCHAR" length="50" isNull="true"></ns2:column>
+    <ns2:column name="LONGITUDE" type="DECIMAL" precision="10" length="10" isNull="true"></ns2:column>
+    <ns2:column name="LATITUDE" type="DECIMAL" precision="10" length="10" isNull="true"></ns2:column>
     <ns2:column name="PROMOTED" type="INTEGER" length="2"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="_sessionId" type="VARCHAR" length="38" default="0"></ns2:column>
@@ -96,13 +98,15 @@
       <ns2:fieldMapping beFieldName="invoiceType" columnName="INVOICETYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="taxRate" columnName="TAXRATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="deliveryInfoId" columnName="DELIVERYINFOID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="deliveryToInfoId" columnName="DELIVERYTOINFOID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="expiredDate" columnName="EXPIREDDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="photos" columnName="PHOTOS"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="htmlDesc" columnName="HTMLDESC"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="status" columnName="STATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="takenStatus" columnName="STATE1"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="city" columnName="CITY"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="longitude" columnName="LONGITUDE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="latitude" columnName="LATITUDE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="promoted" columnName="PROMOTED"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_sessionId" columnName="_sessionId"></ns2:fieldMapping>
@@ -119,8 +123,8 @@
     <ns2:column name="SERIALNUMBER" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="COUNT" type="INTEGER" isNull="true"></ns2:column>
-    <ns2:column name="ESTIMATEDPRICE" type="DECIMAL" isNull="true"></ns2:column>
-    <ns2:column name="ENDPRICE" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="ESTIMATEDPRICE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
+    <ns2:column name="ENDPRICE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="ISPURCHASEORDER" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="PUBLISHEDCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="PURCHASEORDERID" type="BIGINT" isNull="true"></ns2:column>
@@ -133,6 +137,8 @@
     <ns2:column name="PHOTOS" type="VARCHAR" default="1"></ns2:column>
     <ns2:column name="HTMLDESC" type="VARCHAR" length="255" isNull="true"></ns2:column>
     <ns2:column name="CITY" type="VARCHAR" length="50" isNull="true"></ns2:column>
+    <ns2:column name="LONGITUDE" type="DECIMAL" precision="10" length="10" isNull="true"></ns2:column>
+    <ns2:column name="LATITUDE" type="DECIMAL" precision="10" length="10" isNull="true"></ns2:column>
     <ns2:column name="promoted" type="INTEGER" length="2" default="0"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="_sessionId" type="VARCHAR" length="38" default="0"></ns2:column>
@@ -158,6 +164,8 @@
       <ns2:fieldMapping beFieldName="htmlDesc" columnName="HTMLDESC"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="status" columnName="STATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="city" columnName="CITY"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="longitude" columnName="LONGITUDE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="latitude" columnName="LATITUDE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="promoted" columnName="PROMOTED"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_sessionId" columnName="_sessionId"></ns2:fieldMapping>
@@ -173,22 +181,24 @@
     <ns2:column name="SERIALNUMBER" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="COUNT" type="INTEGER" isNull="true"></ns2:column>
-    <ns2:column name="ESTIMATEDPRICE" type="DECIMAL" isNull="true"></ns2:column>
-    <ns2:column name="ENDPRICE" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="ESTIMATEDPRICE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
+    <ns2:column name="ENDPRICE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="PUBLISHEDCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="TAKENCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="DELIVERYINFOID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="DELIVERYTOINFOID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="PRODUCTID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="PHOTOS" type="VARCHAR" default="1"></ns2:column>
     <ns2:column name="HTMLDESC" type="VARCHAR" length="255" isNull="true"></ns2:column>
     <ns2:column name="STATE" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:column name="STATE1" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="TYPE" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="DATETYPE" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="DATECOUNT" type="INTEGER" length="2" default="1"></ns2:column>
-    <ns2:column name="DEPOSIT" type="DECIMAL" default="0"></ns2:column>
+    <ns2:column name="DEPOSIT" type="DECIMAL" precision="2" default="0"></ns2:column>
     <ns2:column name="CITY" type="VARCHAR" length="50" isNull="true"></ns2:column>
-    <ns2:column name="TAXRATE" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="LONGITUDE" type="DECIMAL" precision="10" length="10" isNull="true"></ns2:column>
+    <ns2:column name="LATITUDE" type="DECIMAL" precision="10" length="10" isNull="true"></ns2:column>
+    <ns2:column name="TAXRATE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="INVOICETYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="STARTDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="EXPIREDDATE" type="DATETIME" isNull="true"></ns2:column>
@@ -212,13 +222,13 @@
       <ns2:fieldMapping beFieldName="publishedCustomerId" columnName="PUBLISHEDCUSTOMERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="takenCustomerId" columnName="TAKENCUSTOMERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="deliveryInfoId" columnName="DELIVERYINFOID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="deliveryToInfoId" columnName="DELIVERYTOINFOID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="productId" columnName="PRODUCTID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="expiredDate" columnName="EXPIREDDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="photos" columnName="PHOTOS"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="htmlDesc" columnName="HTMLDESC"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="status" columnName="STATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="takenStatus" columnName="STATE1"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="taxRate" columnName="TAXRATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="invoiceType" columnName="INVOICETYPE"></ns2:fieldMapping>
@@ -226,6 +236,8 @@
       <ns2:fieldMapping beFieldName="deposit" columnName="DEPOSIT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="dateCount" columnName="DATECOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="city" columnName="CITY"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="longitude" columnName="LONGITUDE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="latitude" columnName="LATITUDE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="promoted" columnName="PROMOTED"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_sessionId" columnName="_sessionId"></ns2:fieldMapping>
@@ -237,7 +249,7 @@
     <entityName>ECOM_GOOfferPrice</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="PRICE" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="PRICE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="SAMPLEPHOTO" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="LEAVEWORDS" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="SESSIONID" type="VARCHAR" isNull="true"></ns2:column>
@@ -265,7 +277,7 @@
     <entityName>ECOM_ROOfferPrice</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="PRICE" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="PRICE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="SAMPLEPHOTO" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="LEAVEWORDS" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="SESSIONID" type="VARCHAR" isNull="true"></ns2:column>
@@ -320,7 +332,7 @@
     <ns2:column name="DESCRIPTION" type="VARCHAR" length="10" isNull="true"></ns2:column>
     <ns2:column name="CATEGORY" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="CODE" type="VARCHAR" length="10" isNull="true"></ns2:column>
-    <ns2:column name="WEIGHTUNIT" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="WEIGHTUNIT" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="PRICE" type="INTEGER" length="5" isNull="true"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
@@ -350,18 +362,20 @@
     <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="DIFFERENTIATION" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="COUNT" type="INTEGER" isNull="true"></ns2:column>
-    <ns2:column name="ESTIMATEDPRICE" type="DECIMAL" isNull="true"></ns2:column>
-    <ns2:column name="ENDPRICE" type="DECIMAL" isNull="true"></ns2:column>
-    <ns2:column name="TAXRATE" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="ESTIMATEDPRICE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
+    <ns2:column name="ENDPRICE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
+    <ns2:column name="TAXRATE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="INVOICETYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="PUBLISHEDCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="TAKENCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="DELIVERYINFOID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="DELIVERYTOINFOID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="PHOTOS" type="VARCHAR" default="1"></ns2:column>
     <ns2:column name="HTMLDESC" type="VARCHAR" length="255" isNull="true"></ns2:column>
     <ns2:column name="STATE" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:column name="STATE1" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="CITY" type="VARCHAR" length="50" isNull="true"></ns2:column>
+    <ns2:column name="LONGITUDE" type="DECIMAL" precision="10" length="10" isNull="true"></ns2:column>
+    <ns2:column name="LATITUDE" type="DECIMAL" precision="10" length="10" isNull="true"></ns2:column>
     <ns2:column name="NeedCreateModel" type="INTEGER" length="1" default="1"></ns2:column>
     <ns2:column name="MODELFILE" type="VARCHAR" length="50" isNull="true"></ns2:column>
     <ns2:column name="MATERIALTYPE" type="INTEGER" length="50" default="1"></ns2:column>
@@ -387,15 +401,17 @@
       <ns2:fieldMapping beFieldName="publishedCustomerId" columnName="PUBLISHEDCUSTOMERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="takenCustomerId" columnName="TAKENCUSTOMERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="deliveryInfoId" columnName="DELIVERYINFOID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="deliveryToInfoId" columnName="DELIVERYTOINFOID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="photos" columnName="PHOTOS"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="htmlDesc" columnName="HTMLDESC"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="status" columnName="STATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="takenStatus" columnName="STATE1"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="needCreateModel" columnName="NeedCreateModel"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="modelFile" columnName="MODELFILE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="materialType" columnName="MATERIALTYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="city" columnName="CITY"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="longitude" columnName="LONGITUDE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="latitude" columnName="LATITUDE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_sessionId" columnName="_sessionId"></ns2:fieldMapping>
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_MACHININGORDER0" mappingType="One-to-One" beFieldName="publishedCustomer" columnName="PUBLISHEDCUSTOMERID"></ns2:fieldMapping>
@@ -407,7 +423,7 @@
     <entityName>ECOM_MOOfferPrice</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="PRICE" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="PRICE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="SAMPLEPHOTO" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="LEAVEWORDS" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="SESSIONID" type="VARCHAR" isNull="true"></ns2:column>
@@ -439,9 +455,9 @@
     <ns2:column name="DESCRIPTION" type="VARCHAR" length="10" isNull="true"></ns2:column>
     <ns2:column name="CATEGORY" type="VARCHAR" length="256" isNull="true"></ns2:column>
     <ns2:column name="CODE" type="VARCHAR" length="10" isNull="true"></ns2:column>
-    <ns2:column name="WEIGHTUNIT" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="WEIGHTUNIT" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="PRICE" type="INTEGER" length="5" isNull="true"></ns2:column>
-    <ns2:column name="ESTIWEIGHT" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="ESTIWEIGHT" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="ESTIMAKINGHOUR" type="VARCHAR" length="256" isNull="true"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
@@ -627,6 +643,62 @@
           </ns2:condition>
         </ns2:conditionValue>
       </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.longitude</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>&lt;=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getMaxLongitude()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getMaxLongitude() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.longitude</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>&gt;=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getMinLongitude()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getMinLongitude() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.latitude</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>&lt;=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getMaxLatitude()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getMaxLatitude() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.latitude</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>&gt;=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getMinLatitude()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getMinLatitude() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
       <ns2:searchConditionData name="scObject" category="BusinessEntity">
         <type entityName="org.shaolin.vogerp.ecommercial.be.GoldenOrder"></type>
       </ns2:searchConditionData>
@@ -789,6 +861,62 @@
           </ns2:condition>
         </ns2:conditionValue>
       </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.longitude</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>&lt;=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getMaxLongitude()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getMaxLongitude() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.longitude</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>&gt;=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getMinLongitude()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getMinLongitude() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.latitude</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>&lt;=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getMaxLatitude()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getMaxLatitude() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.latitude</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>&gt;=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getMinLatitude()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getMinLatitude() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
       <ns2:searchConditionData name="scObject" category="BusinessEntity">
         <type entityName="org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder"></type>
       </ns2:searchConditionData>
@@ -934,6 +1062,62 @@
           </ns2:value>
           <ns2:condition>
             <expressionString><![CDATA[scObject.getCity() != null && scObject.getCity().trim().length() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.longitude</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>&lt;=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getMaxLongitude()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getMaxLongitude() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.longitude</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>&gt;=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getMinLongitude()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getMinLongitude() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.latitude</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>&lt;=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getMaxLatitude()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getMaxLatitude() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.latitude</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>&gt;=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getMinLatitude()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getMinLatitude() > 0]]></expressionString>
           </ns2:condition>
         </ns2:conditionValue>
       </ns2:fieldMapping>

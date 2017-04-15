@@ -360,10 +360,14 @@
       	      // get the default value logged in customer context.
       	  	  $ceName = UserContext.getUserContext().getOrgType();
       	  }
+      	  if ($pvalue == null) {
+      	  	  $pvalue = UserContext.getUserContext().getOrgType();
+          }
           
           $pvalues = new ArrayList();
           $pdisplayItems = new ArrayList();
           IConstantEntity ce = CEUtil.toCEValue($ceName);
+          $ceName = ce.getEntityName();
           CEOperationUtil.getCEComboBox($pvalues, $pdisplayItems, ce);
           
           $subvalues = new ArrayList();
@@ -371,17 +375,13 @@
       	  $values = new ArrayList();
       	  $displayItems = new ArrayList();
           
-          if ($value != null && $value.trim().length() > 0) {
-            IConstantEntity ceValue = CEUtil.toCEValue($value);
-            IConstantEntity parentCe = AppContext.get().getConstantService().getParent(ceValue);
+          if ($pvalue != null && $pvalue.trim().length() > 0) {
+            IConstantEntity ceValue = CEUtil.toCEValue($pvalue);
+            IConstantEntity parentCe = AppContext.get().getConstantService().getChildren(ceValue);
             if (parentCe != null) { 
                CEOperationUtil.getCEComboBox($subvalues, $subdisplayItems, parentCe);
-               CEOperationUtil.getCEComboBox($values, $displayItems, CEUtil.toCEValue(ceValue.getEntityName()));
+               //CEOperationUtil.getCEComboBox($values, $displayItems, CEUtil.toCEValue(parentCe.getEntityName()));
                $subvalue = parentCe.getEntityName() +","+ AppContext.get().getConstantService().getParentsIntValue(ceValue);
-               IConstantEntity rootCe = AppContext.get().getConstantService().getParent(parentCe); 
-               if (rootCe != null) {
-                 $pvalue = rootCe.getEntityName() +","+ AppContext.get().getConstantService().getParentsIntValue(parentCe); 
-               }
             }
           }
       	  

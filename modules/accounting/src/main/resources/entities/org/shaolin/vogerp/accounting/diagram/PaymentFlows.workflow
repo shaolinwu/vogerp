@@ -45,9 +45,12 @@
             </ns2:process>
             <ns2:eventDest>
                 <ns2:dest name="PrepayCallBack"></ns2:dest>
+                <ns2:dest name="deliveryOrder" flow="DeliveryOrder" entity="org.shaolin.vogerp.ecommercial.diagram.DeliveryFlows"></ns2:dest>
+                <!-- 
             	<ns2:dest name="deliveryOrder" flow="PublishGoldenOrder" entity="org.shaolin.vogerp.ecommercial.diagram.GoldenOrderFlows"></ns2:dest>
             	<ns2:dest name="deliveryOrder" flow="PublishRentOrder" entity="org.shaolin.vogerp.ecommercial.diagram.RentOrderFlows"></ns2:dest>
             	<ns2:dest name="deliveryOrder" flow="PublishRentOrder" entity="org.shaolin.vogerp.ecommercial.diagram.MachiningOrderFlows"></ns2:dest>
+                 -->
             </ns2:eventDest>
         </ns2:mission-node>
         
@@ -77,7 +80,7 @@
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                     import org.shaolin.uimaster.page.ajax.json.JSONObject;
                     {
-                        
+                        //just triggered for workflow node logging!
                     }
                     ]]></expressionString>
                 </ns2:expression>

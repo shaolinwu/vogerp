@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:WebService xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
+	xsi:schemaLocation="">
+	<entityName>org.shaolin.vogerp.ecommercial.page.AjaxService</entityName>
+	<systemVersion>0</systemVersion>
+	<!-- this is for Notification view. -->
+	<ns2:service name="openEOrderForDetail">
+        <ns2:filter>
+            <expressionString><![CDATA[
+            import org.shaolin.bmdp.runtime.security.UserContext;
+            {
+               return UserContext.getUserContext().isOnlineUser(UserContext.getUserContext().getUserId());
+            }
+            ]]></expressionString>
+        </ns2:filter>
+        <ns2:exp>
+            <expressionString><![CDATA[
+            import java.util.List;
+            import java.util.ArrayList;
+            import java.util.HashMap;
+            import org.shaolin.uimaster.page.AjaxContext;
+            import org.shaolin.uimaster.page.ajax.*;
+            import org.shaolin.vogerp.ecommercial.ce.*;
+            import org.shaolin.vogerp.ecommercial.be.*;
+            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+            import org.shaolin.bmdp.runtime.security.UserContext;
+            import org.shaolin.uimaster.page.ajax.json.JSONObject;
+            {
+               String parameter = @request.getParameter("param");
+               @page.log("parameter: " + parameter);
+               JSONObject json = new JSONObject(parameter);
+               long orderId = json.getLong("orderId");
+               String type = json.getString("type");
+               HashMap input = new HashMap();
+               IEOrder order = null;
+               long orgId = 0;
+               String orderName = "";
+               String formName = "";
+               if ("GoldenOrderImpl".equalsIgnoreCase(type)) {
+                   order = (GoldenOrderImpl)OrderModel.INSTANCE.get(orderId, GoldenOrderImpl.class);
+                   orgId = ((GoldenOrderImpl)order).getOrgId();
+                   orderName = "采购订单详情";
+                   formName = "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor";
+	               if (((GoldenOrderImpl)order).getType() == GoldenOrderType.SALE) {
+	                   orderName = "销售订单详情";
+	                   formName = "org.shaolin.vogerp.ecommercial.form.GoldenSaleOrderEditor";
+	               }
+	               if (order.getStatus() == OrderStatusType.PUBLISHED
+	                   || order.getStatus() == OrderStatusType.CREATED) {
+	               	   input.put("editable", new Boolean(true));
+	               } else {
+	                   input.put("editable", new Boolean(false));
+	               }
+               } else if ("RentOrLoanOrderImpl".equalsIgnoreCase(type)) {
+                   order = (RentOrLoanOrderImpl)OrderModel.INSTANCE.get(orderId, RentOrLoanOrderImpl.class);
+                   orgId = ((RentOrLoanOrderImpl)order).getOrgId();
+                   orderName = "租赁订单详情";
+	               formName = "org.shaolin.vogerp.ecommercial.form.RentOrderEditor";
+	               if (((RentOrLoanOrderImpl)order).getType() == RentOrLoanOrderType.LOAN) {
+	        	       formName = "org.shaolin.vogerp.ecommercial.form.RLoanOrderEditor";
+	        	   }
+	        	   if (order.getStatus() == OrderStatusType.PUBLISHED
+	                   || order.getStatus() == OrderStatusType.CREATED) {
+	               	   input.put("editable", new Boolean(true));
+	               } else {
+	                   input.put("editable", new Boolean(false));
+	               }
+        	   } else if ("MachiningOrderImpl".equalsIgnoreCase(type)) {
+        	       order = (MachiningOrderImpl)OrderModel.INSTANCE.get(orderId, MachiningOrderImpl.class);
+        	       orgId = ((MachiningOrderImpl)order).getOrgId();
+        	       orderName = "加工订单详情";
+	        	   formName = "org.shaolin.vogerp.ecommercial.form.MachiningOrder";
+	        	   if (order.getStatus() == OrderStatusType.PUBLISHED
+	                   || order.getStatus() == OrderStatusType.CREATED) {
+	               	   input.put("editable", new Boolean(true));
+	               } else {
+	                   input.put("editable", new Boolean(false));
+	               }
+	               if (order.getEstimatedPrice() > 0) {
+	                  formName = "org.shaolin.vogerp.ecommercial.form.MachiningOrderWithResult";
+	                  input.put("editable", new Boolean(false));
+	               } 
+               }
+               
+               if (orgId == UserContext.getUserContext().getOrgId()) {
+	               input.put("beObject", order);
+	               RefForm form = new RefForm("eorderForm", formName, input);
+	               @page.addElement(form);
+	               form.openInWindows(orderName, null, true);
+               } else {
+                   return "对不起，您没有访问权限！";
+               }
+            }
+            ]]></expressionString>
+        </ns2:exp>
+    </ns2:service>
+    <!-- this is for Notification view. -->
+    <ns2:service name="openPriceOfferingDetail">
+        <ns2:filter>
+            <expressionString><![CDATA[
+            import org.shaolin.bmdp.runtime.security.UserContext;
+            {
+               return UserContext.getUserContext().isOnlineUser(UserContext.getUserContext().getUserId());
+            }
+            ]]></expressionString>
+        </ns2:filter>
+        <ns2:exp>
+            <expressionString><![CDATA[
+            import java.util.List;
+            import java.util.ArrayList;
+            import java.util.HashMap;
+            import org.shaolin.uimaster.page.AjaxContext;
+            import org.shaolin.uimaster.page.ajax.*;
+            import org.shaolin.vogerp.ecommercial.ce.*;
+            import org.shaolin.vogerp.ecommercial.be.*;
+            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+            import org.shaolin.bmdp.runtime.security.UserContext;
+            import org.shaolin.uimaster.page.ajax.json.JSONObject;
+            {
+               String parameter = @request.getParameter("param");
+               @page.log("parameter: " + parameter);
+               JSONObject json = new JSONObject(parameter);
+               long orderId = json.getLong("orderId");
+               String type = json.getString("type");
+               HashMap input = new HashMap();
+               IEOrder order = null;
+               long orgId = 0;
+               String orderName = "";
+               String formName = "";
+               if ("GoldenOrderImpl".equalsIgnoreCase(type)) {
+                   order = (GoldenOrderImpl)OrderModel.INSTANCE.get(orderId, GoldenOrderImpl.class);
+                   orgId = ((GoldenOrderImpl)order).getOrgId();
+                   orderName = "采购竞价订单详情";
+                   formName = "org.shaolin.vogerp.ecommercial.form.GOOfferPriceTable";
+               } else if ("RentOrLoanOrderImpl".equalsIgnoreCase(type)) {
+                   order = (RentOrLoanOrderImpl)OrderModel.INSTANCE.get(orderId, RentOrLoanOrderImpl.class);
+                   orgId = ((RentOrLoanOrderImpl)order).getOrgId();
+                   orderName = "租赁竞价订单详情";
+	               formName = "org.shaolin.vogerp.ecommercial.form.ROOfferPriceTable";
+        	   } else if ("MachiningOrderImpl".equalsIgnoreCase(type)) {
+        	       order = (MachiningOrderImpl)OrderModel.INSTANCE.get(orderId, MachiningOrderImpl.class);
+        	       orgId = ((MachiningOrderImpl)order).getOrgId();
+        	       orderName = "加工竞价订单详情";
+	        	   formName = "org.shaolin.vogerp.ecommercial.form.MOOfferPriceTable";
+               }
+               
+               if (orgId == UserContext.getUserContext().getOrgId()) {
+	               input.put("beObject", order);
+	               input.put("list", order.getOfferPrices());
+	               RefForm form = new RefForm("offerTable", formName, input);
+                   @page.addElement(form);
+	               form.openInWindows(orderName, null, true);
+               } else {
+                   return "对不起，您没有访问权限！";
+               }
+            }
+            ]]></expressionString>
+        </ns2:exp>
+    </ns2:service>
+</ns2:WebService>

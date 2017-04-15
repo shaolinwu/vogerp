@@ -36,46 +36,44 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 	@Override
 	public void startService() {
 		IAppServiceManager serviceManger = AppContext.get();
-		if (AppContext.isMasterNode()) {
-			try {
-				RegistryImpl condition0 = new RegistryImpl();
-				List<IRegistry> registerItems = ModularityModel.INSTANCE.searchRegistryItems(condition0, null, 0, -1);
-				for (IRegistry item : registerItems) {
-					String parentPath = item.getPath().substring(0, item.getPath().lastIndexOf('/'));
-					String nodeName = item.getPath().substring(item.getPath().lastIndexOf('/') + 1);
-					Registry.getInstance().getNodeItems(parentPath).put(nodeName, item.getValue());
-					LoggerFactory.getLogger(Registry.class).info("Read Registry item: " + item.getPath() + "=" + item.getValue());
-				}
-				
-				loadConstants();
-			} catch (Exception e) {
-				throw new IllegalStateException("Failed to parse CE items: " + e.getMessage(), e);
+		try {
+			RegistryImpl condition0 = new RegistryImpl();
+			List<IRegistry> registerItems = ModularityModel.INSTANCE.searchRegistryItems(condition0, null, 0, -1);
+			for (IRegistry item : registerItems) {
+				String parentPath = item.getPath().substring(0, item.getPath().lastIndexOf('/'));
+				String nodeName = item.getPath().substring(item.getPath().lastIndexOf('/') + 1);
+				Registry.getInstance().getNodeItems(parentPath).put(nodeName, item.getValue());
+				LoggerFactory.getLogger(Registry.class).info("Read Registry item: " + item.getPath() + "=" + item.getValue());
 			}
 			
-			CaptchaImpl condition = new CaptchaImpl();
-			final List<ICaptcha> allCaptchas = CommonModel.INSTANCE.allCaptcha(condition, null, 0, -1);
-			ICaptcherService captcherSerivce = new ICaptcherService() {
-				@Override
-				public Class getServiceInterface() {
-					return ICaptcherService.class;
-				}
-				@Override
-				public int generateOne() {
-					return (int)(Math.random() * allCaptchas.size());
-				}
-				@Override
-				public ICaptcha getItem(int index) {
-					if (index == allCaptchas.size()) {
-						return allCaptchas.get(index - 1);
-					}
-					return allCaptchas.get(index);
-				}
-			};
-			IServerServiceManager.INSTANCE.register(captcherSerivce);
-			
-			ModuleServiceImpl moduleService = new ModuleServiceImpl();
-			serviceManger.register(moduleService);
+			loadConstants();
+		} catch (Exception e) {
+			throw new IllegalStateException("Failed to parse CE items: " + e.getMessage(), e);
 		}
+		
+		CaptchaImpl condition = new CaptchaImpl();
+		final List<ICaptcha> allCaptchas = CommonModel.INSTANCE.allCaptcha(condition, null, 0, -1);
+		ICaptcherService captcherSerivce = new ICaptcherService() {
+			@Override
+			public Class getServiceInterface() {
+				return ICaptcherService.class;
+			}
+			@Override
+			public int generateOne() {
+				return (int)(Math.random() * allCaptchas.size());
+			}
+			@Override
+			public ICaptcha getItem(int index) {
+				if (index == allCaptchas.size()) {
+					return allCaptchas.get(index - 1);
+				}
+				return allCaptchas.get(index);
+			}
+		};
+		IServerServiceManager.INSTANCE.register(captcherSerivce);
+		
+		ModuleServiceImpl moduleService = new ModuleServiceImpl();
+		serviceManger.register(moduleService);
 		
 		try {
 			ShortMsgServiceImpl smsService = new ShortMsgServiceImpl();

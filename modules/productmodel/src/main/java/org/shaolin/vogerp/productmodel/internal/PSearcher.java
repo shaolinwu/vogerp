@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -24,6 +26,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.shaolin.bmdp.runtime.security.UserContext;
+import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.utils.FileUtil;
 import org.shaolin.bmdp.utils.ImageUtil;
 import org.shaolin.bmdp.utils.StringUtil;
@@ -51,19 +54,14 @@ public class PSearcher {
 	
 	private List<Handler> handlers = new ArrayList<Handler>();
 	
-//	private WebClient wc = new WebClient();
+	private static ScheduledExecutorService scheduler = IServerServiceManager.INSTANCE.getSchedulerService()
+			.createScheduler("app", "product-donwload", 1);
 	
 	public static PSearcher getInstance() {
 		return INSTANCE;
 	}
 	
 	private PSearcher() {
-//		wc.getOptions().setUseInsecureSSL(true);
-//        wc.getOptions().setJavaScriptEnabled(true);
-//        wc.getOptions().setCssEnabled(false);
-//        wc.getOptions().setThrowExceptionOnScriptError(false); 
-//        wc.getOptions().setTimeout(10000);
-		
 		handlers.add(new ToBHandler());
 		handlers.add(new TMHandler());
 		handlers.add(new CnMHandler());
@@ -161,38 +159,41 @@ public class PSearcher {
 	 * @param items
 	 * @return
 	 */
-	public synchronized List<IProduct> downloadDetail(List<IImprotProductItem> items) {
-		List resultJsonItems = new ArrayList();
-		for (IImprotProductItem item: items) {
-			ProductImpl product = new ProductImpl();
-			product.setOrgId(UserContext.getUserContext().getOrgId());
-			product.setName(item.getName());
-			product.setDescription(item.getName());
-			product.setSerialNumber(ProductUtil.genSerialNumber());
-			product.setType("OtherProductType,1");//temporary type.
-			String resId = ProductUtil.genResourceId();
-			product.setHtmlDesc("/product/" + resId + "/desc.html");
-			product.setPhotos("/product/" + resId + "/images");
-			
-			for (Handler h: handlers) {
-				if (h.isAcceptable(item.getDetailLink())) {
-					try {
-						Thread.sleep(500);//prevent server blocking
-						//item.getDetailLink(), item.getDetailLink().substring(0, item.getDetailLink().indexOf(".com") + 4
-						//item.getImageLink(), item.getImageLink().substring(0, item.getImageLink().indexOf(".com") + 4)
-						h.downloadDetail(item, product);
-					} catch (Exception e) {
-						logger.warn("Failed to parse this link: " + item.getDetailLink(), e);
+	public synchronized void downloadDetail(final List<IImprotProductItem> items) {
+		scheduler.schedule(new Runnable() {
+			@Override
+			public void run() {
+				final List resultJsonItems = new ArrayList();
+				for (IImprotProductItem item: items) {
+					ProductImpl product = new ProductImpl();
+					product.setOrgId(UserContext.getUserContext().getOrgId());
+					product.setName(item.getName());
+					product.setDescription(item.getName());
+					product.setSerialNumber(ProductUtil.genSerialNumber());
+					product.setType("OtherProductType,1");//temporary type.
+					String resId = ProductUtil.genResourceId();
+					product.setHtmlDesc("/product/" + resId + "/desc.html");
+					product.setPhotos("/product/" + resId + "/images");
+					
+					for (Handler h: handlers) {
+						if (h.isAcceptable(item.getDetailLink())) {
+							try {
+								Thread.sleep(500);//prevent server blocking
+								//item.getDetailLink(), item.getDetailLink().substring(0, item.getDetailLink().indexOf(".com") + 4
+								//item.getImageLink(), item.getImageLink().substring(0, item.getImageLink().indexOf(".com") + 4)
+								h.downloadDetail(item, product);
+								ProductUtil.genProductThumbnail(product);
+								break;
+							} catch (Exception e) {
+								logger.warn("Failed to parse this link: " + item.getDetailLink(), e);
+							}
+						}
 					}
+					resultJsonItems.add(product);
 				}
+				ProductModel.INSTANCE.batchInsert(resultJsonItems, true);
 			}
-			
-			resultJsonItems.add(product);
-			// after downloading
-			ProductUtil.genProductThumbnail(product);
-		}
-		ProductModel.INSTANCE.batchInsert(resultJsonItems, true);
-		return resultJsonItems;
+		}, 0, TimeUnit.MILLISECONDS);
 	}
 	
 	private static Document getDocument(String url){

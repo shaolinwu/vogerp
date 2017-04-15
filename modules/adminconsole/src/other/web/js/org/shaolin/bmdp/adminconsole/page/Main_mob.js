@@ -214,6 +214,31 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 
         
 			   {
+			     // notify user open up the GPS.
+			    var longitudeInfo = 0;
+			    var latitudeInfo = 0;
+	            $("<div style='display:none;' id='mapcontainer'><div>").appendTo($(document.forms[0]));
+				    var map = new AMap.Map('mapcontainer');
+				    map.plugin('AMap.Geolocation', function() {
+				        var geolocation = new AMap.Geolocation({
+				            enableHighAccuracy: true,
+				            timeout: 10000,
+				            buttonOffset: new AMap.Pixel(10, 20),
+				            zoomToAccuracy: false,
+				            buttonPosition:'RB'
+				        });
+				        map.addControl(geolocation);
+				        geolocation.getCurrentPosition();
+				        AMap.event.addListener(geolocation, 'complete', onComplete);
+				        AMap.event.addListener(geolocation, 'error', onError);
+				    });
+				    function onComplete(data) {
+				        console.log("latitudeInfo: " + data.position.getLng() + ", longitudeInfo: " + data.position.getLat());
+				    }
+				    function onError(data) {
+				        console.log("geolocation fails: " + data.message);
+				    }
+			    
 			     var o = this;
 			     o.clearSelectedTab = function() {
 			        $(o.bottomPanel).children().each(function(){
@@ -237,12 +262,12 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 					    }
 				    }
 			     });
-			     this.realCounter = $("<span style='color:blue;font-weight:bold;'></span>");
+			     this.realCounter = $("<span style='color:blue;font-weight:bold;position:absolute;'></span>");
 			     $(this.matrixUI).find("[class=messageIcon]").append(this.realCounter);
 			     this.nodesocket = io.connect(this.serverURLUI.value);
 			     this.nodesocket.on('connect', function(e) {
 		            var msg = {partyId: o.partyIdUI.value};
-		            o.nodesocket.emit('register', msg);
+		            o.nodesocket.emit('register', msg); //for registering web socket after refreshing page only.
 		         });
 		         this.nodesocket.on('loginSuccess', function(e) {
 		            var msg = {partyId: o.partyIdUI.value};
@@ -252,7 +277,10 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 		            o.realCounter.text("("+e+")");
 		            o.realCounter.c = e;
 		         });
-		         o.nodesocket.on('notifyFrom', function(e) {
+		         o.nodesocket.on('notifyhistory', function(e) {
+		            o.realCounter.text("("+(++o.realCounter.c)+")");
+		         });
+		         o.nodesocket.on('notifySingleItem', function(e) {
 		            o.realCounter.text("("+(++o.realCounter.c)+")");
 		         });
 			   }

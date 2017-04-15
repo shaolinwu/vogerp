@@ -4,9 +4,9 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.ecommercial.page.OnlineOrderList</entityName>
 	<systemVersion>0</systemVersion>
-	<description>抢单达人主页</description>
+	<description>加工达人主页</description>
 	<descriptionExpr>
-	   <expressionString><![CDATA[{return "抢单达人主页";}]]></expressionString>
+	   <expressionString><![CDATA[{return "加工达人主页";}]]></expressionString>
 	</descriptionExpr>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 	    <ns2:eventHandler functionName="openGoldenOrder">
@@ -717,7 +717,7 @@
 		                            <ns2:expressionString><![CDATA[
 		                            import java.util.List;
 		                            import org.shaolin.uimaster.page.ajax.TableConditions;
-		                            import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
+		                            import org.shaolin.vogerp.ecommercial.ce.*;
 		                            import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
 		                            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
 		                            import org.shaolin.bmdp.runtime.AppContext;
@@ -738,6 +738,7 @@
 		                                      AppContext.register(masterApp);
 		                                      RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
 		                                      condition.setType(RentOrLoanOrderType.RENT);
+		                                      condition.setStatus(OrderStatusType.PUBLISHED);
 		                                      return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 
@@ -832,7 +833,7 @@
                                     <ns2:expressionString><![CDATA[
                                     import java.util.List;
                                     import org.shaolin.uimaster.page.ajax.TableConditions;
-                                    import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
+                                    import org.shaolin.vogerp.ecommercial.ce.*;
                                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                                     import org.shaolin.bmdp.runtime.AppContext;
@@ -853,6 +854,7 @@
                                               AppContext.register(masterApp);
                                               RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
                                               condition.setType(RentOrLoanOrderType.LOAN);
+                                              condition.setStatus(OrderStatusType.PUBLISHED);
                                               return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
                                                         $tableCondition.getOrders(),
                                                         $tableCondition.getOffset(), 

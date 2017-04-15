@@ -6,10 +6,18 @@ import java.util.List;
 
 import org.shaolin.bmdp.i18n.LocaleContext;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
+import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.utils.DateParser;
 import org.shaolin.bmdp.utils.LockManager;
+import org.shaolin.uimaster.page.AjaxContext;
+import org.shaolin.uimaster.page.ajax.RadioButtonGroup;
+import org.shaolin.uimaster.page.ajax.json.JSONObject;
 import org.shaolin.uimaster.page.exception.FormatException;
 import org.shaolin.uimaster.page.od.formats.FormatUtil;
+import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+import org.shaolin.vogerp.commonmodel.be.IDeliveryInfo;
+import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
 import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
 import org.shaolin.vogerp.ecommercial.be.IEOrder;
 import org.shaolin.vogerp.ecommercial.be.IGoldenOrder;
@@ -174,7 +182,7 @@ public class OrderUtil {
 	
 	public static String getOrderHTMLInfo(IEOrder order) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<div>");
+		sb.append("<div class='vogerp_order'>");
 		sb.append("<div class='vogerp_city'>\u6765\u81EA").append(CEUtil.getValue(order.getCity()));
 		if (order instanceof IGoldenOrder) {
 			if (((IGoldenOrder)order).getType() == GoldenOrderType.PURCHASE) {
@@ -232,4 +240,152 @@ public class OrderUtil {
 		totalPrice += morder.getTaxRate() * totalPrice;
 		return totalPrice;
 	}
+	
+	public static void setPublishedUserAddress(final IEOrder order) {
+		if (order.getDeliveryInfoId() > 0) {
+			DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl) CommonModel.INSTANCE.get(order.getDeliveryInfoId(),
+					DeliveryInfoImpl.class);
+			order.setDeliveryInfo(deliveryInfo);
+		}
+		if (order.getDeliveryInfoId() == 0) {
+			order.setDeliveryInfo(
+					(DeliveryInfoImpl) CustomerInfoUtil.createDeliveryInfo(UserContext.getUserContext().getUserId()));
+			order.setDeliveryInfoId(order.getDeliveryInfo().getId());
+			CommonModel.INSTANCE.create(order.getDeliveryInfo());
+		}
+	}
+	
+	public static void setTakenUserAddress(final IEOrder order, final long userId) {
+		if (order.getDeliveryInfoId() > 0 && order.getDeliveryInfo() == null) {
+			DeliveryInfoImpl deliveryInfo = CommonModel.INSTANCE.get(order.getDeliveryInfoId(),
+					DeliveryInfoImpl.class);
+			order.setDeliveryInfo(deliveryInfo);
+		}
+		IDeliveryInfo endUser = CustomerInfoUtil.createDeliveryInfo(userId);
+		order.getDeliveryInfo().setToUserId(userId);
+		order.getDeliveryInfo().setToAddress(endUser.getAddress());
+		order.getDeliveryInfo().setToName(endUser.getName());
+		order.getDeliveryInfo().setToMobileNumber(endUser.getMobileNumber());
+		
+		CommonModel.INSTANCE.update(order.getDeliveryInfo());
+	}
+	
+	public static void reverseDeliveryAddress(final IEOrder order) {
+		if (order.getDeliveryInfoId() > 0 && order.getDeliveryInfo() == null) {
+			DeliveryInfoImpl deliveryInfo = CommonModel.INSTANCE.get(order.getDeliveryInfoId(),
+					DeliveryInfoImpl.class);
+			order.setDeliveryInfo(deliveryInfo);
+		}
+		
+		IDeliveryInfo info = order.getDeliveryInfo();
+		
+		long userId = info.getUserId();
+		String address = info.getAddress();
+		String name = info.getName();
+		String mNumber = info.getMobileNumber();
+		
+		info.setUserId(info.getToUserId());
+		info.setAddress(info.getToAddress());
+		info.setName(info.getToName());
+		info.setMobileNumber(info.getToMobileNumber());
+		
+		info.setToUserId(userId);
+		info.setToAddress(address);
+		info.setToName(name);
+		info.setToMobileNumber(mNumber);
+		
+		CommonModel.INSTANCE.update(info);
+	}
+	
+	public static String getOrderStatusInfo(final IEOrder order) {
+		String color = "black";
+        if (order.getStatus() == OrderStatusType.PUBLISHED) {
+           color = "blue";
+        } else if (order.getStatus() == OrderStatusType.TAKEN) {
+           color = "green";
+        } else if (order.getStatus() == OrderStatusType.FORBIDDEN
+        		|| order.getStatus() == OrderStatusType.CANCELLED) {
+            color = "red";
+         }
+        String state = "<span style='color:"+color+";'>" + order.getStatus().getDisplayName() + "</span>";
+        if (order.getOfferPrices() != null && order.getOfferPrices().size() > 0) {
+           return state + "(\u5DF2\u7ADE\u4EF7<span style='color:red;'>" +order.getOfferPrices().size()+ "</span>\u6B21)";
+        }
+        return state;
+	}
+	
+	public static String getOrderLink(final IEOrder order) {
+		StringBuilder sb = new StringBuilder();
+		try {
+			JSONObject param = new JSONObject();
+			param.put("orderId", order.getId() + "");
+			param.put("type", order.getClass().getSimpleName());
+			sb.append("<a href='#' onclick=\"javascript:UIMaster.util.invokeWebService('org.shaolin.vogerp.ecommercial.page.AjaxService', 'openEOrderForDetail', \"").append(param.toString()).append("\");\">");
+			sb.append(order.getSerialNumber()).append("</a>");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return sb.toString();
+	}
+	
+	public static String getOrderOfferPriceLink(final IEOrder order) {
+		StringBuilder sb = new StringBuilder();
+		try {
+			JSONObject param = new JSONObject();
+			param.put("orderId", order.getId() + "");
+			param.put("type", order.getClass().getSimpleName());
+			sb.append("<a href='#' onclick=\"javascript:UIMaster.util.invokeWebService('org.shaolin.vogerp.ecommercial.page.AjaxService', 'openPriceOfferingDetail', \"").append(param.toString()).append("\");\">");
+			sb.append(order.getSerialNumber()).append("</a>");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return sb.toString();
+	}
+	
+	public static void updateSearchCriteria(AjaxContext page, IEOrder condition) {
+		if (page != null) {
+			RadioButtonGroup buttonGroup = page.getRadioBtnGroup("searchBar.selectFilterUI");
+			if ("1".equals(buttonGroup.getValue()) && UserContext.getUserContext().getLongitude() > 0) {
+				// $page.getHidden("searchBar.areaScopeUI").setValue(100);
+				// 12 kilometres = 0.1
+				double maxlong = UserContext.getUserContext().getLongitude() + 0.1;
+				double maxlati = UserContext.getUserContext().getLatitude() + 0.1;
+				double minlong = UserContext.getUserContext().getLongitude() - 0.1;
+				double minlati = UserContext.getUserContext().getLatitude() - 0.1;
+
+				condition.setCity(null);
+				condition.setMaxLongitude(maxlong);
+				condition.setMaxLatitude(maxlati);
+				condition.setMinLongitude(minlong);
+				condition.setMinLatitude(minlati);
+			} else if ("2".equals(buttonGroup.getValue())) {
+				String city = page.getHidden("searchBar.citiesCbxUI").getValue();
+				if (city != null && city.length() > 0) {
+					condition.setCity(city);
+					condition.setMaxLongitude(0);
+					condition.setMaxLatitude(0);
+					condition.setMinLongitude(0);
+					condition.setMinLatitude(0);
+				}
+			} else if ("3".equals(buttonGroup.getValue())) {
+				condition.setCity(null);
+				condition.setMaxLongitude(0);
+				condition.setMaxLatitude(0);
+				condition.setMinLongitude(0);
+				condition.setMinLatitude(0);
+			}
+		} else if (UserContext.getUserContext().getLongitude() > 0) {
+			double maxlong = UserContext.getUserContext().getLongitude() + 0.1;
+			double maxlati = UserContext.getUserContext().getLatitude() + 0.1;
+			double minlong = UserContext.getUserContext().getLongitude() - 0.1;
+			double minlati = UserContext.getUserContext().getLatitude() - 0.1;
+
+			condition.setMaxLongitude(maxlong);
+			condition.setMaxLatitude(maxlati);
+			condition.setMinLongitude(minlong);
+			condition.setMinLatitude(minlati);
+		}
+	}
+	
+	
 }

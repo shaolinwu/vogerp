@@ -13,6 +13,11 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor(json)
         ui: elementList[prefix + "saleOrderLabel"]
     });
 
+    var addProductBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "addProductBtn"]
+    });
+
     var hintsUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "hintsUI"]
@@ -37,6 +42,13 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor(json)
         ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
     });
 
+    var productPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "productPanel"]
+        ,items: []
+        ,subComponents: [prefix + "addProductBtn"]
+    });
+
     var selectTypePanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "selectTypePanel"]
@@ -49,18 +61,20 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "selectTypePanel",prefix + "hintsUI",prefix + "priceSelector"]
+        ,subComponents: [prefix + "selectTypePanel",prefix + "productPanel",prefix + "hintsUI",prefix + "priceSelector"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [purchaseOrderLabel,saleOrderLabel,hintsUI,okbtn,cancelbtn,priceSelector,fieldPanel,selectTypePanel,actionPanel]
+        ,items: [purchaseOrderLabel,saleOrderLabel,addProductBtn,hintsUI,okbtn,cancelbtn,priceSelector,fieldPanel,selectTypePanel,productPanel,actionPanel]
     });
 
     Form.purchaseOrderLabel=purchaseOrderLabel;
 
     Form.saleOrderLabel=saleOrderLabel;
+
+    Form.addProductBtn=addProductBtn;
 
     Form.hintsUI=hintsUI;
 
@@ -78,6 +92,10 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor(json)
 
     Form.saleOrderLabel=saleOrderLabel;
 
+    Form.productPanel=productPanel;
+
+    Form.addProductBtn=addProductBtn;
+
     Form.hintsUI=hintsUI;
 
     Form.priceSelector=priceSelector;
@@ -87,6 +105,10 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor(json)
     Form.purchaseOrderLabel=purchaseOrderLabel;
 
     Form.saleOrderLabel=saleOrderLabel;
+
+    Form.productPanel=productPanel;
+
+    Form.addProductBtn=addProductBtn;
 
     Form.actionPanel=actionPanel;
 
@@ -107,6 +129,10 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor(json)
     Form.selectedSaleOrder = org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_selectedSaleOrder;
 
     Form.Next = org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_Next;
+
+    Form.addProduct = org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_addProduct;
+
+    Form.refreshProductTree = org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_refreshProductTree;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_invokeDynamicFunction;
 
@@ -171,6 +197,28 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor(json)
            $(this.selectTypePanel).dialog();
         }
             }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_Next */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_addProduct(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_addProduct */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"addProduct-20170306-114008",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_addProduct */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_refreshProductTree(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_refreshProductTree */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"refreshProductTree-20170306-114008",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_GoldenOrderPreEditor_refreshProductTree */
 
 
     /* auto generated eventlistener function declaration */

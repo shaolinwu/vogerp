@@ -8,6 +8,11 @@ function org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView(json)
         ui: elementList[prefix + "idUI"]
     });
 
+    var userIdUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "userIdUI"]
+    });
+
     var nameUI = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "nameUI"]
@@ -42,17 +47,19 @@ function org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "nameUI",prefix + "mobileUI",prefix + "contactorUILabel",prefix + "contactorUI",prefix + "addressUILabel",prefix + "addressUI"]
+        ,subComponents: [prefix + "idUI",prefix + "userIdUI",prefix + "nameUI",prefix + "mobileUI",prefix + "contactorUILabel",prefix + "contactorUI",prefix + "addressUILabel",prefix + "addressUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.RighOpenPanel"
-        ,items: [idUI,nameUI,mobileUI,contactorUILabel,contactorUI,addressUILabel,addressUI,fieldPanel]
+        ,items: [idUI,userIdUI,nameUI,mobileUI,contactorUILabel,contactorUI,addressUILabel,addressUI,fieldPanel]
     });
 
     Form.idUI=idUI;
+
+    Form.userIdUI=userIdUI;
 
     Form.nameUI=nameUI;
 
@@ -69,6 +76,8 @@ function org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView(json)
     Form.fieldPanel=fieldPanel;
 
     Form.idUI=idUI;
+
+    Form.userIdUI=userIdUI;
 
     Form.nameUI=nameUI;
 

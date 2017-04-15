@@ -13,18 +13,14 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
         ui: elementList[prefix + "clickEventUI"]
     });
 
-    var cityListUI = new UIMaster.ui.list
+    var cityListUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "cityListUI"]
-        ,horizontalLayout: true
-        ,colCount: 6
     });
 
-    var citySubListUI = new UIMaster.ui.list
+    var citySubListUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "citySubListUI"]
-        ,horizontalLayout: true
-        ,colCount: 6
     });
 
     var cancelbtn = new UIMaster.ui.button
@@ -93,6 +89,8 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
 
     Form.selectedCity = org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_selectedCity;
 
+    Form.Clean = org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_Clean;
+
     Form.Cancel = org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_Cancel;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_invokeDynamicFunction;
@@ -127,6 +125,17 @@ function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedCity-201604152311",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_selectedCity */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_Clean(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_Clean */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"Clean-201703122311",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_CitySelelctor_mob_Clean */
 
 
     /* auto generated eventlistener function declaration */
