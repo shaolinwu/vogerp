@@ -162,7 +162,7 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 				state = alipayHandler.query(order);
 			} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
 				state = wepayHandler.query(order);
-			} else if (SettlementMethodType.NOT_SPECIFIED == order.getCustomerAPaymentMethod()) {
+			} else if (SettlementMethodType.NOT_SPECIFIED.getIntValue() == order.getCustomerAPaymentMethod().getIntValue()) {
 				return PayOrderStatusType.NOTPAYED;
 			} else {
 				throw new PaymentException("Unsupported query method: " + order.getCustomerAPaymentMethod());
@@ -177,7 +177,7 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	}
 	
 	public PayOrderStatusType queryForPayStatus(final IPayOrder oldorder) throws PaymentException {
-		if (oldorder.getCustomerAPaymentMethod() == SettlementMethodType.NOT_SPECIFIED) {
+		if (oldorder.getCustomerAPaymentMethod().getIntValue() == SettlementMethodType.NOT_SPECIFIED.getIntValue()) {
 			return PayOrderStatusType.NOTPAYED;
 		}
 		PayOrderImpl order = AccountingModel.INSTANCE.get(oldorder.getId(), PayOrderImpl.class);
@@ -187,7 +187,7 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 				state = alipayHandler.query(order);
 			} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
 				state = wepayHandler.query(order);
-			} else if (SettlementMethodType.NOT_SPECIFIED == order.getCustomerAPaymentMethod()) {
+			} else if (SettlementMethodType.NOT_SPECIFIED.getIntValue() == order.getCustomerAPaymentMethod().getIntValue()) {
 				return PayOrderStatusType.NOTPAYED;
 			}  else {
 				throw new PaymentException("Unsupported query method: " + order.getCustomerAPaymentMethod());
