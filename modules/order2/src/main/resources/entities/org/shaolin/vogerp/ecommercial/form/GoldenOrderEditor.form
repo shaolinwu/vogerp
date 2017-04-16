@@ -550,6 +550,11 @@
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
       <ns2:UIComponent componentPath="invoiceTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.invoiceType" paramName="CEValue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ContainsNotSpecified">
+        <ns2:expression>
+          <expressionString>false</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
         <ns2:expression>
           <expressionString>"org.shaolin.vogerp.ecommercial.ce.InvoiceType"</expressionString>

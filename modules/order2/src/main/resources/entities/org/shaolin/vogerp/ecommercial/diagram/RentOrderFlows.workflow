@@ -340,6 +340,7 @@
             <ns2:eventDest>
             	<ns2:dest name="verifyROrder"></ns2:dest>
             	<ns2:dest name="publishGorder"></ns2:dest>
+            	<ns2:dest name="offerPrice"></ns2:dest>
             	<ns2:dest name="cancelGOrder"></ns2:dest>
             	<ns2:dest name="forbiddenROrder"></ns2:dest>
             </ns2:eventDest>
