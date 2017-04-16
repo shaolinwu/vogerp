@@ -239,10 +239,10 @@
                             Dialog.showMessageDialog("操作失败！", "订单状态: " + defaultUser.getStatus().getDisplayName(), Dialog.WARNING_MESSAGE, null);
                             return;
                         }
-                        defaultUser.setStatus(OrderStatusType.PUBLISHED);
                         
                         HashMap result = new HashMap();
                         result.put("order", defaultUser);
+                        result.put("verifyPass", Boolean.TRUE);
                         return result;
                     }
                     ]]></expressionString>
@@ -275,10 +275,10 @@
                             Dialog.showMessageDialog("操作失败！", "订单状态: " + defaultUser.getStatus().getDisplayName(), Dialog.WARNING_MESSAGE, null);
                             return;
                         }
-                        defaultUser.setStatus(OrderStatusType.CREATED);
                         
                         HashMap result = new HashMap();
                         result.put("order", defaultUser);
+                        result.put("verifyPass", Boolean.FALSE);
                         return result;
                     }
                     ]]></expressionString>
@@ -288,6 +288,9 @@
             <ns2:process>
                 <ns2:var name="order" category="BusinessEntity" scope="InOut">
                     <type entityName="org.shaolin.vogerp.ecommercial.be.GoldenOrder"></type>
+                </ns2:var>
+                <ns2:var name="verifyPass" category="JavaPrimitive" scope="InOut">
+                    <type entityName="java.lang.Boolean"></type>
                 </ns2:var>
                 <ns2:expression>
                     <expressionString><![CDATA[
@@ -308,7 +311,8 @@
                           
                           NotificationImpl message = new NotificationImpl();
                           message.setPartyId($order.getPublishedCustomerId());
-                          if ($order.getStatus() == OrderStatusType.PUBLISHED) {
+                          if ($verifyPass.booleanValue()) {
+                              $order.setStatus(OrderStatusType.PUBLISHED);
                           	  message.setSubject("您的加工订单通过审核! 推送给所有在线用户...");
 	                          message.setDescription(OrderUtil.getOrderLink($order) + $order.getDescription());
 	                          
@@ -318,6 +322,7 @@
 		                      message.setPartyType(UserContext.getUserContext().getOrgType());
 		                      //TODO: add product type as well
                           } else if ($order.getStatus() == OrderStatusType.CREATED) {
+                              $order.setStatus(OrderStatusType.CREATED);
                               message.setSubject("您的加工订单审核失败! 请打开订单查看详情。");
                               message.setDescription(OrderUtil.getOrderLink($order) + @flowContext.getEvent().getComments());
                           }
@@ -355,6 +360,7 @@
 			        import org.shaolin.vogerp.ecommercial.be.GOOfferPriceImpl;
 			        import org.shaolin.vogerp.ecommercial.dao.*;
 			        import org.shaolin.bmdp.runtime.AppContext; 
+			        import org.shaolin.bmdp.runtime.security.UserContext;
 			        import org.shaolin.vogerp.commonmodel.IUserService; 
 			        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
 			        import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
@@ -365,30 +371,15 @@
 			            GoldenOrderImpl order = (GoldenOrderImpl)out.get("beObject");
 			            
 			            GOOfferPriceImpl offerPrice = new GOOfferPriceImpl();
-			            IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
-			            offerPrice.setTakenCustomerId(service.getUserId());
+			            offerPrice.setTakenCustomerId(UserContext.getUserContext().getUserId());
 			            offerPrice.setPrice(Double.valueOf(@page.getTextField("priceUI").getValue()));
 			            offerPrice.setCreateDate(new Date());
 			            offerPrice.setSamplePhoto(@page.getHidden("samplePhotoUI.imagePathUI").getValue());
 			            offerPrice.setLeaveWords(@page.getTextArea("leaveWordUI").getValue());
 			            offerPrice.setSessionId(OrderUtil.genConversationId());
 			            
-			            int state = OrderUtil.addAPrice(order, offerPrice);
-			            if (state == -1) {
-			                form.closeIfinWindows();
-			                @page.removeForm(@page.getEntityUiid()); 
-			                Dialog.showMessageDialog("竞价失败，请刷新订单状态！", "提醒", Dialog.WARNING_MESSAGE, null);
-			                return;
-			            } else if (state == -2) {
-			                form.closeIfinWindows();
-			                @page.removeForm(@page.getEntityUiid()); 
-			                Dialog.showMessageDialog("您已出价一次，不可重复竞价！", "提醒", Dialog.WARNING_MESSAGE, null);
-			                return;
-			            } 
-			            
 			            form.closeIfinWindows();
 			            @page.removeForm(@page.getEntityUiid()); 
-			            //disable竞价按钮。Button offerPriceBtn = @page.getButton("offerPriceBtn");
 			            
 			            HashMap result = new HashMap();
 			            result.put("goldenOrder", order);
@@ -433,6 +424,15 @@
                      import org.shaolin.bmdp.workflow.be.NotificationImpl;
                      import org.shaolin.bmdp.workflow.ws.ChatService;
                      {
+                          int state = OrderUtil.addAPrice($goldenOrder, $offerPrice);
+			              if (state == -1) {
+			                 Dialog.showMessageDialog("竞价失败，请刷新订单状态！", "提醒", Dialog.WARNING_MESSAGE, null);
+			                 return;
+			              } else if (state == -2) {
+			                 Dialog.showMessageDialog("您已出价一次，不可重复竞价！", "提醒", Dialog.WARNING_MESSAGE, null);
+			                 return;
+			              } 
+                          
                           InterestEOrderImpl condition = new InterestEOrderImpl();
                           condition.setOrgId(UserContext.getUserContext().getOrgId());
                           condition.setOrderId($goldenOrder.getId());
@@ -506,11 +506,6 @@
                             Dialog.showMessageDialog("无法成交，因竟价客户没有配置默认地址！", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
-                        GoldenOrderImpl order = (GoldenOrderImpl)out.get("beObject");
-                        OrderUtil.setTakenUserAddress(order, selectedPrice.getTakenCustomerId());
-                        if (order.getType() == GoldenOrderType.PURCHASE) {
-                            OrderUtil.reverseDeliveryAddress(order);
-                        }
                         
                         HashMap result = new HashMap();
                         result.put("gorder", out.get("beObject"));
@@ -542,12 +537,10 @@
 				<ns2:var name="gorder" category="BusinessEntity" scope="InOut">
 					<type entityName="org.shaolin.vogerp.ecommercial.be.GoldenOrder"></type>
 				</ns2:var>
-				<ns2:var name="offerLowestPrice" category="JavaPrimitive"
-					scope="InOut">
+				<ns2:var name="offerLowestPrice" category="JavaPrimitive" scope="InOut">
 					<type entityName="java.lang.Boolean"></type>
 				</ns2:var>
-				<ns2:var name="selectedPrice" category="BusinessEntity"
-					scope="InOut">
+				<ns2:var name="selectedPrice" category="BusinessEntity" scope="InOut">
 					<type entityName="org.shaolin.vogerp.ecommercial.be.GOOfferPrice"></type>
 				</ns2:var>
 				<ns2:var name="page" category="JavaClass" scope="InOut">
@@ -579,6 +572,10 @@
                     import org.shaolin.vogerp.accounting.IPaymentService;
                     import org.shaolin.bmdp.utils.StringUtil;
                     {
+                         OrderUtil.setTakenUserAddress($gorder, $selectedPrice.getTakenCustomerId());
+                         if ($gorder.getType() == GoldenOrderType.PURCHASE) {
+                            OrderUtil.reverseDeliveryAddress($gorder);
+                         }
                          if ($offerLowestPrice != null && $offerLowestPrice == Boolean.TRUE) {
                             $gorder.setEndPrice(OrderUtil.getLowestOfferPrice($gorder, true));
                             $gorder.setTakenCustomerId(OrderUtil.getLowestOfferPriceCustId($gorder));

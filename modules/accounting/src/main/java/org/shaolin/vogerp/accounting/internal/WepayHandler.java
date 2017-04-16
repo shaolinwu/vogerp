@@ -177,7 +177,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 			
 			HashMap<String, Object> values = new HashMap<String, Object>();
 			values.put("appid", APP_ID);
-			values.put("body", StringUtil.string2Unicode(StringUtil.truncateString(payOrder.getDescription(), 20)));
+			values.put("body", StringUtil.unicode2String(StringUtil.truncateString(payOrder.getDescription(), 20)));
 			values.put("mch_id", MCH_ID);
 			values.put("nonce_str", StringUtil.genRandomAlphaBits(32));
 			values.put("out_trade_no", payOrder.getOutTradeNo());//must be unique requested every time!

@@ -154,7 +154,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 				AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
 				AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
 				model.setSubject(PaymentUtil.getPaymentTitle(payOrder));
-				model.setBody(StringUtil.string2Unicode(StringUtil.truncateString(payOrder.getDescription(), 20)));
+				model.setBody(StringUtil.unicode2String(StringUtil.truncateString(payOrder.getDescription(), 20)));
 				model.setOutTradeNo(payOrder.getOutTradeNo());//must be unique requested every time!
 				model.setTimeoutExpress("500m");
 				model.setTotalAmount((payOrder.getAmount() / 100) + "");

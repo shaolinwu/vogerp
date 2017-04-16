@@ -169,16 +169,18 @@
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                     {
                         Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
                         if (orderInfoTable.getSelectedRow() == null) {
                             return;
                         }
                         GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
+                        GoldenOrderImpl order = (GoldenOrderImpl)OrderModel.INSTANCE.get(defaultUser.getId(), GoldenOrderImpl.class);
                         
                         HashMap input = new HashMap();
-                        input.put("beObject", defaultUser);
-                        input.put("list", defaultUser.getOfferPrices());
+                        input.put("beObject", order);
+                        input.put("list", order.getOfferPrices());
                         input.put("editable", new Boolean(true));
                         RefForm form = new RefForm("offerPriceTable", "org.shaolin.vogerp.ecommercial.form.GOOfferPriceTable", input);
                         @page.addElement(form);
@@ -197,16 +199,18 @@
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                     {
                         Table orderInfoTable = (Table)@page.getElement("rentOrderTable");
                         if (orderInfoTable.getSelectedRow() == null) {
                             return;
                         }
                         RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)orderInfoTable.getSelectedRow();
+                        RentOrLoanOrderImpl order = (RentOrLoanOrderImpl)OrderModel.INSTANCE.get(defaultUser.getId(), RentOrLoanOrderImpl.class);
                         
                         HashMap input = new HashMap();
-                        input.put("beObject", defaultUser);
-                        input.put("list", defaultUser.getOfferPrices());
+                        input.put("beObject", order);
+                        input.put("list", order.getOfferPrices());
                         input.put("editable", new Boolean(true));
                         RefForm form = new RefForm("offerPriceTable", "org.shaolin.vogerp.ecommercial.form.ROOfferPriceTable", input);
                         @page.addElement(form);
@@ -225,6 +229,7 @@
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                     {
                         Table orderInfoTable = (Table)@page.getElement("machiningTable");
                         if (orderInfoTable.getSelectedRow() == null) {
@@ -232,9 +237,11 @@
                         }
                         MachiningOrderImpl defaultUser = (MachiningOrderImpl)orderInfoTable.getSelectedRow();
                         
+                        MachiningOrderImpl order = (MachiningOrderImpl)OrderModel.INSTANCE.get(defaultUser.getId(), MachiningOrderImpl.class);
+                        
                         HashMap input = new HashMap();
-                        input.put("beObject", defaultUser);
-                        input.put("list", defaultUser.getOfferPrices());
+                        input.put("beObject", order);
+                        input.put("list", order.getOfferPrices());
                         input.put("editable", new Boolean(true));
                         RefForm form = new RefForm("offerPriceTable", "org.shaolin.vogerp.ecommercial.form.MOOfferPriceTable", input);
                         @page.addElement(form);
