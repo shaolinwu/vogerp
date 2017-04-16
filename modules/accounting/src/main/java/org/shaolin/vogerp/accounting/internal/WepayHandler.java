@@ -257,28 +257,32 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 	 * @throws PaymentException
 	 */
 	public String refund(final IPayOrder order) throws PaymentException {
+
+		// TODO ============>> for test, please delete
+		order.setOutTradeNo("OTN2017041619007133727");
+		order.setAmount(300);
+		//============>> for test, please delete
+
 		try {
 			HashMap<String, Object> values = new HashMap<String, Object>();
 			values.put("appid", APP_ID);
 			values.put("mch_id", MCH_ID);
 			values.put("nonce_str", StringUtil.genRandomAlphaBits(32));
-//			values.put("transaction_id", order.getOutTradeNo());
 			values.put("out_trade_no", order.getOutTradeNo());
 			values.put("out_refund_no", PaymentUtil.genRefundSerialNumber()); //
 			values.put("total_fee", ((int)order.getAmount()) + ""); //fen
 			values.put("refund_fee", ((int)order.getAmount()) + "");
-			values.put("op_user_id", "system"); //operator user id
+			values.put("op_user_id", MCH_ID); //operator user id
 
 			StringBuffer keyValues = new StringBuffer();
 			keyValues.append("appid=").append(APP_ID);
 			keyValues.append("&mch_id=").append(values.get("mch_id"));
 			keyValues.append("&nonce_str=").append(values.get("nonce_str"));
-			keyValues.append("&transaction_id=").append(values.get("transaction_id"));
-			keyValues.append("&out_trade_no=").append(values.get("out_trade_no"));
-			keyValues.append("&out_refund_no=").append(values.get("out_refund_no"));
-			keyValues.append("&total_fee=").append(values.get("total_fee"));
-			keyValues.append("&refund_fee=").append(values.get("refund_fee"));
 			keyValues.append("&op_user_id=").append(values.get("op_user_id"));
+			keyValues.append("&out_refund_no=").append(values.get("out_refund_no"));
+			keyValues.append("&out_trade_no=").append(values.get("out_trade_no"));
+			keyValues.append("&refund_fee=").append(values.get("refund_fee"));
+			keyValues.append("&total_fee=").append(values.get("total_fee"));
 			//key setting path ：pay.weixin.qq.com-->API security-->password
 			keyValues.append("&key=").append(MCH_APISECURE_KEY);
 			values.put("sign", encodeMD5(keyValues.toString(), "UTF-8").toUpperCase());
@@ -303,7 +307,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 				HttpPost httpPost = new HttpPost(REFUND_URL);
 				StringEntity entity = new StringEntity(StringUtil.convertMapToXML(values, "xml"), "utf-8");
 				entity.setContentEncoding("utf-8");
-				entity.setContentType("");
+				entity.setContentType("text/xml");
 				httpPost.setEntity(entity);
 				response = httpClient.execute(httpPost);
 
@@ -593,6 +597,6 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
         int d1 = n / 16;  
         int d2 = n % 16;  
         return hexDigits[d1] + hexDigits[d2];  
-    } 
+    }
 
 }
