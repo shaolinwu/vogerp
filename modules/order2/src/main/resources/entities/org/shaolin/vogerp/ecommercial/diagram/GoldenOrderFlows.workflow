@@ -335,6 +335,7 @@
             	<ns2:dest name="verifyGOrder"></ns2:dest>
             	<ns2:dest name="publishGorder"></ns2:dest>
             	<ns2:dest name="cancelGOrder"></ns2:dest>
+            	<ns2:dest name="offerPrice"></ns2:dest>
             </ns2:eventDest>
         </ns2:mission-node>
 
