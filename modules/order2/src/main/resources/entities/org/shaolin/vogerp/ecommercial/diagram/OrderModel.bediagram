@@ -85,6 +85,11 @@
             </bediagram:type>
         </bediagram:member>
         <bediagram:member>
+            <!-- 发票抬头 -->
+            <bediagram:name>invoiceSign</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>productId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>

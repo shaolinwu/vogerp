@@ -65,6 +65,7 @@
     <ns2:column name="ORDERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="TAXRATE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="INVOICETYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="INVOICESIGN" type="VARCHAR" length="30" isNull="true"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="EXPIREDDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="STATE" type="INTEGER" length="2" default="1"></ns2:column>
@@ -96,6 +97,7 @@
       <ns2:fieldMapping beFieldName="orderId" columnName="ORDERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="productId" columnName="PRODUCTID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="invoiceType" columnName="INVOICETYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="invoiceSign" columnName="INVOICESIGN"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="taxRate" columnName="TAXRATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="deliveryInfoId" columnName="DELIVERYINFOID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
@@ -200,6 +202,7 @@
     <ns2:column name="LATITUDE" type="DECIMAL" precision="10" length="10" isNull="true"></ns2:column>
     <ns2:column name="TAXRATE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="INVOICETYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="INVOICESIGN" type="VARCHAR" length="30" isNull="true"></ns2:column>
     <ns2:column name="STARTDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="EXPIREDDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
@@ -232,6 +235,7 @@
       <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="taxRate" columnName="TAXRATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="invoiceType" columnName="INVOICETYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="invoiceSign" columnName="INVOICESIGN"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="dateType" columnName="DATETYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="deposit" columnName="DEPOSIT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="dateCount" columnName="DATECOUNT"></ns2:fieldMapping>
@@ -366,6 +370,7 @@
     <ns2:column name="ENDPRICE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="TAXRATE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="INVOICETYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="INVOICESIGN" type="VARCHAR" length="30" isNull="true"></ns2:column>
     <ns2:column name="PUBLISHEDCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="TAKENCUSTOMERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="DELIVERYINFOID" type="BIGINT" isNull="true"></ns2:column>
@@ -398,6 +403,7 @@
       <ns2:fieldMapping beFieldName="endPrice" columnName="ENDPRICE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="taxRate" columnName="TAXRATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="invoiceType" columnName="INVOICETYPE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="invoiceSign" columnName="INVOICESIGN"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="publishedCustomerId" columnName="PUBLISHEDCUSTOMERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="takenCustomerId" columnName="TAKENCUSTOMERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="deliveryInfoId" columnName="DELIVERYINFOID"></ns2:fieldMapping>

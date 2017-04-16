@@ -81,8 +81,7 @@
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:columnWidthWeight>0</ns2:columnWidthWeight>
-        <ns2:columnWidthWeight>30</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="ceNameUI" />
       <ns2:component xsi:type="ns2:UIComboBoxType" UIID="typeUI">
@@ -91,6 +90,7 @@
           <ns2:handler functionName="selectItem"></ns2:handler>
         </ns2:EventListener>
       </ns2:component>
+      <!-- 
       <ns2:component xsi:type="ns2:UIImageType" UIID="filterUI">
         <ns2:Property name="width">
             <ns2:value xsi:type="ns2:StringPropertyType">
@@ -111,14 +111,17 @@
           <ns2:handler functionName="showFilter"></ns2:handler>
         </ns2:EventListener>
       </ns2:component>
+       -->
 	  <ns2:layoutConstraint>
         <ns2:componentId>typeUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="cehierarchy_combox_typeui"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
+      <!-- cehierarchy_combox_typeui
       <ns2:layoutConstraint>
         <ns2:componentId>filterUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="cehierarchy_combox_filterui"></ns2:constraint>
       </ns2:layoutConstraint>
+       -->
     </ns2:component>
     <ns2:layoutConstraint>
       <ns2:componentId>fieldPanel</ns2:componentId>

@@ -136,11 +136,31 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderEditor(json)
     });
     var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView({"prefix":prefix + "deliveryInfoUI."});
 
+    var invoiceTypeUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "invoiceTypeUILabel"]
+    });
+
+    var invoiceTypeUI = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "invoiceTypeUI"]
+    });
+
+    var invoiceSignUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "invoiceSignUILabel"]
+    });
+
+    var invoiceSignUI = new UIMaster.ui.textarea
+    ({
+        ui: elementList[prefix + "invoiceSignUI"]
+    });
+
     var deliveryInfoPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "deliveryInfoPanel"]
         ,items: []
-        ,subComponents: [prefix + "deliveryInfoUI"]
+        ,subComponents: [prefix + "deliveryInfoUI",prefix + "invoiceTypeUILabel",prefix + "invoiceTypeUI",prefix + "invoiceSignUILabel",prefix + "invoiceSignUI"]
     });
     var htmlDescUI = new UIMaster.ui.textarea
     ({
@@ -227,6 +247,14 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderEditor(json)
 
     Form.deliveryInfoUI=deliveryInfoUI;
 
+    Form.invoiceTypeUILabel=invoiceTypeUILabel;
+
+    Form.invoiceTypeUI=invoiceTypeUI;
+
+    Form.invoiceSignUILabel=invoiceSignUILabel;
+
+    Form.invoiceSignUI=invoiceSignUI;
+
     Form.prodcutInfoPanel=prodcutInfoPanel;
 
     Form.htmlDescUI=htmlDescUI;
@@ -276,6 +304,14 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderEditor(json)
     Form.deliveryInfoPanel=deliveryInfoPanel;
 
     Form.deliveryInfoUI=deliveryInfoUI;
+
+    Form.invoiceTypeUILabel=invoiceTypeUILabel;
+
+    Form.invoiceTypeUI=invoiceTypeUI;
+
+    Form.invoiceSignUILabel=invoiceSignUILabel;
+
+    Form.invoiceSignUI=invoiceSignUI;
 
     Form.prodcutInfoPanel=prodcutInfoPanel;
 

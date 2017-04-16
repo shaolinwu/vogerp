@@ -3,6 +3,16 @@
 function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var funcsPanel = new UIMaster.ui.prenextpanel
+    ({
+        ui: elementList[prefix + "funcsPanel"]
+        ,vertical: true
+        ,closeOthersByDefault: true
+        ,items: []
+        ,subComponents: [prefix + "basicInfoPanel",prefix + "deliveryInfoPanel"]
+    });
+    var photoUI = new org_shaolin_vogerp_ecommercial_form_CADUploader({"prefix":prefix + "photoUI."});
+
     var serialNumberUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "serialNumberUILabel"]
@@ -51,6 +61,8 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
         ui: elementList[prefix + "materialTypeUILabel"]
     });
 
+    var materialTypeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "materialTypeUI."});
+
     var createModelUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "createModelUILabel"]
@@ -61,6 +73,20 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
         ui: elementList[prefix + "needCreateModelUI"]
     });
 
+    var attributePanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "attributePanel"]
+        ,items: []
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "differentiationUILabel",prefix + "differentiationUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI",prefix + "createModelUILabel",prefix + "needCreateModelUI"]
+    });
+    var basicInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "basicInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "photoUI",prefix + "attributePanel"]
+    });
+    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView({"prefix":prefix + "deliveryInfoUI."});
+
     var invoiceTypeUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "invoiceTypeUILabel"]
@@ -69,6 +95,23 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     var invoiceTypeUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "invoiceTypeUI"]
+    });
+
+    var invoiceSignUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "invoiceSignUILabel"]
+    });
+
+    var invoiceSignUI = new UIMaster.ui.textarea
+    ({
+        ui: elementList[prefix + "invoiceSignUI"]
+    });
+
+    var deliveryInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "deliveryInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "deliveryInfoUI",prefix + "invoiceTypeUILabel",prefix + "invoiceTypeUI",prefix + "invoiceSignUILabel",prefix + "invoiceSignUI"]
     });
 
     var notifybtn = new UIMaster.ui.button
@@ -81,10 +124,6 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
         ui: elementList[prefix + "cancelbtn"]
     });
 
-    var photoUI = new org_shaolin_vogerp_ecommercial_form_CADUploader({"prefix":prefix + "photoUI."});
-
-    var materialTypeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "materialTypeUI."});
-
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
@@ -92,25 +131,26 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
         ,subComponents: [prefix + "notifybtn",prefix + "cancelbtn"]
     });
 
-    var attributePanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "attributePanel"]
-        ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "differentiationUILabel",prefix + "differentiationUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI",prefix + "createModelUILabel",prefix + "needCreateModelUI",prefix + "invoiceTypeUILabel",prefix + "invoiceTypeUI"]
-    });
-
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "photoUI",prefix + "attributePanel"]
+        ,subComponents: [prefix + "funcsPanel"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,differentiationUILabel,differentiationUI,countUILabel,countUI,materialTypeUILabel,createModelUILabel,needCreateModelUI,invoiceTypeUILabel,invoiceTypeUI,notifybtn,cancelbtn,photoUI,materialTypeUI,fieldPanel,attributePanel,actionPanel]
+        ,items: [funcsPanel,notifybtn,cancelbtn,fieldPanel,actionPanel]
     });
+
+    Form.funcsPanel=funcsPanel;
+
+    Form.basicInfoPanel=basicInfoPanel;
+
+    Form.photoUI=photoUI;
+
+    Form.attributePanel=attributePanel;
 
     Form.serialNumberUILabel=serialNumberUILabel;
 
@@ -130,24 +170,34 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.materialTypeUILabel=materialTypeUILabel;
 
+    Form.materialTypeUI=materialTypeUI;
+
     Form.createModelUILabel=createModelUILabel;
 
     Form.needCreateModelUI=needCreateModelUI;
 
+    Form.deliveryInfoPanel=deliveryInfoPanel;
+
+    Form.deliveryInfoUI=deliveryInfoUI;
+
     Form.invoiceTypeUILabel=invoiceTypeUILabel;
 
     Form.invoiceTypeUI=invoiceTypeUI;
+
+    Form.invoiceSignUILabel=invoiceSignUILabel;
+
+    Form.invoiceSignUI=invoiceSignUI;
 
     Form.notifybtn=notifybtn;
 
     Form.cancelbtn=cancelbtn;
 
-    Form.photoUI=photoUI;
-
-    Form.materialTypeUI=materialTypeUI;
-
     Form.fieldPanel=fieldPanel;
 
+    Form.funcsPanel=funcsPanel;
+
+    Form.basicInfoPanel=basicInfoPanel;
+
     Form.photoUI=photoUI;
 
     Form.attributePanel=attributePanel;
@@ -176,39 +226,17 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.needCreateModelUI=needCreateModelUI;
 
-    Form.invoiceTypeUILabel=invoiceTypeUILabel;
+    Form.deliveryInfoPanel=deliveryInfoPanel;
 
-    Form.invoiceTypeUI=invoiceTypeUI;
-
-    Form.attributePanel=attributePanel;
-
-    Form.serialNumberUILabel=serialNumberUILabel;
-
-    Form.serialNumberUI=serialNumberUI;
-
-    Form.descriptionUILabel=descriptionUILabel;
-
-    Form.descriptionUI=descriptionUI;
-
-    Form.differentiationUILabel=differentiationUILabel;
-
-    Form.differentiationUI=differentiationUI;
-
-    Form.countUILabel=countUILabel;
-
-    Form.countUI=countUI;
-
-    Form.materialTypeUILabel=materialTypeUILabel;
-
-    Form.materialTypeUI=materialTypeUI;
-
-    Form.createModelUILabel=createModelUILabel;
-
-    Form.needCreateModelUI=needCreateModelUI;
+    Form.deliveryInfoUI=deliveryInfoUI;
 
     Form.invoiceTypeUILabel=invoiceTypeUILabel;
 
     Form.invoiceTypeUI=invoiceTypeUI;
+
+    Form.invoiceSignUILabel=invoiceSignUILabel;
+
+    Form.invoiceSignUI=invoiceSignUI;
 
     Form.actionPanel=actionPanel;
 
