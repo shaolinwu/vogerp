@@ -19,16 +19,18 @@
           { 
              RadioButtonGroup buttonGroup = @page.getRadioBtnGroup("selectFilterUI");
              if ("1".equals(buttonGroup.getValue())) {
-                //TODO: allow to set a scope of longtitude and lantitudu.
-                //@page.getHidden("areaScopeUI").setValue(100);
-             } else if ("2".equals(buttonGroup.getValue())) {
                   HashMap input = new HashMap();
+                  
+                  input.put("selectedCity", @page.getHidden("citiesCbxUI").getValue());
 	              input.put("parentUIID", @page.getEntityUiid() + ".citiesCbxUI");
 	              input.put("editable", new Boolean(true));
 	              RefForm form = new RefForm("cityListForm", "org.shaolin.vogerp.commonmodel.form.CitySelelctor_mob", input);
 	              @page.addElement(form);
 	              
 	              form.openInWindows("选择城市", new FunctionCallBack(@page, "selectedCity-201604102211"), true);
+             } else if ("2".equals(buttonGroup.getValue())) {
+                //TODO: allow to set a scope of longtitude and lantitudu.
+                //@page.getHidden("areaScopeUI").setValue(100);
              } else if ("3".equals(buttonGroup.getValue())) {
                   @page.getHidden("citiesCbxUI").setValue(null);
                   @page.getHidden("productTypeUI").setValue(null);
@@ -136,8 +138,8 @@
 	           import java.util.ArrayList;
 	           { 
 	               ArrayList list = new ArrayList();
-	               list.add("按登录区域");
 	               list.add("按城市");
+	               list.add("按登录区域");
 	               list.add("按全国");
 	               return list; 
 	           }]]></expressionString>

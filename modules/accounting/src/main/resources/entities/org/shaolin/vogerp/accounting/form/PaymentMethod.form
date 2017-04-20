@@ -38,7 +38,7 @@
 	            try {
 	               String htmlform = payService.prepay(payOrder);
 	               if (UserContext.isAppClient()) {
-	                   @page.executeJavaScript("UIMaster.appPay('"+htmlform+"', 'alipay')");
+	                   @page.executeJavaScript("_mobContext.appPay('"+htmlform+"', 'alipay')");
 	               } else {
 		               @page.getRequest().getSession().setAttribute("__htmlform", htmlform);
 		               @page.executeJavaScript("UIMaster.util.forwardToPage('/uimaster/jsp/alipaywindow.jsp', true)");
@@ -90,7 +90,7 @@
 	            try {
 		            String url = payService.prepay(payOrder);
 		            if (UserContext.isAppClient()) {
-		                @page.executeJavaScript("UIMaster.appPay('"+url+"', 'wepay')");
+		                @page.executeJavaScript("_mobContext.appPay('"+url+"', 'wepay')");
 		            } else {
 			            // generate url as 2d code picture to client side.
 			            @page.executeJavaScript("defaultname." + @page.getEntityUiid() + ".genWepayQRCode('"+url+"');");

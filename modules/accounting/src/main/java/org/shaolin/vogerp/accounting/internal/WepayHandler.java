@@ -222,7 +222,10 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 					translog.setIsCorrect(true);
 					translog.setCreateDate(new Date());
 					AccountingModel.INSTANCE.create(translog, true);
-					resultMap.get("prepay_id");
+					if (UserContext.isMobileRequest() && UserContext.isAppClient()) {
+						//resultMap.get("prepay_id")
+						return (new JSONObject(resultMap)).toString();
+					}
 					return resultMap.get("code_url").toString(); // for end user payment url which will be generated as 2 dimension code picture!
 				} else {
 					translog.setIsCorrect(false);

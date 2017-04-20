@@ -348,6 +348,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 					modal: true,
 					closeOnEscape: true,
 					open: function(event, ui) {
+					   $(othis.selectMComponentTable).css("display", "block");
 					   $(othis.attributePanel1).parent().css("display", "block");
 					},
 					beforeClose: function() {

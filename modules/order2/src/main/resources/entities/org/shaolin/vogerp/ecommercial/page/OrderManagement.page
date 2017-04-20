@@ -659,6 +659,8 @@
 			              if (item.getOrder().getStatus() != OrderStatusType.PUBLISHED) {
 			                 input.put("isEditable", Boolean.FALSE);
                           }
+                          input.put("orderInfo", item.getOrder().getDescription());
+                          input.put("price", offeredPrice.getPrice() + "");
 		                  input.put("orgId", chatItem.getOrgId() + "");
 		                  input.put("taskId", chatItem.getTaskId() + "");
 		                  input.put("sessionId", chatItem.getSessionId());

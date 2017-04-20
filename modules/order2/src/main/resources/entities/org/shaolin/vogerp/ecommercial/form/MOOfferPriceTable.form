@@ -42,8 +42,9 @@
             IMOOfferPrice offer = (IMOOfferPrice)orderInfoTable.getSelectedRow();
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid());  
             
+            IMachiningOrder order = (IMachiningOrder)form.getInputParameter("beObject");
             ChatHistoryImpl defaultUser = new ChatHistoryImpl();
-            defaultUser.setTaskId(((IMachiningOrder)form.getInputParameter("beObject")).getTaskId());
+            defaultUser.setTaskId(order.getTaskId());
             if (UserContext.getUserContext().getUserId() == offer.getTakenCustomerId()) {
                 defaultUser.setSentPartyId(offer.getTakenCustomerId());
 	            defaultUser.setReceivedPartyId(UserContext.getUserContext().getUserId());
@@ -69,6 +70,8 @@
             
             if (UserContext.isMobileRequest() && UserContext.isAppClient()) {
                 //invokes App native javascript api.
+                input.put("orderInfo", order.getDescription());
+                input.put("price", offer.getPrice() + "");
                 input.put("orgId", defaultUser.getOrgId() + "");
                 input.put("taskId", defaultUser.getTaskId() + "");
                 input.put("sessionId", defaultUser.getSessionId());

@@ -164,7 +164,12 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 				
 				// this is app payment api.
 		        AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
-		        return response.getBody(); //order information returning to client
+		        if (response.isSuccess()) {
+		        	return response.getBody(); //order information returning to client
+		        } else {
+		        	throw new PaymentException("Make Ali payment error: " + response.getCode() 
+		        		+ ", msg: " + response.getMsg() + ", order id: " + payOrder.getSerialNumber());
+		        }
 			} else {
 				// web payment: alipay.trade.wap.pay
 				// https://doc.open.alipay.com/docs/doc.htm?spm=a219a.7629140.0.0.WUo6cW&treeId=203&articleId=105285&docType=1
