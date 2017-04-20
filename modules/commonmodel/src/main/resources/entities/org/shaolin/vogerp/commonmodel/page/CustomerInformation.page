@@ -133,6 +133,9 @@
 		<ns2:DataEntity scope="InOut" name="personalInfo" category="BusinessEntity">
 	      <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo"></type>
 	    </ns2:DataEntity>
+	    <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
+	      <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo"></type>
+	    </ns2:DataEntity>
 	    <ns2:DataEntity scope="InOut" name="personalAccount" category="BusinessEntity">
 	      <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalAccount"></type>
 	    </ns2:DataEntity>
@@ -204,6 +207,7 @@
 			  IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
 			  $personalAccount = (PersonalAccountImpl)userService.getPersonalAccount(userContext.getUserId());
 			  $personalInfo = $personalAccount.getInfo();
+			  $beObject = $personalInfo; // for all sub-froms' data2ui mapping.
 			  
 			  @odContext.executeAllMappings();
 			}]]></ns2:expressionString>

@@ -13,40 +13,28 @@ function org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox(json)
         ui: elementList[prefix + "typeUI"]
     });
 
-    var filterUI = new UIMaster.ui.image
-    ({
-        ui: elementList[prefix + "filterUI"]
-        ,width: "30px"
-        ,height: "30px"
-        ,src: "/cefilter.png"
-    });
-
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "ceNameUI",prefix + "typeUI",prefix + "filterUI"]
+        ,subComponents: [prefix + "ceNameUI",prefix + "typeUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [ceNameUI,typeUI,filterUI,fieldPanel]
+        ,items: [ceNameUI,typeUI,fieldPanel]
     });
 
     Form.ceNameUI=ceNameUI;
 
     Form.typeUI=typeUI;
-
-    Form.filterUI=filterUI;
 
     Form.fieldPanel=fieldPanel;
 
     Form.ceNameUI=ceNameUI;
 
     Form.typeUI=typeUI;
-
-    Form.filterUI=filterUI;
 
     Form.user_constructor = function()
     {

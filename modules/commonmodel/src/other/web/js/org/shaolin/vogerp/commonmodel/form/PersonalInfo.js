@@ -18,11 +18,6 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
         ui: elementList[prefix + "firstNameUI"]
     });
 
-    var typeUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "typeUILabel"]
-    });
-
     var genderUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "genderUILabel"]
@@ -77,22 +72,10 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
       ,allowBlank:false
     });
 
-    var majorUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "majorUILabel"]
-    });
-
-    var majorUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "majorUI"]
-    });
-
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
     });
-
-    var typeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "typeUI."});
 
     var actionPanel = new UIMaster.ui.panel
     ({
@@ -105,13 +88,13 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "firstNameUILabel",prefix + "firstNameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "genderUILabel",prefix + "genderUI",prefix + "discriptionUILabel",prefix + "discriptionUI",prefix + "birthdayUILabel",prefix + "birthdayUI",prefix + "languageUILabel",prefix + "languageUI",prefix + "educationUILabel",prefix + "educationUI",prefix + "majorUILabel",prefix + "majorUI"]
+        ,subComponents: [prefix + "idUI",prefix + "firstNameUILabel",prefix + "firstNameUI",prefix + "genderUILabel",prefix + "genderUI",prefix + "discriptionUILabel",prefix + "discriptionUI",prefix + "birthdayUILabel",prefix + "birthdayUI",prefix + "languageUILabel",prefix + "languageUI",prefix + "educationUILabel",prefix + "educationUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,firstNameUILabel,firstNameUI,typeUILabel,genderUILabel,genderUI,discriptionUILabel,discriptionUI,birthdayUILabel,birthdayUI,languageUILabel,languageUI,educationUILabel,educationUI,majorUILabel,majorUI,okbtn,typeUI,fieldPanel,actionPanel]
+        ,items: [idUI,firstNameUILabel,firstNameUI,genderUILabel,genderUI,discriptionUILabel,discriptionUI,birthdayUILabel,birthdayUI,languageUILabel,languageUI,educationUILabel,educationUI,okbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -119,8 +102,6 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
     Form.firstNameUILabel=firstNameUILabel;
 
     Form.firstNameUI=firstNameUI;
-
-    Form.typeUILabel=typeUILabel;
 
     Form.genderUILabel=genderUILabel;
 
@@ -142,13 +123,7 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
 
     Form.educationUI=educationUI;
 
-    Form.majorUILabel=majorUILabel;
-
-    Form.majorUI=majorUI;
-
     Form.okbtn=okbtn;
-
-    Form.typeUI=typeUI;
 
     Form.fieldPanel=fieldPanel;
 
@@ -158,10 +133,6 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
 
     Form.firstNameUI=firstNameUI;
 
-    Form.typeUILabel=typeUILabel;
-
-    Form.typeUI=typeUI;
-
     Form.genderUILabel=genderUILabel;
 
     Form.genderUI=genderUI;
@@ -181,10 +152,6 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
     Form.educationUILabel=educationUILabel;
 
     Form.educationUI=educationUI;
-
-    Form.majorUILabel=majorUILabel;
-
-    Form.majorUI=majorUI;
 
     Form.actionPanel=actionPanel;
 
