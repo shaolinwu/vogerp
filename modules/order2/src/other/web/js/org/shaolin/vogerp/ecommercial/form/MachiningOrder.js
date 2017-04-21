@@ -63,21 +63,24 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     var materialTypeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "materialTypeUI."});
 
-    var createModelUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "createModelUILabel"]
-    });
-
     var needCreateModelUI = new UIMaster.ui.checkbox
     ({
         ui: elementList[prefix + "needCreateModelUI"]
+        ,label: "?????????"
+    });
+
+    var termsUI = new UIMaster.ui.checkbox
+    ({
+        ui: elementList[prefix + "termsUI"]
+        ,label: "?????????"
+        ,mustCheck: true
     });
 
     var attributePanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "differentiationUILabel",prefix + "differentiationUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI",prefix + "createModelUILabel",prefix + "needCreateModelUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "differentiationUILabel",prefix + "differentiationUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI",prefix + "needCreateModelUI",prefix + "termsUI"]
     });
     var basicInfoPanel = new UIMaster.ui.panel
     ({
@@ -172,9 +175,9 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.materialTypeUI=materialTypeUI;
 
-    Form.createModelUILabel=createModelUILabel;
-
     Form.needCreateModelUI=needCreateModelUI;
+
+    Form.termsUI=termsUI;
 
     Form.deliveryInfoPanel=deliveryInfoPanel;
 
@@ -222,9 +225,9 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.materialTypeUI=materialTypeUI;
 
-    Form.createModelUILabel=createModelUILabel;
-
     Form.needCreateModelUI=needCreateModelUI;
+
+    Form.termsUI=termsUI;
 
     Form.deliveryInfoPanel=deliveryInfoPanel;
 
@@ -255,6 +258,8 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     Form.NotifyHurly = org_shaolin_vogerp_ecommercial_form_MachiningOrder_NotifyHurly;
 
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_MachiningOrder_Cancel;
+
+    Form.openUserTerms = org_shaolin_vogerp_ecommercial_form_MachiningOrder_openUserTerms;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_MachiningOrder_invokeDynamicFunction;
 
@@ -299,6 +304,17 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20170125-215225",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachiningOrder_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_MachiningOrder_openUserTerms(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_MachiningOrder_openUserTerms */
+        var o = this;
+        var UIEntity = this;
+
+        {   
+            UIMaster.ui.mask.openHtml("/html/hints/machorderterms.html");
+        }
+            }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_MachiningOrder_openUserTerms */
 
 
     /* auto generated eventlistener function declaration */
