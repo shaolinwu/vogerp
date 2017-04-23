@@ -15,14 +15,8 @@
         <node name="webConstant">
             <node name="commonjs">
                 <node name="org.shaolin.vogerp.accounting.page.PaymentOrderManagement">
-                    <!-- 
-                    <item name="beecloud" value="https://jspay.beecloud.cn/1/pay/jsbutton/returnscripts?appId=1ab7992b-26b6-4f1c-b007-02f6c325444c" />
-                     -->
                 </node>
                 <node name="org.shaolin.vogerp.accounting.page.PaymentOrderManagementByAdmin">
-                    <!-- 
-                    <item name="beecloud" value="https://jspay.beecloud.cn/1/pay/jsbutton/returnscripts?appId=1ab7992b-26b6-4f1c-b007-02f6c325444c" />
-                     -->
                 </node>
             </node>
         </node>

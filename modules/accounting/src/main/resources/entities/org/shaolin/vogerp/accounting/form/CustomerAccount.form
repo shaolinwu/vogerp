@@ -1,26 +1,30 @@
 <?xml version="1.0" ?>
-<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns7="http://bmdp.shaolin.org/datamodel/FlowDiagram" xmlns:ns6="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns5="http://bmdp.shaolin.org/datamodel/Workflow" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
   <entityName>org.shaolin.vogerp.accounting.form.CustomerAccount</entityName>
   <systemVersion>0</systemVersion>
   <ns2:eventHandler functionName="Save">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveDetail-20160405-114830">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="saveDetail-20170422-224500">
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
+        import java.io.Serializable;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.accounting.be.CustomerAccountImpl;
+        import org.shaolin.vogerp.accounting.dao.AccountingModel;
+        import org.shaolin.bmdp.runtime.security.UserContext;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             HashMap out = (HashMap)form.ui2Data();
 
             CustomerAccountImpl defaultUser = (CustomerAccountImpl)out.get("beObject");
             if (defaultUser.getId() == 0) {
-                System.out.println("created object: " + defaultUser);
+                AccountingModel.INSTANCE.create(defaultUser);
             } else {
-                System.out.println("updated object: " + defaultUser);
+                AccountingModel.INSTANCE.update(defaultUser);
             }
-
+            UserContext.addUserData("AccountInfo", (Serializable)defaultUser);
+            
             form.closeIfinWindows();
             @page.removeForm(@page.getEntityUiid()); 
         }]]></expressionString>
@@ -28,7 +32,7 @@
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="Cancel">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20160405-114830">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20170422-224500">
       <ns2:exp>
         <expressionString><![CDATA[
         import org.shaolin.uimaster.page.AjaxContext;
@@ -51,7 +55,6 @@
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
@@ -60,59 +63,45 @@
           <ns2:value>true</ns2:value>
         </ns2:secure>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="accountIdUILabel">
+      <ns2:component xsi:type="ns2:UILabelType" UIID="thirdPartyAccountTypeUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_accounting_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.accounting.be.CustomerAccount.accountId</ns2:key>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>第三方支付帐号(提现帐号)</ns2:value>
         </ns2:text>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+          <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="accountIdUI">
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="thirdPartyAccountTypeUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="WechatAccountUILabel">
+      <ns2:component xsi:type="ns2:UILabelType" UIID="thirdPartyAccountUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_accounting_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.accounting.be.CustomerAccount.WechatAccount</ns2:key>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>第三方支付商</ns2:value>
         </ns2:text>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+          <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="WechatAccountUI">
-        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="AlipayAccountUILabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_accounting_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.accounting.be.CustomerAccount.AlipayAccount</ns2:key>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="AlipayAccountUI">
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="thirdPartyAccountUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>accountIdUILabel</ns2:componentId>
+        <ns2:componentId>thirdPartyAccountTypeUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>accountIdUI</ns2:componentId>
+        <ns2:componentId>thirdPartyAccountTypeUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>WechatAccountUILabel</ns2:componentId>
+        <ns2:componentId>thirdPartyAccountUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>WechatAccountUI</ns2:componentId>
+        <ns2:componentId>thirdPartyAccountUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>AlipayAccountUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>AlipayAccountUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
@@ -176,6 +165,26 @@
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Number">
         <ns2:expression>
           <expressionString>$beObject.getId()</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="thirdPartyAccountUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.thirdPartyAccount" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="thirdPartyAccountTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.thirdPartyAccountType" paramName="CEValue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
+        <ns2:expression>
+          <expressionString>"org.shaolin.vogerp.accounting.ce.SettlementMethodType"</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ContainsNotSpecified">
+        <ns2:expression>
+          <expressionString>false</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>

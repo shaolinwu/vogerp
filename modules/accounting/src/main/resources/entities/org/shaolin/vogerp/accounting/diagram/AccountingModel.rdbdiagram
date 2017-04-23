@@ -44,6 +44,7 @@
     <ns2:column name="PAYRETURNURL" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="PAYBUSITYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="STATUS" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="WITHDRAWN" type="INTEGER" length="1" isNull="true"></ns2:column>
     <ns2:column name="CUSTAPAYMETHOD" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="ThirdGenSerialNumber" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="ThirdTransactionTime" type="DATETIME" isNull="true"></ns2:column>
@@ -70,6 +71,7 @@
       <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="amount" columnName="AMOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="status" columnName="STATUS"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="withdrawn" columnName="WITHDRAWN"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="payReturnUrl" columnName="PAYRETURNURL"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="payBusinessType" columnName="PAYBUSITYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="customerAPaymentMethod" columnName="CUSTAPAYMETHOD"></ns2:fieldMapping>
@@ -114,6 +116,10 @@
     <ns2:column name="PAYORDERID" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="TYPE" type="INTEGER" length="1" default="1"></ns2:column>
     <ns2:column name="STATE" type="INTEGER" length="1" default="1"></ns2:column>
+    <ns2:column name="USERID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="THIRDPARTYACCOUNT" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="THIRDPARTYACCOUNTNAME" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="THIRDPARTYACCOUNTTYPE" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
@@ -126,6 +132,10 @@
       <ns2:fieldMapping beFieldName="payOrderId" columnName="PAYORDERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="state" columnName="STATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="userId" columnName="USERID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="thirdPartyAccount" columnName="THIRDPARTYACCOUNT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="thirdPartyAccountName" columnName="THIRDPARTYACCOUNTNAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="thirdPartyAccountType" columnName="THIRDPARTYACCOUNTTYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ACCT_PAYOORDERREQUEST1" mappingType="One-to-One" beFieldName="payOrder" columnName="PAYORDERID"></ns2:fieldMapping>
@@ -509,6 +519,20 @@
           </ns2:condition>
         </ns2:conditionValue>
       </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.statusInt</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getStatus().getIntValue()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.accounting.ce.PayOrderStatusType.NOT_SPECIFIED]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
       <ns2:searchConditionData name="scObject" category="BusinessEntity">
         <type entityName="org.shaolin.vogerp.accounting.be.PayOrder"></type>
       </ns2:searchConditionData>
@@ -635,7 +659,35 @@
             <expressionString><![CDATA[scObject.getPayOrderId() > 0]]></expressionString>
           </ns2:condition>
          </ns2:conditionValue>
-        </ns2:fieldMapping>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.stateInt</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getState().getIntValue()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getState() != null && scObject.getState() != org.shaolin.vogerp.accounting.ce.RequestStatusType.NOT_SPECIFIED]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.typeInt</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getType().getIntValue()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getType() != null && scObject.getType() != org.shaolin.vogerp.accounting.ce.PayOrderRequestType.NOT_SPECIFIED]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
       <ns2:searchConditionData name="scObject" category="BusinessEntity">
         <type entityName="org.shaolin.vogerp.accounting.be.PayOrderRequest"></type>
       </ns2:searchConditionData>

@@ -245,19 +245,32 @@
 	                        return;
 	                    }
 	                    PayOrderImpl payrOrder = (PayOrderImpl)orderInfoTable.getSelectedRow();
-                        if (payrOrder.getStatus() == PayOrderStatusType.AGREEDPAYTOEND 
-                               && payrOrder.getOrderSerialNumber() != null) {
+	                    if (payrOrder.getWithdrawn()) {
+			                Dialog.showMessageDialog("该支付订单已提现成功！", "支付订单已经提现", Dialog.INFORMATION_MESSAGE, null);
+			                return;
+			            }
+			            IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
+		                if (payService.isRequestedForWithdraw(payrOrder)) {
+		                    Dialog.showMessageDialog("支付订单已申请提现，请稍等！", "支付订单提现中", Dialog.INFORMATION_MESSAGE, null);
+			                return;
+		                }
+			            
+                        if (payrOrder.getStatus() == PayOrderStatusType.AGREEDPAYTOEND) {
 	                        ICustomerAccount customerAccount = (ICustomerAccount)UserContext.getUserData("AccountInfo", true);
-	                        if (customerAccount == null || customerAccount.getUserId() != payrOrder.getEndUserId()) {
+	                        if (customerAccount == null) {
 	                           Dialog.showMessageDialog("您还没有配制支付宝或微号提现帐号！", "没有第三方交易帐号", Dialog.WARNING_MESSAGE, null);
 	                           return;
 	                        }
-				            
+				            if (customerAccount.getUserId() != payrOrder.getEndUserId()) {
+	                           Dialog.showMessageDialog("不是您的支付订单，不可提现！", "不是您的支付订单", Dialog.WARNING_MESSAGE, null);
+	                           return;
+	                        }
+	                        
 	                        HashMap result = new HashMap();
 	                        result.put("beObject", payrOrder);
 	                        return result;
                         } else {
-                            Dialog.showMessageDialog("支付订单状态异常，不能继续本次操作!", "", Dialog.WARNING_MESSAGE, null);
+                            Dialog.showMessageDialog("支付订单不属于提现状态，不能继续本次操作!", "", Dialog.WARNING_MESSAGE, null);
                         }
                     }
                     ]]></expressionString>
@@ -272,17 +285,21 @@
                     <expressionString><![CDATA[
                     import java.util.List;
                     import org.shaolin.bmdp.runtime.AppContext;
+			        import org.shaolin.bmdp.runtime.security.UserContext;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.accounting.ce.*;
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
                     import org.shaolin.vogerp.accounting.be.ICustomerAccount;
                     import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
 			        import org.shaolin.vogerp.accounting.IPaymentService;
+			        import org.shaolin.vogerp.accounting.be.ICustomerAccount;
+                    import org.shaolin.vogerp.accounting.be.CustomerAccountImpl;
                     {
+                        ICustomerAccount customerAccount = (ICustomerAccount)UserContext.getUserData("AccountInfo", true);
                         IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
-		                accountingService.requestForPayOrder((IPayOrder)$beObject, RequestStatusType.REQUEST, PayOrderRequestType.WITHDRAW);
+		                accountingService.withdraw((IPayOrder)$beObject, customerAccount);
                         
-                        Dialog.showMessageDialog("提现申请成功，系统将在5个工作日内处理转账到您帐户。","提醒",Dialog.INFORMATION_MESSAGE, null);
+                        Dialog.showMessageDialog("提现申请中，系统将在5个工作日内完成提现申请。","提醒",Dialog.INFORMATION_MESSAGE, null);
                     }
                     ]]></expressionString>
                 </ns2:expression>
@@ -301,7 +318,7 @@
                     <expressionString><![CDATA[
                     import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
                     {
-                        return true;
+                        return $beObject.getWithdrawn();
                     }
                     ]]></expressionString>
                 </ns2:filter>
@@ -322,26 +339,29 @@
 			        import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 			        import org.shaolin.vogerp.accounting.ce.*;
 			        import org.shaolin.vogerp.accounting.IPaymentService;
+			        import org.shaolin.vogerp.accounting.IAccountingService;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
 			            HashMap out = (HashMap)form.ui2Data();
 			            PayOrderImpl payrOrder = (PayOrderImpl)out.get("beObject");
-		                if (payrOrder.getStatus() == PayOrderStatusType.WITHDRAWING && payrOrder.getOrderSerialNumber() != null) { 
-                            ICustomerAccount customerAccount = (ICustomerAccount)UserContext.getUserData("AccountInfo", true);
-	                        if (customerAccount == null || customerAccount.getUserId() != payrOrder.getEndUserId()) {
+			            if (payrOrder.getWithdrawn()) {
+			                Dialog.showMessageDialog("该支付订单已申请过提现成功！", "支付订单已经提现", Dialog.WARNING_MESSAGE, null);
+			                return;
+			            }
+		                if (payrOrder.getStatus() == PayOrderStatusType.AGREEDPAYTOEND) {
+		                    IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class); 
+                            ICustomerAccount customerAccount = accountingService.getCustomerAccount(payrOrder.getUserId());
+	                        if (customerAccount == null) {
 	                           Dialog.showMessageDialog("您还没有配制支付宝或微号提现帐号！", "没有第三方交易帐号", Dialog.WARNING_MESSAGE, null);
 	                           return;
 	                        }
+	                        if (customerAccount.getUserId() != payrOrder.getEndUserId()) {
+	                           Dialog.showMessageDialog("不是您的支付订单，不可提现！", "不是您的支付订单", Dialog.WARNING_MESSAGE, null);
+	                           return;
+	                        }
                                 
-                            IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
-                            String url = accountingService.transfer((IPayOrder)payrOrder, customerAccount);
-                            if (customerAccount.getThirdPartyAccountType() == SettlementMethodType.ALIPAY) {
-                                @page.executeJavaScript("UIMaster.util.forwardToPage('" + url + "', true)");
-					        }
-					        
 	                        HashMap result = new HashMap();
 	                        result.put("beObject", payrOrder);
-	                        result.put("customerAccount", customerAccount);
 	                        
 	                        return result;
                         } else {
@@ -374,20 +394,16 @@
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                     {
-                        if ($customerAccount.getThirdPartyAccountType() == SettlementMethodType.WEIXI) {
-                            $beObject.setStatus(PayOrderStatusType.WITHDRAWN);
-                            AccountingModel.INSTANCE.update($beObject);
-                            
-	                        ICoordinatorService coorService = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
-				    		NotificationImpl message = new NotificationImpl();
-				    		message.setPartyId($beObject.getEndUserId());
-				    		message.setSubject("提现成功通知！");
-				    		message.setDescription("提现： " + ($beObject.getAmount()/100) + "元！来自订单: " + $beObject.getOrderSerialNumber());
-				    		message.setCreateDate(new Date());
-				    		coorService.addNotification(message, false);
-				        } else if ($customerAccount.getThirdPartyAccountType() == SettlementMethodType.ALIPAY) {
-				            // it's async operation.
-				        }
+                        $beObject.setWithdrawn(true);
+                        AccountingModel.INSTANCE.update($beObject);
+                           
+                        ICoordinatorService coorService = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+			    		NotificationImpl message = new NotificationImpl();
+			    		message.setPartyId($beObject.getEndUserId());
+			    		message.setSubject("提现成功通知！");
+			    		message.setDescription("提现： " + ($beObject.getAmount()/100) + "元！来自订单: " + $beObject.getOrderSerialNumber());
+			    		message.setCreateDate(new Date());
+			    		coorService.addNotification(message, false);
                    }
                   ]]></expressionString>
                 </ns2:expression>
@@ -400,7 +416,7 @@
     <!-- 退款流程 -->
     <ns2:flow name="RefundFlow" eventConsumer="RefundFlowConsumer">
         <ns2:mission-node name="refundPrepayment" autoTrigger="false">
-            <ns2:description>从我们系统中退款给打款客户</ns2:description>
+            <ns2:description>申请退款给打款客户</ns2:description>
             <ns2:uiAction actionPage="org.shaolin.vogerp.accounting.page.PaymentOrderManagement"
                 actionName="refundPrepayment" actionText="申请退款">
                 <ns2:filter>
@@ -457,13 +473,15 @@
                     <expressionString><![CDATA[
                     import java.util.List;
                     import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
                     import org.shaolin.vogerp.accounting.ce.*;
 			        import org.shaolin.vogerp.accounting.IPaymentService;
 			        import org.shaolin.vogerp.accounting.dao.AccountingModel;
                     {
                         IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
-		                accountingService.requestForPayOrder((IPayOrder)$payOrder, RequestStatusType.REQUEST, PayOrderRequestType.REFUND);
+		                accountingService.requestForRefund((IPayOrder)$payOrder);
+		                Dialog.showMessageDialog("退款申请中，系统将在5个工作日内处理退款申请!","提醒",Dialog.INFORMATION_MESSAGE, null);
                     }
                     ]]></expressionString>
                 </ns2:expression>

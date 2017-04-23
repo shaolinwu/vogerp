@@ -122,6 +122,9 @@ public class AccountingModel extends BEEntityDaoObject {
             if (scObject.getCustomerBPayAccount() != null && scObject.getCustomerBPayAccount().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.customerBPayAccount", scObject.getCustomerBPayAccount()));
             }
+            if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.accounting.ce.PayOrderStatusType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -158,6 +161,9 @@ public class AccountingModel extends BEEntityDaoObject {
             }
             if (scObject.getCustomerBPayAccount() != null && scObject.getCustomerBPayAccount().length() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.customerBPayAccount", scObject.getCustomerBPayAccount()));
+            }
+            if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.accounting.ce.PayOrderStatusType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
@@ -227,6 +233,12 @@ public class AccountingModel extends BEEntityDaoObject {
             if (scObject.getPayOrderId() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.payOrderId", scObject.getPayOrderId()));
             }
+            if (scObject.getState() != null && scObject.getState() != org.shaolin.vogerp.accounting.ce.RequestStatusType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.stateInt", scObject.getState().getIntValue()));
+            }
+            if (scObject.getType() != null && scObject.getType() != org.shaolin.vogerp.accounting.ce.PayOrderRequestType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.typeInt", scObject.getType().getIntValue()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -242,6 +254,12 @@ public class AccountingModel extends BEEntityDaoObject {
             }
             if (scObject.getPayOrderId() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.payOrderId", scObject.getPayOrderId()));
+            }
+            if (scObject.getState() != null && scObject.getState() != org.shaolin.vogerp.accounting.ce.RequestStatusType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.stateInt", scObject.getState().getIntValue()));
+            }
+            if (scObject.getType() != null && scObject.getType() != org.shaolin.vogerp.accounting.ce.PayOrderRequestType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.typeInt", scObject.getType().getIntValue()));
             }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));

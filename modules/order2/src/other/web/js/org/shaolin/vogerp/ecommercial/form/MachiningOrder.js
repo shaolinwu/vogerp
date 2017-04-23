@@ -74,6 +74,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
         ui: elementList[prefix + "termsUI"]
         ,label: "?????????"
         ,mustCheck: true
+        ,checked: true
     });
 
     var attributePanel = new UIMaster.ui.panel

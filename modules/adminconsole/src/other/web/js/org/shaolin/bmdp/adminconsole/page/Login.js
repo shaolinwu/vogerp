@@ -332,7 +332,7 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         var UIEntity = this;
 
 		      {
-		        window.open("http://120.25.197.58:8080/xwiki");
+		        window.open("http://120.25.197.58:8099/xwiki");
 		      }
 		          }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_showHelp */
 

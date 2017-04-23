@@ -2,19 +2,18 @@ package org.shaolin.vogerp.accounting.internal;
 
 import java.util.List;
 
-import org.shaolin.bmdp.runtime.AppContext;
-import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
-import org.shaolin.bmdp.workflow.be.NotificationImpl;
-import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
 import org.shaolin.vogerp.accounting.IAccountingService;
 import org.shaolin.vogerp.accounting.be.AccountVoucherImpl;
 import org.shaolin.vogerp.accounting.be.CustomerAccountImpl;
 import org.shaolin.vogerp.accounting.be.DoubleEntryImpl;
 import org.shaolin.vogerp.accounting.be.IAccountVoucher;
 import org.shaolin.vogerp.accounting.be.ICustomerAccount;
+import org.shaolin.vogerp.accounting.be.IPayOrder;
+import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 import org.shaolin.vogerp.accounting.ce.ClassifyOfAccounts;
+import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
 import org.shaolin.vogerp.accounting.ce.SettlementMethodType;
 import org.shaolin.vogerp.accounting.ce.VoucherType;
 import org.shaolin.vogerp.accounting.dao.AccountingModel;
@@ -35,17 +34,29 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 		if (result != null && result.size() > 0) {
 			UserContext.addUserData("AccountInfo", result.get(0));
 		} else {
-			NotificationImpl message = new NotificationImpl();
-            message.setPartyId(userContext.getUserId());
-            ///System/Vogerp/Notification/Payment/UserRegister
-            message.setSubject(Registry.getInstance().getValue("/System/Vogerp/Notification/Payment/UserRegister_SUB"));
-            message.setDescription(Registry.getInstance().getValue("/System/Vogerp/Notification/Payment/UserRegister_DESC"));
-            message.setCreateDate(new java.util.Date());
-            
-            ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
-            service.addNotification(message, true);
+			// it's fine without notification here.
+//			NotificationImpl message = new NotificationImpl();
+//            message.setPartyId(userContext.getUserId());
+//            ///System/Vogerp/Notification/Payment/UserRegister
+//            message.setSubject(Registry.getInstance().getValue("/System/Vogerp/Notification/Payment/UserRegister_SUB"));
+//            message.setDescription(Registry.getInstance().getValue("/System/Vogerp/Notification/Payment/UserRegister_DESC"));
+//            message.setCreateDate(new java.util.Date());
+//            
+//            ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+//            service.addNotification(message, true);
 		}
 	}
+	
+	public ICustomerAccount getCustomerAccount(long userId) {
+		CustomerAccountImpl condition = new CustomerAccountImpl();
+		condition.setUserId(userId);
+		
+		List<ICustomerAccount> result = AccountingModel.INSTANCE.searchAccount(condition, null, 0, 1);
+		if (result != null && result.size() > 0) {
+			return result.get(0);
+		}
+		throw new IllegalArgumentException("Unable to find this account by user id: " + userId);
+	} 
 	
 	/**
 	 * for all receiving money orders.
@@ -87,6 +98,32 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 		return item;
 	}
 
+	public double queryUserTotalAmount(long userId) {
+		PayOrderImpl condition = new PayOrderImpl();
+		condition.setUserId(userId);
+		condition.setStatus(PayOrderStatusType.AGREEDPAYTOEND);
+		
+		List<IPayOrder> orders = AccountingModel.INSTANCE.searchPaymentOrder(condition, null, 0, -1);
+		double totalAmount = 0;
+		for (IPayOrder order: orders) {
+			totalAmount += order.getAmount();
+		}
+		return totalAmount;
+	}
+	
+	public double queryUserTotalSpent(long userId) {
+		PayOrderImpl condition = new PayOrderImpl();
+		condition.setEndUserId(userId);
+		condition.setStatus(PayOrderStatusType.PAYED);
+		
+		List<IPayOrder> orders = AccountingModel.INSTANCE.searchPaymentOrder(condition, null, 0, -1);
+		double totalAmount = 0;
+		for (IPayOrder order: orders) {
+			totalAmount += order.getAmount();
+		}
+		return totalAmount;
+	}
+	
 	@Override
 	public Class getServiceInterface() {
 		return IAccountingService.class;

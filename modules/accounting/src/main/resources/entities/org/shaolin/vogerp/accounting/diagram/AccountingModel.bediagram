@@ -109,6 +109,11 @@
                 <bediagram:targetEntity entityName="PayOrderStatusType" />
             </bediagram:type>
         </bediagram:member>
+        <bediagram:member>
+        	<!-- 是否已提现 -->
+            <bediagram:name>withdrawn</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BooleanType" />
+        </bediagram:member>
         <!-- 客户A支付给平台 -->
         <bediagram:member>
             <bediagram:name>customerAPaymentMethod</bediagram:name>
@@ -177,7 +182,7 @@
         </bediagram:member>
     </bediagram:beEntity>
     <!-- all request actions for a pay order. -->
-    <bediagram:beEntity needPersist="true">
+    <bediagram:beEntity needPersist="true" needOrgId="true">
         <common:entityName>PayOrderRequest</common:entityName>
         <bediagram:member pk="true">
             <bediagram:name>id</bediagram:name>
@@ -205,6 +210,27 @@
                 <bediagram:targetEntity entityName="RequestStatusType" />
             </bediagram:type>
         </bediagram:member>
+        
+        <!-- request for withdrawing -->
+        <bediagram:member>
+            <bediagram:name>userId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>thirdPartyAccount</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>thirdPartyAccountName</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>thirdPartyAccountType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+				<bediagram:targetEntity entityName="SettlementMethodType" />
+			</bediagram:type>
+        </bediagram:member>
+        
         <bediagram:member>
             <bediagram:name>startCreateDate</bediagram:name>
             <bediagram:type xsi:type="bediagram:DateTimeType" />
@@ -663,16 +689,6 @@
 			<bediagram:intValue>1</bediagram:intValue>
 			<bediagram:description>微信支付</bediagram:description>
 		</bediagram:constantValue>
-		<bediagram:constantValue>
-			<bediagram:value>BeeCloud</bediagram:value>
-			<bediagram:intValue>2</bediagram:intValue>
-			<bediagram:description>BeeCloud</bediagram:description>
-		</bediagram:constantValue>
-		<bediagram:constantValue>
-			<bediagram:value>UnionPay</bediagram:value>
-			<bediagram:intValue>3</bediagram:intValue>
-			<bediagram:description>银联</bediagram:description>
-		</bediagram:constantValue>
 	</bediagram:ceEntity>
 	 
      <bediagram:ceEntity>
@@ -707,16 +723,6 @@
             <bediagram:value>AgreedPayToEnd</bediagram:value>
             <bediagram:intValue>40</bediagram:intValue>
             <bediagram:description>同意支付给客户</bediagram:description>
-        </bediagram:constantValue>
-        <bediagram:constantValue>
-            <bediagram:value>Withdrawing</bediagram:value>
-            <bediagram:intValue>41</bediagram:intValue>
-            <bediagram:description>申请提现</bediagram:description>
-        </bediagram:constantValue>
-        <bediagram:constantValue>
-            <bediagram:value>Withdrawn</bediagram:value>
-            <bediagram:intValue>42</bediagram:intValue>
-            <bediagram:description>客户已提现</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
     

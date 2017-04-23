@@ -153,11 +153,14 @@
 			        import org.shaolin.vogerp.ecommercial.ce.*;
 			        import org.shaolin.vogerp.ecommercial.dao.*;
 			        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                      {
                          $order.setStatus(OrderStatusType.TAKEN_COMPLETED);
 			             @flowContext.save((ITaskEntity)$order);
+                         IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
+                         payService.ensurePay($order.getSerialNumber());     
 			             
 			             String description = "("+OrderUtil.getOrderLink($order)+")" + $order.getDescription();
                          NotificationImpl message = new NotificationImpl();

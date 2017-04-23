@@ -32,13 +32,19 @@ public interface IPaymentService {
 	
 	public String prepay(final IPayOrder order) throws PaymentException;
 	
-	public String transfer(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException;
+	public void ensurePay(final String orderSNumber) throws PaymentException;
+	
+	public boolean isRequestedForWithdraw(final IPayOrder order);
+	
+	public void withdraw(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException;
+	
+	public void requestForRefund(final IPayOrder order) throws PaymentException;
+	
+	public boolean isRequestedForRefund(final IPayOrder order);
 	
 	public String refund(final IPayOrder order) throws PaymentException;
 	
 	public void cancelPayment(final IPayOrder order) throws PaymentException;
-	
-	public void requestForPayOrder(final IPayOrder order, final RequestStatusType state, final PayOrderRequestType type);
 	
 	public IPayOrder queryForPayOrder(final String orderSerialNumber);
 	

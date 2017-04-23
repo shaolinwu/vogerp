@@ -243,10 +243,39 @@
 		        ]]></ns2:expressionString>
 		    </ns2:ops>
         </ns2:eventHandler>
+        <ns2:eventHandler functionName="withdrawSetting">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="withdrawSetting-20170406-1109">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                 import java.util.HashMap;
+                 import java.util.ArrayList;
+                 import java.util.Date;
+                 import org.shaolin.uimaster.page.AjaxContext;
+                 import org.shaolin.uimaster.page.AjaxActionHelper;
+                 import org.shaolin.uimaster.page.ajax.*;
+                 import org.shaolin.vogerp.accounting.be.*;
+                 import org.shaolin.vogerp.accounting.ce.*;
+                 import org.shaolin.bmdp.runtime.security.UserContext;
+                 {
+                    HashMap input = new HashMap();
+                    ICustomerAccount beObject = (ICustomerAccount)UserContext.getUserData("AccountInfo", true);
+                    if (beObject == null) {
+                       beObject = new CustomerAccountImpl();
+                    }
+                    input.put("beObject", beObject);
+		            input.put("editable", new Boolean(true));
+		            RefForm form = new RefForm("settingsForm", "org.shaolin.vogerp.accounting.form.CustomerAccount", input);
+		            @page.addElement(form);
+		            
+		            form.openInWindows("提钱帐号设置", null, true);
+                 }
+                 ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:UISkin xsi:type="ns2:UISkinType">
-				<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel
-				</ns2:skinName>
+				<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
 				<ns2:param name="text">
 					<ns2:value xsi:type="ns2:StringPropertyType">
 						<ns2:value></ns2:value>
@@ -259,11 +288,6 @@
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			</ns2:layout>
-			<ns2:component xsi:type="ns2:UILabelType" UIID="hintUILabel">
-	          <ns2:text xsi:type="ns2:StringPropertyType">
-	            <ns2:value>*： 如您选择微信支付。在手机浏览器上看到的二维码后，只需截图保存，再用微信扫描即可。谢谢！</ns2:value>
-	          </ns2:text>
-	        </ns2:component>
 			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
 				<ns2:ajaxLoad>true</ns2:ajaxLoad>
 				
@@ -274,8 +298,14 @@
                     <ns2:panel UIID="PayVoucherInfoPanel1">
                         <ns2:layout xsi:type="ns2:TableLayoutType">
                             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
                             <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
                         </ns2:layout>
+                        <ns2:component xsi:type="ns2:UILabelType" UIID="hintUILabel">
+				          <ns2:text xsi:type="ns2:StringPropertyType">
+				            <ns2:value>*： 如您选择在手机浏览器中进行微信支付。请看到的二维码后，需截屏保存，再用微信扫描即可。谢谢！</ns2:value>
+				          </ns2:text>
+				        </ns2:component>
                         <ns2:component xsi:type="ns2:UITableType" UIID="payOrderTable">
                             <ns2:beElement>org.shaolin.vogerp.accounting.be.PayOrder</ns2:beElement>
                             <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
@@ -450,9 +480,14 @@
                             <ns2:defaultActions />
                         </ns2:component>
                         <ns2:layoutConstraint>
+							<ns2:componentId>hintUILabel</ns2:componentId>
+							<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+								x="0" y="0" align="FULL"></ns2:constraint>
+						</ns2:layoutConstraint>
+                        <ns2:layoutConstraint>
                             <ns2:componentId>payOrderTable</ns2:componentId>
                             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                                x="0" y="0" align="FULL"></ns2:constraint>
+                                x="0" y="1" align="FULL"></ns2:constraint>
                         </ns2:layoutConstraint>
                     </ns2:panel>
                 </ns2:tab>
@@ -464,8 +499,25 @@
                     <ns2:panel UIID="PayVoucherInfoPanel">
                         <ns2:layout xsi:type="ns2:TableLayoutType">
                             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
                             <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
                         </ns2:layout>
+                        <ns2:component xsi:type="ns2:UILabelType" UIID="totalAmountUI">
+				          <ns2:Property name="text">
+				            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+						         <ns2:expression>
+						           <expressionString><![CDATA[
+						           import org.shaolin.bmdp.runtime.AppContext;
+						           import org.shaolin.bmdp.runtime.security.UserContext;
+						           import org.shaolin.vogerp.accounting.IAccountingService;
+						           { 
+						               IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+						               return "总收入： " + accountingService.queryUserTotalAmount(UserContext.getUserContext().getUserId()) + "\uFFE5"; 
+						           }]]></expressionString>
+						         </ns2:expression>
+					        </ns2:value>
+			              </ns2:Property>
+				        </ns2:component>
                         <ns2:component xsi:type="ns2:UITableType" UIID="receivePayOrderTable">
                             <ns2:beElement>org.shaolin.vogerp.accounting.be.PayOrder</ns2:beElement>
                             <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
@@ -488,7 +540,7 @@
 						                   $tableCondition.addOrder("createDate", false);
 						                }
 						                PayOrderImpl condition = (PayOrderImpl)$tableCondition.getCondition();
-						                condition.setOrgId(UserContext.getUserContext().getOrgId());
+						                condition.setUserId(UserContext.getUserContext().getUserId());
 						                return AccountingModel.INSTANCE.searchPaymentOrder(condition,
 						                              $tableCondition.getOrders(),
 						                              $tableCondition.getOffset(), 
@@ -638,11 +690,27 @@
                             </ns2:column>
                             <ns2:defaultActions>
                             </ns2:defaultActions>
+                            <ns2:actionGroup>
+                              <ns2:type>radio</ns2:type>
+                              <ns2:action>
+                                  <ns2:uiid>withdrawSetting</ns2:uiid>
+                                  <ns2:title xsi:type="ns2:StringPropertyType">
+                                      <ns2:value>提现设置</ns2:value>
+                                  </ns2:title>
+                                  <ns2:icon>ui-icon-note</ns2:icon>
+                                  <ns2:function>withdrawSetting</ns2:function>
+                              </ns2:action>
+                           </ns2:actionGroup>
                         </ns2:component>
+                        <ns2:layoutConstraint>
+                            <ns2:componentId>totalAmountUI</ns2:componentId>
+                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                                x="0" y="0" align="FULL"></ns2:constraint>
+                        </ns2:layoutConstraint>
                         <ns2:layoutConstraint>
                             <ns2:componentId>receivePayOrderTable</ns2:componentId>
                             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                                x="0" y="0" align="FULL"></ns2:constraint>
+                                x="0" y="1" align="FULL"></ns2:constraint>
                         </ns2:layoutConstraint>
                     </ns2:panel>
                 </ns2:tab>
@@ -653,14 +721,9 @@
 		      </ns2:layout>
 		    </ns2:component>
 			<ns2:layoutConstraint>
-				<ns2:componentId>hintUILabel</ns2:componentId>
-				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-					x="0" y="0" align="FULL"></ns2:constraint>
-			</ns2:layoutConstraint>
-			<ns2:layoutConstraint>
 				<ns2:componentId>functionsTab</ns2:componentId>
 				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-					x="0" y="1" align="FULL"></ns2:constraint>
+					x="0" y="0" align="FULL"></ns2:constraint>
 			</ns2:layoutConstraint>
 			<ns2:layoutConstraint>
 				<ns2:componentId>actionPanel</ns2:componentId>

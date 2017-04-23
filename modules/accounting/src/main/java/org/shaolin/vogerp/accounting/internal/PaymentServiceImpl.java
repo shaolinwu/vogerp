@@ -212,30 +212,6 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		return null;
 	}
 	
-	public void requestForPayOrder(final IPayOrder order, final RequestStatusType state, final PayOrderRequestType type) {
-		PayOrderRequestImpl request = new PayOrderRequestImpl();
-		request.setPayOrderId(order.getId());
-		request.setState(state);
-		request.setType(type);
-		request.setCreateDate(new Date());
-		AccountingModel.INSTANCE.create(request);
-		
-		if (PayOrderRequestType.WITHDRAW == type) {
-			order.setStatus(PayOrderStatusType.WITHDRAWING);
-		} else if (PayOrderRequestType.REFUND == type) {
-			order.setStatus(PayOrderStatusType.REFUNDING);
-		}
-		AccountingModel.INSTANCE.create(order);
-		
-		//notify admin
-		ICoordinatorService coorService = AppContext.get().getService(ICoordinatorService.class);
-		NotificationImpl message = new NotificationImpl();
-		message.setSubject("\u7533\u8BF7: " + type.getDisplayName());
-		message.setDescription(order.getSerialNumber());
-		message.setCreateDate(new Date());
-		coorService.addNotificationToAdmin(message, false);
-	}
-
 	/**
 	 * Make a pre-payment order to our system account.
 	 * 
@@ -255,11 +231,32 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 			return alipayHandler.prepay(order);
 		} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
 			return wepayHandler.prepay(order);
-		} else if (SettlementMethodType.BEECLOUD == order.getCustomerAPaymentMethod()) {
-			return behandler.prepay(order);
 		} else {
 			throw new PaymentException("Unsupported payment method: " + order.getCustomerAPaymentMethod());
 		}
+	}
+	
+	/**
+	 * Confirms payment order to end user.
+	 */
+	public void ensurePay(final String orderSNumber) throws PaymentException {
+		PayOrderImpl order = new PayOrderImpl();
+		order.setSerialNumber(orderSNumber);
+		order.setEnabled(true);
+		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order, null, 0, 1);
+		if (result != null && result.size() > 0) {
+			result.get(0).setStatus(PayOrderStatusType.AGREEDPAYTOEND);
+			AccountingModel.INSTANCE.update(result.get(0));
+		} else {
+			throw new PaymentException("Unable to find order number: " + orderSNumber);
+		}
+	}
+	
+	public boolean isRequestedForWithdraw(final IPayOrder order) {
+		PayOrderRequestImpl request = new PayOrderRequestImpl();
+		request.setPayOrderId(order.getId());
+		request.setType(PayOrderRequestType.WITHDRAW);
+		return AccountingModel.INSTANCE.searchPayOrderRequestCount(request) == 1;
 	}
 	
 	/**
@@ -269,18 +266,74 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	 * 
 	 * This method only supposed done by Admin user.
 	 * 
-	 * @param order
-	 * @param paymethod
-	 * @param thirdUserId
-	 * @param thirdUserName
+	 * @param orderSNumber
 	 * @return
 	 * @throws PaymentException
 	 */
-	public String transfer(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException {
-		//TODO:
-		throw new PaymentException("Unsupported payment method: " + order.getCustomerAPaymentMethod());
+	public void withdraw(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException{
+		if (order.getStatus() == PayOrderStatusType.AGREEDPAYTOEND && !order.getWithdrawn()) {
+			if (isRequestedForWithdraw(order)) {
+				return;
+			}
+			
+			PayOrderRequestImpl request = new PayOrderRequestImpl();
+			request.setPayOrderId(order.getId());
+			request.setState(RequestStatusType.REQUEST);
+			request.setType(PayOrderRequestType.WITHDRAW);
+			request.setCreateDate(new Date());
+			request.setUserId(customerAccount.getUserId());
+			request.setThirdPartyAccount(customerAccount.getThirdPartyAccount());
+			request.setThirdPartyAccountName(customerAccount.getThirdPartyAccountName());
+			request.setThirdPartyAccountType(customerAccount.getThirdPartyAccountType());
+			AccountingModel.INSTANCE.create(request);
+			
+			//notify admin
+			ICoordinatorService coorService = AppContext.get().getService(ICoordinatorService.class);
+			NotificationImpl message = new NotificationImpl();
+			message.setSubject("\u63D0\u73B0\u7533\u8BF7: " + order.getSerialNumber());
+			message.setDescription(order.getDescription());
+			message.setCreateDate(new Date());
+			coorService.addNotificationToAdmin(message, false);
+		} else {
+			throw new PaymentException("Illegal order state for withdrawing: " + order.getStatus().getDescription());
+		}
 	}
 	
+	/**
+	 * Request for Refund or Withdraw.
+	 */
+	public void requestForRefund(final IPayOrder order) throws PaymentException {
+		 if (order.getStatus() == PayOrderStatusType.PAYED) {
+			if (isRequestedForRefund(order)) {
+				return;
+			}
+			PayOrderRequestImpl request = new PayOrderRequestImpl();
+			request.setUserId(UserContext.getUserContext().getOrgId());
+			request.setPayOrderId(order.getId());
+			request.setState(RequestStatusType.REQUEST);
+			request.setType(PayOrderRequestType.REFUND);
+			request.setCreateDate(new Date());
+			AccountingModel.INSTANCE.create(request);
+			
+			//notify admin
+			ICoordinatorService coorService = AppContext.get().getService(ICoordinatorService.class);
+			NotificationImpl message = new NotificationImpl();
+			message.setSubject("\u9000\u6B3E\u7533\u8BF7: " + order.getSerialNumber());
+			message.setDescription(order.getDescription());
+			message.setCreateDate(new Date());
+			coorService.addNotificationToAdmin(message, false);
+		} else {
+			throw new PaymentException("Illegal order state for refunding: " + order.getStatus().getDescription());
+		}
+	}
+	
+	public boolean isRequestedForRefund(final IPayOrder order) {
+		PayOrderRequestImpl request = new PayOrderRequestImpl();
+		request.setPayOrderId(order.getId());
+		request.setType(PayOrderRequestType.REFUND);
+		return AccountingModel.INSTANCE.searchPayOrderRequestCount(request) == 1;
+	}
+
 	/**
 	 * refund
 	 *
@@ -293,8 +346,6 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 			return alipayHandler.refund(order);
 		} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
 			return wepayHandler.refund(order);
-		} else if (SettlementMethodType.BEECLOUD == order.getCustomerAPaymentMethod()) {
-			return behandler.refund(order);
 		} else {
 			throw new PaymentException("Unsupported payment method: " + order.getCustomerAPaymentMethod());
 		}

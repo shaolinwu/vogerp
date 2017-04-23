@@ -8,34 +8,24 @@ function org_shaolin_vogerp_accounting_form_CustomerAccount(json)
         ui: elementList[prefix + "idUI"]
     });
 
-    var accountIdUILabel = new UIMaster.ui.label
+    var thirdPartyAccountTypeUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "accountIdUILabel"]
+        ui: elementList[prefix + "thirdPartyAccountTypeUILabel"]
     });
 
-    var accountIdUI = new UIMaster.ui.textfield
+    var thirdPartyAccountTypeUI = new UIMaster.ui.combobox
     ({
-        ui: elementList[prefix + "accountIdUI"]
+        ui: elementList[prefix + "thirdPartyAccountTypeUI"]
     });
 
-    var WechatAccountUILabel = new UIMaster.ui.label
+    var thirdPartyAccountUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "WechatAccountUILabel"]
+        ui: elementList[prefix + "thirdPartyAccountUILabel"]
     });
 
-    var WechatAccountUI = new UIMaster.ui.textfield
+    var thirdPartyAccountUI = new UIMaster.ui.textfield
     ({
-        ui: elementList[prefix + "WechatAccountUI"]
-    });
-
-    var AlipayAccountUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "AlipayAccountUILabel"]
-    });
-
-    var AlipayAccountUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "AlipayAccountUI"]
+        ui: elementList[prefix + "thirdPartyAccountUI"]
     });
 
     var okbtn = new UIMaster.ui.button
@@ -59,28 +49,24 @@ function org_shaolin_vogerp_accounting_form_CustomerAccount(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "accountIdUILabel",prefix + "accountIdUI",prefix + "WechatAccountUILabel",prefix + "WechatAccountUI",prefix + "AlipayAccountUILabel",prefix + "AlipayAccountUI"]
+        ,subComponents: [prefix + "idUI",prefix + "thirdPartyAccountTypeUILabel",prefix + "thirdPartyAccountTypeUI",prefix + "thirdPartyAccountUILabel",prefix + "thirdPartyAccountUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,accountIdUILabel,accountIdUI,WechatAccountUILabel,WechatAccountUI,AlipayAccountUILabel,AlipayAccountUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,thirdPartyAccountTypeUILabel,thirdPartyAccountTypeUI,thirdPartyAccountUILabel,thirdPartyAccountUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
 
-    Form.accountIdUILabel=accountIdUILabel;
+    Form.thirdPartyAccountTypeUILabel=thirdPartyAccountTypeUILabel;
 
-    Form.accountIdUI=accountIdUI;
+    Form.thirdPartyAccountTypeUI=thirdPartyAccountTypeUI;
 
-    Form.WechatAccountUILabel=WechatAccountUILabel;
+    Form.thirdPartyAccountUILabel=thirdPartyAccountUILabel;
 
-    Form.WechatAccountUI=WechatAccountUI;
-
-    Form.AlipayAccountUILabel=AlipayAccountUILabel;
-
-    Form.AlipayAccountUI=AlipayAccountUI;
+    Form.thirdPartyAccountUI=thirdPartyAccountUI;
 
     Form.okbtn=okbtn;
 
@@ -90,17 +76,13 @@ function org_shaolin_vogerp_accounting_form_CustomerAccount(json)
 
     Form.idUI=idUI;
 
-    Form.accountIdUILabel=accountIdUILabel;
+    Form.thirdPartyAccountTypeUILabel=thirdPartyAccountTypeUILabel;
 
-    Form.accountIdUI=accountIdUI;
+    Form.thirdPartyAccountTypeUI=thirdPartyAccountTypeUI;
 
-    Form.WechatAccountUILabel=WechatAccountUILabel;
+    Form.thirdPartyAccountUILabel=thirdPartyAccountUILabel;
 
-    Form.WechatAccountUI=WechatAccountUI;
-
-    Form.AlipayAccountUILabel=AlipayAccountUILabel;
-
-    Form.AlipayAccountUI=AlipayAccountUI;
+    Form.thirdPartyAccountUI=thirdPartyAccountUI;
 
     Form.actionPanel=actionPanel;
 
@@ -137,7 +119,7 @@ function org_shaolin_vogerp_accounting_form_CustomerAccount(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20160405-114830",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20170422-224500",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_CustomerAccount_Save */
 
 
@@ -148,7 +130,7 @@ function org_shaolin_vogerp_accounting_form_CustomerAccount(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160405-114830",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20170422-224500",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_CustomerAccount_Cancel */
 
 
