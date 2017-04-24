@@ -79,7 +79,7 @@
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                      {
-                         $order.setStatus(OrderStatusType.TAKEN_DELIVERY);
+                         $order.setTakenStatus(OrderStatusType.TAKEN_DELIVERY);
 			             @flowContext.save((ITaskEntity)$order);
 			             
 			             String description = "("+OrderUtil.getOrderLink($order)+")" + $order.getDescription();
@@ -157,7 +157,7 @@
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                      {
-                         $order.setStatus(OrderStatusType.TAKEN_COMPLETED);
+                         $order.setTakenStatus(OrderStatusType.TAKEN_COMPLETED);
 			             @flowContext.save((ITaskEntity)$order);
                          IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                          payService.ensurePay($order.getSerialNumber());     
@@ -178,6 +178,8 @@
             </ns2:process>
             <ns2:eventDest>
                 <!-- TODO: more missions after receiving good! -->
+                <ns2:dest name="withdrawPayOrder" flow="TransferFlow"
+					entity="org.shaolin.vogerp.accounting.diagram.PaymentFlows"></ns2:dest>
             </ns2:eventDest>
         </ns2:mission-node>
         

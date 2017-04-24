@@ -118,11 +118,6 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
         ,subComponents: [prefix + "deliveryInfoUI",prefix + "invoiceTypeUILabel",prefix + "invoiceTypeUI",prefix + "invoiceSignUILabel",prefix + "invoiceSignUI"]
     });
 
-    var notifybtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "notifybtn"]
-    });
-
     var cancelbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "cancelbtn"]
@@ -132,7 +127,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "notifybtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "cancelbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -145,7 +140,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [funcsPanel,notifybtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [funcsPanel,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.funcsPanel=funcsPanel;
@@ -191,8 +186,6 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     Form.invoiceSignUILabel=invoiceSignUILabel;
 
     Form.invoiceSignUI=invoiceSignUI;
-
-    Form.notifybtn=notifybtn;
 
     Form.cancelbtn=cancelbtn;
 
@@ -243,8 +236,6 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     Form.invoiceSignUI=invoiceSignUI;
 
     Form.actionPanel=actionPanel;
-
-    Form.notifybtn=notifybtn;
 
     Form.cancelbtn=cancelbtn;
 

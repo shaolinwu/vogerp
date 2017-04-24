@@ -604,6 +604,7 @@
 				        console.log("geolocation fails: " + data.message);
 				    }
 				    
+				    var o = this;
 				    this.nodesocket = io.connect(this.serverURLUI.value);
 				     this.nodesocket.on('connect', function(e) {
 			            var msg = {partyId: o.partyIdUI.value};
@@ -685,6 +686,7 @@
 			  $userAccount = (UserContext)@odContext.getRequest().getSession().getAttribute(WebflowConstants.USER_SESSION_KEY);
 			  $notificator = new NotificationImpl();
 			  $notificator.setPartyId($userAccount.getUserId());
+			  $partyId = $userAccount.getUserId() + "";
 			  
 			  @odContext.executeAllMappings();
 			}]]></ns2:expressionString>

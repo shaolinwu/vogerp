@@ -561,17 +561,17 @@
         <bediagram:constantValue>
             <bediagram:value>Taken_Payed</bediagram:value>
             <bediagram:intValue>21</bediagram:intValue>
-            <bediagram:description>支付</bediagram:description>
+            <bediagram:description>支付完成</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Taken_Delivery</bediagram:value>
             <bediagram:intValue>22</bediagram:intValue>
-            <bediagram:description>发货中</bediagram:description>
+            <bediagram:description>发货完成</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Taken_Completed</bediagram:value>
             <bediagram:intValue>23</bediagram:intValue>
-            <bediagram:description>完成</bediagram:description>
+            <bediagram:description>已收货</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Cancelled</bediagram:value>

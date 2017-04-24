@@ -633,6 +633,7 @@
 					entity="org.shaolin.vogerp.accounting.diagram.PaymentFlows"></ns2:dest>
 				<!-- payment goes back for delivering order. -->
 				<ns2:dest name="cancelGOrder"></ns2:dest>
+				
 			</ns2:eventDest>
 		</ns2:mission-node>
 

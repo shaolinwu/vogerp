@@ -145,14 +145,22 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
 				} else {
 					context.generateHTML("<td>2.\u751F\u4EA7\u5546\u54C1\u8DDF\u8E2A");
 					generateProgressInfo(context, deliveryInfo.getProgressNote());
-					context.generateHTML("</td><td>2.\u7B49\u5F85\u53D1\u8D27</td>");
+					if (order.getTakenStatus().getIntValue() > OrderStatusType.TAKEN_PAYED.getIntValue()) {
+						context.generateHTML("</td><td>2." + order.getTakenStatus().getDisplayName() + "</td>");
+					} else {
+						context.generateHTML("</td><td>2.\u7B49\u5F85\u53D1\u8D27</td>");
+					}
 				}
 				context.generateHTML("</tr>");
 			} else {
 				context.generateHTML("<tr class=\"\">");
 				context.generateHTML("<td>2.\u751F\u4EA7\u5546\u54C1\u8DDF\u8E2A");
 				generateProgressInfo(context, deliveryInfo.getProgressNote());
-				context.generateHTML("</td><td>2.\u7B49\u5F85\u53D1\u8D27</td>");
+				if (order.getTakenStatus().getIntValue() > OrderStatusType.TAKEN_PAYED.getIntValue()) {
+					context.generateHTML("</td><td>2." + order.getTakenStatus().getDisplayName() + "</td>");
+				} else {
+					context.generateHTML("</td><td>2.\u7B49\u5F85\u53D1\u8D27</td>");
+				}
 				context.generateHTML("</tr>");
 			}
 			
@@ -176,7 +184,11 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
 				context.generateHTML("</td><td>3.\u7B49\u5F85\u53D1\u8D27</td>");
 				context.generateHTML("</tr>");
 				context.generateHTML("<tr class=\"\">");
-				context.generateHTML("<td>4.\u6536\u6B3E\u8DDF\u8E2A</td><td>4.\u786E\u8BA4\u6536\u8D27</td>");
+				if (order.getTakenStatus().getIntValue() > OrderStatusType.TAKEN_DELIVERY.getIntValue()) {
+					context.generateHTML("<td>4.\u6536\u6B3E\u8DDF\u8E2A</td><td>4." + order.getTakenStatus().getDisplayName() + "</td>");
+				} else {
+					context.generateHTML("<td>4.\u6536\u6B3E\u8DDF\u8E2A</td><td>4.\u786E\u8BA4\u6536\u8D27</td>");
+				}
 				context.generateHTML("</tr>");
 			}
 			

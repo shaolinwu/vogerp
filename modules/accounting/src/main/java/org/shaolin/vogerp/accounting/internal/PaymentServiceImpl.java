@@ -241,7 +241,7 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	 */
 	public void ensurePay(final String orderSNumber) throws PaymentException {
 		PayOrderImpl order = new PayOrderImpl();
-		order.setSerialNumber(orderSNumber);
+		order.setOrderSerialNumber(orderSNumber);
 		order.setEnabled(true);
 		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order, null, 0, 1);
 		if (result != null && result.size() > 0) {

@@ -106,7 +106,7 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 		List<IPayOrder> orders = AccountingModel.INSTANCE.searchPaymentOrder(condition, null, 0, -1);
 		double totalAmount = 0;
 		for (IPayOrder order: orders) {
-			totalAmount += order.getAmount();
+			totalAmount += (order.getAmount()/100);
 		}
 		return totalAmount;
 	}
@@ -119,7 +119,7 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 		List<IPayOrder> orders = AccountingModel.INSTANCE.searchPaymentOrder(condition, null, 0, -1);
 		double totalAmount = 0;
 		for (IPayOrder order: orders) {
-			totalAmount += order.getAmount();
+			totalAmount += (order.getAmount()/100);
 		}
 		return totalAmount;
 	}
