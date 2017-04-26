@@ -54,6 +54,16 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         ,subComponents: [prefix + "interestEOrderTable"]
     });
 
+    var purchaseOrderLabel = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "purchaseOrderLabel"]
+    });
+
+    var saleOrderLabel = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "saleOrderLabel"]
+    });
+
     var loanOrderLabel = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "loanOrderLabel"]
@@ -72,11 +82,19 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         ,subComponents: [prefix + "loanOrderLabel",prefix + "rentOrderLabel"]
     });
 
+    var selectGTypePanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "selectGTypePanel"]
+        ,style: "display:none"
+        ,items: []
+        ,subComponents: [prefix + "purchaseOrderLabel",prefix + "saleOrderLabel"]
+    });
+
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [functionsTab,loanOrderLabel,rentOrderLabel,selectRentOrderTypePanel]
+        ,items: [functionsTab,purchaseOrderLabel,saleOrderLabel,loanOrderLabel,rentOrderLabel,selectGTypePanel,selectRentOrderTypePanel]
     });
 
     Form.functionsTab=functionsTab;
@@ -97,9 +115,19 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
     Form.interestEOrderTable=interestEOrderTable;
 
+    Form.purchaseOrderLabel=purchaseOrderLabel;
+
+    Form.saleOrderLabel=saleOrderLabel;
+
     Form.loanOrderLabel=loanOrderLabel;
 
     Form.rentOrderLabel=rentOrderLabel;
+
+    Form.selectGTypePanel=selectGTypePanel;
+
+    Form.purchaseOrderLabel=purchaseOrderLabel;
+
+    Form.saleOrderLabel=saleOrderLabel;
 
     Form.selectRentOrderTypePanel=selectRentOrderTypePanel;
 
@@ -114,6 +142,10 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     };
 
     Form.createGOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_createGOrder;
+
+    Form.selectedPurchaseOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_selectedPurchaseOrder;
+
+    Form.selectedSaleOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_selectedSaleOrder;
 
     Form.createCopyGOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_createCopyGOrder;
 
@@ -179,17 +211,47 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 		                  UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createCopyGOrder-20160602",UIMaster.getValue(eventsource),o.__entityName);
 		              },
 		              noHandler: function() {
-		                  UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createGOrder-20160602",UIMaster.getValue(eventsource),o.__entityName);
+		                  $(o.selectGTypePanel).css("display", "block");
+	                      $(o.selectGTypePanel).dialog();
 		              },
 		          }).open();
 		          return;
-	          } 
+	          } else {
+	              $(this.selectGTypePanel).css("display", "block");
+	              $(this.selectGTypePanel).dialog();
+	          }
 	        }
-	        
+	            }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_createGOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_selectedPurchaseOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_selectedPurchaseOrder */
+        var o = this;
+        var UIEntity = this;
+
+		        {   
+		           $(this.selectGTypePanel).dialog("close");
+		        }
+		        
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createGOrder-20160602",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_createGOrder */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedPurchaseOrder-20170106-214008",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_selectedPurchaseOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_selectedSaleOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_selectedSaleOrder */
+        var o = this;
+        var UIEntity = this;
+
+		        {   
+		           $(this.selectGTypePanel).dialog("close");
+		        }
+		        
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedSaleOrder-20170106-214008",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_selectedSaleOrder */
 
 
     /* auto generated eventlistener function declaration */
