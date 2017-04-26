@@ -19,9 +19,9 @@
         <module>commonmodel</module>
 		<module>productmodel</module>
 		<module>order</module>
-		<module>adminconsole</module>
 		<module>order2</module>
 		<module>coupon</module>
+		<module>adminconsole</module>
 	</modules>
 	
     <reporting>

@@ -49,6 +49,7 @@
 				            
 			                HashMap result = new HashMap();
                             result.put("order", order);
+                            result.put("form", form);
                             return result;
 			            } else {
 			                Dialog.showMessageDialog("亲，请先确认对方已支付，再发货哟！", "", Dialog.WARNING_MESSAGE, null);
@@ -62,6 +63,9 @@
             <ns2:process>
                 <ns2:var name="order" category="BusinessEntity" scope="InOut">
                     <type entityName="org.shaolin.vogerp.ecommercial.be.EOrder"></type>
+                </ns2:var>
+                <ns2:var name="form" category="JavaClass" scope="InOut">
+                    <type entityName="org.shaolin.uimaster.page.ajax.RefForm"></type>
                 </ns2:var>
                 <ns2:expression>
                     <expressionString><![CDATA[
@@ -91,7 +95,10 @@
                          
                          ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
                          service.addNotification(message, true);
+			             
 			             Dialog.showMessageDialog("更新成功！", "", Dialog.INFORMATION_MESSAGE, null);
+			             $form.setInputParameter("order", $order);
+			             $form.refresh();
                      }
                      ]]></expressionString>
                 </ns2:expression>
@@ -126,6 +133,7 @@
 			            if (order.getTakenStatus() == OrderStatusType.TAKEN_DELIVERY) {
 			                HashMap result = new HashMap();
                             result.put("order", order);
+                            result.put("form", form);
                             return result;
 			            } else {
 			                Dialog.showMessageDialog("亲，您的订单还未发货！", "", Dialog.WARNING_MESSAGE, null);
@@ -139,6 +147,9 @@
             <ns2:process>
                 <ns2:var name="order" category="BusinessEntity" scope="InOut">
                     <type entityName="org.shaolin.vogerp.ecommercial.be.EOrder"></type>
+                </ns2:var>
+                <ns2:var name="form" category="JavaClass" scope="InOut">
+                    <type entityName="org.shaolin.uimaster.page.ajax.RefForm"></type>
                 </ns2:var>
                 <ns2:expression>
                     <expressionString><![CDATA[
@@ -172,6 +183,9 @@
                          ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
                          service.addNotification(message, true);
 			             Dialog.showMessageDialog("更新成功！", "", Dialog.INFORMATION_MESSAGE, null);
+			             
+			             $form.setInputParameter("order", $order);
+			             $form.refresh();
                      }
                      ]]></expressionString>
                 </ns2:expression>
