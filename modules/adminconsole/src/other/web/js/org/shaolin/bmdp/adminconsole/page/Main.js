@@ -326,6 +326,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 				        console.log("geolocation fails: " + data.message);
 				    }
 				    
+				    var o = this;
 				    this.nodesocket = io.connect(this.serverURLUI.value);
 				     this.nodesocket.on('connect', function(e) {
 			            var msg = {partyId: o.partyIdUI.value};

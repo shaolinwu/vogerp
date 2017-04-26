@@ -1,4 +1,4 @@
-#treePanel{overflow-y: scroll;}
+#treePanel{overflow-x: hidden;}
 #topPanel {min-width: 790px;}
 #div-topPanel-0_0 img{cursor:pointer; height: 60px;}
 
