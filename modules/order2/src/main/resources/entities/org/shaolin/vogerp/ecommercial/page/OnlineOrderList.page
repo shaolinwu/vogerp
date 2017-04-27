@@ -391,18 +391,18 @@
 									import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 									import org.shaolin.vogerp.ecommercial.ce.*;
 		                            {
-		                                  if ($tableCondition == null) {
-		                                     $tableCondition = TableConditions.createCondition(new MachiningOrderImpl());
-		                                     $tableCondition.setCount(5);
-		                                     $tableCondition.addOrder("statusInt", true);
-		                                     $tableCondition.addOrder("createDate", false);
-		                                  }
-		                                  MachiningOrderImpl condition = (MachiningOrderImpl)$tableCondition.getCondition();
-		                                  condition.setStatus(OrderStatusType.PUBLISHED);
-		                                  return OrderModel.INSTANCE.searchMachiningOrder(condition,
-	                                                $tableCondition.getOrders(),
-	                                                $tableCondition.getOffset(), 
-	                                                $tableCondition.getCount());
+	                                  if ($tableCondition == null) {
+	                                     $tableCondition = TableConditions.createCondition(new MachiningOrderImpl());
+	                                     $tableCondition.setCount(5);
+	                                     $tableCondition.addOrder("createDate", false);
+	                                  }
+                                      $tableCondition.addOrder("statusInt", false);
+	                                  MachiningOrderImpl condition = (MachiningOrderImpl)$tableCondition.getCondition();
+	                                  condition.setStatus(OrderStatusType.PUBLISHED);
+	                                  return OrderModel.INSTANCE.searchMachiningOrder(condition,
+                                                $tableCondition.getOrders(),
+                                                $tableCondition.getOffset(), 
+                                                $tableCondition.getCount());
 		                            }]]></ns2:expressionString>
 		                        </ns2:expression>
 		                    </ns2:query>
@@ -495,25 +495,16 @@
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
 		                                     $tableCondition.setCount(10);
-		                                     $tableCondition.addOrder("statusInt", true);
 		                                     $tableCondition.addOrder("createDate", false);
 		                                  }
-		                                  // switch to uimaster node.
-		                                  IAppServiceManager masterApp = (IAppServiceManager)IServerServiceManager.INSTANCE.getApplication(
-		                                                              IServerServiceManager.INSTANCE.getMasterNodeName());
-								          IAppServiceManager currentContext = AppContext.get();
-								          try {
-								              AppContext.register(masterApp);
-			                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
-			                                  condition.setStatus(OrderStatusType.PUBLISHED);
-			                                  condition.setType(GoldenOrderType.PURCHASE);
-			                                  return OrderModel.INSTANCE.searchGoldenOrder(condition,
-		                                                $tableCondition.getOrders(),
-		                                                $tableCondition.getOffset(), 
-		                                                $tableCondition.getCount());
-		                                  } finally {
-								              AppContext.register(currentContext);
-								          }
+	                                      $tableCondition.addOrder("statusInt", false);
+		                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
+		                                  condition.setStatus(OrderStatusType.PUBLISHED);
+		                                  condition.setType(GoldenOrderType.PURCHASE);
+		                                  return OrderModel.INSTANCE.searchGoldenOrder(condition,
+	                                                $tableCondition.getOrders(),
+	                                                $tableCondition.getOffset(), 
+	                                                $tableCondition.getCount());
 		                            }]]></ns2:expressionString>
 		                        </ns2:expression>
 		                    </ns2:query>
@@ -611,9 +602,9 @@
                                           if ($tableCondition == null) {
                                              $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
                                              $tableCondition.setCount(10);
-                                             $tableCondition.addOrder("statusInt", true);
                                              $tableCondition.addOrder("createDate", false);
                                           }
+                                          $tableCondition.addOrder("statusInt", false);
                                           // switch to uimaster node.
                                           IAppServiceManager masterApp = (IAppServiceManager)IServerServiceManager.INSTANCE.getApplication(
                                                                       IServerServiceManager.INSTANCE.getMasterNodeName());
@@ -727,9 +718,9 @@
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new RentOrLoanOrderImpl());
 		                                     $tableCondition.setCount(10);
-		                                     $tableCondition.addOrder("statusInt", true);
 		                                     $tableCondition.addOrder("createDate", false);
 		                                  }
+	                                      $tableCondition.addOrder("statusInt", false);
 		                                  // switch to uimaster node.
 		                                  IAppServiceManager masterApp = (IAppServiceManager)IServerServiceManager.INSTANCE.getApplication(
 		                                                              IServerServiceManager.INSTANCE.getMasterNodeName());
@@ -843,9 +834,9 @@
                                           if ($tableCondition == null) {
                                              $tableCondition = TableConditions.createCondition(new RentOrLoanOrderImpl());
                                              $tableCondition.setCount(10);
-                                             $tableCondition.addOrder("statusInt", true);
                                              $tableCondition.addOrder("createDate", false);
                                           }
+                                          $tableCondition.addOrder("statusInt", false);
                                           // switch to uimaster node.
                                           IAppServiceManager masterApp = (IAppServiceManager)IServerServiceManager.INSTANCE.getApplication(
                                                                       IServerServiceManager.INSTANCE.getMasterNodeName());

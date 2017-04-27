@@ -379,9 +379,9 @@
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new MachiningOrderImpl());
 		                                     $tableCondition.setCount(5);
-		                                     $tableCondition.addOrder("statusInt", true);
 		                                     $tableCondition.addOrder("createDate", false);
 		                                  }
+		                                  $tableCondition.addOrder("statusInt", false);
 		                                  MachiningOrderImpl condition = (MachiningOrderImpl)$tableCondition.getCondition();
 		                                  condition.setStatus(OrderStatusType.PUBLISHED);
 		                                  OrderUtil.updateSearchCriteria($page, condition);
@@ -489,9 +489,9 @@
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
 		                                     $tableCondition.setCount(5);
-		                                     $tableCondition.addOrder("statusInt", true);
 		                                     $tableCondition.addOrder("createDate", false);
 		                                  }
+		                                  $tableCondition.addOrder("statusInt", false);
 		                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
 		                                  condition.setStatus(OrderStatusType.PUBLISHED);
 		                                  condition.setType(GoldenOrderType.PURCHASE);
@@ -613,9 +613,9 @@
                                           if ($tableCondition == null) {
                                              $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
                                              $tableCondition.setCount(10);
-                                             $tableCondition.addOrder("statusInt", true);
                                              $tableCondition.addOrder("createDate", false);
                                           }
+                                          $tableCondition.addOrder("statusInt", false);
                                           GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
                                           condition.setStatus(OrderStatusType.PUBLISHED);
                                           condition.setType(GoldenOrderType.SALE);
@@ -736,9 +736,9 @@
                                           if ($tableCondition == null) {
                                              $tableCondition = TableConditions.createCondition(new RentOrLoanOrderImpl());
                                              $tableCondition.setCount(10);
-                                             $tableCondition.addOrder("statusInt", true);
                                              $tableCondition.addOrder("createDate", false);
                                           }
+                                          $tableCondition.addOrder("statusInt", false);
                                           RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
                                           condition.setType(RentOrLoanOrderType.RENT);
                                           condition.setStatus(OrderStatusType.PUBLISHED);
@@ -859,9 +859,9 @@
                                           if ($tableCondition == null) {
                                              $tableCondition = TableConditions.createCondition(new RentOrLoanOrderImpl());
                                              $tableCondition.setCount(10);
-                                             $tableCondition.addOrder("statusInt", true);
                                              $tableCondition.addOrder("createDate", false);
                                           }
+                                          $tableCondition.addOrder("statusInt", false);
                                           RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
                                           condition.setType(RentOrLoanOrderType.LOAN);
                                           condition.setStatus(OrderStatusType.PUBLISHED);

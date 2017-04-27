@@ -115,7 +115,7 @@
                                         }
                                         PayOrderRequestImpl condition = (PayOrderRequestImpl)$tableCondition.getCondition();
 						                condition.setType(PayOrderRequestType.WITHDRAW);
-						                //condition.setState(RequestStatusType.REQUEST);
+						                condition.setState(RequestStatusType.REQUEST);
                                         return AccountingModel.INSTANCE.searchPayOrderRequest(condition,
                                                       $tableCondition.getOrders(),
                                                       $tableCondition.getOffset(), 
@@ -131,6 +131,17 @@
                                 <ns2:uiType xsi:type="ns2:UITableColHTMLType">
                                     <ns2:type>Label</ns2:type>
                                 </ns2:uiType>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+						            <ns2:expression xsi:type="ns2:ExpressionType">
+						                <ns2:expressionString><![CDATA[
+						                import org.shaolin.bmdp.utils.StringUtil;
+						                import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+						                {
+						                   String userName = CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getUserId());
+						                   return $rowBE.getPayOrder().getSerialNumber() + "("+userName+")";
+						                }]]></ns2:expressionString>
+						            </ns2:expression>
+						        </ns2:rowExpression>
                             </ns2:column>
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
@@ -157,7 +168,7 @@
                                 </ns2:title>
                                 <ns2:beFieldId>rowBE.payOrder.description</ns2:beFieldId>
                                 <ns2:uiType xsi:type="ns2:UITableColHTMLType">
-                                    <ns2:type>Text</ns2:type>
+                                    <ns2:type>Label</ns2:type>
                                 </ns2:uiType>
                             </ns2:column>
                             <ns2:column xsi:type="ns2:UITableColumnType">
@@ -254,7 +265,7 @@
                                         }
                                         PayOrderRequestImpl condition = (PayOrderRequestImpl)$tableCondition.getCondition();
 						                condition.setType(PayOrderRequestType.REFUND);
-						                //condition.setState(RequestStatusType.REQUEST);
+						                condition.setState(RequestStatusType.REQUEST);
                                         return AccountingModel.INSTANCE.searchPayOrderRequest(condition,
                                                       $tableCondition.getOrders(),
                                                       $tableCondition.getOffset(), 
@@ -270,6 +281,17 @@
                                 <ns2:uiType xsi:type="ns2:UITableColHTMLType">
                                     <ns2:type>Label</ns2:type>
                                 </ns2:uiType>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+						            <ns2:expression xsi:type="ns2:ExpressionType">
+						                <ns2:expressionString><![CDATA[
+						                import org.shaolin.bmdp.utils.StringUtil;
+						                import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+						                {
+						                   String userName = CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getUserId());
+						                   return $rowBE.getPayOrder().getSerialNumber() + "("+userName+")";
+						                }]]></ns2:expressionString>
+						            </ns2:expression>
+						        </ns2:rowExpression>
                             </ns2:column>
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
@@ -296,7 +318,7 @@
                                 </ns2:title>
                                 <ns2:beFieldId>rowBE.payOrder.description</ns2:beFieldId>
                                 <ns2:uiType xsi:type="ns2:UITableColHTMLType">
-                                    <ns2:type>Text</ns2:type>
+                                    <ns2:type>Label</ns2:type>
                                 </ns2:uiType>
                             </ns2:column>
                             <ns2:column xsi:type="ns2:UITableColumnType">
@@ -435,7 +457,7 @@
                                 </ns2:title>
                                 <ns2:beFieldId>rowBE.description</ns2:beFieldId>
                                 <ns2:uiType xsi:type="ns2:UITableColHTMLType">
-                                    <ns2:type>Text</ns2:type>
+                                    <ns2:type>Label</ns2:type>
                                 </ns2:uiType>
                             </ns2:column>
                             <ns2:column xsi:type="ns2:UITableColumnType">

@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.shaolin.bmdp.i18n.LocaleContext;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -30,6 +29,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
+import org.shaolin.bmdp.i18n.LocaleContext;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
@@ -89,6 +89,8 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 	
 	private final HttpSender sender;
 	
+	private SSLConnectionSocketFactory sslsf;
+	
 	public WepayHandler() {
 		// \u767B\u5F55\u5FAE\u4FE1\u516C\u4F17\u5E73\u53F0\uFF0C\u5728\u3010\u5F00\u53D1-->\u57FA\u672C\u914D\u7F6E\u3011\u4E2D\u67E5\u770B
 		APP_ID = Registry.getInstance().getValue("/System/payment/wepay/app_id");
@@ -97,6 +99,20 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 		// \u767B\u5F55\u5FAE\u4FE1\u652F\u4ED8\u5546\u6237\u5E73\u53F0\uFF0C\u5728\u3010\u8D26\u6237\u8BBE\u7F6E-->API\u5B89\u5168\u3011\u4E2D\u8BBE\u7F6E
 		MCH_APISECURE_KEY = Registry.getInstance().getValue("/System/payment/wepay/mch_apisecurekey");
 		
+		// HttpClient need to load keyStore
+		try {
+			KeyStore keyStore  = KeyStore.getInstance("PKCS12");
+			InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("cert/wepay/apiclient_cert.p12");
+			try {
+				keyStore.load(inputStream, MCH_ID.toCharArray());
+			} finally {
+				inputStream.close();
+			}
+			SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, MCH_ID.toCharArray()).build();
+			sslsf = new SSLConnectionSocketFactory(sslcontext, SSLConnectionSocketFactory.getDefaultHostnameVerifier());
+		} catch (Exception e) {
+			logger.error("Error to load Wepay certificates: " + e.getMessage(), e);
+		}
 		sender = new HttpSender();
 	}
 
@@ -260,12 +276,8 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 	 * @throws PaymentException
 	 */
 	public String refund(final IPayOrder order) throws PaymentException {
-
-		// TODO ============>> for test, please delete
-		order.setOutTradeNo("OTN2017041619007133727");
-		order.setAmount(300);
-		//============>> for test, please delete
-
+		order.setOutTradeNo(order.getOutTradeNo());
+		order.setAmount(order.getAmount());
 		try {
 			HashMap<String, Object> values = new HashMap<String, Object>();
 			values.put("appid", APP_ID);
@@ -290,21 +302,9 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 			keyValues.append("&key=").append(MCH_APISECURE_KEY);
 			values.put("sign", encodeMD5(keyValues.toString(), "UTF-8").toUpperCase());
 
-			// HttpClient need to load keyStore
-			KeyStore keyStore  = KeyStore.getInstance("PKCS12");
-			InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("cert/wepay/apiclient_cert.p12");
-			try {
-				keyStore.load(inputStream, MCH_ID.toCharArray());
-			} finally {
-				inputStream.close();
-			}
-
 			CloseableHttpResponse response = null;
 			String result = null;
 			try {
-				SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, MCH_ID.toCharArray()).build();
-				SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
-						sslcontext, SSLConnectionSocketFactory.getDefaultHostnameVerifier());
 				CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
 
 				HttpPost httpPost = new HttpPost(REFUND_URL);

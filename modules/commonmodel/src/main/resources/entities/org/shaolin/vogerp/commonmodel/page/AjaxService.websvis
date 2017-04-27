@@ -91,17 +91,9 @@
 	        item1.put("_page", "org.shaolin.vogerp.ecommercial.page.OrderManagement");
 	        item1.put("_framename", "goldenOrderManager");
 	        
-	        JSONObject item2 = new JSONObject();
-	        item2.put("name", "产品");
-	        item2.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
-	        item2.put("_nodename", "ProductManagement");
-	        item2.put("_page", "org.shaolin.vogerp.productmodel.page.ProductManagement");
-	        item2.put("_framename", "productManager");
-	        
 	        JSONArray array = new JSONArray();
 	        array.put(item);
 	        array.put(item1);
-	        array.put(item2);
 	        return array;
         }
      ]]></expressionString>

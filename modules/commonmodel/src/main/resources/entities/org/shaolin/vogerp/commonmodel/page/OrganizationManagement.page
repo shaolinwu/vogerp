@@ -394,7 +394,7 @@
                                      if ("-1".equals($value)) {
                                          $rowBE.setType(null);
                                      } else {
-                                         $rowBE.setType($value);
+                                         $rowBE.setType("org.shaolin.vogerp.productmodel.ce.ProductType," + $value);
                                      }
                                  }]]></ns2:expressionString>
                              </ns2:expression>
@@ -426,7 +426,7 @@
                                  import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
                                  {
                                      if ("-1".equals($value)) {
-                                         $rowBE.setVeriState(null);
+                                         $rowBE.setVeriState(OrgVerifyStatusType.NOT_SPECIFIED);
                                      } else {
                                          $rowBE.setVeriState((OrgVerifyStatusType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType").getByIntValue(Integer.valueOf($value).intValue()));
                                      }

@@ -323,9 +323,9 @@
                                           if ($tableCondition == null) {
                                              $tableCondition = TableConditions.createCondition(new MachiningOrderImpl());
                                              $tableCondition.setCount(10);
-                                             $tableCondition.addOrder("statusInt", true);
                                              $tableCondition.addOrder("createDate", false);
                                           }
+                                          $tableCondition.addOrder("statusInt", true);
                                           MachiningOrderImpl condition = (MachiningOrderImpl)$tableCondition.getCondition();
                                           return OrderModel.INSTANCE.searchMachiningOrder(condition,
                                                         $tableCondition.getOrders(),
@@ -507,11 +507,10 @@
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
 		                                     $tableCondition.setCount(10);
-		                                     $tableCondition.addOrder("statusInt", true);
                                              $tableCondition.addOrder("createDate", false);
 		                                  }
+		                                  $tableCondition.addOrder("statusInt", true);
 		                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
-		                                  condition.setType(GoldenOrderType.PURCHASE);
 		                                  return OrderModel.INSTANCE.searchGoldenOrder(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 
@@ -728,9 +727,9 @@
                                           if ($tableCondition == null) {
                                              $tableCondition = TableConditions.createCondition(new RentOrLoanOrderImpl());
                                              $tableCondition.setCount(10);
-                                             $tableCondition.addOrder("statusInt", true);
                                              $tableCondition.addOrder("createDate", false);
                                           }
+                                          $tableCondition.addOrder("statusInt", true);
                                           RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
                                           return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
                                                         $tableCondition.getOrders(),

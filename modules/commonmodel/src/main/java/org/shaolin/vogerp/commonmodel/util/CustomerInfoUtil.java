@@ -14,12 +14,21 @@ import org.shaolin.vogerp.commonmodel.be.IDeliveryInfo;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 import org.shaolin.vogerp.commonmodel.ce.OrgType;
 import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
-import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 
 public class CustomerInfoUtil {
 
 	public static String getCustomerBasicInfo(IPersonalInfo customer) {
 		return customer.getLastName() + customer.getFirstName();
+	}
+	
+	public static String getCustomerBasicInfo(long userId) {
+		IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
+	    return CustomerInfoUtil.getCustomerBasicInfo(service.getPersonalInfo(userId));
+	}
+	
+	public static String getCustomerEnterpriseBasicInfo(long userId) {
+		IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
+	    return CustomerInfoUtil.getCustomerEnterpriseBasicInfo(service.getPersonalInfo(userId));
 	}
 	
 	public static String getCustomerEnterpriseBasicInfo(IPersonalInfo customer) {
@@ -32,6 +41,11 @@ public class CustomerInfoUtil {
 		} else {
 			return getCustomerBasicInfo(customer);
 		}
+	}
+	
+	public static String getSecureCustomerBasicInfo(long userId) {
+		IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
+	    return CustomerInfoUtil.getSecureCustomerBasicInfo(service.getPersonalInfo(userId));
 	}
 	
 	public static String getSecureCustomerBasicInfo(IPersonalInfo customer) {

@@ -856,22 +856,22 @@
         <bediagram:constantValue>
             <bediagram:value>Organization</bediagram:value>
             <bediagram:intValue>0</bediagram:intValue>
-            <bediagram:description>Organization</bediagram:description>
+            <bediagram:description>组织</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>BusinessPartners</bediagram:value>
             <bediagram:intValue>1</bediagram:intValue>
-            <bediagram:description>Business Partners</bediagram:description>
+            <bediagram:description>合作伙伴</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Supplier</bediagram:value>
             <bediagram:intValue>2</bediagram:intValue>
-            <bediagram:description>Supplier</bediagram:description>
+            <bediagram:description>供应商</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Distributor</bediagram:value>
             <bediagram:intValue>3</bediagram:intValue>
-            <bediagram:description>Distributor</bediagram:description>
+            <bediagram:description>分销商</bediagram:description>
         </bediagram:constantValue>
         
     </bediagram:ceEntity>    
@@ -929,7 +929,7 @@
 		<bediagram:constantValue>
 			<bediagram:value>Chinese</bediagram:value>
 			<bediagram:intValue>0</bediagram:intValue>
-			<bediagram:description>Chinese</bediagram:description>
+			<bediagram:description>中文</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>English</bediagram:value>
@@ -942,32 +942,32 @@
 		<bediagram:constantValue>
 			<bediagram:value>SENIORSCHOOL</bediagram:value>
 			<bediagram:intValue>0</bediagram:intValue>
-			<bediagram:description>SENIORSCHOOL</bediagram:description>
+			<bediagram:description>高中</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>JUNIORCOLLEGE</bediagram:value>
 			<bediagram:intValue>1</bediagram:intValue>
-			<bediagram:description>JUNIORCOLLEGE</bediagram:description>
+			<bediagram:description>大专</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>UNDERGRADUATE</bediagram:value>
 			<bediagram:intValue>2</bediagram:intValue>
-			<bediagram:description>UNDERGRADUATE</bediagram:description>
+			<bediagram:description>本科</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>MASTER</bediagram:value>
 			<bediagram:intValue>3</bediagram:intValue>
-			<bediagram:description>MASTER</bediagram:description>
+			<bediagram:description>研究生</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>DOCTOR</bediagram:value>
 			<bediagram:intValue>4</bediagram:intValue>
-			<bediagram:description>DOCTOR</bediagram:description>
+			<bediagram:description>博士</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>POSTDOCTOR</bediagram:value>
 			<bediagram:intValue>5</bediagram:intValue>
-			<bediagram:description>POSTDOCTOR</bediagram:description>
+			<bediagram:description>博士后</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>
 	<bediagram:ceEntity>
@@ -975,12 +975,12 @@
 		<bediagram:constantValue>
 			<bediagram:value>MALE</bediagram:value>
 			<bediagram:intValue>0</bediagram:intValue>
-			<bediagram:description>MALE</bediagram:description>
+			<bediagram:description>男</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>FEMALE</bediagram:value>
 			<bediagram:intValue>1</bediagram:intValue>
-			<bediagram:description>FEMALE</bediagram:description>
+			<bediagram:description>女</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>
 	<!-- 
@@ -1028,22 +1028,22 @@
 		<bediagram:constantValue>
 			<bediagram:value>Trial</bediagram:value>
 			<bediagram:intValue>0</bediagram:intValue>
-			<bediagram:description>Trial for free in two monthes</bediagram:description>
+			<bediagram:description>试用</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Monthly</bediagram:value>
 			<bediagram:intValue>1</bediagram:intValue>
-			<bediagram:description>Monthly</bediagram:description>
+			<bediagram:description>月</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Season</bediagram:value>
 			<bediagram:intValue>2</bediagram:intValue>
-			<bediagram:description>Season</bediagram:description>
+			<bediagram:description>季</bediagram:description>
 		</bediagram:constantValue>
 		<bediagram:constantValue>
 			<bediagram:value>Year</bediagram:value>
 			<bediagram:intValue>3</bediagram:intValue>
-			<bediagram:description>Year</bediagram:description>
+			<bediagram:description>年</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>
 	
