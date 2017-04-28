@@ -21,6 +21,7 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     var errorInfo = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "errorInfo"]
+        ,needAjaxSupport: true
     });
 
     var selectModeUI = new UIMaster.ui.radiobuttongroup
@@ -38,6 +39,7 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     var veriCodeQuestion = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "veriCodeQuestion"]
+        ,needAjaxSupport: true
     });
 
     var veriCodeUILabel = new UIMaster.ui.label

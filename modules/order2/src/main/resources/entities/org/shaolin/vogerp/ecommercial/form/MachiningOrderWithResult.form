@@ -80,6 +80,16 @@
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="serialNumberUI">
             <ns2:UIStyle></ns2:UIStyle>
+            <ns2:Property name="displayValue">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           { 
+			               return $beObject.getSerialNumber() + "(" +$beObject.getStatus().getDisplayName() + ")";
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+            </ns2:Property>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="descriptionUILabel">
             <ns2:UIStyle></ns2:UIStyle>
@@ -90,6 +100,16 @@
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="descriptionUI">
             <ns2:UIStyle></ns2:UIStyle>
+            <ns2:Property name="displayValue">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           { 
+			               return $beObject.getDescription();
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+            </ns2:Property>
           </ns2:component>
 	      <ns2:component xsi:type="ns2:UILabelType" UIID="countUILabel">
 	        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -99,6 +119,16 @@
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UILabelType" UIID="countUI">
 	        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+	        <ns2:Property name="displayValue">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           { 
+			               return $beObject.getCount();
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+            </ns2:Property>
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UILabelType" UIID="materialTypeUILabel">
 	        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -107,6 +137,18 @@
 	        </ns2:text>
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UILabelType" UIID="materialTypeUI">
+	        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+	        <ns2:Property name="displayValue">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           import org.shaolin.bmdp.runtime.ce.CEUtil;
+			           {
+			              return CEUtil.getValue($beObject.getMaterialType());
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+            </ns2:Property>
 	      </ns2:component>
           <ns2:layoutConstraint>
             <ns2:componentId>serialNumberUILabel</ns2:componentId>
@@ -249,38 +291,6 @@
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
          <ns2:expression>
           <expressionString>{return false;}</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="serialNumberUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
-         <ns2:expression>
-             <expressionString>$beObject.getSerialNumber() + "(" +$beObject.getStatus().getDisplayName() + ")"</expressionString>
-         </ns2:expression>
-      </ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="descriptionUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.description" paramName="StringData"></ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="countUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.count" paramName="Number"></ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="materialTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
-        <ns2:expression>
-          <expressionString><![CDATA[
-          import org.shaolin.bmdp.runtime.ce.CEUtil;
-          {
-             return CEUtil.getValue($beObject.getMaterialType());
-          }]]></expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>

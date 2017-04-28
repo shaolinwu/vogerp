@@ -144,7 +144,13 @@
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 				</ns2:layout>
-				<ns2:component xsi:type="ns2:UILabelType" UIID="errorInfo" />
+				<ns2:component xsi:type="ns2:UILabelType" UIID="errorInfo">
+				   <ns2:Property name="needAjaxSupport">
+		               <ns2:value xsi:type="ns2:BooleanPropertyType">
+		                   <value>true</value>
+		               </ns2:value>
+		           </ns2:Property>
+				</ns2:component>
 				<ns2:component xsi:type="ns2:UIRadioButtonGroupType" UIID="selectModeUI">
 				    <ns2:Property name="horizontalLayout" >
 			         <ns2:value xsi:type="ns2:BooleanPropertyType">
@@ -210,6 +216,11 @@
 				        </ns2:text>
 				    </ns2:component>
 	                <ns2:component xsi:type="ns2:UILabelType" UIID="veriCodeQuestion">
+	                    <ns2:Property name="needAjaxSupport">
+			               <ns2:value xsi:type="ns2:BooleanPropertyType">
+			                   <value>true</value>
+			               </ns2:value>
+			            </ns2:Property>
 	                    <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
 	                    <ns2:text xsi:type="ns2:StringPropertyType">
 	                        <ns2:value>请您点一下，谢谢</ns2:value>

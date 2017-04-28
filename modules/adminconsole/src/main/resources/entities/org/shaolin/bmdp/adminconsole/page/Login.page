@@ -236,7 +236,13 @@
 					</ns2:layout>
 					<ns2:component xsi:type="ns2:UIHiddenType" UIID="latitudeInfo" />
 				    <ns2:component xsi:type="ns2:UIHiddenType" UIID="longitudeInfo" />
-					<ns2:component xsi:type="ns2:UILabelType" UIID="errorInfo" />
+					<ns2:component xsi:type="ns2:UILabelType" UIID="errorInfo">
+					   <ns2:Property name="needAjaxSupport">
+			               <ns2:value xsi:type="ns2:BooleanPropertyType">
+			                   <value>true</value>
+			               </ns2:value>
+			           </ns2:Property>
+					</ns2:component>
 					<ns2:component xsi:type="ns2:UITextFieldType" UIID="userName">
 						<ns2:title xsi:type="ns2:StringPropertyType">
 							<ns2:value>用户名</ns2:value>
@@ -266,6 +272,11 @@
 						</ns2:allowBlankText>
 					</ns2:component>
 	                <ns2:component xsi:type="ns2:UILabelType" UIID="veriCodeQuestion">
+	                    <ns2:Property name="needAjaxSupport">
+			               <ns2:value xsi:type="ns2:BooleanPropertyType">
+			                   <value>true</value>
+			               </ns2:value>
+			            </ns2:Property>
 	                    <ns2:text xsi:type="ns2:StringPropertyType">
 	                        <ns2:value>请您点一下，谢谢</ns2:value>
 	                    </ns2:text>

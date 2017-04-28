@@ -21,6 +21,7 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
     var errorInfo = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "errorInfo"]
+        ,needAjaxSupport: true
     });
 
     var userName = new UIMaster.ui.textfield
@@ -36,6 +37,7 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
     var veriCodeQuestion = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "veriCodeQuestion"]
+        ,needAjaxSupport: true
     });
 
     var veriCode = new UIMaster.ui.textfield
