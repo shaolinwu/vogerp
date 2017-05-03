@@ -620,12 +620,6 @@
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>
-		<ns2:DataEntity category="JavaClass" name="treeCondition" scope="Internal">
-			<ns2:type entityName="org.shaolin.uimaster.page.ajax.TreeConditions" />
-			<ns2:default>
-				<ns2:expressionString><![CDATA[org.shaolin.uimaster.page.ajax.TreeConditions.createCondition()]]></ns2:expressionString>
-			</ns2:default>
-		</ns2:DataEntity>
 		<ns2:DataEntity category="JavaClass" name="userAccount" scope="In">
 			<ns2:type entityName="org.shaolin.bmdp.runtime.security.UserContext" />
 		</ns2:DataEntity>
