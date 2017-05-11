@@ -36,6 +36,10 @@
                 <ns2:refEntity UIID="mToolInfoPanel">
                    <ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.MachiningToolTable" />
                 </ns2:refEntity>
+                <ns2:odmapping>
+                   <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.MachiningToolTable"></ns2:mappingRule>
+                   <ns2:UIComponent componentPath="mToolInfoPanel" paramName="UIWidgetType"></ns2:UIComponent>
+                </ns2:odmapping>
               </ns2:tab>
               <ns2:tab uiid="skinInfoPanel">
                 <ns2:title xsi:type="ns2:StringPropertyType">
@@ -44,6 +48,10 @@
                 <ns2:refEntity UIID="skinInfoPanel">
                    <ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.MachiningSkinTable" />
                 </ns2:refEntity>
+                <ns2:odmapping>
+                   <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.MachiningSkinTable"></ns2:mappingRule>
+                   <ns2:UIComponent componentPath="skinInfoPanel" paramName="UIWidgetType"></ns2:UIComponent>
+                </ns2:odmapping>
               </ns2:tab>
               <ns2:tab uiid="thirdCompInfoPanel">
                 <ns2:title xsi:type="ns2:StringPropertyType">
@@ -52,6 +60,10 @@
                 <ns2:refEntity UIID="thirdCompInfoPanel">
                    <ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.MachiningThirdCompTable" />
                 </ns2:refEntity>
+                <ns2:odmapping>
+                   <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.MachiningThirdCompTable"></ns2:mappingRule>
+                   <ns2:UIComponent componentPath="thirdCompInfoPanel" paramName="UIWidgetType"></ns2:UIComponent>
+                </ns2:odmapping>
               </ns2:tab>
            </ns2:component>
            <ns2:layoutConstraint>
@@ -64,18 +76,6 @@
 	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
           <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.MachiningComponentTable"></ns2:mappingRule>
           <ns2:UIComponent componentPath="materialInfoPanel" paramName="UIWidgetType"></ns2:UIComponent>
-        </ns2:ComponentMapping>
-        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
-          <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.MachiningToolTable"></ns2:mappingRule>
-          <ns2:UIComponent componentPath="mToolInfoPanel" paramName="UIWidgetType"></ns2:UIComponent>
-        </ns2:ComponentMapping>
-        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
-          <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.MachiningSkinTable"></ns2:mappingRule>
-          <ns2:UIComponent componentPath="skinInfoPanel" paramName="UIWidgetType"></ns2:UIComponent>
-        </ns2:ComponentMapping>
-        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
-          <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.MachiningThirdCompTable"></ns2:mappingRule>
-          <ns2:UIComponent componentPath="thirdCompInfoPanel" paramName="UIWidgetType"></ns2:UIComponent>
         </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>

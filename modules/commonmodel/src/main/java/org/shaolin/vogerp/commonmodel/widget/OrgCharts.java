@@ -18,8 +18,8 @@ import org.shaolin.bmdp.datamodel.page.UITableColumnType;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.javacc.context.DefaultParsingContext;
 import org.shaolin.javacc.exception.ParsingException;
-import org.shaolin.uimaster.page.HTMLSnapshotContext;
 import org.shaolin.uimaster.page.HTMLUtil;
+import org.shaolin.uimaster.page.UserRequestContext;
 import org.shaolin.uimaster.page.ajax.Widget;
 import org.shaolin.uimaster.page.cache.UIFormObject;
 import org.shaolin.uimaster.page.javacc.VariableEvaluator;
@@ -34,27 +34,18 @@ public class OrgCharts extends HTMLWidgetType {
 
 	private static final Logger logger = LoggerFactory.getLogger(OrgCharts.class);
 	
-	public OrgCharts()
+    public OrgCharts(String id)
     {
-    }
-
-    public OrgCharts(HTMLSnapshotContext context)
-    {
-        super(context);
-    }
-
-    public OrgCharts(HTMLSnapshotContext context, String id)
-    {
-        super(context, id);
+        super(id);
     }
 	
 	@Override
-	public void generateBeginHTML(HTMLSnapshotContext context, UIFormObject ownerEntity, int depth) {
+	public void generateBeginHTML(UserRequestContext context, UIFormObject ownerEntity, int depth) {
 		
 	}
     
     @Override
-    public void generateEndHTML(HTMLSnapshotContext context, UIFormObject ownerEntity, int depth)
+    public void generateEndHTML(UserRequestContext context, UIFormObject ownerEntity, int depth)
     {
     	generateWidget(context);
     	String city = (String)this.getAttribute("value");
@@ -108,11 +99,9 @@ public class OrgCharts extends HTMLWidgetType {
 		HashMap<String, Integer> chartSum = toSumPoints(list);
 		
     	String uiid = this.getUIID()+"chart";
-    	HTMLChartDoughnutType chartWidget = new HTMLChartDoughnutType(context, uiid);
+    	HTMLChartDoughnutType chartWidget = new HTMLChartDoughnutType(uiid);
 		chartWidget.addAttribute("query", chartSum);
 		chartWidget.addAttribute("labels", AanlysisModelCust.getLabels(chartSum));
-		chartWidget.setPrefix(context.getHTMLPrefix());
-		chartWidget.setFrameInfo(context.getFrameInfo());
 		chartWidget.addAttribute("columns", columns);
 		chartWidget.addAttribute("width", "200px");
 		chartWidget.addAttribute("height", "200px");

@@ -206,7 +206,16 @@
                     </ns2:title>
                     <ns2:refEntity UIID="ceentityPanel">
 		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEExtensionManager" />
-		            </ns2:refEntity>  
+		            </ns2:refEntity>
+		            <ns2:odmapping>
+		            	<ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEExtensionManager"></ns2:mappingRule>
+					    <ns2:UIComponent componentPath="ceentityPanel" paramName="UIWidgetType"></ns2:UIComponent>
+					    <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEName">
+					      <ns2:expression>
+					        <expressionString>"org.shaolin.vogerp.commonmodel.ce.PartyRoleType"</expressionString>
+					      </ns2:expression>
+					    </ns2:DataComponent>
+		            </ns2:odmapping>
                 </ns2:tab>
                 <ns2:tab uiid="dynamicUIPanel">
                     <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
@@ -215,7 +224,11 @@
                     </ns2:title>
                     <ns2:refEntity UIID="dynamicUIPanel">
 		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.UIDynamicItemManager" />
-		            </ns2:refEntity>  
+		            </ns2:refEntity>
+		            <ns2:odmapping>
+		            	<ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.UIDynamicItemManager"></ns2:mappingRule>
+    					<ns2:UIComponent componentPath="dynamicUIPanel" paramName="UIWidgetType"></ns2:UIComponent>
+		            </ns2:odmapping>
                 </ns2:tab>
                 <ns2:tab uiid="dynamicPageLinkPanel">
                     <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
@@ -224,7 +237,11 @@
                     </ns2:title>
                     <ns2:refEntity UIID="dynamicPageLinkPanel">
 		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.UIDyanimcPageLinkTable" />
-		            </ns2:refEntity>  
+		            </ns2:refEntity>
+		            <ns2:odmapping>
+		            	<ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.UIDyanimcPageLinkTable"></ns2:mappingRule>
+    					<ns2:UIComponent componentPath="dynamicPageLinkPanel" paramName="UIWidgetType"></ns2:UIComponent>
+		            </ns2:odmapping> 
                 </ns2:tab>
                 <ns2:tab uiid="dynamicPageHintsPanel">
                     <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
@@ -233,7 +250,11 @@
                     </ns2:title>
                     <ns2:refEntity UIID="dynamicPageHintsPanel">
 		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.UIDyanimcPageHintsTable" />
-		            </ns2:refEntity>  
+		            </ns2:refEntity>
+		            <ns2:odmapping>
+		            	<ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.UIDyanimcPageHintsTable"></ns2:mappingRule>
+    					<ns2:UIComponent componentPath="dynamicPageHintsPanel" paramName="UIWidgetType"></ns2:UIComponent>
+		            </ns2:odmapping> 
                 </ns2:tab>
                 <ns2:tab uiid="registryTable">
                     <ns2:title xsi:type="ns2:StringPropertyType">
@@ -241,7 +262,11 @@
                     </ns2:title>
                     <ns2:refEntity UIID="registryTable">
 		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.RegistryTable" />
-		            </ns2:refEntity>  
+		            </ns2:refEntity>
+		            <ns2:odmapping>
+		            	<ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.RegistryTable"></ns2:mappingRule>
+    					<ns2:UIComponent componentPath="registryTable" paramName="UIWidgetType"></ns2:UIComponent>
+		            </ns2:odmapping> 
                 </ns2:tab>
                 <ns2:tab uiid="InterfacePanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
@@ -335,31 +360,6 @@
 			<ns2:UIComponent componentPath="reloadPathText" paramName="UIWidgetType"></ns2:UIComponent>
 			<ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="reloadPath" paramName="StringData"></ns2:DataComponent>
 		</ns2:ComponentMapping>
-		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-    <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEExtensionManager"></ns2:mappingRule>
-    <ns2:UIComponent componentPath="ceentityPanel" paramName="UIWidgetType"></ns2:UIComponent>
-    <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEName">
-      <ns2:expression>
-        <expressionString>"org.shaolin.vogerp.commonmodel.ce.PartyRoleType"</expressionString>
-      </ns2:expression>
-    </ns2:DataComponent>
-  </ns2:ComponentMapping>
-  <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
-    <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.UIDynamicItemManager"></ns2:mappingRule>
-    <ns2:UIComponent componentPath="dynamicUIPanel" paramName="UIWidgetType"></ns2:UIComponent>
-  </ns2:ComponentMapping>
-  <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
-    <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.UIDyanimcPageLinkTable"></ns2:mappingRule>
-    <ns2:UIComponent componentPath="dynamicPageLinkPanel" paramName="UIWidgetType"></ns2:UIComponent>
-  </ns2:ComponentMapping>
-  <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
-    <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.UIDyanimcPageHintsTable"></ns2:mappingRule>
-    <ns2:UIComponent componentPath="dynamicPageHintsPanel" paramName="UIWidgetType"></ns2:UIComponent>
-  </ns2:ComponentMapping>
-  <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
-    <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.RegistryTable"></ns2:mappingRule>
-    <ns2:UIComponent componentPath="registryTable" paramName="UIWidgetType"></ns2:UIComponent>
-  </ns2:ComponentMapping>
   </ns2:ODMapping>
   <ns2:in>
      <ns2:serverOperation xsi:type="ns2:ExpressionType">

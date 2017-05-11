@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.shaolin.uimaster.page.AjaxContext;
-import org.shaolin.uimaster.page.HTMLSnapshotContext;
+import org.shaolin.uimaster.page.UserRequestContext;
 import org.shaolin.uimaster.page.cache.UIFormObject;
 import org.shaolin.uimaster.page.od.formats.FormatUtil;
 import org.shaolin.uimaster.page.widgets.HTMLWidgetType;
@@ -18,24 +18,17 @@ public class ComponentListUI extends HTMLWidgetType {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LoggerFactory.getLogger(AjaxContext.class);
 	
-	public ComponentListUI()
+    public ComponentListUI(String id)
     {
-    }
-    public ComponentListUI(HTMLSnapshotContext context)
-    {
-        super(context);
-    }
-    public ComponentListUI(HTMLSnapshotContext context, String id)
-    {
-        super(context, id);
+        super(id);
     }
 
 	@Override
-	public void generateBeginHTML(HTMLSnapshotContext context, UIFormObject ownerEntity, int depth) {
+	public void generateBeginHTML(UserRequestContext context, UIFormObject ownerEntity, int depth) {
 	}
 
 	@Override
-	public void generateEndHTML(HTMLSnapshotContext context, UIFormObject ownerEntity, int depth) {
+	public void generateEndHTML(UserRequestContext context, UIFormObject ownerEntity, int depth) {
 		generateWidget(context);
 		try {
 			IMachiningOrder morder = (IMachiningOrder)this.getAttribute("value");
@@ -70,7 +63,7 @@ public class ComponentListUI extends HTMLWidgetType {
 		return result;
 	}
 
-	private double generateTable(HTMLSnapshotContext context, List<IMachOrderComponent> fiterComponents, String title) 
+	private double generateTable(UserRequestContext context, List<IMachOrderComponent> fiterComponents, String title) 
 		throws Exception {
 		if (fiterComponents.size() == 0) {
 			return 0;

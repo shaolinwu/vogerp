@@ -36,6 +36,15 @@
                     <ns2:refEntity UIID="takenGOrderInfoPanel">
                        <ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.GoldenOrderTrack" />
                     </ns2:refEntity>
+                    <ns2:odmapping>
+			          <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.GoldenOrderTrack"></ns2:mappingRule>
+			          <ns2:UIComponent componentPath="takenGOrderInfoPanel" paramName="UIWidgetType"></ns2:UIComponent>
+			          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
+			            <ns2:expression>
+			              <expressionString>Boolean.TRUE</expressionString>
+			            </ns2:expression>
+			          </ns2:DataComponent>
+			        </ns2:odmapping>
                   </ns2:tab>
                   <ns2:tab uiid="takenROrderInfoPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
@@ -44,6 +53,15 @@
                     <ns2:refEntity UIID="takenROrderInfoPanel">
                        <ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.RentOrLoanOrderTrack" />
                     </ns2:refEntity>
+                    <ns2:odmapping>
+			          <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.RentOrLoanOrderTrack"></ns2:mappingRule>
+			          <ns2:UIComponent componentPath="takenROrderInfoPanel" paramName="UIWidgetType"></ns2:UIComponent>
+			          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
+			            <ns2:expression>
+			              <expressionString>Boolean.TRUE</expressionString>
+			            </ns2:expression>
+			          </ns2:DataComponent>
+			        </ns2:odmapping>
                   </ns2:tab>
                </ns2:component>
 			   <ns2:layoutConstraint>
@@ -62,30 +80,11 @@
             </ns2:expression>
           </ns2:DataComponent>
         </ns2:ComponentMapping>
-	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
-          <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.GoldenOrderTrack"></ns2:mappingRule>
-          <ns2:UIComponent componentPath="takenGOrderInfoPanel" paramName="UIWidgetType"></ns2:UIComponent>
-          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
-            <ns2:expression>
-              <expressionString>Boolean.TRUE</expressionString>
-            </ns2:expression>
-          </ns2:DataComponent>
-        </ns2:ComponentMapping>
-		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
-          <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.RentOrLoanOrderTrack"></ns2:mappingRule>
-          <ns2:UIComponent componentPath="takenROrderInfoPanel" paramName="UIWidgetType"></ns2:UIComponent>
-          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
-            <ns2:expression>
-              <expressionString>Boolean.TRUE</expressionString>
-            </ns2:expression>
-          </ns2:DataComponent>
-        </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
 		<ns2:serverOperation xsi:type="ns2:ExpressionType">
 			<ns2:expressionString><![CDATA[
 			import org.shaolin.bmdp.runtime.AppContext;
-		    import org.shaolin.bmdp.workflow.be.NotificationImpl;
 			{
 			  @odContext.executeAllMappings();
 			}]]></ns2:expressionString>

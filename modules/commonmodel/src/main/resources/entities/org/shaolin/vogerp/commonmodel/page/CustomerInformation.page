@@ -104,6 +104,16 @@
                     <ns2:refEntity UIID="addressForm">
 		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.AddressInfoTable" />
 		            </ns2:refEntity>
+		            <ns2:odmapping>
+			          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.AddressInfoTable"></ns2:mappingRule>
+			          <ns2:UIComponent componentPath="addressForm" paramName="UIWidgetType"></ns2:UIComponent>
+			          <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalInfo.id" paramName="parentId"></ns2:DataComponent>
+			          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
+				        <ns2:expression>
+				          <expressionString>Boolean.TRUE</expressionString>
+				        </ns2:expression>
+				      </ns2:DataComponent>
+			        </ns2:odmapping>
                 </ns2:tab>
                 <ns2:tab uiid="personalAccountForm">
                     <ns2:title xsi:type="ns2:StringPropertyType">
@@ -112,6 +122,16 @@
                     <ns2:refEntity UIID="personalAccountForm">
 		               <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.PersonalAccount" />
 		            </ns2:refEntity>
+		            <ns2:odmapping>
+			          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.PersonalAccount"></ns2:mappingRule>
+			          <ns2:UIComponent componentPath="personalAccountForm" paramName="UIWidgetType"></ns2:UIComponent>
+			          <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalAccount" paramName="beObject"></ns2:DataComponent>
+			          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
+				        <ns2:expression>
+				          <expressionString>Boolean.TRUE</expressionString>
+				        </ns2:expression>
+				      </ns2:DataComponent>
+			        </ns2:odmapping>
                 </ns2:tab>
                 <ns2:tab uiid="certifyForm">
                     <ns2:title xsi:type="ns2:StringPropertyType">
@@ -120,6 +140,15 @@
                     <ns2:refEntity UIID="certifyForm">
                        <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo" />
                     </ns2:refEntity>
+                    <ns2:odmapping>
+			          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo"></ns2:mappingRule>
+			          <ns2:UIComponent componentPath="certifyForm" paramName="UIWidgetType"></ns2:UIComponent>
+			          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
+			            <ns2:expression>
+			              <expressionString>Boolean.TRUE</expressionString>
+			            </ns2:expression>
+			          </ns2:DataComponent>
+			        </ns2:odmapping>
                 </ns2:tab>
             </ns2:component>
 			<ns2:layoutConstraint>
@@ -149,38 +178,6 @@
 	        </ns2:expression>
 	      </ns2:DataComponent>
 	    </ns2:ComponentMapping>
-	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
-          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.PersonalAccount"></ns2:mappingRule>
-          <ns2:UIComponent componentPath="personalAccountForm" paramName="UIWidgetType"></ns2:UIComponent>
-          <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalAccount" paramName="beObject"></ns2:DataComponent>
-          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
-	        <ns2:expression>
-	          <expressionString>Boolean.TRUE</expressionString>
-	        </ns2:expression>
-	      </ns2:DataComponent>
-        </ns2:ComponentMapping>
-        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
-          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.AddressInfoTable"></ns2:mappingRule>
-          <ns2:UIComponent componentPath="addressForm" paramName="UIWidgetType"></ns2:UIComponent>
-          <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalInfo.id" paramName="parentId"></ns2:DataComponent>
-          <!-- 
-          <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalInfo.addresses" paramName="list"></ns2:DataComponent>
-           -->
-          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
-	        <ns2:expression>
-	          <expressionString>Boolean.TRUE</expressionString>
-	        </ns2:expression>
-	      </ns2:DataComponent>
-        </ns2:ComponentMapping>
-        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
-          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo"></ns2:mappingRule>
-          <ns2:UIComponent componentPath="certifyForm" paramName="UIWidgetType"></ns2:UIComponent>
-          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
-            <ns2:expression>
-              <expressionString>Boolean.TRUE</expressionString>
-            </ns2:expression>
-          </ns2:DataComponent>
-        </ns2:ComponentMapping>
         <!-- 
         <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping6">
           <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.AssignedMember"></ns2:mappingRule>

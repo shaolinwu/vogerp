@@ -6,7 +6,7 @@ import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.uimaster.page.AjaxContext;
-import org.shaolin.uimaster.page.HTMLSnapshotContext;
+import org.shaolin.uimaster.page.UserRequestContext;
 import org.shaolin.uimaster.page.ajax.Empty;
 import org.shaolin.uimaster.page.ajax.Layout;
 import org.shaolin.uimaster.page.ajax.Widget;
@@ -41,20 +41,13 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
 	
 	public static final String order_step_passed = "order_step_passed";;
 	
-	public OrderPaymentAndDeliveryUI()
+    public OrderPaymentAndDeliveryUI(String id)
     {
-    }
-    public OrderPaymentAndDeliveryUI(HTMLSnapshotContext context)
-    {
-        super(context);
-    }
-    public OrderPaymentAndDeliveryUI(HTMLSnapshotContext context, String id)
-    {
-        super(context, id);
+        super(id);
     }
 
 	@Override
-	public void generateBeginHTML(HTMLSnapshotContext context, UIFormObject ownerEntity, int depth) {
+	public void generateBeginHTML(UserRequestContext context, UIFormObject ownerEntity, int depth) {
 	}
 
 	public static long getOrgId(final IEOrder order) {
@@ -90,10 +83,10 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
 	}
 	
 	@Override
-	public void generateEndHTML(HTMLSnapshotContext context, UIFormObject ownerEntity, int depth) {
+	public void generateEndHTML(UserRequestContext context, UIFormObject ownerEntity, int depth) {
 		generateWidget(context);
 		String htmlId = getName();
-		String funcRef = "javascript:defaultname." + getPrefix();
+		String funcRef = "javascript:defaultname." + context.getHTMLPrefix();
 		try {
 			IEOrder order = (IEOrder)this.getAttribute("order");
 			if (order.getDeliveryInfoId() > 0) {
@@ -211,7 +204,7 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
 		}
 	}
 	
-	private void generateProgressInfo(HTMLSnapshotContext context, String progressInfo) {
+	private void generateProgressInfo(UserRequestContext context, String progressInfo) {
 		if (progressInfo == null || progressInfo.trim().length() == 0) {
 			return;
 		}
@@ -227,7 +220,7 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
 		}
 	}
 
-	private void generateExpressInfo(HTMLSnapshotContext context, IDeliveryInfo deliveryInfo) {
+	private void generateExpressInfo(UserRequestContext context, IDeliveryInfo deliveryInfo) {
 		if (deliveryInfo.getExpressNumber() == null || deliveryInfo.getExpressNumber().trim().length() == 0) {
 			return;
 		}

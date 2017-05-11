@@ -18,6 +18,7 @@ import org.shaolin.javacc.exception.ParsingException;
 import org.shaolin.uimaster.page.cache.PageCacheManager;
 import org.shaolin.uimaster.page.cache.UIFormObject;
 import org.shaolin.uimaster.page.cache.UIPageObject;
+import org.shaolin.uimaster.page.exception.UIPageException;
 import org.shaolin.uimaster.page.widgets.HTMLDynamicUIItem;
 import org.shaolin.vogerp.commonmodel.IDynamicUIService;
 import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
@@ -66,7 +67,9 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
     			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
     		} catch (ClassNotFoundException e) {
     			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
-    		}
+    		} catch (UIPageException e) {
+    			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
+			}
         }
         
         // load dynamic ui links.
@@ -85,7 +88,9 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
     			} catch (Exception e1) {
     				Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page links: " + e.getMessage(), e);
     			} 
-    		} 
+    		} catch (UIPageException e) {
+    			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page links: " + e.getMessage(), e);
+			} 
         }
         
         // load dynamic ui hints.
@@ -113,7 +118,9 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
     			} catch (Exception e1) {
     				Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page hints: " + e.getMessage(), e);
     			} 
-    		} 
+    		} catch (UIPageException e) {
+    			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page hints: " + e.getMessage(), e);
+			} 
         }
         
 	}
@@ -154,7 +161,9 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
     			} catch (Exception e1) {
     				Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page hints: " + e.getMessage(), e);
     			} 
-    		} 
+    		} catch (UIPageException e) {
+    			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page hints: " + e.getMessage(), e);
+			} 
         }
 	}
 	
@@ -171,6 +180,8 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
 			} catch (Exception e1) {
 				Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page links: " + e.getMessage(), e);
 			} 
+		} catch (UIPageException e) {
+			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page links: " + e.getMessage(), e);
 		} 
 	}
 	
@@ -186,6 +197,8 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
 			} catch (Exception e1) {
 				Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page hints: " + e.getMessage(), e);
 			} 
+		} catch (UIPageException e) {
+			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page hints: " + e.getMessage(), e);
 		} 
 	}
 	
@@ -218,7 +231,9 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
     			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
     		} catch (ClassNotFoundException e) {
     			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
-    		}
+    		} catch (UIPageException e) {
+    			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic UI items: " + e.getMessage(), e);
+			}
         }
 	}
 	
@@ -239,7 +254,9 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
     			} catch (Exception e1) {
     				Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page links: " + e.getMessage(), e);
     			} 
-    		} 
+    		} catch (UIPageException e) {
+    			Logger.getLogger(DynamicUIServiceImpl.class).error("Error to load the dynamic page links: " + e.getMessage(), e);
+			} 
         }
 	}
 	

@@ -171,8 +171,12 @@
                     IPaymentService payservice = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                     for (int i=0; i<result.size(); i++) {
                         IMachiningOrder order = ((IMachiningOrder)result.get(i));
-                        PayOrderStatusType state = payservice.queryForPayStatus(order.getSerialNumber());
-                        order.setPayStatus("("+state.getDisplayName()+")");
+                        try {
+                           PayOrderStatusType state = payservice.queryForPayStatus(order.getSerialNumber());
+                           order.setPayStatus("("+state.getDisplayName()+")");
+                        } catch (Throwable e) {
+                            //unable to query!
+                        }
                     }
                     return result;
               }]]></ns2:expressionString>
