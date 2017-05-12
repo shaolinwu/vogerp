@@ -43,7 +43,7 @@
         import java.util.HashMap;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
-        import org.shaolin.uimaster.page.ajax.json.JSONObject;
+        import org.shaolin.bmdp.json.JSONObject;
         import org.shaolin.vogerp.ecommercial.be.*;
         import org.shaolin.vogerp.commonmodel.IUserService;
         import org.shaolin.bmdp.runtime.ce.CEUtil;
@@ -53,7 +53,7 @@
         import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
         import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
         import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-        import org.shaolin.uimaster.page.ajax.json.JSONObject;
+        import org.shaolin.bmdp.json.JSONObject;
         { 
             Table orderInfoTable = (Table)@page.getElement("itemTable");
             if (orderInfoTable.getSelectedRow() == null) {

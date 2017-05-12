@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.criterion.Order;
-import org.shaolin.uimaster.page.ajax.json.JSONObject;
+import org.shaolin.bmdp.json.JSONObject;
 import org.shaolin.vogerp.commonmodel.IAppUpdateService;
 import org.shaolin.vogerp.commonmodel.be.AppUpdateRecordImpl;
 import org.shaolin.vogerp.commonmodel.be.IAppUpdateRecord;

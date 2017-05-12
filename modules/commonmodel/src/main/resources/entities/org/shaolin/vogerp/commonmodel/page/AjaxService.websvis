@@ -11,8 +11,8 @@
         import java.util.ArrayList;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.bmdp.runtime.AppContext;
-        import org.shaolin.uimaster.page.ajax.json.JSONArray;
-        import org.shaolin.uimaster.page.ajax.json.JSONObject;
+        import org.shaolin.bmdp.json.JSONArray;
+        import org.shaolin.bmdp.json.JSONObject;
         {
             String word = @request.getParameter("word");
             if (word == null || word.length() == 0) {return "";}
@@ -74,8 +74,8 @@
         import java.util.ArrayList;
         import org.shaolin.bmdp.runtime.AppContext;
         import org.shaolin.vogerp.commonmodel.IModuleService;
-        import org.shaolin.uimaster.page.ajax.json.JSONArray;
-        import org.shaolin.uimaster.page.ajax.json.JSONObject;
+        import org.shaolin.bmdp.json.JSONArray;
+        import org.shaolin.bmdp.json.JSONObject;
         {
            JSONObject item = new JSONObject();
 	        item.put("name", " 主页");
@@ -106,8 +106,8 @@
         import java.util.ArrayList;
         import org.shaolin.bmdp.runtime.AppContext;
         import org.shaolin.vogerp.commonmodel.IModuleService;
-        import org.shaolin.uimaster.page.ajax.json.JSONArray;
-        import org.shaolin.uimaster.page.ajax.json.JSONObject;
+        import org.shaolin.bmdp.json.JSONArray;
+        import org.shaolin.bmdp.json.JSONObject;
         {
             JSONObject item = new JSONObject();
 	        item.put("name", "消息");
@@ -171,8 +171,8 @@
         import java.util.ArrayList;
         import org.shaolin.bmdp.runtime.AppContext;
         import org.shaolin.vogerp.commonmodel.IModuleService;
-        import org.shaolin.uimaster.page.ajax.json.JSONArray;
-        import org.shaolin.uimaster.page.ajax.json.JSONObject;
+        import org.shaolin.bmdp.json.JSONArray;
+        import org.shaolin.bmdp.json.JSONObject;
         import org.shaolin.vogerp.commonmodel.be.*;
         import org.shaolin.vogerp.commonmodel.ce.*;
         import org.shaolin.vogerp.commonmodel.IUserService;

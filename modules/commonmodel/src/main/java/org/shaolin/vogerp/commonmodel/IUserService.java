@@ -3,8 +3,8 @@ package org.shaolin.vogerp.commonmodel;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.shaolin.uimaster.page.ajax.json.JSONException;
-import org.shaolin.uimaster.page.ajax.json.JSONObject;
+import org.shaolin.bmdp.json.JSONException;
+import org.shaolin.bmdp.json.JSONObject;
 import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 import org.shaolin.vogerp.commonmodel.be.IRegisterInfo;

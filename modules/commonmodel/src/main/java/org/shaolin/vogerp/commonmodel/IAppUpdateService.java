@@ -1,7 +1,7 @@
 package org.shaolin.vogerp.commonmodel;
 
+import org.shaolin.bmdp.json.JSONObject;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
-import org.shaolin.uimaster.page.ajax.json.JSONObject;
 
 public interface IAppUpdateService extends IServiceProvider {
 

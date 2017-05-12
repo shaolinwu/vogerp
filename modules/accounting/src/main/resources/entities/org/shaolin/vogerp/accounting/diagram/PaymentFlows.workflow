@@ -21,7 +21,7 @@
                     <type entityName="org.shaolin.vogerp.accounting.be.PayOrder"></type>
                 </ns2:var>
                 <ns2:var name="jsonObj" category="JavaClass" scope="Out">
-                    <type entityName="org.shaolin.uimaster.page.ajax.json.JSONObject"></type>
+                    <type entityName="org.shaolin.bmdp.json.JSONObject"></type>
                 </ns2:var>
                 <ns2:expression>
                     <expressionString><![CDATA[
@@ -36,7 +36,7 @@
 			        import org.shaolin.vogerp.accounting.internal.PaymentServiceImpl;
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
-                    import org.shaolin.uimaster.page.ajax.json.JSONObject;
+                    import org.shaolin.bmdp.json.JSONObject;
                     {
                         // only notified when success for deriving workflow.
                     }
@@ -65,7 +65,7 @@
                     <type entityName="org.shaolin.vogerp.accounting.be.PayOrderTransactionLog"></type>
                 </ns2:var>
                 <ns2:var name="jsonObj" category="JavaClass" scope="Out">
-                    <type entityName="org.shaolin.uimaster.page.ajax.json.JSONObject"></type>
+                    <type entityName="org.shaolin.bmdp.json.JSONObject"></type>
                 </ns2:var>
                 <ns2:expression>
                     <expressionString><![CDATA[
@@ -78,7 +78,7 @@
 			        import org.shaolin.vogerp.accounting.dao.AccountingModel;
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
-                    import org.shaolin.uimaster.page.ajax.json.JSONObject;
+                    import org.shaolin.bmdp.json.JSONObject;
                     {
                         //just triggered for workflow node logging!
                     }
@@ -101,7 +101,7 @@
                     <type entityName="org.shaolin.vogerp.accounting.be.PayOrderTransactionLog"></type>
                 </ns2:var>
                 <ns2:var name="jsonObj" category="JavaClass" scope="Out">
-                    <type entityName="org.shaolin.uimaster.page.ajax.json.JSONObject"></type>
+                    <type entityName="org.shaolin.bmdp.json.JSONObject"></type>
                 </ns2:var>
                 <ns2:expression>
                     <expressionString><![CDATA[
@@ -114,7 +114,7 @@
 			        import org.shaolin.vogerp.accounting.dao.AccountingModel;
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
-                    import org.shaolin.uimaster.page.ajax.json.JSONObject;
+                    import org.shaolin.bmdp.json.JSONObject;
                     {
                         
                     }

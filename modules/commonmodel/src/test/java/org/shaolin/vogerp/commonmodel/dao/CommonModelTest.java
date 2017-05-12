@@ -1,8 +1,8 @@
 package org.shaolin.vogerp.commonmodel.dao;
 
 import org.junit.Test;
-import org.shaolin.uimaster.page.ajax.json.JSONArray;
-import org.shaolin.uimaster.page.ajax.json.JSONObject;
+import org.shaolin.bmdp.json.JSONArray;
+import org.shaolin.bmdp.json.JSONObject;
 
 public class CommonModelTest {
 

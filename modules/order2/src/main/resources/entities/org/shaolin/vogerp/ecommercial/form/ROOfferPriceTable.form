@@ -32,7 +32,7 @@
         import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
         import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
         import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-        import org.shaolin.uimaster.page.ajax.json.JSONObject;
+        import org.shaolin.bmdp.json.JSONObject;
         { 
             Table orderInfoTable = (Table)@page.getElement("itemTable");
             if (orderInfoTable.getSelectedRow() == null) {

@@ -11,8 +11,8 @@ import java.security.NoSuchAlgorithmException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-import org.shaolin.uimaster.page.ajax.json.JSONException;
-import org.shaolin.uimaster.page.ajax.json.JSONObject;
+import org.shaolin.bmdp.json.JSONException;
+import org.shaolin.bmdp.json.JSONObject;
 
 public class WechatUtil {
 

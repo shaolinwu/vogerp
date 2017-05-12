@@ -25,7 +25,7 @@
             import org.shaolin.vogerp.ecommercial.be.*;
             import org.shaolin.vogerp.ecommercial.dao.OrderModel;
             import org.shaolin.bmdp.runtime.security.UserContext;
-            import org.shaolin.uimaster.page.ajax.json.JSONObject;
+            import org.shaolin.bmdp.json.JSONObject;
             {
                String parameter = @request.getParameter("param");
                @page.log("parameter: " + parameter);
@@ -116,7 +116,7 @@
             import org.shaolin.vogerp.ecommercial.be.*;
             import org.shaolin.vogerp.ecommercial.dao.OrderModel;
             import org.shaolin.bmdp.runtime.security.UserContext;
-            import org.shaolin.uimaster.page.ajax.json.JSONObject;
+            import org.shaolin.bmdp.json.JSONObject;
             {
                String parameter = @request.getParameter("param");
                @page.log("parameter: " + parameter);

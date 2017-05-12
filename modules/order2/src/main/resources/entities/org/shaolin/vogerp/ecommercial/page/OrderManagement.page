@@ -749,7 +749,7 @@
                   import java.util.HashMap;
                   import org.shaolin.uimaster.page.AjaxContext;
                   import org.shaolin.uimaster.page.ajax.*;
-		          import org.shaolin.uimaster.page.ajax.json.JSONObject;
+		          import org.shaolin.bmdp.json.JSONObject;
                   import org.shaolin.bmdp.runtime.AppContext;
 		          import org.shaolin.bmdp.runtime.ce.CEUtil;
 		          import org.shaolin.bmdp.runtime.AppContext;

@@ -23,7 +23,7 @@
       import org.shaolin.bmdp.runtime.AppContext;
       import org.shaolin.vogerp.commonmodel.IUserService;
       import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
-      import org.shaolin.uimaster.page.ajax.json.JSONObject;
+      import org.shaolin.bmdp.json.JSONObject;
       {
        IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
        if (!service.checkVerifiAnswer(@request.getParameter("verifyCode"), @request)) {
@@ -58,7 +58,7 @@
 			<expressionString><![CDATA[
       import org.shaolin.bmdp.runtime.AppContext;
       import org.shaolin.vogerp.commonmodel.IUserService;
-      import org.shaolin.uimaster.page.ajax.json.JSONObject;
+      import org.shaolin.bmdp.json.JSONObject;
       {
        IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
        service.logout(@request.getSession());
