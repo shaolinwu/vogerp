@@ -145,6 +145,8 @@ function org_shaolin_vogerp_ecommercial_form_ROOfferPrice(json)
 
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_ROOfferPrice_Cancel;
 
+    Form.showSimplePanel = org_shaolin_vogerp_ecommercial_form_ROOfferPrice_showSimplePanel;
+
     Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_ROOfferPrice_invokeDynamicFunction;
 
     Form.__entityName="org.shaolin.vogerp.ecommercial.form.ROOfferPrice";
@@ -201,6 +203,18 @@ function org_shaolin_vogerp_ecommercial_form_ROOfferPrice(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160124-175742",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_ROOfferPrice_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_ROOfferPrice_showSimplePanel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_ROOfferPrice_showSimplePanel */
+        var o = this;
+        var UIEntity = this;
+
+        {
+           $(this.samplePhotoUI.Form).css("display", "block");
+           $(this.samplePhotoUI.Form).parent().parent().parent().css("display", "block");
+        }
+            }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_ROOfferPrice_showSimplePanel */
 
 
     /* auto generated eventlistener function declaration */
