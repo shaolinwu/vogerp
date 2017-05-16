@@ -11,11 +11,7 @@ function org_shaolin_vogerp_ecommercial_form_InterestEOrder(json)
     var offerPriceInfoLabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "offerPriceInfoLabel"]
-    });
-
-    var changePricebtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "changePricebtn"]
+        ,editableValueType: "number"
     });
 
     var cancelbtn = new UIMaster.ui.button
@@ -29,7 +25,7 @@ function org_shaolin_vogerp_ecommercial_form_InterestEOrder(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "changePricebtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "cancelbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -42,14 +38,12 @@ function org_shaolin_vogerp_ecommercial_form_InterestEOrder(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [orderInfoLabel,offerPriceInfoLabel,changePricebtn,cancelbtn,chatUI,fieldPanel,actionPanel]
+        ,items: [orderInfoLabel,offerPriceInfoLabel,cancelbtn,chatUI,fieldPanel,actionPanel]
     });
 
     Form.orderInfoLabel=orderInfoLabel;
 
     Form.offerPriceInfoLabel=offerPriceInfoLabel;
-
-    Form.changePricebtn=changePricebtn;
 
     Form.cancelbtn=cancelbtn;
 
@@ -65,14 +59,19 @@ function org_shaolin_vogerp_ecommercial_form_InterestEOrder(json)
 
     Form.actionPanel=actionPanel;
 
-    Form.changePricebtn=changePricebtn;
-
     Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_InterestEOrder */
-        /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_InterestEOrder */
+
+        
+        { 
+           $("#div-goldenOrderForm-chatUI-actionPanel-1_0").css("display", "none");
+           $("#div-goldenOrderForm-chatUI-actionPanel-2_0").css("display", "none");
+        }
+    
+            /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_InterestEOrder */
     };
 
     Form.ChangePrice = org_shaolin_vogerp_ecommercial_form_InterestEOrder_ChangePrice;

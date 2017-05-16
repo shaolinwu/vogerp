@@ -199,6 +199,19 @@ public class OrderUtil {
 		} else if (order instanceof IMachiningOrder) {
 			sb.append("\u7684\u52A0\u5DE5\u8BA2\u5355");
 		} 
+		
+		String color = "black";
+        if (order.getStatus() == OrderStatusType.PUBLISHED) {
+           color = "blue";
+        } else if (order.getStatus() == OrderStatusType.TAKEN) {
+           color = "green";
+        } else if (order.getStatus() == OrderStatusType.FORBIDDEN
+        		|| order.getStatus() == OrderStatusType.CANCELLED) {
+            color = "red";
+        }
+        String state = "<span style='color:"+color+";'>" + order.getStatus().getDisplayName() + "</span>";
+        sb.append("(").append(state).append(")");
+        
 		sb.append("</div>");
 		sb.append("<div class='vogerp_desc'>").append(order.getDescription()).append("</div>");
 		sb.append("</div>");
@@ -212,6 +225,7 @@ public class OrderUtil {
 		} else if (order instanceof IRentOrLoanOrder) {
 		} 
 		sb.append("\u6765\u81EA").append(CEUtil.getValue(order.getCity())).append(": ");
+		sb.append("(").append(order.getStatus().getDisplayName()).append(")");
 		sb.append(order.getDescription());
 		
 		return sb.toString();
@@ -306,7 +320,7 @@ public class OrderUtil {
         } else if (order.getStatus() == OrderStatusType.FORBIDDEN
         		|| order.getStatus() == OrderStatusType.CANCELLED) {
             color = "red";
-         }
+        }
         String state = "<span style='color:"+color+";'>" + order.getStatus().getDisplayName() + "</span>";
         if (order.getOfferPrices() != null && order.getOfferPrices().size() > 0) {
            return state + "(\u5DF2\u7ADE\u4EF7<span style='color:red;'>" +order.getOfferPrices().size()+ "</span>\u6B21)";

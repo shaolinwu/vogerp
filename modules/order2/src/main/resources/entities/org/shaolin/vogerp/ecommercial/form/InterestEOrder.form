@@ -10,9 +10,11 @@
         import java.util.HashMap;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.bmdp.runtime.security.UserContext;
         import org.shaolin.vogerp.ecommercial.be.*;
         import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-        import org.shaolin.bmdp.runtime.security.UserContext;
+        import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             InterestEOrderImpl order = (InterestEOrderImpl)form.getInputParameter("beObject");
@@ -27,7 +29,19 @@
 		      	         break;
 		      	     }
 	      	    }
-	            //TODO:
+	      	    if (offeredPrice.getPriceChangedCount() == 0) {
+	               String updatedValue = @page.getLabel("offerPriceInfoLabel").getValue();
+	               offeredPrice.setPriceChangedCount(1);
+	               offeredPrice.setPrice(Double.parseDouble(updatedValue));
+	               OrderModel.INSTANCE.update((Object)offeredPrice);
+	               order = (InterestEOrderImpl)OrderModel.INSTANCE.get(order.getId(), InterestEOrderImpl.class);
+	               order.getOrder().getOfferPrices(); //refreshing.
+	               @page.getLabel("offerPriceInfoLabel").setDisplayValue(OrderUtil.getOfferPriceInfo(offeredPrice));
+	            } else {
+	               Dialog.showMessageDialog("对不起，该订单已改过一次价格，不可再次更改！", "", Dialog.WARNING_MESSAGE, null);
+	            }
+            } else {
+                Dialog.showMessageDialog("对不起，该订单处于不可更改状态！" + order.getOrder().getStatus().getDisplayName(), "", Dialog.WARNING_MESSAGE, null);
             }
         }]]></expressionString>
       </ns2:exp>
@@ -92,6 +106,34 @@
         </ns2:Property>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="offerPriceInfoLabel">
+        <ns2:Property name="oneditable">
+           <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                 <ns2:expression>
+                   <expressionString><![CDATA[
+                   { 
+                       return $editable;
+                   }]]></expressionString>
+                 </ns2:expression>
+            </ns2:value>
+        </ns2:Property>
+        <ns2:Property name="editableValueType">
+           <ns2:value xsi:type="ns2:StringPropertyType">
+               <value>number</value>
+           </ns2:value>
+        </ns2:Property>
+        <ns2:Property name="htmlValue">
+           <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                 <ns2:expression>
+                   <expressionString><![CDATA[
+                   { 
+                       return $offeredPriceInfo;
+                   }]]></expressionString>
+                 </ns2:expression>
+            </ns2:value>
+        </ns2:Property>
+        <ns2:EventListener xsi:type="ns2:CustomListenerType" eventName="oneditable">
+          <ns2:handler functionName="ChangePrice"></ns2:handler>
+        </ns2:EventListener>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="chatUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
@@ -114,16 +156,7 @@
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
-      <ns2:component xsi:type="ns2:UIButtonType" UIID="changePricebtn">
-        <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="ChangePrice"></ns2:handler>
-        </ns2:EventListener>
-        <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>改价</ns2:value>
-        </ns2:text>
-      </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="Cancel"></ns2:handler>
@@ -134,12 +167,8 @@
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>changePricebtn</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
         <ns2:componentId>cancelbtn</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
@@ -150,6 +179,12 @@
       <ns2:componentId>actionPanel</ns2:componentId>
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
+    <ns2:constructorCode><![CDATA[
+        { 
+           $("#div-goldenOrderForm-chatUI-actionPanel-1_0").css("display", "none");
+           $("#div-goldenOrderForm-chatUI-actionPanel-2_0").css("display", "none");
+        }
+    ]]></ns2:constructorCode>
   </ns2:body>
   <ns2:mapping>
     <systemVersion>0</systemVersion>
@@ -172,6 +207,7 @@
       <ns2:mappingRule entityName="org.shaolin.bmdp.workflow.form.ChatWindow"></ns2:mappingRule>
       <ns2:UIComponent componentPath="chatUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="chatObject" paramName="beObject"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="editable" paramName="isEditable"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="sentPartyName">
         <ns2:expression>
           <expressionString>{return org.shaolin.bmdp.runtime.security.UserContext.getUserContext().getUserName();}</expressionString>
@@ -182,11 +218,6 @@
           <expressionString>{return $recievedPartyName;}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="offerPriceInfoLabel" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="offeredPriceInfo" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[

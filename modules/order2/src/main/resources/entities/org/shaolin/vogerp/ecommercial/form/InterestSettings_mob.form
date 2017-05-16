@@ -47,7 +47,7 @@
         <ns2:columnWidthWeight>30</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>100</ns2:columnWidthWeight>
       </ns2:layout>
-      <ns2:component xsi:type="ns2:UIListType" UIID="machiningListUI">
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="machiningListUI">
         <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
             <value>可选设备类型:</value>
         </ns2:widgetLabel>
@@ -69,38 +69,7 @@
           </ns2:value>
         </ns2:Property>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UIPanelType" UIID="buttonPanel">
-	      <ns2:layout xsi:type="ns2:TableLayoutType">
-	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-	        <ns2:columnWidthWeight>0</ns2:columnWidthWeight>
-	      </ns2:layout>
-	      <ns2:component xsi:type="ns2:UIButtonType" UIID="moveToRightBtn">
-	        <ns2:EventListener xsi:type="ns2:ClickListenerType">
-	          <ns2:handler functionName="moveToRight"></ns2:handler>
-	        </ns2:EventListener>
-	    	<ns2:text xsi:type="ns2:StringPropertyType">
-	          <ns2:value>右移</ns2:value>
-	        </ns2:text>
-	      </ns2:component>
-	      <ns2:component xsi:type="ns2:UIButtonType" UIID="removeSelectedBtn">
-	        <ns2:EventListener xsi:type="ns2:ClickListenerType">
-	          <ns2:handler functionName="removeSelected"></ns2:handler>
-	        </ns2:EventListener>
-	    	<ns2:text xsi:type="ns2:StringPropertyType">
-	          <ns2:value>清除</ns2:value>
-	        </ns2:text>
-	      </ns2:component>
-	      <ns2:layoutConstraint>
-	        <ns2:componentId>moveToRightBtn</ns2:componentId>
-	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
-	      </ns2:layoutConstraint>
-	      <ns2:layoutConstraint>
-	        <ns2:componentId>removeSelectedBtn</ns2:componentId>
-	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass=""></ns2:constraint>
-	      </ns2:layoutConstraint>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UIListType" UIID="selectedMachiningListUI">
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="selectedMachiningListUI">
         <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
             <value>已选设备类型:</value>
         </ns2:widgetLabel>
@@ -122,16 +91,47 @@
           </ns2:value>
         </ns2:Property>
       </ns2:component>
+      <ns2:component xsi:type="ns2:UIPanelType" UIID="buttonPanel">
+	      <ns2:layout xsi:type="ns2:TableLayoutType">
+	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+	        <ns2:columnWidthWeight>0</ns2:columnWidthWeight>
+	        <ns2:columnWidthWeight>0</ns2:columnWidthWeight>
+	      </ns2:layout>
+	      <ns2:component xsi:type="ns2:UIButtonType" UIID="moveToRightBtn">
+	        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+	          <ns2:handler functionName="moveToRight"></ns2:handler>
+	        </ns2:EventListener>
+	    	<ns2:text xsi:type="ns2:StringPropertyType">
+	          <ns2:value>添加</ns2:value>
+	        </ns2:text>
+	      </ns2:component>
+	      <ns2:component xsi:type="ns2:UIButtonType" UIID="removeSelectedBtn">
+	        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+	          <ns2:handler functionName="removeSelected"></ns2:handler>
+	        </ns2:EventListener>
+	    	<ns2:text xsi:type="ns2:StringPropertyType">
+	          <ns2:value>清除</ns2:value>
+	        </ns2:text>
+	      </ns2:component>
+	      <ns2:layoutConstraint>
+	        <ns2:componentId>moveToRightBtn</ns2:componentId>
+	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
+	      </ns2:layoutConstraint>
+	      <ns2:layoutConstraint>
+	        <ns2:componentId>removeSelectedBtn</ns2:componentId>
+	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass=""></ns2:constraint>
+	      </ns2:layoutConstraint>
+      </ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>machiningListUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>buttonPanel</ns2:componentId>
+        <ns2:componentId>selectedMachiningListUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>selectedMachiningListUI</ns2:componentId>
+        <ns2:componentId>buttonPanel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="2" y="0" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
@@ -188,7 +188,7 @@
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIMultipleChoice"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
       <ns2:UIComponent componentPath="machiningListUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values" paramName="OptionValues"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems" paramName="OptionDisplayValues"></ns2:DataComponent>

@@ -26,7 +26,7 @@ function org_shaolin_vogerp_ecommercial_form_InterestSettings(json)
         ui: elementList[prefix + "selectedMachiningListUI"]
         ,colCount: 10
         ,size: 10
-        ,multiple: false
+        ,multiple: true
     });
 
     var changePricebtn = new UIMaster.ui.button

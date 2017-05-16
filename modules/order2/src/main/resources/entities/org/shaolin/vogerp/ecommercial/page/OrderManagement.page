@@ -810,7 +810,7 @@
                       } else {
 	                      HashMap input = new HashMap();
 	                      input.put("beObject", item);
-	                      input.put("editable", new Boolean(true));
+	                      input.put("editable", new Boolean(item.getOrder().getStatus() == OrderStatusType.PUBLISHED));
 	                      RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.InterestEOrder", input);
 	                      @page.addElement(form);
 	                      
@@ -1366,6 +1366,21 @@
                                     }]]></ns2:expressionString>
                                 </ns2:expression>
                             </ns2:query>
+                            <ns2:rowFilter xsi:type="ns2:ExpressionPropertyType">
+                                <ns2:expression xsi:type="ns2:ExpressionType">
+                                    <ns2:expressionString><![CDATA[
+                                    import java.util.List;
+                                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.bmdp.runtime.AppContext; 
+                                    import org.shaolin.vogerp.commonmodel.IUserService;
+                                    import org.shaolin.bmdp.runtime.security.UserContext;
+                                    import org.shaolin.vogerp.ecommercial.ce.GOrderType;
+                                    {
+                                        //TODO:
+                                        return true;
+                                    }]]></ns2:expressionString>
+                                </ns2:expression>
+                            </ns2:rowFilter>
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
                                     <ns2:value>订单信息</ns2:value>
