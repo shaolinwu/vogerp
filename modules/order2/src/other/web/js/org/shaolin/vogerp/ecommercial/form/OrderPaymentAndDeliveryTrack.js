@@ -38,6 +38,11 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
         ui: elementList[prefix + "refreshbtn"]
     });
 
+    var updateAddressbtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "updateAddressbtn"]
+    });
+
     var cancelbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "cancelbtn"]
@@ -47,7 +52,7 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "refreshbtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "refreshbtn",prefix + "updateAddressbtn",prefix + "cancelbtn"]
     });
 
     var addDeliveryInfo = new UIMaster.ui.panel
@@ -76,7 +81,7 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [trackFormUI,descProgressUI,descProgressbtn,expressVendorUI,expressNumberUI,expressbtn,refreshbtn,cancelbtn,fieldPanel,addProductInfo,addDeliveryInfo,actionPanel]
+        ,items: [trackFormUI,descProgressUI,descProgressbtn,expressVendorUI,expressNumberUI,expressbtn,refreshbtn,updateAddressbtn,cancelbtn,fieldPanel,addProductInfo,addDeliveryInfo,actionPanel]
     });
 
     Form.trackFormUI=trackFormUI;
@@ -92,6 +97,8 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
     Form.expressbtn=expressbtn;
 
     Form.refreshbtn=refreshbtn;
+
+    Form.updateAddressbtn=updateAddressbtn;
 
     Form.cancelbtn=cancelbtn;
 
@@ -131,6 +138,8 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
 
     Form.refreshbtn=refreshbtn;
 
+    Form.updateAddressbtn=updateAddressbtn;
+
     Form.cancelbtn=cancelbtn;
 
     Form.user_constructor = function()
@@ -163,6 +172,8 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_Cancel;
 
     Form.RefreshTest = org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_RefreshTest;
+
+    Form.updateAddress = org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_updateAddress;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_invokeDynamicFunction;
 
@@ -249,6 +260,20 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"RefreshTest-20170125-215225",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_RefreshTest */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_updateAddress(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_updateAddress */
+        var o = this;
+        var UIEntity = this;
+
+        {   
+        }
+        
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"updateAddress-2017-0219-1131",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_updateAddress */
 
 
     /* auto generated eventlistener function declaration */

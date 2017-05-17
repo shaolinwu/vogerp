@@ -54,6 +54,7 @@
 		   
 		   CustCommonModel.INSTANCE.update(deliveryInfo);
 		   
+		   Dialog.showMessageDialog("操作成功！请刷新当前对话窗口。", "", Dialog.INFORMATION_MESSAGE, null);
            form.closeIfinWindows();
            @page.removeForm(@page.getEntityUiid());
 		}]]></expressionString>
@@ -129,6 +130,11 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="contactorUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:Property name="needAjaxSupport">
+        <ns2:value xsi:type="ns2:BooleanPropertyType">
+           <value>true</value>
+        </ns2:value>
+      </ns2:Property>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="addressUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -138,6 +144,11 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="addressUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:Property name="needAjaxSupport">
+        <ns2:value xsi:type="ns2:BooleanPropertyType">
+           <value>true</value>
+        </ns2:value>
+      </ns2:Property>
       </ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>addressListUILabel</ns2:componentId>

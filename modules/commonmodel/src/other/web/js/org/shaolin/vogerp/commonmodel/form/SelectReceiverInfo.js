@@ -41,6 +41,7 @@ function org_shaolin_vogerp_commonmodel_form_SelectReceiverInfo(json)
     var contactorUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "contactorUI"]
+        ,needAjaxSupport: true
     });
 
     var addressUILabel = new UIMaster.ui.label
@@ -51,6 +52,7 @@ function org_shaolin_vogerp_commonmodel_form_SelectReceiverInfo(json)
     var addressUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "addressUI"]
+        ,needAjaxSupport: true
     });
 
     var okbtn = new UIMaster.ui.button

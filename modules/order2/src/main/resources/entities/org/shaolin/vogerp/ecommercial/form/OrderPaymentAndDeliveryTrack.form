@@ -126,6 +126,48 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
+  <ns2:eventHandler functionName="updateAddress">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="updateAddress-2017-0219-1131">
+        <ns2:exp>
+            <ns2:expressionString><![CDATA[
+            import java.util.HashMap;
+            import org.shaolin.bmdp.runtime.AppContext;
+            import org.shaolin.uimaster.page.AjaxContext;
+            import org.shaolin.uimaster.page.ajax.*;
+            import org.shaolin.bmdp.runtime.security.UserContext;
+            import org.shaolin.vogerp.ecommercial.be.*;
+            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+            import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+            import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+            import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+            {
+                RefForm form1 = (RefForm)@page.getElement(@page.getEntityUiid()); 
+                IEOrder order = (IEOrder)form1.getInputParameter("order");
+                DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)OrderModel.INSTANCE.get(order.getDeliveryInfoId(), DeliveryInfoImpl.class);
+                
+                HashMap input = new HashMap();
+                input.put("beObject", deliveryInfo);
+                input.put("editable", new Boolean(true));
+                String formName = "org.shaolin.vogerp.commonmodel.form.SelectDeliveryInfo";
+                if (deliveryInfo.getToUserId() == UserContext.getUserContext().getUserId()) {
+                   formName = "org.shaolin.vogerp.commonmodel.form.SelectReceiverInfo";
+                }
+                RefForm form = new RefForm("addressInfoForm", formName, input);
+                @page.addElement(form);
+                
+                form.openInWindows("地址详情", null, true);
+            }
+            ]]></ns2:expressionString>
+        </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  
   
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -248,6 +290,7 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="refreshbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
@@ -255,6 +298,14 @@
         </ns2:EventListener>
         <ns2:text xsi:type="ns2:StringPropertyType">
           <ns2:value>刷新</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="updateAddressbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="updateAddress"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>更新地址</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
@@ -271,8 +322,12 @@
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:componentId>updateAddressbtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="2" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
