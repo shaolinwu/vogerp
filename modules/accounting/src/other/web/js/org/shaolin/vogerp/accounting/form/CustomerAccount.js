@@ -8,16 +8,6 @@ function org_shaolin_vogerp_accounting_form_CustomerAccount(json)
         ui: elementList[prefix + "idUI"]
     });
 
-    var thirdPartyAccountTypeUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "thirdPartyAccountTypeUILabel"]
-    });
-
-    var thirdPartyAccountTypeUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "thirdPartyAccountTypeUI"]
-    });
-
     var thirdPartyAccountUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "thirdPartyAccountUILabel"]
@@ -49,20 +39,16 @@ function org_shaolin_vogerp_accounting_form_CustomerAccount(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "thirdPartyAccountTypeUILabel",prefix + "thirdPartyAccountTypeUI",prefix + "thirdPartyAccountUILabel",prefix + "thirdPartyAccountUI"]
+        ,subComponents: [prefix + "idUI",prefix + "thirdPartyAccountUILabel",prefix + "thirdPartyAccountUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,thirdPartyAccountTypeUILabel,thirdPartyAccountTypeUI,thirdPartyAccountUILabel,thirdPartyAccountUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,thirdPartyAccountUILabel,thirdPartyAccountUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
-
-    Form.thirdPartyAccountTypeUILabel=thirdPartyAccountTypeUILabel;
-
-    Form.thirdPartyAccountTypeUI=thirdPartyAccountTypeUI;
 
     Form.thirdPartyAccountUILabel=thirdPartyAccountUILabel;
 
@@ -75,10 +61,6 @@ function org_shaolin_vogerp_accounting_form_CustomerAccount(json)
     Form.fieldPanel=fieldPanel;
 
     Form.idUI=idUI;
-
-    Form.thirdPartyAccountTypeUILabel=thirdPartyAccountTypeUILabel;
-
-    Form.thirdPartyAccountTypeUI=thirdPartyAccountTypeUI;
 
     Form.thirdPartyAccountUILabel=thirdPartyAccountUILabel;
 

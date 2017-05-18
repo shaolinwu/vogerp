@@ -13,6 +13,8 @@ public interface IAccountingService {
 	
 	public double queryUserTotalAmount(long userId);
 	
+	public double queryUserTotalAvailableAmount(long userId);
+	
 	public double queryUserTotalSpent(long userId);
 	
 }

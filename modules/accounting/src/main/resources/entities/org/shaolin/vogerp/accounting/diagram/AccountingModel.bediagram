@@ -684,6 +684,9 @@
 			<bediagram:intValue>0</bediagram:intValue>
 			<bediagram:description>支付宝支付</bediagram:description>
 		</bediagram:constantValue>
+		<!-- 
+		之前一直没找到微信转账的接口，我现在才知道，微信是没有提供转账的api的，所以客户不能提现到微信. 客户只能提现到支付宝.
+		 -->
 		<bediagram:constantValue>
 			<bediagram:value>WeiXi</bediagram:value>
 			<bediagram:intValue>1</bediagram:intValue>

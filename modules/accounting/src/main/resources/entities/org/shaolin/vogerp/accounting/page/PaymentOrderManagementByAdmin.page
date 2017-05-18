@@ -564,6 +564,13 @@
 	<ns2:ODMapping>
 	</ns2:ODMapping>
 	<ns2:in>
+	    <ns2:serverOperation xsi:type="ns2:ExpressionType">
+			<ns2:expressionString><![CDATA[
+			import org.shaolin.bmdp.runtime.AppContext;
+			{
+			  @odContext.executeAllMappings();
+			}]]></ns2:expressionString>
+		</ns2:serverOperation>
         <ns2:clientAction xsi:type="ns2:ExpressionType">
             <ns2:expressionString><![CDATA[
 			{

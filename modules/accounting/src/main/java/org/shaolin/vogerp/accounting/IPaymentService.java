@@ -3,9 +3,7 @@ package org.shaolin.vogerp.accounting;
 import org.shaolin.vogerp.accounting.be.ICustomerAccount;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
 import org.shaolin.vogerp.accounting.ce.PayBusinessType;
-import org.shaolin.vogerp.accounting.ce.PayOrderRequestType;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
-import org.shaolin.vogerp.accounting.ce.RequestStatusType;
 
 public interface IPaymentService {
 
@@ -36,7 +34,7 @@ public interface IPaymentService {
 	
 	public boolean isRequestedForWithdraw(final IPayOrder order);
 	
-	public void withdraw(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException;
+	public void requestForWithdraw(ICustomerAccount customerAccount) throws PaymentException;
 	
 	public void requestForRefund(final IPayOrder order) throws PaymentException;
 	

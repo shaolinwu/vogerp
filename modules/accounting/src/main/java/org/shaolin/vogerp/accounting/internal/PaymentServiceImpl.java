@@ -262,41 +262,31 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	/**
 	 * Transfer the money to End customer from our account. 
 	 * 
-	 * Support WeiXi and Alipay.
-	 * 
-	 * This method only supposed done by Admin user.
+	 * Supported Alipay only.
 	 * 
 	 * @param orderSNumber
 	 * @return
 	 * @throws PaymentException
 	 */
-	public void withdraw(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException{
-		if (order.getStatus() == PayOrderStatusType.AGREEDPAYTOEND && !order.getWithdrawn()) {
-			if (isRequestedForWithdraw(order)) {
-				return;
-			}
-			
-			PayOrderRequestImpl request = new PayOrderRequestImpl();
-			request.setPayOrderId(order.getId());
-			request.setState(RequestStatusType.REQUEST);
-			request.setType(PayOrderRequestType.WITHDRAW);
-			request.setCreateDate(new Date());
-			request.setUserId(customerAccount.getUserId());
-			request.setThirdPartyAccount(customerAccount.getThirdPartyAccount());
-			request.setThirdPartyAccountName(customerAccount.getThirdPartyAccountName());
-			request.setThirdPartyAccountType(customerAccount.getThirdPartyAccountType());
-			AccountingModel.INSTANCE.create(request);
-			
-			//notify admin
-			ICoordinatorService coorService = AppContext.get().getService(ICoordinatorService.class);
-			NotificationImpl message = new NotificationImpl();
-			message.setSubject("\u63D0\u73B0\u7533\u8BF7: " + order.getSerialNumber());
-			message.setDescription(order.getDescription());
-			message.setCreateDate(new Date());
-			coorService.addNotificationToAdmin(message, false);
-		} else {
-			throw new PaymentException("Illegal order state for withdrawing: " + order.getStatus().getDescription());
-		}
+	public void requestForWithdraw(ICustomerAccount customerAccount) throws PaymentException{
+		PayOrderRequestImpl request = new PayOrderRequestImpl();
+		request.setPayOrderId(0);
+		request.setState(RequestStatusType.REQUEST);
+		request.setType(PayOrderRequestType.WITHDRAW);
+		request.setCreateDate(new Date());
+		request.setUserId(customerAccount.getUserId());
+		request.setThirdPartyAccount(customerAccount.getThirdPartyAccount());
+		request.setThirdPartyAccountName(customerAccount.getThirdPartyAccountName());
+		request.setThirdPartyAccountType(customerAccount.getThirdPartyAccountType());
+		AccountingModel.INSTANCE.create(request);
+		
+		//notify admin
+		ICoordinatorService coorService = AppContext.get().getService(ICoordinatorService.class);
+		NotificationImpl message = new NotificationImpl();
+		message.setSubject("\u63D0\u73B0\u7533\u8BF7: " + customerAccount.getUserId());
+		message.setDescription("");
+		message.setCreateDate(new Date());
+		coorService.addNotificationToAdmin(message, false);
 	}
 	
 	/**

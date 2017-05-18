@@ -100,20 +100,41 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 
 	public double queryUserTotalAmount(long userId) {
 		PayOrderImpl condition = new PayOrderImpl();
-		condition.setUserId(userId);
+		condition.setEndUserId(userId);
 		condition.setStatus(PayOrderStatusType.AGREEDPAYTOEND);
+		condition.setWithdrawn(false);
 		
 		List<IPayOrder> orders = AccountingModel.INSTANCE.searchPaymentOrder(condition, null, 0, -1);
 		double totalAmount = 0;
 		for (IPayOrder order: orders) {
 			totalAmount += (order.getAmount()/100);
 		}
+		
+		condition.setWithdrawn(true);
+		orders = AccountingModel.INSTANCE.searchPaymentOrder(condition, null, 0, -1);
+		for (IPayOrder order: orders) {
+			totalAmount += (order.getAmount()/100);
+		}
 		return totalAmount;
+	}
+	
+	public double queryUserTotalAvailableAmount(long userId) {
+		PayOrderImpl condition = new PayOrderImpl();
+		condition.setEndUserId(userId);
+		condition.setStatus(PayOrderStatusType.AGREEDPAYTOEND);
+		condition.setWithdrawn(false);
+		
+		List<IPayOrder> orders = AccountingModel.INSTANCE.searchPaymentOrder(condition, null, 0, -1);
+		double totalWithdrawnAmount = 0;
+		for (IPayOrder order: orders) {
+			totalWithdrawnAmount += (order.getAmount()/100);
+		}
+		return totalWithdrawnAmount;
 	}
 	
 	public double queryUserTotalSpent(long userId) {
 		PayOrderImpl condition = new PayOrderImpl();
-		condition.setEndUserId(userId);
+		condition.setUserId(userId);
 		condition.setStatus(PayOrderStatusType.PAYED);
 		
 		List<IPayOrder> orders = AccountingModel.INSTANCE.searchPaymentOrder(condition, null, 0, -1);

@@ -7,7 +7,28 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "PayVoucherInfoPanel1",prefix + "PayVoucherInfoPanel"]
+        ,subComponents: [prefix + "MyWalletPanel",prefix + "PayVoucherInfoPanel1",prefix + "PayVoucherInfoPanel"]
+    });
+    var totalAmountUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "totalAmountUI"]
+    });
+
+    var withdrawAmountUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "withdrawAmountUI"]
+    });
+
+    var withdrawBtnUI = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "withdrawBtnUI"]
+    });
+
+    var MyWalletPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "MyWalletPanel"]
+        ,items: []
+        ,subComponents: [prefix + "totalAmountUI",prefix + "withdrawAmountUI",prefix + "withdrawBtnUI"]
     });
     var hintUILabel = new UIMaster.ui.label
     ({
@@ -25,11 +46,6 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
         ,items: []
         ,subComponents: [prefix + "hintUILabel",prefix + "payOrderTable"]
     });
-    var totalAmountUI = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "totalAmountUI"]
-    });
-
     var receivePayOrderTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "receivePayOrderTable"]
@@ -39,7 +55,7 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
     ({
         ui: elementList[prefix + "PayVoucherInfoPanel"]
         ,items: []
-        ,subComponents: [prefix + "totalAmountUI",prefix + "receivePayOrderTable"]
+        ,subComponents: [prefix + "receivePayOrderTable"]
     });
 
     var actionPanel = new UIMaster.ui.panel
@@ -58,6 +74,14 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
 
     Form.functionsTab=functionsTab;
 
+    Form.MyWalletPanel=MyWalletPanel;
+
+    Form.totalAmountUI=totalAmountUI;
+
+    Form.withdrawAmountUI=withdrawAmountUI;
+
+    Form.withdrawBtnUI=withdrawBtnUI;
+
     Form.PayVoucherInfoPanel1=PayVoucherInfoPanel1;
 
     Form.hintUILabel=hintUILabel;
@@ -65,8 +89,6 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
     Form.payOrderTable=payOrderTable;
 
     Form.PayVoucherInfoPanel=PayVoucherInfoPanel;
-
-    Form.totalAmountUI=totalAmountUI;
 
     Form.receivePayOrderTable=receivePayOrderTable;
 
@@ -86,9 +108,9 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
 
     Form.ensurePayment = org_shaolin_vogerp_accounting_page_PaymentOrderManagement_ensurePayment;
 
-    Form.refund = org_shaolin_vogerp_accounting_page_PaymentOrderManagement_refund;
+    Form.askForRefund = org_shaolin_vogerp_accounting_page_PaymentOrderManagement_askForRefund;
 
-    Form.cancelPayment = org_shaolin_vogerp_accounting_page_PaymentOrderManagement_cancelPayment;
+    Form.withdrawPayOrder = org_shaolin_vogerp_accounting_page_PaymentOrderManagement_withdrawPayOrder;
 
     Form.withdrawSetting = org_shaolin_vogerp_accounting_page_PaymentOrderManagement_withdrawSetting;
 
@@ -171,43 +193,40 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_accounting_page_PaymentOrderManagement_refund(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_refund */
+    function org_shaolin_vogerp_accounting_page_PaymentOrderManagement_askForRefund(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_askForRefund */
         var o = this;
         var UIEntity = this;
 
 		        {   
-		        	eventsource = this.payOrderTable;
-		        }
 		        
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"refund-20160406-1109",UIMaster.getValue(eventsource),o.__entityName);
-
-		        {
-		            event.stopPropagation();
-		        	return false;   
+		          eventsource = this.payOrderTable;
+		          new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:WORKFLOW_COMFORMATION_MSG,messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,
+		          handler: function() {
+		        
+		        	UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"refundPrepayment",UIMaster.getValue(eventsource),o.__entityName);
+		        	
+		        	}
+                  }).open();
 		        }
-		            }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_refund */
+		            }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_askForRefund */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_accounting_page_PaymentOrderManagement_cancelPayment(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_cancelPayment */
+    function org_shaolin_vogerp_accounting_page_PaymentOrderManagement_withdrawPayOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_withdrawPayOrder */
         var o = this;
         var UIEntity = this;
 
 		        {   
-		        	eventsource = this.payOrderTable;
-		        }
 		        
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelPayment-20160406-1109",UIMaster.getValue(eventsource),o.__entityName);
-
-		        {
-		            event.stopPropagation();
-		        	return false;   
+		          new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:WORKFLOW_COMFORMATION_MSG,messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,
+		          handler: function() {
+		        
+		        	UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"withdrawPayOrder",UIMaster.getValue(eventsource),o.__entityName);
+		        	
+		        	}
+                  }).open();
 		        }
-		            }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_cancelPayment */
+		            }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagement_withdrawPayOrder */
 
 
     /* auto generated eventlistener function declaration */

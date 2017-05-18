@@ -206,7 +206,7 @@ public class PaymentUtil {
 //			sb.append("<button type='agreedpaytoend' class='uimaster_button ui-btn-inline' onclick='javascript:defaultname.");
 //            sb.append(formId).append("ensurePayment(this, event);'>\u786E\u8BA4\u4ED8\u6B3E</button>");
 			sb.append("<button type='refund' class='uimaster_button ui-btn-inline' onclick='javascript:defaultname.");
-            sb.append(formId).append("refund(this, event);'>\u7533\u8BF7\u9000\u6B3E</button>");
+            sb.append(formId).append("askForRefund(this, event);'>\u7533\u8BF7\u9000\u6B3E</button>");
 		} else if (payOrder.getStatus() == PayOrderStatusType.REFUND) {
 			//no actions
 		} else if (payOrder.getStatus() == PayOrderStatusType.AGREEDPAYTOEND) {
@@ -220,8 +220,8 @@ public class PaymentUtil {
 	public static String getReceivedPayOperations(IPayOrder payOrder, String formId) {
 		StringBuffer sb = new StringBuffer();
 		if (payOrder.getStatus() == PayOrderStatusType.AGREEDPAYTOEND) {
-            sb.append("<button type='pay' class='uimaster_button ui-btn-inline' onclick='javascript:defaultname.");
-            sb.append(formId).append("withdrawPayOrder(this, event);'>\u63D0\u73B0</button>");
+//            sb.append("<button type='pay' class='uimaster_button ui-btn-inline' onclick='javascript:defaultname.");
+//            sb.append(formId).append("withdrawPayOrder(this, event);'>\u63D0\u73B0</button>");
 		} 
 		return sb.toString();
 	}
