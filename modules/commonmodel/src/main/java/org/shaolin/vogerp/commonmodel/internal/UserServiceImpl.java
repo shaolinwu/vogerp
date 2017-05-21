@@ -19,6 +19,7 @@ import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.cache.CacheManager;
 import org.shaolin.bmdp.runtime.cache.ICache;
+import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.security.UserContext.OnlineUserChecker;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
@@ -368,16 +369,17 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			userContext.setOrgName(organization.getName());
 			userContext.setIsAdmin("uimaster".equals(organization.getOrgCode()) || "runner".equals(organization.getOrgCode()));
 			userContext.setVerified(organization.getVeriState() == OrgVerifyStatusType.VERIFIED);
+			List<IConstantEntity> userRoles = CEOperationUtil.toCElist(userInfo.getType());
+			session.setAttribute(WebflowConstants.USER_ROLE_KEY, userRoles);
 			session.setAttribute(WebflowConstants.USER_SESSION_KEY, userContext);
 			session.setAttribute(WebflowConstants.USER_LOCALE_KEY, matchedUser.getLocale());
-			session.setAttribute(WebflowConstants.USER_ROLE_KEY, CEOperationUtil.toCElist(userInfo.getType()));
 			
 			String userLocale = WebConfig.getUserLocale(request);
-			List userRoles = (List)session.getAttribute(WebflowConstants.USER_ROLE_KEY);
 			String userAgent = request.getHeader("user-agent");
 			boolean isMobile = MobilitySupport.isMobileRequest(userAgent);
 			//add user-context thread bind
             UserContext.register(session, userContext, userLocale, userRoles, isMobile);
+            UserContext.addUserData(WebflowConstants.USER_ROLE_KEY, userRoles);
             AccountingServiceImpl accountingService = (AccountingServiceImpl)AppContext.get().getService(IAccountingService.class);
             accountingService.registerLoginUserAccountInfo(userContext);
             for (UserActionListener listener: listeners) {
@@ -408,6 +410,31 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 	}
 	
+	@Override
+	public void logout(HttpSession session) {
+		Object userContext = session.getAttribute(WebflowConstants.USER_SESSION_KEY);
+		if (userContext != null) {
+			long userId = ((UserContext)userContext).getUserId();
+			try {
+				if (websocketServer.startsWith("https")) {
+					sender.doGetSSL(websocketServer + "/uimaster/onlineinfo?type=logout&userId=" + userId, "UTF-8");
+				} else {
+					sender.get(websocketServer + "/uimaster/onlineinfo?type=logout&userId=" + userId);
+				}
+			} catch (Throwable e) {
+				logger.warn("Error to access online user count!", e);
+			}
+		}
+		session.removeAttribute(WebflowConstants.USER_SESSION_KEY);
+		session.removeAttribute(WebflowConstants.USER_LOCALE_KEY);
+		session.removeAttribute(WebflowConstants.USER_ROLE_KEY);
+		
+		for (UserActionListener listener: listeners) {
+			listener.loggedOut();
+		}
+		UserContext.unregister();
+	}
+
 	public boolean isEnterpriseUser(long userId) {
 		IPersonalInfo personInfo = getPersonalInfo(userId);
 		if (personInfo != null && personInfo.getOrganization() != null) {
@@ -486,12 +513,12 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	
 	@Override
 	public String getUserOrganizationType() {
-		return ((UserContext)UserContext.getUserData(WebflowConstants.USER_SESSION_KEY)).getOrgType();
+		return UserContext.getUserContext().getOrgType();
 	}
 	
 	@Override
 	public long getUserId() {
-		return ((UserContext)UserContext.getUserData(WebflowConstants.USER_SESSION_KEY)).getUserId();
+		return UserContext.getUserContext().getUserId();
 	}
 	
 	@Override
@@ -518,27 +545,6 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 		UserContext context = (UserContext)session.getAttribute(WebflowConstants.USER_SESSION_KEY);
 		return  context.getUserId() > 0;
-	}
-	
-	@Override
-	public void logout(HttpSession session) {
-		Object userContext = session.getAttribute(WebflowConstants.USER_SESSION_KEY);
-		if (userContext != null) {
-			long userId = ((UserContext)userContext).getUserId();
-			try {
-				if (websocketServer.startsWith("https")) {
-					sender.doGetSSL(websocketServer + "/uimaster/onlineinfo?type=logout&userId=" + userId, "UTF-8");
-				} else {
-					sender.get(websocketServer + "/uimaster/onlineinfo?type=logout&userId=" + userId);
-				}
-			} catch (Throwable e) {
-				logger.warn("Error to access online user count!", e);
-			}
-		}
-		session.removeAttribute(WebflowConstants.USER_SESSION_KEY);
-		session.removeAttribute(WebflowConstants.USER_LOCALE_KEY);
-		session.removeAttribute(WebflowConstants.USER_ROLE_KEY);
-		UserContext.unregister();
 	}
 	
 	@Override

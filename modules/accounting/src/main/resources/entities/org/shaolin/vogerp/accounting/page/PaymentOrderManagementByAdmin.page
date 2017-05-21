@@ -6,28 +6,28 @@
 	<systemVersion>0</systemVersion>
 	<description>支付审核管理</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
-		<ns2:eventHandler functionName="openPayOrder">
-            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openPayOrder-20160115-1135">
+		<ns2:eventHandler functionName="openWithdrawRequest">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openWithdrawRequest-20160115-1135">
                 <ns2:exp>
                     <ns2:expressionString><![CDATA[
 			        import java.util.HashMap;
 			        import org.shaolin.uimaster.page.AjaxContext;
 			        import org.shaolin.uimaster.page.ajax.*;
 			        import org.shaolin.vogerp.accounting.be.PayOrderImpl;
+			        import org.shaolin.vogerp.accounting.be.IPayOrderRequest;
 			        {
 			            Table orderInfoTable = (Table)@page.getElement("payOrderRequestTable");
 			            if (orderInfoTable.getSelectedRow() == null) {
 			                return;
 			            }
-			            PayOrderImpl defaultUser = (PayOrderImpl)orderInfoTable.getSelectedRow();
-			            
+			            IPayOrderRequest defaultUser = (IPayOrderRequest)orderInfoTable.getSelectedRow();
 			            HashMap input = new HashMap();
 			            input.put("beObject", defaultUser);
 			            input.put("editable", new Boolean(true));
-			            RefForm form = new RefForm("payOrderForm", "org.shaolin.vogerp.accounting.form.PayOrder", input);
+			            RefForm form = new RefForm("payOrderForm", "org.shaolin.vogerp.accounting.form.PayOrderRequestAdmin", input);
 			            @page.addElement(form);
 			            
-			            form.openInWindows("支付单详情", new TableCallBack("payOrderRequestTable"), true);
+			            form.openInWindows("提现申请详情", new TableCallBack("payOrderRequestTable"), true);
 			        }
 			        ]]></ns2:expressionString>
                 </ns2:exp>
@@ -42,7 +42,7 @@
 			        import org.shaolin.uimaster.page.ajax.*;
 			        import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 			        {
-			            Table orderInfoTable = (Table)@page.getElement("payOrderRequestTable");
+			            Table orderInfoTable = (Table)@page.getElement("payOrderRefundTable");
 			            if (orderInfoTable.getSelectedRow() == null) {
 			                return;
 			            }
@@ -51,10 +51,10 @@
 			            HashMap input = new HashMap();
 			            input.put("beObject", defaultUser);
 			            input.put("editable", new Boolean(true));
-			            RefForm form = new RefForm("payOrderForm", "org.shaolin.vogerp.accounting.form.PayOrderRefund", input);
+			            RefForm form = new RefForm("payOrderForm", "org.shaolin.vogerp.accounting.form.PayOrderRefundAdmin", input);
 			            @page.addElement(form);
 			            
-			            form.openInWindows("支付单详情", new TableCallBack("payOrderRefundTable"), true);
+			            form.openInWindows("退款申请详情", new TableCallBack("payOrderRefundTable"), true);
 			        }
 			        ]]></ns2:expressionString>
                 </ns2:exp>
@@ -125,9 +125,9 @@
                             </ns2:query>
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>支付订单号</ns2:value>
+                                    <ns2:value>用户</ns2:value>
                                 </ns2:title>
-                                <ns2:beFieldId>rowBE.payOrder.serialNumber</ns2:beFieldId>
+                                <ns2:beFieldId>rowBE.userId</ns2:beFieldId>
                                 <ns2:uiType xsi:type="ns2:UITableColHTMLType">
                                     <ns2:type>Label</ns2:type>
                                 </ns2:uiType>
@@ -137,27 +137,7 @@
 						                import org.shaolin.bmdp.utils.StringUtil;
 						                import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
 						                {
-						                   String userName = CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getUserId());
-						                   return $rowBE.getPayOrder().getSerialNumber() + "("+userName+")";
-						                }]]></ns2:expressionString>
-						            </ns2:expression>
-						        </ns2:rowExpression>
-                            </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>金额</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.payOrder.amount</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
-                                    <ns2:type>Label</ns2:type>
-                                </ns2:uiType>
-                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-						            <ns2:expression xsi:type="ns2:ExpressionType">
-						                <ns2:expressionString><![CDATA[
-						                import org.shaolin.bmdp.utils.StringUtil;
-						                import org.shaolin.uimaster.page.od.formats.FormatUtil;
-						                {
-						                   return FormatUtil.getCurrency($rowBE.getPayOrder().getAmount() / 100, null, true);
+						                   return CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getUserId());
 						                }]]></ns2:expressionString>
 						            </ns2:expression>
 						        </ns2:rowExpression>
@@ -166,7 +146,7 @@
                                 <ns2:title xsi:type="ns2:StringPropertyType">
                                     <ns2:value>描述</ns2:value>
                                 </ns2:title>
-                                <ns2:beFieldId>rowBE.payOrder.description</ns2:beFieldId>
+                                <ns2:beFieldId>rowBE.comment</ns2:beFieldId>
                                 <ns2:uiType xsi:type="ns2:UITableColHTMLType">
                                     <ns2:type>Label</ns2:type>
                                 </ns2:uiType>
@@ -223,7 +203,7 @@
                                 </ns2:updateCondition>
                             </ns2:column>
                             <ns2:defaultActions>
-                                <ns2:defaultOpenAction>openPayOrder</ns2:defaultOpenAction>
+                                <ns2:defaultOpenAction>openWithdrawRequest</ns2:defaultOpenAction>
                             </ns2:defaultActions>
                         </ns2:component>
                         <ns2:layoutConstraint>

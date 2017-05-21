@@ -89,6 +89,7 @@ public interface IUserService {
 	
 	public interface UserActionListener {
 		void loggedIn(IPersonalAccount account, IPersonalInfo userInfo);
+		void loggedOut();
 		void registered(IPersonalInfo userInfo);
 	}
 }

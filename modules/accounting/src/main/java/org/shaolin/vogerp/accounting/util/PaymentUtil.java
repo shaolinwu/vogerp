@@ -2,14 +2,20 @@ package org.shaolin.vogerp.accounting.util;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.shaolin.bmdp.utils.DateParser;
 import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
+import org.shaolin.vogerp.accounting.be.IPayOrderRequest;
+import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 import org.shaolin.vogerp.accounting.ce.PayBusinessType;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+import org.shaolin.vogerp.accounting.dao.AccountingModel;
 
 import cn.beecloud.BCCache;
 
@@ -226,5 +232,32 @@ public class PaymentUtil {
 		return sb.toString();
 	}
 	
+	public static List<IPayOrder> getRequestedPayOrderList(IPayOrderRequest request) {
+		if (request.getPayOrderIds() == null || request.getPayOrderIds().trim().isEmpty()) {
+			return Collections.emptyList();
+		}
+		List<String> orders  = StringUtil.split(request.getPayOrderIds(), ",");
+		List<IPayOrder> payOrders = new ArrayList<IPayOrder>();
+		for (String id : orders) {
+			PayOrderImpl payorder = AccountingModel.INSTANCE.get(Long.parseLong(id), PayOrderImpl.class);
+			payOrders.add(payorder);
+		}
+		return payOrders;
+	}
 
+	public static String getRequestedPayOrderHTML(IPayOrderRequest request) {
+		List<IPayOrder> orders = getRequestedPayOrderList(request);
+		StringBuilder sb = new StringBuilder();
+		sb.append("<div>");
+		for (IPayOrder order : orders) {
+			sb.append("<div>");
+			sb.append("\u8BA2\u5355\u53F7").append(order.getSerialNumber());
+			sb.append(", \u989D\u5EA6").append(order.getAmount());
+			sb.append(order.getWithdrawn()?"<span style='color:red;'>(\u5DF2\u63D0\u73B0)</span>":"");
+			sb.append(", \u63CF\u8FF0: ").append(order.getDescription());
+			sb.append("</div>");
+		}
+		sb.append("</div>");
+		return sb.toString();
+	}
 }

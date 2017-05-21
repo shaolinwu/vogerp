@@ -189,16 +189,6 @@
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
-            <bediagram:name>payOrderId</bediagram:name>
-            <bediagram:type xsi:type="bediagram:LongType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>payOrder</bediagram:name>
-            <bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="PayOrder" />
-            </bediagram:type>
-        </bediagram:member>
-        <bediagram:member>
             <bediagram:name>type</bediagram:name>
             <bediagram:type xsi:type="bediagram:CEObjRefType">
                 <bediagram:targetEntity entityName="PayOrderRequestType" />
@@ -209,6 +199,19 @@
             <bediagram:type xsi:type="bediagram:CEObjRefType">
                 <bediagram:targetEntity entityName="RequestStatusType" />
             </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>amount</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- what are the payorders accordingly.-->
+            <bediagram:name>payOrderIds</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>comment</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         
         <!-- request for withdrawing -->
@@ -221,14 +224,22 @@
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>
-            <bediagram:name>thirdPartyAccountName</bediagram:name>
-            <bediagram:type xsi:type="bediagram:StringType" />
-        </bediagram:member>
-        <bediagram:member>
             <bediagram:name>thirdPartyAccountType</bediagram:name>
             <bediagram:type xsi:type="bediagram:CEObjRefType">
 				<bediagram:targetEntity entityName="SettlementMethodType" />
 			</bediagram:type>
+        </bediagram:member>
+        
+        <!-- for refunding a pay order only!-->
+        <bediagram:member>
+            <bediagram:name>payOrderId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>payOrder</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BEObjRefType">
+                <bediagram:targetEntity entityName="PayOrder" />
+            </bediagram:type>
         </bediagram:member>
         
         <bediagram:member>

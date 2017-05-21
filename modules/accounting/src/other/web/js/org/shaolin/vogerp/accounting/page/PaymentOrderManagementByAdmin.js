@@ -86,7 +86,7 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin(json)
         /* Construct_LAST:org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin */
     };
 
-    Form.openPayOrder = org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_openPayOrder;
+    Form.openWithdrawRequest = org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_openWithdrawRequest;
 
     Form.openRufundPayOrder = org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_openRufundPayOrder;
 
@@ -107,14 +107,14 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin(json)
 /* Other_Func_LAST:org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_openPayOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_openPayOrder */
+    function org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_openWithdrawRequest(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_openWithdrawRequest */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openPayOrder-20160115-1135",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_openPayOrder */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openWithdrawRequest-20160115-1135",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_openWithdrawRequest */
 
 
     /* auto generated eventlistener function declaration */

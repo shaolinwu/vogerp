@@ -21,4 +21,9 @@ public class CouponUserActionListener implements UserActionListener {
 	private void generateDefaultCouponTypes(Long orgId) {
 	}
 
+	@Override
+	public void loggedOut() {
+		
+	}
+
 }

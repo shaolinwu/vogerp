@@ -113,12 +113,14 @@
     <entityName>ACCT_PAYOORDERREQUEST</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="PAYORDERID" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="PAYORDERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="TYPE" type="INTEGER" length="1" default="1"></ns2:column>
     <ns2:column name="STATE" type="INTEGER" length="1" default="1"></ns2:column>
     <ns2:column name="USERID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="AMOUNT" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="PAYORDERIDS" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="COMMENT" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="THIRDPARTYACCOUNT" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="THIRDPARTYACCOUNTNAME" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="THIRDPARTYACCOUNTTYPE" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
@@ -129,16 +131,20 @@
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.PayOrderRequest"></ns2:businessEntity>
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="payOrderId" columnName="PAYORDERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="state" columnName="STATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="userId" columnName="USERID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="amount" columnName="AMOUNT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="payOrderIds" columnName="PAYORDERIDS"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="comment" columnName="COMMENT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="thirdPartyAccount" columnName="THIRDPARTYACCOUNT"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="thirdPartyAccountName" columnName="THIRDPARTYACCOUNTNAME"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="thirdPartyAccountType" columnName="THIRDPARTYACCOUNTTYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="payOrderId" columnName="PAYORDERID"></ns2:fieldMapping>
+      <!-- payorder id is optional for refund only. 
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ACCT_PAYOORDERREQUEST1" mappingType="One-to-One" beFieldName="payOrder" columnName="PAYORDERID"></ns2:fieldMapping>
+       -->
     </ns2:mapping>
   </ns2:table>
   
@@ -643,6 +649,20 @@
           </ns2:value>
           <ns2:condition>
             <expressionString><![CDATA[scObject.getId() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.userId</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.userId</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getUserId() > 0]]></expressionString>
           </ns2:condition>
         </ns2:conditionValue>
       </ns2:fieldMapping>

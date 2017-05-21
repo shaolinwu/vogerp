@@ -160,7 +160,6 @@
             <ns2:ops xsi:type="ns2:OpExecuteScriptType">
 		        <ns2:expressionString><![CDATA[
 		        {   
-		        
 		          eventsource = this.payOrderTable;
 		          new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:WORKFLOW_COMFORMATION_MSG,messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,
 		          handler: function() {
@@ -173,21 +172,55 @@
 		        ]]></ns2:expressionString>
 		    </ns2:ops>
         </ns2:eventHandler>
-        <ns2:eventHandler functionName="withdrawPayOrder">
-            <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-		        <ns2:expressionString><![CDATA[
-		        {   
-		        
-		          new UIMaster.ui.dialog({dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,message:WORKFLOW_COMFORMATION_MSG,messageType:UIMaster.ui.dialog.Warning,optionType:UIMaster.ui.dialog.YES_NO_OPTION,title:'',height:150,width:300,
-		          handler: function() {
-		        
-		        	UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"withdrawPayOrder",UIMaster.getValue(eventsource),o.__entityName);
-		        	
-		        	}
-                  }).open();
-		        }
-		        ]]></ns2:expressionString>
-		    </ns2:ops>
+        <ns2:eventHandler functionName="requestForWithdraw">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="requestForWithdraw-20170406-1109">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.List;
+                    import java.util.HashMap;
+                    import java.util.Date;
+                    import java.util.ArrayList;
+                    import org.shaolin.bmdp.utils.DateUtil;
+                    import org.shaolin.bmdp.runtime.Registry;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+			        import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+			        import org.shaolin.vogerp.accounting.be.*;
+			        import org.shaolin.vogerp.accounting.ce.*;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
+		            import org.shaolin.vogerp.accounting.IAccountingService;
+			        import org.shaolin.vogerp.accounting.dao.AccountingModel;
+                    { 
+			            // 之前一直没找到微信转账的接口，我现在才知道，微信是没有提供转账的api的，所以客户不能提现到微信. 客户只能提现到支付宝.
+		                IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+						double availabeAmount = accountingService.queryUserTotalAvailableAmount(UserContext.getUserContext().getUserId());
+                        if (availabeAmount > 0) {
+	                        ICustomerAccount customerAccount = (ICustomerAccount)UserContext.getUserData("AccountInfo", true);
+	                        if (customerAccount == null || customerAccount.getThirdPartyAccount() == null) {
+	                           Dialog.showMessageDialog("您还没有配制支付宝帐号，请点击设置按钮！", "没有第三方交易帐号", Dialog.WARNING_MESSAGE, null);
+	                           return;
+	                        }
+	                        PayOrderImpl condition = new PayOrderImpl();
+							condition.setEndUserId(UserContext.getUserContext().getUserId());
+							condition.setStatus(PayOrderStatusType.AGREEDPAYTOEND);
+							condition.setWithdrawn(false);
+							List orders = AccountingModel.INSTANCE.searchPaymentOrder(condition, null, 0, -1);
+	                        IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
+	                        if (payService.isRequestedForWithdraw(customerAccount.getUserId())) {
+			                   payService.requestForWithdraw(orders, customerAccount);
+	                           Dialog.showMessageDialog("提现申请成功，系统将在5个工作日内完成提现申请,请您耐心等待。","提醒",Dialog.INFORMATION_MESSAGE, null);
+	                        } else {
+	                           Dialog.showMessageDialog("您已申请提现中，请您耐心等待！", "", Dialog.INFORMATION_MESSAGE, null);
+	                        }
+                        } else {
+                            Dialog.showMessageDialog("您没有余额提现，请多加油哟！", "", Dialog.WARNING_MESSAGE, null);
+                        }
+                    }
+                 ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
         </ns2:eventHandler>
         <ns2:eventHandler functionName="withdrawSetting">
             <ns2:ops xsi:type="ns2:OpCallAjaxType" name="withdrawSetting-20170406-1109">
@@ -230,8 +263,6 @@
 			</ns2:UISkin>
 			<ns2:layout xsi:type="ns2:TableLayoutType">
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			</ns2:layout>
 			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
@@ -244,70 +275,118 @@
                         <ns2:layout xsi:type="ns2:TableLayoutType">
                             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
                             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
                             <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
                         </ns2:layout>
-                        <ns2:component xsi:type="ns2:UILabelType" UIID="totalAmountUI">
-				          <ns2:Property name="text">
-				            <ns2:value xsi:type="ns2:ExpressionPropertyType">
-						         <ns2:expression>
-						           <expressionString><![CDATA[
-						           import org.shaolin.bmdp.runtime.AppContext;
-						           import org.shaolin.bmdp.runtime.security.UserContext;
-						           import org.shaolin.vogerp.accounting.IAccountingService;
-						           { 
-						               IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
-						               double totalAmount = accountingService.queryUserTotalAmount(UserContext.getUserContext().getUserId());
-						               return "总收入： " + totalAmount + "\uFFE5"; 
-						           }]]></expressionString>
-						         </ns2:expression>
-					        </ns2:value>
-			              </ns2:Property>
-				        </ns2:component>
-				        <ns2:component xsi:type="ns2:UILabelType" UIID="withdrawAmountUI">
-				          <ns2:Property name="text">
-				            <ns2:value xsi:type="ns2:ExpressionPropertyType">
-						         <ns2:expression>
-						           <expressionString><![CDATA[
-						           import org.shaolin.bmdp.runtime.AppContext;
-						           import org.shaolin.bmdp.runtime.security.UserContext;
-						           import org.shaolin.vogerp.accounting.IAccountingService;
-						           { 
-						               IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
-						               double availabeAmount = accountingService.queryUserTotalAvailableAmount(UserContext.getUserContext().getUserId());
-						               return "可提现： " + availabeAmount + "\uFFE5"; 
-						           }]]></expressionString>
-						         </ns2:expression>
-					        </ns2:value>
-			              </ns2:Property>
-				        </ns2:component>
-				        <ns2:component xsi:type="ns2:UIButtonType" UIID="withdrawBtnUI">
-				          <ns2:text xsi:type="ns2:StringPropertyType">
-					         <ns2:value>提现</ns2:value>
-					      </ns2:text>
-					      <ns2:EventListener xsi:type="ns2:ClickListenerType">
-				            <ns2:handler functionName="withdrawPayOrder"></ns2:handler>
-				          </ns2:EventListener>
-				          <ns2:editable xsi:type="ns2:ExpressionPropertyType">
-				            <ns2:expression>
-				              <expressionString>{return true;}</expressionString>
-				            </ns2:expression>
-				          </ns2:editable>
-				        </ns2:component>
+                        <ns2:component xsi:type="ns2:UIPanelType" UIID="buttonPanel0">
+					      <ns2:layout xsi:type="ns2:TableLayoutType">
+					        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+					      </ns2:layout>
+	                        <ns2:component xsi:type="ns2:UILabelType" UIID="totalAmountUI">
+					          <ns2:Property name="text">
+					            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+							         <ns2:expression>
+							           <expressionString><![CDATA[
+							           import org.shaolin.bmdp.runtime.AppContext;
+							           import org.shaolin.bmdp.runtime.security.UserContext;
+							           import org.shaolin.vogerp.accounting.IAccountingService;
+							           { 
+							               IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+							               double totalAmount = accountingService.queryUserTotalAmount(UserContext.getUserContext().getUserId());
+							               return "总收入： " + totalAmount + "\uFFE5"; 
+							           }]]></expressionString>
+							         </ns2:expression>
+						        </ns2:value>
+				              </ns2:Property>
+					        </ns2:component>
+					        <ns2:component xsi:type="ns2:UILabelType" UIID="withdrawAmountUI">
+					          <ns2:Property name="text">
+					            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+							         <ns2:expression>
+							           <expressionString><![CDATA[
+							           import org.shaolin.bmdp.runtime.AppContext;
+							           import org.shaolin.bmdp.runtime.security.UserContext;
+							           import org.shaolin.vogerp.accounting.IAccountingService;
+							           { 
+							               IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+							               double availabeAmount = accountingService.queryUserTotalAvailableAmount(UserContext.getUserContext().getUserId());
+							               return "可提现： " + availabeAmount + "\uFFE5"; 
+							           }]]></expressionString>
+							         </ns2:expression>
+						        </ns2:value>
+				              </ns2:Property>
+					        </ns2:component>
+					        <ns2:component xsi:type="ns2:UILabelType" UIID="hintUILabel2">
+					          <ns2:text xsi:type="ns2:StringPropertyType">
+					            <ns2:value>*： 目前加工达人只支持提现到支付宝帐号，请您点击设置按钮进行配制。谢谢！</ns2:value>
+					          </ns2:text>
+					        </ns2:component>
+					        <ns2:layoutConstraint>
+	                            <ns2:componentId>totalAmountUI</ns2:componentId>
+	                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	                                x="0" y="0" align="FULL"></ns2:constraint>
+	                        </ns2:layoutConstraint>
+	                        <ns2:layoutConstraint>
+	                            <ns2:componentId>withdrawAmountUI</ns2:componentId>
+	                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	                                x="0" y="1" align="FULL"></ns2:constraint>
+	                        </ns2:layoutConstraint>
+	                        <ns2:layoutConstraint>
+	                            <ns2:componentId>hintUILabel2</ns2:componentId>
+	                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	                                x="0" y="2" align="FULL"></ns2:constraint>
+	                        </ns2:layoutConstraint>
+					    </ns2:component>
+				        <ns2:component xsi:type="ns2:UIPanelType" UIID="buttonPanel1">
+					      <ns2:layout xsi:type="ns2:TableLayoutType">
+					        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+					        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+					      </ns2:layout>
+					        <ns2:component xsi:type="ns2:UIButtonType" UIID="settingBtnUI">
+					          <ns2:text xsi:type="ns2:StringPropertyType">
+						         <ns2:value>设置</ns2:value>
+						      </ns2:text>
+						      <ns2:EventListener xsi:type="ns2:ClickListenerType">
+					            <ns2:handler functionName="withdrawSetting"></ns2:handler>
+					          </ns2:EventListener>
+					        </ns2:component>
+					        <ns2:component xsi:type="ns2:UIButtonType" UIID="withdrawBtnUI">
+					          <ns2:text xsi:type="ns2:StringPropertyType">
+						         <ns2:value>提现</ns2:value>
+						      </ns2:text>
+						      <ns2:EventListener xsi:type="ns2:ClickListenerType">
+					            <ns2:handler functionName="requestForWithdraw"></ns2:handler>
+					          </ns2:EventListener>
+					          <ns2:editable xsi:type="ns2:ExpressionPropertyType">
+					            <ns2:expression>
+					              <expressionString>{return true;}</expressionString>
+					            </ns2:expression>
+					          </ns2:editable>
+					        </ns2:component>
+					        <ns2:layoutConstraint>
+                            <ns2:componentId>settingBtnUI</ns2:componentId>
+	                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	                                x="0" y="0" align="FULL"></ns2:constraint>
+	                        </ns2:layoutConstraint>
+	                        <ns2:layoutConstraint>
+	                            <ns2:componentId>withdrawBtnUI</ns2:componentId>
+	                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	                                x="1" y="0" align="FULL"></ns2:constraint>
+	                        </ns2:layoutConstraint>
+					    </ns2:component>
+				        
 				        <ns2:layoutConstraint>
-                            <ns2:componentId>totalAmountUI</ns2:componentId>
+                            <ns2:componentId>buttonPanel0</ns2:componentId>
                             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                                 x="0" y="0" align="FULL"></ns2:constraint>
                         </ns2:layoutConstraint>
                         <ns2:layoutConstraint>
-                            <ns2:componentId>withdrawAmountUI</ns2:componentId>
+                            <ns2:componentId>buttonPanel1</ns2:componentId>
                             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                                 x="0" y="1" align="FULL"></ns2:constraint>
-                        </ns2:layoutConstraint>
-                        <ns2:layoutConstraint>
-                            <ns2:componentId>withdrawBtnUI</ns2:componentId>
-                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                                x="0" y="2" align="FULL"></ns2:constraint>
                         </ns2:layoutConstraint>
 				    </ns2:panel>
 				</ns2:tab>
@@ -560,6 +639,15 @@
                                 <ns2:uiType xsi:type="ns2:UITableColHTMLType">
                                     <ns2:type>Label</ns2:type>
                                 </ns2:uiType>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+						            <ns2:expression xsi:type="ns2:ExpressionType">
+						                <ns2:expressionString><![CDATA[
+						                import org.shaolin.bmdp.utils.StringUtil;
+						                {
+						                   return $rowBE.getSerialNumber() + "("+($rowBE.getWithdrawn()?"已提现":"")+")";
+						                }]]></ns2:expressionString>
+						            </ns2:expression>
+						        </ns2:rowExpression>
                             </ns2:column>
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
@@ -694,17 +782,6 @@
                             </ns2:column>
                             <ns2:defaultActions>
                             </ns2:defaultActions>
-                            <ns2:actionGroup>
-                              <ns2:type>radio</ns2:type>
-                              <ns2:action>
-                                  <ns2:uiid>withdrawSetting</ns2:uiid>
-                                  <ns2:title xsi:type="ns2:StringPropertyType">
-                                      <ns2:value>提现设置</ns2:value>
-                                  </ns2:title>
-                                  <ns2:icon>ui-icon-note</ns2:icon>
-                                  <ns2:function>withdrawSetting</ns2:function>
-                              </ns2:action>
-                           </ns2:actionGroup>
                         </ns2:component>
                         <ns2:layoutConstraint>
                             <ns2:componentId>receivePayOrderTable</ns2:componentId>
@@ -714,20 +791,10 @@
                     </ns2:panel>
                 </ns2:tab>
 			</ns2:component>
-			<!-- for workflow dynamic actions -->
-			<ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
-		      <ns2:layout xsi:type="ns2:TableLayoutType">
-		      </ns2:layout>
-		    </ns2:component>
 			<ns2:layoutConstraint>
 				<ns2:componentId>functionsTab</ns2:componentId>
 				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 					x="0" y="0" align="FULL"></ns2:constraint>
-			</ns2:layoutConstraint>
-			<ns2:layoutConstraint>
-				<ns2:componentId>actionPanel</ns2:componentId>
-				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-					x="0" y="1" align="FULL"></ns2:constraint>
 			</ns2:layoutConstraint>
 		</ns2:body>
 	</ns2:UIEntity>

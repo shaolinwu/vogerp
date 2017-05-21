@@ -31,4 +31,9 @@ public class NewUserListener implements UserActionListener{
 		
 	}
 
+	@Override
+	public void loggedOut() {
+		
+	}
+
 }

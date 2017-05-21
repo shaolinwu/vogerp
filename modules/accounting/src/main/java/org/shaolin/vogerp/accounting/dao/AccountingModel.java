@@ -230,6 +230,9 @@ public class AccountingModel extends BEEntityDaoObject {
             if (scObject.getId() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.id", scObject.getId()));
             }
+            if (scObject.getUserId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.userId", scObject.getUserId()));
+            }
             if (scObject.getPayOrderId() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.payOrderId", scObject.getPayOrderId()));
             }
@@ -251,6 +254,9 @@ public class AccountingModel extends BEEntityDaoObject {
 
             if (scObject.getId() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.id", scObject.getId()));
+            }
+            if (scObject.getUserId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.userId", scObject.getUserId()));
             }
             if (scObject.getPayOrderId() > 0) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.payOrderId", scObject.getPayOrderId()));

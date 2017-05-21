@@ -252,10 +252,11 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		}
 	}
 	
-	public boolean isRequestedForWithdraw(final IPayOrder order) {
+	public boolean isRequestedForWithdraw(final long userId) {
 		PayOrderRequestImpl request = new PayOrderRequestImpl();
-		request.setPayOrderId(order.getId());
+		request.setUserId(userId);
 		request.setType(PayOrderRequestType.WITHDRAW);
+		request.setState(RequestStatusType.REQUEST);
 		return AccountingModel.INSTANCE.searchPayOrderRequestCount(request) == 1;
 	}
 	
@@ -268,15 +269,31 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	 * @return
 	 * @throws PaymentException
 	 */
-	public void requestForWithdraw(ICustomerAccount customerAccount) throws PaymentException{
+	public void requestForWithdraw(final List<IPayOrder> payOrders, final ICustomerAccount customerAccount) throws PaymentException {
+		if (payOrders == null || payOrders.size() == 0) {
+			return;
+		}
+		if (isRequestedForWithdraw(customerAccount.getUserId())) {
+			return;
+		}
+		List<Long> ids = new ArrayList<Long>();
+		double totalAmount = 0;
+		for (IPayOrder order: payOrders) {
+			ids.add(order.getId());
+			totalAmount += (order.getAmount()/100);
+		}
+		if (totalAmount <= 0) {
+			return;
+		}
+		
 		PayOrderRequestImpl request = new PayOrderRequestImpl();
-		request.setPayOrderId(0);
 		request.setState(RequestStatusType.REQUEST);
 		request.setType(PayOrderRequestType.WITHDRAW);
+		request.setAmount(totalAmount);
+		request.setPayOrderIds(ids.toString());
 		request.setCreateDate(new Date());
 		request.setUserId(customerAccount.getUserId());
 		request.setThirdPartyAccount(customerAccount.getThirdPartyAccount());
-		request.setThirdPartyAccountName(customerAccount.getThirdPartyAccountName());
 		request.setThirdPartyAccountType(customerAccount.getThirdPartyAccountType());
 		AccountingModel.INSTANCE.create(request);
 		
@@ -321,6 +338,7 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		PayOrderRequestImpl request = new PayOrderRequestImpl();
 		request.setPayOrderId(order.getId());
 		request.setType(PayOrderRequestType.REFUND);
+		request.setState(RequestStatusType.REQUEST);
 		return AccountingModel.INSTANCE.searchPayOrderRequestCount(request) == 1;
 	}
 

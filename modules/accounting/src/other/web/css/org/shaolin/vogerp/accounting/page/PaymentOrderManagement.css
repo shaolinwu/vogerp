@@ -1,3 +1,6 @@
 .payActions{}
 #payOrderTable .d {width: auto;}
 #div-actionPanel-0_0 {display: none;}
+#withdrawAmountUI_Label {font-size: large; color: #eb8f00;}
+#div-buttonPanel1-0_0 {float: right;}
+#buttonPanel1 {border-top: 1px solid #e78f08;}

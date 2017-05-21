@@ -1,5 +1,7 @@
 package org.shaolin.vogerp.accounting;
 
+import java.util.List;
+
 import org.shaolin.vogerp.accounting.be.ICustomerAccount;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
 import org.shaolin.vogerp.accounting.ce.PayBusinessType;
@@ -32,9 +34,9 @@ public interface IPaymentService {
 	
 	public void ensurePay(final String orderSNumber) throws PaymentException;
 	
-	public boolean isRequestedForWithdraw(final IPayOrder order);
+	public boolean isRequestedForWithdraw(final long userId);
 	
-	public void requestForWithdraw(ICustomerAccount customerAccount) throws PaymentException;
+	public void requestForWithdraw(List<IPayOrder> payOrders, ICustomerAccount customerAccount) throws PaymentException;
 	
 	public void requestForRefund(final IPayOrder order) throws PaymentException;
 	

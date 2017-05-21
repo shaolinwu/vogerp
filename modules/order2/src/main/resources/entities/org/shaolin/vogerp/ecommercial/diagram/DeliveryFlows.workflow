@@ -190,12 +190,8 @@
                      ]]></expressionString>
                 </ns2:expression>
             </ns2:process>
-            <ns2:eventDest>
-                <!-- TODO: more missions after receiving good! -->
-                <ns2:dest name="withdrawPayOrder" flow="TransferFlow"
-					entity="org.shaolin.vogerp.accounting.diagram.PaymentFlows"></ns2:dest>
-            </ns2:eventDest>
+            <ns2:dest name="endOrder"></ns2:dest>
         </ns2:mission-node>
-        
+        <ns2:end-node name="endOrder"></ns2:end-node>
         </ns2:flow>
 </ns2:Workflow>
