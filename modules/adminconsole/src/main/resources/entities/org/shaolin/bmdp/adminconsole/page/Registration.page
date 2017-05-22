@@ -78,7 +78,7 @@
                     IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
                     if (userService.checkVerifiAnswer(veriCode.getValue(), @page.getRequest())) {
                        veriCode.addStyle("background-color", "greenyellow");
-                       @page.executeJavaScript("javascript:defaultname.Register(defaultname.verifiCode);");
+                       //@page.executeJavaScript("javascript:defaultname.Register(defaultname.verifiCode);");
                     } else {
                        veriCode.addStyle("background-image", "none");
                        veriCode.addStyle("background-color", "red");
@@ -98,7 +98,81 @@
 		    </ns2:ops>
 		</ns2:eventHandler>    
         <ns2:eventHandler functionName="Login"></ns2:eventHandler>
-		<ns2:eventHandler functionName="Register"></ns2:eventHandler>
+		<ns2:eventHandler functionName="Register">
+		    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+		        <ns2:expressionString><![CDATA[
+		        {   
+		            constraint_result = this.Form.validate();
+					if (this.selectModeUI.getValue() == "0") {
+		                constraint_result = this.registerInfo.Form.validate();
+			            if (constraint_result != true && constraint_result != null) {
+			                return false;
+			            }
+		            } else {
+		                constraint_result = this.registerCompanyInfo.Form.validate();
+			            if (constraint_result != true && constraint_result != null) {
+			                return false;
+			            }
+		            }
+		            constraint_result = this.veriCode.validate();
+		            if (constraint_result != true && constraint_result != null) {
+		                return false;
+		            }
+		            constraint_result = this.termsUI.validate();
+		            if (constraint_result != true && constraint_result != null) {
+		                return false;
+		            }
+		            
+		            if (MobileAppMode) {
+		               // webview does not support form.
+		               
+		               UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"AppRegister-20151227-1839",UIMaster.getValue(eventsource),o.__entityName);
+		               
+		               return;
+		            }
+		        }
+		        ]]></ns2:expressionString>
+		    </ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="AppRegister">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="AppRegister-20151227-1839">
+                <ns2:exp>
+                    <expressionString><![CDATA[
+                import java.util.HashMap;
+                import org.shaolin.bmdp.runtime.AppContext;
+                import org.shaolin.uimaster.page.AjaxContext;
+                import org.shaolin.uimaster.page.ajax.*;
+                import org.shaolin.vogerp.commonmodel.IUserService;
+                import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
+                import org.shaolin.vogerp.commonmodel.be.RegisterInfoImpl;
+                import org.shaolin.vogerp.commonmodel.be.AddressInfoImpl;
+                import org.shaolin.vogerp.commonmodel.ce.OrgType;
+                { 
+                    RegisterInfoImpl registerInfo = new RegisterInfoImpl();
+                    registerInfo.setUserType(OrgType.INDIVIDUAL);
+                    String formType = "registerInfo";
+                    if (((RadioButtonGroup)@page.getElement("selectModeUI")).getValue().equals("1")) {
+                       formType = "registerCompanyInfo";
+                       registerInfo.setUserType(OrgType.COMPANY);
+	                   registerInfo.setAddress(new AddressInfoImpl());
+                    }
+                    HashMap input = new HashMap();
+                    input.put("beObject", registerInfo);
+                    RefForm form = (RefForm)@page.getElement(formType); 
+                    HashMap out = (HashMap)form.ui2Data(input);
+                    registerInfo = (RegisterInfoImpl)out.get("beObject");
+                    @page.log("----------->: " + registerInfo.toString());
+                    IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
+			        if (service.register(registerInfo, @page.getRequest())) {
+				        Dialog.showMessageDialog(registerInfo.getPhoneNumber() + "手机帐号注册成功！您现在可以登录加工达人App了。", "", Dialog.INFORMATION_MESSAGE, null);
+			        } else {
+			            Dialog.showMessageDialog("对不起，本次帐号注册失败！请您重新注册。", "", Dialog.ERROR_MESSAGE, null);
+			        }
+                }
+                ]]></expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:layout xsi:type="ns2:TableLayoutType">
 				<ns2:rowHeightWeight>0</ns2:rowHeightWeight>
@@ -274,7 +348,7 @@
 	                        <ns2:value>注册</ns2:value>
 	                    </ns2:text>
 	                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
-	                        <ns2:handler functionName="verifiCode" />
+	                        <ns2:handler functionName="Register" />
 	                    </ns2:EventListener>
 	                </ns2:component>
 	                <ns2:component xsi:type="ns2:UILabelType" UIID="loginBtn">
@@ -456,22 +530,6 @@
 	<ns2:out name="Register" functionName="Register" validate="true">
 		<ns2:clientAction xsi:type="ns2:ExpressionType">
 			<ns2:expressionString><![CDATA[{
-			constraint_result = true;
-			if (this.selectModeUI.getValue() == "0") {
-                var constraint_result = this.registerInfo.Form.validate();
-	            if (constraint_result != true && constraint_result != null) {
-	                return false;
-	            }
-            } else {
-               var constraint_result = this.registerCompanyInfo.Form.validate();
-	            if (constraint_result != true && constraint_result != null) {
-	                return false;
-	            }
-            }
-            var constraint_result = this.veriCode.validate();
-            if (constraint_result != true && constraint_result != null) {
-                return false;
-            }
 			}]]></ns2:expressionString>
 		</ns2:clientAction>
 		<ns2:serverOperation xsi:type="ns2:ExpressionType">

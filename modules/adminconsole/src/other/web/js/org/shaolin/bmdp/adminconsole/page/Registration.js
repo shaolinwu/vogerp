@@ -232,6 +232,8 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
     Form.Register = org_shaolin_bmdp_adminconsole_page_Registration_Register;
 
+    Form.AppRegister = org_shaolin_bmdp_adminconsole_page_Registration_AppRegister;
+
     Form.initPageJs = org_shaolin_bmdp_adminconsole_page_Registration_initPageJs;
 
     Form.finalizePageJs = org_shaolin_bmdp_adminconsole_page_Registration_finalizePageJs;
@@ -334,8 +336,50 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
         var o = this;
         var UIEntity = this;
 
+		        {   
+		            constraint_result = this.Form.validate();
+					if (this.selectModeUI.getValue() == "0") {
+		                constraint_result = this.registerInfo.Form.validate();
+			            if (constraint_result != true && constraint_result != null) {
+			                return false;
+			            }
+		            } else {
+		                constraint_result = this.registerCompanyInfo.Form.validate();
+			            if (constraint_result != true && constraint_result != null) {
+			                return false;
+			            }
+		            }
+		            constraint_result = this.veriCode.validate();
+		            if (constraint_result != true && constraint_result != null) {
+		                return false;
+		            }
+		            constraint_result = this.termsUI.validate();
+		            if (constraint_result != true && constraint_result != null) {
+		                return false;
+		            }
+		            
+		            if (MobileAppMode) {
+		               // webview does not support form.
+		               
+		               UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"AppRegister-20151227-1839",UIMaster.getValue(eventsource),o.__entityName);
+		               
+		               return;
+		            }
+		        }
+		        
         o.Register_OutFunctionName(eventsource);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Registration_Register */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Registration_AppRegister(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Registration_AppRegister */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"AppRegister-20151227-1839",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Registration_AppRegister */
 
 
     function org_shaolin_bmdp_adminconsole_page_Registration_initPageJs(){/* Gen_First:org_shaolin_bmdp_adminconsole_page_Registration_initPageJs */
@@ -371,22 +415,6 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
         constraint_result = this.Form.validate();
 {
-			constraint_result = true;
-			if (this.selectModeUI.getValue() == "0") {
-                var constraint_result = this.registerInfo.Form.validate();
-	            if (constraint_result != true && constraint_result != null) {
-	                return false;
-	            }
-            } else {
-               var constraint_result = this.registerCompanyInfo.Form.validate();
-	            if (constraint_result != true && constraint_result != null) {
-	                return false;
-	            }
-            }
-            var constraint_result = this.veriCode.validate();
-            if (constraint_result != true && constraint_result != null) {
-                return false;
-            }
 			}        
         myForm._outname.value = "Register";
         myForm.target = "_self";
