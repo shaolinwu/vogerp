@@ -127,7 +127,7 @@
             <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
           </ns2:layout>
           <ns2:component xsi:type="ns2:UILabelType" UIID="serialNumberUILabel">
-            <ns2:UIStyle></ns2:UIStyle>
+            <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
             <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
               <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
               <ns2:key>org.shaolin.vogerp.ecommercial.be.GoldenOrder.serialNumber</ns2:key>
@@ -137,17 +137,22 @@
             <ns2:UIStyle></ns2:UIStyle>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="descriptionUILabel">
-            <ns2:UIStyle></ns2:UIStyle>
+            <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
             <ns2:text xsi:type="ns2:StringPropertyType">
               <ns2:value>订单描述</ns2:value>
             </ns2:text>
           </ns2:component>
           <ns2:component xsi:type="ns2:UITextAreaType" UIID="descriptionUI">
-            <ns2:UIStyle></ns2:UIStyle>
+            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
             <ns2:Property name="showMaxLength">
                <ns2:value xsi:type="ns2:NumericPropertyType">
                    <type>int</type>
                    <value>100</value>
+               </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="placeholder">
+               <ns2:value xsi:type="ns2:StringPropertyType">
+                   <value>请详细写明您的加工要求。</value>
                </ns2:value>
             </ns2:Property>
             <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
@@ -166,6 +171,11 @@
                <ns2:value xsi:type="ns2:NumericPropertyType">
                    <type>int</type>
                    <value>100</value>
+               </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="placeholder">
+               <ns2:value xsi:type="ns2:StringPropertyType">
+                   <value>请详细写明您的加工公差要求。</value>
                </ns2:value>
             </ns2:Property>
 	      </ns2:component>
@@ -194,6 +204,20 @@
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="materialTypeUI">
 	         <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox" />
+	         <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+               <ns2:value>false</ns2:value>
+             </ns2:allowBlank>
+	         <ns2:validator xsi:type="ns2:ValidatorsPropertyType">
+	            <ns2:validator xsi:type="ns2:ValidatorPropertyType">
+	                    <isFuncRef>false</isFuncRef>
+	                    <funcCode><![CDATA[
+	                    { 
+	                    return this.value != "org.shaolin.vogerp.ecommercial.ce.MachiningMaterialType";
+	                    }]]></funcCode>
+	                    <!-- 请选择加工材料！ -->
+	                    <errMsg>\u8BF7\u9009\u62E9\u52A0\u5DE5\u6750\u6599\uFF01</errMsg>
+	            </ns2:validator>
+	         </ns2:validator>
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UICheckBoxType" UIID="needCreateModelUI">
 	        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -453,6 +477,11 @@
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="singleLevel">
         <ns2:expression>
           <expressionString>{return Boolean.FALSE;}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="value">
+        <ns2:expression>
+          <expressionString>{return "org.shaolin.vogerp.ecommercial.ce.MachiningMaterialType,1";}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>

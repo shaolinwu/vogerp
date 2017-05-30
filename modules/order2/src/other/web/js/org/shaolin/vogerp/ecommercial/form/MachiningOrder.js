@@ -32,6 +32,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     ({
         ui: elementList[prefix + "descriptionUI"]
         ,showMaxLength: 100
+        ,placeholder: "????????????"
     });
 
     var differentiationUILabel = new UIMaster.ui.label
@@ -43,6 +44,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     ({
         ui: elementList[prefix + "differentiationUI"]
         ,showMaxLength: 100
+        ,placeholder: "??????????????"
     });
 
     var countUILabel = new UIMaster.ui.label

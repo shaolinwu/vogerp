@@ -28,7 +28,7 @@
 						</ns2:param>
 					</ns2:UISkin>
 					<ns2:layout xsi:type="ns2:TableLayoutType">
-						<ns2:rowHeightWeight>280</ns2:rowHeightWeight>
+						<ns2:rowHeightWeight>600</ns2:rowHeightWeight>
 						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 					</ns2:layout>
 					<ns2:component xsi:type="ns2:UIFrameType" UIID="frame1" chunkName="org.shaolin.vogerp.commonmodel.diagram.ModularityModel" nodeName="OrderManagementByAdmin">
@@ -49,7 +49,7 @@
 						</ns2:param>
 					</ns2:UISkin>
 					<ns2:layout xsi:type="ns2:TableLayoutType">
-						<ns2:rowHeightWeight>280</ns2:rowHeightWeight>
+						<ns2:rowHeightWeight>600</ns2:rowHeightWeight>
 						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 					</ns2:layout>
 					<ns2:component xsi:type="ns2:UIFrameType" UIID="frame2" chunkName="org.shaolin.vogerp.commonmodel.diagram.ModularityModel" nodeName="OrgManager">
@@ -73,6 +73,7 @@
 				</ns2:layoutConstraint>
 			</ns2:component>
 			
+			<!-- 
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="secondPanel">
 				<ns2:layout xsi:type="ns2:TableLayoutType">
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -90,7 +91,7 @@
 						</ns2:param>
 					</ns2:UISkin>
 					<ns2:layout xsi:type="ns2:TableLayoutType">
-						<ns2:rowHeightWeight>280</ns2:rowHeightWeight>
+						<ns2:rowHeightWeight>600</ns2:rowHeightWeight>
 						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 					</ns2:layout>
 					<ns2:component xsi:type="ns2:UIFrameType" UIID="frame3" chunkName="org.shaolin.vogerp.commonmodel.diagram.ModularityModel" nodeName="PayOrderAdminManager">
@@ -111,7 +112,7 @@
 						</ns2:param>
 					</ns2:UISkin>
 					<ns2:layout xsi:type="ns2:TableLayoutType">
-						<ns2:rowHeightWeight>280</ns2:rowHeightWeight>
+						<ns2:rowHeightWeight>600</ns2:rowHeightWeight>
 						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 					</ns2:layout>
 					<ns2:component xsi:type="ns2:UIFrameType" UIID="frame4" chunkName="org.shaolin.vogerp.commonmodel.diagram.ModularityModel" nodeName="UserNotification">
@@ -122,7 +123,6 @@
 							x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
 					</ns2:layoutConstraint>
 				</ns2:component>
-				
 				<ns2:layoutConstraint>
 					<ns2:componentId>secondPanel0</ns2:componentId>
 					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
@@ -134,16 +134,11 @@
 						x="1" y="0" align="FULL" cellUIClass=""></ns2:constraint>
 				</ns2:layoutConstraint>
 			</ns2:component>
-			
+			 -->
 			  <ns2:layoutConstraint>
 					<ns2:componentId>topPanel</ns2:componentId>
 					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 						x="0" y="0" align="FULL"></ns2:constraint>
-				</ns2:layoutConstraint>
-				<ns2:layoutConstraint>
-					<ns2:componentId>secondPanel</ns2:componentId>
-					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-						x="0" y="1" align="FULL"></ns2:constraint>
 				</ns2:layoutConstraint>
 			<ns2:constructorCode><![CDATA[
 			   {

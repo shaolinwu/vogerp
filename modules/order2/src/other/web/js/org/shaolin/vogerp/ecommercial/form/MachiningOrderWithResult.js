@@ -23,6 +23,16 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
         ui: elementList[prefix + "descriptionUI"]
     });
 
+    var differentiationUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "differentiationUILabel"]
+    });
+
+    var differentiationUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "differentiationUI"]
+    });
+
     var countUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "countUILabel"]
@@ -78,7 +88,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "differentiationUILabel",prefix + "differentiationUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -91,7 +101,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,countUILabel,countUI,materialTypeUILabel,materialTypeUI,componentListUI,offerPriceBtn,cancelbtn,photoUI,fieldPanel,attributePanel,attributePanel1,actionPanel]
+        ,items: [serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,differentiationUILabel,differentiationUI,countUILabel,countUI,materialTypeUILabel,materialTypeUI,componentListUI,offerPriceBtn,cancelbtn,photoUI,fieldPanel,attributePanel,attributePanel1,actionPanel]
     });
 
     Form.serialNumberUILabel=serialNumberUILabel;
@@ -101,6 +111,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
+
+    Form.differentiationUILabel=differentiationUILabel;
+
+    Form.differentiationUI=differentiationUI;
 
     Form.countUILabel=countUILabel;
 
@@ -132,6 +146,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
 
     Form.descriptionUI=descriptionUI;
 
+    Form.differentiationUILabel=differentiationUILabel;
+
+    Form.differentiationUI=differentiationUI;
+
     Form.countUILabel=countUILabel;
 
     Form.countUI=countUI;
@@ -153,6 +171,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
+
+    Form.differentiationUILabel=differentiationUILabel;
+
+    Form.differentiationUI=differentiationUI;
 
     Form.countUILabel=countUILabel;
 

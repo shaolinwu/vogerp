@@ -13,39 +13,6 @@ function org_shaolin_bmdp_adminconsole_page_MainAdmin(json)
         ui: elementList[prefix + "frame2"]
     });
 
-    var frame3 = new UIMaster.ui.frame
-    ({
-        ui: elementList[prefix + "frame3"]
-    });
-
-    var frame4 = new UIMaster.ui.frame
-    ({
-        ui: elementList[prefix + "frame4"]
-    });
-
-    var secondPanel1 = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "secondPanel1"]
-        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: []
-        ,subComponents: [prefix + "frame4"]
-    });
-
-    var secondPanel0 = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "secondPanel0"]
-        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: []
-        ,subComponents: [prefix + "frame3"]
-    });
-
-    var secondPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "secondPanel"]
-        ,items: []
-        ,subComponents: [prefix + "secondPanel0",prefix + "secondPanel1"]
-    });
-
     var topPanel1 = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "topPanel1"]
@@ -72,16 +39,12 @@ function org_shaolin_bmdp_adminconsole_page_MainAdmin(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [frame1,frame2,frame3,frame4,topPanel,topPanel0,topPanel1,secondPanel,secondPanel0,secondPanel1]
+        ,items: [frame1,frame2,topPanel,topPanel0,topPanel1]
     });
 
     Form.frame1=frame1;
 
     Form.frame2=frame2;
-
-    Form.frame3=frame3;
-
-    Form.frame4=frame4;
 
     Form.topPanel=topPanel;
 
@@ -100,24 +63,6 @@ function org_shaolin_bmdp_adminconsole_page_MainAdmin(json)
     Form.topPanel1=topPanel1;
 
     Form.frame2=frame2;
-
-    Form.secondPanel=secondPanel;
-
-    Form.secondPanel0=secondPanel0;
-
-    Form.frame3=frame3;
-
-    Form.secondPanel1=secondPanel1;
-
-    Form.frame4=frame4;
-
-    Form.secondPanel0=secondPanel0;
-
-    Form.frame3=frame3;
-
-    Form.secondPanel1=secondPanel1;
-
-    Form.frame4=frame4;
 
     Form.user_constructor = function()
     {
