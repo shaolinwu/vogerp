@@ -78,14 +78,14 @@
         import org.shaolin.bmdp.json.JSONObject;
         {
            JSONObject item = new JSONObject();
-	        item.put("name", " 主页");
+	        item.put("name", " 可抢订单");
 	        item.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
 	        item.put("_nodename", "OnlineOrderList");
 	        item.put("_page", "org.shaolin.vogerp.ecommercial.page.OnlineOrderList");
 	        item.put("_framename", "onlineOrderList");
 	        
 	        JSONObject item1 = new JSONObject();
-	        item1.put("name", "订单");
+	        item1.put("name", "发布订单");
 	        item1.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
 	        item1.put("_nodename", "OrderManagement");
 	        item1.put("_page", "org.shaolin.vogerp.ecommercial.page.OrderManagement");

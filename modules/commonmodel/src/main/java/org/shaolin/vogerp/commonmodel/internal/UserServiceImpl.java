@@ -1,6 +1,5 @@
 package org.shaolin.vogerp.commonmodel.internal;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -132,12 +131,6 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		if (result.size() > 0) {
 			return false;
 		}
-		String rawPassword = registerInfo.getPassword();
-		try {
-			registerInfo.setPassword(PasswordVerifier.getPasswordHash(registerInfo.getPassword()));
-		} catch (NoSuchAlgorithmException e) {
-			// impossible
-		}
 		CommonModel.INSTANCE.create(registerInfo);
 		
 		// create organization
@@ -186,7 +179,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		PersonalAccountImpl newAccount = new PersonalAccountImpl();
 		newAccount.setPersonalId(userInfo.getId());
 		newAccount.setUserName(registerInfo.getPhoneNumber());
-		newAccount.setPassword(registerInfo.getPassword());
+		newAccount.setPassword(registerInfo.getPassword().toUpperCase());
 		newAccount.setLoginIP(HttpUserUtil.getIP(request));
 		newAccount.setLatitude(registerInfo.getLatitude());
 		newAccount.setLongitude(registerInfo.getLongitude());
@@ -218,8 +211,6 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		// rebuild transaction again.
 		HibernateUtil.getSession();
 		
-		//set the raw password back!
-		registerInfo.setPassword(rawPassword);
 		// send notification.
 		return true;
 	}
@@ -271,6 +262,11 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		return value.toString().equalsIgnoreCase(answer);
 	}
 	
+	/**
+	 * Login Requirements: 
+	 * 1. the password must be encryted in the client before sending.
+	 * 2. MD5 supported and time expiration supported for auto login.
+	 */
 	@Override
 	public String login(final IPersonalAccount user, final HttpServletRequest request) {
 		if (user.getUserName() == null || user.getUserName().trim().length() == 0) {
@@ -305,16 +301,27 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 					return USER_LOGIN_PASSWORDRULES_ACCOUNTLOCKED;
 				}
 			}
-			try {
-				if (!PasswordVerifier.getPasswordHash(user.getPassword()).equals(matchedUser.getPassword())) {
-					matchedUser.setAttempt( matchedUser.getAttempt() + 1);
-					CommonModel.INSTANCE.update(matchedUser);
-					return USER_LOGIN_PASSWORDRULES_PASSWORDINCORRECT;
-				}
-			} catch (NoSuchAlgorithmException e) {
+			if (!user.getPassword().equals(matchedUser.getPassword().toUpperCase())) {
+				matchedUser.setAttempt(matchedUser.getAttempt() + 1);
+				CommonModel.INSTANCE.update(matchedUser);
 				return USER_LOGIN_PASSWORDRULES_PASSWORDINCORRECT;
 			}
-			
+			// auto login check!
+			String autosumcheck = request.getParameter("autosumcheck");
+			if (autosumcheck != null && autosumcheck.length() > 0 
+					&& matchedUser.getAutoLoginSumCheck() != null && matchedUser.getAutoLoginSumCheck().length() > 0) {
+				Date expiredDate = new Date(); 
+				DateUtil.increaseDays(expiredDate, 5);// auto login must be cancelled after 5 days.
+				if (!matchedUser.getAutoLoginSumCheck().equals(autosumcheck)) {
+					matchedUser.setAttempt(matchedUser.getAttempt() + 1);
+					CommonModel.INSTANCE.update(matchedUser);
+					return USER_LOGIN_PASSWORDRULES_EXPIRED;
+				} else if ((System.currentTimeMillis() - matchedUser.getLastLogin().getTime()) > expiredDate.getTime()) {
+					return USER_LOGIN_PASSWORDRULES_EXPIRED;
+				}
+			} 
+			// the auto sumcheck will be generated and updated by server side.
+			matchedUser.setAutoLoginSumCheck(Math.random() + "");
 			matchedUser.setLastLogin(new Date());
 			matchedUser.setAttempt(0);
 			matchedUser.setIsLocked(false);
@@ -348,9 +355,10 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			userContext.setUserAccount(matchedUser.getUserName());
 			userContext.setUserName(userInfo.getFirstName());
 			userContext.setUserLocale(matchedUser.getLocale());
-			userContext.setUserLocation(matchedUser.getLocationInfo());
 			userContext.setUserRequestIP(request.getRemoteAddr());
+			userContext.setAutoLoginSumCheck(matchedUser.getAutoLoginSumCheck());
 			if (matchedUser.getLocationInfo() != null) {
+				userContext.setUserLocation(matchedUser.getLocationInfo());
 				userContext.setCity(matchedUser.getLocationInfo());
 			}
 			userContext.setLatitude(matchedUser.getLatitude());
@@ -531,6 +539,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			json.put("userName", UserContext.getUserContext().getUserName());
 			json.put("city", UserContext.getUserContext().getCity());
 			json.put("locale", UserContext.getUserContext().getLocale());
+			json.put("sumCheck", UserContext.getUserContext().getAutoLoginSumCheck());
 			
 			return json;
 		} catch (Exception e) {
@@ -587,12 +596,8 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 		
 		if (user.getPassword() != null) {
-			try {
-				user.setPassword(PasswordVerifier.getPasswordHash(newPassword));
-				CommonModel.INSTANCE.update(user);
-			} catch (NoSuchAlgorithmException e) {
-				logger.warn("hash password error!", e);
-			}
+			user.setPassword(newPassword.toUpperCase());
+			CommonModel.INSTANCE.update(user);
 		}
 	}
 

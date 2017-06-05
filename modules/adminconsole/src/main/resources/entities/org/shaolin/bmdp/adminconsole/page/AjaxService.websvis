@@ -26,14 +26,25 @@
       import org.shaolin.bmdp.json.JSONObject;
       {
        IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
-       if (!service.checkVerifiAnswer(@request.getParameter("verifyCode"), @request)) {
+       
+       String verifyCode = @request.getParameter("verifyCode");
+       String autosumcheck = @request.getParameter("autosumcheck");
+       if ((verifyCode == null || verifyCode.trim().length() == 0)
+          && (autosumcheck == null || autosumcheck.trim().length() == 0)) {
           JSONObject json = new JSONObject();
           json.put("verifyCode.error", "1");
-          return json;//don't to string.
+          return json;//don't convert to string.
        }
+       if (verifyCode != null && !service.checkVerifiAnswer(verifyCode, @request)) {
+          JSONObject json = new JSONObject();
+          json.put("verifyCode.error", "1");
+          return json;//don't convert to string.
+       }
+       // autosumcheck in service.login method.
        PersonalAccountImpl loginAccount = new PersonalAccountImpl();
        loginAccount.setUserName(@request.getParameter("username"));
        loginAccount.setPassword(@request.getParameter("pwd"));
+       loginAccount.setAutoLoginSumCheck(autosumcheck);
        String la = @request.getParameter("latitude");
        String lg = @request.getParameter("longitude");
        if (la != null && la.trim().length() > 0) {

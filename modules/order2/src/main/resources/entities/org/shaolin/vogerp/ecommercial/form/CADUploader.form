@@ -24,7 +24,7 @@
             	   if (".jpg;.jpeg;.png;.gif".indexOf(suffix.toLowerCase()) == -1) {
             	      String modelFilePath = @page.getHidden("modelFileUI").getValue();
             	      FileUtil.copyFile(new File(path +"/"+ images[i]), 
-            	                        new File(WebConfig.getResourcePath() + modelFilePath +"/"+ images[i]));
+            	                        new File(WebConfig.getResourcePath() + modelFilePath, images[i]));
             	      File srcFile = new File(path +"/"+ images[i]);
             	      srcFile.delete();
             	      @page.log("Copy successed: " + (WebConfig.getResourcePath() + modelFilePath +"/"+ images[i]));

@@ -18,6 +18,9 @@ public interface IUserService {
 	
 	public static final String USER_LOGIN_PASSWORDRULES_VERICODEINCORRECT = "user.login.passwordrules.verifycodeincorrect";
 	
+	public static final String USER_LOGIN_PASSWORDRULES_EXPIRED = "user.login.passwordrules.expired";
+	
+	
 	public static final String USER_REGISTER_FAIL = "user.register.fail";
 	
 	public void addListener(UserActionListener listener);

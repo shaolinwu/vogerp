@@ -4,7 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.vogerp.ecommercial.page.TakenOrderManagement</entityName>
 	<systemVersion>0</systemVersion>
-	<description>拍下订单管理</description>
+	<description>已抢订单管理</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
         <ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 		   <ns2:UISkin xsi:type="ns2:UISkinType">

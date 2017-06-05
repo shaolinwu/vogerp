@@ -27,6 +27,9 @@
                     <item name="chinaMapConfig" value="/js/controls/map/chinaMapConfig.js" />
                     <item name="map" value="/js/controls/map/map.js" />
                 </node>
+                <node name="org.shaolin.vogerp.commonmodel.page.CustomerInformation">
+                    <item name="md5" value="/js/md5.js" />
+                </node>
             </node>
         </node>
         <!-- 

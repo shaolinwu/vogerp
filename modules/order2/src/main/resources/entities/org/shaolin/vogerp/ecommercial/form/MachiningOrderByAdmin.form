@@ -80,7 +80,7 @@
 	    import org.shaolin.vogerp.ecommercial.be.MachOrderComponentImpl;
         { 
            String selectTable = @page.getHidden("selectTableUI").getValue();
-           @page.log("selectTable value: " + selectTable);
+           //@page.log("selectTable value: " + selectTable);
            Table table = @page.getTable("selectMComponentTable");
            MachiningComponentImpl condition = (MachiningComponentImpl)table.getConditions().getCondition();
            if (selectTable.equals("1")) {
@@ -166,6 +166,8 @@
 			  morderComponent.setDescription(component.getDescription());
 			  morderComponent.setPrice(component.getPrice());
 			  morderComponent.setWeightUnit(component.getWeightUnit());
+              morderComponent.setEstiWeight(1.0);
+              morderComponent.setEstiMakingHour(1);
               
               Table t = null;
               if (condition.getCategory() == MachiningCategoryType.MATERIAL) {

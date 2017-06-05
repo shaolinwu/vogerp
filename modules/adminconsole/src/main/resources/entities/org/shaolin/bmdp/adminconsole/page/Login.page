@@ -93,7 +93,15 @@
             </ns2:ops>
         </ns2:eventHandler>
         
-		<ns2:eventHandler functionName="Login"></ns2:eventHandler>
+		<ns2:eventHandler functionName="Login">
+		  <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+                <ns2:expressionString><![CDATA[
+		      {
+		        this.password.setValue(md5(this.password.getValue()).toUpperCase());
+		      }
+		      ]]></ns2:expressionString>
+          </ns2:ops>
+		</ns2:eventHandler>
 		<ns2:eventHandler functionName="Register"></ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:layout xsi:type="ns2:TableLayoutType">

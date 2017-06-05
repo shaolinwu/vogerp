@@ -247,6 +247,8 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
             if (constraint_result != true && constraint_result != null) {
                 return false;
             }
+            UIMaster.ui.sync.set({_uiid:UIMaster.getUIID(this.orgPasswordUI),_valueName:"value",_value:md5(this.orgPasswordUI.getValue()).toUpperCase(),_framePrefix:UIMaster.getFramePrefix(this.orgPasswordUI)});
+            UIMaster.ui.sync.set({_uiid:UIMaster.getUIID(this.passwordUI),_valueName:"value",_value:md5(this.passwordUI.getValue()).toUpperCase(),_framePrefix:UIMaster.getFramePrefix(this.passwordUI)});
         }
         
         // cal ajax function. 

@@ -357,6 +357,8 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 		            if (constraint_result != true && constraint_result != null) {
 		                return false;
 		            }
+		            UIMaster.ui.sync.set({_uiid:UIMaster.getUIID(this.registerInfo.passwordUI),_valueName:"value",_value:md5(this.registerInfo.passwordUI.getValue()).toUpperCase(),_framePrefix:UIMaster.getFramePrefix(this.termsUI)});
+		            UIMaster.ui.sync.set({_uiid:UIMaster.getUIID(this.registerCompanyInfo.passwordUI),_valueName:"value",_value:md5(this.registerCompanyInfo.passwordUI.getValue()).toUpperCase(),_framePrefix:UIMaster.getFramePrefix(this.termsUI)});
 		            
 		            if (MobileAppMode) {
 		               // webview does not support form.
@@ -386,7 +388,7 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
         var constraint_result = true;
         var UIEntity = this;
 {
-			// hello, my first js.
+			
 			}
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Registration_initPageJs */
 
@@ -414,7 +416,10 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
         var UIEntity = this;
 
         constraint_result = this.Form.validate();
-{
+
+			{
+			 // skip Form.validate() again!
+			 constraint_result = true;
 			}        
         myForm._outname.value = "Register";
         myForm.target = "_self";

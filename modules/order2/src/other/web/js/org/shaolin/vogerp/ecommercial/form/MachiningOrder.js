@@ -65,10 +65,19 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     var materialTypeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "materialTypeUI."});
 
+    var needCreateModelUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "needCreateModelUILabel"]
+    });
+
     var needCreateModelUI = new UIMaster.ui.checkbox
     ({
         ui: elementList[prefix + "needCreateModelUI"]
-        ,label: "?????????"
+    });
+
+    var termsUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "termsUILabel"]
     });
 
     var termsUI = new UIMaster.ui.checkbox
@@ -83,7 +92,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "differentiationUILabel",prefix + "differentiationUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI",prefix + "needCreateModelUI",prefix + "termsUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "differentiationUILabel",prefix + "differentiationUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI",prefix + "needCreateModelUILabel",prefix + "needCreateModelUI",prefix + "termsUILabel",prefix + "termsUI"]
     });
     var basicInfoPanel = new UIMaster.ui.panel
     ({
@@ -173,7 +182,11 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.materialTypeUI=materialTypeUI;
 
+    Form.needCreateModelUILabel=needCreateModelUILabel;
+
     Form.needCreateModelUI=needCreateModelUI;
+
+    Form.termsUILabel=termsUILabel;
 
     Form.termsUI=termsUI;
 
@@ -221,7 +234,11 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.materialTypeUI=materialTypeUI;
 
+    Form.needCreateModelUILabel=needCreateModelUILabel;
+
     Form.needCreateModelUI=needCreateModelUI;
+
+    Form.termsUILabel=termsUILabel;
 
     Form.termsUI=termsUI;
 

@@ -385,7 +385,7 @@
 			    </ns2:layout>
 			    <ns2:component xsi:type="ns2:UILabelType" UIID="mainIcon">
                    <ns2:text xsi:type="ns2:StringPropertyType">
-                       <ns2:value>开始抢单</ns2:value>
+                       <ns2:value>可抢订单</ns2:value>
                    </ns2:text>
                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
                         <ns2:handler functionName="showMainInfo" />
@@ -393,7 +393,7 @@
                 </ns2:component>
                 <ns2:component xsi:type="ns2:UILabelType" UIID="orderIcon">
                    <ns2:text xsi:type="ns2:StringPropertyType">
-                       <ns2:value>我的抢单</ns2:value>
+                       <ns2:value>发布抢单</ns2:value>
                    </ns2:text>
                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
                         <ns2:handler functionName="showOrderInfo" />

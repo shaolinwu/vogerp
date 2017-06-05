@@ -1,5 +1,6 @@
 package org.shaolin.vogerp.commonmodel.internal;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -53,25 +54,25 @@ public class PasswordVerifier {
 		int minDigitCount = AccountPolicyConfig.getPasswordMinDigitCount();
 		if (minDigitCount > 0 && digitCount < minDigitCount) {
 			return new PasswordCheckResult(false,
-					"EBOSExceptionConstants.EBOS_SECURITY_193");
+					"ExceptionConstants.UIMASTER_SECURITY_193");
 		}
 
 		int maxDigitCount = AccountPolicyConfig.getPasswordMaxDigitCount();
 		if (maxDigitCount >= 0 && digitCount > maxDigitCount) {
 			return new PasswordCheckResult(false,
-					"EBOSExceptionConstants.EBOS_SECURITY_181");
+					"ExceptionConstants.UIMASTER_SECURITY_181");
 		}
 
 		int minLetterCount = AccountPolicyConfig.getPasswordMinLetterCount();
 		if (minLetterCount > 0 && letterCount < minLetterCount) {
 			return new PasswordCheckResult(false,
-					"EBOSExceptionConstants.EBOS_SECURITY_193");
+					"ExceptionConstants.UIMASTER_SECURITY_193");
 		}
 
 		int maxLetterCount = AccountPolicyConfig.getPasswordMaxLetterCount();
 		if (maxLetterCount >= 0 && letterCount > maxLetterCount) {
 			return new PasswordCheckResult(false,
-					"EBOSExceptionConstants.EBOS_SECURITY_181");
+					"ExceptionConstants.UIMASTER_SECURITY_181");
 		}
 
 		int minLowerCaseLetterCount = AccountPolicyConfig
@@ -79,7 +80,7 @@ public class PasswordVerifier {
 		if (minLowerCaseLetterCount > 0
 				&& lowerCaseLetterCount < minLowerCaseLetterCount) {
 			return new PasswordCheckResult(false,
-					"EBOSExceptionConstants.EBOS_SECURITY_181");
+					"ExceptionConstants.UIMASTER_SECURITY_181");
 		}
 
 		int maxLowerCaseLetterCount = AccountPolicyConfig
@@ -87,7 +88,7 @@ public class PasswordVerifier {
 		if (maxLowerCaseLetterCount >= 0
 				&& lowerCaseLetterCount > maxLowerCaseLetterCount) {
 			return new PasswordCheckResult(false,
-					"EBOSExceptionConstants.EBOS_SECURITY_181");
+					"ExceptionConstants.UIMASTER_SECURITY_181");
 		}
 
 		int minUpperCaseLetterCount = AccountPolicyConfig
@@ -95,7 +96,7 @@ public class PasswordVerifier {
 		if (minUpperCaseLetterCount > 0
 				&& upperCaseLetterCount < minUpperCaseLetterCount) {
 			return new PasswordCheckResult(false,
-					"EBOSExceptionConstants.EBOS_SECURITY_181");
+					"ExceptionConstants.UIMASTER_SECURITY_181");
 		}
 
 		int maxUpperCaseLetterCount = AccountPolicyConfig
@@ -103,7 +104,7 @@ public class PasswordVerifier {
 		if (maxUpperCaseLetterCount >= 0
 				&& upperCaseLetterCount > maxUpperCaseLetterCount) {
 			return new PasswordCheckResult(false,
-					"EBOSExceptionConstants.EBOS_SECURITY_181");
+					"ExceptionConstants.UIMASTER_SECURITY_181");
 		}
 
 		return new PasswordCheckResult(true, null);
@@ -114,7 +115,7 @@ public class PasswordVerifier {
 		if (arg > 0) {
 			policySummary.add(ResourceUtil.getResource(
 					LocaleContext.getUserLocale(),
-					"bmiasia.ebos.security.security.Bundle", bundleKey,
+					"Errors", bundleKey,
 					new Object[] { new Integer(arg) }));
 		}
 	}
@@ -181,10 +182,11 @@ public class PasswordVerifier {
 		return String.valueOf(pwd);
 	}
 
-	public static String getPasswordHash(String password)
-			throws NoSuchAlgorithmException {
+	public static synchronized String getPasswordHash(String password)
+			throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		MessageDigest md5 = MessageDigest.getInstance("MD5");
-		md5.update(password.getBytes());
+		md5.reset();
+		md5.update(password.getBytes("UTF-8"));
 		byte[] hash = md5.digest();
 		return byte2hex(hash);
 	}
@@ -205,7 +207,7 @@ public class PasswordVerifier {
 		if (password == null || password.length() < 6) {
 			return (ResourceUtil.getResource(
 					LocaleContext.getUserLocale(),
-					"bmiasia.ebos.security.security.Bundle", "UserPwdLength"));
+					"Errors", "UserPwdLength"));
 		}
 
 		boolean hasLetter = false;
@@ -215,7 +217,7 @@ public class PasswordVerifier {
 			if (ch < '!' || ch > '~') {
 				return (ResourceUtil.getResource(
 						LocaleContext.getUserLocale(),
-						"bmiasia.ebos.security.security.Bundle",
+						"Errors",
 						"PwdContainsCharNum"));
 			}
 
@@ -231,7 +233,7 @@ public class PasswordVerifier {
 		if (!(hasLetter && hasNumber)) {
 			return (ResourceUtil.getResource(
 					LocaleContext.getUserLocale(),
-					"bmiasia.ebos.security.security.Bundle",
+					"Errors",
 					"PwdContainsCharNumTogeteher"));
 		}
 

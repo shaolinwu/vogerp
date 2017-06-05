@@ -355,6 +355,10 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         var o = this;
         var UIEntity = this;
 
+		      {
+		        this.password.setValue(md5(this.password.getValue()).toUpperCase());
+		      }
+		      
         o.Submit_OutFunctionName(eventsource);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_Login */
 

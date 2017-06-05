@@ -420,6 +420,14 @@
             <bediagram:name>loginIP</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
+        <bediagram:member>
+            <!-- this attribute store the information for the client which requires auto login function.
+                 the verification code does not work for this mode!
+                 md5 = ipaddress + random.number.
+            -->
+            <bediagram:name>autoLoginSumCheck</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
         <!-- login user graphic information. -->
         <bediagram:member>
             <bediagram:name>locationInfo</bediagram:name>

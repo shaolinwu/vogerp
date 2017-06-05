@@ -219,19 +219,23 @@
 	            </ns2:validator>
 	         </ns2:validator>
 	      </ns2:component>
-	      <ns2:component xsi:type="ns2:UICheckBoxType" UIID="needCreateModelUI">
+	      <ns2:component xsi:type="ns2:UILabelType" UIID="needCreateModelUILabel">
 	        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-	        <ns2:Property name="label">
-	           <ns2:value xsi:type="ns2:StringPropertyType">
-	               <value>是否需要设计建模图</value>
-	           </ns2:value>
-	       </ns2:Property>
-	       <ns2:text xsi:type="ns2:StringPropertyType">
-              <ns2:value>是否需要设计建模图</ns2:value>
-           </ns2:text>
+	        <ns2:text xsi:type="ns2:StringPropertyType">
+              <ns2:value>需要设计建模图</ns2:value>
+            </ns2:text>
+	      </ns2:component>
+	      <ns2:component xsi:type="ns2:UICheckBoxType" UIID="needCreateModelUI">
+	        <ns2:UIStyle></ns2:UIStyle>
+	      </ns2:component>
+	      <ns2:component xsi:type="ns2:UILabelType" UIID="termsUILabel">
+	        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+	        <ns2:text xsi:type="ns2:StringPropertyType">
+              <ns2:value>协议条款</ns2:value>
+            </ns2:text>
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UICheckBoxType" UIID="termsUI">
-            <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+            <ns2:UIStyle></ns2:UIStyle>
             <ns2:Property name="label">
 	           <ns2:value xsi:type="ns2:StringPropertyType">
 	               <value>同意《加工协议书》</value>
@@ -298,12 +302,20 @@
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>needCreateModelUI</ns2:componentId>
+            <ns2:componentId>needCreateModelUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>termsUI</ns2:componentId>
+            <ns2:componentId>needCreateModelUI</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass=""></ns2:constraint>
+          </ns2:layoutConstraint>
+          <ns2:layoutConstraint>
+            <ns2:componentId>termsUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass=""></ns2:constraint>
+          </ns2:layoutConstraint>
+          <ns2:layoutConstraint>
+            <ns2:componentId>termsUI</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
        </ns2:component>
        <ns2:layoutConstraint>
