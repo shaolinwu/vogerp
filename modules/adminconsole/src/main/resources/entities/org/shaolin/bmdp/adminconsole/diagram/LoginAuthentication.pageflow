@@ -247,7 +247,8 @@
         </ns2:outDataMappingToNode>
         <ns2:outDataMappingToNode name="password">
           <expression>
-            <expressionString><![CDATA[$password]]></expressionString>
+            <!-- don't pass the password to client! -->
+            <expressionString><![CDATA[""]]></expressionString>
           </expression>
         </ns2:outDataMappingToNode>
         <ns2:outDataMappingToNode name="errorCode">

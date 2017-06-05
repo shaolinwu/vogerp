@@ -307,14 +307,13 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 				return USER_LOGIN_PASSWORDRULES_PASSWORDINCORRECT;
 			}
 			// auto login check!
+			String userIP = HttpUserUtil.getIP(request);
 			String autosumcheck = request.getParameter("autosumcheck");
 			if (autosumcheck != null && autosumcheck.length() > 0 
 					&& matchedUser.getAutoLoginSumCheck() != null && matchedUser.getAutoLoginSumCheck().length() > 0) {
 				Date expiredDate = new Date(); 
 				DateUtil.increaseDays(expiredDate, 5);// auto login must be cancelled after 5 days.
-				if (!matchedUser.getAutoLoginSumCheck().equals(autosumcheck)) {
-					matchedUser.setAttempt(matchedUser.getAttempt() + 1);
-					CommonModel.INSTANCE.update(matchedUser);
+				if (!(matchedUser.getAutoLoginSumCheck().equals(autosumcheck) && matchedUser.getLoginIP().equals(userIP))) {
 					return USER_LOGIN_PASSWORDRULES_EXPIRED;
 				} else if ((System.currentTimeMillis() - matchedUser.getLastLogin().getTime()) > expiredDate.getTime()) {
 					return USER_LOGIN_PASSWORDRULES_EXPIRED;
@@ -330,7 +329,6 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 				matchedUser.setLatitude(user.getLatitude());
 				matchedUser.setLongitude(user.getLongitude());
 			}
-			String userIP = HttpUserUtil.getIP(request);
 			if ((matchedUser.getLocationInfo() == null || matchedUser.getLocationInfo().trim().length() == 0)
 					 || matchedUser.getLoginIP() == null || !matchedUser.getLoginIP().equals(userIP)) {
 				matchedUser.setLoginIP(userIP);

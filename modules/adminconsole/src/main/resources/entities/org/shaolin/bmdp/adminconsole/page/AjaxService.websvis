@@ -32,10 +32,11 @@
        if ((verifyCode == null || verifyCode.trim().length() == 0)
           && (autosumcheck == null || autosumcheck.trim().length() == 0)) {
           JSONObject json = new JSONObject();
-          json.put("verifyCode.error", "1");
+          json.put("verifyCode.error", "2");
           return json;//don't convert to string.
        }
-       if (verifyCode != null && !service.checkVerifiAnswer(verifyCode, @request)) {
+       if (verifyCode != null && verifyCode.trim().length() > 0 
+           && !service.checkVerifiAnswer(verifyCode, @request)) {
           JSONObject json = new JSONObject();
           json.put("verifyCode.error", "1");
           return json;//don't convert to string.
