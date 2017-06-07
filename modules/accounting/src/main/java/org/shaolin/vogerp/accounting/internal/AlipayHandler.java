@@ -68,8 +68,6 @@ import com.alipay.api.response.AlipayTradeQueryResponse;
 public class AlipayHandler extends HttpServlet implements PaymentHandler {
 
 	private static String charset = "UTF-8";
-	public static final String SUCCESS = "success";
-	public static final String FAIL = "failure";
 	private static final Logger logger = LoggerFactory.getLogger(AlipayHandler.class);
 	
 	public static boolean enableDebugger = false;
@@ -228,7 +226,8 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 			request.setBizContent(json.toString());
 			AlipayTradeRefundResponse response = alipayClient.execute(request);
 			if(response.isSuccess()){
-				// TODO successful post process
+				order.setStatus(PayOrderStatusType.REFUND);
+                AccountingModel.INSTANCE.update(order, true);
 				return SUCCESS;
 			} else {
 				// TODO failed post process

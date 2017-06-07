@@ -3,139 +3,84 @@
 function org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var idUI = new UIMaster.ui.hidden
+    var typeUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "idUI"]
+        ui: elementList[prefix + "typeUILabel"]
     });
 
-    var orderIdUILabel = new UIMaster.ui.label
+    var typeUI = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "orderIdUILabel"]
+        ui: elementList[prefix + "typeUI"]
     });
 
-    var orderIdUI = new UIMaster.ui.textfield
+    var stateUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "orderIdUI"]
+        ui: elementList[prefix + "stateUILabel"]
     });
 
-    var serialNumberUILabel = new UIMaster.ui.label
+    var stateUI = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "serialNumberUILabel"]
+        ui: elementList[prefix + "stateUI"]
     });
 
-    var serialNumberUI = new UIMaster.ui.textfield
+    var payOrderIdsUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "serialNumberUI"]
+        ui: elementList[prefix + "payOrderIdsUILabel"]
     });
 
-    var descriptionUILabel = new UIMaster.ui.label
+    var payOrderIdsUI = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "descriptionUILabel"]
+        ui: elementList[prefix + "payOrderIdsUI"]
     });
 
-    var descriptionUI = new UIMaster.ui.textfield
+    var thirdPartyAccountUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "descriptionUI"]
+        ui: elementList[prefix + "thirdPartyAccountUILabel"]
     });
 
-    var payBusinessTypeUILabel = new UIMaster.ui.label
+    var thirdPartyAccountUI = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "payBusinessTypeUILabel"]
+        ui: elementList[prefix + "thirdPartyAccountUI"]
     });
 
-    var payBusinessTypeUI = new UIMaster.ui.combobox
+    var thirdPartyAccountTypeUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "payBusinessTypeUI"]
+        ui: elementList[prefix + "thirdPartyAccountTypeUILabel"]
     });
 
-    var statusUILabel = new UIMaster.ui.label
+    var thirdPartyAccountTypeUI = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "statusUILabel"]
+        ui: elementList[prefix + "thirdPartyAccountTypeUI"]
     });
 
-    var statusUI = new UIMaster.ui.combobox
+    var amountUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "statusUI"]
+        ui: elementList[prefix + "amountUILabel"]
     });
 
-    var customerAPaymentMethodUILabel = new UIMaster.ui.label
+    var amountUI = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "customerAPaymentMethodUILabel"]
+        ui: elementList[prefix + "amountUI"]
     });
 
-    var customerAPaymentMethodUI = new UIMaster.ui.combobox
+    var commentUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "customerAPaymentMethodUI"]
+        ui: elementList[prefix + "commentUILabel"]
     });
 
-    var customerAPayAccountUILabel = new UIMaster.ui.label
+    var commentUI = new UIMaster.ui.textfield
     ({
-        ui: elementList[prefix + "customerAPayAccountUILabel"]
+        ui: elementList[prefix + "commentUI"]
     });
 
-    var customerAPayAccountUI = new UIMaster.ui.textfield
+    var payorderInfoUI = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "customerAPayAccountUI"]
+        ui: elementList[prefix + "payorderInfoUI"]
     });
 
-    var thirdGenSerialNumberUILabel = new UIMaster.ui.label
+    var okbtn1 = new UIMaster.ui.button
     ({
-        ui: elementList[prefix + "thirdGenSerialNumberUILabel"]
-    });
-
-    var thirdGenSerialNumberUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "thirdGenSerialNumberUI"]
-    });
-
-    var thirdTransactionTimeUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "thirdTransactionTimeUILabel"]
-    });
-
-    var thirdTransactionTimeUI = new UIMaster.ui.calendar
-    ({
-        ui: elementList[prefix + "thirdTransactionTimeUI"]
-    });
-
-    var customerBPaymentMethodUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "customerBPaymentMethodUILabel"]
-    });
-
-    var customerBPaymentMethodUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "customerBPaymentMethodUI"]
-    });
-
-    var customerBPayAccountUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "customerBPayAccountUILabel"]
-    });
-
-    var customerBPayAccountUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "customerBPayAccountUI"]
-    });
-
-    var thirdGenSerialNumber2UILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "thirdGenSerialNumber2UILabel"]
-    });
-
-    var thirdGenSerialNumber2UI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "thirdGenSerialNumber2UI"]
-    });
-
-    var thirdTransactionTime2UILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "thirdTransactionTime2UILabel"]
-    });
-
-    var thirdTransactionTime2UI = new UIMaster.ui.calendar
-    ({
-        ui: elementList[prefix + "thirdTransactionTime2UI"]
+        ui: elementList[prefix + "okbtn1"]
     });
 
     var cancelbtn = new UIMaster.ui.button
@@ -147,135 +92,100 @@ function org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "cancelbtn"]
+        ,subComponents: [prefix + "okbtn1",prefix + "cancelbtn"]
+    });
+
+    var fieldPanel1 = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "fieldPanel1"]
+        ,items: []
+        ,subComponents: [prefix + "payorderInfoUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "orderIdUILabel",prefix + "orderIdUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "payBusinessTypeUILabel",prefix + "payBusinessTypeUI",prefix + "statusUILabel",prefix + "statusUI",prefix + "customerAPaymentMethodUILabel",prefix + "customerAPaymentMethodUI",prefix + "customerAPayAccountUILabel",prefix + "customerAPayAccountUI",prefix + "thirdGenSerialNumberUILabel",prefix + "thirdGenSerialNumberUI",prefix + "thirdTransactionTimeUILabel",prefix + "thirdTransactionTimeUI",prefix + "customerBPaymentMethodUILabel",prefix + "customerBPaymentMethodUI",prefix + "customerBPayAccountUILabel",prefix + "customerBPayAccountUI",prefix + "thirdGenSerialNumber2UILabel",prefix + "thirdGenSerialNumber2UI",prefix + "thirdTransactionTime2UILabel",prefix + "thirdTransactionTime2UI"]
+        ,subComponents: [prefix + "typeUILabel",prefix + "typeUI",prefix + "stateUILabel",prefix + "stateUI",prefix + "payOrderIdsUILabel",prefix + "payOrderIdsUI",prefix + "thirdPartyAccountUILabel",prefix + "thirdPartyAccountUI",prefix + "thirdPartyAccountTypeUILabel",prefix + "thirdPartyAccountTypeUI",prefix + "amountUILabel",prefix + "amountUI",prefix + "commentUILabel",prefix + "commentUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,orderIdUILabel,orderIdUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,payBusinessTypeUILabel,payBusinessTypeUI,statusUILabel,statusUI,customerAPaymentMethodUILabel,customerAPaymentMethodUI,customerAPayAccountUILabel,customerAPayAccountUI,thirdGenSerialNumberUILabel,thirdGenSerialNumberUI,thirdTransactionTimeUILabel,thirdTransactionTimeUI,customerBPaymentMethodUILabel,customerBPaymentMethodUI,customerBPayAccountUILabel,customerBPayAccountUI,thirdGenSerialNumber2UILabel,thirdGenSerialNumber2UI,thirdTransactionTime2UILabel,thirdTransactionTime2UI,cancelbtn,fieldPanel,actionPanel]
+        ,items: [typeUILabel,typeUI,stateUILabel,stateUI,payOrderIdsUILabel,payOrderIdsUI,thirdPartyAccountUILabel,thirdPartyAccountUI,thirdPartyAccountTypeUILabel,thirdPartyAccountTypeUI,amountUILabel,amountUI,commentUILabel,commentUI,payorderInfoUI,okbtn1,cancelbtn,fieldPanel,fieldPanel1,actionPanel]
     });
 
-    Form.idUI=idUI;
+    Form.typeUILabel=typeUILabel;
 
-    Form.orderIdUILabel=orderIdUILabel;
+    Form.typeUI=typeUI;
 
-    Form.orderIdUI=orderIdUI;
+    Form.stateUILabel=stateUILabel;
 
-    Form.serialNumberUILabel=serialNumberUILabel;
+    Form.stateUI=stateUI;
 
-    Form.serialNumberUI=serialNumberUI;
+    Form.payOrderIdsUILabel=payOrderIdsUILabel;
 
-    Form.descriptionUILabel=descriptionUILabel;
+    Form.payOrderIdsUI=payOrderIdsUI;
 
-    Form.descriptionUI=descriptionUI;
+    Form.thirdPartyAccountUILabel=thirdPartyAccountUILabel;
 
-    Form.payBusinessTypeUILabel=payBusinessTypeUILabel;
+    Form.thirdPartyAccountUI=thirdPartyAccountUI;
 
-    Form.payBusinessTypeUI=payBusinessTypeUI;
+    Form.thirdPartyAccountTypeUILabel=thirdPartyAccountTypeUILabel;
 
-    Form.statusUILabel=statusUILabel;
+    Form.thirdPartyAccountTypeUI=thirdPartyAccountTypeUI;
 
-    Form.statusUI=statusUI;
+    Form.amountUILabel=amountUILabel;
 
-    Form.customerAPaymentMethodUILabel=customerAPaymentMethodUILabel;
+    Form.amountUI=amountUI;
 
-    Form.customerAPaymentMethodUI=customerAPaymentMethodUI;
+    Form.commentUILabel=commentUILabel;
 
-    Form.customerAPayAccountUILabel=customerAPayAccountUILabel;
+    Form.commentUI=commentUI;
 
-    Form.customerAPayAccountUI=customerAPayAccountUI;
+    Form.payorderInfoUI=payorderInfoUI;
 
-    Form.thirdGenSerialNumberUILabel=thirdGenSerialNumberUILabel;
-
-    Form.thirdGenSerialNumberUI=thirdGenSerialNumberUI;
-
-    Form.thirdTransactionTimeUILabel=thirdTransactionTimeUILabel;
-
-    Form.thirdTransactionTimeUI=thirdTransactionTimeUI;
-
-    Form.customerBPaymentMethodUILabel=customerBPaymentMethodUILabel;
-
-    Form.customerBPaymentMethodUI=customerBPaymentMethodUI;
-
-    Form.customerBPayAccountUILabel=customerBPayAccountUILabel;
-
-    Form.customerBPayAccountUI=customerBPayAccountUI;
-
-    Form.thirdGenSerialNumber2UILabel=thirdGenSerialNumber2UILabel;
-
-    Form.thirdGenSerialNumber2UI=thirdGenSerialNumber2UI;
-
-    Form.thirdTransactionTime2UILabel=thirdTransactionTime2UILabel;
-
-    Form.thirdTransactionTime2UI=thirdTransactionTime2UI;
+    Form.okbtn1=okbtn1;
 
     Form.cancelbtn=cancelbtn;
 
     Form.fieldPanel=fieldPanel;
 
-    Form.idUI=idUI;
+    Form.typeUILabel=typeUILabel;
 
-    Form.orderIdUILabel=orderIdUILabel;
+    Form.typeUI=typeUI;
 
-    Form.orderIdUI=orderIdUI;
+    Form.stateUILabel=stateUILabel;
 
-    Form.serialNumberUILabel=serialNumberUILabel;
+    Form.stateUI=stateUI;
 
-    Form.serialNumberUI=serialNumberUI;
+    Form.payOrderIdsUILabel=payOrderIdsUILabel;
 
-    Form.descriptionUILabel=descriptionUILabel;
+    Form.payOrderIdsUI=payOrderIdsUI;
 
-    Form.descriptionUI=descriptionUI;
+    Form.thirdPartyAccountUILabel=thirdPartyAccountUILabel;
 
-    Form.payBusinessTypeUILabel=payBusinessTypeUILabel;
+    Form.thirdPartyAccountUI=thirdPartyAccountUI;
 
-    Form.payBusinessTypeUI=payBusinessTypeUI;
+    Form.thirdPartyAccountTypeUILabel=thirdPartyAccountTypeUILabel;
 
-    Form.statusUILabel=statusUILabel;
+    Form.thirdPartyAccountTypeUI=thirdPartyAccountTypeUI;
 
-    Form.statusUI=statusUI;
+    Form.amountUILabel=amountUILabel;
 
-    Form.customerAPaymentMethodUILabel=customerAPaymentMethodUILabel;
+    Form.amountUI=amountUI;
 
-    Form.customerAPaymentMethodUI=customerAPaymentMethodUI;
+    Form.commentUILabel=commentUILabel;
 
-    Form.customerAPayAccountUILabel=customerAPayAccountUILabel;
+    Form.commentUI=commentUI;
 
-    Form.customerAPayAccountUI=customerAPayAccountUI;
+    Form.fieldPanel1=fieldPanel1;
 
-    Form.thirdGenSerialNumberUILabel=thirdGenSerialNumberUILabel;
-
-    Form.thirdGenSerialNumberUI=thirdGenSerialNumberUI;
-
-    Form.thirdTransactionTimeUILabel=thirdTransactionTimeUILabel;
-
-    Form.thirdTransactionTimeUI=thirdTransactionTimeUI;
-
-    Form.customerBPaymentMethodUILabel=customerBPaymentMethodUILabel;
-
-    Form.customerBPaymentMethodUI=customerBPaymentMethodUI;
-
-    Form.customerBPayAccountUILabel=customerBPayAccountUILabel;
-
-    Form.customerBPayAccountUI=customerBPayAccountUI;
-
-    Form.thirdGenSerialNumber2UILabel=thirdGenSerialNumber2UILabel;
-
-    Form.thirdGenSerialNumber2UI=thirdGenSerialNumber2UI;
-
-    Form.thirdTransactionTime2UILabel=thirdTransactionTime2UILabel;
-
-    Form.thirdTransactionTime2UI=thirdTransactionTime2UI;
+    Form.payorderInfoUI=payorderInfoUI;
 
     Form.actionPanel=actionPanel;
+
+    Form.okbtn1=okbtn1;
 
     Form.cancelbtn=cancelbtn;
 
@@ -284,6 +194,8 @@ function org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin(json)
         /* Construct_FIRST:org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin */
         /* Construct_LAST:org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin */
     };
+
+    Form.cancelRefund = org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin_cancelRefund;
 
     Form.Cancel = org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin_Cancel;
 
@@ -300,13 +212,24 @@ function org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin(json)
 /* Other_Func_LAST:org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin */
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin_cancelRefund(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin_cancelRefund */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelRefund-20170519-231757",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin_cancelRefund */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin_Cancel */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20160405-114830",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20170519-231757",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin_Cancel */
 
 

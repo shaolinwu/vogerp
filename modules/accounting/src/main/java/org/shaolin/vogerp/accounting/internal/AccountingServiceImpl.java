@@ -104,14 +104,14 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 		condition.setStatus(PayOrderStatusType.AGREEDPAYTOEND);
 		condition.setWithdrawn(false);
 		
-		List<IPayOrder> orders = AccountingModel.INSTANCE.searchPaymentOrder(condition, null, 0, -1);
+		List<IPayOrder> orders = AccountingModel.INSTANCE.searchWithdrawnPaymentOrder(condition, null, 0, -1);
 		double totalAmount = 0;
 		for (IPayOrder order: orders) {
 			totalAmount += (order.getAmount()/100);
 		}
 		
 		condition.setWithdrawn(true);
-		orders = AccountingModel.INSTANCE.searchPaymentOrder(condition, null, 0, -1);
+		orders = AccountingModel.INSTANCE.searchWithdrawnPaymentOrder(condition, null, 0, -1);
 		for (IPayOrder order: orders) {
 			totalAmount += (order.getAmount()/100);
 		}
@@ -124,7 +124,7 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 		condition.setStatus(PayOrderStatusType.AGREEDPAYTOEND);
 		condition.setWithdrawn(false);
 		
-		List<IPayOrder> orders = AccountingModel.INSTANCE.searchPaymentOrder(condition, null, 0, -1);
+		List<IPayOrder> orders = AccountingModel.INSTANCE.searchWithdrawnPaymentOrder(condition, null, 0, -1);
 		double totalWithdrawnAmount = 0;
 		for (IPayOrder order: orders) {
 			totalWithdrawnAmount += (order.getAmount()/100);

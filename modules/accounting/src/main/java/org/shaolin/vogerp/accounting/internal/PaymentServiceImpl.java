@@ -320,6 +320,9 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 			request.setState(RequestStatusType.REQUEST);
 			request.setType(PayOrderRequestType.REFUND);
 			request.setCreateDate(new Date());
+			ICustomerAccount customerAccount = (ICustomerAccount)UserContext.getUserContext().getUserData("AccountInfo");
+			request.setThirdPartyAccount(customerAccount.getThirdPartyAccount());
+			request.setThirdPartyAccountType(customerAccount.getThirdPartyAccountType());
 			AccountingModel.INSTANCE.create(request);
 			
 			//notify admin

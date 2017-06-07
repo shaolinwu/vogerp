@@ -8,8 +8,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.utils.DateParser;
 import org.shaolin.bmdp.utils.StringUtil;
+import org.shaolin.vogerp.accounting.IPaymentService;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
 import org.shaolin.vogerp.accounting.be.IPayOrderRequest;
 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
@@ -211,8 +213,13 @@ public class PaymentUtil {
 				|| payOrder.getPayBusinessType() == PayBusinessType.MACHININGBUSI)) {
 //			sb.append("<button type='agreedpaytoend' class='uimaster_button ui-btn-inline' onclick='javascript:defaultname.");
 //            sb.append(formId).append("ensurePayment(this, event);'>\u786E\u8BA4\u4ED8\u6B3E</button>");
-			sb.append("<button type='refund' class='uimaster_button ui-btn-inline' onclick='javascript:defaultname.");
-            sb.append(formId).append("askForRefund(this, event);'>\u7533\u8BF7\u9000\u6B3E</button>");
+			IPaymentService paymentService = AppContext.get().getService(IPaymentService.class);
+			if (paymentService.isRequestedForRefund(payOrder)) {
+				sb.append(PayOrderStatusType.REFUNDING.getDisplayName());
+			} else {
+				sb.append("<button type='refund' class='uimaster_button ui-btn-inline' onclick='javascript:defaultname.");
+	            sb.append(formId).append("askForRefund(this, event);'>\u7533\u8BF7\u9000\u6B3E</button>");
+			}
 		} else if (payOrder.getStatus() == PayOrderStatusType.REFUND) {
 			//no actions
 		} else if (payOrder.getStatus() == PayOrderStatusType.AGREEDPAYTOEND) {
@@ -252,7 +259,7 @@ public class PaymentUtil {
 		for (IPayOrder order : orders) {
 			sb.append("<div>");
 			sb.append("\u8BA2\u5355\u53F7").append(order.getSerialNumber());
-			sb.append(", \u989D\u5EA6").append(order.getAmount());
+			sb.append(", \u989D\u5EA6").append(order.getAmount()/100);
 			sb.append(order.getWithdrawn()?"<span style='color:red;'>(\u5DF2\u63D0\u73B0)</span>":"");
 			sb.append(", \u63CF\u8FF0: ").append(order.getDescription());
 			sb.append("</div>");

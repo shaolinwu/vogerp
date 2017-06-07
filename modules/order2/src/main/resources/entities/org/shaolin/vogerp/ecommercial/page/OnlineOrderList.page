@@ -17,6 +17,7 @@
                     import org.shaolin.bmdp.runtime.AppContext;
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.ce.CEUtil;
                     import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
                     import org.shaolin.vogerp.commonmodel.IUserService;
                     {
@@ -37,7 +38,8 @@
                         RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrder", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("采购订单详情", null, true);
+                        String title = "来自" + CEUtil.getValue(defaultUser.getCity()) + "的采购订单详情";
+                        form.openInWindows(title, null, true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -51,6 +53,7 @@
                     import org.shaolin.bmdp.runtime.AppContext;
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.ce.CEUtil;
                     import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
                     import org.shaolin.vogerp.commonmodel.IUserService;
                     {
@@ -71,7 +74,8 @@
                         RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrder", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("销售订单详情", null, true);
+                        String title = "来自" + CEUtil.getValue(defaultUser.getCity()) + "的销售订单详情";
+                        form.openInWindows(title, null, true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -85,6 +89,7 @@
                     import org.shaolin.bmdp.runtime.AppContext;
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.ce.CEUtil;
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                     import org.shaolin.vogerp.commonmodel.IUserService;
                     {
@@ -299,6 +304,7 @@
                   import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
                   import org.shaolin.bmdp.runtime.AppContext;
 		          import org.shaolin.bmdp.runtime.security.UserContext;
+		          import org.shaolin.bmdp.runtime.ce.CEUtil;
 		          import org.shaolin.vogerp.commonmodel.IUserService; 
                   import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                   {
@@ -323,7 +329,8 @@
                       RefForm form = new RefForm("mOrderForm", formUI, input);
                       @page.addElement(form);
                       
-                      form.openInWindows("加工订单详情", null, true);
+                      String title = "来自" + CEUtil.getValue(order.getCity()) + "的加工订单详情";
+                      form.openInWindows(title, null, true);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>

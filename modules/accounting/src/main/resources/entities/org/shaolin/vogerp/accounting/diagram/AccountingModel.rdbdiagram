@@ -544,6 +544,155 @@
       </ns2:searchConditionData>
     </ns2:searchConditionMapping>
   </ns2:query>
+  
+  <ns2:query queryName="searchWithdrawnPaymentOrder">
+    <ns2:searchResult name="outObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.accounting.be.PayOrder"></type>
+    </ns2:searchResult>
+    <ns2:fromData name="inObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.accounting.be.PayOrder"></type>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>outObject</ns2:toDataFieldPath>
+        <ns2:value xsi:type="ns2:SimpleFieldValueType">
+          <ns2:valueFieldPath>inObject</ns2:valueFieldPath>
+        </ns2:value>
+      </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.id</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.id</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getId() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+         <ns2:toDataFieldPath>inObject.orgId</ns2:toDataFieldPath>
+         <ns2:conditionValue>
+             <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                 <ns2:type>=</ns2:type>
+             </ns2:operator>
+             <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                 <ns2:valueFieldPath>scObject.orgId</ns2:valueFieldPath>
+             </ns2:value>
+             <ns2:condition>
+                 <expressionString><![CDATA[scObject.getOrgId() > 0]]></expressionString>
+             </ns2:condition>
+         </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+         <ns2:toDataFieldPath>inObject.userId</ns2:toDataFieldPath>
+         <ns2:conditionValue>
+             <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                 <ns2:type>=</ns2:type>
+             </ns2:operator>
+             <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                 <ns2:valueFieldPath>scObject.userId</ns2:valueFieldPath>
+             </ns2:value>
+             <ns2:condition>
+                 <expressionString><![CDATA[scObject.getUserId() > 0]]></expressionString>
+             </ns2:condition>
+         </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+         <ns2:toDataFieldPath>inObject.endUserId</ns2:toDataFieldPath>
+         <ns2:conditionValue>
+             <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                 <ns2:type>=</ns2:type>
+             </ns2:operator>
+             <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                 <ns2:valueFieldPath>scObject.endUserId</ns2:valueFieldPath>
+             </ns2:value>
+             <ns2:condition>
+                 <expressionString><![CDATA[scObject.getEndUserId() > 0]]></expressionString>
+             </ns2:condition>
+         </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+         <ns2:toDataFieldPath>inObject.withdrawn</ns2:toDataFieldPath>
+         <ns2:conditionValue>
+             <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                 <ns2:type>=</ns2:type>
+             </ns2:operator>
+             <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                 <ns2:valueFieldPath>scObject.withdrawn</ns2:valueFieldPath>
+             </ns2:value>
+             <ns2:condition>
+                 <expressionString><![CDATA[true]]></expressionString>
+             </ns2:condition>
+         </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.serialNumber</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:StarLikeOperatorType" isReverse="false">
+            <ns2:type>LIKE %*</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.serialNumber</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.outTradeNo</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+             <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.outTradeNo</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getOutTradeNo() != null && scObject.getOutTradeNo().length() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.orderSerialNumber</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+             <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.orderSerialNumber</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getOrderSerialNumber() != null && scObject.getOrderSerialNumber().length() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.statusInt</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getStatus().getIntValue()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.accounting.ce.PayOrderStatusType.NOT_SPECIFIED]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:searchConditionData name="scObject" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.accounting.be.PayOrder"></type>
+      </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>  
+  
   <ns2:query queryName="searchAccountVoucher">
     <ns2:searchResult name="outObject" category="BusinessEntity">
       <type entityName="org.shaolin.vogerp.accounting.be.AccountVoucher"></type>

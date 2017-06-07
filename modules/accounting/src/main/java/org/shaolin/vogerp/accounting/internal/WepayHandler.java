@@ -75,8 +75,6 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 	private static final String UNIFIEDPAY_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 	private static final String UNIFIEDQUERY_URL = "https://api.mch.weixin.qq.com/pay/orderquery";
 	private static final String REFUND_URL = "https://api.mch.weixin.qq.com/secapi/pay/refund";
-	public static final String SUCCESS = "SUCCESS";
-	public static final String FAIL = "FAIL";
 	private static final Logger logger = LoggerFactory.getLogger(WepayHandler.class);
 	
 	public static boolean enableDebugger = false;
@@ -331,6 +329,8 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 			// invoke result
 			if (SUCCESS.equalsIgnoreCase(resultMap.get("return_code").toString())) {
 				// TODO successful post process
+				order.setStatus(PayOrderStatusType.REFUND);
+                AccountingModel.INSTANCE.update(order, true);
 				return SUCCESS;
 			} else {
 				// TODO failed post process
@@ -375,7 +375,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 			if (SUCCESS.equalsIgnoreCase(resultMap.get("return_code").toString()) 
 				&& SUCCESS.equalsIgnoreCase(resultMap.get("result_code").toString()) ) {
 				JSONObject jsonObj = new JSONObject(resultMap);
-				if (!jsonObj.has("trade_state") || !SUCCESS.equals(jsonObj.getString("trade_state"))) {
+				if (!jsonObj.has("trade_state") || !SUCCESS.equalsIgnoreCase(jsonObj.getString("trade_state"))) {
 					//TODO:
 //					SUCCESS
 //					REFUND

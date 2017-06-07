@@ -38,8 +38,8 @@
                ICoordinatorService coorService = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
 				NotificationImpl message = new NotificationImpl();
 				message.setPartyId(defaultUser.getUserId());
-				message.setSubject("提现成功");
-				message.setDescription("恭喜您提现成功" + defaultUser.getAmount() + "元");
+				message.setSubject("提现申请成功");
+				message.setDescription("恭喜您成功提现" + defaultUser.getAmount() + "元。");
 				message.setCreateDate(new Date());
 				coorService.addNotification(message, false);
             }
@@ -76,7 +76,7 @@
                ICoordinatorService coorService = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
 				NotificationImpl message = new NotificationImpl();
 				message.setPartyId(defaultUser.getUserId());
-				message.setSubject("提现失败!");
+				message.setSubject("提现申请失败!");
 				message.setDescription("原因： " + defaultUser.getComment());
 				message.setCreateDate(new Date());
 				coorService.addNotification(message, false);

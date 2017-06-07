@@ -41,12 +41,13 @@
 			        import org.shaolin.uimaster.page.AjaxContext;
 			        import org.shaolin.uimaster.page.ajax.*;
 			        import org.shaolin.vogerp.accounting.be.PayOrderImpl;
+			        import org.shaolin.vogerp.accounting.be.IPayOrderRequest;
 			        {
 			            Table orderInfoTable = (Table)@page.getElement("payOrderRefundTable");
 			            if (orderInfoTable.getSelectedRow() == null) {
 			                return;
 			            }
-			            PayOrderImpl defaultUser = (PayOrderImpl)orderInfoTable.getSelectedRow();
+			            IPayOrderRequest defaultUser = (IPayOrderRequest)orderInfoTable.getSelectedRow();
 			            
 			            HashMap input = new HashMap();
 			            input.put("beObject", defaultUser);
@@ -137,7 +138,7 @@
 						                import org.shaolin.bmdp.utils.StringUtil;
 						                import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
 						                {
-						                   return CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getUserId());
+						                   return $rowBE.getUserId() + "--" + CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getUserId());
 						                }]]></ns2:expressionString>
 						            </ns2:expression>
 						        </ns2:rowExpression>
@@ -246,10 +247,16 @@
                                         PayOrderRequestImpl condition = (PayOrderRequestImpl)$tableCondition.getCondition();
 						                condition.setType(PayOrderRequestType.REFUND);
 						                condition.setState(RequestStatusType.REQUEST);
-                                        return AccountingModel.INSTANCE.searchPayOrderRequest(condition,
+                                        List result = AccountingModel.INSTANCE.searchPayOrderRequest(condition,
                                                       $tableCondition.getOrders(),
                                                       $tableCondition.getOffset(), 
                                                       $tableCondition.getCount());
+                                        for (int i=0; i<result.size(); i++) {
+                                            PayOrderRequestImpl request = (PayOrderRequestImpl)result.get(i);
+                                            PayOrderImpl payOrder = (PayOrderImpl)AccountingModel.INSTANCE.get(request.getPayOrderId(), PayOrderImpl.class);
+                                            request.setPayOrder(payOrder);
+                                        }
+                                        return result;
                                      }]]></ns2:expressionString>
                                 </ns2:expression>
                             </ns2:query>
@@ -353,9 +360,7 @@
                                 </ns2:updateCondition>
                             </ns2:column>
                             <ns2:defaultActions>
-                                <ns2:defaultActions>
-	                                <ns2:defaultOpenAction>openRufundPayOrder</ns2:defaultOpenAction>
-	                            </ns2:defaultActions>
+                               <ns2:defaultOpenAction>openRufundPayOrder</ns2:defaultOpenAction>
                             </ns2:defaultActions>
                         </ns2:component>
                         <ns2:layoutConstraint>

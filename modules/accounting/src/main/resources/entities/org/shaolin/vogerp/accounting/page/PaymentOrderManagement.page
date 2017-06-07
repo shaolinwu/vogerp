@@ -208,11 +208,11 @@
 							condition.setWithdrawn(false);
 							List orders = AccountingModel.INSTANCE.searchPaymentOrder(condition, null, 0, -1);
 	                        IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
-	                        if (payService.isRequestedForWithdraw(customerAccount.getUserId())) {
+	                        if (!payService.isRequestedForWithdraw(customerAccount.getUserId())) {
 			                   payService.requestForWithdraw(orders, customerAccount);
 	                           Dialog.showMessageDialog("提现申请成功，系统将在5个工作日内完成提现申请,请您耐心等待。","提醒",Dialog.INFORMATION_MESSAGE, null);
 	                        } else {
-	                           Dialog.showMessageDialog("您已申请提现中，请您耐心等待！", "", Dialog.INFORMATION_MESSAGE, null);
+	                           Dialog.showMessageDialog("您已申请提现中...，请您耐心等待！", "", Dialog.INFORMATION_MESSAGE, null);
 	                        }
                         } else {
                             Dialog.showMessageDialog("您没有余额提现，请多加油哟！", "", Dialog.WARNING_MESSAGE, null);

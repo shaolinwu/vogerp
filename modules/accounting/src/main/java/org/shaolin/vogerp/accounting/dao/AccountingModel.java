@@ -171,6 +171,84 @@ public class AccountingModel extends BEEntityDaoObject {
         return this._count(inObjectCriteria);
     }
 
+    public List<org.shaolin.vogerp.accounting.be.IPayOrder> searchWithdrawnPaymentOrder(org.shaolin.vogerp.accounting.be.PayOrderImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.PayOrderImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+            if (scObject.getId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.id", scObject.getId()));
+            }
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
+            if (scObject.getUserId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.userId", scObject.getUserId()));
+            }
+            if (scObject.getEndUserId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.endUserId", scObject.getEndUserId()));
+            }
+            if (true) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.withdrawn", scObject.getWithdrawn()));
+            }
+            if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getOutTradeNo() != null && scObject.getOutTradeNo().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.outTradeNo", scObject.getOutTradeNo()));
+            }
+            if (scObject.getOrderSerialNumber() != null && scObject.getOrderSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orderSerialNumber", scObject.getOrderSerialNumber()));
+            }
+            if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.accounting.ce.PayOrderStatusType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long searchWithdrawnPaymentOrderCount(org.shaolin.vogerp.accounting.be.PayOrderImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.PayOrderImpl.class, "inObject");
+
+            if (scObject.getId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.id", scObject.getId()));
+            }
+            if (scObject.getOrgId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+            }
+            if (scObject.getUserId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.userId", scObject.getUserId()));
+            }
+            if (scObject.getEndUserId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.endUserId", scObject.getEndUserId()));
+            }
+            if (true) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.withdrawn", scObject.getWithdrawn()));
+            }
+            if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+            }
+            if (scObject.getOutTradeNo() != null && scObject.getOutTradeNo().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.outTradeNo", scObject.getOutTradeNo()));
+            }
+            if (scObject.getOrderSerialNumber() != null && scObject.getOrderSerialNumber().length() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orderSerialNumber", scObject.getOrderSerialNumber()));
+            }
+            if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.accounting.ce.PayOrderStatusType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
+    }
+
     public List<org.shaolin.vogerp.accounting.be.IAccountVoucher> searchAccountVoucher(org.shaolin.vogerp.accounting.be.AccountVoucherImpl scFlow,
            List<Order> orders, int offset, int count) {
             Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.AccountVoucherImpl.class, "inFlow");
