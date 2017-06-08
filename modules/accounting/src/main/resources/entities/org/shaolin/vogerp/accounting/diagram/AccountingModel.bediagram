@@ -731,7 +731,7 @@
         <bediagram:constantValue>
             <bediagram:value>Refund</bediagram:value>
             <bediagram:intValue>31</bediagram:intValue>
-            <bediagram:description>退款</bediagram:description>
+            <bediagram:description>已退款</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>AgreedPayToEnd</bediagram:value>

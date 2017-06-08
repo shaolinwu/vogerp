@@ -160,7 +160,9 @@
             <ns2:eventDest>
                 <ns2:dest name="confirmRefundPayOrder"></ns2:dest>
             </ns2:eventDest>
-        </ns2:mission-node><ns2:mission-node name="RefundCallBack" autoTrigger="false">
+        </ns2:mission-node>
+        
+        <ns2:mission-node name="RefundCallBack" autoTrigger="false">
             <ns2:description>确认退款成功后回调</ns2:description>
             <ns2:participant onlyOwner="false"/>
             <ns2:process>
@@ -196,12 +198,13 @@
         <ns2:mission-node name="confirmRefundPayOrder" autoTrigger="false">
             <ns2:description>管理员确认退款</ns2:description>
             <ns2:uiAction actionPage="org.shaolin.vogerp.accounting.form.PayOrderRefundAdmin"
-                actionName="confirmWithdrawPayOrder" actionText="批准退款">
+                actionName="confirmRefundPayOrder" actionText="批准退款">
                 <ns2:filter>
                     <expressionString><![CDATA[
                     import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+                    import org.shaolin.vogerp.accounting.ce.RequestStatusType;
                     {
-                        return true;
+                        return $beObject.getState() == RequestStatusType.REQUEST && $beObject.getPayOrderId() > 0;
                     }
                     ]]></expressionString>
                 </ns2:filter>
@@ -219,16 +222,21 @@
 			        import org.shaolin.vogerp.accounting.be.*;
 			        import org.shaolin.vogerp.accounting.ce.*;
 			        import org.shaolin.vogerp.accounting.IPaymentService;
+			        import org.shaolin.vogerp.accounting.dao.AccountingModel;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
 		                
 		                PayOrderRequestImpl request = (PayOrderRequestImpl)out.get("beObject");
                         if (request.getState() == RequestStatusType.REQUEST && request.getPayOrderId() > 0) {
+                            IPayOrder payOrder = (IPayOrder)AccountingModel.INSTANCE.get(request.getPayOrderId(), PayOrderImpl.class);
 	                        HashMap result = new HashMap();
 	                        result.put("payOrderRequest", request);
+	                        result.put("payOrder", payOrder);
 	                        result.put("page", @page);
 	                        
+	                        form.closeIfinWindows();
+                            @page.removeForm(@page.getEntityUiid()); 
 	                        return result;
                         } else {
                             Dialog.showMessageDialog("订单状态异常，不能继续本次操作!", "", Dialog.WARNING_MESSAGE, null);
@@ -241,6 +249,9 @@
             <ns2:process>
                 <ns2:var name="payOrderRequest" category="BusinessEntity" scope="Out">
                     <type entityName="org.shaolin.vogerp.accounting.be.PayOrderRequest"></type>
+                </ns2:var>
+                <ns2:var name="payOrder" category="BusinessEntity" scope="Out">
+                    <type entityName="org.shaolin.vogerp.accounting.be.PayOrder"></type>
                 </ns2:var>
                 <ns2:var name="customerAccount" category="BusinessEntity" scope="Out">
                     <type entityName="org.shaolin.vogerp.accounting.be.CustomerAccount"></type>
@@ -265,24 +276,23 @@
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                     {
-                        IPayOrder payOrder = (IPayOrder)AccountingModel.INSTANCE.get($payOrderRequest.getPayOrderId(), PayOrderImpl.class);
 		                IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
-		                String returnUrl = accountingService.refund(payOrder);
+		                String returnUrl = accountingService.refund($payOrder);
 		                if (!returnUrl.equalsIgnoreCase(PaymentHandler.SUCCESS)) {
 		                    Dialog.showMessageDialog("退款确认失败, 请联系技术人员!","提醒", Dialog.ERROR_MESSAGE, null);
 		                    return;
 		                }
 		                
                         $payOrderRequest.setState(RequestStatusType.SUCCESS);
-                        payOrder.setStatus(PayOrderStatusType.REFUND);
+                        $payOrder.setStatus(PayOrderStatusType.REFUND);
                         AccountingModel.INSTANCE.update($payOrderRequest);
-                        AccountingModel.INSTANCE.update(payOrder);
+                        AccountingModel.INSTANCE.update($payOrder);
                         
                         ICoordinatorService coorService = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
 			    		NotificationImpl message = new NotificationImpl();
-			    		message.setPartyId(payOrder.getEndUserId());
+			    		message.setPartyId($payOrder.getEndUserId());
 			    		message.setSubject("您有退款成功通知！");
-			    		message.setDescription("退款： " + (payOrder.getAmount()/100) + "元！来自订单: " + payOrder.getOrderSerialNumber());
+			    		message.setDescription("退款： " + ($payOrder.getAmount()/100) + "元！来自订单: " + $payOrder.getOrderSerialNumber());
 			    		message.setCreateDate(new Date());
 			    		coorService.addNotification(message, false);
 			    		Dialog.showMessageDialog("更新成功!","提醒",Dialog.INFORMATION_MESSAGE, null);

@@ -20,18 +20,18 @@
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             HashMap out = (HashMap)form.ui2Data();
 
-            PayOrderRequestImpl defaultUser = (PayOrderRequestImpl)out.get("beObject");
-            if (defaultUser.getId() > 0) {
-               defaultUser.setState(RequestStatusType.FAIL);
-               AccountingModel.INSTANCE.update(defaultUser);
+            PayOrderRequestImpl object = (PayOrderRequestImpl)out.get("beObject");
+            if (object.getId() > 0) {
+               object.setState(RequestStatusType.FAIL);
+               AccountingModel.INSTANCE.update(object);
                
                ICoordinatorService coorService = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
-				NotificationImpl message = new NotificationImpl();
-				message.setPartyId(defaultUser.getUserId());
-				message.setSubject("提现申请失败!");
-				message.setDescription("原因： " + defaultUser.getComment());
-				message.setCreateDate(new Date());
-				coorService.addNotification(message, false);
+			   NotificationImpl message = new NotificationImpl();
+			   message.setPartyId(object.getUserId());
+			   message.setSubject("提现申请失败!");
+			   message.setDescription("原因： " + object.getComment());
+			   message.setCreateDate(new Date());
+			   coorService.addNotification(message, false);
             }
 
             form.closeIfinWindows();
@@ -128,7 +128,7 @@
                  <ns2:expression>
                    <expressionString><![CDATA[
                    { 
-                       return $beObject.getPayOrderId();
+                       return $beObject.getPayOrderId() + "";
                    }]]></expressionString>
                  </ns2:expression>
             </ns2:value>
@@ -307,7 +307,7 @@
         </ns2:EventListener>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
           <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>Cancelbtn</ns2:key>
+          <ns2:key>Closebtn</ns2:key>
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
