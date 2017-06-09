@@ -122,7 +122,7 @@
         <bediagram:member>
             <bediagram:name>deliveryInfo</bediagram:name>
             <bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.DeliveryInfo" />
+                <bediagram:targetEntity entityName="DeliveryInfo" />
             </bediagram:type>
         </bediagram:member>
         <bediagram:member>
@@ -482,6 +482,66 @@
             <bediagram:targetEntity entityName="OfferPrice" />
         </bediagram:parentObject>
     </bediagram:beEntity>
+	
+	<bediagram:beEntity needPersist="true" needUIEntity="true">
+		<common:entityName>DeliveryInfo</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>userId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<!-- compressed address info -->
+		<bediagram:member>
+			<bediagram:name>address</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>name</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>mobileNumber</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		
+		<!-- delivery to the end user. -->
+		<bediagram:member>
+			<bediagram:name>toUserId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>toAddress</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>toName</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>toMobileNumber</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		
+		<bediagram:member>
+			<bediagram:name>expressVendor</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>expressNumber</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>progressNote</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>comment</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+	</bediagram:beEntity>
 	
 	<!-- User interests EOrder. -->
 	<bediagram:beEntity needPersist="true" needOrgId="true" needUIEntity="true">

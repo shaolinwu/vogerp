@@ -46,11 +46,6 @@
 			<version>${uimaster.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.shaolin.vogerp</groupId>
-			<artifactId>order</artifactId>
-			<version>${uimaster.version}</version>
-		</dependency>
-		<dependency>
             <groupId>org.shaolin.vogerp</groupId>
             <artifactId>accounting</artifactId>
             <version>${uimaster.version}</version>

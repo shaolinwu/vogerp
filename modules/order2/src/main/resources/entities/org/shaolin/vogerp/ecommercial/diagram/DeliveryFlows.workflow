@@ -30,7 +30,7 @@
 			        import org.shaolin.vogerp.ecommercial.ce.*;
 			        import org.shaolin.vogerp.ecommercial.dao.*;
 			        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
-			        import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+			        import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
 			        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 			        { 
 			            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
@@ -123,7 +123,7 @@
 			        import org.shaolin.vogerp.ecommercial.ce.*;
 			        import org.shaolin.vogerp.ecommercial.dao.*;
 			        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
-			        import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+			        import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
 			        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;

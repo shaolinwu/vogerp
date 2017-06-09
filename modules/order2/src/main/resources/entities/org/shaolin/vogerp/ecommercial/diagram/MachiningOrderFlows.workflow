@@ -47,14 +47,14 @@
                     import java.util.ArrayList;
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
-                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.bmdp.runtime.AppContext;
                     import org.shaolin.bmdp.runtime.security.UserContext;
                     import org.shaolin.vogerp.commonmodel.IUserService; 
                     import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
-                    import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+                    import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
@@ -150,7 +150,7 @@
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                     import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
-                    import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+                    import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
                     { 
                         Table orderInfoTable = (Table)@page.getElement("machiningTable");
                         if (orderInfoTable.getSelectedRow() == null) {
@@ -186,7 +186,7 @@
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                     import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
-                    import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+                    import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
                     { 
                         Table orderInfoTable = (Table)@page.getElement("machiningTable");
                         if (orderInfoTable.getSelectedRow() == null) {
@@ -493,7 +493,7 @@
                     import org.shaolin.vogerp.ecommercial.dao.*;
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.vogerp.commonmodel.IUserService; 
-                    import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl; 
+                    import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl; 
                     import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                     { 

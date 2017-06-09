@@ -21,6 +21,7 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     var orgIdUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "orgIdUI"]
+        ,needAjaxSupport: true
     });
 
     var nameUILabel = new UIMaster.ui.label

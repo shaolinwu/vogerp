@@ -127,45 +127,4 @@ public class CustomerInfoUtil {
     	return sb.toString();
     }
     
-    public static IDeliveryInfo createDeliveryInfo(long userId) {
-    	DeliveryInfoImpl deliveryInfo = new DeliveryInfoImpl();
-    	deliveryInfo.setUserId(userId);
-    	IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
-    	List<IAddressInfo> list = userService.getPersonalInfo(userId).getAddresses();
-    	if (list != null && list.size() > 0) {
-    		IAddressInfo defaultAddress = null;
-    		for (IAddressInfo a : list) {
-    			if (a.getDefaultAddress()) {
-    				defaultAddress = a;
-    				break;
-    			}
-    		}
-    		IAddressInfo info = defaultAddress != null? defaultAddress : list.get(0);
-    		deliveryInfo.setName(info.getName());
-    		deliveryInfo.setAddress(addressToString(info));
-    		deliveryInfo.setMobileNumber(info.getMobile());
-    		deliveryInfo.setComment(info.getDescription());
-    	}
-    	return deliveryInfo;
-    }
-    
-    public static IDeliveryInfo createDeliveryInfo(long userId, long addressId) {
-    	DeliveryInfoImpl deliveryInfo = new DeliveryInfoImpl();
-    	deliveryInfo.setUserId(userId);
-    	IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
-    	List<IAddressInfo> list = userService.getPersonalInfo(userId).getAddresses();
-    	if (list != null && list.size() > 0) {
-    		for (IAddressInfo address: list) {
-    			if (address.getId() == addressId) {
-		    		IAddressInfo info = list.get(0);
-		    		deliveryInfo.setName(info.getName());
-		    		deliveryInfo.setAddress(addressToString(info));
-		    		deliveryInfo.setMobileNumber(info.getMobile());
-		    		deliveryInfo.setComment(info.getDescription());
-		    		break;
-    			}
-    		}
-    	}
-    	return deliveryInfo;
-    }
 }

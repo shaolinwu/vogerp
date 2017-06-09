@@ -639,29 +639,5 @@ public class CommonModel extends BEEntityDaoObject {
         return this._count(inObjectCriteria);
     }
 
-    public List<org.shaolin.vogerp.commonmodel.be.IDeliveryInfo> searchDeliveryInfo(org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl scObject,
-           List<Order> orders, int offset, int count) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
-            }
-
-
-        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
-
-        List result = this._list(offset, count, inObjectCriteria);
-        return result;
-    }
-
-    public long searchDeliveryInfoCount(org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl scObject) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl.class, "inObject");
-
-
-        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
-
-        return this._count(inObjectCriteria);
-    }
-
 }
 

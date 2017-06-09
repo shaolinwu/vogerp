@@ -77,7 +77,7 @@
 		<bediagram:member>
 			<bediagram:name>deliveryInfo</bediagram:name>
 			<bediagram:type xsi:type="bediagram:BEObjRefType">
-		        <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.DeliveryInfo" />
+		        <bediagram:targetEntity entityName="org.shaolin.vogerp.ecommercial.be.DeliveryInfo" />
 		    </bediagram:type>
 		</bediagram:member>
 		<bediagram:member>
@@ -130,7 +130,7 @@
         <bediagram:member>
             <bediagram:name>deliveryInfo</bediagram:name>
             <bediagram:type xsi:type="bediagram:BEObjRefType">
-                <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.DeliveryInfo" />
+                <bediagram:targetEntity entityName="org.shaolin.vogerp.ecommercial.be.DeliveryInfo" />
             </bediagram:type>
         </bediagram:member>
 	</bediagram:beEntity>

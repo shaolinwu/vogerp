@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.shaolin.bmdp.i18n.LocaleContext;
 import org.shaolin.bmdp.json.JSONObject;
+import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.utils.DateParser;
@@ -14,8 +15,10 @@ import org.shaolin.uimaster.page.AjaxContext;
 import org.shaolin.uimaster.page.ajax.RadioButtonGroup;
 import org.shaolin.uimaster.page.exception.FormatException;
 import org.shaolin.uimaster.page.od.formats.FormatUtil;
-import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
-import org.shaolin.vogerp.commonmodel.be.IDeliveryInfo;
+import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
+import org.shaolin.vogerp.ecommercial.be.IDeliveryInfo;
+import org.shaolin.vogerp.commonmodel.IUserService;
+import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
 import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
 import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
@@ -263,7 +266,7 @@ public class OrderUtil {
 		}
 		if (order.getDeliveryInfoId() == 0) {
 			order.setDeliveryInfo(
-					(DeliveryInfoImpl) CustomerInfoUtil.createDeliveryInfo(UserContext.getUserContext().getUserId()));
+					(DeliveryInfoImpl) createDeliveryInfo(UserContext.getUserContext().getUserId()));
 			order.setDeliveryInfoId(order.getDeliveryInfo().getId());
 			CommonModel.INSTANCE.create(order.getDeliveryInfo());
 		}
@@ -275,13 +278,20 @@ public class OrderUtil {
 					DeliveryInfoImpl.class);
 			order.setDeliveryInfo(deliveryInfo);
 		}
-		IDeliveryInfo endUser = CustomerInfoUtil.createDeliveryInfo(userId);
+		if (order.getDeliveryInfo() == null) {
+			order.setDeliveryInfo(new DeliveryInfoImpl());
+		}
+		IDeliveryInfo endUser = createDeliveryInfo(userId);
 		order.getDeliveryInfo().setToUserId(userId);
 		order.getDeliveryInfo().setToAddress(endUser.getAddress());
 		order.getDeliveryInfo().setToName(endUser.getName());
 		order.getDeliveryInfo().setToMobileNumber(endUser.getMobileNumber());
 		
-		CommonModel.INSTANCE.update(order.getDeliveryInfo());
+		if (order.getDeliveryInfo().getId() == 0) {
+			CommonModel.INSTANCE.create(order.getDeliveryInfo());
+		} else {
+			CommonModel.INSTANCE.update(order.getDeliveryInfo());
+		}
 	}
 	
 	public static void reverseDeliveryAddress(final IEOrder order) {
@@ -396,5 +406,46 @@ public class OrderUtil {
 		}
 	}
 	
+	public static IDeliveryInfo createDeliveryInfo(long userId) {
+    	DeliveryInfoImpl deliveryInfo = new DeliveryInfoImpl();
+    	deliveryInfo.setUserId(userId);
+    	IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+    	List<IAddressInfo> list = userService.getPersonalInfo(userId).getAddresses();
+    	if (list != null && list.size() > 0) {
+    		IAddressInfo defaultAddress = null;
+    		for (IAddressInfo a : list) {
+    			if (a.getDefaultAddress()) {
+    				defaultAddress = a;
+    				break;
+    			}
+    		}
+    		IAddressInfo info = defaultAddress != null? defaultAddress : list.get(0);
+    		deliveryInfo.setName(info.getName());
+    		deliveryInfo.setAddress(CustomerInfoUtil.addressToString(info));
+    		deliveryInfo.setMobileNumber(info.getMobile());
+    		deliveryInfo.setComment(info.getDescription());
+    	}
+    	return deliveryInfo;
+    }
+    
+    public static IDeliveryInfo createDeliveryInfo(long userId, long addressId) {
+    	DeliveryInfoImpl deliveryInfo = new DeliveryInfoImpl();
+    	deliveryInfo.setUserId(userId);
+    	IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+    	List<IAddressInfo> list = userService.getPersonalInfo(userId).getAddresses();
+    	if (list != null && list.size() > 0) {
+    		for (IAddressInfo address: list) {
+    			if (address.getId() == addressId) {
+		    		IAddressInfo info = list.get(0);
+		    		deliveryInfo.setName(info.getName());
+		    		deliveryInfo.setAddress(CustomerInfoUtil.addressToString(info));
+		    		deliveryInfo.setMobileNumber(info.getMobile());
+		    		deliveryInfo.setComment(info.getDescription());
+		    		break;
+    			}
+    		}
+    	}
+    	return deliveryInfo;
+    }
 	
 }

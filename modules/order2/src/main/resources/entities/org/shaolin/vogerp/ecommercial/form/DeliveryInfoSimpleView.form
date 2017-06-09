@@ -9,7 +9,6 @@
         import java.util.HashMap;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
-        import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
         import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
         import org.shaolin.bmdp.runtime.AppContext;
@@ -38,18 +37,15 @@
         import java.util.HashMap;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
-        import org.shaolin.vogerp.commonmodel.be.IDeliveryInfo;
+        import org.shaolin.vogerp.ecommercial.be.IDeliveryInfo;
+        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
         import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
-        import org.shaolin.vogerp.commonmodel.ce.IDeliveryInfo;
-        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
-		import org.shaolin.vogerp.commonmodel.dao.CustCommonModel;
-		import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
         import org.shaolin.bmdp.runtime.AppContext;
         import org.shaolin.bmdp.runtime.security.UserContext;
         import org.shaolin.vogerp.commonmodel.IUserService;
         { 
            int addressId = Integer.parseInt(@page.getHidden("idUI").getValue());
-           IDeliveryInfo dinfo = CustomerInfoUtil.createDeliveryInfo(UserContext.getUserContext().getUserId(), addressId);
+           IDeliveryInfo dinfo = OrderUtil.createDeliveryInfo(UserContext.getUserContext().getUserId(), addressId);
            @page.getHidden("nameUI").setValue(dinfo.getName());
            @page.getHidden("mobileUI").setValue(dinfo.getMobileNumber());
            @page.getLabel("contactorUI").setValue(dinfo.getName() + "(" + dinfo.getMobileNumber() + ")");
@@ -141,7 +137,7 @@
   <ns2:mapping>
     <systemVersion>0</systemVersion>
     <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.commonmodel.be.DeliveryInfo"></type>
+      <type entityName="org.shaolin.vogerp.ecommercial.be.DeliveryInfo"></type>
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>

@@ -43,6 +43,11 @@
 			<version>${vogerp.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.shaolin.vogerp</groupId>
+			<artifactId>ecommercial</artifactId>
+			<version>${vogerp.version}</version>
+		</dependency>
+		<dependency>
 		    <groupId>junit</groupId>
 		    <artifactId>junit</artifactId>
 	    </dependency>

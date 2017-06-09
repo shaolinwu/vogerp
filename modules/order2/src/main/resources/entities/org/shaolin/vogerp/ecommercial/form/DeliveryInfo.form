@@ -9,7 +9,7 @@
         import java.util.HashMap;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
-        import org.shaolin.vogerp.commonmodel.be.DeliveryInfoImpl;
+        import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
@@ -223,7 +223,7 @@
   <ns2:mapping>
     <systemVersion>0</systemVersion>
     <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.commonmodel.be.DeliveryInfo"></type>
+      <type entityName="org.shaolin.vogerp.ecommercial.be.DeliveryInfo"></type>
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
