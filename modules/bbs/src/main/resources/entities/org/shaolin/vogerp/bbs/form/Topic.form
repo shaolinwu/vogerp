@@ -26,6 +26,7 @@
 
             form.closeIfinWindows();
             @page.removeForm(@page.getEntityUiid()); 
+            Dialog.showMessageDialog("添加贴子成功！等待管理员审核中。。。", "", Dialog.INFORMATION_MESSAGE, null);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
