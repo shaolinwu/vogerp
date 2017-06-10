@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bediagram:BEDiagram xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:bediagram="http://bmdp.shaolin.org/datamodel/BEDiagram"
+	xmlns:common="http://bmdp.shaolin.org/datamodel/Common">
+	<name>BBSModel</name>
+	<bePackage>org.shaolin.vogerp.bbs.be</bePackage>
+	<cePackage>org.shaolin.vogerp.bbs.ce</cePackage>
+	<diagramPackage>org.shaolin.vogerp.bbs.diagram</diagramPackage>
+	<bediagram:beEntity needPersist="true" needOrgId="true" needUIEntity="true">
+		<common:entityName>Topic</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>userId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>name</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>description</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>iconLink</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>contentLink</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+		    <!-- hot count of this topic for sorting! -->
+			<bediagram:name>hotCount</bediagram:name>
+			<bediagram:type xsi:type="bediagram:IntType" />
+		</bediagram:member>
+        <bediagram:member>
+            <bediagram:name>startCreateDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>endCreateDate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DateTimeType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>type</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="TopicType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>state</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="TopicStatusType" />
+            </bediagram:type>
+        </bediagram:member>
+	</bediagram:beEntity>
+	<bediagram:beEntity needPersist="true" needOrgId="true">
+		<common:entityName>Comment</common:entityName>
+		<bediagram:member pk="true">
+			<bediagram:name>id</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>topicId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>userId</bediagram:name>
+			<bediagram:type xsi:type="bediagram:LongType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>description</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>agreeCount</bediagram:name>
+			<bediagram:type xsi:type="bediagram:IntType" />
+		</bediagram:member>
+		<bediagram:member>
+			<bediagram:name>disagreeCount</bediagram:name>
+			<bediagram:type xsi:type="bediagram:IntType" />
+		</bediagram:member>
+	</bediagram:beEntity>
+	
+	<bediagram:ceEntity>
+		<common:entityName>TopicType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Machining</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>机械加工</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>RentAndLoan</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>设备租赁</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>CustomerService</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>在线客服</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	
+	<bediagram:ceEntity>
+		<common:entityName>TopicStatusType</common:entityName>
+		<bediagram:constantValue>
+			<bediagram:value>Verify</bediagram:value>
+			<bediagram:intValue>0</bediagram:intValue>
+			<bediagram:description>审核中</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Published</bediagram:value>
+			<bediagram:intValue>1</bediagram:intValue>
+			<bediagram:description>发布</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Denied</bediagram:value>
+			<bediagram:intValue>2</bediagram:intValue>
+			<bediagram:description>拒绝发布</bediagram:description>
+		</bediagram:constantValue>
+		<bediagram:constantValue>
+			<bediagram:value>Cancelled</bediagram:value>
+			<bediagram:intValue>3</bediagram:intValue>
+			<bediagram:description>停止发布</bediagram:description>
+		</bediagram:constantValue>
+	</bediagram:ceEntity>
+	
+</bediagram:BEDiagram>

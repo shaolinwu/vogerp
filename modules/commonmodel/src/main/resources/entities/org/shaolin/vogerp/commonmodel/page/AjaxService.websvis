@@ -117,15 +117,23 @@
 	        item.put("_framename", "userNotificator");
 	        
 	        JSONObject item1 = new JSONObject();
-	        item1.put("name", "关于我们");
+	        item1.put("name", "论坛");
 	        item1.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
-	        item1.put("_nodename", "AboutTeam");
-	        item1.put("_page", "org.shaolin.vogerp.commonmodel.page.AboutTeam");
-	        item1.put("_framename", "aboutTeam");
+	        item1.put("_nodename", "BBSMain");
+	        item1.put("_page", "org.shaolin.vogerp.bbs.page.BBSMain");
+	        item1.put("_framename", "BBSMain");
+	        
+	        JSONObject item2 = new JSONObject();
+	        item2.put("name", "关于我们");
+	        item2.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
+	        item2.put("_nodename", "AboutTeam");
+	        item2.put("_page", "org.shaolin.vogerp.commonmodel.page.AboutTeam");
+	        item2.put("_framename", "aboutTeam");
 	        
 	        JSONArray array = new JSONArray();
 	        array.put(item);
 	        array.put(item1);
+            array.put(item2);
            
             return array;
         }

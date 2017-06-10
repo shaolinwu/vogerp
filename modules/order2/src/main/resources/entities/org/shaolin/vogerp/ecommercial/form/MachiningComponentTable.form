@@ -46,6 +46,7 @@
               {
                   Table orderInfoTable = (Table)@page.getElement("mComponentTable");
                   if (orderInfoTable.getSelectedRow() == null) {
+                      Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                       return;
                   }
                   MachiningComponentImpl defaultUser = (MachiningComponentImpl)orderInfoTable.getSelectedRow();
@@ -75,6 +76,7 @@
                    {
                        Table orderInfoTable = (Table)@page.getElement("mComponentTable");
                        if (orderInfoTable.getSelectedRow() == null) {
+                           Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                            return;
                        }
                        MachiningComponentImpl defaultUser = (MachiningComponentImpl)orderInfoTable.getSelectedRow();

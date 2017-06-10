@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.shaolin.vogerp.order.be.OrderItemImpl" table="ORDER_ORDERITEM">
+    <id name="id" column="ID">
+      <generator class="native" />
+    </id>
+    <property name="productId" column="PRODUCTID"/>
+    <property name="priceId" column="PRICEID"/>
+    <property name="amount" column="AMOUNT"/>
+    <property name="unitPrice" column="UNITPRICE"/>
+    <property name="ajustPriceTypeInt" type="integer" column="AJUSTPRICETYPE"/>
+    <property name="ajustPrice" column="AJUSTPRICE"/>
+    <property name="comment" column="COMMENT"/>
+    <property name="termsInt" type="integer" column="TERMS"/>
+    <property name="_enable" type="boolean" column="_enable"/>
+    <property name="_version" type="int" column="_version"/>
+    <property name="_starttime" type="timestamp" column="_starttime"/>
+    <property name="_endtime" type="timestamp" column="_endtime"/>
+    <property name="_optuserid" type="long" column="_optuserid"/>
+  </class>
+</hibernate-mapping>

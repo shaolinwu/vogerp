@@ -216,6 +216,7 @@
                     {
                         Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
                         if (orderInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
@@ -272,6 +273,7 @@
                     {
                         Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
                         if (orderInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
@@ -310,6 +312,7 @@
                     {
                         Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
                         if (orderInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
@@ -340,6 +343,7 @@
                     {
                         Table orderInfoTable = (Table)@page.getElement("rentOrderTable");
                         if (orderInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)orderInfoTable.getSelectedRow();
@@ -370,6 +374,7 @@
                     {
                         Table orderInfoTable = (Table)@page.getElement("machiningTable");
                         if (orderInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         MachiningOrderImpl defaultUser = (MachiningOrderImpl)orderInfoTable.getSelectedRow();
@@ -545,6 +550,7 @@
                   {
                       Table personalInfoTable = (Table)@page.getElement("rentOrderTable");
                       if (personalInfoTable.getSelectedRow() == null) {
+                          Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                           return;
                       }
                       RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)personalInfoTable.getSelectedRow();
@@ -661,6 +667,7 @@
                   {
                       Table personalInfoTable = (Table)@page.getElement("machiningTable");
                       if (personalInfoTable.getSelectedRow() == null) {
+                          Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                           return;
                       }
                       MachiningOrderImpl eorder = (MachiningOrderImpl)personalInfoTable.getSelectedRow();
@@ -715,6 +722,7 @@
                   {
                       Table personalInfoTable = (Table)@page.getElement("machiningTable");
                       if (personalInfoTable.getSelectedRow() == null) {
+                          Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                           return;
                       }
                       MachiningOrderImpl order = (MachiningOrderImpl)personalInfoTable.getSelectedRow();
@@ -764,6 +772,7 @@
                   {
                       Table interestEOrderTable = (Table)@page.getElement("interestEOrderTable");
                       if (interestEOrderTable.getSelectedRow() == null) {
+                          Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                           return;
                       }
                       InterestEOrderImpl item = (InterestEOrderImpl)interestEOrderTable.getSelectedRow();

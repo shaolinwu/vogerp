@@ -23,6 +23,7 @@
             {
                 Table t = (Table)@page.getElement("paymentTable");
                 if (t.getSelectedRow() == null) {
+                    Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                     return;
                 }
                 GoldenOrderImpl defaultUser = (GoldenOrderImpl)t.getSelectedRow();
@@ -69,6 +70,7 @@
             {
                 Table t = (Table)@page.getElement("paymentTable");
                 if (t.getSelectedRow() == null) {
+                    Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                     return;
                 }
                 GoldenOrderImpl defaultUser = (GoldenOrderImpl)t.getSelectedRow();

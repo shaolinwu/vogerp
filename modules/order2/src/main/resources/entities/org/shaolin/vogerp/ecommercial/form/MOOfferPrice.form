@@ -279,7 +279,7 @@
       <type entityName="org.shaolin.vogerp.ecommercial.be.MachiningOrder"></type>
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="delieryInfo" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.commonmodel.be.DeliveryInfo"></type>
+      <type entityName="org.shaolin.vogerp.ecommercial.be.DeliveryInfo"></type>
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>

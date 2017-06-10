@@ -41,6 +41,7 @@
                     {
                         Table customerInfoTable = (Table)@page.getElement("customerInfoTable");
                         if (customerInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         PersonalInfoImpl defaultUser = (PersonalInfoImpl)customerInfoTable.getSelectedRow();
@@ -68,6 +69,7 @@
                     {
                         Table customerInfoTable = (Table)@page.getElement("customerInfoTable");
                         if (customerInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         PersonalInfoImpl defaultUser = (PersonalInfoImpl)customerInfoTable.getSelectedRow();
@@ -96,6 +98,7 @@
                     {
                         Table customerInfoTable = (Table)@page.getElement("customerInfoTable");
                         if (customerInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                     }

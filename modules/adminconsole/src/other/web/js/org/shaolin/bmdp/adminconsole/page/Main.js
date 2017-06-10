@@ -491,7 +491,8 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 		            $("#div-topRightPanel-5_0").slideUp("fast");
 		        }
 		        
-		        window.open("http://120.25.197.58:8099/xwiki");
+		        
+		        window.open("https://www.vogerp.com/uimaster/webflow.do?_chunkname=org.shaolin.vogerp.commonmodel.diagram.ModularityModel&_nodename=BBSMain&_page=org.shaolin.vogerp.bbs.page.BBSMain&_framename=BBSMain&_framePrefix=");
 		      }
 		          }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Main_showHelp */
 

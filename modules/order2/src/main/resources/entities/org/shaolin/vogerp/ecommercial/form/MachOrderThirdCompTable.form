@@ -42,6 +42,7 @@
         { 
             Table orderInfoTable = (Table)@page.getElement("itemTable");
             if (orderInfoTable.getSelectedRow() == null) {
+                Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                 return;
             }
             MachOrderComponentImpl defaultUser = (MachOrderComponentImpl)orderInfoTable.getSelectedRow();
@@ -70,6 +71,7 @@
         { 
             Table table = (Table)@page.getElement("itemTable");
             if (table.getSelectedRow() == null) {
+                Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                 return;
             }
             MachOrderComponentImpl defaultUser = (MachOrderComponentImpl)table.getSelectedRow();

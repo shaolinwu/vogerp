@@ -41,6 +41,7 @@
                     {
                         Table personalInfoTable = (Table)@page.getElement("organizationInfoTable");
                         if (personalInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         OrganizationImpl defaultUser = (OrganizationImpl)personalInfoTable.getSelectedRow();
@@ -71,6 +72,7 @@
                     {
                         Table personalInfoTable = (Table)@page.getElement("organizationInfoTable");
                         if (personalInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         OrganizationImpl orgInfo = (OrganizationImpl)personalInfoTable.getSelectedRow();
@@ -110,6 +112,7 @@
                     {
                         Table personalInfoTable = (Table)@page.getElement("organizationInfoTable");
                         if (personalInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         OrganizationImpl defaultUser = (OrganizationImpl)personalInfoTable.getSelectedRow();
@@ -162,6 +165,7 @@
                     {
                         Table personalInfoTable = (Table)@page.getElement("employeeInfoTablel");
                         if (personalInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         PersonalInfoImpl defaultUser = (PersonalInfoImpl)personalInfoTable.getSelectedRow();

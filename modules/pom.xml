@@ -21,6 +21,7 @@
 		<module>order2</module>
 		<module>order</module>
 		<module>coupon</module>
+		<module>bbs</module>
 		<module>adminconsole</module>
 	</modules>
 	

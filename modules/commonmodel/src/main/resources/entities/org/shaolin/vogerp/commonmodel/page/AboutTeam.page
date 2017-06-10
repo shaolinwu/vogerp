@@ -24,7 +24,7 @@
 			<ns2:component xsi:type="ns2:UILabelType" UIID="textUI">
 		        <ns2:Property name="htmlValue">
 	               <ns2:value xsi:type="ns2:StringPropertyType">
-	                   <value>关于我们： 本系统由上海抚企信息科技有限公司提供。 </value>
+	                   <value>关于我们： 本系统由上海抚企信息科技有限公司提供。您有任何需要帮助，请拨打以下电话，或者访问我们的在线客服论坛。非常感谢您的光临！ </value>
 	               </ns2:value>
 	            </ns2:Property>
 		    </ns2:component>
