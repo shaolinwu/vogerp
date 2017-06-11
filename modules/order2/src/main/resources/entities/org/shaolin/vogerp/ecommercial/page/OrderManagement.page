@@ -291,6 +291,11 @@
                             orderName = "销售订单详情";
                             formName = "org.shaolin.vogerp.ecommercial.form.GoldenSaleOrderEditor";
                         }
+                        if (defaultUser.getStatus() == OrderStatusType.TAKEN) {
+                           formName = "org.shaolin.vogerp.ecommercial.form.OrderPaymentAndDeliveryTrack";
+                           input.put("editable", new Boolean(true));
+                           input.put("order", defaultUser);
+                        }
                         RefForm form = new RefForm("goldenOrderForm", formName, input);
                         @page.addElement(form);
                         
@@ -566,6 +571,11 @@
                       if (defaultUser.getType() == RentOrLoanOrderType.LOAN) {
                	         formName = "org.shaolin.vogerp.ecommercial.form.RLoanOrderEditor";
                	      }
+               	      if (defaultUser.getStatus() == OrderStatusType.TAKEN) {
+                         formName = "org.shaolin.vogerp.ecommercial.form.OrderPaymentAndDeliveryTrack";
+                         input.put("editable", new Boolean(true));
+                         input.put("order", defaultUser);
+                      }
                       RefForm form = new RefForm("rentOrLoanOrder", formName, input);
                       @page.addElement(form);
                       
@@ -688,7 +698,8 @@
                       order.setInvoiceSign(eorder.getInvoiceSign());
                       order.setTaxRate(eorder.getTaxRate());
                       order.setEstimatedPrice(eorder.getEstimatedPrice());
-                      order.setComponents(eorder.getComponents());
+                      //can't be copied easily here.
+                      //order.setComponents(eorder.getComponents());
                       order.setCount(eorder.getCount());
                       order.setCity(UserContext.getUserContext().getCity());
                       order.setLongitude(UserContext.getUserContext().getLongitude());
@@ -735,15 +746,21 @@
                           input.put("editable", new Boolean(false));
                       }
                       
+                      String title = "加工订单详情";
                       String formUI = "org.shaolin.vogerp.ecommercial.form.MachiningOrder";
                       if (order.getEstimatedPrice() > 0 && order.getStatus() != OrderStatusType.CREATED) {
                          formUI = "org.shaolin.vogerp.ecommercial.form.MachiningOrderWithResult";
                          input.put("editable", new Boolean(false));
                       }
+                      if (order.getStatus() == OrderStatusType.TAKEN) {
+                         formUI = "org.shaolin.vogerp.ecommercial.form.OrderPaymentAndDeliveryTrack";
+                         input.put("order", order);
+                         input.put("editable", new Boolean(true));
+                      }
                       RefForm form = new RefForm("mOrderForm", formUI, input);
                       @page.addElement(form);
                       
-                      form.openInWindows("编辑加工订单", null, true);
+                      form.openInWindows(title, null, true);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>

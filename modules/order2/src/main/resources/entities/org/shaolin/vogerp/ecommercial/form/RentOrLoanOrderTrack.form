@@ -124,7 +124,7 @@
                        $tableCondition.addOrder("createDate", false);
                     }
                     RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
-                    condition.setPublishedCustomerId(UserContext.getUserContext().getUserId());
+                    //condition.setPublishedCustomerId(UserContext.getUserContext().getUserId());
                     condition.setTakenCustomerId(UserContext.getUserContext().getUserId());
                     condition.setStatus(OrderStatusType.TAKEN);
                     List result = CustOrderModel.INSTANCE.searchRentOrLoanOrder(condition,

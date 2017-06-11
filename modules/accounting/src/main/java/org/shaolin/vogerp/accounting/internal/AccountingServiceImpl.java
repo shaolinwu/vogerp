@@ -100,7 +100,7 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 
 	public double queryUserTotalAmount(long userId) {
 		PayOrderImpl condition = new PayOrderImpl();
-		condition.setEndUserId(userId);
+		condition.setUserId(userId);
 		condition.setStatus(PayOrderStatusType.AGREEDPAYTOEND);
 		condition.setWithdrawn(false);
 		
@@ -120,7 +120,7 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 	
 	public double queryUserTotalAvailableAmount(long userId) {
 		PayOrderImpl condition = new PayOrderImpl();
-		condition.setEndUserId(userId);
+		condition.setUserId(userId);
 		condition.setStatus(PayOrderStatusType.AGREEDPAYTOEND);
 		condition.setWithdrawn(false);
 		
@@ -134,7 +134,7 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 	
 	public double queryUserTotalSpent(long userId) {
 		PayOrderImpl condition = new PayOrderImpl();
-		condition.setUserId(userId);
+		condition.setEndUserId(userId);
 		condition.setStatus(PayOrderStatusType.PAYED);
 		
 		List<IPayOrder> orders = AccountingModel.INSTANCE.searchPaymentOrder(condition, null, 0, -1);

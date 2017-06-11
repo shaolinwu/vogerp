@@ -89,6 +89,10 @@
             if (payService.queryForPayStatus(payOrder) == PayOrderStatusType.NOTPAYED) {
 	            try {
 		            String url = payService.prepay(payOrder);
+		            if (url == null || url.length() == 0) {
+		                Dialog.showMessageDialog("支付异常，已通知管理员检查支付接口是否可用！", "", Dialog.WARNING_MESSAGE, null);
+		                return;
+		            }
 		            if (UserContext.isAppClient()) {
 		                @page.executeJavaScript("_mobContext.appPay('"+url+"', 'wepay')");
 		            } else {
@@ -96,7 +100,7 @@
 			            @page.executeJavaScript("defaultname." + @page.getEntityUiid() + ".genWepayQRCode('"+url+"');");
 		            }
 	            } catch (Exception e) {
-	               Dialog.showMessageDialog("支付异常，请刷新页面，重新支付！", "", Dialog.WARNING_MESSAGE, null);
+	               Dialog.showMessageDialog("支付异常，已通知管理员检查支付接口是否可用！", "", Dialog.WARNING_MESSAGE, null);
 	            }
             } else {
                 Dialog.showMessageDialog("不可支付，当前支付状态为： " +payOrder.getStatus().getDisplayName(), "", Dialog.WARNING_MESSAGE, null);
@@ -112,6 +116,7 @@
             UIMaster.require("/js/qrcode.min.js");
             var qrcode = new QRCode(this.wepayQRCodeUI, {width:150, height:150});
             qrcode.makeCode(eventsource);
+            $(this.wepayQRCodeUI).dialog();
         }
         ]]></ns2:expressionString>
     </ns2:ops>
@@ -126,6 +131,8 @@
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             form.closeIfinWindows(true);
             @page.removeForm(@page.getEntityUiid()); 
+            
+            Dialog.showMessageDialog("如果您已支付完成，请刷新页面更新您的支付状态，谢谢！", "", Dialog.INFORMATION_MESSAGE, null);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -228,9 +235,8 @@
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="Cancel"></ns2:handler>
         </ns2:EventListener>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>Closebtn</ns2:key>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>关闭或支付完成</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>

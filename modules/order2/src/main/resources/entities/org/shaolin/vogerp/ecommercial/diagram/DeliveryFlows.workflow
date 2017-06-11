@@ -76,19 +76,25 @@
 			        import org.shaolin.bmdp.runtime.be.ITaskEntity;
 			        import org.shaolin.uimaster.page.AjaxContext;
 			        import org.shaolin.uimaster.page.ajax.*;
+			        import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
+			        import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
 			        import org.shaolin.vogerp.ecommercial.be.*;
 			        import org.shaolin.vogerp.ecommercial.ce.*;
 			        import org.shaolin.vogerp.ecommercial.dao.*;
 			        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
                      {
                          $order.setTakenStatus(OrderStatusType.TAKEN_DELIVERY);
 			             @flowContext.save((ITaskEntity)$order);
 			             
+			             IDeliveryInfo deliveryInfo = $order.getDeliveryInfo();
+						 //IPersonalInfo takener = OrderModel.INSTANCE.get(deliveryInfo.getToUserId(), PersonalInfoImpl.class);
+			             
 			             String description = "("+OrderUtil.getOrderLink($order)+")" + $order.getDescription();
                          NotificationImpl message = new NotificationImpl();
-                         message.setPartyId($order.getTakenCustomerId());
+                         message.setPartyId(deliveryInfo.getToUserId());
                          message.setSubject("您的订单已发货，请注意查收！");
                          message.setDescription(description);
                          message.setCreateDate(new Date());
@@ -107,7 +113,7 @@
                 <ns2:dest name="receivedOrder"></ns2:dest>
             </ns2:eventDest>
         </ns2:mission-node>
-        <ns2:mission-node name="receivedOrder" expiredDays="0" expiredHours="0" autoTrigger="false" multipleInvoke="true">
+        <ns2:mission-node name="receivedOrder" autoTrigger="false">
             <ns2:description>确认收货</ns2:description>
             <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.OrderPaymentAndDeliveryTrack"
                 actionName="receivedOrder" actionText="确认收货" isHidden="true">
@@ -173,9 +179,12 @@
                          IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                          payService.ensurePay($order.getSerialNumber());     
 			             
+			             IDeliveryInfo deliveryInfo = $order.getDeliveryInfo();
+						 //IPersonalInfo takener = OrderModel.INSTANCE.get(deliveryInfo.getToUserId(), PersonalInfoImpl.class);
+			             
 			             String description = "("+OrderUtil.getOrderLink($order)+")" + $order.getDescription();
                          NotificationImpl message = new NotificationImpl();
-                         message.setPartyId($order.getPublishedCustomerId());
+                         message.setPartyId(deliveryInfo.getUserId());
                          message.setSubject("您的订单已确认收货成功！");
                          message.setDescription(description);
                          message.setCreateDate(new Date());

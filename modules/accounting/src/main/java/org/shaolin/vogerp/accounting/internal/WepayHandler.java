@@ -191,7 +191,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 			
 			HashMap<String, Object> values = new HashMap<String, Object>();
 			values.put("appid", APP_ID);
-			values.put("body", StringUtil.unicode2String(StringUtil.truncateString(payOrder.getDescription(), 20)));
+			values.put("body", StringUtil.truncateString(payOrder.getDescription(), 20));
 			values.put("mch_id", MCH_ID);
 			values.put("nonce_str", StringUtil.genRandomAlphaBits(32));
 			values.put("out_trade_no", payOrder.getOutTradeNo());//must be unique requested every time!
@@ -199,6 +199,9 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 			values.put("total_fee", ((int)payOrder.getAmount()) + ""); //fen
 			values.put("trade_type", UserContext.isAppClient() ?"APP" :"NATIVE");
 			values.put("notify_url", WEPAY_WEB_HOOK);
+			if (logger.isDebugEnabled()) {
+				logger.debug("Trade_Device: " + (UserContext.isAppClient() ?"APP" :"NATIVE") + ", out_trade_no: " + values.get("out_trade_no"));
+			}
 			// optional.
 	//		JSONObject detail = new JSONObject();
 	//		detail.put("cost_price", payOrder.getAmount());
@@ -246,19 +249,17 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 					translog.setCreateDate(new Date());	
 					AccountingModel.INSTANCE.create(translog, true);
 	
-					throw new PaymentException("Wepay prepay operation failed: " + resultMap.toString() 
+					logger.warn("Wepay prepay operation failed: " + resultMap.toString() 
 					+ ", payment order: " + payOrder.getSerialNumber());
 				}
 			} else {
-				throw new PaymentException("Wepay prepay order fail to sign: " + resultMap.toString() 
+				logger.warn("Wepay prepay order fail to sign: " + resultMap.toString() 
 											+ ", payment order: " + payOrder.getSerialNumber());
 			}
-		} catch (Exception e) {
-			if (e instanceof PaymentException) {
-				throw (PaymentException)e;
-			}
-			throw new PaymentException("Weixi prepay error occurred!", e);
+		} catch (Throwable e) {
+			logger.warn("Wepay prepay order failed: " + e.getMessage(), e);
 		}
+		return "";
 	}
 	
 	public String transfer(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException {

@@ -56,7 +56,17 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     ({
         ui: elementList[prefix + "countUI"]
         ,isNumber: true
-    });
+        ,validators:[
+        {
+            func: function() {
+                
+	                    { 
+	                    return this.value != 0 || this.value != "0";
+	                    }
+            }
+            ,msg: ""
+        }
+]    });
 
     var materialTypeUILabel = new UIMaster.ui.label
     ({

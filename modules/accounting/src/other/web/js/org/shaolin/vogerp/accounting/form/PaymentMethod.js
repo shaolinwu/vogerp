@@ -155,6 +155,7 @@ function org_shaolin_vogerp_accounting_form_PaymentMethod(json)
             UIMaster.require("/js/qrcode.min.js");
             var qrcode = new QRCode(this.wepayQRCodeUI, {width:150, height:150});
             qrcode.makeCode(eventsource);
+            $(this.wepayQRCodeUI).dialog();
         }
             }/* Gen_Last:org_shaolin_vogerp_accounting_form_PaymentMethod_genWepayQRCode */
 

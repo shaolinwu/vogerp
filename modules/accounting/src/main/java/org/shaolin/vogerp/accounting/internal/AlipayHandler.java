@@ -153,20 +153,22 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 				AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
 				AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
 				model.setSubject(PaymentUtil.getPaymentTitle(payOrder));
-				model.setBody(StringUtil.unicode2String(StringUtil.truncateString(payOrder.getDescription(), 20)));
+				model.setBody(StringUtil.truncateString(payOrder.getDescription(), 20));
 				model.setOutTradeNo(payOrder.getOutTradeNo());//must be unique requested every time!
 				model.setTimeoutExpress("500m");
 				model.setTotalAmount((payOrder.getAmount() / 100) + "");
 				model.setProductCode("QUICK_MSECURITY_PAY");
 				request.setBizModel(model);
 	//			request.setNotifyUrl("");
-				
+				if (logger.isDebugEnabled()) {
+					logger.debug("Trade_Device: APP" + ", out_trade_no: " + model.getOutTradeNo());
+				}
 				// this is app payment api.
 		        AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
 		        if (response.isSuccess()) {
 		        	return response.getBody(); //order information returning to client
 		        } else {
-		        	throw new PaymentException("Make Ali payment error: " + response.getCode() 
+		        	logger.warn("Make ali-payment error: " + response.getCode() 
 		        		+ ", msg: " + response.getMsg() + ", order id: " + payOrder.getSerialNumber());
 		        }
 			} else {
@@ -181,7 +183,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 				json.put("product_code", "QUICK_WAP_PAY");
 				json.put("total_amount", payOrder.getAmount() / 100); //yuan with double.
 				json.put("subject", PaymentUtil.getPaymentTitle(payOrder));
-				json.put("body", payOrder.getDescription());
+				json.put("body", StringUtil.truncateString(payOrder.getDescription(), 20));
 				
 				alipayRequest.setBizContent(json.toString());
 				String form = alipayClient.pageExecute(alipayRequest).getBody();
@@ -191,12 +193,10 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 	//		    httpResponse.getWriter().flush();
 				return form;
 	        }
-		} catch (Exception e) {
-			if (e instanceof PaymentException) {
-				throw (PaymentException)e;
-			}
-			throw new PaymentException("Alipay prepay error occurred!", e);
+		} catch (Throwable e) {
+			logger.warn("Alipay prepay error occurred!", e);
 		}
+		return "";
 	}
 	
 	public String transfer(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException {

@@ -198,6 +198,17 @@
             <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
                <ns2:value>false</ns2:value>
             </ns2:allowBlank>
+            <ns2:validator xsi:type="ns2:ValidatorsPropertyType">
+	            <ns2:validator xsi:type="ns2:ValidatorPropertyType">
+	                    <isFuncRef>false</isFuncRef>
+	                    <funcCode><![CDATA[
+	                    { 
+	                    return this.value != 0 || this.value != "0";
+	                    }]]></funcCode>
+	                    <!-- 大于1！ -->
+	                    <errMsg></errMsg>
+	            </ns2:validator>
+	         </ns2:validator>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="estimatedPriceUILabel">
             <ns2:UIStyle></ns2:UIStyle>

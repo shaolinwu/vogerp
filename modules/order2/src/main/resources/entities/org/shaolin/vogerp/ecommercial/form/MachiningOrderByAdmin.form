@@ -287,6 +287,16 @@
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UILabelType" UIID="countUI">
 	        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+	        <ns2:Property name="htmlValue">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           { 
+			               return $beObject.getCount() + "";
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+            </ns2:Property>
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UILabelType" UIID="materialTypeUILabel">
 	        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -658,11 +668,6 @@
           <expressionString>{return Boolean.FALSE;}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="countUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.count" paramName="Number"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping55">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
