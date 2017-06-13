@@ -748,7 +748,8 @@
                       
                       String title = "加工订单详情";
                       String formUI = "org.shaolin.vogerp.ecommercial.form.MachiningOrder";
-                      if (order.getEstimatedPrice() > 0 && order.getStatus() != OrderStatusType.CREATED) {
+                      if ((order.getStatus() != OrderStatusType.CREATED && order.getStatus() != OrderStatusType.VERIFYING) 
+                          && order.getEstimatedPrice() > 0) {
                          formUI = "org.shaolin.vogerp.ecommercial.form.MachiningOrderWithResult";
                          input.put("editable", new Boolean(false));
                       }
@@ -793,7 +794,11 @@
                           return;
                       }
                       InterestEOrderImpl item = (InterestEOrderImpl)interestEOrderTable.getSelectedRow();
-                      
+                      if (item.getOrder().getStatus() == OrderStatusType.TAKEN && 
+                          item.getOrder().getTakenCustomerId() != UserContext.getUserContext().getUserId()) {
+                          Dialog.showMessageDialog("该订单已被客户拍下！", "", Dialog.WARNING_MESSAGE, null);
+                          return;
+                      }
                       if (UserContext.isMobileRequest() && UserContext.isAppClient()) {
                       	  //invokes App native javascript api.
                       	  IOfferPrice offeredPrice = null;

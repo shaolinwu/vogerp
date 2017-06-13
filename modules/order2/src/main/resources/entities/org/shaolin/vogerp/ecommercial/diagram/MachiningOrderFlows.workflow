@@ -58,20 +58,29 @@
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
-                        MachiningOrderImpl gorder = (MachiningOrderImpl)out.get("beObject");
-                        gorder.setCount(1);
-                        gorder.setStatus(OrderStatusType.VERIFYING);
-			            if (gorder.getId() == 0) {
-			                OrderModel.INSTANCE.create(gorder, true);
+                        MachiningOrderImpl morder = (MachiningOrderImpl)out.get("beObject");
+			            if (morder.getDeliveryInfo() == null) {
+			                Dialog.showMessageDialog("您没有配制地址信息！", "", Dialog.WARNING_MESSAGE, null);
+			                return;
+			            }
+		                if (morder.getDeliveryInfo().getId() > 0) {
+		                   OrderModel.INSTANCE.update(morder.getDeliveryInfo());
+		                } else {
+		                   OrderModel.INSTANCE.create(morder.getDeliveryInfo());
+		                   morder.setDeliveryInfoId(morder.getDeliveryInfo().getId());
+		                }
+                        morder.setStatus(OrderStatusType.VERIFYING);
+			            if (morder.getId() == 0) {
+			                OrderModel.INSTANCE.create(morder, true);
 			            } else {
-			                OrderModel.INSTANCE.update(gorder, true);
+			                OrderModel.INSTANCE.update(morder, true);
 			            }
                         
                         form.closeIfinWindows();
                         @page.removeForm(@page.getEntityUiid()); 
                         
                         HashMap result = new HashMap();
-                        result.put("gOrder", gorder);
+                        result.put("morder", morder);
                         return result;
                     }
                     ]]></expressionString>
@@ -88,7 +97,7 @@
             </ns2:uiAction>
             <ns2:participant partyType="GenericOrganizationType.Director,0" />
             <ns2:process>
-                <ns2:var name="gOrder" category="BusinessEntity" scope="Out">
+                <ns2:var name="morder" category="BusinessEntity" scope="Out">
                     <type entityName="org.shaolin.vogerp.ecommercial.be.MachiningOrder"></type>
                 </ns2:var>
                 <ns2:expression>
@@ -108,12 +117,12 @@
                      import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                      {
                          PersonalInfoImpl condition = new PersonalInfoImpl();
-                         condition.setId($gOrder.getPublishedCustomerId());
+                         condition.setId($morder.getPublishedCustomerId());
                          List result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, 1);
                          IPersonalInfo publisher = (IPersonalInfo)result.get(0);
                          
                          String subject = CustomerInfoUtil.getCustomerEnterpriseBasicInfo(publisher);
-                         String description = $gOrder.getDescription();
+                         String description = $morder.getDescription();
                          NotificationImpl message = new NotificationImpl();
 					     message.setSubject(subject + "发布新的加工订单！审核中。。。");
 				         message.setDescription(description);
@@ -280,6 +289,7 @@
 			        import org.shaolin.uimaster.page.ajax.*;
 			        import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
 			        import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
+			        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
 			        import org.shaolin.vogerp.ecommercial.dao.*;
 			        import org.shaolin.bmdp.runtime.AppContext; 
 			        import org.shaolin.vogerp.commonmodel.IUserService; 
@@ -291,6 +301,10 @@
 			            MachiningOrderImpl order = (MachiningOrderImpl)out.get("beObject");
 			            if (order.getEstimatedPrice() <= 0) {
 			            	Dialog.showMessageDialog("出价必需大于0", "", Dialog.WARNING_MESSAGE, null);
+			                return;
+			            }
+			            if (order.getStatus() == OrderStatusType.VERIFYING) {
+			                Dialog.showMessageDialog("订单还在审核中，不能完成估价操作！", "", Dialog.WARNING_MESSAGE, null);
 			                return;
 			            }
 			            

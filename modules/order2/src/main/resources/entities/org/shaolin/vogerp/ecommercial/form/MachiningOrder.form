@@ -510,11 +510,6 @@
           <expressionString>{return Boolean.FALSE;}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="value">
-        <ns2:expression>
-          <expressionString>{return "org.shaolin.vogerp.ecommercial.ce.MachiningMaterialType,1";}</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISelect"></ns2:mappingRule>

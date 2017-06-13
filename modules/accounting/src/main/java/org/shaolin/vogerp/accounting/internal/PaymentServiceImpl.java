@@ -6,12 +6,12 @@ import java.util.List;
 
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.Registry;
+import org.shaolin.bmdp.runtime.Registry.RunningMode;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.bmdp.workflow.be.NotificationImpl;
 import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
-import org.shaolin.uimaster.page.AjaxFactory;
 import org.shaolin.vogerp.accounting.IPaymentService;
 import org.shaolin.vogerp.accounting.PayOrderStatusListener;
 import org.shaolin.vogerp.accounting.PaymentException;
@@ -43,6 +43,7 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	private BCpayHandler behandler;
 	private AlipayHandler alipayHandler;
 	private WepayHandler wepayHandler;
+	private DevTestHandler devTestHandler;
 	
 	public PaymentServiceImpl() {
 	}
@@ -158,7 +159,9 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		IPayOrder order = result.get(0);
 		if (order.getStatus() == PayOrderStatusType.NOTPAYED) {
 			String state = "";
-			if (SettlementMethodType.ALIPAY == order.getCustomerAPaymentMethod()) {
+			if (Registry.getAppRunningMode() == RunningMode.Dev) {
+				state = devTestHandler.query(order);
+			} else if (SettlementMethodType.ALIPAY == order.getCustomerAPaymentMethod()) {
 				state = alipayHandler.query(order);
 			} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
 				state = wepayHandler.query(order);
@@ -183,7 +186,9 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		PayOrderImpl order = AccountingModel.INSTANCE.get(oldorder.getId(), PayOrderImpl.class);
 		if (order.getStatus() == PayOrderStatusType.NOTPAYED) {
 			String state = "";
-			if (SettlementMethodType.ALIPAY == order.getCustomerAPaymentMethod()) {
+			if (Registry.getAppRunningMode() == RunningMode.Dev) {
+				state = devTestHandler.query(order);
+			} else if (SettlementMethodType.ALIPAY == order.getCustomerAPaymentMethod()) {
 				state = alipayHandler.query(order);
 			} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
 				state = wepayHandler.query(order);
@@ -226,7 +231,9 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		if (order.getStatus() != PayOrderStatusType.NOTPAYED) {
 			throw new PaymentException("PayOrder is not in NOTPAY state! current state: " + order.getStatus());
 		}
-		
+		if (Registry.getAppRunningMode() == RunningMode.Dev) {
+			return devTestHandler.prepay(order);
+		}
 		if (SettlementMethodType.ALIPAY == order.getCustomerAPaymentMethod()) {
 			return alipayHandler.prepay(order);
 		} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
@@ -353,6 +360,9 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	 * @return
 	 */
 	public String refund(final IPayOrder order) throws PaymentException {
+		if (Registry.getAppRunningMode() == RunningMode.Dev) {
+			return devTestHandler.refund(order);
+		}
 		if (SettlementMethodType.ALIPAY == order.getCustomerAPaymentMethod()) {
 			return alipayHandler.refund(order);
 		} else if (SettlementMethodType.WEIXI == order.getCustomerAPaymentMethod()) {
@@ -385,11 +395,9 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		AppContext.get().register(this);
 		AppContext.get().register(new AccountingServiceImpl());
 		
-		this.behandler = new BCpayHandler();
 		this.alipayHandler = new AlipayHandler();
 		this.wepayHandler = new WepayHandler();
-		
-		AjaxFactory.register("BCWebHook", behandler);
+		this.devTestHandler = new DevTestHandler();
 	}
 
 	@Override

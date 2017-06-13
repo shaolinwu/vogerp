@@ -177,8 +177,8 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
 				context.generateHTML("</td><td>3.\u7B49\u5F85\u53D1\u8D27</td>");
 				context.generateHTML("</tr>");
 				context.generateHTML("<tr class=\"\">");
-				if (order.getTakenStatus().getIntValue() > OrderStatusType.TAKEN_DELIVERY.getIntValue()) {
-					context.generateHTML("<td>4.\u6536\u6B3E\u8DDF\u8E2A</td><td>4." + order.getTakenStatus().getDisplayName() + "</td>");
+				if (order.getTakenStatus() == OrderStatusType.TAKEN_COMPLETED) {
+					context.generateHTML("<td>4.\u786E\u8BA4\u6536\u8D27</td><td>4." + order.getTakenStatus().getDisplayName() + "</td>");
 				} else {
 					context.generateHTML("<td>4.\u6536\u6B3E\u8DDF\u8E2A</td><td>4.\u786E\u8BA4\u6536\u8D27</td>");
 				}
@@ -187,11 +187,15 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
 			
 			if (order.getTakenStatus() == OrderStatusType.TAKEN_COMPLETED) {
 				context.generateHTML("<tr class=\"order_step\">");
-				context.generateHTML("<td>5.\u8BC4\u4EF7</td><td>5.\u8BC4\u4EF7</td>");
+				if (isCurrTaker) {
+					context.generateHTML("<td>5.\u8BC4\u4EF7\u4FE1\u606F</td><td>5.<button onclick=\""+funcRef+"commentOrder(defaultname." + htmlId + ");\" class=\"ui-btn-inline\">\u8BC4\u4EF7</button></td>");
+				} else {
+					context.generateHTML("<td>5.<button onclick=\""+funcRef+"commentOrder(defaultname." + htmlId + ");\" class=\"ui-btn-inline\">\u8BC4\u4EF7</button></td><td>5.\u8BC4\u4EF7\u4FE1\u606F</td>");
+				}
 				context.generateHTML("</tr>");
 			} else {
 				context.generateHTML("<tr class=\"\">");
-				context.generateHTML("<td>5.\u8BC4\u4EF7</td><td>5.\u8BC4\u4EF7</td>");
+				context.generateHTML("<td>5.\u8BC4\u4EF7\u4FE1\u606F</td><td>5.\u8BC4\u4EF7\u4FE1\u606F</td>");
 				context.generateHTML("</tr>");
 			}
 			

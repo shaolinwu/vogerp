@@ -61,13 +61,15 @@
                         gorder.setType(GoldenOrderType.PURCHASE);
                         gorder.setStatus(OrderStatusType.VERIFYING);
                         if (gorder.getDeliveryInfo() != null) {
-			                if (gorder.getDeliveryInfo().getId() > 0) {
-			                   OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
-			                } else {
-			                   OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
-			                }
-			                gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
+			                Dialog.showMessageDialog("您没有配制地址信息！", "", Dialog.WARNING_MESSAGE, null);
+			                return;
 			            }
+		                if (gorder.getDeliveryInfo().getId() > 0) {
+		                   OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
+		                } else {
+		                   OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
+		                   gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
+		                }
 			            if (gorder.getId() == 0) {
 			                OrderModel.INSTANCE.create(gorder, true);
 			            } else {

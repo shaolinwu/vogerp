@@ -267,8 +267,8 @@ public class OrderUtil {
 		if (order.getDeliveryInfoId() == 0) {
 			order.setDeliveryInfo(
 					(DeliveryInfoImpl) createDeliveryInfo(UserContext.getUserContext().getUserId()));
-			order.setDeliveryInfoId(order.getDeliveryInfo().getId());
 			CommonModel.INSTANCE.create(order.getDeliveryInfo());
+			order.setDeliveryInfoId(order.getDeliveryInfo().getId());
 		}
 	}
 	

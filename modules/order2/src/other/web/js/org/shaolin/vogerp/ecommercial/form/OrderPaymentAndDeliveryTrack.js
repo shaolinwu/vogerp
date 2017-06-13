@@ -33,6 +33,26 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
         ui: elementList[prefix + "expressbtn"]
     });
 
+    var descCommentUI = new UIMaster.ui.textarea
+    ({
+        ui: elementList[prefix + "descCommentUI"]
+    });
+
+    var qualityUI = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "qualityUI"]
+    });
+
+    var serviceUI = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "serviceUI"]
+    });
+
+    var descCommentbtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "descCommentbtn"]
+    });
+
     var refreshbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "refreshbtn"]
@@ -55,6 +75,14 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
         ,subComponents: [prefix + "refreshbtn",prefix + "updateAddressbtn",prefix + "cancelbtn"]
     });
 
+    var addCommentInfo = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "addCommentInfo"]
+        ,style: "display:none"
+        ,items: []
+        ,subComponents: [prefix + "descCommentUI",prefix + "qualityUI",prefix + "serviceUI",prefix + "descCommentbtn"]
+    });
+
     var addDeliveryInfo = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "addDeliveryInfo"]
@@ -75,13 +103,13 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "trackFormUI",prefix + "addProductInfo",prefix + "addDeliveryInfo"]
+        ,subComponents: [prefix + "trackFormUI",prefix + "addProductInfo",prefix + "addDeliveryInfo",prefix + "addCommentInfo"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [trackFormUI,descProgressUI,descProgressbtn,expressVendorUI,expressNumberUI,expressbtn,refreshbtn,updateAddressbtn,cancelbtn,fieldPanel,addProductInfo,addDeliveryInfo,actionPanel]
+        ,items: [trackFormUI,descProgressUI,descProgressbtn,expressVendorUI,expressNumberUI,expressbtn,descCommentUI,qualityUI,serviceUI,descCommentbtn,refreshbtn,updateAddressbtn,cancelbtn,fieldPanel,addProductInfo,addDeliveryInfo,addCommentInfo,actionPanel]
     });
 
     Form.trackFormUI=trackFormUI;
@@ -95,6 +123,14 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
     Form.expressNumberUI=expressNumberUI;
 
     Form.expressbtn=expressbtn;
+
+    Form.descCommentUI=descCommentUI;
+
+    Form.qualityUI=qualityUI;
+
+    Form.serviceUI=serviceUI;
+
+    Form.descCommentbtn=descCommentbtn;
 
     Form.refreshbtn=refreshbtn;
 
@@ -120,6 +156,16 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
 
     Form.expressbtn=expressbtn;
 
+    Form.addCommentInfo=addCommentInfo;
+
+    Form.descCommentUI=descCommentUI;
+
+    Form.qualityUI=qualityUI;
+
+    Form.serviceUI=serviceUI;
+
+    Form.descCommentbtn=descCommentbtn;
+
     Form.addProductInfo=addProductInfo;
 
     Form.descProgressUI=descProgressUI;
@@ -133,6 +179,16 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
     Form.expressNumberUI=expressNumberUI;
 
     Form.expressbtn=expressbtn;
+
+    Form.addCommentInfo=addCommentInfo;
+
+    Form.descCommentUI=descCommentUI;
+
+    Form.qualityUI=qualityUI;
+
+    Form.serviceUI=serviceUI;
+
+    Form.descCommentbtn=descCommentbtn;
 
     Form.actionPanel=actionPanel;
 
@@ -168,6 +224,10 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
     Form.savePregressNote = org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_savePregressNote;
 
     Form.updateExpress = org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_updateExpress;
+
+    Form.commentOrder = org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_commentOrder;
+
+    Form.saveComment = org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_saveComment;
 
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_Cancel;
 
@@ -238,6 +298,33 @@ function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack(json)
            $(this.addDeliveryInfo).dialog();
         }
             }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_updateExpress */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_commentOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_commentOrder */
+        var o = this;
+        var UIEntity = this;
+
+        {   
+           $(this.addCommentInfo).css("display", "block");
+           $(this.addCommentInfo).dialog();
+        }
+            }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_commentOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_saveComment(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_saveComment */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveComment-20170325-215225",UIMaster.getValue(eventsource),o.__entityName);
+
+        {   
+           $(this.addCommentInfo).dialog("close");
+        }
+            }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_OrderPaymentAndDeliveryTrack_saveComment */
 
 
     /* auto generated eventlistener function declaration */
