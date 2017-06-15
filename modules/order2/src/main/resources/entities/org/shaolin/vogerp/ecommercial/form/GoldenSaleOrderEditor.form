@@ -167,6 +167,15 @@
 	        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
 	            <ns2:value>false</ns2:value>
 	        </ns2:allowBlank>
+	        <ns2:maxLength xsi:type="ns2:NumericPropertyType">
+	            <type>int</type>
+	            <value>200</value>
+	        </ns2:maxLength>
+	        <ns2:Property name="placeholder">
+               <ns2:value xsi:type="ns2:StringPropertyType">
+                   <value>请您填写批量非加工类机械产品的销售订单信息。</value>
+               </ns2:value>
+            </ns2:Property>
 	      </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="countUILabel">
             <ns2:UIStyle></ns2:UIStyle>

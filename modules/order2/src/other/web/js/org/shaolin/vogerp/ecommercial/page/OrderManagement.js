@@ -64,6 +64,12 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         ui: elementList[prefix + "saleOrderLabel"]
     });
 
+    var hintsLabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "hintsLabel"]
+        ,htmlValue: "????????????????????????“?????”??????"
+    });
+
     var loanOrderLabel = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "loanOrderLabel"]
@@ -87,14 +93,14 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         ui: elementList[prefix + "selectGTypePanel"]
         ,style: "display:none"
         ,items: []
-        ,subComponents: [prefix + "purchaseOrderLabel",prefix + "saleOrderLabel"]
+        ,subComponents: [prefix + "purchaseOrderLabel",prefix + "saleOrderLabel",prefix + "hintsLabel"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [functionsTab,purchaseOrderLabel,saleOrderLabel,loanOrderLabel,rentOrderLabel,selectGTypePanel,selectRentOrderTypePanel]
+        ,items: [functionsTab,purchaseOrderLabel,saleOrderLabel,hintsLabel,loanOrderLabel,rentOrderLabel,selectGTypePanel,selectRentOrderTypePanel]
     });
 
     Form.functionsTab=functionsTab;
@@ -119,6 +125,8 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
     Form.saleOrderLabel=saleOrderLabel;
 
+    Form.hintsLabel=hintsLabel;
+
     Form.loanOrderLabel=loanOrderLabel;
 
     Form.rentOrderLabel=rentOrderLabel;
@@ -128,6 +136,8 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     Form.purchaseOrderLabel=purchaseOrderLabel;
 
     Form.saleOrderLabel=saleOrderLabel;
+
+    Form.hintsLabel=hintsLabel;
 
     Form.selectRentOrderTypePanel=selectRentOrderTypePanel;
 
@@ -160,6 +170,8 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     Form.createRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_createRentOrder;
 
     Form.selectedLoanOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_selectedLoanOrder;
+
+    Form.loanMasterOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_loanMasterOrder;
 
     Form.selectedRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_selectedRentOrder;
 
@@ -334,6 +346,17 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedLoanOrder-20160602",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_selectedLoanOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagement_loanMasterOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_loanMasterOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"loanMasterOrder-20170613-234",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_loanMasterOrder */
 
 
     /* auto generated eventlistener function declaration */

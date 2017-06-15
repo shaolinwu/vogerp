@@ -49,11 +49,7 @@
                 <!-- if the products is delivered, the payed user is unable to cancel this payment which must contact Customer Service Center for trace off.-->
                 <ns2:dest name="refundPrepayment"></ns2:dest>
                 <ns2:dest name="deliveryOrder" flow="DeliveryOrder" entity="org.shaolin.vogerp.ecommercial.diagram.DeliveryFlows"></ns2:dest>
-                <!-- 
-            	<ns2:dest name="deliveryOrder" flow="PublishGoldenOrder" entity="org.shaolin.vogerp.ecommercial.diagram.GoldenOrderFlows"></ns2:dest>
-            	<ns2:dest name="deliveryOrder" flow="PublishRentOrder" entity="org.shaolin.vogerp.ecommercial.diagram.RentOrderFlows"></ns2:dest>
-            	<ns2:dest name="deliveryOrder" flow="PublishRentOrder" entity="org.shaolin.vogerp.ecommercial.diagram.MachiningOrderFlows"></ns2:dest>
-                 -->
+                <ns2:dest name="ensurePayMasterOrder" flow="PublishRentOrder" entity="org.shaolin.vogerp.ecommercial.diagram.RentOrderFlows"></ns2:dest>
             </ns2:eventDest>
         </ns2:mission-node>
         

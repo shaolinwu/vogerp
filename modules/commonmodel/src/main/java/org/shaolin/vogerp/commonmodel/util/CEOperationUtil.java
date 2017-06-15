@@ -1,6 +1,7 @@
 package org.shaolin.vogerp.commonmodel.util;
 
 import java.lang.reflect.Constructor;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -95,11 +96,13 @@ public class CEOperationUtil {
 			try {
 				// supposed it's a static constant first.
 				Constructor cons = Class.forName(v.getCeName()).getDeclaredConstructor(
-						new Class[]{long.class, String.class, int.class, String.class, String.class});
+						new Class[]{String.class, int.class, String.class, String.class, 
+								java.util.Date.class, java.util.Date.class, boolean.class, int.class, String.class});
 				cons.setAccessible(true);
 				record = (AbstractConstant)cons.newInstance(
-						new Object[]{v.getId(), v.getStringValue(), v.getIntValue(), 
-								v.getI18nKey(), v.getDescription()});
+						new Object[]{v.getStringValue(), v.getIntValue(), 
+								v.getI18nKey(), v.getDescription(), null, null, false, 0, v.getIcon()});
+				record.setRecordId0(v.getId());
 			} catch (ClassNotFoundException e) {
 				//it's a dynamic extension constant.
 				record = new DynamicConstant(v.getCeName(), v.getId());

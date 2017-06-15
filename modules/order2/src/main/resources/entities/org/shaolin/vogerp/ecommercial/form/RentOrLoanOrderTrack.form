@@ -38,6 +38,12 @@
                	if (defaultUser.getType() == RentOrLoanOrderType.LOAN) {
                	   formName = "org.shaolin.vogerp.ecommercial.form.RLoanOrderEditor";
                	}
+               	if (defaultUser.getType() == RentOrLoanOrderType.FINDMASTER) {
+                   formName = "org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderEditor";
+                   if (defaultUser.getStatus() == OrderStatusType.TAKEN) { 
+                       formName = "org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderTrack";
+                   }
+                }
                	
                 RefForm form = new RefForm("rentOrLoanOrder", formName, input);
                 @page.addElement(form);
@@ -80,7 +86,13 @@
                 HashMap input = new HashMap();
                 input.put("order", defaultUser);
                 input.put("editable", new Boolean(true));
-                RefForm form = new RefForm("orderTrackForm", "org.shaolin.vogerp.ecommercial.form.OrderPaymentAndDeliveryTrack", input);
+                
+                String formName = "org.shaolin.vogerp.ecommercial.form.OrderPaymentAndDeliveryTrack";
+                if (defaultUser.getType() == RentOrLoanOrderType.FINDMASTER) {
+                   formName = "org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderTrack";
+                }
+                
+                RefForm form = new RefForm("orderTrackForm", formName, input);
                 @page.addElement(form);
                 
                 form.openInWindows("订单拍下详情", null, true);

@@ -475,6 +475,61 @@
               </ns2:exp>
           </ns2:ops>
       </ns2:eventHandler>
+      <ns2:eventHandler functionName="loanMasterOrder">
+          <ns2:ops xsi:type="ns2:OpCallAjaxType" name="loanMasterOrder-20170613-234">
+              <ns2:exp>
+                  <ns2:expressionString><![CDATA[
+                  import java.util.HashMap;
+                  import java.util.Date;
+                  import org.shaolin.uimaster.page.AjaxContext;
+                  import org.shaolin.uimaster.page.ajax.*;
+                  import org.shaolin.bmdp.runtime.AppContext;
+                  import org.shaolin.bmdp.runtime.security.UserContext;
+                  import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                  import org.shaolin.vogerp.commonmodel.IUserService; 
+                  import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                  import org.shaolin.vogerp.ecommercial.ce.RentDateType;
+                  import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                  import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
+                  import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+                  import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+                  {
+                      IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+                      if (!service.isEnterpriseUser(UserContext.getUserContext().getUserId())) {
+                          Dialog.showMessageDialog("只有企业用户才能发租赁订单!", "", Dialog.WARNING_MESSAGE, null);
+                          return;
+                      }
+                      if (!service.hasAddressConfigured(UserContext.getUserContext().getUserId())) {
+                          Dialog.showMessageDialog("您没有配置默认地址！请到基本信息模块中添加您的地址信息。", "", Dialog.WARNING_MESSAGE, null);
+                          return;
+                      }
+                      
+                      RentOrLoanOrderImpl order = new RentOrLoanOrderImpl();
+                      order.setOrgId(UserContext.getUserContext().getOrgId());
+                      order.setSerialNumber(OrderUtil.genSerialNumber());
+                      order.setStatus(OrderStatusType.CREATED);
+                      order.setType(RentOrLoanOrderType.FINDMASTER);
+                      order.setDateType(RentDateType.MONTHLY);
+                      order.setDateCount(1);
+                      order.setPublishedCustomerId(service.getUserId());
+                      order.setPublishedCustomer((PersonalInfoImpl)service.getPersonalInfo(service.getUserId()));
+                      order.setCreateDate(new java.util.Date());
+                      order.setCity(UserContext.getUserContext().getCity());
+                      order.setLongitude(UserContext.getUserContext().getLongitude());
+                      order.setLatitude(UserContext.getUserContext().getLatitude());
+                      
+                      HashMap input = new HashMap();
+                      input.put("beObject", order);
+                      input.put("editable", new Boolean(true));
+                      RefForm form = new RefForm("rentOrLoanOrder", "org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderEditor", input);
+                      @page.addElement(form);
+                      
+                      form.openInWindows("新建设备求租订单", new TableCallBack("rentOrderTable"), true);
+                  }
+                  ]]></ns2:expressionString>
+              </ns2:exp>
+          </ns2:ops>
+      </ns2:eventHandler>
       <ns2:eventHandler functionName="selectedRentOrder">
           <ns2:ops xsi:type="ns2:OpExecuteScriptType">
 	        <ns2:expressionString><![CDATA[
@@ -576,10 +631,16 @@
                          input.put("editable", new Boolean(true));
                          input.put("order", defaultUser);
                       }
+                      if (defaultUser.getType() == RentOrLoanOrderType.FINDMASTER) {
+                         formName = "org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderEditor";
+                         if (defaultUser.getStatus() == OrderStatusType.TAKEN) { 
+                             formName = "org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderTrack";
+                         }
+                      }
                       RefForm form = new RefForm("rentOrLoanOrder", formName, input);
                       @page.addElement(form);
                       
-                      form.openInWindows("设备租赁订单详情", new TableCallBack("rentOrderTable"), true);
+                      form.openInWindows("租赁订单详情", new TableCallBack("rentOrderTable"), true);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>
@@ -1339,6 +1400,14 @@
                             <ns2:actionGroup>
                                 <ns2:type>radio</ns2:type>
                                 <ns2:action>
+                                    <ns2:uiid>loanMasterOrder</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>租个师傅</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>loanMasterOrder</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
                                     <ns2:uiid>acceptRentOrder</ns2:uiid>
                                     <ns2:title xsi:type="ns2:StringPropertyType">
                                         <ns2:value>竞价记录</ns2:value>
@@ -1480,8 +1549,9 @@
                <ns2:component xsi:type="ns2:UIPanelType" UIID="selectGTypePanel">
 			      <ns2:layout xsi:type="ns2:TableLayoutType">
 			        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-			        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-			        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+			        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+			        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+			        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			      </ns2:layout>
 			      <ns2:Property name="style">
 		             <ns2:value xsi:type="ns2:StringPropertyType">
@@ -1506,20 +1576,35 @@
 			          <ns2:handler functionName="selectedSaleOrder"></ns2:handler>
 			        </ns2:EventListener>
 			      </ns2:component>
+			      <ns2:component xsi:type="ns2:UILabelType" UIID="hintsLabel">
+			        <ns2:UIStyle></ns2:UIStyle>
+			        <ns2:text xsi:type="ns2:StringPropertyType">
+			          <ns2:value></ns2:value>
+			        </ns2:text>
+			        <ns2:Property name="htmlValue">
+		               <ns2:value xsi:type="ns2:StringPropertyType">
+		                   <value>您可以创建批量机械产品的采购或销售。加工零件请到“我的加工单”里添加订单。</value>
+		               </ns2:value>
+		            </ns2:Property>
+			      </ns2:component>
 			      <ns2:layoutConstraint>
 			        <ns2:componentId>saleOrderLabel</ns2:componentId>
 			        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
 			      </ns2:layoutConstraint>
 			      <ns2:layoutConstraint>
 			        <ns2:componentId>purchaseOrderLabel</ns2:componentId>
-			        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+			        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+			      </ns2:layoutConstraint>
+			      <ns2:layoutConstraint>
+			        <ns2:componentId>hintsLabel</ns2:componentId>
+			        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL"></ns2:constraint>
 			      </ns2:layoutConstraint>
 			  </ns2:component>
                <ns2:component xsi:type="ns2:UIPanelType" UIID="selectRentOrderTypePanel">
 			      <ns2:layout xsi:type="ns2:TableLayoutType">
 			        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-			        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-			        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+			        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+			        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			      </ns2:layout>
 			      <ns2:Property name="style">
 		             <ns2:value xsi:type="ns2:StringPropertyType">
@@ -1550,7 +1635,7 @@
 			      </ns2:layoutConstraint>
 			      <ns2:layoutConstraint>
 			        <ns2:componentId>rentOrderLabel</ns2:componentId>
-			        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+			        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
 			      </ns2:layoutConstraint>
 			  </ns2:component>
 			   <ns2:layoutConstraint>

@@ -56,6 +56,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     var descriptionUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "descriptionUI"]
+        ,placeholder: "??????????????????????"
     });
 
     var countUILabel = new UIMaster.ui.label

@@ -119,6 +119,43 @@
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
+        <ns2:eventHandler functionName="openLoanMasterOrder">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openLoanMasterOrder-20170524-15435">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.ce.CEUtil;
+                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
+                    {
+                        IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+                        if (!userService.checkUserOnline(@page.getRequest().getSession())) {
+                            @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\");");
+                            return;
+                        }
+                        
+                        Table orderInfoTable = (Table)@page.getElement("loanMasterTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
+                        RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)orderInfoTable.getSelectedRow();
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.RLoanMasterOrder", input);
+                        @page.addElement(form);
+                        
+                        String title = "来自" + CEUtil.getValue(defaultUser.getCity()) + "的找师傅订单详情";
+                        form.openInWindows(title, null, true);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
 		<ns2:eventHandler functionName="takeGoldenOrder">
 		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="takeGoldenOrder-20160124-1333">
                 <ns2:exp>
@@ -929,6 +966,98 @@
                         </ns2:component>
                         <ns2:layoutConstraint>
                             <ns2:componentId>loanOrderTable</ns2:componentId>
+                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                                x="0" y="0" align="FULL"></ns2:constraint>
+                        </ns2:layoutConstraint>
+                    </ns2:panel>
+                </ns2:tab>
+	            <ns2:tab uiid="loanMasterInfoPanel">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>租个师傅</ns2:value>
+                    </ns2:title>
+                    <ns2:panel UIID="loanMasterInfoPanel">
+                        <ns2:layout xsi:type="ns2:TableLayoutType">
+                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+                        </ns2:layout>
+                        <ns2:component xsi:type="ns2:UITableType" UIID="loanMasterTable">
+                            <ns2:beElement>org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder</ns2:beElement>
+                            <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+                            <ns2:defaultRowSize>10</ns2:defaultRowSize>
+                            <ns2:showActionBar>true</ns2:showActionBar>
+                            <ns2:showFilter>true</ns2:showFilter>
+                            <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                                <ns2:expression xsi:type="ns2:ExpressionType">
+                                    <ns2:expressionString><![CDATA[
+                                    import java.util.List;
+                                    import org.shaolin.uimaster.page.AjaxContext;
+                                    import org.shaolin.uimaster.page.ajax.*;
+									import org.shaolin.bmdp.runtime.security.UserContext;
+                                    import org.shaolin.vogerp.ecommercial.ce.*; 
+                                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+                                    import org.shaolin.bmdp.runtime.AppContext;
+                                    import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
+                                    import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
+                                    {
+                                          if ($tableCondition == null) {
+                                             $tableCondition = TableConditions.createCondition(new RentOrLoanOrderImpl());
+                                             $tableCondition.setCount(10);
+                                             $tableCondition.addOrder("createDate", false);
+                                          }
+                                          $tableCondition.addOrder("statusInt", false);
+                                          RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
+                                          condition.setType(RentOrLoanOrderType.FINDMASTER);
+                                          condition.setStatus(OrderStatusType.PUBLISHED);
+                                          OrderUtil.updateSearchCriteria($page, condition);
+		                                  
+                                          return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
+                                                    $tableCondition.getOrders(),
+                                                    $tableCondition.getOffset(), 
+                                                    $tableCondition.getCount());
+                                    }]]></ns2:expressionString>
+                                </ns2:expression>
+                            </ns2:query>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>师傅详情</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.id</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>HTMLItem</ns2:type></ns2:uiType>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import java.util.HashMap;
+			                            import org.shaolin.uimaster.page.AjaxContext;
+			                            import org.shaolin.uimaster.page.AjaxActionHelper;
+			                            import org.shaolin.uimaster.page.ajax.*;
+			                            import org.shaolin.uimaster.page.ajax.json.IDataItem;
+			                            import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+			                            import org.shaolin.uimaster.page.od.formats.FormatUtil;
+			                            {
+			                                StringBuffer sb = new StringBuffer();
+			                                sb.append(OrderUtil.getOrderHTMLInfo($rowBE));
+			                                sb.append("<div>").append(FormatUtil.formatDateTime($rowBE.getCreateDate())).append("</div>");
+			                                return sb.toString();
+			                            }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:rowExpression>
+                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.runtime.AppContext;
+                                        {
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:updateCondition>
+                            </ns2:column>
+                            <ns2:defaultActions>
+                                <ns2:defaultOpenAction>openLoanMasterOrder</ns2:defaultOpenAction>
+                            </ns2:defaultActions>
+                        </ns2:component>
+                        <ns2:layoutConstraint>
+                            <ns2:componentId>loanMasterTable</ns2:componentId>
                             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                                 x="0" y="0" align="FULL"></ns2:constraint>
                         </ns2:layoutConstraint>

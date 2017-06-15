@@ -179,6 +179,10 @@
                          IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                          payService.ensurePay($order.getSerialNumber());     
 			             
+			             if ($order.getDeliveryInfo() == null) {
+						    DeliveryInfoImpl takener = (DeliveryInfoImpl)OrderModel.INSTANCE.get($order.getDeliveryInfoId(), DeliveryInfoImpl.class);
+			                $order.setDeliveryInfo(takener);
+			             }
 			             IDeliveryInfo deliveryInfo = $order.getDeliveryInfo();
 						 //IPersonalInfo takener = OrderModel.INSTANCE.get(deliveryInfo.getToUserId(), PersonalInfoImpl.class);
 			             

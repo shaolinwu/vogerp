@@ -12,7 +12,7 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "machiningOrderInfoPanel",prefix + "goldenOrderInfoPanel",prefix + "gsaleOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "loanOrderInfoPanel"]
+        ,subComponents: [prefix + "machiningOrderInfoPanel",prefix + "goldenOrderInfoPanel",prefix + "gsaleOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "loanOrderInfoPanel",prefix + "loanMasterInfoPanel"]
     });
     var machingOrderTable = new UIMaster.ui.objectlist
     ({
@@ -69,6 +69,17 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob(json)
         ,items: []
         ,subComponents: [prefix + "loanOrderTable"]
     });
+    var loanMasterTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "loanMasterTable"]
+    });
+
+    var loanMasterInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "loanMasterInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "loanMasterTable"]
+    });
 
     var searchBar = new org_shaolin_vogerp_ecommercial_form_SearchBar_mob({"prefix":prefix + "searchBar."});
 
@@ -110,6 +121,10 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob(json)
 
     Form.loanOrderTable=loanOrderTable;
 
+    Form.loanMasterInfoPanel=loanMasterInfoPanel;
+
+    Form.loanMasterTable=loanMasterTable;
+
     Form.searchBar=searchBar;
 
     Form.searchConditionPanel=searchConditionPanel;
@@ -134,6 +149,8 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob(json)
     Form.openRentOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob_openRentOrder;
 
     Form.openLoanOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob_openLoanOrder;
+
+    Form.openLoanMasterOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob_openLoanMasterOrder;
 
     Form.takeGoldenOrder = org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob_takeGoldenOrder;
 
@@ -201,6 +218,17 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openLoanOrder-20160124-15435",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob_openLoanOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob_openLoanMasterOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob_openLoanMasterOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openLoanMasterOrder-20170524-15435",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob_openLoanMasterOrder */
 
 
     /* auto generated eventlistener function declaration */

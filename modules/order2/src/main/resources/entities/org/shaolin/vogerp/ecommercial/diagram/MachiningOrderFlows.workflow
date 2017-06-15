@@ -71,9 +71,9 @@
 		                }
                         morder.setStatus(OrderStatusType.VERIFYING);
 			            if (morder.getId() == 0) {
-			                OrderModel.INSTANCE.create(morder, true);
+			                OrderModel.INSTANCE.create(morder);
 			            } else {
-			                OrderModel.INSTANCE.update(morder, true);
+			                OrderModel.INSTANCE.update(morder);
 			            }
                         
                         form.closeIfinWindows();
@@ -537,14 +537,16 @@
                     }
                     ]]></expressionString>
                 </ns2:expression>
-                <ns2:filter><expressionString><![CDATA[
-                    import org.shaolin.bmdp.runtime.security.UserContext;
-                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                    {
-                       return $beObject.getStatus() == OrderStatusType.PUBLISHED 
-                           && $beObject.getOrgId() == UserContext.getUserContext().getOrgId();
-                    }
-                ]]></expressionString></ns2:filter>
+                <ns2:filter>
+	                <expressionString><![CDATA[
+	                    import org.shaolin.bmdp.runtime.security.UserContext;
+	                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+	                    {
+	                       return $beObject.getStatus() == OrderStatusType.PUBLISHED 
+	                           && $beObject.getOrgId() == UserContext.getUserContext().getOrgId();
+	                    }
+	                ]]></expressionString>
+                </ns2:filter>
             </ns2:uiAction>
             <ns2:participant partyType="GenericOrganizationType.Director,0" onlyOwner="true"/>
             <ns2:process>
@@ -614,7 +616,7 @@
 			             input.put("editable", new Boolean(true));
 			             RefForm form = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PaymentMethod", input);
 			             $page.addElement(form);
-			             form.openInWindows("支付方式选择", null, true);
+			             form.openInWindows("预支付方式选择", null, true);
 			             
                          String description = "("+OrderUtil.getOrderLink($gorder)+")" + $gorder.getDescription();
                          NotificationImpl message = new NotificationImpl();

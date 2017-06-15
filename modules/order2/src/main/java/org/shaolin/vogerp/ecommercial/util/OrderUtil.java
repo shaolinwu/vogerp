@@ -182,7 +182,6 @@ public class OrderUtil {
 		}
 	}
 	
-	
 	public static String getOrderHTMLInfo(IEOrder order) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<div class='vogerp_order'>");
@@ -196,6 +195,8 @@ public class OrderUtil {
 		} else if (order instanceof IRentOrLoanOrder) {
 			if (((IRentOrLoanOrder)order).getType() == RentOrLoanOrderType.LOAN) {
 				sb.append("\u7684\u79DF\u8D41\u8BA2\u5355");
+			} else if (((IRentOrLoanOrder)order).getType() == RentOrLoanOrderType.FINDMASTER) {
+				sb.append("\u7684\u627E\u5E08\u5085\u8BA2\u5355");
 			} else {
 				sb.append("\u7684\u51FA\u79DF\u8BA2\u5355");
 			}

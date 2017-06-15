@@ -123,13 +123,16 @@
                         input.put("editable", new Boolean(true));
                         
                         String formName = "org.shaolin.vogerp.ecommercial.form.RentOrderEditor";
-	                      if (defaultUser.getType() == RentOrLoanOrderType.LOAN) {
-	               	         formName = "org.shaolin.vogerp.ecommercial.form.RLoanOrderEditor";
-	               	      }
-	                      RefForm form = new RefForm("rentOrLoanOrder", formName, input);
-	                      @page.addElement(form);
-	                      
-	                      form.openInWindows("设备租赁订单详情", new TableCallBack("rentOrderTable"), true);
+                        if (defaultUser.getType() == RentOrLoanOrderType.LOAN) {
+               	           formName = "org.shaolin.vogerp.ecommercial.form.RLoanOrderEditor";
+               	        }
+               	        if (defaultUser.getType() == RentOrLoanOrderType.FINDMASTER) {
+                           formName = "org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderEditor";
+                        }
+                        RefForm form = new RefForm("rentOrLoanOrder", formName, input);
+                        @page.addElement(form);
+                      
+                        form.openInWindows("租赁订单详情", new TableCallBack("rentOrderTable"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>

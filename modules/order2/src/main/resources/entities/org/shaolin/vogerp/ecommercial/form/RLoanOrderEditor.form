@@ -165,6 +165,10 @@
             <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
                 <ns2:value>false</ns2:value>
             </ns2:allowBlank>
+            <ns2:maxLength xsi:type="ns2:NumericPropertyType">
+	            <type>int</type>
+	            <value>200</value>
+	        </ns2:maxLength>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="rentDateTypeUILabel">
             <ns2:UIStyle></ns2:UIStyle>

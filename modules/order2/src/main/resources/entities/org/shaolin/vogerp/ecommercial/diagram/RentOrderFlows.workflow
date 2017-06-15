@@ -61,19 +61,16 @@
                         RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)out.get("beObject");
                         gorder.setType(RentOrLoanOrderType.RENT);
                         gorder.setStatus(OrderStatusType.VERIFYING);
-                        gorder.setCount(1);
-			            if (gorder.getDeliveryInfo() != null) {
-			                if (gorder.getDeliveryInfo().getId() > 0) {
-				               OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
-				            } else {
-				               OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
-				            }
-				            gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
+		                if (gorder.getDeliveryInfo().getId() > 0) {
+			               OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
+			            } else {
+			               OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
+			               gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
 			            }
 			            if (gorder.getId() == 0) {
-			                OrderModel.INSTANCE.create(gorder, true);
+			                OrderModel.INSTANCE.create(gorder);
 			            } else {
-			                OrderModel.INSTANCE.update(gorder, true);
+			                OrderModel.INSTANCE.update(gorder);
 			            }
                         
                         form.closeIfinWindows();
@@ -116,21 +113,72 @@
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
                         RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)out.get("beObject");
-                        gorder.setCount(1);
                         gorder.setType(RentOrLoanOrderType.LOAN);
                         gorder.setStatus(OrderStatusType.VERIFYING);
-			            if (gorder.getDeliveryInfo() != null) {
-			                if (gorder.getDeliveryInfo().getId() > 0) {
-				               OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
-				            } else {
-				               OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
-				            }
-				            gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
+		                if (gorder.getDeliveryInfo().getId() > 0) {
+			               OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
+			            } else {
+			               OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
+			               gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
 			            }
 			            if (gorder.getId() == 0) {
-			                OrderModel.INSTANCE.create(gorder, true);
+			                OrderModel.INSTANCE.create(gorder);
 			            } else {
-			                OrderModel.INSTANCE.update(gorder, true);
+			                OrderModel.INSTANCE.update(gorder);
+			            }
+                        
+                        form.closeIfinWindows();
+                        @page.removeForm(@page.getEntityUiid()); 
+                        
+                        HashMap result = new HashMap();
+                        result.put("gOrder", gorder);
+                        return result;
+                    }
+                    ]]></expressionString>
+                </ns2:expression>
+                <ns2:filter>
+                  <expressionString><![CDATA[
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    {
+                       return $beObject.getStatus() == OrderStatusType.CREATED;
+                    }
+                   ]]></expressionString>
+                </ns2:filter>
+            </ns2:uiAction>
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderEditor"
+                actionName="publishGorder2" actionText="发布">
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.Date;
+                    import java.util.ArrayList;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.vogerp.commonmodel.IUserService; 
+                    import org.shaolin.vogerp.order.be.PurchaseOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    { 
+                        RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+                        HashMap out = (HashMap)form.ui2Data();
+                        RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)out.get("beObject");
+                        gorder.setType(RentOrLoanOrderType.FINDMASTER);
+                        gorder.setStatus(OrderStatusType.VERIFYING);
+		                if (gorder.getDeliveryInfo().getId() > 0) {
+			               OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
+			            } else {
+			               OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
+			               gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
+			            }
+			            if (gorder.getId() == 0) {
+			                OrderModel.INSTANCE.create(gorder);
+			            } else {
+			                OrderModel.INSTANCE.update(gorder);
 			            }
                         
                         form.closeIfinWindows();
@@ -477,7 +525,7 @@
         <ns2:mission-node name="acceptPrice" expiredDays="0" expiredHours="0" autoTrigger="false">
             <ns2:description>接受当前价格</ns2:description>
             <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.ROOfferPriceTable"
-                actionName="acceptOfferPrice" actionText="成交选中价格">
+                actionName="acceptOfferPrice" actionText="选中价格成交">
                 <ns2:expression>
                     <expressionString><![CDATA[
                     import java.util.HashMap;
@@ -522,6 +570,16 @@
                     }
                     ]]></expressionString>
                 </ns2:expression>
+                <ns2:filter>
+	                <expressionString><![CDATA[
+	                    import org.shaolin.bmdp.runtime.security.UserContext;
+	                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+	                    {
+	                       return $beObject.getStatus() == OrderStatusType.PUBLISHED 
+	                           && $beObject.getOrgId() == UserContext.getUserContext().getOrgId();
+	                    }
+	                ]]></expressionString>
+                </ns2:filter>
             </ns2:uiAction>
             <ns2:participant partyType="GenericOrganizationType.Director,0" />
             <ns2:process>
@@ -590,7 +648,8 @@
                          
                          IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                          IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class); 
-                         if ($gorder.getType() == RentOrLoanOrderType.RENT) {
+                         if ($gorder.getType() == RentOrLoanOrderType.RENT
+                             || $gorder.getType() == RentOrLoanOrderType.FINDMASTER) {
 	                         IPayOrder payOrder = accountingService.createSelfPayOrder(PayBusinessType.EQUIPMENTRENTBUSI, 
 	                         						$gorder.getTakenCustomerId(), $gorder.getSerialNumber(), $gorder.getEndPrice());
                              if (payOrder.getDescription() == null) {
@@ -604,7 +663,7 @@
 				             input.put("editable", new Boolean(true));
 				             RefForm form = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PaymentMethod", input);
 				             $page.addElement(form);
-				             form.openInWindows("支付方式选择", null, true);
+				             form.openInWindows("预支付方式选择", null, true);
                          } else {
                              long orgId = orgService.getOrgIdByPartyId($selectedPrice.getTakenCustomerId());
 	                         IPayOrder payOrder = accountingService.createPayOrder(PayBusinessType.EQUIPMENTLOANBUSI, 
@@ -636,6 +695,112 @@
             	<ns2:dest name="PrepayCallBack" flow="PrepayFlow" entity="org.shaolin.vogerp.accounting.diagram.PaymentFlows"></ns2:dest>
             	<ns2:dest name="cancelGOrder"></ns2:dest>
             </ns2:eventDest>
+        </ns2:mission-node>
+        
+        <ns2:mission-node name="ensurePayMasterOrder" expiredDays="0" expiredHours="0" autoTrigger="false">
+            <ns2:description>确认支付给师傅</ns2:description>
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderTrack"
+                actionName="ensuprePay" actionText="确认支付">
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.Date;
+                    import java.util.ArrayList;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
+                    import org.shaolin.vogerp.ecommercial.dao.*;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.vogerp.commonmodel.IUserService; 
+                    import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl; 
+                    import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+                    { 
+                        RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+                        RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)form.getInputParameter("beObject");
+                        
+                        HashMap result = new HashMap();
+                        result.put("order", gorder);
+                        result.put("page", @page);
+                        
+                        form.closeIfinWindows();
+                        @page.removeForm(@page.getEntityUiid()); 
+                        
+                        return result;
+                    }
+                    ]]></expressionString>
+                </ns2:expression>
+                <ns2:filter><expressionString><![CDATA[
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    {
+                       return $beObject.getOrgId() == UserContext.getUserContext().getOrgId() 
+                              && $beObject.getTakenStatus() == OrderStatusType.TAKEN_PAYED;
+                    }
+                ]]></expressionString></ns2:filter>
+            </ns2:uiAction>
+            <ns2:participant partyType="GenericOrganizationType.Director,0" />
+            <ns2:process>
+                <ns2:var name="order" category="BusinessEntity" scope="InOut">
+                    <type entityName="org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder"></type>
+                </ns2:var>
+                <ns2:var name="page" category="JavaClass" scope="InOut">
+                    <type entityName="org.shaolin.uimaster.page.AjaxContext"></type>
+                </ns2:var>
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                    import java.util.List;
+                    import java.util.ArrayList;
+                    import java.util.Date;
+                    import java.util.HashMap;
+                    import org.shaolin.bmdp.utils.DateUtil;
+                    import org.shaolin.bmdp.utils.StringUtil;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.bmdp.runtime.be.ITaskEntity;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                    import org.shaolin.bmdp.workflow.be.*;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+                    import org.shaolin.vogerp.ecommercial.be.*;
+                    import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
+                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.commonmodel.IOrganizationService;
+                    import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+                    import org.shaolin.vogerp.accounting.be.IPayOrder;
+                    import org.shaolin.vogerp.accounting.ce.PayBusinessType;
+                    import org.shaolin.vogerp.accounting.IPaymentService;
+                    {
+                         $order.setTakenStatus(OrderStatusType.TAKEN_COMPLETED);
+			             @flowContext.save((ITaskEntity)$order);
+                         IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
+                         payService.ensurePay($order.getSerialNumber());     
+			             
+			             if ($order.getDeliveryInfo() == null) {
+						    DeliveryInfoImpl takener = (DeliveryInfoImpl)OrderModel.INSTANCE.get($order.getDeliveryInfoId(), DeliveryInfoImpl.class);
+			                $order.setDeliveryInfo(takener);
+			             }
+			             IDeliveryInfo deliveryInfo = $order.getDeliveryInfo();
+			             
+			             String description = "("+OrderUtil.getOrderLink($order)+")" + $order.getDescription();
+                         NotificationImpl message = new NotificationImpl();
+                         message.setPartyId(deliveryInfo.getToUserId());
+                         message.setSubject("您的订单确认付款成功！");
+                         message.setDescription(description);
+                         message.setCreateDate(new Date());
+                         
+                         ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+                         service.addNotification(message, true);
+			             Dialog.showMessageDialog("确认付款成功！", "", Dialog.INFORMATION_MESSAGE, null);
+                    }
+                     ]]></expressionString>
+                </ns2:expression>
+            </ns2:process>
+            <ns2:dest name="endNode"></ns2:dest>
         </ns2:mission-node>
         
         <ns2:mission-node name="cancelGOrder" expiredDays="0" expiredHours="0" autoTrigger="false">

@@ -27,8 +27,7 @@
         import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            HashMap out = (HashMap)form.ui2Data();
-            RentOrLoanOrderImpl beObject = (RentOrLoanOrderImpl)out.get("beObject");
+            RentOrLoanOrderImpl beObject = (RentOrLoanOrderImpl)form.getInputParameter("beObject");
             if (beObject.getOrgId() == UserContext.getUserContext().getOrgId()) {
                Dialog.showMessageDialog("这是您自己的订单，不可参与竞价。", "提醒", Dialog.INFORMATION_MESSAGE, null);
                return;
@@ -92,6 +91,16 @@
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="serialNumberUI">
             <ns2:UIStyle></ns2:UIStyle>
+            <ns2:Property name="htmlValue">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           { 
+			               return $beObject.getSerialNumber() + "(" +$beObject.getStatus().getDisplayName() + ")"; 
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+            </ns2:Property>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="descriptionUILabel">
             <ns2:UIStyle></ns2:UIStyle>
@@ -107,6 +116,16 @@
                    <type>int</type>
                    <value>100</value>
                </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="htmlValue">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           { 
+			               return $beObject.getDescription(); 
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:value>
             </ns2:Property>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="estimatedPriceUILabel">
@@ -135,6 +154,16 @@
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="dateMethodUI">
             <ns2:UIStyle></ns2:UIStyle>
+            <ns2:Property name="htmlValue">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           { 
+			               return $beObject.getDateType().getDisplayName();
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+            </ns2:Property>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="publishedCustomerIdUILabel">
             <ns2:UIStyle></ns2:UIStyle>
@@ -145,6 +174,17 @@
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="publishedCustomerIdUI">
             <ns2:UIStyle></ns2:UIStyle>
+            <ns2:Property name="htmlValue">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+			           { 
+			               return CustomerInfoUtil.getSecureCustomerBasicInfo($beObject.getPublishedCustomer()); 
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+            </ns2:Property>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="createDateUILabel">
             <ns2:UIStyle></ns2:UIStyle>
@@ -155,6 +195,17 @@
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="createDateUI">
             <ns2:UIStyle></ns2:UIStyle>
+            <ns2:Property name="htmlValue">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           import org.shaolin.uimaster.page.od.formats.FormatUtil;
+			           { 
+			               return FormatUtil.formatDate($beObject.getCreateDate()); 
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+            </ns2:Property>
           </ns2:component>
           <ns2:layoutConstraint>
             <ns2:componentId>serialNumberUILabel</ns2:componentId>
@@ -283,6 +334,11 @@
         <ns2:text xsi:type="ns2:StringPropertyType">
           <ns2:value>竟价</ns2:value>
         </ns2:text>
+        <ns2:editable xsi:type="ns2:ExpressionPropertyType">
+          <ns2:expression>
+            <expressionString>{return $beObject.getStatus() == org.shaolin.vogerp.ecommercial.ce.OrderStatusType.PUBLISHED;}</expressionString>
+          </ns2:expression>
+        </ns2:editable>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
@@ -344,20 +400,6 @@
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="serialNumberUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
-         <ns2:expression>
-             <expressionString>$beObject.getSerialNumber() + "(" +$beObject.getStatus().getDisplayName() + ")"</expressionString>
-         </ns2:expression>
-      </ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="descriptionUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.description" paramName="StringData"></ns2:DataComponent>
-    </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithCurrency"></ns2:mappingRule>
       <ns2:UIComponent componentPath="estimatedPriceUI" paramName="UIWidgetType"></ns2:UIComponent>
@@ -373,29 +415,6 @@
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="dateMethodUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
-        <ns2:expression>
-          <expressionString>{return $beObject.getDateType().getDisplayName();}</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping6">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="publishedCustomerIdUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
-        <ns2:expression>
-          <expressionString>org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil.getSecureCustomerBasicInfo($beObject.getPublishedCustomer())</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping7">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithDate"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="createDateUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.createDate" paramName="Date"></ns2:DataComponent>
-    </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping8">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="htmlDescUI" paramName="UIWidgetType"></ns2:UIComponent>
@@ -408,7 +427,6 @@
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString>{
-@odContext.executeAllMappings();
 }</expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>

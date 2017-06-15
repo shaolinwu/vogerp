@@ -62,7 +62,17 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderEditor(json)
     ({
         ui: elementList[prefix + "dateCountUI"]
         ,isNumber: true
-    });
+        ,validators:[
+        {
+            func: function() {
+                
+	                    { 
+	                    return this.value != 0 || this.value != "0";
+	                    }
+            }
+            ,msg: ""
+        }
+]    });
 
     var estimatedPriceUILabel = new UIMaster.ui.label
     ({

@@ -71,9 +71,9 @@
 		                   gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
 		                }
 			            if (gorder.getId() == 0) {
-			                OrderModel.INSTANCE.create(gorder, true);
+			                OrderModel.INSTANCE.create(gorder);
 			            } else {
-			                OrderModel.INSTANCE.update(gorder, true);
+			                OrderModel.INSTANCE.update(gorder);
 			            }
                         
                         form.closeIfinWindows();
@@ -124,9 +124,9 @@
 			                gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
 			            }
 			            if (gorder.getId() == 0) {
-			                OrderModel.INSTANCE.create(gorder, true);
+			                OrderModel.INSTANCE.create(gorder);
 			            } else {
-			                OrderModel.INSTANCE.update(gorder, true);
+			                OrderModel.INSTANCE.update(gorder);
 			            }
                         
                         form.closeIfinWindows();
@@ -477,7 +477,7 @@
 			expiredHours="0" autoTrigger="false">
 			<ns2:description>接受当前价格</ns2:description>
 			<ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.GOOfferPriceTable"
-				actionName="acceptOfferPrice" actionText="成交选中价格">
+				actionName="acceptOfferPrice" actionText="选中价格成交">
 				<ns2:expression>
 					<expressionString><![CDATA[
                     import java.util.HashMap;
@@ -527,8 +527,7 @@
                     import org.shaolin.bmdp.runtime.security.UserContext;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     {
-                       return UserContext.hasRole("GenericOrganizationType.Director,0") 
-                              && $beObject.getOrgId() == UserContext.getUserContext().getOrgId() 
+                       return $beObject.getOrgId() == UserContext.getUserContext().getOrgId() 
                               && $beObject.getStatus() == OrderStatusType.PUBLISHED;
                     }
                   ]]></expressionString>
@@ -604,7 +603,7 @@
 				             input.put("editable", new Boolean(true));
 				             RefForm form = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PaymentMethod", input);
 				             $page.addElement(form);
-				             form.openInWindows("支付方式选择", null, true);
+				             form.openInWindows("预支付方式选择", null, true);
                          } else {
 	                         long orgId = orgService.getOrgIdByPartyId($selectedPrice.getTakenCustomerId());
                              IPayOrder payOrder = accountingService.createPayOrder(PayBusinessType.GOLDENSORDERBUSI, 

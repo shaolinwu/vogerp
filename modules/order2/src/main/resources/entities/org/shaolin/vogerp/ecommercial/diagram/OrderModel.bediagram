@@ -307,6 +307,19 @@
             <bediagram:name>deposit</bediagram:name>
             <bediagram:type xsi:type="bediagram:DoubleType" />
         </bediagram:member>
+        
+        <!-- for loaning a master business. -->
+        <bediagram:member>
+            <bediagram:name>masterType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="MasterType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <!-- the years that the master experience. -->
+            <bediagram:name>workYears</bediagram:name>
+            <bediagram:type xsi:type="bediagram:IntType" />
+        </bediagram:member>
     </bediagram:beEntity>    
 	<!-- 
 	         做为一个共用的独立组件共享库。包括四类项目： 生产材料部件, 加工设备, 表面处理方式  和其它三方独立辅材料。
@@ -694,6 +707,11 @@
             <bediagram:intValue>1</bediagram:intValue>
             <bediagram:description>出租订单</bediagram:description>
         </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>FindMaster</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>找个师傅</bediagram:description>
+        </bediagram:constantValue>
     </bediagram:ceEntity>
     
     <bediagram:ceEntity>
@@ -710,12 +728,101 @@
         </bediagram:constantValue>
     </bediagram:ceEntity>
     
+    <!-- 加工或其它行业师傅类型 -->
+    <bediagram:ceEntity>
+        <common:entityName>MasterType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>Master1</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>电工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/1.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master2</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>机械设备维修工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/2.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master3</bediagram:value>
+            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:description>电焊工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/3.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master4</bediagram:value>
+            <bediagram:intValue>4</bediagram:intValue>
+            <bediagram:description>电加工设备操作工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/4.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master5</bediagram:value>
+            <bediagram:intValue>5</bediagram:intValue>
+            <bediagram:description>钳工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/5.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master6</bediagram:value>
+            <bediagram:intValue>6</bediagram:intValue>
+            <bediagram:description>车工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/6.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master7</bediagram:value>
+            <bediagram:intValue>7</bediagram:intValue>
+            <bediagram:description>铣工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/7.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master8</bediagram:value>
+            <bediagram:intValue>8</bediagram:intValue>
+            <bediagram:description>刨工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/8.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master9</bediagram:value>
+            <bediagram:intValue>9</bediagram:intValue>
+            <bediagram:description>磨工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/9.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master10</bediagram:value>
+            <bediagram:intValue>10</bediagram:intValue>
+            <bediagram:description>冲压工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/10.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master11</bediagram:value>
+            <bediagram:intValue>11</bediagram:intValue>
+            <bediagram:description>铸造工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/11.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master12</bediagram:value>
+            <bediagram:intValue>12</bediagram:intValue>
+            <bediagram:description>锻造工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/12.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master13</bediagram:value>
+            <bediagram:intValue>13</bediagram:intValue>
+            <bediagram:description>热处理工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/13.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master14</bediagram:value>
+            <bediagram:intValue>14</bediagram:intValue>
+            <bediagram:description>其它工种</bediagram:description>
+            <bediagram:icon>/images/gorder/master/-1.png</bediagram:icon>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
+    
     <bediagram:ceEntity>
         <common:entityName>RentDateType</common:entityName>
         <bediagram:constantValue>
-            <bediagram:value>Daily</bediagram:value>
+            <bediagram:value>Monthly</bediagram:value>
             <bediagram:intValue>1</bediagram:intValue>
-            <bediagram:description>天</bediagram:description>
+            <bediagram:description>月</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Weekly</bediagram:value>
@@ -723,9 +830,9 @@
             <bediagram:description>周</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
-            <bediagram:value>Monthly</bediagram:value>
+            <bediagram:value>Daily</bediagram:value>
             <bediagram:intValue>3</bediagram:intValue>
-            <bediagram:description>月</bediagram:description>
+            <bediagram:description>天</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
     

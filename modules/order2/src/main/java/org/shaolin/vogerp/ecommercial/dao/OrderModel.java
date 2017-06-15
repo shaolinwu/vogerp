@@ -161,6 +161,9 @@ public class OrderModel extends BEEntityDaoObject {
             if (scObject.getType() != null && scObject.getType() != org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType.NOT_SPECIFIED) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.typeInt", scObject.getType().getIntValue()));
             }
+            if (scObject.getMasterType() != null && scObject.getMasterType() != org.shaolin.vogerp.ecommercial.ce.MasterType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.masterTypeInt", scObject.getMasterType().getIntValue()));
+            }
             if (scObject.getStartCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getStartCreateDate()));
             }
@@ -212,6 +215,9 @@ public class OrderModel extends BEEntityDaoObject {
             }
             if (scObject.getType() != null && scObject.getType() != org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType.NOT_SPECIFIED) {
                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.typeInt", scObject.getType().getIntValue()));
+            }
+            if (scObject.getMasterType() != null && scObject.getMasterType() != org.shaolin.vogerp.ecommercial.ce.MasterType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.masterTypeInt", scObject.getMasterType().getIntValue()));
             }
             if (scObject.getStartCreateDate() != null) {
                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getStartCreateDate()));
