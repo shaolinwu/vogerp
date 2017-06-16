@@ -113,7 +113,13 @@
           <ns2:value xsi:type="ns2:ExpressionPropertyType">
          <ns2:expression>
            <expressionString><![CDATA[
+           import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+           import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
+           import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
            { 
+               if ($beObject.getType() == RentOrLoanOrderType.FINDMASTER) {
+                   return ($beObject.getDateCount() * $beObject.getEstimatedPrice());
+               }
                if ($beObject.getEndPrice() > 0) {
                   return $beObject.getEndPrice();
                } else { 

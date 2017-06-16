@@ -136,7 +136,7 @@
 			           <expressionString><![CDATA[
 			           { 
 			               return "聘用时间一共(<span style='color:blue;'>"+$beObject.getDateCount()+"</span>)个" + $beObject.getDateType().getDisplayName() 
-			                      + ", 支付费用： <span style='color:blue;'>" + $beObject.getEstimatedPrice() + "元</span>"; 
+			                      + ", 总支付费用： <span style='color:blue;'>" + ($beObject.getDateCount() * $beObject.getEstimatedPrice()) + "元</span>"; 
 			           }]]></expressionString>
 			         </ns2:expression>
 		        </ns2:value>

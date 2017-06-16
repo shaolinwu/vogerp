@@ -17,9 +17,6 @@ import javax.servlet.http.HttpSession;
 import org.shaolin.bmdp.i18n.LocaleContext;
 import org.shaolin.bmdp.json.JSONException;
 import org.shaolin.bmdp.json.JSONObject;
-
-import com.alipay.api.request.AlipayTradeRefundRequest;
-import com.alipay.api.response.AlipayTradeRefundResponse;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
@@ -56,9 +53,11 @@ import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.request.AlipayTradeQueryRequest;
+import com.alipay.api.request.AlipayTradeRefundRequest;
 import com.alipay.api.request.AlipayTradeWapPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
+import com.alipay.api.response.AlipayTradeRefundResponse;
 
 /**
  * We are able to debug this callback handler through Admin console by enabling 'enableDebugger'.
@@ -228,6 +227,9 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 			if(response.isSuccess()){
 				order.setStatus(PayOrderStatusType.REFUND);
                 AccountingModel.INSTANCE.update(order, true);
+                IPaymentService payService = AppContext.get().getService(IPaymentService.class);
+    			payService.notifyPayRefund(order);
+                
 				return SUCCESS;
 			} else {
 				// TODO failed post process

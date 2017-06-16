@@ -231,6 +231,16 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="amountUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:Property name="htmlValue">
+           <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                 <ns2:expression>
+                   <expressionString><![CDATA[
+                   { 
+                       return $beObject.getPayOrder().getAmount()/100 + "";
+                   }]]></expressionString>
+                 </ns2:expression>
+            </ns2:value>
+        </ns2:Property>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="commentUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -391,11 +401,6 @@
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithFloatNumber"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="amountUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.amount" paramName="FloatNumber"></ns2:DataComponent>
-    </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="commentUI" paramName="UIWidgetType"></ns2:UIComponent>

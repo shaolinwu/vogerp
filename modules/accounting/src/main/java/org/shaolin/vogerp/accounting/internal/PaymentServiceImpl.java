@@ -60,7 +60,14 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	
 	public void notifyPaySuccess(IPayOrder payOrder) {
 		for (PayOrderStatusListener listener: listeners) {
-			listener.notifySuccess(payOrder);
+			listener.notifyPaySuccess(payOrder);
+		}
+	}
+	
+	@Override
+	public void notifyPayRefund(IPayOrder payOrder) {
+		for (PayOrderStatusListener listener: listeners) {
+			listener.notifyPayRefund(payOrder);
 		}
 	}
 	

@@ -188,7 +188,7 @@
                  <ns2:expression>
                    <expressionString><![CDATA[
                    { 
-                       return $beObject.getPayOrder().getAmount() + "";
+                       return $beObject.getPayOrder().getAmount()/100 + "";
                    }]]></expressionString>
                  </ns2:expression>
             </ns2:value>

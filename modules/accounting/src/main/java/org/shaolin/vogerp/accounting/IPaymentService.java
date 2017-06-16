@@ -20,6 +20,8 @@ public interface IPaymentService {
 	
 	public void notifyPaySuccess(IPayOrder payOrder);
 	
+	public void notifyPayRefund(IPayOrder payOrder);
+	
 	public void notifyPayFail(IPayOrder payOrder);
 	
 	public IPayOrder createSelfPayOrder(PayBusinessType type, long endUserId, String orderSeriaNumber, double amount);

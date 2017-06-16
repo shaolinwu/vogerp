@@ -77,6 +77,8 @@ public class DevTestHandler implements PaymentHandler {
 	public String refund(final IPayOrder order) throws PaymentException {
 		order.setStatus(PayOrderStatusType.REFUND);
         AccountingModel.INSTANCE.update(order, true);
+        IPaymentService payService = AppContext.get().getService(IPaymentService.class);
+		payService.notifyPayRefund(order);
 		return SUCCESS;
 	}
 	

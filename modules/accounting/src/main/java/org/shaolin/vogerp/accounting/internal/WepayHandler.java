@@ -332,6 +332,8 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 				// TODO successful post process
 				order.setStatus(PayOrderStatusType.REFUND);
                 AccountingModel.INSTANCE.update(order, true);
+                IPaymentService payService = AppContext.get().getService(IPaymentService.class);
+    			payService.notifyPayRefund(order);
 				return SUCCESS;
 			} else {
 				// TODO failed post process

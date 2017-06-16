@@ -89,6 +89,7 @@
                 
                 String formName = "org.shaolin.vogerp.ecommercial.form.OrderPaymentAndDeliveryTrack";
                 if (defaultUser.getType() == RentOrLoanOrderType.FINDMASTER) {
+                   input.put("beObject", defaultUser);
                    formName = "org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderTrack";
                 }
                 

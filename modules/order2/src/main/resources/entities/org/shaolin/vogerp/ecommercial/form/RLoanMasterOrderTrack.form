@@ -35,11 +35,11 @@
             IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
             IPayOrder payOrder = accountingService.queryForPayOrder(order.getSerialNumber());
             if (payOrder != null) {
-                if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
+                 if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
                     Dialog.showMessageDialog("您的订单已支付成功！请刷新页面。", "", Dialog.INFORMATION_MESSAGE, null);
                     return;
-                }
-                HashMap input = new HashMap();
+                 }
+                 HashMap input = new HashMap();
 	             input.put("beObject", payOrder);
 	             input.put("editable", new Boolean(true));
 	             RefForm form1 = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PaymentMethod", input);
