@@ -14,7 +14,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         ,vertical: true
         ,closeOthersByDefault: true
         ,items: []
-        ,subComponents: [prefix + "photoPanel",prefix + "prodcutInfoPanel",prefix + "deliveryInfoPanel"]
+        ,subComponents: [prefix + "photoPanel",prefix + "deliveryInfoPanel"]
     });
     var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
 
@@ -121,20 +121,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         ,items: []
         ,subComponents: [prefix + "photoUI",prefix + "attributePanel"]
     });
-    var htmlDescUI = new UIMaster.ui.textarea
-    ({
-        ui: elementList[prefix + "htmlDescUI"]
-        ,hiddenToolbar: false
-        ,persistable: true
-        ,height: "300px"
-    });
-
-    var prodcutInfoPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "prodcutInfoPanel"]
-        ,items: []
-        ,subComponents: [prefix + "htmlDescUI"]
-    });
     var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView({"prefix":prefix + "deliveryInfoUI."});
 
     var invoiceTypeUILabel = new UIMaster.ui.label
@@ -228,10 +214,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.estimatedPriceUI=estimatedPriceUI;
 
-    Form.prodcutInfoPanel=prodcutInfoPanel;
-
-    Form.htmlDescUI=htmlDescUI;
-
     Form.deliveryInfoPanel=deliveryInfoPanel;
 
     Form.deliveryInfoUI=deliveryInfoUI;
@@ -283,10 +265,6 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     Form.estimatedPriceUILabel=estimatedPriceUILabel;
 
     Form.estimatedPriceUI=estimatedPriceUI;
-
-    Form.prodcutInfoPanel=prodcutInfoPanel;
-
-    Form.htmlDescUI=htmlDescUI;
 
     Form.deliveryInfoPanel=deliveryInfoPanel;
 

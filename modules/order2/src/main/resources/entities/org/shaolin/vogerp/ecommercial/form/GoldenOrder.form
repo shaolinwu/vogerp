@@ -24,7 +24,9 @@
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.bmdp.runtime.security.UserContext;
+        import org.shaolin.vogerp.ecommercial.be.IEOrder;
         import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             GoldenOrderImpl beObject = (GoldenOrderImpl)form.getInputParameter("beObject");
@@ -32,6 +34,14 @@
                Dialog.showMessageDialog("这是您自己的订单，不可参与竞价。", "提醒", Dialog.INFORMATION_MESSAGE, null);
                return;
             }
+            int state = OrderUtil.checkPriceOffered((IEOrder)beObject, UserContext.getUserContext().getUserId());
+            if (state == -1) {
+               Dialog.showMessageDialog("竞价失败，请刷新订单状态！", "提醒", Dialog.WARNING_MESSAGE, null);
+               return;
+            } else if (state == -2) {
+               Dialog.showMessageDialog("您已出价一次，不可重复竞价！", "提醒", Dialog.WARNING_MESSAGE, null);
+               return;
+            } 
             
             HashMap input = new HashMap();
             input.put("beObject", beObject);
@@ -134,6 +144,18 @@
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UILabelType" UIID="estimatedPriceUI">
 	        <ns2:UIStyle></ns2:UIStyle>
+	        <ns2:Property name="htmlValue">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           import org.shaolin.bmdp.utils.StringUtil;
+			           import org.shaolin.uimaster.page.od.formats.FormatUtil;
+			           { 
+			               return FormatUtil.getCurrency($beObject.getEstimatedPrice(), null, true); 
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+	         </ns2:Property>
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UILabelType" UIID="publishedCustomerIdUILabel">
 	        <ns2:UIStyle></ns2:UIStyle>

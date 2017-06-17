@@ -8,7 +8,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderEditor(json)
         ui: elementList[prefix + "funcsPanel"]
         ,vertical: true
         ,items: []
-        ,subComponents: [prefix + "photoPanel",prefix + "deliveryInfoPanel",prefix + "prodcutInfoPanel"]
+        ,subComponents: [prefix + "photoPanel",prefix + "deliveryInfoPanel"]
     });
     var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
 
@@ -172,20 +172,6 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderEditor(json)
         ,items: []
         ,subComponents: [prefix + "deliveryInfoUI",prefix + "invoiceTypeUILabel",prefix + "invoiceTypeUI",prefix + "invoiceSignUILabel",prefix + "invoiceSignUI"]
     });
-    var htmlDescUI = new UIMaster.ui.textarea
-    ({
-        ui: elementList[prefix + "htmlDescUI"]
-        ,hiddenToolbar: false
-        ,persistable: true
-        ,height: "300px"
-    });
-
-    var prodcutInfoPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "prodcutInfoPanel"]
-        ,items: []
-        ,subComponents: [prefix + "htmlDescUI"]
-    });
 
     var saveTempbtn = new UIMaster.ui.button
     ({
@@ -265,10 +251,6 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderEditor(json)
 
     Form.invoiceSignUI=invoiceSignUI;
 
-    Form.prodcutInfoPanel=prodcutInfoPanel;
-
-    Form.htmlDescUI=htmlDescUI;
-
     Form.saveTempbtn=saveTempbtn;
 
     Form.cancelbtn=cancelbtn;
@@ -322,10 +304,6 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderEditor(json)
     Form.invoiceSignUILabel=invoiceSignUILabel;
 
     Form.invoiceSignUI=invoiceSignUI;
-
-    Form.prodcutInfoPanel=prodcutInfoPanel;
-
-    Form.htmlDescUI=htmlDescUI;
 
     Form.actionPanel=actionPanel;
 

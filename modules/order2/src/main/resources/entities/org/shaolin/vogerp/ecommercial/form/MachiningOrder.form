@@ -16,13 +16,11 @@
             HashMap out = (HashMap)form.ui2Data();
 
             MachiningOrderImpl defaultUser = (MachiningOrderImpl)out.get("beObject");
-            if (defaultUser.getDeliveryInfo() != null) {
-                if (defaultUser.getDeliveryInfo().getId() > 0) {
-                   OrderModel.INSTANCE.update(defaultUser.getDeliveryInfo());
-                } else {
-                   OrderModel.INSTANCE.create(defaultUser.getDeliveryInfo());
-                }
-                defaultUser.setDeliveryInfoId(defaultUser.getDeliveryInfo().getId());
+            if (defaultUser.getDeliveryInfo().getId() > 0) {
+               OrderModel.INSTANCE.update(defaultUser.getDeliveryInfo());
+            } else {
+               OrderModel.INSTANCE.create(defaultUser.getDeliveryInfo());
+               defaultUser.setDeliveryInfoId(defaultUser.getDeliveryInfo().getId());
             }
             if (defaultUser.getId() == 0) {
                 OrderModel.INSTANCE.create(defaultUser);

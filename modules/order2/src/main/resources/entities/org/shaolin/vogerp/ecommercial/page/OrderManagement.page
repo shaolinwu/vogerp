@@ -524,7 +524,7 @@
                       RefForm form = new RefForm("rentOrLoanOrder", "org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderEditor", input);
                       @page.addElement(form);
                       
-                      form.openInWindows("新建设备求租订单", new TableCallBack("rentOrderTable"), true);
+                      form.openInWindows("新建找个师傅订单", new TableCallBack("rentOrderTable"), true);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>
@@ -631,7 +631,9 @@
                          input.put("editable", new Boolean(true));
                          input.put("order", defaultUser);
                       }
+                      String title = "租赁订单详情";
                       if (defaultUser.getType() == RentOrLoanOrderType.FINDMASTER) {
+                         title = "找个师傅订单";
                          formName = "org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderEditor";
                          if (defaultUser.getStatus() == OrderStatusType.TAKEN) { 
                              formName = "org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderTrack";
@@ -640,7 +642,7 @@
                       RefForm form = new RefForm("rentOrLoanOrder", formName, input);
                       @page.addElement(form);
                       
-                      form.openInWindows("租赁订单详情", new TableCallBack("rentOrderTable"), true);
+                      form.openInWindows(title, new TableCallBack("rentOrderTable"), true);
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>

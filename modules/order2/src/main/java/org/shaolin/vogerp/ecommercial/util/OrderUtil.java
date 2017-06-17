@@ -55,6 +55,50 @@ public class OrderUtil {
 		return "r" + System.nanoTime();
 	}
 	
+	public static int checkPriceOffered(final IEOrder eorder, final long userId) {
+		if (eorder instanceof GoldenOrderImpl) {
+			GoldenOrderImpl gorder = OrderModel.INSTANCE.get(eorder.getId(), GoldenOrderImpl.class);
+			if (gorder == null || eorder.getStatus() != OrderStatusType.PUBLISHED
+					|| gorder.getOfferPrices() == null) {
+				return -1;
+			}
+			// check whether has offered price already.
+			List<IOfferPrice> priceList = gorder.getOfferPrices();
+            for (IOfferPrice price : priceList) {
+            	if (price.getTakenCustomerId() == userId) {
+            		return -2;
+            	}
+            }
+		} else if (eorder instanceof RentOrLoanOrderImpl) {
+			RentOrLoanOrderImpl rorder = OrderModel.INSTANCE.get(eorder.getId(), RentOrLoanOrderImpl.class);
+			if (rorder == null || rorder.getStatus() != OrderStatusType.PUBLISHED
+					|| rorder.getOfferPrices() == null) {
+				return -1;
+			}
+			// check whether has offered price already.
+			List<IOfferPrice> priceList = rorder.getOfferPrices();
+            for (IOfferPrice price : priceList) {
+            	if (price.getTakenCustomerId() == userId) {
+            		return -2;
+            	}
+            }
+		} else if  (eorder instanceof MachiningOrderImpl) {
+			MachiningOrderImpl rorder = OrderModel.INSTANCE.get(eorder.getId(), MachiningOrderImpl.class);
+			if (rorder == null || rorder.getStatus() != OrderStatusType.PUBLISHED
+					|| rorder.getOfferPrices() == null) {
+				return -1;
+			}
+			// check whether has offered price already.
+			List<IOfferPrice> priceList = rorder.getOfferPrices();
+            for (IOfferPrice price : priceList) {
+            	if (price.getTakenCustomerId() == userId) {
+            		return -2;
+            	}
+            }
+		} 
+		return 1;
+	}
+	
 	/**
 	 * 
 	 * Add a price

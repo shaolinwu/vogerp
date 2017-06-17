@@ -21,6 +21,19 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="descriptionUI">
         <ns2:UIStyle></ns2:UIStyle>
+        <ns2:Property name="htmlValue">
+            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+		         <ns2:expression>
+		           <expressionString><![CDATA[
+		           import org.shaolin.bmdp.utils.StringUtil;
+		           import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+		           { 
+		               return StringUtil.escape(StringUtil.getAbbreviatoryString(beObject.getDescription()+"(" 
+                           + beObject.getStatus().getDisplayName() +")", 30)); 
+		           }]]></expressionString>
+		         </ns2:expression>
+	        </ns2:value>
+         </ns2:Property>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIPanelType" UIID="bannerPanel">
 	      <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -30,9 +43,34 @@
 	      </ns2:layout>
 	      <ns2:component xsi:type="ns2:UILabelType" UIID="estimatedPriceUI">
 	        <ns2:UIStyle></ns2:UIStyle>
+	        <ns2:Property name="htmlValue">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           import org.shaolin.bmdp.utils.StringUtil;
+			           import org.shaolin.uimaster.page.od.formats.FormatUtil;
+			           { 
+			               return FormatUtil.getCurrency($beObject.getEstimatedPrice(), null, true); 
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+	         </ns2:Property>
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UILabelType" UIID="publishedCustomerIdUI">
 	        <ns2:UIStyle></ns2:UIStyle>
+	        <ns2:Property name="htmlValue">
+               <ns2:value xsi:type="ns2:ExpressionPropertyType">
+		         <ns2:expression>
+		           <expressionString><![CDATA[
+		           import org.shaolin.bmdp.utils.StringUtil;
+		           import org.shaolin.bmdp.runtime.ce.CEUtil;
+		           import org.shaolin.uimaster.page.od.formats.FormatUtil;
+		           { 
+		               return CEUtil.getValue($beObject.getCity()) + "["+FormatUtil.formatDateTime($beObject.getCreateDate())+"]"; 
+		           }]]></expressionString>
+		         </ns2:expression>
+	           </ns2:value>
+	         </ns2:Property>
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UILabelType" UIID="createDateUI">
 	        <ns2:UIStyle></ns2:UIStyle>
@@ -68,31 +106,6 @@
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="descriptionUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
-        <ns2:expression>
-          <expressionString><![CDATA[{return org.shaolin.bmdp.utils.StringUtil.escape(org.shaolin.bmdp.utils.StringUtil.getAbbreviatoryString("[" 
-          + beObject.getStatus().getDisplayName() +"]"+ beObject.getDescription(), 30));}]]></expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithCurrency"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="estimatedPriceUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.estimatedPrice" paramName="Currency"></ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="publishedCustomerIdUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
-        <ns2:expression>
-          <expressionString><![CDATA[{return org.shaolin.bmdp.runtime.ce.CEUtil.getValue($beObject.getCity()) 
-          + "["+org.shaolin.uimaster.page.od.formats.FormatUtil.formatDateTime($beObject.getCreateDate())+"]";}]]></expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
-    </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>{
 @odContext.executeAllMappings();
@@ -100,7 +113,6 @@
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString>{
-@odContext.executeAllMappings();
 }</expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>
