@@ -1,5 +1,6 @@
 package org.shaolin.vogerp.commonmodel.internal;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +26,9 @@ import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PermissionServiceImpl implements IServiceProvider, IPermissionService {
+public class PermissionServiceImpl implements IServiceProvider, IPermissionService, Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LoggerFactory.getLogger(PermissionServiceImpl.class);
 	
 	private final ICache<String, SingleRolePermission> rolePermissions;
@@ -212,8 +214,8 @@ public class PermissionServiceImpl implements IServiceProvider, IPermissionServi
 		return IPermissionService.class;
 	}
 
-	class SingleRolePermission {
-		
+	class SingleRolePermission implements Serializable {
+		private static final long serialVersionUID = 1L;
 		final String role;
 		final List<IBEPermission> bePermissions;
 		final List<IModelPermission> modelPermissions;
