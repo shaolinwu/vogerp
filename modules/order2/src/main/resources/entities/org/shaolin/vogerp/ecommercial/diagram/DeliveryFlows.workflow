@@ -87,7 +87,7 @@
                     import org.shaolin.bmdp.runtime.security.UserContext;
                      {
                          $order.setTakenStatus(OrderStatusType.TAKEN_DELIVERY);
-			             @flowContext.save((ITaskEntity)$order);
+			             OrderModel.INSTANCE.update($order);
 			             
 			             IDeliveryInfo deliveryInfo = $order.getDeliveryInfo();
 						 //IPersonalInfo takener = OrderModel.INSTANCE.get(deliveryInfo.getToUserId(), PersonalInfoImpl.class);
@@ -175,7 +175,7 @@
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                      {
                          $order.setTakenStatus(OrderStatusType.TAKEN_COMPLETED);
-			             @flowContext.save((ITaskEntity)$order);
+			             OrderModel.INSTANCE.update($order);
                          IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                          payService.ensurePay($order.getSerialNumber());     
 			             

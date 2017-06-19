@@ -18,7 +18,7 @@ function org_shaolin_vogerp_commonmodel_page_AboutTeam(json)
     var contactUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "contactUI"]
-        ,htmlValue: "????: 159-2146-0670  ???  021-31009779"
+        ,htmlValue: "????: <a href="tel:159-2146-0670">159-2146-0670</a>  ??? <a href="tel:021-31009779">021-31009779</a>"
     });
 
     var Form = new UIMaster.ui.panel

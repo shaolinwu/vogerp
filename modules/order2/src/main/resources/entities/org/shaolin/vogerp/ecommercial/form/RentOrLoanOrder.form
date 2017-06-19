@@ -146,6 +146,18 @@
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="estimatedPriceUI">
             <ns2:UIStyle></ns2:UIStyle>
+            <ns2:Property name="htmlValue">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           import org.shaolin.bmdp.utils.StringUtil;
+			           import org.shaolin.uimaster.page.od.formats.FormatUtil;
+			           { 
+			               return FormatUtil.getCurrency($beObject.getEstimatedPrice(), null, true); 
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+	         </ns2:Property>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="depositUILabel">
             <ns2:UIStyle></ns2:UIStyle>
@@ -155,6 +167,21 @@
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="depositUI">
             <ns2:UIStyle></ns2:UIStyle>
+            <ns2:Property name="htmlValue">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           import org.shaolin.bmdp.utils.StringUtil;
+			           import org.shaolin.uimaster.page.od.formats.FormatUtil;
+			           { 
+			               if ($beObject.getDeposit() > 0) {
+			                  return FormatUtil.getCurrency($beObject.getDeposit(), null, true); 
+			               }
+			               return "不需要";
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+	         </ns2:Property>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="dateMethodUILabel">
             <ns2:UIStyle></ns2:UIStyle>
@@ -298,6 +325,22 @@
             <ns2:htmlSupport xsi:type="ns2:BooleanPropertyType">
                 <value>true</value>
             </ns2:htmlSupport>
+            <ns2:Property name="value">
+	            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+			         <ns2:expression>
+			           <expressionString><![CDATA[
+			           import org.shaolin.uimaster.page.od.formats.FormatUtil;
+			           { 
+			               return $beObject.getHtmlDesc(); 
+			           }]]></expressionString>
+			         </ns2:expression>
+		        </ns2:value>
+            </ns2:Property>
+            <ns2:Property name="viewMode" >
+	            <ns2:value xsi:type="ns2:BooleanPropertyType">
+	                <value>true</value>
+	            </ns2:value>
+	        </ns2:Property>
             <ns2:Property name="hiddenToolbar" >
                 <ns2:value xsi:type="ns2:BooleanPropertyType">
                     <value>true</value>
@@ -409,26 +452,6 @@
           <expressionString>{return false;}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithCurrency"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="estimatedPriceUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.estimatedPrice" paramName="Currency"></ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithCurrency"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="depositUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.deposit" paramName="Currency"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="displayZero">
-        <ns2:expression>
-          <expressionString>true</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping8">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="htmlDescUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.htmlDesc" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>{

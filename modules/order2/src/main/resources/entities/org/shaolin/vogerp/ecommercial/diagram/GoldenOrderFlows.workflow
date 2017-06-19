@@ -18,17 +18,11 @@
 		</ns2:conf>
 		<ns2:start-node name="init">
 			<ns2:process>
-				<ns2:var name="gOrder" category="BusinessEntity" scope="InOut">
-					<type entityName="org.shaolin.vogerp.ecommercial.be.GoldenOrder"></type>
-				</ns2:var>
 				<ns2:expression>
 					<expressionString><![CDATA[
                     import org.shaolin.bmdp.runtime.ce.CEUtil;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     {
-                      $gOrder.setStatus(OrderStatusType.VERIFYING);
-                      @flowContext.save($gOrder);
-                      //assign task id to sales order. this object is passed from blow action actually.
                     }]]></expressionString>
 				</ns2:expression>
 			</ns2:process>
@@ -60,7 +54,7 @@
                         GoldenOrderImpl gorder = (GoldenOrderImpl)out.get("beObject");
                         gorder.setType(GoldenOrderType.PURCHASE);
                         gorder.setStatus(OrderStatusType.VERIFYING);
-                        if (gorder.getDeliveryInfo() != null) {
+                        if (gorder.getDeliveryInfo() == null) {
 			                Dialog.showMessageDialog("您没有配制地址信息！", "", Dialog.WARNING_MESSAGE, null);
 			                return;
 			            }
@@ -119,10 +113,16 @@
                         GoldenOrderImpl gorder = (GoldenOrderImpl)out.get("beObject");
                         gorder.setType(GoldenOrderType.SALE);
                         gorder.setStatus(OrderStatusType.VERIFYING);
-                        if (gorder.getDeliveryInfo() != null && gorder.getDeliveryInfo().getId() == 0) {
-		                    OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
-			                gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
+                        if (gorder.getDeliveryInfo() == null) {
+			                Dialog.showMessageDialog("您没有配制地址信息！", "", Dialog.WARNING_MESSAGE, null);
+			                return;
 			            }
+                        if (gorder.getDeliveryInfo().getId() > 0) {
+		                   OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
+		                } else {
+		                   OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
+		                   gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
+		                }
 			            if (gorder.getId() == 0) {
 			                OrderModel.INSTANCE.create(gorder);
 			            } else {
@@ -177,6 +177,7 @@
                     import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
                     import org.shaolin.vogerp.commonmodel.IUserService;
                     {
+                       @flowContext.bindSession($gOrder); // bind workflow session!
                        // add the search criteria.
                        GOrderSearchCriteriaImpl sc = new GOrderSearchCriteriaImpl();
                        sc.setOrderId($gOrder.getId());
@@ -309,8 +310,6 @@
                      import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                      import org.shaolin.bmdp.workflow.be.NotificationImpl;
                      {
-                          @flowContext.save($order);
-                          
                           NotificationImpl message = new NotificationImpl();
                           message.setPartyId($order.getPublishedCustomerId());
                           if ($verifyPass.booleanValue()) {
@@ -328,6 +327,7 @@
                               message.setSubject("您的加工订单审核失败! 请打开订单查看详情。");
                               message.setDescription(OrderUtil.getOrderLink($order) + @flowContext.getEvent().getComments());
                           }
+                          OrderModel.INSTANCE.update($order);
                           message.setCreateDate(new java.util.Date());
 	                      
 	                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
@@ -595,7 +595,7 @@
 	                         if (payOrder.getDescription() == null) {
 		                         payOrder.setDescription("[" + $selectedPrice.getTakenCustomer().getOrganization().getDescription() + "]" 
 	                                                     + $gorder.getDescription());
-		                         @flowContext.save(payOrder);
+		                         @flowContext.bindSession(payOrder);
 	                         }
 	                         
 			                 HashMap input = new HashMap();
@@ -612,7 +612,7 @@
                              if (payOrder.getDescription() == null) {
 	                             payOrder.setDescription("[" + $selectedPrice.getTakenCustomer().getOrganization().getDescription() + "]" 
 	                                                     + $gorder.getDescription());
-		                         @flowContext.save(payOrder);
+		                         @flowContext.bindSession(payOrder);
 	                         }
 	                         String description = "("+OrderUtil.getOrderLink($gorder)+")" + $gorder.getDescription();
 	                         NotificationImpl message = new NotificationImpl();

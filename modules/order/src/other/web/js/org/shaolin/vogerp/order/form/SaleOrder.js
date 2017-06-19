@@ -48,11 +48,6 @@ function org_shaolin_vogerp_order_form_SaleOrder(json)
         ui: elementList[prefix + "itemsUI"]
     });
 
-    var customerTreeUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "customerTreeUILabel"]
-    });
-
     var descriptionUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "descriptionUILabel"]
@@ -83,8 +78,6 @@ function org_shaolin_vogerp_order_form_SaleOrder(json)
         ui: elementList[prefix + "cancelbtn"]
     });
 
-    var customerTreeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithDeliveryInfo({"prefix":prefix + "customerTreeUI."});
-
     var orderItemTable = new org_shaolin_vogerp_order_form_OrderItemTable({"prefix":prefix + "orderItemTable."});
 
     var actionPanel = new UIMaster.ui.panel
@@ -105,13 +98,13 @@ function org_shaolin_vogerp_order_form_SaleOrder(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "discountUILabel",prefix + "discountUI",prefix + "statusUILabel",prefix + "statusUI",prefix + "itemsUILabel",prefix + "itemsUI",prefix + "customerTreeUILabel",prefix + "customerTreeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "deliveryDateUILabel",prefix + "deliveryDateUI"]
+        ,subComponents: [prefix + "idUI",prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "discountUILabel",prefix + "discountUI",prefix + "statusUILabel",prefix + "statusUI",prefix + "itemsUILabel",prefix + "itemsUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "deliveryDateUILabel",prefix + "deliveryDateUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,serialNumberUILabel,serialNumberUI,discountUILabel,discountUI,statusUILabel,statusUI,itemsUILabel,itemsUI,customerTreeUILabel,descriptionUILabel,descriptionUI,deliveryDateUILabel,deliveryDateUI,okbtn,cancelbtn,customerTreeUI,orderItemTable,fieldPanel,orderItemInfo,actionPanel]
+        ,items: [idUI,serialNumberUILabel,serialNumberUI,discountUILabel,discountUI,statusUILabel,statusUI,itemsUILabel,itemsUI,descriptionUILabel,descriptionUI,deliveryDateUILabel,deliveryDateUI,okbtn,cancelbtn,orderItemTable,fieldPanel,orderItemInfo,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -132,8 +125,6 @@ function org_shaolin_vogerp_order_form_SaleOrder(json)
 
     Form.itemsUI=itemsUI;
 
-    Form.customerTreeUILabel=customerTreeUILabel;
-
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
@@ -145,8 +136,6 @@ function org_shaolin_vogerp_order_form_SaleOrder(json)
     Form.okbtn=okbtn;
 
     Form.cancelbtn=cancelbtn;
-
-    Form.customerTreeUI=customerTreeUI;
 
     Form.orderItemTable=orderItemTable;
 
@@ -169,10 +158,6 @@ function org_shaolin_vogerp_order_form_SaleOrder(json)
     Form.itemsUILabel=itemsUILabel;
 
     Form.itemsUI=itemsUI;
-
-    Form.customerTreeUILabel=customerTreeUILabel;
-
-    Form.customerTreeUI=customerTreeUI;
 
     Form.descriptionUILabel=descriptionUILabel;
 

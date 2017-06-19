@@ -17,12 +17,8 @@
 		</ns2:conf>
 		<ns2:start-node name="init">
 			<ns2:process>
-				<ns2:var name="saleOrder" category="BusinessEntity" scope="InOut">
-					<type entityName="org.shaolin.vogerp.order.be.SaleOrder"></type>
-				</ns2:var>
 				<ns2:expression>
 					<expressionString>{
-						@flowContext.save($saleOrder);//assign task id to sales order.
 						}
 					</expressionString>
 				</ns2:expression>
@@ -86,7 +82,7 @@
 						       items.add(pitem);
 						   }
 						   productOrder.setItems(items);
-						   @flowContext.save(productOrder);
+						   @flowContext.bindSession(productOrder);
 						}
 					 ]]></expressionString>
 				</ns2:expression>
@@ -142,7 +138,7 @@
              items.add(pitem);
          }
          inStoreOrder.setItems(items);
-         @flowContext.save(inStoreOrder);
+         @flowContext.bindSession(inStoreOrder);
       }
      ]]></expressionString>
 				</ns2:expression>
@@ -199,7 +195,7 @@
              items.add(pitem);
          }
          outStoreOrder.setItems(items);
-         @flowContext.save(outStoreOrder);
+         @flowContext.bindSession(outStoreOrder);
       }
      ]]></expressionString>
 				</ns2:expression>

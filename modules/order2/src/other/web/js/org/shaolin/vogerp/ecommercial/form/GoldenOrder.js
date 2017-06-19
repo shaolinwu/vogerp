@@ -77,6 +77,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
     var htmlDescUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "htmlDescUI"]
+        ,viewMode: true
         ,hiddenToolbar: true
         ,persistable: false
         ,disabled: "disabled"

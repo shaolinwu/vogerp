@@ -46,13 +46,6 @@
                 PurchaseItemImpl item = (PurchaseItemImpl)items.get(i);
                 item.setPricePackage(null);//clear this value.
             }
-            if (defaultUser.getDeliveryInfoId() == 0) {
-	            defaultUser.setStatus(OrderStatusType.CREATED);
-                OrderModel.INSTANCE.create(defaultUser.getDeliveryInfo());
-                defaultUser.setDeliveryInfoId(defaultUser.getDeliveryInfo().getId());
-            } else {
-                OrderModel.INSTANCE.update(defaultUser.getDeliveryInfo());
-            }
             
             if (defaultUser.getId() == 0) {
                 defaultUser.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
@@ -109,16 +102,6 @@
             <ns2:value>false</ns2:value>
         </ns2:allowBlank>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="deliveryInfoLabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>寄送地址</ns2:value>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="deliveryInfoUI">
-         <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithDeliveryInfo" />
-        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-      </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="deliveryDateUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -147,14 +130,6 @@
       <ns2:layoutConstraint>
         <ns2:componentId>deliveryDateUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>deliveryInfoLabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>deliveryInfoUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="orderItemInfo">
@@ -267,13 +242,6 @@
           <expressionString>{return $editable;}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
-      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithDeliveryInfo"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="deliveryInfoUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.deliveryInfo.addressId" paramName="value2"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.deliveryInfo.contactId" paramName="value3"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalInfo" paramName="personalInfo"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>{

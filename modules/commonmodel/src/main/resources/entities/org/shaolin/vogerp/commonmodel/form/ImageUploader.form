@@ -136,7 +136,7 @@
                      <ns2:expression>
                        <expressionString><![CDATA[
                        { 
-                           return "只能上传后缀为：*.jpg;*.jpeg;*.png;*.gif的图片文件，且以拼音命名。图片尺寸为: " + $imageWsize +" * "+ $imageHsize; 
+                           return "只能上传后缀为：*.jpg;*.jpeg;*.png;*.gif的图片文件，且以拼音命名。适宜图片尺寸为: " + $imageWsize +" * "+ $imageHsize; 
                        }]]></expressionString>
                      </ns2:expression>
                 </ns2:value>

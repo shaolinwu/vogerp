@@ -583,44 +583,55 @@
                             </ns2:column>
 		                    <ns2:column xsi:type="ns2:UITableColumnType">
 			                    <ns2:title xsi:type="ns2:StringPropertyType">
-			                        <ns2:value>订单详情</ns2:value>
+			                        <ns2:value></ns2:value>
 			                    </ns2:title>
-			                    <ns2:beFieldId>rowBE.id</ns2:beFieldId>
-			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>HTMLItem</ns2:type></ns2:uiType>
+			                    <ns2:beFieldId>rowBE.description</ns2:beFieldId>
+			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
 			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
 			                        <ns2:expression xsi:type="ns2:ExpressionType">
 			                            <ns2:expressionString><![CDATA[
-			                            import java.util.HashMap;
-			                            import org.shaolin.uimaster.page.AjaxContext;
-			                            import org.shaolin.uimaster.page.AjaxActionHelper;
-			                            import org.shaolin.uimaster.page.ajax.*;
-			                            import org.shaolin.uimaster.page.ajax.json.IDataItem;
-			                            import org.shaolin.vogerp.productmodel.be.ProductImpl;
-			                            {
-			                                HashMap input = new HashMap();
-			                                input.put("beObject", $rowBE);
-			                                RefForm form = new RefForm("gOrderForm"+$rowBE.getId(), 
-			                                  "org.shaolin.vogerp.ecommercial.form.GoldenOrderOverView_mob", input);
-			                                StringBuffer sb = new StringBuffer();
-			                                sb.append(form.generateHTML());
-			                                sb.append("<script type=\"text/javascript\">UIMaster.pageInitFunctions.push(function(){");
-			                                sb.append("getElementListSingle(document.getElementById(\"productBasicForm");
-			                                sb.append($rowBE.getId());
-			                                sb.append(".Form\"));\n");
-			                                sb.append(form.generateJS());
-			                                sb.append("});</script>");
-			                                return sb.toString();
-			                            }]]></ns2:expressionString>
+			                           import org.shaolin.bmdp.utils.StringUtil;
+							           { 
+							               return StringUtil.escape(StringUtil.getAbbreviatoryString($rowBE.getDescription()+"(" 
+					                           + $rowBE.getStatus().getDisplayName() +")", 30)); 
+							           }]]></ns2:expressionString>
 			                        </ns2:expression>
 			                    </ns2:rowExpression>
-			                    <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+			                </ns2:column>
+			                <ns2:column xsi:type="ns2:UITableColumnType">
+			                    <ns2:title xsi:type="ns2:StringPropertyType">
+			                        <ns2:value>估价</ns2:value>
+			                    </ns2:title>
+			                    <ns2:beFieldId>rowBE.estimatedPrice</ns2:beFieldId>
+			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
 			                        <ns2:expression xsi:type="ns2:ExpressionType">
 			                            <ns2:expressionString><![CDATA[
-			                            import org.shaolin.bmdp.runtime.AppContext;
-			                            {
-			                            }]]></ns2:expressionString>
+			                           import org.shaolin.bmdp.utils.StringUtil;
+							           import org.shaolin.uimaster.page.od.formats.FormatUtil;
+							           { 
+							               return FormatUtil.getCurrency($rowBE.getEstimatedPrice(), null, true); 
+							           }]]></ns2:expressionString>
 			                        </ns2:expression>
-			                    </ns2:updateCondition>
+			                    </ns2:rowExpression>
+			                </ns2:column>
+			                <ns2:column xsi:type="ns2:UITableColumnType">
+			                    <ns2:title xsi:type="ns2:StringPropertyType">
+			                        <ns2:value></ns2:value>
+			                    </ns2:title>
+			                    <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+			                        <ns2:expression xsi:type="ns2:ExpressionType">
+			                            <ns2:expressionString><![CDATA[
+			                           import org.shaolin.bmdp.utils.StringUtil;
+							           import org.shaolin.bmdp.runtime.ce.CEUtil;
+							           import org.shaolin.uimaster.page.od.formats.FormatUtil;
+							           { 
+							               return CEUtil.getValue($rowBE.getCity()) + "["+FormatUtil.formatDateTime($rowBE.getCreateDate())+"]"; 
+							           }]]></ns2:expressionString>
+			                        </ns2:expression>
+			                    </ns2:rowExpression>
 			                </ns2:column>
 		                    <ns2:defaultActions>
 		                       <ns2:defaultOpenAction>openGoldenOrder</ns2:defaultOpenAction>
@@ -706,46 +717,57 @@
                                 </ns2:rowExpression>
                             </ns2:column>
                             <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>订单详情</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.id</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>HTMLItem</ns2:type></ns2:uiType>
-                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import java.util.HashMap;
-                                        import org.shaolin.uimaster.page.AjaxContext;
-                                        import org.shaolin.uimaster.page.AjaxActionHelper;
-                                        import org.shaolin.uimaster.page.ajax.*;
-                                        import org.shaolin.uimaster.page.ajax.json.IDataItem;
-                                        import org.shaolin.vogerp.productmodel.be.ProductImpl;
-                                        {
-                                            HashMap input = new HashMap();
-                                            input.put("beObject", $rowBE);
-                                            RefForm form = new RefForm("gsOrderForm"+$rowBE.getId(), 
-                                              "org.shaolin.vogerp.ecommercial.form.GoldenOrderOverView_mob", input);
-                                            StringBuffer sb = new StringBuffer();
-                                            sb.append(form.generateHTML());
-                                            sb.append("<script type=\"text/javascript\">UIMaster.pageInitFunctions.push(function(){");
-                                            sb.append("getElementListSingle(document.getElementById(\"productBasicForm");
-                                            sb.append($rowBE.getId());
-                                            sb.append(".Form\"));\n");
-                                            sb.append(form.generateJS());
-                                            sb.append("});</script>");
-                                            return sb.toString();
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:rowExpression>
-                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        {
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
-                            </ns2:column>
+			                    <ns2:title xsi:type="ns2:StringPropertyType">
+			                        <ns2:value></ns2:value>
+			                    </ns2:title>
+			                    <ns2:beFieldId>rowBE.description</ns2:beFieldId>
+			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+			                        <ns2:expression xsi:type="ns2:ExpressionType">
+			                            <ns2:expressionString><![CDATA[
+			                           import org.shaolin.bmdp.utils.StringUtil;
+							           { 
+							               return StringUtil.escape(StringUtil.getAbbreviatoryString($rowBE.getDescription()+"(" 
+					                           + $rowBE.getStatus().getDisplayName() +")", 30)); 
+							           }]]></ns2:expressionString>
+			                        </ns2:expression>
+			                    </ns2:rowExpression>
+			                </ns2:column>
+			                <ns2:column xsi:type="ns2:UITableColumnType">
+			                    <ns2:title xsi:type="ns2:StringPropertyType">
+			                        <ns2:value>估价</ns2:value>
+			                    </ns2:title>
+			                    <ns2:beFieldId>rowBE.estimatedPrice</ns2:beFieldId>
+			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+			                        <ns2:expression xsi:type="ns2:ExpressionType">
+			                            <ns2:expressionString><![CDATA[
+			                           import org.shaolin.bmdp.utils.StringUtil;
+							           import org.shaolin.uimaster.page.od.formats.FormatUtil;
+							           { 
+							               return FormatUtil.getCurrency($rowBE.getEstimatedPrice(), null, true); 
+							           }]]></ns2:expressionString>
+			                        </ns2:expression>
+			                    </ns2:rowExpression>
+			                </ns2:column>
+			                <ns2:column xsi:type="ns2:UITableColumnType">
+			                    <ns2:title xsi:type="ns2:StringPropertyType">
+			                        <ns2:value></ns2:value>
+			                    </ns2:title>
+			                    <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+			                        <ns2:expression xsi:type="ns2:ExpressionType">
+			                            <ns2:expressionString><![CDATA[
+			                           import org.shaolin.bmdp.utils.StringUtil;
+							           import org.shaolin.bmdp.runtime.ce.CEUtil;
+							           import org.shaolin.uimaster.page.od.formats.FormatUtil;
+							           { 
+							               return CEUtil.getValue($rowBE.getCity()) + "["+FormatUtil.formatDateTime($rowBE.getCreateDate())+"]"; 
+							           }]]></ns2:expressionString>
+			                        </ns2:expression>
+			                    </ns2:rowExpression>
+			                </ns2:column>
                             <ns2:defaultActions>
                                 <ns2:defaultOpenAction>openSaleGoldenOrder</ns2:defaultOpenAction>
                             </ns2:defaultActions>
@@ -829,46 +851,57 @@
                                 </ns2:rowExpression>
                             </ns2:column>
                             <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>订单详情</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.id</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>HTMLItem</ns2:type></ns2:uiType>
-                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import java.util.HashMap;
-                                        import org.shaolin.uimaster.page.AjaxContext;
-                                        import org.shaolin.uimaster.page.AjaxActionHelper;
-                                        import org.shaolin.uimaster.page.ajax.*;
-                                        import org.shaolin.uimaster.page.ajax.json.IDataItem;
-                                        import org.shaolin.vogerp.productmodel.be.ProductImpl;
-                                        {
-                                            HashMap input = new HashMap();
-                                            input.put("beObject", $rowBE);
-                                            RefForm form = new RefForm("rOrderForm"+$rowBE.getId(), 
-                                              "org.shaolin.vogerp.ecommercial.form.RentOrderOverView_mob", input);
-                                            StringBuffer sb = new StringBuffer();
-                                            sb.append(form.generateHTML());
-                                            sb.append("<script type=\"text/javascript\">UIMaster.pageInitFunctions.push(function(){");
-                                            sb.append("getElementListSingle(document.getElementById(\"productBasicForm");
-                                            sb.append($rowBE.getId());
-                                            sb.append(".Form\"));\n");
-                                            sb.append(form.generateJS());
-                                            sb.append("});</script>");
-                                            return sb.toString();
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:rowExpression>
-                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        {
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
-                            </ns2:column>
+			                    <ns2:title xsi:type="ns2:StringPropertyType">
+			                        <ns2:value></ns2:value>
+			                    </ns2:title>
+			                    <ns2:beFieldId>rowBE.description</ns2:beFieldId>
+			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+			                        <ns2:expression xsi:type="ns2:ExpressionType">
+			                            <ns2:expressionString><![CDATA[
+			                           import org.shaolin.bmdp.utils.StringUtil;
+							           { 
+							               return StringUtil.escape(StringUtil.getAbbreviatoryString($rowBE.getDescription()+"(" 
+					                           + $rowBE.getStatus().getDisplayName() +")", 30)); 
+							           }]]></ns2:expressionString>
+			                        </ns2:expression>
+			                    </ns2:rowExpression>
+			                </ns2:column>
+			                <ns2:column xsi:type="ns2:UITableColumnType">
+			                    <ns2:title xsi:type="ns2:StringPropertyType">
+			                        <ns2:value>估价</ns2:value>
+			                    </ns2:title>
+			                    <ns2:beFieldId>rowBE.estimatedPrice</ns2:beFieldId>
+			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+			                        <ns2:expression xsi:type="ns2:ExpressionType">
+			                            <ns2:expressionString><![CDATA[
+			                           import org.shaolin.bmdp.utils.StringUtil;
+							           import org.shaolin.uimaster.page.od.formats.FormatUtil;
+							           { 
+							               return FormatUtil.getCurrency($rowBE.getEstimatedPrice(), null, true); 
+							           }]]></ns2:expressionString>
+			                        </ns2:expression>
+			                    </ns2:rowExpression>
+			                </ns2:column>
+			                <ns2:column xsi:type="ns2:UITableColumnType">
+			                    <ns2:title xsi:type="ns2:StringPropertyType">
+			                        <ns2:value></ns2:value>
+			                    </ns2:title>
+			                    <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+			                        <ns2:expression xsi:type="ns2:ExpressionType">
+			                            <ns2:expressionString><![CDATA[
+			                           import org.shaolin.bmdp.utils.StringUtil;
+							           import org.shaolin.bmdp.runtime.ce.CEUtil;
+							           import org.shaolin.uimaster.page.od.formats.FormatUtil;
+							           { 
+							               return CEUtil.getValue($rowBE.getCity()) + "["+FormatUtil.formatDateTime($rowBE.getCreateDate())+"]"; 
+							           }]]></ns2:expressionString>
+			                        </ns2:expression>
+			                    </ns2:rowExpression>
+			                </ns2:column>
                             <ns2:defaultActions>
                                <ns2:defaultOpenAction>openRentOrder</ns2:defaultOpenAction>
                             </ns2:defaultActions>
@@ -952,46 +985,57 @@
                                 </ns2:rowExpression>
                             </ns2:column>
                             <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>订单详情</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.id</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>HTMLItem</ns2:type></ns2:uiType>
-                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import java.util.HashMap;
-                                        import org.shaolin.uimaster.page.AjaxContext;
-                                        import org.shaolin.uimaster.page.AjaxActionHelper;
-                                        import org.shaolin.uimaster.page.ajax.*;
-                                        import org.shaolin.uimaster.page.ajax.json.IDataItem;
-                                        import org.shaolin.vogerp.productmodel.be.ProductImpl;
-                                        {
-                                            HashMap input = new HashMap();
-                                            input.put("beObject", $rowBE);
-                                            RefForm form = new RefForm("rrOrderForm"+$rowBE.getId(), 
-                                              "org.shaolin.vogerp.ecommercial.form.RentOrderOverView_mob", input);
-                                            StringBuffer sb = new StringBuffer();
-                                            sb.append(form.generateHTML());
-                                            sb.append("<script type=\"text/javascript\">UIMaster.pageInitFunctions.push(function(){");
-                                            sb.append("getElementListSingle(document.getElementById(\"productBasicForm");
-                                            sb.append($rowBE.getId());
-                                            sb.append(".Form\"));\n");
-                                            sb.append(form.generateJS());
-                                            sb.append("});</script>");
-                                            return sb.toString();
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:rowExpression>
-                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        {
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
-                            </ns2:column>
+			                    <ns2:title xsi:type="ns2:StringPropertyType">
+			                        <ns2:value></ns2:value>
+			                    </ns2:title>
+			                    <ns2:beFieldId>rowBE.description</ns2:beFieldId>
+			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+			                        <ns2:expression xsi:type="ns2:ExpressionType">
+			                            <ns2:expressionString><![CDATA[
+			                           import org.shaolin.bmdp.utils.StringUtil;
+							           { 
+							               return StringUtil.escape(StringUtil.getAbbreviatoryString($rowBE.getDescription()+"(" 
+					                           + $rowBE.getStatus().getDisplayName() +")", 30)); 
+							           }]]></ns2:expressionString>
+			                        </ns2:expression>
+			                    </ns2:rowExpression>
+			                </ns2:column>
+			                <ns2:column xsi:type="ns2:UITableColumnType">
+			                    <ns2:title xsi:type="ns2:StringPropertyType">
+			                        <ns2:value>估价</ns2:value>
+			                    </ns2:title>
+			                    <ns2:beFieldId>rowBE.estimatedPrice</ns2:beFieldId>
+			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+			                        <ns2:expression xsi:type="ns2:ExpressionType">
+			                            <ns2:expressionString><![CDATA[
+			                           import org.shaolin.bmdp.utils.StringUtil;
+							           import org.shaolin.uimaster.page.od.formats.FormatUtil;
+							           { 
+							               return FormatUtil.getCurrency($rowBE.getEstimatedPrice(), null, true); 
+							           }]]></ns2:expressionString>
+			                        </ns2:expression>
+			                    </ns2:rowExpression>
+			                </ns2:column>
+			                <ns2:column xsi:type="ns2:UITableColumnType">
+			                    <ns2:title xsi:type="ns2:StringPropertyType">
+			                        <ns2:value></ns2:value>
+			                    </ns2:title>
+			                    <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+			                        <ns2:expression xsi:type="ns2:ExpressionType">
+			                            <ns2:expressionString><![CDATA[
+			                           import org.shaolin.bmdp.utils.StringUtil;
+							           import org.shaolin.bmdp.runtime.ce.CEUtil;
+							           import org.shaolin.uimaster.page.od.formats.FormatUtil;
+							           { 
+							               return CEUtil.getValue($rowBE.getCity()) + "["+FormatUtil.formatDateTime($rowBE.getCreateDate())+"]"; 
+							           }]]></ns2:expressionString>
+			                        </ns2:expression>
+			                    </ns2:rowExpression>
+			                </ns2:column>
                             <ns2:defaultActions>
                                 <ns2:defaultOpenAction>openLoanOrder</ns2:defaultOpenAction>
                             </ns2:defaultActions>

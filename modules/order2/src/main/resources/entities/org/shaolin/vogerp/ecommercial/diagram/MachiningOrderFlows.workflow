@@ -20,17 +20,12 @@
         </ns2:conf>
         <ns2:start-node name="init">
             <ns2:process>
-	            <ns2:var name="gOrder" category="BusinessEntity" scope="InOut">
-	                <type entityName="org.shaolin.vogerp.ecommercial.be.MachiningOrder"></type>
-	            </ns2:var>
                 <ns2:expression>
                     <expressionString><![CDATA[
                     import org.shaolin.bmdp.runtime.ce.CEUtil;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     {
-                      $gOrder.setStatus(OrderStatusType.VERIFYING);
-                      @flowContext.save($gOrder);
-                      //assign task id to sales order. this object is passed from blow action actually.
+                      // lets start form here.
                     }]]></expressionString>
                 </ns2:expression>
             </ns2:process>
@@ -116,6 +111,7 @@
                      import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
                      import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                      {
+                         @flowContext.bindSession($morder); // bind workflow session!
                          PersonalInfoImpl condition = new PersonalInfoImpl();
                          condition.setId($morder.getPublishedCustomerId());
                          List result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, 1);
@@ -131,7 +127,7 @@
                          ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
                          service.addNotificationToAdmin(message, true);
                          
-                         Dialog.showMessageDialog("您的加工订单已发送给管理员做评估，我们将尽快给您回复！", "", Dialog.INFORMATION_MESSAGE, null);
+                         Dialog.showMessageDialog("您的加工订单已发送给管理员做全面评估，我们将尽快给您回复！", "", Dialog.INFORMATION_MESSAGE, null);
                      }
                      ]]></expressionString>
                 </ns2:expression>
@@ -238,8 +234,6 @@
                      import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                      import org.shaolin.bmdp.workflow.be.NotificationImpl;
                      {
-                          @flowContext.save($order);
-                          
                           NotificationImpl message = new NotificationImpl();
                           message.setPartyId($order.getPublishedCustomerId());
                           if ($verifyPass.booleanValue()) {
@@ -257,6 +251,7 @@
                               message.setSubject("您的加工订单审核失败! 请打开订单查看详情。");
                               message.setDescription(OrderUtil.getOrderLink($order) + @flowContext.getEvent().getComments());
                           }
+                          OrderModel.INSTANCE.update($order);
                           message.setCreateDate(new java.util.Date());
 	                      
 	                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
@@ -307,6 +302,7 @@
 			                Dialog.showMessageDialog("订单还在审核中，不能完成估价操作！", "", Dialog.WARNING_MESSAGE, null);
 			                return;
 			            }
+			            OrderModel.INSTANCE.update(order);
 			            
 			            form.closeIfinWindows();
 			            @page.removeForm(@page.getEntityUiid()); 
@@ -345,8 +341,6 @@
                      import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                      import org.shaolin.bmdp.workflow.be.NotificationImpl;
                      {
-                          @flowContext.save($goldenOrder);
-                          
                           NotificationImpl message = new NotificationImpl();
                           message.setPartyId($goldenOrder.getPublishedCustomerId());
                           message.setSubject("您有新的加工订单报价信息。");
@@ -609,7 +603,7 @@
                          if (payOrder.getDescription() == null) {
 	                         payOrder.setDescription("[" + $gorder.getPublishedCustomer().getOrganization().getDescription() + "]" 
 	                                                    + $gorder.getDescription());
-	                         @flowContext.save(payOrder);
+	                         @flowContext.bindSession(payOrder);
                          }
                          HashMap input = new HashMap();
 			             input.put("beObject", payOrder);

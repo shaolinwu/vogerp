@@ -21,15 +21,9 @@
         </ns2:conf>
         <ns2:start-node name="init">
             <ns2:process>
-	            <ns2:var name="orgLegalinfo" category="BusinessEntity" scope="InOut">
-	                <type entityName="org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfo"></type>
-	            </ns2:var>
                 <ns2:expression>
                     <expressionString><![CDATA[
-                    import org.shaolin.bmdp.runtime.ce.CEUtil;
-                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     {
-                      @flowContext.save($orgLegalinfo);
                     }]]></expressionString>
                 </ns2:expression>
             </ns2:process>
@@ -161,15 +155,15 @@
                         $orgLegalinfo.setVeriState($orgInfo.getVeriState());
         			    $orgLegalinfo.setVerifierId($orgInfo.getVerifierId());
         			   
-        			    @flowContext.save($orgLegalinfo);
-        			    @flowContext.save(payOrder);
+        			    @flowContext.bindSession($orgLegalinfo);
+        			    @flowContext.bindSession(payOrder);
         			    
                         HashMap input = new HashMap();
 		                input.put("beObject", payOrder);
 		                input.put("editable", new Boolean(true));
 		                RefForm form1 = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PaymentMethod", input);
 		                $page.addElement(form1);
-		                form1.openInWindows("支付方式选择", null, 150, 100);
+		                form1.openInWindows("支付方式选择", null, true);
                         Dialog.showMessageDialog("提交审核中...请您支付("+price+")元会员验证费用, 谢谢！", "", Dialog.INFORMATION_MESSAGE, null);
                     }
                     ]]></expressionString>

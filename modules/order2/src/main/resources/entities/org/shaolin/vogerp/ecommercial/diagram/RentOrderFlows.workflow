@@ -20,17 +20,12 @@
         </ns2:conf>
         <ns2:start-node name="init">
             <ns2:process>
-	            <ns2:var name="gOrder" category="BusinessEntity" scope="InOut">
-	                <type entityName="org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder"></type>
-	            </ns2:var>
                 <ns2:expression>
                     <expressionString><![CDATA[
                     import org.shaolin.bmdp.runtime.ce.CEUtil;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     {
-                      $gOrder.setStatus(OrderStatusType.VERIFYING);
-                      @flowContext.save($gOrder);
-                      //assign task id to sales order. this object is passed from blow action actually.
+                       // bind workflow session at beginning.
                     }]]></expressionString>
                 </ns2:expression>
             </ns2:process>
@@ -61,6 +56,10 @@
                         RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)out.get("beObject");
                         gorder.setType(RentOrLoanOrderType.RENT);
                         gorder.setStatus(OrderStatusType.VERIFYING);
+                        if (gorder.getDeliveryInfo() == null) {
+			                Dialog.showMessageDialog("您没有配制地址信息！", "", Dialog.WARNING_MESSAGE, null);
+			                return;
+			            }
 		                if (gorder.getDeliveryInfo().getId() > 0) {
 			               OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
 			            } else {
@@ -115,6 +114,10 @@
                         RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)out.get("beObject");
                         gorder.setType(RentOrLoanOrderType.LOAN);
                         gorder.setStatus(OrderStatusType.VERIFYING);
+                        if (gorder.getDeliveryInfo() == null) {
+			                Dialog.showMessageDialog("您没有配制地址信息！", "", Dialog.WARNING_MESSAGE, null);
+			                return;
+			            }
 		                if (gorder.getDeliveryInfo().getId() > 0) {
 			               OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
 			            } else {
@@ -169,6 +172,10 @@
                         RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)out.get("beObject");
                         gorder.setType(RentOrLoanOrderType.FINDMASTER);
                         gorder.setStatus(OrderStatusType.VERIFYING);
+                        if (gorder.getDeliveryInfo() == null) {
+			                Dialog.showMessageDialog("您没有配制地址信息！", "", Dialog.WARNING_MESSAGE, null);
+			                return;
+			            }
 		                if (gorder.getDeliveryInfo().getId() > 0) {
 			               OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
 			            } else {
@@ -229,6 +236,7 @@
                     import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
                     import org.shaolin.vogerp.commonmodel.IUserService;
                     {
+                       @flowContext.bindSession($gOrder); // bind workflow session!
                        // add the search criteria.
                        ROrderSearchCriteriaImpl sc = new ROrderSearchCriteriaImpl();
                        sc.setOrderId($gOrder.getId());
@@ -361,8 +369,6 @@
                      import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                      import org.shaolin.bmdp.workflow.be.NotificationImpl;
                      {
-                          @flowContext.save($order);
-                          
                           NotificationImpl message = new NotificationImpl();
                           message.setPartyId($order.getPublishedCustomerId());
                           if ($verifyPass.booleanValue()) {
@@ -380,6 +386,7 @@
                               message.setSubject("您的加工订单审核失败! 请打开订单查看详情。");
                               message.setDescription(OrderUtil.getOrderLink($order) + @flowContext.getEvent().getComments());
                           }
+                          OrderModel.INSTANCE.update($order);
                           message.setCreateDate(new java.util.Date());
 	                      
 	                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
@@ -655,7 +662,7 @@
                              if (payOrder.getDescription() == null) {
 	                             payOrder.setDescription("[" + $selectedPrice.getTakenCustomer().getOrganization().getDescription() + "]" 
 	                                                     + $gorder.getDescription());
-	                             @flowContext.save(payOrder);
+	                             @flowContext.bindSession(payOrder);
                              }
                              
                              HashMap input = new HashMap();
@@ -673,7 +680,7 @@
 		                         payOrder.setOrgId(orgService.getOrgIdByPartyId($gorder.getTakenCustomerId()));
 	                             payOrder.setDescription("[" + $selectedPrice.getTakenCustomer().getOrganization().getDescription() + "]" 
 	                                                     + $gorder.getDescription());
-	                             @flowContext.save(payOrder);
+	                             @flowContext.bindSession(payOrder);
                              }
 	                         String description = "("+OrderUtil.getOrderLink($gorder)+")" + $gorder.getDescription();
 	                         NotificationImpl message = new NotificationImpl();
@@ -775,10 +782,10 @@
                     import org.shaolin.vogerp.accounting.ce.PayBusinessType;
                     import org.shaolin.vogerp.accounting.IPaymentService;
                     {
-                         $order.setTakenStatus(OrderStatusType.TAKEN_COMPLETED);
-			             @flowContext.save((ITaskEntity)$order);
                          IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                          payService.ensurePay($order.getSerialNumber());     
+                         $order.setTakenStatus(OrderStatusType.TAKEN_COMPLETED);
+			             OrderModel.INSTANCE.update($order);
 			             
 			             if ($order.getDeliveryInfo() == null) {
 						    DeliveryInfoImpl takener = (DeliveryInfoImpl)OrderModel.INSTANCE.get($order.getDeliveryInfoId(), DeliveryInfoImpl.class);
