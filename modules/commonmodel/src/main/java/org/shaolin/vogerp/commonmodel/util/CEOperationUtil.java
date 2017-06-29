@@ -192,7 +192,7 @@ public class CEOperationUtil {
 		if (parentNode == null) {
 			// create the root node for the first time.
 			TreeItem ceNode = new TreeItem();
-			ceNode.setId(nodeId);
+			ceNode.setNodeId(nodeId);
 			ceNode.setText(ce.getI18nEntityName());
 			ceNode.setIcon(ce.getIcon());
 			ceNode.setHasChildren(true);
@@ -207,7 +207,7 @@ public class CEOperationUtil {
 				continue;
 			}
 			TreeItem ceItem = new TreeItem();
-			ceItem.setId(nodeId + "_"+item.getIntValue());
+			ceItem.setNodeId(nodeId + "_"+item.getIntValue());
 			ceItem.setText(item.getDisplayName());
 			ceItem.setIcon(item.getIcon());
 			parentNode.getChildren().add(ceItem);
@@ -236,7 +236,7 @@ public class CEOperationUtil {
 				continue;
 			}
 			TreeItem ceItem = new TreeItem();
-			ceItem.setId(nodeId + "_"+item.getIntValue());
+			ceItem.setNodeId(nodeId + "_"+item.getIntValue());
 			ceItem.setText(item.getDisplayName());
 			ceItem.setIcon(item.getIcon());
 			

@@ -20,7 +20,6 @@
 		<module>productmodel</module>
 		<module>order2</module>
 		<module>order</module>
-		<module>coupon</module>
 		<module>bbs</module>
 		<module>campaign</module>
 		<module>adminconsole</module>

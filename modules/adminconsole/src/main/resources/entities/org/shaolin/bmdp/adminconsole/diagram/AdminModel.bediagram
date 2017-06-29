@@ -9,6 +9,10 @@
 	
 	<bediagram:beEntity>
 		<common:entityName>LifeServiceItem</common:entityName>
+		<bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
 		<bediagram:member>
             <bediagram:name>className</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />

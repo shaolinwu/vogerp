@@ -156,7 +156,7 @@
                      <ns2:expression>
                        <expressionString><![CDATA[
                        { 
-                           return $imageWsize; 
+                           return -1; 
                        }]]></expressionString>
                      </ns2:expression>
                 </ns2:value>
@@ -166,7 +166,7 @@
                      <ns2:expression>
                        <expressionString><![CDATA[
                        { 
-                           return $imageHsize; 
+                           return -1; 
                        }]]></expressionString>
                      </ns2:expression>
                 </ns2:value>

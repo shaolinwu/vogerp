@@ -15,12 +15,13 @@ import org.shaolin.bmdp.datamodel.common.ExpressionType;
 import org.shaolin.bmdp.datamodel.page.ExpressionPropertyType;
 import org.shaolin.bmdp.datamodel.page.StringPropertyType;
 import org.shaolin.bmdp.datamodel.page.UITableColumnType;
+import org.shaolin.bmdp.json.JSONException;
+import org.shaolin.bmdp.json.JSONObject;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.javacc.context.DefaultParsingContext;
 import org.shaolin.javacc.exception.ParsingException;
 import org.shaolin.uimaster.page.HTMLUtil;
 import org.shaolin.uimaster.page.UserRequestContext;
-import org.shaolin.uimaster.page.ajax.Widget;
 import org.shaolin.uimaster.page.cache.UIFormObject;
 import org.shaolin.uimaster.page.javacc.VariableEvaluator;
 import org.shaolin.uimaster.page.widgets.HTMLChartDoughnutType;
@@ -155,7 +156,7 @@ public class OrgCharts extends HTMLWidgetType {
 		return "'#" + red + green + blue + "'";
 	}
 	
-    public Widget createAjaxWidget(VariableEvaluator ee)
+    public JSONObject createJsonModel(VariableEvaluator ee) throws JSONException
     {
       return null;
     }

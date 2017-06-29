@@ -12,7 +12,6 @@ import org.shaolin.uimaster.page.AjaxContext;
 import org.shaolin.uimaster.page.UserRequestContext;
 import org.shaolin.uimaster.page.ajax.Empty;
 import org.shaolin.uimaster.page.ajax.Layout;
-import org.shaolin.uimaster.page.ajax.Widget;
 import org.shaolin.uimaster.page.cache.UIFormObject;
 import org.shaolin.uimaster.page.javacc.VariableEvaluator;
 import org.shaolin.uimaster.page.od.formats.FormatUtil;
@@ -20,12 +19,12 @@ import org.shaolin.uimaster.page.widgets.HTMLWidgetType;
 import org.shaolin.vogerp.accounting.IPaymentService;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
 import org.shaolin.vogerp.commonmodel.IExpressService;
-import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
-import org.shaolin.vogerp.ecommercial.be.IDeliveryInfo;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
 import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
 import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+import org.shaolin.vogerp.ecommercial.be.IDeliveryInfo;
 import org.shaolin.vogerp.ecommercial.be.IEOrder;
 import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
 import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
@@ -242,9 +241,9 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
 		context.generateHTML("</DIV>");
 	}
 	
-	public Widget createAjaxWidget(VariableEvaluator ee)
+	public JSONObject createJsonModel(VariableEvaluator ee) throws JSONException
     {
-      return new Empty(getName(), Layout.NULL);
+      return super.createJsonModel(ee);
     }
 	
 }

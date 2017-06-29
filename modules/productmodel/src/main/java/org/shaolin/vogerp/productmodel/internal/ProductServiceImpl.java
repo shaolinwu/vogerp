@@ -247,7 +247,7 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		for (int i = 0; i < all.size(); i++) {
 			ProductImpl mg = (ProductImpl) all.get(i);
 			TreeItem gitem = new TreeItem();
-			gitem.setId("mg_" + i);
+			gitem.setNodeId("mg_" + i);
 			gitem.setText(StringUtil.truncateString(mg.getName(), 20) + "("+mg.getSerialNumber()+")");
 			result.add(gitem);
 			
@@ -261,7 +261,7 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 				dataModel.put("pg_" + price.getId(), price);
 			
 				TreeItem pitem = new TreeItem();
-				pitem.setId("pg_" + price.getId());
+				pitem.setNodeId("pg_" + price.getId());
 				pitem.setText(ProductUtil.getPriceFormat(price.getPrice()) + 
 							"--" + ProductUtil.getPricePackage(price));
 				gitem.getChildren().add(pitem);
@@ -293,7 +293,7 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 				result.remove(i);
 			}
 			TreeItem gitem = new TreeItem();
-			gitem.setId("mg_" + productPriceCache.get(orgId).priceResult.size());
+			gitem.setNodeId("mg_" + productPriceCache.get(orgId).priceResult.size());
 			gitem.setText(product.getName());
 			productPriceCache.get(orgId).priceResult.add(gitem);
 			
@@ -303,7 +303,7 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 				productPriceCache.get(orgId).priceDataModel.put("pg_" + price.getId(), price);
 			
 				TreeItem pitem = new TreeItem();
-				pitem.setId("pg_" + price.getId());
+				pitem.setNodeId("pg_" + price.getId());
 				pitem.setText(ProductUtil.getProductSummary(product) + 
 							"--" + ProductUtil.getPriceFormat(price.getPrice()) + 
 							"--" + ProductUtil.getPricePackage(price));

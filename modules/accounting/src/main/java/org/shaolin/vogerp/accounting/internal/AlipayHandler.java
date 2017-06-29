@@ -29,7 +29,7 @@ import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.bmdp.workflow.be.NotificationImpl;
 import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
 import org.shaolin.bmdp.workflow.internal.BuiltInAttributeConstant;
-import org.shaolin.uimaster.page.AjaxActionHelper;
+import org.shaolin.uimaster.page.AjaxContextHelper;
 import org.shaolin.uimaster.page.WebConfig;
 import org.shaolin.vogerp.accounting.IPaymentService;
 import org.shaolin.vogerp.accounting.IPaymentService.TransactionType;
@@ -126,7 +126,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 		try {
 			response.getWriter().write(execute(request, response));
 		} finally {
-			AjaxActionHelper.removeAjaxContext();
+			AjaxContextHelper.removeAjaxContext();
 			UserContext.unregister();
 			LocaleContext.clearLocaleContext();
 		}

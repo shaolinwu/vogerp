@@ -857,6 +857,7 @@
                           return;
                       }
                       InterestEOrderImpl item = (InterestEOrderImpl)interestEOrderTable.getSelectedRow();
+                      OrderUtil.bindOrder(item);
                       if (item.getOrder().getStatus() == OrderStatusType.TAKEN && 
                           item.getOrder().getTakenCustomerId() != UserContext.getUserContext().getUserId()) {
                           Dialog.showMessageDialog("该订单已被客户拍下！", "", Dialog.WARNING_MESSAGE, null);
@@ -1493,26 +1494,9 @@
                                     <ns2:expression xsi:type="ns2:ExpressionType">
                                         <ns2:expressionString><![CDATA[
                                         import org.shaolin.bmdp.runtime.AppContext;
-                                        import org.shaolin.vogerp.ecommercial.ce.EOrderType;
-                                        import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
-                                        import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                                        import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
-                                        import org.shaolin.vogerp.ecommercial.dao.OrderModel;
                                         import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                                         {
-                                            if ($rowBE.getType() == EOrderType.GOLDENORDER) {
-                                                GoldenOrderImpl gorder = (GoldenOrderImpl)OrderModel.INSTANCE.get($rowBE.getOrderId(), GoldenOrderImpl.class);
-                                                $rowBE.setOrder(gorder);
-                                                return OrderUtil.getOrderHTMLInfo(gorder);
-                                            } else if ($rowBE.getType() == EOrderType.RENTORLOANORDER) {
-                                                RentOrLoanOrderImpl rorder = (RentOrLoanOrderImpl)OrderModel.INSTANCE.get($rowBE.getOrderId(), RentOrLoanOrderImpl.class);
-                                                $rowBE.setOrder(rorder);
-                                                return OrderUtil.getOrderHTMLInfo(rorder);
-                                            } else if ($rowBE.getType() == EOrderType.MACHININGORDER) {
-                                                MachiningOrderImpl rorder = (MachiningOrderImpl)OrderModel.INSTANCE.get($rowBE.getOrderId(), MachiningOrderImpl.class);
-                                                $rowBE.setOrder(rorder);
-                                                return OrderUtil.getOrderHTMLInfo(rorder);
-                                            }
+                                            return OrderUtil.getOrderInfo($rowBE);
                                         }]]></ns2:expressionString>
                                     </ns2:expression>
                                 </ns2:rowExpression>

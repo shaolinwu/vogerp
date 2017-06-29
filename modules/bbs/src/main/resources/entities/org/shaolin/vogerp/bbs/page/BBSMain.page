@@ -46,6 +46,7 @@
                     import org.shaolin.uimaster.page.AjaxActionHelper;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.bbs.be.TopicImpl;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
                     {
                         Table orderInfoTable = (Table)@page.getElement("machiningTopicTable");
                         if (orderInfoTable.getSelectedRow() == null) {
@@ -56,7 +57,11 @@
                         HashMap input = new HashMap();
                         input.put("beObject", topic);
                         input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("topicForm", "org.shaolin.vogerp.bbs.form.TopicViewer", input);
+                        String formName = "org.shaolin.vogerp.bbs.form.TopicViewer";
+                        if (UserContext.getUserContext().isAdmin()) {
+                           formName = "org.shaolin.vogerp.bbs.form.Topic";
+                        }
+                        RefForm form = new RefForm("topicForm", formName, input);
                         @page.addElement(form);
                         
                         form.openInWindows("贴子： " +topic.getName(), null, true);
@@ -111,6 +116,7 @@
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.bbs.be.TopicImpl;
                     import org.shaolin.vogerp.bbs.ce.*;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
                     {
                         Table orderInfoTable = (Table)@page.getElement("custServiceTable");
                         if (orderInfoTable.getSelectedRow() == null) {
@@ -121,7 +127,12 @@
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
                         input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("topicForm", "org.shaolin.vogerp.bbs.form.TopicViewer", input);
+                        
+                        String formName = "org.shaolin.vogerp.bbs.form.TopicViewer";
+                        if (UserContext.getUserContext().isAdmin()) {
+                           formName = "org.shaolin.vogerp.bbs.form.Topic";
+                        }
+                        RefForm form = new RefForm("topicForm", formName, input);
                         @page.addElement(form);
                         
                         form.openInWindows("贴子： " +defaultUser.getName(), null, true);

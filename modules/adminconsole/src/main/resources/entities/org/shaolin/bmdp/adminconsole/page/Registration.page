@@ -560,6 +560,15 @@
             // hello, my first js.
             }]]></ns2:expressionString>
         </ns2:clientAction>
-        <ns2:serverOperation xsi:type="ns2:ExpressionType" />
+        <ns2:serverOperation xsi:type="ns2:ExpressionType">
+		    <ns2:expressionString><![CDATA[
+			import org.shaolin.bmdp.runtime.AppContext;
+			import org.shaolin.bmdp.page.ajax.*;
+			import org.shaolin.vogerp.commonmodel.ce.OrgType;
+			{
+			 // no need mapping at all.
+			     //@odContext.executeMapping("simpleMapping3");
+			}]]></ns2:expressionString>
+		</ns2:serverOperation>
     </ns2:out>
 </ns2:UIPage>

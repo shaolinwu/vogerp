@@ -109,7 +109,7 @@
             
             if (out.get("isDiagramMode") == Boolean.TRUE) {
 	            // the all data will be saved in ModuleManagement.save action.
-	            FlowDiagram diagram = (FlowDiagram)@page.getElementByAbsoluteId("groupFlow", @page.getFrameId());
+	            FlowDiagram diagram = (FlowDiagram)@page.getElementByAbsoluteId("groupFlow");
 	            if (diagram != null) {
 		            if (defaultUser.getId() > 0) {
 		                boolean found = false;

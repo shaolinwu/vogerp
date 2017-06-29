@@ -15,21 +15,23 @@ import org.shaolin.uimaster.page.AjaxContext;
 import org.shaolin.uimaster.page.ajax.RadioButtonGroup;
 import org.shaolin.uimaster.page.exception.FormatException;
 import org.shaolin.uimaster.page.od.formats.FormatUtil;
-import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
-import org.shaolin.vogerp.ecommercial.be.IDeliveryInfo;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
 import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
 import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+import org.shaolin.vogerp.ecommercial.be.IDeliveryInfo;
 import org.shaolin.vogerp.ecommercial.be.IEOrder;
 import org.shaolin.vogerp.ecommercial.be.IGoldenOrder;
+import org.shaolin.vogerp.ecommercial.be.IInterestEOrder;
 import org.shaolin.vogerp.ecommercial.be.IMachOrderComponent;
 import org.shaolin.vogerp.ecommercial.be.IMachiningOrder;
 import org.shaolin.vogerp.ecommercial.be.IOfferPrice;
 import org.shaolin.vogerp.ecommercial.be.IRentOrLoanOrder;
 import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
 import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+import org.shaolin.vogerp.ecommercial.ce.EOrderType;
 import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
 import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
 import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
@@ -53,6 +55,35 @@ public class OrderUtil {
 	
 	public synchronized static String genResourceId() {
 		return "r" + System.nanoTime();
+	}
+	
+	public static String getOrderInfo(IInterestEOrder rowBE) {
+		if (rowBE.getType() == EOrderType.GOLDENORDER) {
+            GoldenOrderImpl gorder = (GoldenOrderImpl)OrderModel.INSTANCE.get(rowBE.getOrderId(), GoldenOrderImpl.class);
+            rowBE.setOrder(gorder);
+            return OrderUtil.getOrderHTMLInfo(gorder);
+        } else if (rowBE.getType() == EOrderType.MACHININGORDER) {
+            MachiningOrderImpl rorder = (MachiningOrderImpl)OrderModel.INSTANCE.get(rowBE.getOrderId(), MachiningOrderImpl.class);
+            rowBE.setOrder(rorder);
+            return OrderUtil.getOrderHTMLInfo(rorder);
+        } else {
+            RentOrLoanOrderImpl rorder = (RentOrLoanOrderImpl)OrderModel.INSTANCE.get(rowBE.getOrderId(), RentOrLoanOrderImpl.class);
+            rowBE.setOrder(rorder);
+            return OrderUtil.getOrderHTMLInfo(rorder);
+        }
+	}
+	
+	public static void bindOrder(IInterestEOrder interestedOrder) {
+		if (interestedOrder.getType() == EOrderType.GOLDENORDER) {
+            GoldenOrderImpl gorder = (GoldenOrderImpl)OrderModel.INSTANCE.get(interestedOrder.getOrderId(), GoldenOrderImpl.class);
+            interestedOrder.setOrder(gorder);
+        } else if (interestedOrder.getType() == EOrderType.MACHININGORDER) {
+            MachiningOrderImpl rorder = (MachiningOrderImpl)OrderModel.INSTANCE.get(interestedOrder.getOrderId(), MachiningOrderImpl.class);
+            interestedOrder.setOrder(rorder);
+        } else {
+            RentOrLoanOrderImpl rorder = (RentOrLoanOrderImpl)OrderModel.INSTANCE.get(interestedOrder.getOrderId(), RentOrLoanOrderImpl.class);
+            interestedOrder.setOrder(rorder);
+        }
 	}
 	
 	public static int checkPriceOffered(final IEOrder eorder, final long userId) {

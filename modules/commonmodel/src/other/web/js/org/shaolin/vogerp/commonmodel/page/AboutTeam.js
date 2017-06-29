@@ -12,7 +12,7 @@ function org_shaolin_vogerp_commonmodel_page_AboutTeam(json)
     var text1UI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "text1UI"]
-        ,htmlValue: "????? www.vogerp.com 2.0.release 2017-05-01"
+        ,htmlValue: "????? www.vogerp.com 3.0.release 2017-06-01"
     });
 
     var contactUI = new UIMaster.ui.label

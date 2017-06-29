@@ -119,7 +119,7 @@
                    for (int i=0;i<subgroups.size();i++) {
                        OrganizationImpl mg = (OrganizationImpl)subgroups.get(i);
                        TreeItem gitem = new TreeItem();
-                       gitem.setId(mg.getOrgCode());
+                       gitem.setNodeId(mg.getOrgCode());
                        gitem.setText(mg.getName());
                        //gitem.setIcon(mg.getSmallIcon());
                        gitem.setHasChildren(true);
@@ -242,7 +242,7 @@
                     {
                         OrganizationImpl root = (OrganizationImpl)$beObject;
                         TreeItem gitem = new TreeItem();
-                        gitem.setId(root.getOrgCode());
+                        gitem.setNodeId(root.getOrgCode());
                         gitem.setText(root.getName());
                         //gitem.setIcon(root.getSmallIcon());
                         
@@ -255,7 +255,7 @@
                         for (int j=0;j<categories.size();j++) {
                             OrganizationImpl m = (OrganizationImpl)categories.get(j);
                             TreeItem item = new TreeItem();
-                            item.setId(m.getOrgCode());
+                            item.setNodeId(m.getOrgCode());
                             item.setText(m.getName());
                             //item.setA_attr(new org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute(m.getAccessURL()));
                             //item.setIcon(m.getSmallIcon());

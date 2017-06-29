@@ -346,8 +346,8 @@
                          <ns2:handler functionName="clickFunctionNode" />
                      </ns2:EventListener>
                      <ns2:init xsi:type="ns2:ExpressionPropertyType">
-                         <ns2:expression xsi:type="ns2:ExpressionType">
-                             <ns2:expressionString><![CDATA[
+                        <ns2:expression xsi:type="ns2:ExpressionType">
+                            <ns2:expressionString><![CDATA[
                              import java.util.List;
                              import org.shaolin.bmdp.runtime.AppContext;
                              import org.shaolin.uimaster.page.ajax.TableConditions;

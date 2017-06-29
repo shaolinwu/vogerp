@@ -254,7 +254,7 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 				continue;
 			}
 			TreeItem gitem = new TreeItem();
-			gitem.setId("mg_" + mg.getId());
+			gitem.setNodeId("mg_" + mg.getId());
 			gitem.setText(mg.getName());
 			gitem.setIcon(mg.getSmallIcon());
 			gitem.setDisplayIndex(mg.getDisplayIndex());
@@ -271,7 +271,7 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 						&& checkPermission((ModuleGroupImpl) mitem, roleIds)) {
 					ModuleGroupImpl m = (ModuleGroupImpl) mitem;
 					TreeItem item = new TreeItem();
-					item.setId("mg_" + m.getId());
+					item.setNodeId("mg_" + m.getId());
 					item.setText(m.getName());
 					item.setDisplayIndex(m.getDisplayIndex());
 					item.setA_attr(new org.shaolin.uimaster.page.ajax.TreeItem.LinkAttribute(
