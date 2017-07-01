@@ -375,9 +375,18 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="parentId" paramName="Number"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
-      <expressionString>{
-@odContext.executeAllMappings();
-}</expressionString>
+      <expressionString><![CDATA[
+      import org.shaolin.bmdp.runtime.AppContext;
+	import org.shaolin.bmdp.runtime.security.UserContext;
+    import org.shaolin.vogerp.commonmodel.IUserService;
+    import org.shaolin.vogerp.commonmodel.be.*;
+	{
+	  UserContext userContext = UserContext.getUserContext();
+	  $parentId = userContext.getUserId();
+	  
+	  @odContext.executeAllMappings();
+	}   
+      ]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString>{

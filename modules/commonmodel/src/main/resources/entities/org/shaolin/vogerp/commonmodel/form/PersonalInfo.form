@@ -25,11 +25,17 @@
         import org.shaolin.vogerp.commonmodel.ce.EmployeeLevel;
         import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
         import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+        import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
         import org.shaolin.vogerp.commonmodel.dao.CommonModel;
         { 
+		    UserContext userContext = UserContext.getUserContext();
+		    IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+		    PersonalAccountImpl personalAccount = (PersonalAccountImpl)userService.getPersonalAccount(userContext.getUserId());
+            HashMap input = new HashMap();
+            input.put("beObject", personalAccount.getInfo());
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            HashMap input = (HashMap)form.ui2Data();
-            PersonalInfoImpl defaultUser = (PersonalInfoImpl)input.get("beObject");
+            HashMap output = (HashMap)form.ui2Data(input);
+            PersonalInfoImpl defaultUser = (PersonalInfoImpl)output.get("beObject");
             if (defaultUser.getId() == 0) {
                 defaultUser.setOrgId(org.shaolin.bmdp.runtime.security.UserContext.getUserContext().getOrgId());
                 defaultUser.setEmpLevel(EmployeeLevel.JUNIOR);
@@ -37,7 +43,6 @@
             } else {
                 CommonModel.INSTANCE.update(defaultUser);
             }
-            IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
             userService.updateUserCache((IPersonalInfo)defaultUser);
             
             if (form != null && form.isInWindows()) {
@@ -373,14 +378,26 @@
     </ns2:ComponentMapping>
      -->
     <ns2:DataToUIMappingOperation>
-      <expressionString>{
-@odContext.executeAllMappings();
-}</expressionString>
+      <expressionString><![CDATA[
+			import org.shaolin.bmdp.runtime.AppContext;
+			import org.shaolin.bmdp.runtime.security.UserContext;
+		    import org.shaolin.vogerp.commonmodel.IUserService;
+		    import org.shaolin.vogerp.commonmodel.be.*;
+		    import org.shaolin.uimaster.page.flow.WebflowConstants;
+		    import org.shaolin.vogerp.commonmodel.IOrganizationService;
+			{
+			  UserContext userContext = UserContext.getUserContext();
+			  IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+			  PersonalAccountImpl personalAccount = (PersonalAccountImpl)userService.getPersonalAccount(userContext.getUserId());
+			  $beObject = personalAccount.getInfo();
+			  
+			  @odContext.executeAllMappings();
+	     }]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString>{
-@odContext.executeAllMappings();
-}</expressionString>
+       @odContext.executeAllMappings();
+     }</expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>
 </ns2:UIEntity>

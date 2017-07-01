@@ -43,7 +43,7 @@ public class CustCommonModel extends BEEntityDaoObject {
     	return new List[] {valueResult, displayResult};
     }
     
-    public List<ArrayList<String>>[] getCustemrsDeliveryInfo(int customerId) {
+    public List<ArrayList<String>>[] getCustemrsDeliveryInfo(int userId) {
     	String sql = "SELECT p.warehouseid, count(p.warehouseid), b.name FROM prod_storageitem p, prod_warehouse b where p.warehouseid=b.id and b.orgid=? group by p.warehouseid;";
     	Session session = HibernateUtil.getSession();	
     	SQLQuery sqlQuery = session.createSQLQuery(sql);
@@ -64,9 +64,9 @@ public class CustCommonModel extends BEEntityDaoObject {
     	return new List[] {valueResult, displayResult};
     }
     
-    public void updateAddresse(long customerId, IAddressInfo item) {
+    public void updateAddresse(long userId, IAddressInfo item) {
     	IUserService userService = AppContext.get().getService(IUserService.class);
-    	IPersonalInfo customer = userService.getPersonalInfo(customerId);
+    	IPersonalInfo customer = userService.getPersonalInfo(userId);
 		List<IAddressInfo> existing = customer.getAddresses();
 		if (item.getId() == 0) {
 			if (item.getDistrict() != null && ("-1".equals(item.getDistrict()) || !"null".equals(item.getDistrict()))) {
@@ -101,9 +101,9 @@ public class CustCommonModel extends BEEntityDaoObject {
 		}
     }
     
-    public void updateAddresses(long customerId, List<IAddressInfo> list) {
+    public void updateAddresses(long userId, List<IAddressInfo> list) {
     	IUserService userService = AppContext.get().getService(IUserService.class);
-    	IPersonalInfo customer = userService.getPersonalInfo(customerId);
+    	IPersonalInfo customer = userService.getPersonalInfo(userId);
 		List<IAddressInfo> existing = customer.getAddresses();
 		if (list.isEmpty() && !customer.getAddresses().isEmpty()) {
 			// disable all addresses
@@ -139,11 +139,11 @@ public class CustCommonModel extends BEEntityDaoObject {
 		CommonModel.INSTANCE.update(customer);
     }
     
-    public void updateContract(long customerId, IContactInfo item) {
+    public void updateContract(long userId, IContactInfo item) {
     	//TODO
     }
     
-    public void updateContracts(long customerId, List<IContactInfo> list) {
+    public void updateContracts(long userId, List<IContactInfo> list) {
     	//TODO
     }
     

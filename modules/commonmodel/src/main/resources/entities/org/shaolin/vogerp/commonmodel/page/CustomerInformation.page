@@ -107,7 +107,6 @@
 		            <ns2:odmapping>
 			          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.AddressInfoTable"></ns2:mappingRule>
 			          <ns2:UIComponent componentPath="addressForm" paramName="UIWidgetType"></ns2:UIComponent>
-			          <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalInfo.id" paramName="parentId"></ns2:DataComponent>
 			          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
 				        <ns2:expression>
 				          <expressionString>Boolean.TRUE</expressionString>
@@ -125,7 +124,6 @@
 		            <ns2:odmapping>
 			          <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.PersonalAccount"></ns2:mappingRule>
 			          <ns2:UIComponent componentPath="personalAccountForm" paramName="UIWidgetType"></ns2:UIComponent>
-			          <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalAccount" paramName="beObject"></ns2:DataComponent>
 			          <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
 				        <ns2:expression>
 				          <expressionString>Boolean.TRUE</expressionString>
@@ -159,19 +157,9 @@
 		</ns2:body>
 	</ns2:UIEntity>
 	<ns2:ODMapping>
-		<ns2:DataEntity scope="InOut" name="personalInfo" category="BusinessEntity">
-	      <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo"></type>
-	    </ns2:DataEntity>
-	    <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
-	      <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo"></type>
-	    </ns2:DataEntity>
-	    <ns2:DataEntity scope="InOut" name="personalAccount" category="BusinessEntity">
-	      <type entityName="org.shaolin.vogerp.commonmodel.be.PersonalAccount"></type>
-	    </ns2:DataEntity>
 	    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
 	      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.PersonalInfo"></ns2:mappingRule>
 	      <ns2:UIComponent componentPath="personalInfoForm" paramName="UIWidgetType"></ns2:UIComponent>
-	      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="personalInfo" paramName="beObject"></ns2:DataComponent>
 	      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
 	        <ns2:expression>
 	          <expressionString>Boolean.TRUE</expressionString>
@@ -196,16 +184,7 @@
 			import org.shaolin.bmdp.runtime.AppContext;
 			import org.shaolin.bmdp.runtime.security.UserContext;
 		    import org.shaolin.vogerp.commonmodel.IUserService;
-		    import org.shaolin.vogerp.commonmodel.be.*;
-		    import org.shaolin.uimaster.page.flow.WebflowConstants;
-		    import org.shaolin.vogerp.commonmodel.IOrganizationService;
 			{
-			  UserContext userContext = (UserContext)@odContext.getRequest().getSession().getAttribute(WebflowConstants.USER_SESSION_KEY);
-			  IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
-			  $personalAccount = (PersonalAccountImpl)userService.getPersonalAccount(userContext.getUserId());
-			  $personalInfo = $personalAccount.getInfo();
-			  $beObject = $personalInfo; // for all sub-froms' data2ui mapping.
-			  
 			  @odContext.executeAllMappings();
 			}]]></ns2:expressionString>
 		</ns2:serverOperation>

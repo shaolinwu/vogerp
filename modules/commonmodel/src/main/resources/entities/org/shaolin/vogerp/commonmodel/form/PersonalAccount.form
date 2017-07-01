@@ -406,18 +406,21 @@
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
-    <!-- 
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="localeUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.locale" paramName="StringData"></ns2:DataComponent>
-    </ns2:ComponentMapping>
-    -->
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
-      {
-		@odContext.executeAllMappings();
-      }   
+      import org.shaolin.bmdp.runtime.AppContext;
+	import org.shaolin.bmdp.runtime.security.UserContext;
+    import org.shaolin.vogerp.commonmodel.IUserService;
+    import org.shaolin.vogerp.commonmodel.be.*;
+    import org.shaolin.uimaster.page.flow.WebflowConstants;
+    import org.shaolin.vogerp.commonmodel.IOrganizationService;
+	{
+	  UserContext userContext = UserContext.getUserContext();
+	  IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+	  $beObject = (PersonalAccountImpl)userService.getPersonalAccount(userContext.getUserId());
+	  
+	  @odContext.executeAllMappings();
+	}   
       ]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>

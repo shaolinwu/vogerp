@@ -542,7 +542,10 @@
 			import org.shaolin.bmdp.runtime.AppContext;
 			import org.shaolin.bmdp.page.ajax.*;
 			import org.shaolin.vogerp.commonmodel.ce.OrgType;
+			import org.shaolin.vogerp.commonmodel.be.*;
 			{
+			  $registerInfo = new RegisterInfoImpl();
+			  $registerInfo.setAddress(new AddressInfoImpl());
 			  if ("0".equals(@page.getRadioBtnGroup("selectModeUI").getValue())) {
 			     @odContext.executeMapping("simpleMapping3");
 			     $registerInfo.setUserType(OrgType.INDIVIDUAL);
