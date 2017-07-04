@@ -41,6 +41,11 @@ function org_shaolin_vogerp_bbs_form_Topic(json)
         ,height: "500px"
     });
 
+    var verifiedbtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "verifiedbtn"]
+    });
+
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
@@ -55,7 +60,7 @@ function org_shaolin_vogerp_bbs_form_Topic(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "okbtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "verifiedbtn",prefix + "okbtn",prefix + "cancelbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -68,7 +73,7 @@ function org_shaolin_vogerp_bbs_form_Topic(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,nameUILabel,nameUI,descriptionUILabel,descriptionUI,contentLinkUILabel,contentLinkUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,nameUILabel,nameUI,descriptionUILabel,descriptionUI,contentLinkUILabel,contentLinkUI,verifiedbtn,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -84,6 +89,8 @@ function org_shaolin_vogerp_bbs_form_Topic(json)
     Form.contentLinkUILabel=contentLinkUILabel;
 
     Form.contentLinkUI=contentLinkUI;
+
+    Form.verifiedbtn=verifiedbtn;
 
     Form.okbtn=okbtn;
 
@@ -107,6 +114,8 @@ function org_shaolin_vogerp_bbs_form_Topic(json)
 
     Form.actionPanel=actionPanel;
 
+    Form.verifiedbtn=verifiedbtn;
+
     Form.okbtn=okbtn;
 
     Form.cancelbtn=cancelbtn;
@@ -118,6 +127,8 @@ function org_shaolin_vogerp_bbs_form_Topic(json)
     };
 
     Form.Save = org_shaolin_vogerp_bbs_form_Topic_Save;
+
+    Form.PassVerifcation = org_shaolin_vogerp_bbs_form_Topic_PassVerifcation;
 
     Form.Cancel = org_shaolin_vogerp_bbs_form_Topic_Cancel;
 
@@ -142,6 +153,17 @@ function org_shaolin_vogerp_bbs_form_Topic(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"saveDetail-20170609-122142",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_bbs_form_Topic_Save */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_bbs_form_Topic_PassVerifcation(eventsource,event) {/* Gen_First:org_shaolin_vogerp_bbs_form_Topic_PassVerifcation */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"passVerifcation-20170609-122142",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_bbs_form_Topic_PassVerifcation */
 
 
     /* auto generated eventlistener function declaration */

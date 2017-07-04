@@ -192,7 +192,9 @@
 		                                  }
 		                                  TopicImpl condition = (TopicImpl)$tableCondition.getCondition();
 		                                  condition.setType(TopicType.MACHINING);
-		                                  condition.setState(TopicStatusType.PUBLISHED);
+		                                  if (!UserContext.getUserContext().isAdmin()) {
+		                                  	  condition.setState(TopicStatusType.PUBLISHED);
+		                                  }
 		                                  return BBSModel.INSTANCE.searchTopic(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 
@@ -317,7 +319,9 @@
 		                                  }
 		                                  TopicImpl condition = (TopicImpl)$tableCondition.getCondition();
 		                                  condition.setType(TopicType.CUSTOMERSERVICE);
-		                                  condition.setState(TopicStatusType.PUBLISHED);
+		                                  if (!UserContext.getUserContext().isAdmin()) {
+		                                      condition.setState(TopicStatusType.PUBLISHED);
+		                                  }
 		                                  return BBSModel.INSTANCE.searchTopic(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 

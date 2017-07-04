@@ -33,6 +33,11 @@
 			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
 		<bediagram:member>
+		    <!-- the static html link which refers to the generated static page. -->
+			<bediagram:name>htmlLink</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
 		    <!-- hot count of this topic for sorting! -->
 			<bediagram:name>hotCount</bediagram:name>
 			<bediagram:type xsi:type="bediagram:IntType" />
