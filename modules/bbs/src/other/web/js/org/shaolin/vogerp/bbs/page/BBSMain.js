@@ -59,9 +59,13 @@ function org_shaolin_vogerp_bbs_page_BBSMain(json)
 
     Form.openMachingTopic = org_shaolin_vogerp_bbs_page_BBSMain_openMachingTopic;
 
+    Form.deleteMachingTopic = org_shaolin_vogerp_bbs_page_BBSMain_deleteMachingTopic;
+
     Form.createCustServiceTopic = org_shaolin_vogerp_bbs_page_BBSMain_createCustServiceTopic;
 
     Form.openCustServiceTopic = org_shaolin_vogerp_bbs_page_BBSMain_openCustServiceTopic;
+
+    Form.deleteCustServiceTopic = org_shaolin_vogerp_bbs_page_BBSMain_deleteCustServiceTopic;
 
     Form.initPageJs = org_shaolin_vogerp_bbs_page_BBSMain_initPageJs;
 
@@ -102,6 +106,17 @@ function org_shaolin_vogerp_bbs_page_BBSMain(json)
 
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_bbs_page_BBSMain_deleteMachingTopic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_bbs_page_BBSMain_deleteMachingTopic */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteMachingTopic-20170618-3542",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_bbs_page_BBSMain_deleteMachingTopic */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_bbs_page_BBSMain_createCustServiceTopic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_bbs_page_BBSMain_createCustServiceTopic */
         var o = this;
         var UIEntity = this;
@@ -121,6 +136,17 @@ function org_shaolin_vogerp_bbs_page_BBSMain(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openCustServiceTopic-20170618-3542",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_bbs_page_BBSMain_openCustServiceTopic */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_bbs_page_BBSMain_deleteCustServiceTopic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_bbs_page_BBSMain_deleteCustServiceTopic */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteCustServiceTopic-20170618-3542",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_bbs_page_BBSMain_deleteCustServiceTopic */
 
 
     function org_shaolin_vogerp_bbs_page_BBSMain_initPageJs(){/* Gen_First:org_shaolin_vogerp_bbs_page_BBSMain_initPageJs */

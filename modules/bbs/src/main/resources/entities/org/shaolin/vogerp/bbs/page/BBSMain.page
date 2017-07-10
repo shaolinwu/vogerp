@@ -11,6 +11,7 @@
                 <ns2:exp>
                     <ns2:expressionString><![CDATA[
                     import java.util.HashMap;
+                    import org.shaolin.bmdp.runtime.AppContext;
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.AjaxActionHelper;
                     import org.shaolin.uimaster.page.ajax.*;
@@ -18,7 +19,14 @@
                     import org.shaolin.vogerp.bbs.ce.*;
                     import org.shaolin.vogerp.bbs.util.BBSUtil;
                     import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
                     {
+                        IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+                        if (!userService.checkUserOnline(@page.getRequest().getSession())) {
+                            @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\");");
+                            return;
+                        }
+                    
                         TopicImpl topic = new TopicImpl();
                         topic.setContentLink("/bbs/" + BBSUtil.genResourceId() + "desc.html");
                         topic.setType(TopicType.MACHINING);
@@ -58,7 +66,7 @@
                         input.put("beObject", topic);
                         input.put("editable", new Boolean(true));
                         String formName = "org.shaolin.vogerp.bbs.form.TopicViewer";
-                        if (UserContext.getUserContext().isAdmin()) {
+                        if (UserContext.getUserContext() != null && UserContext.getUserContext().isAdmin()) {
                            formName = "org.shaolin.vogerp.bbs.form.Topic";
                         }
                         RefForm form = new RefForm("topicForm", formName, input);
@@ -70,8 +78,8 @@
                 </ns2:exp>
             </ns2:ops>
 		</ns2:eventHandler>
-		<ns2:eventHandler functionName="createCustServiceTopic">
-		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createCustServiceTopic-20170618-3542">
+		<ns2:eventHandler functionName="deleteMachingTopic">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deleteMachingTopic-20170618-3542">
                 <ns2:exp>
                     <ns2:expressionString><![CDATA[
                     import java.util.HashMap;
@@ -80,10 +88,51 @@
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.bbs.be.TopicImpl;
                     import org.shaolin.vogerp.bbs.ce.*;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.bbs.dao.BBSModel;
+                    {
+                        Table orderInfoTable = (Table)@page.getElement("machiningTopicTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
+                        if (UserContext.getUserContext() == null || !UserContext.getUserContext().isAdmin()) {
+                            Dialog.showMessageDialog("只有管理员才能删除贴子！", "", Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
+                        TopicImpl topic = (TopicImpl)orderInfoTable.getSelectedRow();
+                        topic.setState(TopicStatusType.VERIFY);
+                        topic.setEnabled(false);
+                        BBSModel.INSTANCE.update(topic);
+                        orderInfoTable.refresh();
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
+		
+		<ns2:eventHandler functionName="createCustServiceTopic">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createCustServiceTopic-20170618-3542">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.bbs.be.TopicImpl;
+                    import org.shaolin.vogerp.bbs.ce.*;
                     import org.shaolin.vogerp.bbs.util.BBSUtil;
                     import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
                     {
-                        if (!UserContext.getUserContext().isAdmin()) {
+                        IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+                        if (!userService.checkUserOnline(@page.getRequest().getSession())) {
+                            @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\");");
+                            return;
+                        }
+                    
+                        if (UserContext.getUserContext() == null || !UserContext.getUserContext().isAdmin()) {
                            Dialog.showMessageDialog("只有管理员才能发客服贴子！", "", Dialog.INFORMATION_MESSAGE, null);
                            return;
                         }
@@ -129,13 +178,45 @@
                         input.put("editable", new Boolean(true));
                         
                         String formName = "org.shaolin.vogerp.bbs.form.TopicViewer";
-                        if (UserContext.getUserContext().isAdmin()) {
+                        if (UserContext.getUserContext() != null && UserContext.getUserContext().isAdmin()) {
                            formName = "org.shaolin.vogerp.bbs.form.Topic";
                         }
                         RefForm form = new RefForm("topicForm", formName, input);
                         @page.addElement(form);
                         
                         form.openInWindows("贴子： " +defaultUser.getName(), null, true);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="deleteCustServiceTopic">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deleteCustServiceTopic-20170618-3542">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.bbs.be.TopicImpl;
+                    import org.shaolin.vogerp.bbs.ce.*;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.bbs.dao.BBSModel;
+                    {
+                        Table orderInfoTable = (Table)@page.getElement("custServiceTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
+                        if (UserContext.getUserContext() == null || !UserContext.getUserContext().isAdmin()) {
+                            Dialog.showMessageDialog("只有管理员才能删除贴子！", "", Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
+                        TopicImpl topic = (TopicImpl)orderInfoTable.getSelectedRow();
+                        topic.setState(TopicStatusType.VERIFY);
+                        topic.setEnabled(false);
+                        BBSModel.INSTANCE.update(topic);
+                        orderInfoTable.refresh();
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -192,7 +273,7 @@
 		                                  }
 		                                  TopicImpl condition = (TopicImpl)$tableCondition.getCondition();
 		                                  condition.setType(TopicType.MACHINING);
-		                                  if (!UserContext.getUserContext().isAdmin()) {
+		                                  if (UserContext.getUserContext() == null || !UserContext.getUserContext().isAdmin()) {
 		                                  	  condition.setState(TopicStatusType.PUBLISHED);
 		                                  }
 		                                  return BBSModel.INSTANCE.searchTopic(condition,
@@ -263,6 +344,7 @@
 		                    </ns2:column>
 		                    <ns2:defaultActions>
 		                        <ns2:defaultOpenAction>openMachingTopic</ns2:defaultOpenAction>
+		                        <ns2:defaultDeleteAction>deleteMachingTopic</ns2:defaultDeleteAction>
 		                    </ns2:defaultActions>
 		                    <ns2:actionGroup>
 		                        <ns2:type>radio</ns2:type>
@@ -319,7 +401,7 @@
 		                                  }
 		                                  TopicImpl condition = (TopicImpl)$tableCondition.getCondition();
 		                                  condition.setType(TopicType.CUSTOMERSERVICE);
-		                                  if (!UserContext.getUserContext().isAdmin()) {
+		                                  if (UserContext.getUserContext() == null || !UserContext.getUserContext().isAdmin()) {
 		                                      condition.setState(TopicStatusType.PUBLISHED);
 		                                  }
 		                                  return BBSModel.INSTANCE.searchTopic(condition,
@@ -372,6 +454,7 @@
 		                    </ns2:column>
 		                    <ns2:defaultActions>
 		                        <ns2:defaultOpenAction>openCustServiceTopic</ns2:defaultOpenAction>
+		                        <ns2:defaultDeleteAction>deleteCustServiceTopic</ns2:defaultDeleteAction>
 		                    </ns2:defaultActions>
 		                    <ns2:actionGroup>
 		                        <ns2:type>radio</ns2:type>

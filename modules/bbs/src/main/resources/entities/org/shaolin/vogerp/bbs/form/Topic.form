@@ -11,6 +11,7 @@
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.bbs.be.TopicImpl;
+        import org.shaolin.vogerp.bbs.ce.TopicStatusType;
         import org.shaolin.vogerp.bbs.dao.BBSModel;
         import org.shaolin.bmdp.runtime.security.UserContext;
         { 
@@ -20,6 +21,7 @@
             TopicImpl topic = (TopicImpl)out.get("beObject");
             topic.setUserId(UserContext.getUserContext().getUserId());
             if (topic.getId() == 0) {
+                topic.setState(TopicStatusType.VERIFY);
                 BBSModel.INSTANCE.create(topic);
             } else {
                 BBSModel.INSTANCE.update(topic);

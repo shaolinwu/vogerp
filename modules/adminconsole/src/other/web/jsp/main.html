@@ -1,291 +1,527 @@
-
 <html lang="en" class="-webkit-">
-<!--<![endif]-->
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>上海抚企信息科技</title>
-	<meta name="description" content=".">
-	<meta http-equiv="Content-Script-Type" content="text/javascript">
-	<meta http-equiv="Content-Style-Type" content="text/css">
-	<meta property="og:image" content="/content/imgs/logo-fb.png">
-	<meta name="viewport" content="width=device-width, height=device-height">
-	<meta name="apple-touch-fullscreen" content="yes">
-	<meta name="app-mobile-web-app-capable" content="yes">
-	<link rel="shortcut icon" href="/uimaster/favicon.ico" type="image/x-icon">
-	<link rel="apple-touch-icon" href="/uimaster/favicon.ico">
-	<link rel="stylesheet" href="./main/main.css" type="text/css">
-	<style media="" data-href="htt447513343"></style>
-	<script type="text/javascript" async="" src="./main/munchkin.js"></script>
-	<script async="" src="./main/analytics.js"></script>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta http-equiv="x-ua-compatible" content="ie=7">
-	<link rel="stylesheet" href="/uimaster/css/jquery-ui.css" type="text/css">
-	<link rel="stylesheet" href="/uimaster/css/iumaster.css" type="text/css">
-	<script type="text/javascript">
-	var defaultname;
-	var USER_CONSTRAINT_IMG="/images/uimaster_constraint.gif";
-	var USER_CONSTRAINT_LEFT=false;
-	var LANG="en";
-	var CURRENCY_GROUP_SEPARATOR=",";
-	var CURRENCY_MONETARY_SEPARATOR=".";
-	var CURTIME=1447858718739;
-	var TZOFFSET=28800000;
-	var WEB_CONTEXTPATH="/uimaster";
-	var RESOURCE_CONTEXTPATH="/uimaster";
-	var FRAMEWRAP="/uimaster";
-	var IS_SERVLETMODE=true;
-	var AJAX_SERVICE_URL="/uimaster/ajaxservice";
-	</script>
-	<script type="text/javascript" src="/uimaster/js/jquery.js?_timestamp=1"></script>
-	<script type="text/javascript" src="/uimaster/js/uimaster.js?_timestamp=1"></script>
-	<link rel="stylesheet" href="/uimaster/js/controls/swiper/swiper.css" type="text/css">
-	<script type="text/javascript" src="/uimaster/js/controls/swiper/swiper.jquery.js"></script>
-    <style>
-	html, body {
-        position: relative;
-        height: 100%;
-    }
-	</style>
-</head>
-<body id="chrome" class="v46 win pl-index" itemscope="" itemtype="http://schema.org/WebPage">
-    <header>
-        <div id="top" class="clearfix desktop">
-            <div class="top_table">
-                <div class="top_cell right">
-                    <div class="top_table">
-                        <div class="top_cell">
-                            <ul>
-                                <li class="green phone"><a href="tel:+15921460670"><span>联系我们 +15921460670</span>
-                                </a></li>
-                                <li class="search_box"><input type="text" name="search"
-                                    placeholder="search"> <i></i></li>
-                                <li class="partners"><a href="javascript:"
-                                    onclick="loadPartnersArea()">合作伙伴<i
-                                        class="fa fa-lock"></i></a></li>
-                                <li>
-                                    <div class="lang-selector">
-                                        <div class="active">
-                                            <a class="lang_en" href="javascript:"
-                                                onclick="$('.layer-langs').slideToggle()">zh<i
-                                                class="fa fa-angle-down"></i></a>
-                                        </div>
-                                        <div class="layer-langs clearfix">
-                                            <ul class="langs">
-                                                <li><a class="lang_zh" hreflang="zh" rel="alternate"
-                                                    rev="alternate" href="/zh/"
-                                                    title="Chinese"
-                                                    onclick="$('.layer-langs').slideUp();">zh</a></li>
-                                                <li><a class="active lang_en" href="javascript:"
-                                                    onclick="$('.layer-langs').slideToggle()">en<i
-                                                        class="fa fa-angle-down"></i></a></li>
-                                                <li><a class="lang_fr" hreflang="fr" rel="alternate"
-                                                    rev="alternate" href="/fr/"
-                                                    title="FranÃ§ais"
-                                                    onclick="$('.layer-langs').slideUp();">fr</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="menu" class="desktop">
-            <div class="frame">
-                <div class="logo">
-                    <a href="#" title="Vogue ERP">
-                    <img src="./main/content/imgs/logo.png" alt="Vogue ERP" title="Vogue ERP">
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div id="menu_mobile" class="tablet mobile">
-            <div class="frame">
-                <div class="dcell">
-                    <div class="icon_container">
-                        <a href="javascript:" class="open_menu"><i class="fa fa-bars"></i></a>
-                    </div>
-                </div>
-                <div class="logo">
-                     <img
-                        src="./main/logo.png"
-                        alt="VogERP" title="VogERP">
-                </div>
-                <div class="dcell">
-                    <div class="icon_container mobile phone">
-                        <a href="tel:+15921460670"
-                            onclick="trackEvent(&#39;Telefono&#39;, &#39;Support&#39;);"><i
-                            class="fa fa-phone"></i></a>
-                    </div>
-                    <ul class="tablet">
-                        <li class="phone"><a href="tel:+15921460670"><i
-                                class="fa fa-phone"></i>联系我们 <span>+1592 1460 670</span></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </header>
+	<!--<![endif] -->
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>加工达人--全国在线机械加工，零件加工制造，机械设备租赁，找加工师傅</title>
+		<meta name="keywords" content="机械加工，零件加工制造，机械设备租赁，找加工师傅" />
+		<meta name="description"
+			content="加工达人是全国专业在线机械加工服务平台,提供机械加工，零件加工制造，机械设备租赁，找加工师傅等服务担保交易;覆盖全国主要一二三线多个城市,快速,便捷,省钱,有保障！" />
+		<meta http-equiv="Content-Script-Type" content="text/javascript" />
+		<meta http-equiv="Content-Style-Type" content="text/css" />
+		<meta property="og:image" content="/content/imgs/logo-fb.png" />
+		<meta name="viewport" content="width=device-width, height=device-height" />
+		<meta name="apple-touch-fullscreen" content="yes" />
+		<meta name="app-mobile-web-app-capable" content="yes" />
+		<link rel="shortcut icon" href="/uimaster/favicon.ico" type="image/x-icon" />
+		<link rel="apple-touch-icon" href="/uimaster/favicon.ico" />
+		<link rel="stylesheet" href="./main/main.css?a=3" type="text/css" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="x-ua-compatible" content="ie=7" />
+		<script type="text/javascript">
+			var defaultname;
+			var
+			USER_CONSTRAINT_IMG="/images/uimaster_constraint.gif";
+			var
+			USER_CONSTRAINT_LEFT=false;
+			var LANG="en";
+			var
+			CURRENCY_GROUP_SEPARATOR=",";
+			var CURRENCY_MONETARY_SEPARATOR=".";
+			var
+			CURTIME=1447858718739;
+			var TZOFFSET=28800000;
+			var
+			WEB_CONTEXTPATH="/uimaster";
+			var RESOURCE_CONTEXTPATH="/uimaster";
+			var
+			FRAMEWRAP="/uimaster";
+			var IS_SERVLETMODE=true;
+			var
+			AJAX_SERVICE_URL="/uimaster/ajaxservice";
+		</script>
+		<script type="text/javascript" src="/uimaster/js/jquery.js?_timestamp=1"></script>
+		<script type="text/javascript" src="/uimaster/js/uimaster.js?_timestamp=1"></script>
+		<link rel="stylesheet" href="/uimaster/js/controls/swiper/swiper.css"
+			type="text/css" />
+		<script type="text/javascript" src="/uimaster/js/controls/swiper/swiper.jquery.js"></script>
+	</head>
+	<body class="min1200">
+		<div class="g-index-head">
+			<div class="top-menu">
+				<div>
+					<div>
+						<span>
+							服务热线：
+							<span>021-31009779</span>
+						</span>
+					</div>
+					<ul class="menu-nav">
+						<li class="login elastic">
+							<a class="down" href="https://www.vogerp.com/uimaster/member/account/login">登录</a>
+							<ul>
+								<li>
+									<a href="https://www.vogerp.com/uimaster/member/account/login">个人登录</a>
+								</li>
+								<li>
+									<a href="http://app.wanshifu.com/" target="_blank">商户登录</a>
+								</li>
+							</ul>
+						</li>
+						<li class="regis elastic">
+							<a class="down"
+								href="https://www.vogerp.com/uimaster/member/account/registration">免费注册</a>
+						</li>
+						<!-- <li class="name is_login hide">您好， <a id="account" href="https://www.vogerp.com/uimaster/member" 
+							target="_blank"> </a> </li> <li class="is_login hide"><a href="https://www.vogerp.com/uimaster/member/account/logout">退出</a></li> 
+							<li class=""><a href="https://www.vogerp.com/uimaster/member" class="f-prompt" 
+							target="_blank">我的订单</a></li> <li class="measseg is_login hide"><a href="https://www.vogerp.com/uimaster/member/account/message" 
+							target="_blank">消息<span id="msg-num"></span></a> </li> -->
+						<li>
+							<a target="_blank" href="http://master.wanshifu.com/">商户服务</a>
+						</li>
+						<li class="">
+							<a target="_blank"
+								href="https://www.vogerp.com/uimaster/helpcenter/HelpCenter">帮助中心</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 
-    <div id="content_cont">
+			<div class="g-navigation-ad">
+				<div class="w1200">
+					<span>
+					</span>
+					<span class="closed" id="navigation_img">
+						<img src="./_files/close.png" />
+					</span>
+				</div>
+			</div>
 
-        <div id="panels" class="clearfix">
-            <a class="panellinker" name="panel_clientes_destacados0_0"></a>
-            <a class="panellinker" name="panel_productos0_1"></a>
-            <ul id="panel_productos1_1" class="panel_productos  panel">
-                <li id="panel_productos_item11_1" class="item col-0 clearfix">
-                    <section class="productos clearfix">
-                        <div class="top">
-                            <div class="container">
-                                <div class="title">
-                                    <div class="bolitas">
-                                        <span class="bola small"></span> <span class="bola medium"></span>
-                                        <span class="bola big"></span>
-                                    </div>
-                                    <h2>我们专注于中小型电商和企业管理系统软件服务！</h2>
-                                    <div class="bolitas">
-                                        <span class="bola big"></span> <span class="bola medium"></span>
+			<span id="user-min"></span>
+			<div class="head">
+				<div>
+					<div class="logo clearfix">
+						<a href="https://www.vogerp.com" class="Head-logo">
+							<img src="https://www.vogerp.com/uimaster/images/qd-logo.png"
+								style="height:70px;margin-top: 12px;" alt="加工达人服务平台" />
+						</a>
+						<a href="https://www.vogerp.com">
+							<span>让-机械加工-变得如此简单！</span>
+						</a>
+						<div class="activeLogo"></div>
+					</div>
+					<div class="nav-link">
+						<a class="active" href="https://www.vogerp.com/uimaster/">首 页</a>
+						<a class="" href="https://www.vogerp.com/uimaster/Complain/plan">服务方案</a>
+						<a class=""
+							href="https://www.vogerp.com/uimaster/universalbao/InAdvance">
+							服务保障
+							<i class="Xx-Ioc"></i>
+						</a>
+						<a target="_blank" href="https://www.vogerp.com/uimaster/event/payact">优惠活动</a>
+						<!--<a target="_blank" href="/special/triennial">优惠活动</a> -->
+						<a class="" href="https://www.vogerp.com/uimaster/about">关于我们</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--页头 End -->
 
-                                <div class="dtable">
-                                    <div class="dcell image">
-                                        <div class="img_bg dtable">
-                                            <div class="dcell" style="">
-											  <a href="/uimaster/jsp/app-release.apk">
-                                                <img
-                                                    src="/uimaster/jsp/main/lefticon1.png"
-                                                    alt="抚企在线抢单达人">
-											  </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="dcell">
-                                        <div class="VogERP">
-                                            <span></span>
-                                        </div>
-                                        <div class="title">在线抢单达人</div>
 
-                                        <div class="btn-container">
-                                            <a href="/uimaster/jsp/index.jsp" target="_blank" title="demo"
-                                                class="botongris">进入在线系统<i
-                                                class="fa fa-chevron-circle-right"></i>
-                                            </a>
-                                        </div>
-                                        <div class="btn-container demo-item">
-                                            <ul>
-                                                <li class="itmenu demo"><a class="botonverde"
-                                                    href="/uimaster/jsp/register.jsp" target="_blank" title="注册VogERP软件">注册使用
-                                                </a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="dcell image">
-                                        <div class="img_bg dtable">
-                                            <div class="dcell">
-                                                <img
-                                                    src="./main/img-iconproductcommercegreen-1.png"
-                                                    alt="在线企业管理系统">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="dcell">
-                                        <div class="title">在线企业管理系统</div>
-                                        <div class="text">
-                                            <p></p>
-                                        </div>
-                                        <div class="btn-container">
-                                            <a href="/uimaster/jsp/index.jsp" target="_blank" title="demo"
-                                                class="botongris">进入在线系统<i
-                                                class="fa fa-chevron-circle-right"></i>
-                                            </a>
-                                        </div>
-                                        <div class="btn-container demo-item">
-                                            <ul>
-                                                <li class="itmenu demo"><a class="botonverde"
-                                                    href="/uimaster/jsp/register.jsp" target="_blank" title="注册VogERP软件">注册使用
-                                                </a></li>
-                                            </ul>
-										</div>
+		<div class="g-index-middle">
+			<div class="g-index-banner">
+				<ul class="FirstL" style="left: -2400px;">
+					<li>
+						<div class="g-nav-img">
+							<img src="http://frontend.wanshifu.com/www/images/first_01.jpg" />
+						</div>
+					</li>
+					<li>
+						<div class="g-nav-img">
+							<img src="http://frontend.wanshifu.com/www/images/first_02.jpg" />
+						</div>
+					</li>
+					<li>
+						<div class="g-nav-img">
+							<img src="http://frontend.wanshifu.com/www/images/first_03.jpg" />
+						</div>
+					</li>
+					<li>
+						<div class="g-nav-img">
+							<img src="http://frontend.wanshifu.com/www/images/first_01.jpg" />
+						</div>
+					</li>
+				</ul>
+				<div class="g-index-body">
+					<div class="gContent">
+						<div class="gCpDiv">
+							<ul class="clearfix font-14">
+								<!--taskIconOn -->
+								<li rel="1">
+									<a class="gConbigLine"></a>
+									<em class="taskIcon01 taskIcon taskIcon01On fl"></em>
+									家具
+								</li>
+
+								<li rel="2">
+									<a class="gConbigLine"></a>
+									<em class="taskIcon02 taskIcon taskIcon02On fl"></em>
+									灯具
+								</li>
+								<li rel="4">
+									<a class="gConbigLine"></a>
+									<em class="taskIcon03 taskIcon taskIcon03On fl"></em>
+									卫浴
+								</li>
+								<li rel="8">
+									<a class="gConbigLine"></a>
+									<em class="taskIcon04 taskIcon taskIcon04On fl"></em>
+									墙纸
+								</li>
+								<li rel="9">
+									<a class="gConbigLine"></a>
+									<em class="taskIcon05 taskIcon taskIcon05On fl"></em>
+									地毯
+								</li>
+								<li rel="14">
+									<a class="gConbigLine"></a>
+									<em class="taskIcon10 taskIcon taskIcon10On fl"></em>
+									家电
+
+								</li>
+
+								<li rel="12">
+									<a class="gConbigLine"></a>
+									<em class="taskIcon07 taskIcon taskIcon07On fl"></em>
+									浴霸
+
+								</li>
+								<li rel="13">
+									<a class="gConbigLine"></a>
+									<em class="taskIcon09 taskIcon taskIcon09On fl"></em>
+									净水器
+								</li>
+								<li rel="10">
+									<a class="gConbigLine"></a>
+									<em class="taskIcon06 taskIcon taskIcon06On fl"></em>
+									健身器材
+								</li>
+								<li rel="11">
+									<a class="gConbigLine"></a>
+									<em class="taskIcon08 taskIcon taskIcon08On fl"></em>
+									晾衣架/窗帘
+
+								</li>
+							</ul>
+
+						</div>
+						<a href="https://www.vogerp.com/uimaster/orders/task/publish"
+							id="order-master" class="gTaskBtn">发布任务找师傅</a>
+						<div class="mt-10 gIndexSlid g-order-decon">
+							<div class="gIndexSlidChild g-slide" style="top: -27px;">
+								<p class="text-c  color-fff">
+									一*发布任务 家具类(送货到家并安装)
+									<a class="g-color-red" href="https://www.vogerp.com/uimaster/bozhou-jiaju"
+										target="_blank">
+										<span class="color-Orange">亳州谯城*</span>
+									</a>
+									38秒前
+								</p>
+								<p class="text-c  color-fff">
+									宜*发布任务 家具类(安装)
+									<a class="g-color-red" href="https://www.vogerp.com/uimaster/sy-jiaju"
+										target="_blank">
+										<span class="color-Orange">沈阳铁西*</span>
+									</a>
+									47秒前
+								</p>
+								<p class="text-c  color-fff">
+									一*发布任务 家具类(送货到家并安装)
+									<a class="g-color-red" href="https://www.vogerp.com/uimaster/bozhou-jiaju"
+										target="_blank">
+										<span class="color-Orange">亳州谯城*</span>
+									</a>
+									38秒前
+								</p>
+								<p class="text-c  color-fff">
+									宜*发布任务 家具类(安装)
+									<a class="g-color-red" href="https://www.vogerp.com/uimaster/sy-jiaju"
+										target="_blank">
+										<span class="color-Orange">沈阳铁西*</span>
+									</a>
+									47秒前
+								</p>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<!-- <div class="g-banner-bottom"> <div class="w1200"> <ul> <li>入驻师傅 
+					532040 人</li> <li>下单商家 124030 个</li> <li>服务客户 9620191 名</li> <li>平均报价速度 3分15秒 
+					</li> </ul> </div> </div> -->
+			</div>
+
+
+			<div class="g-middle-mess">
+				<div class="g-frame-car">
+					<div class="w1200">
+						<ul class="g-car-dec">
+							<li>
+								<a href="https://www.vogerp.com/uimaster/Complain/plan">
+									<span>
+										<img src="http://frontend.wanshifu.com/www/images/v4/i_01.jpg" />
+									</span>
+								</a>
+								<span class="mrgl5">
+									<div class="f-car-dec-top">服务范围覆盖全国</div>
+									<div class="f-car-dec-bottom">服务全国600多个城市及区县</div>
+								</span>
+
+							</li>
+							<li>
+								<a href="https://www.vogerp.com/uimaster/Complain/plan">
+									<span>
+										<img src="http://frontend.wanshifu.com/www/images/v4/i_02.jpg" />
+									</span>
+								</a>
+
+								<span class="mrgl5">
+									<div class="f-car-dec-top">服务去除中间化</div>
+									<div class="f-car-dec-bottom">用户直接在线发单全国竞价，沟通方便快捷</div>
+								</span>
+							</li>
+							<li>
+								<a href="https://www.vogerp.com/uimaster/Complain/plan">
+									<span>
+										<img src="http://frontend.wanshifu.com/www/images/v4/i_03.png" />
+									</span>
+								</a>
+
+								<span class="mrgl5">
+									<div class="f-car-dec-top">服务费用全免</div>
+									<div class="f-car-dec-bottom">多商户在线报价竞标，不收取任何服务费</div>
+								</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="g-frame-car">
+					<div class="w1200 g-car3">
+						<div class="g-car3-left">
+							<div>
+								<span class="f-title">优质师傅</span>
+								<!-- <a target="_blank" href=" -->
+								<!--/findMaster" class="f-more">更多>></a> -->
+								<a target="_blank" href="https://www.vogerp.com/uimaster/master/list"
+									class="f-more">更多&gt;&gt;</a>
+							</div>
+							<div class="g-car3-dec">
+								<span class="g-foot-icon"></span>
+								<span>师傅承诺：按时完成服务、保证客户满意、服务中绝不恶意加价、100%喵师傅核销</span>
+							</div>
+							<ul class="g-car3-list">
+								<li>
+									<div class="g-car3-img">
+										<a target="_blank" href="http://worker.wanshifu.com/14562568.html">
+											<img
+												src="https://qncdn.wanshifu.com/9a28610d7dc9b7b33202aaf29b9d7357?imageView2/2/w/125/h/125/interlace/1/ignore-error/1"
+												width="100%" alt="" />
+										</a>
 									</div>
-                            </div>
-                        </div>
-                        <div class="flechas_container">
-                            <div class="container rel">
-                                <i class="sprites sprite-flecha-galeria-producto1"></i> <i
-                                    class="sprites sprite-flecha-galeria-producto2"></i>
-                            </div>
-                        </div>
-                        <div class="bottom">
-                            <div id="picSlider" class="container bxslider">
-                                <div class="bx-wrapper" style="max-width: 100%;">
-                                    <div class="bx-viewport"
-                                        style="width: 100%; height:600px; overflow: hidden;">
-										<div id="productos_gallery" class="swiper-container">
-										   <div class="swiper-wrapper" style="">
-											  <div class="swiper-slide red-slide" style="background-size: cover; background-position: center;background-image: url('./main/img-productos-a.png')">
-											  </div>
-											  <div class="swiper-slide red-slide" style="background-size: cover; background-position: center;background-image: url('./main/img-productos-b.png')">
-												<div ></div>
-											  </div>
-											  <div class="swiper-slide red-slide" style="background-size: cover; background-position: center;background-image: url('./main/img-productos-c.png')">
-												<div ></div>
-											  </div>
-                                           </div>
-										   <!-- Add Pagination -->
-											<div class="swiper-pagination"></div>
-											<!-- Add Arrows -->
-											<div class="swiper-button-next"></div>
-											<div class="swiper-button-prev"></div>
+									<a target="_blank" href="http://worker.wanshifu.com/14562568.html">
+										<div class="g-car3-name clear">
+											<span class="f-font16">张师傅</span>
+											<span class="f-font14">保</span>
+											<span>2000</span>
 										</div>
-                                    </div>
-                                </div>
-                            </div>
-                         </div>
-                    </section>
-                    <script type="text/javascript">
-						var swiper = new Swiper('#productos_gallery', {
-							pagination: '.swiper-pagination',
-							paginationClickable: true,
-							nextButton: '.swiper-button-next',
-							prevButton: '.swiper-button-prev',
-							spaceBetween: 30
-						});
-					</script>
-                </li>
-            </ul>
-        </div>
+									</a>
+									<div class="g-car3-fen f-font14">
+										综合评分：
+										<span class="g-color-red">5.0分</span>
+									</div>
+									<div class="g-car3-num f-font14">服务：141次</div>
+								</li>
+								<li>
+									<div class="g-car3-img">
+										<a target="_blank" href="http://worker.wanshifu.com/15263569.html">
+											<img
+												src="https://qncdn.wanshifu.com/1d2663d74a88ada4defe3add4f1b3459?imageView2/2/w/125/h/125/interlace/1/ignore-error/1"
+												width="100%" alt="" />
+										</a>
+									</div>
+									<a target="_blank" href="http://worker.wanshifu.com/15263569.html">
+										<div class="g-car3-name clear">
+											<span class="f-font16">豆师傅</span>
+											<span class="f-font14">保</span>
+											<span>2000</span>
+										</div>
+									</a>
+									<div class="g-car3-fen f-font14">
+										综合评分：
+										<span class="g-color-red">5.0分</span>
+									</div>
+									<div class="g-car3-num f-font14">服务：130次</div>
+								</li>
+								<li>
+									<div class="g-car3-img">
+										<a target="_blank" href="http://worker.wanshifu.com/15300456.html">
+											<img
+												src="https://qncdn.wanshifu.com/eeb474579a0ba098f9351d0b04ae47d5?imageView2/2/w/125/h/125/interlace/1/ignore-error/1"
+												width="100%" alt="" />
+										</a>
+									</div>
+									<a target="_blank" href="http://worker.wanshifu.com/15300456.html">
+										<div class="g-car3-name clear">
+											<span class="f-font16">马师傅</span>
+											<span class="f-font14">保</span>
+											<span>2000</span>
+										</div>
+									</a>
+									<div class="g-car3-fen f-font14">
+										综合评分：
+										<span class="g-color-red">4.8分</span>
+									</div>
+									<div class="g-car3-num f-font14">服务：231次</div>
+								</li>
+							</ul>
+						</div>
+						<div class="g-car3-right">
+							<div>
+								<span class="f-title">企业服务商</span>
+								<a target="_blank" href="http://b.wanshifu.com/" class="f-more">更多&gt;&gt;
+								</a>
+							</div>
+							<div class="g-car3-dec">
+								<span class="f-font12">一对一为企业用户（家居卖家、家居商家、物流公司等）提供服务，具有企业资质认证并交纳诚意保证金
+								</span>
+							</div>
+							<ul class="g-car3-list">
+								<li>
+									<div class="g-car3-img">
+										<a target="_blank" href="http://b.wanshifu.com/3735431479">
+											<img
+												src="https://qncdn.wanshifu.com/e2f4234d59cc0767ff71e9cc6cc1cefc?imageView2/2/w/150/h/150/interlace/1/ignore-error/1"
+												width="100%" alt="" />
+										</a>
+									</div>
+									<a target="_blank" href="http://b.wanshifu.com/3735431479">
+										<div class="g-car3-name ta-center f-font16">卓沃家居服务</div>
+									</a>
+									<div class="g-car3-fen f-font12 ta-center">
+										<div>全国级服务商</div>
+										<div>服务2268次</div>
+									</div>
+								</li>
+								<li>
+									<div class="g-car3-img">
+										<a target="_blank" href="http://b.wanshifu.com/3735571615">
+											<img
+												src="https://qncdn.wanshifu.com/38fcd4804a5707e1b03c2f3c33ddf799?imageView2/2/w/150/h/150/interlace/1/ignore-error/1"
+												width="100%" alt="" />
+										</a>
+									</div>
+									<a target="_blank" href="http://b.wanshifu.com/3735571615">
+										<div class="g-car3-name ta-center f-font16">云邦家居</div>
+									</a>
+									<div class="g-car3-fen f-font12 ta-center">
+										<div>全国级服务商</div>
+										<div>服务54236次</div>
+									</div>
+								</li>
+								<li>
+									<div class="g-car3-img">
+										<a target="_blank" href="http://b.wanshifu.com/4311700850">
+											<img
+												src="https://qncdn.wanshifu.com/89182218d73280541b50e1af6fee2fee?imageView2/2/w/150/h/150/interlace/1/ignore-error/1"
+												width="100%" alt="" />
+										</a>
+									</div>
+									<a target="_blank" href="http://b.wanshifu.com/4311700850">
+										<div class="g-car3-name ta-center f-font16">铭速家居服务商</div>
+									</a>
+									<div class="g-car3-fen f-font12 ta-center">
+										<div>全国级服务商</div>
+										<div>服务8772次</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
 
-    </div>
+				<div class="g-frame-car">
+					<div class="w1200 g-car5">
+						<ul>
+							<li class="ta-center">
+								<span class="g-foot-icon"></span>
+								<span>发布一个任务</span>
+								<span class="g-foot-icon g-car5-icon"></span>
+							</li>
+							<li class="ta-center">
+								<span class="g-foot-icon"></span>
+								<span>众多师傅报价</span>
+								<span class="g-foot-icon g-car5-icon"></span>
+							</li>
+							<li class="ta-center">
+								<span class="g-foot-icon"></span>
+								<span>选择师傅并托管费用</span>
+								<span class="g-foot-icon g-car5-icon"></span>
+							</li>
+							<li class="ta-center">
+								<span class="g-foot-icon"></span>
+								<span>师傅上门服务</span>
+								<span class="g-foot-icon g-car5-icon"></span>
+							</li>
+							<li class="ta-center">
+								<span class="g-foot-icon"></span>
+								<span>验收付款并评价师傅</span>
+							</li>
 
-    <footer>
-        <div class="footer_top">
-        </div>
-        <div class="footer_bottom">
-            <div class="container">
-                <div class="footer_table">
-                    <div class="footer_cell menu_bottom">
-                        <ul>
-                            <li>© 2015-2016 上海抚企信息科技有限公司</li>
-							<li><a href="http://www.miitbeian.gov.cn" target="_blank">沪ICP备案号: 16005435号</a></li>
-                            <li><a href="javascript:" onclick="loadLegal()">条款聲明</a></li>
-                            <li class="desktop"><a href="/webmap/">地图</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+						</ul>
+					</div>
+				</div>
 
-    <div id="layover"
-        onclick="$(&#39;#legallayer&#39;).hide(); $(this).hide();"></div>
-    <div id="legallayer" class="popup">
-        <div class="close">
-            <i
-                onclick="$(&#39;#legallayer&#39;).hide(); $(&#39;#layover&#39;).hide();"
-                class="fa fa-times"></i>
-        </div>
-        <div id="legalinfo"></div>
-    </div>
+			</div>
+		</div>
 
-</body>
+		<!--首页页脚 -->
+
+		<div class="g-index-foot">
+			<div class="foot">
+				<div class="top">
+					<div class="con1">
+						<a target="_blank" href="https://www.vogerp.com/uimaster/about">公司介绍</a>
+						<a target="_blank" href="https://www.vogerp.com/uimaster/recruitment">加入我们</a>
+						<a target="_blank" href="https://www.vogerp.com/uimaster/news/">新闻动态</a>
+						<a target="_blank"
+							href="https://www.vogerp.com/uimaster/helpcenter/HelpCenter">常见问题</a>
+						<a target="_blank" href="https://www.vogerp.com/uimaster/service">服务协议</a>
+						<a target="_blank" href="https://www.vogerp.com/uimaster/sitemap.html">站点地图</a>
+						<a target="_blank"
+							href="https://www.vogerp.com/uimaster/download/app-release.apk"
+							class="g-app">加工达人APP</a>
+					</div>
+
+					<div class="con2">
+						<span class="g-foot-icon g-foot-phoneicon"></span>
+						<span class="g-foot-phone">
+							<div>021-31009779</div>
+							<div>周一至周日 08:30 - 20:00</div>
+						</span>
+					</div>
+				</div>
+
+				<div class="copyright">
+					<span>© 2015-2017 上海抚企信息科技有限公司</span>
+					<a href="http://www.gsxt.gov.cn/index.html" target="_blank">沪ICP备案号:
+						16005435号
+					</a>
+				</div>
+			</div>
+
+		</div>
+
+
+	</body>
 </html>
