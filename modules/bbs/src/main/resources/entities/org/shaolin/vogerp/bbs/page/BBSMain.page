@@ -23,7 +23,8 @@
                     {
                         IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
                         if (!userService.checkUserOnline(@page.getRequest().getSession())) {
-                            @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\");");
+                            Dialog.showMessageDialog("请登录系统后发贴！", "", Dialog.WARNING_MESSAGE, null);
+                            @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\", true);");
                             return;
                         }
                     
@@ -128,7 +129,8 @@
                     {
                         IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
                         if (!userService.checkUserOnline(@page.getRequest().getSession())) {
-                            @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\");");
+                            Dialog.showMessageDialog("请登录系统后发贴！", "", Dialog.WARNING_MESSAGE, null);
+                            @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\", true);");
                             return;
                         }
                     
