@@ -6,7 +6,7 @@
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="ChangePrice-20170111-163402">
       <ns2:exp>
         <expressionString><![CDATA[
-        import java.util.List;
+        import java.util.Set;
         import java.util.HashMap;
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
@@ -21,9 +21,10 @@
             
             if (order.getOrder().getStatus() == OrderStatusType.PUBLISHED) {
 	            IOfferPrice offeredPrice = null;
-	      	    List items = order.getOrder().getOfferPrices();
-	      	    for (int i=0; i<items.size(); i++) {
-		      	     IOfferPrice price = (IOfferPrice)items.get(i);
+	      	    Set items = order.getOrder().getOfferPrices();
+	      	    java.util.Iterator iter = items.iterator();
+		        while (iter.hasNext()) {
+		      	     IOfferPrice price = (IOfferPrice)iter.next();
 		      	     if (price.getTakenCustomerId() == UserContext.getUserContext().getUserId()) {
 		      	         offeredPrice = price;
 		      	         break;
@@ -221,7 +222,7 @@
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
-      import java.util.List;
+      import java.util.Set;
       import org.shaolin.vogerp.ecommercial.be.*;
       import org.shaolin.vogerp.commonmodel.IUserService;
       import org.shaolin.bmdp.runtime.AppContext;
@@ -231,9 +232,10 @@
       import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
       {
           IOfferPrice offeredPrice = null;
-      	  List items = $beObject.getOrder().getOfferPrices();
-      	  for (int i=0; i<items.size(); i++) {
-      	     IOfferPrice price = (IOfferPrice)items.get(i);
+      	  Set items = $beObject.getOrder().getOfferPrices();
+      	  java.util.Iterator iter = items.iterator();
+		  while (iter.hasNext()) {
+      	     IOfferPrice price = (IOfferPrice)iter.next();
       	     if (price.getTakenCustomerId() == UserContext.getUserContext().getUserId()) {
       	         offeredPrice = price;
       	         break;

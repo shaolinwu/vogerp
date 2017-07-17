@@ -1,6 +1,7 @@
 package org.shaolin.vogerp.ecommercial.dao;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -9,6 +10,11 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.shaolin.bmdp.persistence.BEEntityDaoObject;
 import org.shaolin.bmdp.persistence.query.operator.Operator;
+import org.shaolin.bmdp.runtime.AppContext;
+import org.shaolin.vogerp.commonmodel.IUserService;
+import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
+import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+import org.shaolin.vogerp.ecommercial.be.IEOrder;
 
 public class CustOrderModel extends BEEntityDaoObject {
 
@@ -148,5 +154,28 @@ public class CustOrderModel extends BEEntityDaoObject {
          return result;
      }
 
+    public static void joinPublishedUserInfo(List<IEOrder> orders) {
+    	if (orders == null || orders.size() == 0) {
+    		return;
+    	}
+    	HashSet<Long> userIds = new HashSet<Long>();
+    	for (IEOrder order : orders) {
+    		userIds.add(order.getPublishedCustomerId());
+    	}
+    	List<IPersonalInfo> userInfoList = AppContext.get().getService(IUserService.class).getPersonalInfos(userIds);
+    	for (IEOrder order : orders) {
+    		order.setPublishedCustomer(selectAUser(order.getPublishedCustomerId(), userInfoList));
+    	}
+    }
+    
+    private static PersonalInfoImpl selectAUser(long userId, List<IPersonalInfo> userInfoList) {
+    	for (IPersonalInfo info : userInfoList) {
+    		if (userId == info.getId()) {
+    			return (PersonalInfoImpl)info;
+    		}
+    	}
+    	return null;
+    }
+    
 }
 

@@ -2,6 +2,7 @@ package org.shaolin.vogerp.commonmodel.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
@@ -66,7 +67,7 @@ public class CustomerInfoUtil {
 		return "";
 	}
 	
-	public static List<ArrayList<String>>[] getAddressInfo(List<IAddressInfo> list) {
+	public static List<ArrayList<String>>[] getAddressInfo(Set<IAddressInfo> list) {
     	if (list == null || list.isEmpty()) {
     		return new List[] {new ArrayList<String>(), new ArrayList<String>()};
     	}
@@ -80,7 +81,7 @@ public class CustomerInfoUtil {
     	return new List[] {valueResult, displayResult};
     }
     
-    public static List<ArrayList<String>>[] getContactInfo(List<IContactInfo> list) {
+    public static List<ArrayList<String>>[] getContactInfo(Set<IContactInfo> list) {
     	if (list == null || list.isEmpty()) {
     		//Don't use Collections.emptyList.
     		return new List[] {new ArrayList<String>(), new ArrayList<String>()};

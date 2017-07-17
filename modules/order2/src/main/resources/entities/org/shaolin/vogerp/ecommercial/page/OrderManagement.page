@@ -325,7 +325,7 @@
                         
                         HashMap input = new HashMap();
                         input.put("beObject", order);
-                        input.put("list", order.getOfferPrices());
+                        input.put("priceItems", order.getOfferPrices());
                         input.put("editable", new Boolean(true));
                         RefForm form = new RefForm("offerPriceTable", "org.shaolin.vogerp.ecommercial.form.GOOfferPriceTable", input);
                         @page.addElement(form);
@@ -356,7 +356,7 @@
                         
                         HashMap input = new HashMap();
                         input.put("beObject", order);
-                        input.put("list", order.getOfferPrices());
+                        input.put("priceItems", order.getOfferPrices());
                         input.put("editable", new Boolean(true));
                         RefForm form = new RefForm("offerPriceTable", "org.shaolin.vogerp.ecommercial.form.ROOfferPriceTable", input);
                         @page.addElement(form);
@@ -388,7 +388,7 @@
                         
                         HashMap input = new HashMap();
                         input.put("beObject", order);
-                        input.put("list", order.getOfferPrices());
+                        input.put("priceItems", order.getOfferPrices());
                         input.put("editable", new Boolean(true));
                         RefForm form = new RefForm("offerPriceTable", "org.shaolin.vogerp.ecommercial.form.MOOfferPriceTable", input);
                         @page.addElement(form);
@@ -834,6 +834,7 @@
           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="responseOrder-20160618-2044">
               <ns2:exp>
                   <ns2:expressionString><![CDATA[
+                  import java.util.Set;
                   import java.util.List;
                   import java.util.HashMap;
                   import org.shaolin.uimaster.page.AjaxContext;
@@ -866,9 +867,10 @@
                       if (UserContext.isMobileRequest() && UserContext.isAppClient()) {
                       	  //invokes App native javascript api.
                       	  IOfferPrice offeredPrice = null;
-				      	  List items = item.getOrder().getOfferPrices();
-				      	  for (int i=0; i<items.size(); i++) {
-				      	     IOfferPrice price = (IOfferPrice)items.get(i);
+				      	  Set items = item.getOrder().getOfferPrices();
+				      	  java.util.Iterator iter = items.iterator();
+		                  while (iter.hasNext()) {
+				      	     IOfferPrice price = (IOfferPrice)iter.next();
 				      	     if (price.getTakenCustomerId() == UserContext.getUserContext().getUserId()) {
 				      	         offeredPrice = price;
 				      	         break;
@@ -1086,6 +1088,7 @@
                                     <ns2:icon>ui-icon-note</ns2:icon>
                                     <ns2:function>acceptMachiningOrder</ns2:function>
                                 </ns2:action>
+                                <!-- 
                                 <ns2:action>
                                     <ns2:uiid>capSettings</ns2:uiid>
                                     <ns2:title xsi:type="ns2:StringPropertyType">
@@ -1094,6 +1097,7 @@
                                     <ns2:icon>ui-icon-note</ns2:icon>
                                     <ns2:function>capSettings</ns2:function>
                                 </ns2:action>
+                                 -->
                              </ns2:actionGroup>
                         </ns2:component>
                         <ns2:layoutConstraint>

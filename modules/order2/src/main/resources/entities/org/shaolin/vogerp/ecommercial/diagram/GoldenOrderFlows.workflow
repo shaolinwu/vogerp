@@ -366,6 +366,7 @@
 			        import org.shaolin.vogerp.commonmodel.IUserService; 
 			        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
 			        import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
+			        import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
 			        { 
 			            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
 			            HashMap out = (HashMap)form.ui2Data();
@@ -374,6 +375,7 @@
 			            
 			            GOOfferPriceImpl offerPrice = new GOOfferPriceImpl();
 			            offerPrice.setTakenCustomerId(UserContext.getUserContext().getUserId());
+			            offerPrice.setTakenCustInfo(CustomerInfoUtil.getCustomerEnterpriseBasicInfo(UserContext.getUserContext().getUserId()));
 			            offerPrice.setPrice(Double.valueOf(@page.getTextField("priceUI").getValue()));
 			            offerPrice.setCreateDate(new Date());
 			            offerPrice.setSamplePhoto(@page.getHidden("samplePhotoUI.imagePathUI").getValue());

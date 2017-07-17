@@ -2,13 +2,19 @@ package org.shaolin.vogerp.commonmodel.internal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.shaolin.bmdp.i18n.Localizer;
 import org.shaolin.bmdp.i18n.ResourceUtil;
 import org.shaolin.bmdp.json.JSONException;
@@ -71,7 +77,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	
 	public UserServiceImpl() {
 		UserContext.setOnlineUserChecker(this);
-		userSecondaryCache = CacheManager.getInstance().getCache(CACHE_NAME, 300, false, Long.class, 
+		userSecondaryCache = CacheManager.getInstance().getCache(CACHE_NAME, 100, false, Long.class, 
 				PersonalInfoImpl.class);
 	}
 	
@@ -166,7 +172,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		if (registerInfo.getUserType() == OrgType.COMPANY) {
 			registerInfo.getAddress().setName(registerInfo.getOrgName());
 			registerInfo.getAddress().setMobile(registerInfo.getPhoneNumber());
-			List<IAddressInfo> addresses = new ArrayList<IAddressInfo>();
+			Set<IAddressInfo> addresses = new HashSet<IAddressInfo>();
 			addresses.add(registerInfo.getAddress());
 			userInfo.setAddresses(addresses);
 		}
@@ -504,17 +510,19 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		return 0;
 	}
 	
+	private static final String USER_LOCATION_SQL = "SELECT LOCATIONINFO from comm_personalaccount a where a.PERSONALID=?";
+	
 	public String getUserLocation(long userId) {
 		if (userId < 1) {
-			return "China";
+			return "";
 		}
-		PersonalAccountImpl account = new PersonalAccountImpl();
-		account.setPersonalId(userId);
-		List<IPersonalAccount> result = CommonModel.INSTANCE.searchUserAccount(account, null, 0, 1);
-		if (result != null && result.size() > 0) {
-			return result.get(0).getLocationInfo();
+		
+		Session session = HibernateUtil.getSession();
+		final List<String> rows = session.createSQLQuery(USER_LOCATION_SQL).setLong(0, userId).list();
+		if (rows != null && rows.size() > 0) {
+			return rows.get(0);
 		}
-		return "China";
+		return "";
 	}
 	
 	@Override
@@ -578,6 +586,23 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	}
 	
 	@Override
+	public List<IPersonalInfo> getPersonalInfos(Set<Long> userIds) {
+		if (userIds == null || userIds.size() == 0) {
+			return Collections.emptyList();
+		}
+		Session session = HibernateUtil.getReadOnlySession();
+		try {
+			Criteria criteria = session.createCriteria(org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl.class, "pinfo");
+			Object[] values = new Object[userIds.size()];
+			userIds.toArray(values);
+			criteria.add(Restrictions.in("pinfo.id", values));
+			return criteria.list();
+		} finally {
+			HibernateUtil.releaseSession(HibernateUtil.getReadOnlySession(), true);
+		}
+	}
+	
+	@Override
 	public String getUserName(long userId) {
 		return CustomerInfoUtil.getCustomerEnterpriseBasicInfo(getPersonalInfo(userId));
 	}
@@ -600,7 +625,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	}
 
 	public boolean hasAddressConfigured(long userId) {
-		List<IAddressInfo> addressInfo = getPersonalInfo(userId).getAddresses();
+		Set<IAddressInfo> addressInfo = getPersonalInfo(userId).getAddresses();
 		return (addressInfo != null && addressInfo.size() > 0);
 	}
 	

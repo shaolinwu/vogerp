@@ -368,7 +368,7 @@
         </bediagram:member>
         <bediagram:member>
             <bediagram:name>addresses</bediagram:name>
-            <bediagram:type xsi:type="bediagram:BEListType">
+            <bediagram:type xsi:type="bediagram:BESetType">
                 <bediagram:elementType xsi:type="bediagram:BEObjRefType">
                     <bediagram:targetEntity entityName="AddressInfo" />
                 </bediagram:elementType>

@@ -1,7 +1,7 @@
 package org.shaolin.vogerp.ecommercial.uiwidget;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.shaolin.uimaster.page.AjaxContext;
 import org.shaolin.uimaster.page.UserRequestContext;
@@ -32,7 +32,7 @@ public class ComponentListUI extends HTMLWidgetType {
 		generateWidget(context);
 		try {
 			IMachiningOrder morder = (IMachiningOrder)this.getAttribute("value");
-			List<IMachOrderComponent> components = morder.getComponents();
+			Set<IMachOrderComponent> components = morder.getComponents();
 			if (components != null && components.size() > 0) {
 				try {
 					double totalPrice = 0;
@@ -53,8 +53,8 @@ public class ComponentListUI extends HTMLWidgetType {
 		}
 	}
 	
-	private List<IMachOrderComponent> getComponents(List<IMachOrderComponent> components, MachiningCategoryType type) {
-		List<IMachOrderComponent> result = new ArrayList<IMachOrderComponent>();
+	private Set<IMachOrderComponent> getComponents(Set<IMachOrderComponent> components, MachiningCategoryType type) {
+		Set<IMachOrderComponent> result = new HashSet<IMachOrderComponent>();
 		for (IMachOrderComponent comp : components) {
 			if (comp.getCategory() == type) {
 				result.add(comp);
@@ -63,7 +63,7 @@ public class ComponentListUI extends HTMLWidgetType {
 		return result;
 	}
 
-	private double generateTable(UserRequestContext context, List<IMachOrderComponent> fiterComponents, String title) 
+	private double generateTable(UserRequestContext context, Set<IMachOrderComponent> fiterComponents, String title) 
 		throws Exception {
 		if (fiterComponents.size() == 0) {
 			return 0;

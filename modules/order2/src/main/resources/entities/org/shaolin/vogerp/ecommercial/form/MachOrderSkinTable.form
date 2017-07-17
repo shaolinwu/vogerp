@@ -244,20 +244,22 @@
     </ns2:DataEntity>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
+      import java.util.Set;
       import java.util.List;
       import java.util.ArrayList;
       import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
       import org.shaolin.vogerp.ecommercial.be.MachOrderComponentImpl;
       {
         $list = new ArrayList();
-        List components = $beObject.getComponents();
+        Set components = $beObject.getComponents();
         if (components != null && components.size() > 0) {
-           for (int i=0;i<components.size(); i++) {
-              MachOrderComponentImpl component = (MachOrderComponentImpl)components.get(i);
-              if (component.getCategory() == MachiningCategoryType.SKINHANDLING) {
-                 $list.add(component);
-              }
-           }
+            java.util.Iterator iter = components.iterator();
+			while (iter.hasNext()) {
+				MachOrderComponentImpl component = (MachOrderComponentImpl)iter.next();
+				if (component.getCategory() == MachiningCategoryType.SKINHANDLING) {
+                   $list.add(component);
+                }
+			}
         }
         
 		@odContext.executeAllMappings();
@@ -267,14 +269,14 @@
     <ns2:UIToDataMappingOperation>
       <expressionString><![CDATA[
       import java.util.List;
-      import java.util.ArrayList;
+      import java.util.HashSet;
       import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
       import org.shaolin.vogerp.ecommercial.be.MachOrderComponentImpl;
       {
 		@odContext.executeAllMappings();
 		$list = @page.getTable("itemTable").getListData();
 		if ($beObject.getComponents() == null) {
-		   $beObject.setComponents(new ArrayList());
+		   $beObject.setComponents(new HashSet());
 		}
 		$beObject.getComponents().addAll($list);
       }

@@ -702,12 +702,12 @@
     <ns2:UIToDataMappingOperation>
       <expressionString><![CDATA[
       import java.util.List;
-      import java.util.ArrayList;
+      import java.util.HashSet;
       import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
       import org.shaolin.vogerp.ecommercial.be.MachOrderComponentImpl;
       import org.shaolin.vogerp.ecommercial.util.OrderUtil;
       {
-         $beObject.setComponents(new ArrayList());
+         $beObject.setComponents(new HashSet());
          @odContext.executeAllMappings();
          
          $beObject.setEstimatedPrice(OrderUtil.getMachiningOrderEstimatedPrice($beObject));

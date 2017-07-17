@@ -15,7 +15,7 @@
            import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
            {
                ComboBox typeUI = @page.getComboBox("typeUI");
-               String value = typeUI.getValue();
+               String value = typeUI.getCeName() +","+ typeUI.getValue();
                if ("more".equals(value)) {
                    ArrayList values = new ArrayList();
                    ArrayList displayItems = new ArrayList();
@@ -136,21 +136,30 @@
     <ns2:DataEntity scope="InOut" name="value" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
-    <ns2:DataEntity scope="InOut" name="values" category="JavaClass">
-      <type entityName="java.util.ArrayList"></type>
-    </ns2:DataEntity>
-    <ns2:DataEntity scope="InOut" name="displayItems" category="JavaClass">
-      <type entityName="java.util.ArrayList"></type>
-    </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="singleLevel" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
 	<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
       <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="value" paramName="Value"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values" paramName="OptionValues"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="value" paramName="CEValue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
+        <ns2:expression>
+          <expressionString>{return $ceName;}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Expendlevels">
+        <ns2:expression>
+          <expressionString><![CDATA[
+          {
+             if ($singleLevel != null && $singleLevel.booleanValue()) {
+                return 1;
+             } else {
+                return 3;
+             }
+          }]]></expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
@@ -160,24 +169,7 @@
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
       import java.util.ArrayList;
-      import org.shaolin.bmdp.runtime.AppContext;
-      import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
       {
-      	  if ($ceName == null) {
-      	      // get the default value logged in customer context.
-      	  	  $ceName = "";
-      	  }
-      	  
-          ArrayList values = new ArrayList();
-          ArrayList displayItems = new ArrayList();
-          if ($singleLevel != null && $singleLevel.booleanValue()) {
-            CEOperationUtil.getCEComboBox(values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
-          } else {
-            CEOperationUtil.getCEComboBox("", values, displayItems, AppContext.get().getConstantService().getConstantEntity($ceName));
-          }
-      	  $values = values;
-      	  $displayItems = displayItems;
-      	  
 	      @odContext.executeAllMappings();
       }   
     ]]></expressionString>

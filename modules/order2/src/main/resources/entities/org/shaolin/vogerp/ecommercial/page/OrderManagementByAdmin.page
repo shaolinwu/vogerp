@@ -325,6 +325,7 @@
                                     import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
                                     import org.shaolin.vogerp.ecommercial.ce.*;
                                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.vogerp.ecommercial.dao.CustOrderModel;
                                     import org.shaolin.bmdp.runtime.AppContext; 
                                     import org.shaolin.vogerp.commonmodel.IUserService;
                                     import org.shaolin.bmdp.runtime.security.UserContext;
@@ -337,10 +338,12 @@
                                           }
                                           $tableCondition.addOrder("statusInt", true);
                                           MachiningOrderImpl condition = (MachiningOrderImpl)$tableCondition.getCondition();
-                                          return OrderModel.INSTANCE.searchMachiningOrder(condition,
+                                          List orders = OrderModel.INSTANCE.searchMachiningOrder(condition,
                                                         $tableCondition.getOrders(),
                                                         $tableCondition.getOffset(), 
                                                         $tableCondition.getCount());
+                                          CustOrderModel.joinPublishedUserInfo(orders);
+                                          return orders;
                                     }]]></ns2:expressionString>
                                 </ns2:expression>
                             </ns2:query>
@@ -377,13 +380,7 @@
 						            <ns2:expression xsi:type="ns2:ExpressionType">
 						                <ns2:expressionString><![CDATA[
 						                import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
-						                import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
-						                import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 						                {
-						                   if ($rowBE.getPublishedCustomer() == null) {
-						                       PersonalInfoImpl pinfo = (PersonalInfoImpl)CommonModel.INSTANCE.get($rowBE.getPublishedCustomerId(), PersonalInfoImpl.class); 
-						                       $rowBE.setPublishedCustomer(pinfo);
-						                   }
 						                   return "["+CustomerInfoUtil.getCustomerCity($rowBE.getPublishedCustomer()) +"]" + CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getPublishedCustomer()) ;
 						                }]]></ns2:expressionString>
 						            </ns2:expression>
@@ -509,6 +506,7 @@
 		                            import org.shaolin.vogerp.ecommercial.ce.*;
 		                            import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
 		                            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.vogerp.ecommercial.dao.CustOrderModel;
 		                            import org.shaolin.bmdp.runtime.AppContext; 
                                     import org.shaolin.vogerp.commonmodel.IUserService;
                                     import org.shaolin.bmdp.runtime.security.UserContext;
@@ -521,10 +519,12 @@
 		                                  }
 		                                  $tableCondition.addOrder("statusInt", true);
 		                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
-		                                  return OrderModel.INSTANCE.searchGoldenOrder(condition,
+		                                  List orders = OrderModel.INSTANCE.searchGoldenOrder(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 
 		                                                $tableCondition.getCount());
+		                                  CustOrderModel.joinPublishedUserInfo(orders);
+		                                  return orders;
 		                            }]]></ns2:expressionString>
 		                        </ns2:expression>
 		                    </ns2:query>
@@ -729,6 +729,7 @@
                                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.vogerp.ecommercial.dao.CustOrderModel;
                                     import org.shaolin.bmdp.runtime.AppContext; 
                                     import org.shaolin.vogerp.commonmodel.IUserService;
                                     import org.shaolin.bmdp.runtime.security.UserContext;
@@ -741,10 +742,12 @@
                                           }
                                           $tableCondition.addOrder("statusInt", true);
                                           RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
-                                          return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
+                                          List orders = OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
                                                         $tableCondition.getOrders(),
                                                         $tableCondition.getOffset(), 
                                                         $tableCondition.getCount());
+                                          CustOrderModel.joinPublishedUserInfo(orders);
+		                                  return orders;
                                     }]]></ns2:expressionString>
                                 </ns2:expression>
                             </ns2:query>

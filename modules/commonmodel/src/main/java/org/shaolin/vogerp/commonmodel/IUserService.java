@@ -1,5 +1,8 @@
 package org.shaolin.vogerp.commonmodel;
 
+import java.util.List;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -60,6 +63,8 @@ public interface IUserService {
 	public IPersonalAccount getPersonalAccount(long userId);
 	
 	public IPersonalInfo getPersonalInfo(long userId);
+	
+	public List<IPersonalInfo> getPersonalInfos(Set<Long> userIds);
 	
 	public String getUserName(long userId);
 	

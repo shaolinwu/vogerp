@@ -21,7 +21,7 @@
 	              IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
 	              ArrayList values1 = new ArrayList();
 		          ArrayList displayItems1 = new ArrayList();
-		          CEOperationUtil.getCEItems(values1, displayItems1, cs.getChildren(CEUtil.toCEValue(cityListUI.getValue())));
+		          CEOperationUtil.getCEItems(values1, displayItems1, cs.getChildren(CEUtil.toCEValue("CityList," + cityListUI.getValue())));
 		          
 	              ComboBox citySubListUI = @page.getComboBox("citySubListUI");
                   citySubListUI.clearValue();
@@ -219,17 +219,8 @@
     <ns2:DataEntity scope="InOut" name="selectedCity" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
-    <ns2:DataEntity scope="InOut" name="values" category="JavaClass">
-      <type entityName="java.util.ArrayList"></type>
-    </ns2:DataEntity>
-    <ns2:DataEntity scope="InOut" name="displayItems" category="JavaClass">
-      <type entityName="java.util.ArrayList"></type>
-    </ns2:DataEntity>
-    <ns2:DataEntity scope="InOut" name="values1" category="JavaClass">
-      <type entityName="java.util.ArrayList"></type>
-    </ns2:DataEntity>
-    <ns2:DataEntity scope="InOut" name="displayItems1" category="JavaClass">
-      <type entityName="java.util.ArrayList"></type>
+    <ns2:DataEntity scope="InOut" name="selectedCityCEName" category="JavaPrimitive">
+      <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
@@ -242,18 +233,35 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="clickEventUI" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
       <ns2:UIComponent componentPath="cityListUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="selectedProvince" paramName="Value"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values" paramName="OptionValues"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="selectedProvince" paramName="CEValue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
+        <ns2:expression>
+          <expressionString>{return "CityList";}</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
       <ns2:UIComponent componentPath="citySubListUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="selectedCity" paramName="Value"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values1" paramName="OptionValues"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems1" paramName="OptionDisplayValues"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="selectedCity" paramName="CEValue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
+        <ns2:expression>
+          <expressionString><![CDATA[
+          {
+	         return $selectedCityCEName;   
+          }]]></expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Expendlevels">
+        <ns2:expression>
+          <expressionString><![CDATA[
+          {
+             return 1;
+          }]]></expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
@@ -266,12 +274,6 @@
       import org.shaolin.bmdp.runtime.spi.IConstantService;
       import org.shaolin.bmdp.runtime.security.UserContext;
       {
-          ArrayList values = new ArrayList();
-          ArrayList displayItems = new ArrayList();
-          CEOperationUtil.getCEItems(values, displayItems, AppContext.get().getConstantService().getConstantEntity("CityList"));
-          $values = values;
-          $displayItems = displayItems;
-          
           IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
           if ($selectedCity == null || $selectedCity.trim().length() == 0) {
               $selectedCity = UserContext.getUserContext().getCity();
@@ -286,13 +288,7 @@
 	          $selectedProvince = pce.getEntityName() +","+ cs.getParentsIntValue(cityItem);
 	          // @odContext.log("$selectedProvince: " + $selectedProvince);
           }
-          ArrayList values1 = new ArrayList();
-          ArrayList displayItems1 = new ArrayList();
-          @odContext.log("cityItem.getEntityName(): " + cityItem.getEntityName());
-          CEOperationUtil.getCEItems(values1, displayItems1, CEUtil.toCEValue(cityItem.getEntityName()));
-          $values1 = values1;
-          $displayItems1 = displayItems1;
-         
+          $selectedCityCEName = cityItem.getEntityName();
           @odContext.executeAllMappings();
       }   
     ]]></expressionString>
@@ -300,8 +296,8 @@
     <ns2:UIToDataMappingOperation>
       <expressionString>
       {
-  @odContext.executeAllMappings();
-   }
+        @odContext.executeAllMappings();
+      }
    </expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>

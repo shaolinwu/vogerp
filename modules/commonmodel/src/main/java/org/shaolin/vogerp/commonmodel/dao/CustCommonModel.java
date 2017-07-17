@@ -2,6 +2,7 @@ package org.shaolin.vogerp.commonmodel.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -67,7 +68,7 @@ public class CustCommonModel extends BEEntityDaoObject {
     public void updateAddresse(long userId, IAddressInfo item) {
     	IUserService userService = AppContext.get().getService(IUserService.class);
     	IPersonalInfo customer = userService.getPersonalInfo(userId);
-		List<IAddressInfo> existing = customer.getAddresses();
+		Set<IAddressInfo> existing = customer.getAddresses();
 		if (item.getId() == 0) {
 			if (item.getDistrict() != null && ("-1".equals(item.getDistrict()) || !"null".equals(item.getDistrict()))) {
 				item.setDistrict(null);
@@ -104,7 +105,7 @@ public class CustCommonModel extends BEEntityDaoObject {
     public void updateAddresses(long userId, List<IAddressInfo> list) {
     	IUserService userService = AppContext.get().getService(IUserService.class);
     	IPersonalInfo customer = userService.getPersonalInfo(userId);
-		List<IAddressInfo> existing = customer.getAddresses();
+    	Set<IAddressInfo> existing = customer.getAddresses();
 		if (list.isEmpty() && !customer.getAddresses().isEmpty()) {
 			// disable all addresses
 			for (IAddressInfo a: existing) {

@@ -235,7 +235,7 @@
         {
             IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
             IPersonalInfo info = (IPersonalInfo)CommonModel.INSTANCE.get(UserContext.getUserContext().getUserId(), PersonalInfoImpl.class);
-			return info.getAddresses();
+			return new ArrayList(info.getAddresses());
         }]]></expressionString>
           </ns2:expression>
         </ns2:query>

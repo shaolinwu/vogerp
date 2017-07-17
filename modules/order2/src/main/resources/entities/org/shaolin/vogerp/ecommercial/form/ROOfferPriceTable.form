@@ -40,6 +40,8 @@
             }
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             IROOfferPrice offer = (IROOfferPrice)orderInfoTable.getSelectedRow();
+            IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+            offer.setTakenCustomer(userService.getPersonalInfo(offer.getTakenCustomerId()));
             
             IRentOrLoanOrder order = (IRentOrLoanOrder)form.getInputParameter("beObject");
             ChatHistoryImpl defaultUser = new ChatHistoryImpl();
@@ -58,7 +60,6 @@
                 return;
             }
             
-            IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
             HashMap input = new HashMap();
             input.put("beObject", defaultUser);
             input.put("recievedPartyName", UserContext.getUserContext().getUserName() + "(" +CEUtil.getValue(UserContext.getUserContext().getCity())+")");
@@ -120,9 +121,9 @@
         <ns2:initQuery>
           <ns2:expression>
             <expressionString><![CDATA[
-        import java.util.List;
+        import java.util.ArrayList;
         {
-            return $list;
+            return new ArrayList($priceItems);
         }]]></expressionString>
           </ns2:expression>
         </ns2:initQuery>
@@ -154,7 +155,7 @@
           <ns2:title xsi:type="ns2:StringPropertyType">
             <ns2:value>出价客户</ns2:value>
           </ns2:title>
-          <ns2:beFieldId>rowBE.takenCustomer</ns2:beFieldId>
+          <ns2:beFieldId>rowBE.takenCustInfo</ns2:beFieldId>
           <ns2:uiType>
             <ns2:type>Label</ns2:type>
           </ns2:uiType>
@@ -165,9 +166,8 @@
                  import org.shaolin.bmdp.utils.DateUtil;
                  import org.shaolin.bmdp.runtime.AppContext;
                  import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                 import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                  {
-                     String message = CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getTakenCustomer());
+                     String message = $rowBE.getTakenCustInfo();
                      if ($rowBE.getIsTaken()) {
                          message = message + "(已拍下)";
                      }
@@ -214,6 +214,16 @@
                 }]]></ns2:expressionString>
             </ns2:expression>
           </ns2:rowExpression>
+        </ns2:column>
+        <ns2:column>
+          <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
+            <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
+            <ns2:key>org.shaolin.vogerp.ecommercial.be.GOOfferPrice.createDate</ns2:key>
+          </ns2:title>
+          <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+          <ns2:uiType>
+            <ns2:type>Label</ns2:type>
+          </ns2:uiType>
         </ns2:column>
         <ns2:column>
           <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
@@ -276,8 +286,8 @@
   </ns2:body>
   <ns2:mapping>
     <systemVersion>0</systemVersion>
-    <ns2:DataEntity scope="InOut" name="list" category="JavaClass">
-      <type entityName="java.util.List"></type>
+    <ns2:DataEntity scope="InOut" name="priceItems" category="JavaClass">
+      <type entityName="java.util.Set"></type>
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
       <type entityName="org.shaolin.vogerp.ecommercial.be.RentOrLoanOrder"></type>

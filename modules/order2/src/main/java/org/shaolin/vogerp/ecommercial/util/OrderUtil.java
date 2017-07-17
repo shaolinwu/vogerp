@@ -2,7 +2,9 @@ package org.shaolin.vogerp.ecommercial.util;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.shaolin.bmdp.i18n.LocaleContext;
 import org.shaolin.bmdp.json.JSONObject;
@@ -94,7 +96,7 @@ public class OrderUtil {
 				return -1;
 			}
 			// check whether has offered price already.
-			List<IOfferPrice> priceList = gorder.getOfferPrices();
+			Set<IOfferPrice> priceList = gorder.getOfferPrices();
             for (IOfferPrice price : priceList) {
             	if (price.getTakenCustomerId() == userId) {
             		return -2;
@@ -107,7 +109,7 @@ public class OrderUtil {
 				return -1;
 			}
 			// check whether has offered price already.
-			List<IOfferPrice> priceList = rorder.getOfferPrices();
+			Set<IOfferPrice> priceList = rorder.getOfferPrices();
             for (IOfferPrice price : priceList) {
             	if (price.getTakenCustomerId() == userId) {
             		return -2;
@@ -120,7 +122,7 @@ public class OrderUtil {
 				return -1;
 			}
 			// check whether has offered price already.
-			List<IOfferPrice> priceList = rorder.getOfferPrices();
+			Set<IOfferPrice> priceList = rorder.getOfferPrices();
             for (IOfferPrice price : priceList) {
             	if (price.getTakenCustomerId() == userId) {
             		return -2;
@@ -152,10 +154,10 @@ public class OrderUtil {
 					return -1;
 				}
 				if (gorder.getOfferPrices() == null) {
-					gorder.setOfferPrices(new ArrayList());
+					gorder.setOfferPrices(new HashSet());
 				}
 				// check whether has offered price already.
-				List<IOfferPrice> priceList = gorder.getOfferPrices();
+				Set<IOfferPrice> priceList = gorder.getOfferPrices();
 	            for (IOfferPrice price : priceList) {
 	            	if (price.getTakenCustomerId() == newPrice.getTakenCustomerId()) {
 	            		return -2;
@@ -169,10 +171,10 @@ public class OrderUtil {
 					return -1;
 				}
 				if (rorder.getOfferPrices() == null) {
-					rorder.setOfferPrices(new ArrayList());
+					rorder.setOfferPrices(new HashSet());
 				}
 				// check whether has offered price already.
-				List<IOfferPrice> priceList = rorder.getOfferPrices();
+				Set<IOfferPrice> priceList = rorder.getOfferPrices();
 	            for (IOfferPrice price : priceList) {
 	            	if (price.getTakenCustomerId() == newPrice.getTakenCustomerId()) {
 	            		return -2;
@@ -186,10 +188,10 @@ public class OrderUtil {
 					return -1;
 				}
 				if (rorder.getOfferPrices() == null) {
-					rorder.setOfferPrices(new ArrayList());
+					rorder.setOfferPrices(new HashSet());
 				}
 				// check whether has offered price already.
-				List<IOfferPrice> priceList = rorder.getOfferPrices();
+				Set<IOfferPrice> priceList = rorder.getOfferPrices();
 	            for (IOfferPrice price : priceList) {
 	            	if (price.getTakenCustomerId() == newPrice.getTakenCustomerId()) {
 	            		return -2;
@@ -217,7 +219,7 @@ public class OrderUtil {
 	public static double getLowestOfferPrice(IEOrder gorder) {
 		double lowestPrice = gorder.getEstimatedPrice();
 		if (gorder.getOfferPrices() != null) {
-			List<IOfferPrice> offerPrices = gorder.getOfferPrices();
+			Set<IOfferPrice> offerPrices = gorder.getOfferPrices();
 			for (IOfferPrice p : offerPrices) {
 				if (lowestPrice > p.getPrice()) {
 					lowestPrice = p.getPrice();
@@ -231,7 +233,7 @@ public class OrderUtil {
 		long custId = 0;
 		double lowestPrice = gorder.getEstimatedPrice();
 		if (gorder.getOfferPrices() != null) {
-			List<IOfferPrice> offerPrices = gorder.getOfferPrices();
+			Set<IOfferPrice> offerPrices = gorder.getOfferPrices();
 			for (IOfferPrice p : offerPrices) {
 				if (lowestPrice > p.getPrice()) {
 					lowestPrice = p.getPrice();
@@ -247,7 +249,7 @@ public class OrderUtil {
 			return;
 		}
 		if (order.getOfferPrices() != null) {
-			List<IOfferPrice> offerPrices = order.getOfferPrices();
+			Set<IOfferPrice> offerPrices = order.getOfferPrices();
 			for (IOfferPrice p : offerPrices) {
 				if (p.getTakenCustomerId() == order.getTakenCustomerId()) {
 					p.setIsTaken(true);
@@ -324,7 +326,7 @@ public class OrderUtil {
 	
 	public static double getMachiningOrderEstimatedPrice(final IMachiningOrder morder) {
 		double totalPrice = 0;
-		List<IMachOrderComponent> components = morder.getComponents();
+		Set<IMachOrderComponent> components = morder.getComponents();
 		if (components != null && components.size() > 0) {
 			for (IMachOrderComponent comp : components) {
 				totalPrice += (comp.getPrice() * comp.getEstiWeight());
