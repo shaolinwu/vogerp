@@ -196,7 +196,7 @@
           <ns2:title xsi:type="ns2:StringPropertyType">
               <ns2:value>拍下客户</ns2:value>
           </ns2:title>
-          <ns2:beFieldId>rowBE.publishedCustomerId</ns2:beFieldId>
+          <ns2:beFieldId>rowBE.takenCustomerId</ns2:beFieldId>
           <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
           <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
               <ns2:expression xsi:type="ns2:ExpressionType">
@@ -207,9 +207,9 @@
                   import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
                   {
                       if ($rowBE.getTakenCustomerId() > 0) {
-                         PersonalInfoImpl pInfo = (PersonalInfoImpl)OrderModel.INSTANCE.get($rowBE.getTakenCustomerId(), PersonalInfoImpl.class);
-                         $rowBE.setTakenCustomer(pInfo);
-                         return CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getTakenCustomer());
+                         // PersonalInfoImpl pInfo = (PersonalInfoImpl)OrderModel.INSTANCE.get($rowBE.getTakenCustomerId(), PersonalInfoImpl.class);
+                         // $rowBE.setTakenCustomer(pInfo);
+                         return CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getTakenCustomerId());
                       }
                       return "";
                   }]]></ns2:expressionString>

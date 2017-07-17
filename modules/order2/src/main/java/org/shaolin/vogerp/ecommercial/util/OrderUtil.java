@@ -1,6 +1,5 @@
 package org.shaolin.vogerp.ecommercial.util;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -488,7 +487,7 @@ public class OrderUtil {
     	DeliveryInfoImpl deliveryInfo = new DeliveryInfoImpl();
     	deliveryInfo.setUserId(userId);
     	IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
-    	List<IAddressInfo> list = userService.getPersonalInfo(userId).getAddresses();
+    	Set<IAddressInfo> list = userService.getPersonalInfo(userId).getAddresses();
     	if (list != null && list.size() > 0) {
     		IAddressInfo defaultAddress = null;
     		for (IAddressInfo a : list) {
@@ -497,7 +496,7 @@ public class OrderUtil {
     				break;
     			}
     		}
-    		IAddressInfo info = defaultAddress != null? defaultAddress : list.get(0);
+    		IAddressInfo info = defaultAddress != null? defaultAddress : list.iterator().next();
     		deliveryInfo.setName(info.getName());
     		deliveryInfo.setAddress(CustomerInfoUtil.addressToString(info));
     		deliveryInfo.setMobileNumber(info.getMobile());
@@ -510,11 +509,11 @@ public class OrderUtil {
     	DeliveryInfoImpl deliveryInfo = new DeliveryInfoImpl();
     	deliveryInfo.setUserId(userId);
     	IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
-    	List<IAddressInfo> list = userService.getPersonalInfo(userId).getAddresses();
+    	Set<IAddressInfo> list = userService.getPersonalInfo(userId).getAddresses();
     	if (list != null && list.size() > 0) {
     		for (IAddressInfo address: list) {
     			if (address.getId() == addressId) {
-		    		IAddressInfo info = list.get(0);
+		    		IAddressInfo info = list.iterator().next();
 		    		deliveryInfo.setName(info.getName());
 		    		deliveryInfo.setAddress(CustomerInfoUtil.addressToString(info));
 		    		deliveryInfo.setMobileNumber(info.getMobile());

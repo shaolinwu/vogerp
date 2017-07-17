@@ -190,9 +190,9 @@
                   import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
                   {
                       if ($rowBE.getTakenCustomerId() > 0) {
-                         PersonalInfoImpl pInfo = (PersonalInfoImpl)OrderModel.INSTANCE.get($rowBE.getTakenCustomerId(), PersonalInfoImpl.class);
-                         $rowBE.setTakenCustomer(pInfo);
-                         return CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getTakenCustomer());
+                         // PersonalInfoImpl pInfo = (PersonalInfoImpl)OrderModel.INSTANCE.get($rowBE.getTakenCustomerId(), PersonalInfoImpl.class);
+                         // $rowBE.setTakenCustomer(pInfo);
+                         return CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getTakenCustomerId());
                       }
                       return "";
                   }]]></ns2:expressionString>

@@ -157,7 +157,7 @@
 			           <expressionString><![CDATA[
 			           import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
 			           { 
-			               return CustomerInfoUtil.getSecureCustomerBasicInfo($beObject.getPublishedCustomer()); 
+			               return CustomerInfoUtil.getSecureCustomerBasicInfo($beObject.getPublishedCustomerId()); 
 			           }]]></expressionString>
 			         </ns2:expression>
 		        </ns2:value>

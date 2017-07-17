@@ -242,7 +242,7 @@
       	     }
       	  }
       	  $offeredPriceInfo = OrderUtil.getOfferPriceInfo(offeredPrice);
-          $recievedPartyName = CustomerInfoUtil.getCustomerEnterpriseBasicInfo($beObject.getOrder().getPublishedCustomer());
+          $recievedPartyName = CustomerInfoUtil.getCustomerEnterpriseBasicInfo($beObject.getOrder().getPublishedCustomerId());
       	  
 	      ChatHistoryImpl defaultUser = new ChatHistoryImpl();
           defaultUser.setOrgId(UserContext.getUserContext().getOrgId());
