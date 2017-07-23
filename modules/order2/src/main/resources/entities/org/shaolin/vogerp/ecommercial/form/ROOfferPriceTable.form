@@ -36,6 +36,7 @@
         { 
             Table orderInfoTable = (Table)@page.getElement("itemTable");
             if (orderInfoTable.getSelectedRow() == null) {
+                Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                 return;
             }
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
@@ -210,7 +211,7 @@
                 <ns2:expressionString><![CDATA[
                 import org.shaolin.bmdp.utils.StringUtil;
                 {
-                   return StringUtil.getAbbreviatoryString($rowBE.getLeaveWords(), 70);
+                   return StringUtil.getAbbreviatoryString($rowBE.getLeaveWords(), 50);
                 }]]></ns2:expressionString>
             </ns2:expression>
           </ns2:rowExpression>

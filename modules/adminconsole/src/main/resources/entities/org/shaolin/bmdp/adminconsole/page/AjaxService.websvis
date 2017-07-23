@@ -78,4 +78,32 @@
      ]]></expressionString>
 		</ns2:exp>
 	</ns2:service>
+	<ns2:service name="findPwd">
+		<ns2:exp>
+			<expressionString><![CDATA[
+      import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.vogerp.commonmodel.IUserService;
+      import org.shaolin.bmdp.json.JSONObject;
+      {
+       IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
+       
+       String verifyCode = @request.getParameter("verifyCode");
+       if ((verifyCode == null || verifyCode.trim().length() == 0)) {
+          JSONObject json = new JSONObject();
+          json.put("verifyCode.error", "2");
+          return json;//don't convert to string.
+       }
+       if (verifyCode != null && verifyCode.trim().length() > 0 
+           && !service.checkVerifiAnswer(verifyCode, @request)) {
+          JSONObject json = new JSONObject();
+          json.put("verifyCode.error", "1");
+          return json;//don't convert to string.
+       }
+       String phoneNumber = @request.getParameter("phoneNumber");
+       
+       return "1";
+      }
+     ]]></expressionString>
+		</ns2:exp>
+	</ns2:service>
 </ns2:WebService>

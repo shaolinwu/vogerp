@@ -318,7 +318,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			if (autosumcheck != null && autosumcheck.length() > 0 
 					&& matchedUser.getAutoLoginSumCheck() != null && matchedUser.getAutoLoginSumCheck().length() > 0) {
 				Date expiredDate = new Date(); 
-				DateUtil.increaseDays(expiredDate, 5);// auto login must be cancelled after 5 days.
+				DateUtil.increaseDays(expiredDate, 7);// auto login must be cancelled after 7 days.
 				if (!(matchedUser.getAutoLoginSumCheck().equals(autosumcheck) && matchedUser.getLoginIP().equals(userIP))) {
 					return USER_LOGIN_PASSWORDRULES_EXPIRED;
 				} else if ((System.currentTimeMillis() - matchedUser.getLastLogin().getTime()) > expiredDate.getTime()) {
