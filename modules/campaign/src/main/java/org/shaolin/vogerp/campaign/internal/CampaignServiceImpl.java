@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
@@ -18,7 +17,9 @@ import org.shaolin.vogerp.campaign.ce.CampaignType;
 import org.shaolin.vogerp.campaign.dao.CampaignModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CampaignServiceImpl implements ICampaignService, ILifeCycleProvider, IServiceProvider {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CampaignServiceImpl.class);
@@ -70,13 +71,15 @@ public class CampaignServiceImpl implements ICampaignService, ILifeCycleProvider
 	}
 	
 	public void checkPolicy(ICampaign campaign, Object object) {
-		//TODO:
+	}
+
+	@Override
+	public void configService() {
+		
 	}
 
 	@Override
 	public void startService() {
-		AppContext.get().register(this);
-		
 		reload();
 	}
 	

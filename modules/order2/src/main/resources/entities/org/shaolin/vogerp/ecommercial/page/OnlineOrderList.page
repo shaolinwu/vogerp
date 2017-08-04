@@ -669,8 +669,7 @@
                                           }
                                           $tableCondition.addOrder("statusInt", false);
                                           // switch to uimaster node.
-                                          IAppServiceManager masterApp = (IAppServiceManager)IServerServiceManager.INSTANCE.getApplication(
-                                                                      IServerServiceManager.INSTANCE.getMasterNodeName());
+                                          IAppServiceManager masterApp = IServerServiceManager.INSTANCE;
                                           IAppServiceManager currentContext = AppContext.get();
                                           try {
                                               AppContext.register(masterApp);
@@ -796,8 +795,7 @@
 		                                  }
 	                                      $tableCondition.addOrder("statusInt", false);
 		                                  // switch to uimaster node.
-		                                  IAppServiceManager masterApp = (IAppServiceManager)IServerServiceManager.INSTANCE.getApplication(
-		                                                              IServerServiceManager.INSTANCE.getMasterNodeName());
+		                                  IAppServiceManager masterApp = IServerServiceManager.INSTANCE;
 		                                  IAppServiceManager currentContext = AppContext.get();
 		                                  try {
 		                                      AppContext.register(masterApp);
@@ -923,8 +921,7 @@
                                           }
                                           $tableCondition.addOrder("statusInt", false);
                                           // switch to uimaster node.
-                                          IAppServiceManager masterApp = (IAppServiceManager)IServerServiceManager.INSTANCE.getApplication(
-                                                                      IServerServiceManager.INSTANCE.getMasterNodeName());
+                                          IAppServiceManager masterApp = IServerServiceManager.INSTANCE;
                                           IAppServiceManager currentContext = AppContext.get();
                                           try {
                                               AppContext.register(masterApp);

@@ -1,37 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <registry xmlns="http://bmdp.shaolin.org/datamodel/Registry">
     <node name="System">
-    	<node name="services">
-    	   <node name="common_model_service">
-	   	       <expression><![CDATA[
-	   	       import org.shaolin.bmdp.runtime.AppContext;
-	   	       import org.shaolin.vogerp.commonmodel.internal.LifeServiceProviderImpl;
-	   	       {
-	   	           AppContext.get().registerLifeCycleProvider(new LifeServiceProviderImpl());
-	   	       }
-	   	       ]]></expression>
-   	       </node>
-        </node>
-        <node name="webConstant">
-            <node name="commonjs">
-                <node name="org.shaolin.vogerp.commonmodel.page.CustomerManagement">
-                    <item name="baidumap" value="https://api.map.baidu.com/api?v=2.0&amp;ak=kT8czcw0fydHdXiGPGBOckX1" />
-                </node>
-                <node name="org.shaolin.vogerp.commonmodel.page.CustomerInformation">
-                    <!-- 
-                    <item name="beecloud" value="https://jspay.beecloud.cn/1/pay/jsbutton/returnscripts?appId=1ab7992b-26b6-4f1c-b007-02f6c325444c" />
-                     -->
-                </node>
-                <node name="org.shaolin.vogerp.commonmodel.page.GlobalStatistic">
-                    <item name="raphael-min" value="/js/controls/map/raphael-min.js" />
-                    <item name="chinaMapConfig" value="/js/controls/map/chinaMapConfig.js" />
-                    <item name="map" value="/js/controls/map/map.js" />
-                </node>
-                <node name="org.shaolin.vogerp.commonmodel.page.CustomerInformation">
-                    <item name="md5" value="/js/md5.js" />
-                </node>
-            </node>
-        </node>
         <!-- 
         /System/Vogerp/Payment/UserMemberRule/Super	    30
 		/System/Vogerp/Payment/UserMemberRule/Golden	20

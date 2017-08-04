@@ -1,50 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <registry xmlns="http://bmdp.shaolin.org/datamodel/Registry">
     <node name="System">
-        <node name="webConstant">
-            <node name="commonjs">
-                <node name="org.shaolin.bmdp.adminconsole.page.Main_mob">
-                    <item name="socket.io" value="/js/socket.io.js" />
-                    <item name="gdwebapi" value="https://webapi.amap.com/maps?key=77c70d659febc8be861e724d925a9fe1&amp;v=1.3" />
-                    <item name="gdwebtool" value="https://cache.amap.com/lbs/static/addToolbar.js" />
-                </node>
-                <node name="org.shaolin.bmdp.adminconsole.page.Main">
-                    <item name="socket.io" value="/js/socket.io.js" />
-                    <item name="gdwebapi" value="https://webapi.amap.com/maps?key=77c70d659febc8be861e724d925a9fe1&amp;v=1.3" />
-                    <item name="gdwebtool" value="https://cache.amap.com/lbs/static/addToolbar.js" />
-                </node>
-                <node name="org.shaolin.bmdp.adminconsole.page.Login_mob">
-                    <item name="md5" value="/js/md5.js" />
-                    <item name="gdwebapi" value="https://webapi.amap.com/maps?key=77c70d659febc8be861e724d925a9fe1&amp;v=1.3" />
-                    <item name="gdwebtool" value="https://cache.amap.com/lbs/static/addToolbar.js" />
-                </node>
-                <node name="org.shaolin.bmdp.adminconsole.page.Login">
-                    <item name="md5" value="/js/md5.js" />
-                    <item name="gdwebapi" value="https://webapi.amap.com/maps?key=77c70d659febc8be861e724d925a9fe1&amp;v=1.3" />
-                    <item name="gdwebtool" value="https://cache.amap.com/lbs/static/addToolbar.js" />
-                </node>
-                <node name="org.shaolin.bmdp.adminconsole.page.Registration">
-                    <item name="md5" value="/js/md5.js" />
-                </node>  
-            </node>
-            <node name="commoncss">
-                <node name="org.shaolin.bmdp.adminconsole.page.Login_mob">
-                    <item name="main1119" value="https://cache.amap.com/lbs/static/main1119.css" />
-                </node>
-                <node name="org.shaolin.bmdp.adminconsole.page.Login">
-                	<item name="main1119" value="https://cache.amap.com/lbs/static/main1119.css" />
-                </node>
-            </node>
-        </node>
-        <node name="webConstant">
-            <node name="skipBackButton">
-                 <item name="Login" value="org.shaolin.bmdp.adminconsole.page.Login" />
-                 <item name="Login_mob" value="org.shaolin.bmdp.adminconsole.page.Login_mob" />
-                 <item name="Main_mob" value="org.shaolin.bmdp.adminconsole.page.Main_mob" />
-                 <item name="Registration" value="org.shaolin.bmdp.adminconsole.page.Registration" />
-                 <item name="RegisterSuccess" value="org.shaolin.bmdp.adminconsole.page.RegisterSuccess" />
-            </node>
-         </node>   
     </node>
 </registry>
 

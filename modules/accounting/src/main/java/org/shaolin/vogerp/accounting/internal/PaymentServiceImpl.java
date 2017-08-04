@@ -28,12 +28,14 @@ import org.shaolin.vogerp.accounting.dao.AccountingModel;
 import org.shaolin.vogerp.accounting.util.PaymentUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 /**
  * 
  * @author wushaol
  *
  */
+@Service
 public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider, IPaymentService {
 
 	private static final Logger logger = LoggerFactory.getLogger(PaymentServiceImpl.class);
@@ -390,6 +392,11 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	public Class getServiceInterface() {
 		return IPaymentService.class;
 	}
+	
+	@Override
+	public void configService() {
+		
+	}
 
 	@Override
 	public void startService() {
@@ -399,7 +406,6 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 			return;
 		}
 		
-		AppContext.get().register(this);
 		AppContext.get().register(new AccountingServiceImpl());
 		
 		this.alipayHandler = new AlipayHandler();

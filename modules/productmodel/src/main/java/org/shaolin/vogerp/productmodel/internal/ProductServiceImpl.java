@@ -35,7 +35,9 @@ import org.shaolin.vogerp.productmodel.be.ProductTemplateImpl;
 import org.shaolin.vogerp.productmodel.be.SupplierRelationshipImpl;
 import org.shaolin.vogerp.productmodel.dao.ProductModel;
 import org.shaolin.vogerp.productmodel.util.ProductUtil;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider, IProductService {
 
 	private static final String SUPPLIER_CACHE = "__app_producttype_supplier_cache";
@@ -412,15 +414,14 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	}
 
 	@Override
-	public void startService() {
-		IAppServiceManager serviceManger = AppContext.get();
-		if (AppContext.isMasterNode()) {
-		}
+	public void configService() {
 		
-		serviceManger.register(this);
+	}
+	
+	@Override
+	public void startService() {
 		
 		loadProductTypeSuppliers();
-		
 	}
 
 	@Override
@@ -439,7 +440,7 @@ public class ProductServiceImpl implements ILifeCycleProvider, IServiceProvider,
 
 	@Override
 	public int getRunLevel() {
-		return 1;
+		return 3;
 	}
 
 }

@@ -104,8 +104,7 @@ public class UserAccessFilter implements Filter {
         if (orgCode == null) {
         	orgCode = IServerServiceManager.INSTANCE.getMasterNodeName();
         }
-        AppContext.register(IServerServiceManager.INSTANCE.getApplication(
-        		IServerServiceManager.INSTANCE.getMasterNodeName()));
+        AppContext.register(IServerServiceManager.INSTANCE);
         
         IModuleService moduleService = AppContext.get().getService(IModuleService.class);
         IPermissionService permiService = AppContext.get().getService(IPermissionService.class);

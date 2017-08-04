@@ -1,0 +1,148 @@
+spring.profiles: prod
+
+persistentConstant:
+  hbmRoot: C:\uimaster\deploy\apache-tomcat-8.0.9\webapps\uimaster\WEB-INF\classes\hbm
+  
+webConstant:
+  runningMode: Dev
+  resourceServer: http://127.0.0.1:8090/uimaster
+  uploadServer: http://127.0.0.1:8090/uimaster/uploadFile
+  websocketServer: http://127.0.0.1:8090
+  resourcePath: C:\uimaster\deploy\apache-tomcat-8.0.9\webapps\uimaster
+  ipLocationURL: https://restapi.amap.com/v3/ip
+  isHTTPs: false
+  isJAAS: false
+  formatHTML: true
+  customizedMode: false
+  contextRoot: /uimaster
+  ajaxServiceURL: /uimaster/ajaxservice
+  cssRootPath: /css
+  jsRootPath: /js
+  webport: 8090
+  hotdeployeable: true
+  hiddenValueMask: '***'
+  defaultOrgCode: jounioruser
+  actionPath: /uimaster/webflow.do
+  loginPath: /uimaster/login.do
+  frameWrap: /uimaster
+  loginPage: /uimaster/jsp/login.jsp
+  iloginPage: /uimaster/jsp/ilogin.jsp
+  indexPage: /uimaster/jsp/index.jsp
+  mainPage: /uimaster/jsp/main.jsp
+  errorPage: /uimaster/jsp/common/Failure.jsp
+  timeoutPage: /uimaster/jsp/common/sessionTimeout.jsp
+  nopermissionPage: /uimaster/jsp/common/noPermission.jsp
+  ajaxHandlingError: true
+  mapwebkey: 77c70d659febc8be861e724d925a9fe1
+  mapappkey: 91c61230781c557eb7a2e61526add1b5
+  syncLoadJs: 
+   - jquery.js
+   - jquery-ui.js
+   - jquery-mobile.js
+   - uimaster.js
+   - api.map.baidu.com/api
+   - webapi.amap.com/maps
+   - addToolbar.js
+   - coupon-common.js
+  skipBackButtonPages:
+   - org.shaolin.bmdp.adminconsole.page.Login
+   - org.shaolin.bmdp.adminconsole.page.Login_mob
+   - org.shaolin.bmdp.adminconsole.page.Main_mob
+   - org.shaolin.bmdp.adminconsole.page.Registration
+   - org.shaolin.bmdp.adminconsole.page.RegisterSuccess
+  commoncss:
+   - /js/controls/swiper/swiper.css
+   - /css/jquery-dataTable.css
+   - /css/jquery-jstree.css
+   - /css/jquery-ui.css
+   - /css/iumaster.css
+  commonMobcss:
+   - /js/controls/swiper/swiper.css
+   - /css/jquery-jstree.css
+   - /css/jquery-ui.css
+   - /css/jquery-mobile.css
+   - /css/iumaster-mob.css
+  commonMobAppcss:
+   - $APPROOT/js/controls/swiper/swiper.css #ssss
+   - $APPROOT/css/jquery-jstree.css
+   - $APPROOT/css/jquery-ui.css
+   - $APPROOT/css/jquery-mobile.css
+   - $APPROOT/css/iumaster-mob.css
+  commonjs:
+   - /js/jquery.js
+   - /js/jquery-ui.js
+   - /js/controls/swiper/swiper.jquery.js
+   - /js/jquery-dataTable.js
+   - /js/jquery-jstree.js
+   - /js/uimaster.js
+   - /js/uimaster-widget.js
+  commonMobjs:
+   - /js/jquery.js
+   - /js/jquery-ui.js
+   - /js/jquery-mobile.js
+   - /js/controls/swiper/swiper.jquery.js
+   - /js/jquery-jstree.js
+   - /js/uimaster.js
+   - /js/uimaster-widget.js
+  commonMobAppjs:
+   - $APPROOT/js/jquery.js
+   - $APPROOT/js/jquery-ui.js
+   - $APPROOT/js/jquery-mobile.js
+   - $APPROOT/js/controls/swiper/swiper.jquery.js
+   - $APPROOT/js/jquery-jstree.js
+   - $APPROOT/js/uimaster.js
+   - $APPROOT/js/uimaster-widget.js
+  
+  singleCommonCss: 
+   org_shaolin_bmdp_adminconsole_page_Login:
+    https://cache.amap.com/lbs/static/main1119.css
+  
+  singleCommonAppCss:
+   org_shaolin_bmdp_adminconsole_page_Login_mob:
+    https://cache.amap.com/lbs/static/main1119.css
+  
+  singleCommonJs:
+   org_shaolin_bmdp_adminconsole_page_Main:
+    /js/socket.io.js,
+    https://webapi.amap.com/maps?key=77c70d659febc8be861e724d925a9fe1&amp;v=1.3,
+    https://cache.amap.com/lbs/static/addToolbar.js
+   org_shaolin_bmdp_adminconsole_page_Login:
+    /js/md5.js,
+    https://webapi.amap.com/maps?key=77c70d659febc8be861e724d925a9fe1&amp;v=1.3,
+    https://cache.amap.com/lbs/static/addToolbar.js
+   org_shaolin_bmdp_adminconsole_page_Registration:
+    /js/md5.js
+   org_shaolin_vogerp_commonmodel_page_CustomerManagement:
+    https://api.map.baidu.com/api?v=2.0&amp;ak=kT8czcw0fydHdXiGPGBOckX1
+   org_shaolin_vogerp_commonmodel_page_CustomerInformation:
+    /js/md5.js
+   org_shaolin_vogerp_commonmodel_page_GlobalStatistic:
+    /js/controls/map/raphael-min.js,
+    /js/controls/map/chinaMapConfig.js,
+    /js/controls/map/map.js
+   org_shaolin_vogerp_ecommercial_page_OrderManagement:
+    /js/controls/countdown/jquery.ba-throttle-debounce.min.js,
+    /js/controls/countdown/jquery.knob.min.js,
+    /js/controls/countdown/jquery.redcountdown.js
+   org_shaolin_vogerp_ecommercial_page_OnlineOrderList: 
+    /js/controls/countdown/jquery.ba-throttle-debounce.min.js,
+    /js/controls/countdown/jquery.knob.min.js,
+    /js/controls/countdown/jquery.redcountdown.js,
+    /js/org/shaolin/vogerp/ecommercial/form/GoldenOrderOverView.js,
+    /js/org/shaolin/vogerp/ecommercial/form/RentOrderOverView.js
+  
+  singleCommonAppJs:
+   org_shaolin_bmdp_adminconsole_page_Main_mob: 
+    /js/socket.io.js,
+    https://webapi.amap.com/maps?key=77c70d659febc8be861e724d925a9fe1&amp;v=1.3,
+    https://cache.amap.com/lbs/static/addToolbar.js
+   org_shaolin_bmdp_adminconsole_page_Login_mob: 
+    /js/md5.js,
+    https://webapi.amap.com/maps?key=77c70d659febc8be861e724d925a9fe1&amp;v=1.3,
+    https://cache.amap.com/lbs/static/addToolbar.js
+   org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob: 
+    /js/controls/countdown/jquery.ba-throttle-debounce.min.js,
+    /js/controls/countdown/jquery.knob.min.js,
+    /js/controls/countdown/jquery.redcountdown.js,
+    /js/org/shaolin/vogerp/ecommercial/form/GoldenOrderOverView_mob.js,
+    /js/org/shaolin/vogerp/ecommercial/form/RentOrderOverView_mob.js

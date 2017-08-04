@@ -1,29 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <registry xmlns="http://bmdp.shaolin.org/datamodel/Registry">
     <node name="System">
-    	<node name="services">
-    	   <node name="common_product_service">
-	   	       <expression><![CDATA[
-	   	       import org.shaolin.bmdp.runtime.AppContext;
-	   	       import org.shaolin.vogerp.productmodel.internal.ProductServiceImpl;
-	   	       {
-	   	           AppContext.get().registerLifeCycleProvider(new ProductServiceImpl());
-	   	       }
-	   	       ]]></expression>
-   	       </node>
-        </node>
-        <node name="webConstant">
-            <!-- 
-            <node name="commonjs">
-                <node name="org.shaolin.vogerp.productmodel.page.ProductManagement">
-                    <item name="ckeditor" value="/js/controls/ckeditor/ckeditor.js" />
-                </node>
-                <node name="org.shaolin.vogerp.productmodel.page.ProductTempManagement">
-                    <item name="ckeditor" value="/js/controls/ckeditor/ckeditor.js" />
-                </node>
-            </node>
-             -->
-        </node>
         <node name="App_productConfig">
         </node>
     </node>

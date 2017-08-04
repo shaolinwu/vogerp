@@ -15,7 +15,6 @@ import org.shaolin.bmdp.runtime.spi.ILifeCycleProvider;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.uimaster.page.UIPermissionManager;
 import org.shaolin.vogerp.commonmodel.ICaptcherService;
-import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.be.CEEntityInfoImpl;
 import org.shaolin.vogerp.commonmodel.be.CEExtensionImpl;
 import org.shaolin.vogerp.commonmodel.be.CEHierarchyImpl;
@@ -30,8 +29,15 @@ import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 import org.shaolin.vogerp.commonmodel.dao.ModularityModel;
 import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+@Service
 public class LifeServiceProviderImpl implements ILifeCycleProvider {
+	
+	@Override
+	public void configService() {
+		
+	}
 	
 	@Override
 	public void startService() {
@@ -76,14 +82,11 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 		serviceManger.register(moduleService);
 		
 		try {
-			ShortMsgServiceImpl smsService = new ShortMsgServiceImpl();
-			serviceManger.register(smsService);
-			
 			UserServiceImpl userService = new UserServiceImpl();
 			userService.addListener(new NewUserListener());
 			serviceManger.register(userService);
 			
-			PermissionServiceImpl permissionService = new PermissionServiceImpl(serviceManger.getService(IModuleService.class));
+			PermissionServiceImpl permissionService = new PermissionServiceImpl(moduleService);
 			serviceManger.register(permissionService);
 			
 			UIPermissionManager uiPermiManager = new UIPermissionManager(permissionService);
@@ -119,7 +122,6 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 		List<ICEExtension> ceItems = ModularityModel.INSTANCE.searchCEExtension(
 				new CEExtensionImpl(), null, 0, -1);
 		ConstantServiceImpl constantService = (ConstantServiceImpl) IServerServiceManager.INSTANCE.getConstantService();
-		constantService.startService();
 		constantService.reloadData(CEOperationUtil.convertC2D(ceItems));
 		constantService.reloadHierarchy(hierarchy);
 		constantService.setHierarchyAccessor(new HierarchyAccessor() {
@@ -216,7 +218,7 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 
 	@Override
 	public int getRunLevel() {
-		return 0;
+		return 2;
 	}
 	
 

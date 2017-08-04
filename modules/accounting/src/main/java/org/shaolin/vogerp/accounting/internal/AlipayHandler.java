@@ -110,8 +110,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 		response.setCharacterEncoding(charset);
 		request.setCharacterEncoding(charset);
 	
-		AppContext.register(IServerServiceManager.INSTANCE.getApplication(
-        		IServerServiceManager.INSTANCE.getMasterNodeName()));
+		AppContext.register(IServerServiceManager.INSTANCE);
 
 		HttpSession session = request.getSession();
 		UserContext currentUserContext = new UserContext();

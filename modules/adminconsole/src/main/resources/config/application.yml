@@ -1,0 +1,35 @@
+spring.profiles: default,prod
+
+webConstant:
+  skipBackButtonPages:
+   - org.shaolin.bmdp.adminconsole.page.Login
+   - org.shaolin.bmdp.adminconsole.page.Login_mob
+   - org.shaolin.bmdp.adminconsole.page.Main_mob
+   - org.shaolin.bmdp.adminconsole.page.Registration
+   - org.shaolin.bmdp.adminconsole.page.RegisterSuccess
+  singleCommonAppJs:
+    org.shaolin.bmdp.adminconsole.page.Main_mob:
+     - /uimaster/js/socket.io.js
+     - https://webapi.amap.com/maps?key=77c70d659febc8be861e724d925a9fe1&amp;v=1.3
+     - https://cache.amap.com/lbs/static/addToolbar.js
+    org.shaolin.bmdp.adminconsole.page.Login_mob:
+     - /uimaster/js/md5.js
+     - https://webapi.amap.com/maps?key=77c70d659febc8be861e724d925a9fe1&amp;v=1.3
+     - https://cache.amap.com/lbs/static/addToolbar.js
+  singleCommonJs: 
+    org.shaolin.bmdp.adminconsole.page.Main:
+     - /uimaster/js/socket.io.js
+     - https://webapi.amap.com/maps?key=77c70d659febc8be861e724d925a9fe1&amp;v=1.3
+     - https://cache.amap.com/lbs/static/addToolbar.js
+    org.shaolin.bmdp.adminconsole.page.Login:
+     - /uimaster/js/md5.js
+     - https://webapi.amap.com/maps?key=77c70d659febc8be861e724d925a9fe1&amp;v=1.3
+     - https://cache.amap.com/lbs/static/addToolbar.js
+    org.shaolin.bmdp.adminconsole.page.Registration:
+     - /uimaster/js/md5.js
+  singleCommonCss:
+    org.shaolin.bmdp.adminconsole.page.Login:
+     - https://cache.amap.com/lbs/static/main1119.css
+  singleCommonAppCss:
+    org.shaolin.bmdp.adminconsole.page.Login_mob:
+     - https://cache.amap.com/lbs/static/main1119.css

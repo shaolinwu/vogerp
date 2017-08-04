@@ -1,0 +1,12 @@
+spring.profiles: default,prod
+
+webConstant:
+  singleCommonJs: 
+   org.shaolin.vogerp.commonmodel.page.CustomerManagement:
+    - https://api.map.baidu.com/api?v=2.0&amp;ak=kT8czcw0fydHdXiGPGBOckX1
+   org.shaolin.vogerp.commonmodel.page.CustomerInformation:
+    - /js/md5.js
+   org.shaolin.vogerp.commonmodel.page.GlobalStatistic:
+    - /js/controls/map/raphael-min.js
+    - /js/controls/map/chinaMapConfig.js
+    - /js/controls/map/map.js

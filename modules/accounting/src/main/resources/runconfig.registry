@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <registry xmlns="http://bmdp.shaolin.org/datamodel/Registry">
     <node name="System">
-    	<node name="services">
-    	   <node name="accounting_model_service">
-	   	       <expression><![CDATA[
-	   	       import org.shaolin.bmdp.runtime.AppContext;
-	   	       import org.shaolin.vogerp.accounting.internal.PaymentServiceImpl;
-	   	       {
-	   	           AppContext.get().registerLifeCycleProvider(new PaymentServiceImpl());
-	   	       }
-	   	       ]]></expression>
-   	       </node>
-        </node>
-        <node name="webConstant">
-            <node name="commonjs">
-                <node name="org.shaolin.vogerp.accounting.page.PaymentOrderManagement">
-                </node>
-                <node name="org.shaolin.vogerp.accounting.page.PaymentOrderManagementByAdmin">
-                </node>
-            </node>
-        </node>
         <node name="Vogerp">
         	<node name="Notification">
         		<node name="Payment">
