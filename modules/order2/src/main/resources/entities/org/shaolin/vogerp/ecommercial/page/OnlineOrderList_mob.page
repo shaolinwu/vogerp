@@ -17,6 +17,7 @@
                     import org.shaolin.bmdp.runtime.ce.CEUtil;
                     import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
                     import org.shaolin.vogerp.commonmodel.IUserService;
+                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                     {
                         IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
                         if (!userService.checkUserOnline(@page.getRequest().getSession())) {
@@ -38,6 +39,9 @@
                         
                         String title = "来自" + CEUtil.getValue(defaultUser.getCity()) + "的采购订单详情";
                         form.openInWindows(title, null, true);
+                        
+                        //record who accessed this order.
+                        OrderUtil.accessedGOrder(defaultUser.getId());
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -54,6 +58,7 @@
                     import org.shaolin.bmdp.runtime.ce.CEUtil;
                     import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
                     import org.shaolin.vogerp.commonmodel.IUserService;
+                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                     {
                         IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
                         if (!userService.checkUserOnline(@page.getRequest().getSession())) {
@@ -75,6 +80,9 @@
                         
                         String title = "来自" + CEUtil.getValue(defaultUser.getCity()) + "的销售订单详情";
                         form.openInWindows(title, null, true);
+                        
+                        //record who accessed this order.
+                        OrderUtil.accessedGOrder(defaultUser.getId());
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -91,6 +99,7 @@
                     import org.shaolin.bmdp.runtime.ce.CEUtil;
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                     import org.shaolin.vogerp.commonmodel.IUserService;
+                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                     {
                         IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
                         if (!userService.checkUserOnline(@page.getRequest().getSession())) {
@@ -111,6 +120,9 @@
                         @page.addElement(form);
                         
                         form.openInWindows("出租订单详情", null, true);
+                        
+                        //record who accessed this order.
+                        OrderUtil.accessedROrder(defaultUser.getId());
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -127,6 +139,7 @@
                     import org.shaolin.bmdp.runtime.ce.CEUtil;
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                     import org.shaolin.vogerp.commonmodel.IUserService;
+                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                     {
                         IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
                         if (!userService.checkUserOnline(@page.getRequest().getSession())) {
@@ -148,6 +161,8 @@
                         
                         String title = "来自" + CEUtil.getValue(defaultUser.getCity()) + "的求租订单详情";
                         form.openInWindows(title, null, true);
+                        
+                        OrderUtil.accessedROrder(defaultUser.getId());
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -164,6 +179,7 @@
                     import org.shaolin.bmdp.runtime.ce.CEUtil;
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                     import org.shaolin.vogerp.commonmodel.IUserService;
+                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                     {
                         IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
                         if (!userService.checkUserOnline(@page.getRequest().getSession())) {
@@ -185,6 +201,8 @@
                         
                         String title = "来自" + CEUtil.getValue(defaultUser.getCity()) + "的找师傅订单详情";
                         form.openInWindows(title, null, true);
+                        
+                        OrderUtil.accessedROrder(defaultUser.getId());
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -308,6 +326,7 @@
 		          import org.shaolin.bmdp.runtime.ce.CEUtil;
 		          import org.shaolin.vogerp.commonmodel.IUserService; 
                   import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                  import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                   {
                       Table personalInfoTable = (Table)@page.getElement("machingOrderTable");
                       if (personalInfoTable.getSelectedRow() == null) {
@@ -333,6 +352,8 @@
                       
                       String title = "来自" + CEUtil.getValue(order.getCity()) + "的加工订单详情";
                       form.openInWindows(title, null, true);
+                      
+                      OrderUtil.accessedMOrder(order.getId());
                   }
                   ]]></ns2:expressionString>
               </ns2:exp>

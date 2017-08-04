@@ -20,6 +20,7 @@ import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
 import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+import org.shaolin.vogerp.ecommercial.IOrderService;
 import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
 import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
 import org.shaolin.vogerp.ecommercial.be.IDeliveryInfo;
@@ -524,5 +525,32 @@ public class OrderUtil {
     	}
     	return deliveryInfo;
     }
+    
+    /**
+     * save the access counter for order.
+     * 
+     * @param orderId
+     */
+    public static void accessedGOrder(long orderId) {
+    	IOrderService payService = AppContext.get().getService(IOrderService.class);
+    	payService.accessedGOrder(orderId);
+    }
 	
+    /**
+     * 
+     * @param orderId
+     */
+    public static void accessedROrder(long orderId) {
+    	IOrderService payService = AppContext.get().getService(IOrderService.class);
+    	payService.accessedROrder(orderId);
+    }
+
+    /**
+     * 
+     * @param orderId
+     */
+    public static void accessedMOrder(long orderId) {
+    	IOrderService payService = AppContext.get().getService(IOrderService.class);
+    	payService.accessedMOrder(orderId);
+    }
 }

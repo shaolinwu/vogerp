@@ -12,7 +12,7 @@
 		<vogerp.version>1.0.0-SNAPSHOT</vogerp.version>
         <uimaster.version>1.0.0-SNAPSHOT</uimaster.version>
 		<uimaster.package>C:/uimaster/deploy</uimaster.package>
-		<uimaster.commonjar>C:/uimaster/deploy/apache-tomcat-8.0.9/lib/uimaster</uimaster.commonjar>
+		<uimaster.commonjar>C:/uimaster/deploy/apache-tomcat-8.0.9/webapps/uimaster/WEB-INF/lib</uimaster.commonjar>
 		<uimaster.webapp>C:/uimaster/deploy/apache-tomcat-8.0.9/webapps/uimaster</uimaster.webapp>
     </properties>
 	
