@@ -8,12 +8,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.shaolin.bmdp.datamodel.common.TargetEntityType;
+import org.shaolin.bmdp.datamodel.page.UIPage;
 import org.shaolin.bmdp.datamodel.pagediagram.PageNodeType;
 import org.shaolin.bmdp.datamodel.pagediagram.WebChunk;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.cache.CacheManager;
 import org.shaolin.bmdp.runtime.cache.ICache;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
+import org.shaolin.bmdp.runtime.entity.EntityNotFoundException;
 import org.shaolin.bmdp.runtime.security.IPermissionService;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
@@ -448,7 +450,12 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
             		}
             		tarEntityName.setEntityName(entityName);
             		webNode.setSourceEntity(tarEntityName);
-            		
+            		try {
+            			AppContext.get().getEntityManager().getEntity(entityName, UIPage.class);
+            		} catch (EntityNotFoundException e) {
+            			logger.warn(e.getMessage() + " from link: " + accessURL);
+            			continue;
+            		}
             		String path = accessURL.substring(chunkNameIndex + "_chunkname=".length(), _nodenameIndex - 1);
             		
             		if (!duplicatedNodes.contains(webNode.getName())) {

@@ -13,6 +13,7 @@
         <uimaster.version>1.0.0-SNAPSHOT</uimaster.version>
 		<uimaster.package>C:/uimaster/deploy</uimaster.package>
 		<uimaster.commonjar>C:/uimaster/deploy/apache-tomcat-8.0.9/webapps/uimaster/WEB-INF/lib</uimaster.commonjar>
+		<uimaster.entitydir>C:/uimaster/deploy/apache-tomcat-8.0.9/webapps/uimaster/WEB-INF/classes/entities</uimaster.entitydir>
 		<uimaster.webapp>C:/uimaster/deploy/apache-tomcat-8.0.9/webapps/uimaster</uimaster.webapp>
     </properties>
 	
@@ -64,7 +65,7 @@
 								
 								entitiesResources = new File(project.basedir, '/src/main/resources/entities'); 
 								if (entitiesResources.exists()) {
-									destFold = '${uimaster.commonjar}' + "/entities";
+									destFold = '${uimaster.entitydir}' + "/entities";
 									ant.copy(todir: destFold) {
 										fileset(dir: entitiesResources) {
 											filename(name: '**');

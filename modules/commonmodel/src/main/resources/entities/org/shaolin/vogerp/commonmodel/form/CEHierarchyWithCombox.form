@@ -136,13 +136,16 @@
     <ns2:DataEntity scope="InOut" name="value" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
+    <ns2:DataEntity scope="Internal" name="ceValue" category="JavaClass">
+      <type entityName="org.shaolin.bmdp.runtime.ce.IConstantEntity"></type>
+    </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="singleLevel" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
 	<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
       <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="value" paramName="CEValue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="ceValue" paramName="CEValue"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
         <ns2:expression>
           <expressionString>{return $ceName;}</expressionString>
@@ -170,16 +173,18 @@
       <expressionString><![CDATA[
       import java.util.ArrayList;
       {
+          $ceValue = org.shaolin.bmdp.runtime.ce.CEUtil.toCEValue($value);
 	      @odContext.executeAllMappings();
       }   
     ]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
-      <expressionString>
+      <expressionString><![CDATA[
       {
-		@odContext.executeAllMappings();
+		 @odContext.executeAllMappings();
+         $value = $ceValue.getEntityName() + "," + $ceValue.getIntValue();
 	  }
-	  </expressionString>
+	  ]]></expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>
 </ns2:UIEntity>
