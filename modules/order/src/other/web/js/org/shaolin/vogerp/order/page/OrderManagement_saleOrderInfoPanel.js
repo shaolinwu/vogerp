@@ -14,5 +14,5 @@
 defaultname.saleOrderInfoPanel = saleOrderInfoPanel;
 defaultname.saleOrderInfoPanel.init();
 
-defaultname.saleOrderInfoPanel.Form.items.push(elementList['saleOrderInfoPanel']);
+defaultname.Form.items.push(elementList['saleOrderInfoPanel']);
 

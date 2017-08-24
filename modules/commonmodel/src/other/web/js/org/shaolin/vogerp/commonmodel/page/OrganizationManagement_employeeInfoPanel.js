@@ -14,5 +14,5 @@
 defaultname.employeeInfoPanel = employeeInfoPanel;
 defaultname.employeeInfoPanel.init();
 
-defaultname.employeeInfoPanel.Form.items.push(elementList['employeeInfoPanel']);
+defaultname.Form.items.push(elementList['employeeInfoPanel']);
 

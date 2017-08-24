@@ -14,5 +14,5 @@
 defaultname.loanMasterInfoPanel = loanMasterInfoPanel;
 defaultname.loanMasterInfoPanel.init();
 
-defaultname.loanMasterInfoPanel.Form.items.push(elementList['loanMasterInfoPanel']);
+defaultname.Form.items.push(elementList['loanMasterInfoPanel']);
 

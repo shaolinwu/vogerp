@@ -14,5 +14,5 @@
 defaultname.PayVoucherInfoPanel2 = PayVoucherInfoPanel2;
 defaultname.PayVoucherInfoPanel2.init();
 
-defaultname.PayVoucherInfoPanel2.Form.items.push(elementList['PayVoucherInfoPanel2']);
+defaultname.Form.items.push(elementList['PayVoucherInfoPanel2']);
 

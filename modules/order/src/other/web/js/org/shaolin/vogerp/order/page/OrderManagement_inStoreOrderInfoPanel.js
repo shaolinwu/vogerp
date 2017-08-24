@@ -14,5 +14,5 @@
 defaultname.inStoreOrderInfoPanel = inStoreOrderInfoPanel;
 defaultname.inStoreOrderInfoPanel.init();
 
-defaultname.inStoreOrderInfoPanel.Form.items.push(elementList['inStoreOrderInfoPanel']);
+defaultname.Form.items.push(elementList['inStoreOrderInfoPanel']);
 

@@ -32,7 +32,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     ({
         ui: elementList[prefix + "descriptionUI"]
         ,showMaxLength: 100
-        ,placeholder: "????????????"
+        ,placeholder: "请详细写明您的加工要求。"
     });
 
     var differentiationUILabel = new UIMaster.ui.label
@@ -44,7 +44,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     ({
         ui: elementList[prefix + "differentiationUI"]
         ,showMaxLength: 100
-        ,placeholder: "??????????????"
+        ,placeholder: "请详细写明您的加工公差要求。"
     });
 
     var countUILabel = new UIMaster.ui.label
@@ -93,7 +93,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     var termsUI = new UIMaster.ui.checkbox
     ({
         ui: elementList[prefix + "termsUI"]
-        ,label: "?????????"
+        ,label: "同意《加工协议书》"
         ,mustCheck: true
         ,checked: true
     });

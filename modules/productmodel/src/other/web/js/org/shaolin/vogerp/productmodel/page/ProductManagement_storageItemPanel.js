@@ -14,5 +14,5 @@
 defaultname.storageItemPanel = storageItemPanel;
 defaultname.storageItemPanel.init();
 
-defaultname.storageItemPanel.Form.items.push(elementList['storageItemPanel']);
+defaultname.Form.items.push(elementList['storageItemPanel']);
 

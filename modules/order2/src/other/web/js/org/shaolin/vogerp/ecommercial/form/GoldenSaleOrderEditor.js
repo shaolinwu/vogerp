@@ -46,7 +46,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor(json)
     var descriptionUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "descriptionUI"]
-        ,placeholder: "??????????????????????"
+        ,placeholder: "请您填写批量非加工类机械产品的销售订单信息。"
     });
 
     var countUILabel = new UIMaster.ui.label

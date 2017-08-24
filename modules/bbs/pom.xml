@@ -71,7 +71,7 @@
 							<goal>generate-entity</goal>
 						</goals>
 						<configuration>
-							<systemEntityPath>C:\uimaster\apps\vogerp\modules\commonmodel\src\main\resources\entities;</systemEntityPath>
+							<systemEntityPath>/Users/shaolinwu/Documents/workspace/apps/vogerp/modules/commonmodel/src/main/resources/entities;</systemEntityPath>
 							<genUIComponents>true</genUIComponents>
 						</configuration>
 					</execution>
@@ -82,7 +82,7 @@
 							<goal>validate-entity</goal>
 						</goals>
 						<configuration>
-							<systemEntityPath>C:\uimaster\apps\vogerp\modules\commonmodel\src\main\resources\entities;</systemEntityPath>
+							<systemEntityPath>/Users/shaolinwu/Documents/workspace/apps/vogerp/modules/commonmodel/src/main/resources/entities;</systemEntityPath>
 						</configuration>
 					</execution>
 				</executions>

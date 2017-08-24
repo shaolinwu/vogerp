@@ -11,10 +11,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<vogerp.version>1.0.0-SNAPSHOT</vogerp.version>
         <uimaster.version>1.0.0-SNAPSHOT</uimaster.version>
-		<uimaster.package>C:/uimaster/deploy</uimaster.package>
-		<uimaster.commonjar>C:/uimaster/deploy/apache-tomcat-8.0.9/webapps/uimaster/WEB-INF/lib</uimaster.commonjar>
-		<uimaster.entitydir>C:/uimaster/deploy/apache-tomcat-8.0.9/webapps/uimaster/WEB-INF/classes/entities</uimaster.entitydir>
-		<uimaster.webapp>C:/uimaster/deploy/apache-tomcat-8.0.9/webapps/uimaster</uimaster.webapp>
+		<uimaster.package>/Users/shaolinwu/Documents/workspace//deploy</uimaster.package>
+		<uimaster.commonjar>/Users/shaolinwu/Documents/workspace/deploy/apache-tomcat-8.0.9/webapps/uimaster/WEB-INF/lib</uimaster.commonjar>
+		<uimaster.entitydir>/Users/shaolinwu/Documents/workspace/deploy/apache-tomcat-8.0.9/webapps/uimaster/WEB-INF/classes</uimaster.entitydir>
+		<uimaster.webapp>/Users/shaolinwu/Documents/workspace/deploy/apache-tomcat-8.0.9/webapps/uimaster</uimaster.webapp>
     </properties>
 	
     <reporting>

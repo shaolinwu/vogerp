@@ -14,5 +14,5 @@
 defaultname.gsaleOrderInfoPanel = gsaleOrderInfoPanel;
 defaultname.gsaleOrderInfoPanel.init();
 
-defaultname.gsaleOrderInfoPanel.Form.items.push(elementList['gsaleOrderInfoPanel']);
+defaultname.Form.items.push(elementList['gsaleOrderInfoPanel']);
 

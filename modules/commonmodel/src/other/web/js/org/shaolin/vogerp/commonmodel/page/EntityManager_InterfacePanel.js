@@ -35,5 +35,5 @@
 defaultname.InterfacePanel = InterfacePanel;
 defaultname.InterfacePanel.init();
 
-defaultname.InterfacePanel.Form.items.push(elementList['InterfacePanel']);
+defaultname.Form.items.push(elementList['InterfacePanel']);
 

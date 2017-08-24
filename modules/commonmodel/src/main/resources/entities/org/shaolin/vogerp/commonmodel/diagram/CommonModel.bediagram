@@ -208,6 +208,11 @@
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>
+            <!-- 加工车间照照片 -->
+            <bediagram:name>locationPhoto</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
 			<!-- 国税登记号-->
             <bediagram:name>taxRegistrationNumber</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />

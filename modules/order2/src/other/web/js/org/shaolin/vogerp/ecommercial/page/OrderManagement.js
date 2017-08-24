@@ -67,7 +67,7 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     var hintsLabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "hintsLabel"]
-        ,htmlValue: "????????????????????????�?????�??????"
+        ,htmlValue: "您可以创建批量机械产品的采购或销售。加工零件请到“我的加工单”里添加订单。"
     });
 
     var loanOrderLabel = new UIMaster.ui.button

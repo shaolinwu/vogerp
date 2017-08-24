@@ -38,7 +38,7 @@ function org_shaolin_vogerp_ecommercial_form_RLoanMasterOrderEditor(json)
     var descriptionUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "descriptionUI"]
-        ,placeholder: "???????????????"
+        ,placeholder: "请您详细填写师傅工作内容信息。"
     });
 
     var masterTypeUILabel = new UIMaster.ui.label

@@ -14,5 +14,5 @@
 defaultname.goldenOrderInfoPanel = goldenOrderInfoPanel;
 defaultname.goldenOrderInfoPanel.init();
 
-defaultname.goldenOrderInfoPanel.Form.items.push(elementList['goldenOrderInfoPanel']);
+defaultname.Form.items.push(elementList['goldenOrderInfoPanel']);
 

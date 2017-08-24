@@ -36,7 +36,7 @@ function org_shaolin_vogerp_commonmodel_form_AssignedMember(json)
     var termsUI = new UIMaster.ui.checkbox
     ({
         ui: elementList[prefix + "termsUI"]
-        ,label: "????????????"
+        ,label: "同意《抢单达人支付议书》"
         ,mustCheck: true
     });
 

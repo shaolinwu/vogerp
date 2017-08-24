@@ -126,7 +126,7 @@ function org_shaolin_vogerp_productmodel_form_ImportProducts(json)
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"Save-20160904-172647",UIMaster.getValue(eventsource),o.__entityName);
 
         {   
-            //?????????????????????
+            //保存过程中可能会需要些时间，请您稍等片刻！
             new UIMaster.ui.dialog({
                 dialogType: UIMaster.ui.dialog.MESSAGE_DIALOG,
                 message:'\u4FDD\u5B58\u8FC7\u7A0B\u4E2D\u53EF\u80FD\u4F1A\u9700\u8981\u4E9B\u65F6\u95F4\uFF0C\u8BF7\u60A8\u7A0D\u7B49\u7247\u523B\uFF01',

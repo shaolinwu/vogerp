@@ -14,5 +14,5 @@
 defaultname.rentOrderInfoPanel = rentOrderInfoPanel;
 defaultname.rentOrderInfoPanel.init();
 
-defaultname.rentOrderInfoPanel.Form.items.push(elementList['rentOrderInfoPanel']);
+defaultname.Form.items.push(elementList['rentOrderInfoPanel']);
 

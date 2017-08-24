@@ -8,7 +8,7 @@ webConstant:
   resourceServer: http://127.0.0.1:8090/uimaster
   uploadServer: http://127.0.0.1:8090/uimaster/uploadFile
   websocketServer: http://127.0.0.1:8090
-  resourcePath: C:\uimaster\deploy\apache-tomcat-8.0.9\webapps\uimaster
+  resourcePath: /Users/shaolinwu/Documents/workspace/deploy\apache-tomcat-8.0.9\webapps\uimaster
   ipLocationURL: https://restapi.amap.com/v3/ip
   isHTTPs: false
   isJAAS: false

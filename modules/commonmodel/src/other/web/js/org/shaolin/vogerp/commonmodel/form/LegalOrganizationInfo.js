@@ -84,10 +84,15 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         ui: elementList[prefix + "busiLicensePhotoLabel"]
     });
 
+    var locationPhotoLabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "locationPhotoLabel"]
+    });
+
     var termsUI = new UIMaster.ui.checkbox
     ({
         ui: elementList[prefix + "termsUI"]
-        ,label: "?????????????????"
+        ,label: "同意《抢单达人会员及网上支付协议》"
         ,mustCheck: true
     });
 
@@ -104,6 +109,8 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     var busiLicensePhoto = new org_shaolin_vogerp_commonmodel_form_SingleImageUploader({"prefix":prefix + "busiLicensePhoto."});
 
+    var locationhoto = new org_shaolin_vogerp_commonmodel_form_SingleImageUploader({"prefix":prefix + "locationhoto."});
+
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
@@ -115,13 +122,13 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "verifiedUI",prefix + "orgIdUILabel",prefix + "orgIdUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "legalPersonUILabel",prefix + "legalPersonUI",prefix + "busiLicenseNumberUILabel",prefix + "busiLicenseNumberUI",prefix + "personalPhotoLabel",prefix + "personalPhoto",prefix + "personalIdentifierPhotoLabel",prefix + "personalIdentifierPhoto",prefix + "busiLicensePhotoLabel",prefix + "busiLicensePhoto",prefix + "termsUI"]
+        ,subComponents: [prefix + "idUI",prefix + "verifiedUI",prefix + "orgIdUILabel",prefix + "orgIdUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "legalPersonUILabel",prefix + "legalPersonUI",prefix + "busiLicenseNumberUILabel",prefix + "busiLicenseNumberUI",prefix + "personalPhotoLabel",prefix + "personalPhoto",prefix + "personalIdentifierPhotoLabel",prefix + "personalIdentifierPhoto",prefix + "busiLicensePhotoLabel",prefix + "busiLicensePhoto",prefix + "locationPhotoLabel",prefix + "locationhoto",prefix + "termsUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,verifiedUI,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,termsUI,okbtn,typeUI,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,fieldPanel,actionPanel]
+        ,items: [idUI,verifiedUI,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,locationPhotoLabel,termsUI,okbtn,typeUI,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,locationhoto,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -156,6 +163,8 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.busiLicensePhotoLabel=busiLicensePhotoLabel;
 
+    Form.locationPhotoLabel=locationPhotoLabel;
+
     Form.termsUI=termsUI;
 
     Form.okbtn=okbtn;
@@ -167,6 +176,8 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     Form.personalIdentifierPhoto=personalIdentifierPhoto;
 
     Form.busiLicensePhoto=busiLicensePhoto;
+
+    Form.locationhoto=locationhoto;
 
     Form.fieldPanel=fieldPanel;
 
@@ -209,6 +220,10 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     Form.busiLicensePhotoLabel=busiLicensePhotoLabel;
 
     Form.busiLicensePhoto=busiLicensePhoto;
+
+    Form.locationPhotoLabel=locationPhotoLabel;
+
+    Form.locationhoto=locationhoto;
 
     Form.termsUI=termsUI;
 

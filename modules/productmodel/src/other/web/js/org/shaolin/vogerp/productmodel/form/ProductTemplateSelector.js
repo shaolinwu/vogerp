@@ -16,7 +16,7 @@ function org_shaolin_vogerp_productmodel_form_ProductTemplateSelector(json)
     var searchTemplateUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "searchTemplateUI"]
-        ,placeholder: "??????"
+        ,placeholder: "搜索产品模板"
     });
 
     var pTemplateListUI = new UIMaster.ui.list

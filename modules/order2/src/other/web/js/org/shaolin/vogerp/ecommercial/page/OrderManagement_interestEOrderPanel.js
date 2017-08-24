@@ -14,5 +14,5 @@
 defaultname.interestEOrderPanel = interestEOrderPanel;
 defaultname.interestEOrderPanel.init();
 
-defaultname.interestEOrderPanel.Form.items.push(elementList['interestEOrderPanel']);
+defaultname.Form.items.push(elementList['interestEOrderPanel']);
 

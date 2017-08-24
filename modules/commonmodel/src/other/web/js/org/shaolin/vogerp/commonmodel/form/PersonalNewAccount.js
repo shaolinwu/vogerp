@@ -20,7 +20,7 @@ function org_shaolin_vogerp_commonmodel_form_PersonalNewAccount(json)
         {
             func: function() {
                 if (this.value.length > 0) {
-        return !/[?~!@#$%\^\+\*&\\\/\?\|:\.<>{}()';="]/.test(this.value);
+        return !/[。~!@#$%\^\+\*&\\\/\?\|:\.<>{}()';="]/.test(this.value);
     }
     return true;
             }
@@ -54,7 +54,7 @@ function org_shaolin_vogerp_commonmodel_form_PersonalNewAccount(json)
                 
                     {
                         if (this.value.length > 0) {
-                            return !/[?~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
+                            return !/[。~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
                         }
                         return true;
                     }
@@ -87,7 +87,7 @@ function org_shaolin_vogerp_commonmodel_form_PersonalNewAccount(json)
                 
                     {
 	                    if (this.value.length > 0) {
-					        return !/[?~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
+					        return !/[。~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
 					    }
 					    return true;
                     }
