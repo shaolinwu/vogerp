@@ -264,6 +264,9 @@ function org_shaolin_bmdp_adminconsole_page_Main_mob(json)
 			     });
 			     this.realCounter = $("<span style='color:blue;font-weight:bold;position:absolute;'></span>");
 			     $(this.matrixUI).find("[class=messageIcon]").append(this.realCounter);
+			     if (this.serverURLUI.value == "") {
+			         return;
+			     }
 			     this.nodesocket = io.connect(this.serverURLUI.value);
 			     this.nodesocket.on('connect', function(e) {
 		            var msg = {partyId: o.partyIdUI.value};

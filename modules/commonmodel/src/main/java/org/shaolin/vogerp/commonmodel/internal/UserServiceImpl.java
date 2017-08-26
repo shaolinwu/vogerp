@@ -428,10 +428,12 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		if (userContext != null) {
 			long userId = ((UserContext)userContext).getUserId();
 			try {
-				if (websocketServer.startsWith("https")) {
-					sender.doGetSSL(websocketServer + "/uimaster/onlineinfo?type=logout&userId=" + userId, "UTF-8");
-				} else {
-					sender.get(websocketServer + "/uimaster/onlineinfo?type=logout&userId=" + userId);
+				if (websocketServer != null && websocketServer.length() > 0) {
+					if (websocketServer.startsWith("https")) {
+						sender.doGetSSL(websocketServer + "/uimaster/onlineinfo?type=logout&userId=" + userId, "UTF-8");
+					} else {
+						sender.get(websocketServer + "/uimaster/onlineinfo?type=logout&userId=" + userId);
+					}
 				}
 			} catch (Throwable e) {
 				logger.warn("Error to access online user count!", e);
@@ -464,10 +466,13 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	}
 	
 	private HttpSender sender = new HttpSender();
-	private Registry instance = Registry.getInstance();
-	private String websocketServer = instance.getValue("/System/webConstant/websocketServer");
+	private String websocketServer = WebConfig.getWebSocketServer();
 	
 	private void registerOnlineUser(final UserContext userContext) {
+		if (websocketServer == null || websocketServer.length() == 0) {
+			logger.info("Websocker server is not configured!");
+			return;
+		}
 		try {
 			String param = "&partyId=" + userContext.getUserId() + "&latitude=" + userContext.getLatitude() + "&longitude=" + userContext.getLongitude();
 			if (websocketServer.startsWith("https")) {
@@ -486,6 +491,10 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	@Override
 	public boolean isOnline(long userId) {
 		try {
+			if (websocketServer == null || websocketServer.length() == 0) {
+				logger.info("Websocker server is not configured!");
+				return false;
+			}
 			if (websocketServer.startsWith("https")) {
 				return "true".equals(sender.doGetSSL(websocketServer + "/uimaster/onlineinfo?type=checkUserOnline&userId=" + userId, "UTF-8"));
 			} else {
@@ -498,6 +507,10 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	}
 	
 	public int getOnlineUsers() {
+		if (websocketServer == null || websocketServer.length() == 0) {
+			logger.info("Websocker server is not configured!");
+			return 0;
+		}
 		try {
 			if (websocketServer.startsWith("https")) {
 				return Integer.parseInt(sender.doGetSSL(websocketServer + "/uimaster/onlineinfo?type=userCount", "UTF-8"));

@@ -105,7 +105,7 @@
 							<goal>validate-entity</goal>
 						</goals>
 						<configuration>
-                            <systemEntityPath>/Users/shaolinwu/Documents/workspace/apps\vogerp\modules\commonmodel\src\main\resources\entities;/Users/shaolinwu/Documents/workspace/apps/vogerp/modules/productmodel/src/main/resources/entities;/Users/shaolinwu/Documents/workspace/apps/vogerp/modules/order/src/main/resources/entities;/Users/shaolinwu/Documents/workspace/uimaster/modules/workflow/src/main/resources/entities;
+                            <systemEntityPath>/Users/shaolinwu/Documents/workspace/apps/vogerp/modules/commonmodel/src/main/resources/entities;/Users/shaolinwu/Documents/workspace/apps/vogerp/modules/productmodel/src/main/resources/entities;/Users/shaolinwu/Documents/workspace/apps/vogerp/modules/order/src/main/resources/entities;/Users/shaolinwu/Documents/workspace/uimaster/modules/workflow/src/main/resources/entities;
                             </systemEntityPath>
                         </configuration>
 					</execution>

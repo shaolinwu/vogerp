@@ -200,10 +200,13 @@
 		           <ns2:value xsi:type="ns2:ExpressionPropertyType">
 			         <ns2:expression>
 			           <expressionString><![CDATA[
-			           import org.shaolin.bmdp.runtime.Registry;
+			           import org.shaolin.uimaster.page.WebConfig;
 			           { 
-			               Registry instance = Registry.getInstance();
-			               return instance.getValue("/System/webConstant/websocketServer"); 
+			               String websocketServer = WebConfig.getWebSocketServer();
+						   if (websocketServer == null || websocketServer.trim().length() == 0) {
+						   	  return "";
+						   }
+						   return websocketServer;
 			           }]]></expressionString>
 			         </ns2:expression>
 		           </ns2:value>
@@ -553,6 +556,9 @@
 			     });
 			     this.realCounter = $("<span style='color:blue;font-weight:bold;position:absolute;'></span>");
 			     $(this.matrixUI).find("[class=messageIcon]").append(this.realCounter);
+			     if (this.serverURLUI.value == "") {
+			         return;
+			     }
 			     this.nodesocket = io.connect(this.serverURLUI.value);
 			     this.nodesocket.on('connect', function(e) {
 		            var msg = {partyId: o.partyIdUI.value};

@@ -32,7 +32,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var searchContext = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "searchContext"]
-        ,placeholder: "?????????"
+        ,placeholder: "搜索功能模块及数据"
     });
 
     var searchButton = new UIMaster.ui.button
@@ -43,7 +43,7 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var userIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "userIcon"]
-        ,text: "????"
+        ,text: "用户中心"
     });
 
     var userLogout = new UIMaster.ui.button
@@ -54,19 +54,19 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
     var taskIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "taskIcon"]
-        ,text: "??"
+        ,text: "任务"
     });
 
     var notificationIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "notificationIcon"]
-        ,text: "??"
+        ,text: "通知"
     });
 
     var helpIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "helpIcon"]
-        ,text: "??"
+        ,text: "帮助"
     });
 
     var functionTree = new UIMaster.ui.webtree
@@ -325,7 +325,9 @@ function org_shaolin_bmdp_adminconsole_page_Main(json)
 				    function onError(data) {
 				        console.log("geolocation fails: " + data.message);
 				    }
-				    
+				    if (this.serverURLUI.value == "") {
+			            return;
+			        }
 				    var o = this;
 				    this.nodesocket = io.connect(this.serverURLUI.value);
 				     this.nodesocket.on('connect', function(e) {

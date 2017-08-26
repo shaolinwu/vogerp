@@ -55,6 +55,7 @@
                     import org.shaolin.uimaster.page.AjaxActionHelper;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.bbs.be.TopicImpl;
+                    import org.shaolin.vogerp.bbs.ce.*;
                     import org.shaolin.bmdp.runtime.security.UserContext;
                     {
                         Table orderInfoTable = (Table)@page.getElement("machiningTopicTable");
@@ -68,6 +69,11 @@
                         input.put("editable", new Boolean(true));
                         String formName = "org.shaolin.vogerp.bbs.form.TopicViewer";
                         if (UserContext.getUserContext() != null && UserContext.getUserContext().isAdmin()) {
+                           formName = "org.shaolin.vogerp.bbs.form.Topic";
+                        }
+                        if (topic.getUserId() == UserContext.getUserContext().getUserId()
+                            && topic.getType().getIntValue() == TopicStatusType.VERIFY.getIntValue()) {
+                            // allow to be edited if user posted the topic with verifying state.
                            formName = "org.shaolin.vogerp.bbs.form.Topic";
                         }
                         RefForm form = new RefForm("topicForm", formName, input);

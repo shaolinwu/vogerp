@@ -45,7 +45,7 @@ function org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo(json)
                 
                     {
                         if (this.value.length > 0) {
-                            return !/[?~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
+                            return !/[。~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
                         }
                         return true;
                     }
@@ -69,7 +69,7 @@ function org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo(json)
                 
                     {
                         if (this.value.length > 0) {
-                            return !/[?~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
+                            return !/[。~!@#$%\^\+\&\\\/\?\|:\.<>{}()';="]/.test(this.value);
                         }
                         return true;
                     }
@@ -107,7 +107,7 @@ function org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo(json)
     ({
         ui: elementList[prefix + "industryUI"]
       ,allowBlank:false
-      ,allowBlankText:"?????????"
+      ,allowBlankText:"行业类型不能为空！"
     });
 
     var addressInfo = new org_shaolin_bmdp_adminconsole_form_AddressInfo({"prefix":prefix + "addressInfo."});

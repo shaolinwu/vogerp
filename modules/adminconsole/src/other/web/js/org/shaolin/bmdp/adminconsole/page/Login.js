@@ -6,7 +6,7 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     var helpIcon = new UIMaster.ui.image
     ({
         ui: elementList[prefix + "helpIcon"]
-        ,text: "????"
+        ,text: "帮助中心"
     });
 
     var vogerplogo = new UIMaster.ui.image

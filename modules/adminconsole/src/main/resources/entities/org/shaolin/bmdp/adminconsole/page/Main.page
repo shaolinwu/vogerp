@@ -175,10 +175,13 @@
 		           <ns2:value xsi:type="ns2:ExpressionPropertyType">
 			         <ns2:expression>
 			           <expressionString><![CDATA[
-			           import org.shaolin.bmdp.runtime.Registry;
+			           import org.shaolin.uimaster.page.WebConfig;
 			           { 
-			               Registry instance = Registry.getInstance();
-			               return instance.getValue("/System/webConstant/websocketServer"); 
+			               String websocketServer = WebConfig.getWebSocketServer();
+						   if (websocketServer == null || websocketServer.trim().length() == 0) {
+							   return "";
+						   }
+						   return websocketServer;
 			           }]]></expressionString>
 			         </ns2:expression>
 		           </ns2:value>
@@ -609,7 +612,9 @@
 				    function onError(data) {
 				        console.log("geolocation fails: " + data.message);
 				    }
-				    
+				    if (this.serverURLUI.value == "") {
+			            return;
+			        }
 				    var o = this;
 				    this.nodesocket = io.connect(this.serverURLUI.value);
 				     this.nodesocket.on('connect', function(e) {
