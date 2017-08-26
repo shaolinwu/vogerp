@@ -206,7 +206,7 @@
           </ns2:expression>
         </ns2:editable>
         <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>审核通过或者重生静态页面</ns2:value>
+          <ns2:value>审核通过生成静态页面</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="okbtn">
@@ -229,7 +229,7 @@
         </ns2:EventListener>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
           <ns2:bundle>Common</ns2:bundle>
-          <ns2:key>Cancelbtn</ns2:key>
+          <ns2:key>Closebtn</ns2:key>
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
