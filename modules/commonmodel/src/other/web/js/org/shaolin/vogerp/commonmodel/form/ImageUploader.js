@@ -73,6 +73,7 @@ function org_shaolin_vogerp_commonmodel_form_ImageUploader(json)
 
         
        var othis = this;
+       $(this.Form).css("border-bottom", "1px solid #dddddd");
        this.uploadFile.callback = function() {
            othis.refresh(othis.uploadFile);
        }

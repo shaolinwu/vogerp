@@ -290,6 +290,7 @@
     </ns2:layoutConstraint>
     <ns2:constructorCode><![CDATA[
        var othis = this;
+       $(this.Form).css("border-bottom", "1px solid #dddddd");
        this.uploadFile.callback = function() {
            othis.refresh(othis.uploadFile);
        }
