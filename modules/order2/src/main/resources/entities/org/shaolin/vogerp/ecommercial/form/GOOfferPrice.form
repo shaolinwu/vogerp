@@ -237,7 +237,7 @@
     </ns2:component>
     <!-- 
     <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="deliveryInfoUI">
-      <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.DeliveryInfoSimpleView" />
+      <ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.DeliveryInfoSimpleView" />
       <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
     </ns2:component>
      -->
@@ -344,7 +344,7 @@
     </ns2:ComponentMapping>
     <!-- 
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
-      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.DeliveryInfoSimpleView"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.DeliveryInfoSimpleView"></ns2:mappingRule>
       <ns2:UIComponent componentPath="deliveryInfoUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="delieryInfo" paramName="beObject"></ns2:DataComponent>
     </ns2:ComponentMapping>

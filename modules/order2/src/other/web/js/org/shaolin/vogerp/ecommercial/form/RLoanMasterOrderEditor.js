@@ -136,7 +136,7 @@ function org_shaolin_vogerp_ecommercial_form_RLoanMasterOrderEditor(json)
         ,items: []
         ,subComponents: [prefix + "attributePanel"]
     });
-    var deliveryInfoPanel = new org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView({"prefix":prefix + "deliveryInfoPanel."});
+    var deliveryInfoPanel = new org_shaolin_vogerp_ecommercial_form_DeliveryInfoSimpleView({"prefix":prefix + "deliveryInfoPanel."});
 
 
     var saveTempbtn = new UIMaster.ui.button

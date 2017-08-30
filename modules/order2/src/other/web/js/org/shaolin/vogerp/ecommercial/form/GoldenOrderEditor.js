@@ -111,7 +111,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         ,items: []
         ,subComponents: [prefix + "photoUI",prefix + "attributePanel"]
     });
-    var deliveryInfoUI = new org_shaolin_vogerp_commonmodel_form_DeliveryInfoSimpleView({"prefix":prefix + "deliveryInfoUI."});
+    var deliveryInfoUI = new org_shaolin_vogerp_ecommercial_form_DeliveryInfoSimpleView({"prefix":prefix + "deliveryInfoUI."});
 
     var invoiceTypeUILabel = new UIMaster.ui.label
     ({

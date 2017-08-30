@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns7="http://bmdp.shaolin.org/datamodel/FlowDiagram" xmlns:ns6="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns5="http://bmdp.shaolin.org/datamodel/Workflow" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
-  <entityName>org.shaolin.vogerp.commonmodel.form.DeliveryInfoSimpleView</entityName>
+  <entityName>org.shaolin.vogerp.ecommercial.form.DeliveryInfoSimpleView</entityName>
   <systemVersion>0</systemVersion>
   <ns2:eventHandler functionName="openList">
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openList-20161216-225330">
