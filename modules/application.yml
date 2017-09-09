@@ -1,7 +1,26 @@
-spring.profiles: prod
+spring:
+  profiles: prod
+  jta:
+    enabled: true
+    log-dir: /Users/shaolinwu/Documents/workspace/deploy/apache-tomcat-8.0.9/logs
+    transaction-manager-id: uimaster0
+  redis:
+    host: localhost
+    port: 6379
 
 persistentConstant:
   hbmRoot: C:\uimaster\deploy\apache-tomcat-8.0.9\webapps\uimaster\WEB-INF\classes\hbm
+  datasource:
+   url: jdbc:mysql://localhost:3306/uimaster
+   username: uimaster
+   password: uimaster
+   driver: com.mysql.jdbc.Driver
+   className: com.mysql.jdbc.jdbc2.optional.MysqlXADataSource
+  hibernate:
+   dialect: org.hibernate.dialect.MySQLInnoDBDialect
+  bitronix:
+   datasource:
+     uniqueName: dataSource
   
 webConstant:
   runningMode: Dev

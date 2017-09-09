@@ -307,7 +307,7 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
         	((ConstantServiceImpl)cs).addConstantItem(ceObject);
         	((ConstantServiceImpl)cs).addHierarchy(hierarchy);
         }
-        HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
+        HibernateUtil.releaseSession(true);
 	}
 	
 	public void deleteCENode(String ceName, int intValue) {
@@ -318,7 +318,7 @@ public class DynamicUIServiceImpl implements IDynamicUIService, IServiceProvider
 		if (items != null && items.size() > 0) {
 			ModularityModel.INSTANCE.delete(items.get(0));
 		}
-		HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
+		HibernateUtil.releaseSession(true);
 		IServerServiceManager.INSTANCE.getConstantService().removeConstantItem(ceName, intValue);
 	}
 	

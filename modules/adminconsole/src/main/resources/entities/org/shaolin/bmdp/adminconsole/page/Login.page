@@ -577,6 +577,10 @@
         <ns2:clientAction xsi:type="ns2:ExpressionType">
             <ns2:expressionString><![CDATA[{
             // hello, my first js.
+            if (true) {
+              window.location.href="/uimaster/webflow.do?_chunkname=org.shaolin.bmdp.adminconsole.diagram.LoginAuthentication&_nodename=Registration";
+              return;
+            }
             }]]></ns2:expressionString>
         </ns2:clientAction>
         <ns2:serverOperation xsi:type="ns2:ExpressionType" />

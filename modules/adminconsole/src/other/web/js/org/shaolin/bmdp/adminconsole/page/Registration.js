@@ -449,6 +449,10 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 {
             constraint_result = true;
             // hello, my first js.
+            if (true) {
+              window.location.href="/uimaster/webflow.do?_chunkname=org.shaolin.bmdp.adminconsole.diagram.LoginAuthentication&_nodename=LoginPage";
+              return;
+            }
             }        
         myForm._outname.value = "Login";
         myForm.target = "_self";

@@ -110,7 +110,6 @@ public class LifeServiceProviderImpl implements ILifeCycleProvider {
 			AppUpdateServiceImpl updateService = new AppUpdateServiceImpl();
 			serviceManger.register(updateService);
 		} finally {
-			HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
 		}
 	}
 

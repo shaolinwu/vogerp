@@ -18,7 +18,7 @@ import org.shaolin.bmdp.runtime.security.IPermissionService;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
-import org.shaolin.uimaster.page.flow.WebFlowServlet.AttributesAccessor;
+import org.shaolin.uimaster.page.flow.WebflowController.AttributesAccessor;
 import org.shaolin.uimaster.page.flow.WebflowConstants;
 import org.shaolin.vogerp.commonmodel.IModuleService;
 import org.shaolin.vogerp.commonmodel.IUserService;
@@ -85,22 +85,12 @@ public class UserAccessFilter implements Filter {
 			} 
 		}
 		
-		if (queryString.endsWith("/*.do")) {
-			if (userOnline) {
-				((HttpServletResponse)response).sendRedirect(request.getServletContext().getContextPath() + mainPageURL);
-				 return;
-			} else {
-				((HttpServletResponse)response).sendRedirect(request.getServletContext().getContextPath() + loginURL);
-				return;
-			}
-		}
-		
 		chain.doFilter(request, response);
 	}
 
 	private boolean checkAccessPermission(AttributesAccessor attrAccessor, HttpServletRequest request) 
     {
-    	String orgCode = (String)UserContext.getUserData(UserContext.CURRENT_USER_ORGNAME);
+		String orgCode = (String)UserContext.getUserData(UserContext.CURRENT_USER_ORGNAME);
         if (orgCode == null) {
         	orgCode = IServerServiceManager.INSTANCE.getMasterNodeName();
         }
@@ -109,9 +99,9 @@ public class UserAccessFilter implements Filter {
         IModuleService moduleService = AppContext.get().getService(IModuleService.class);
         IPermissionService permiService = AppContext.get().getService(IPermissionService.class);
         
-    	List<IConstantEntity> roleIds = (List<IConstantEntity>)request.getSession().getAttribute(WebflowConstants.USER_ROLE_KEY);
-    	int decision = permiService.checkModule(moduleService.getModuleId(orgCode, attrAccessor.chunkName, attrAccessor.nodeName), roleIds);
-    	return IPermissionService.ACCEPTABLE == decision;
+	    	List<IConstantEntity> roleIds = (List<IConstantEntity>)request.getSession().getAttribute(WebflowConstants.USER_ROLE_KEY);
+	    	int decision = permiService.checkModule(moduleService.getModuleId(orgCode, attrAccessor.chunkName, attrAccessor.nodeName), roleIds);
+	    	return IPermissionService.ACCEPTABLE == decision;
     }
 	
 	@Override

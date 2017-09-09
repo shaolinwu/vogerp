@@ -211,7 +211,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 		
 		// manually commit the transaction.
-		HibernateUtil.releaseSession(HibernateUtil.getSession(), true);
+		HibernateUtil.releaseSession(true);
 		// the rollback operation is performed outside.
 		
 		// rebuild transaction again.
@@ -248,7 +248,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		ICaptcherService service = IServerServiceManager.INSTANCE.getService(ICaptcherService.class);
 		ICaptcha captcha = service.getItem(service.generateOne());
 		
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession();
 		session.setAttribute(WebflowConstants.USER_TOKEN, captcha.getAnswer());
 		return captcha.getQuestion();
 	}
@@ -611,7 +611,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			criteria.add(Restrictions.in("pinfo.id", values));
 			return criteria.list();
 		} finally {
-			HibernateUtil.releaseSession(HibernateUtil.getReadOnlySession(), true);
+			HibernateUtil.releaseSession(session, true);
 		}
 	}
 	

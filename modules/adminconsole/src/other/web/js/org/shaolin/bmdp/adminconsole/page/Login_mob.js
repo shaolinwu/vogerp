@@ -352,6 +352,10 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
         var UIEntity = this;
 {
             // hello, my first js.
+            if (true) {
+              window.location.href="/uimaster/webflow.do?_chunkname=org.shaolin.bmdp.adminconsole.diagram.LoginAuthentication&_nodename=Registration";
+              return;
+            }
             }        
         myForm._outname.value = "Register";
         myForm.target = "_self";
