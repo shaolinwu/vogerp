@@ -6,6 +6,13 @@
  <entityName>org.shaolin.vogerp.ecommercial.form.SearchBar_mob</entityName>
  <systemVersion>0</systemVersion>
   <ns2:eventHandler functionName="selectFilterCondition">
+   <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+         <ns2:expressionString><![CDATA[
+         {
+           UIMaster.setCookie("scopeSelectFilter", UIEntity.selectFilterUI.getValue());
+         }
+         ]]></ns2:expressionString>
+     </ns2:ops>
    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="selectFilterCondition-20170409-1411">
     <ns2:exp>
      <expressionString><![CDATA[
@@ -180,6 +187,20 @@
    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
     x="0" y="0" align="FULL"></ns2:constraint>
   </ns2:layoutConstraint>
+  <ns2:constructorCode>
+    <![CDATA[
+    {
+       var cachedValue = UIMaster.getCookie("scopeSelectFilter");
+       if (cachedValue == null) {
+          UIMaster.setCookie("scopeSelectFilter", this.selectFilterUI.getValue());
+       } else {
+          this.selectFilterUI.setValue(cachedValue);
+          if (cachedValue != "1") {
+             this.selectFilterCondition(this.selectFilterUI, event);
+          }
+       }
+    }]]>
+   </ns2:constructorCode>
  </ns2:body>
  <ns2:mapping>
  </ns2:mapping>

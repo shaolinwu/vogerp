@@ -40,7 +40,47 @@
                         RefForm form = new RefForm("topicForm", "org.shaolin.vogerp.bbs.form.Topic", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("发贴", new TableCallBack("machiningPanel"), true);
+                        form.openInWindows("发贴", new TableCallBack("machiningTopicTable"), true);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="createSelfMachiningTopic">
+		   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createSelfMachiningTopic-20170618-3542">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.bbs.be.TopicImpl;
+                    import org.shaolin.vogerp.bbs.ce.*;
+                    import org.shaolin.vogerp.bbs.util.BBSUtil;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
+                    {
+                        IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+                        if (!userService.checkUserOnline(@page.getRequest().getSession())) {
+                            Dialog.showMessageDialog("请登录系统后发贴！", "", Dialog.WARNING_MESSAGE, null);
+                            @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\", true);");
+                            return;
+                        }
+                    
+                        TopicImpl topic = new TopicImpl();
+                        topic.setContentLink("/bbs/" + BBSUtil.genResourceId() + "desc.html");
+                        topic.setType(TopicType.MACHINING);
+                        topic.setState(TopicStatusType.VERIFY);
+                        topic.setUserId(UserContext.getUserContext().getUserId());
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", topic);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("topicForm", "org.shaolin.vogerp.bbs.form.Topic", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("发贴", new TableCallBack("mytopicTable"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -59,6 +99,45 @@
                     import org.shaolin.bmdp.runtime.security.UserContext;
                     {
                         Table orderInfoTable = (Table)@page.getElement("machiningTopicTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
+                        TopicImpl topic = (TopicImpl)orderInfoTable.getSelectedRow();
+                        HashMap input = new HashMap();
+                        input.put("beObject", topic);
+                        input.put("editable", new Boolean(true));
+                        String formName = "org.shaolin.vogerp.bbs.form.TopicViewer";
+                        if (UserContext.getUserContext() != null && UserContext.getUserContext().isAdmin()) {
+                           formName = "org.shaolin.vogerp.bbs.form.Topic";
+                        }
+                        if (topic.getUserId() == UserContext.getUserContext().getUserId()
+                            && topic.getType().getIntValue() == TopicStatusType.VERIFY.getIntValue()) {
+                            // allow to be edited if user posted the topic with verifying state.
+                           formName = "org.shaolin.vogerp.bbs.form.Topic";
+                        }
+                        RefForm form = new RefForm("topicForm", formName, input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("贴子： " +topic.getName(), null, true);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
+		<ns2:eventHandler functionName="openSelfMachingTopic">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openSelfMachingTopic-20170618-3542">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.bbs.be.TopicImpl;
+                    import org.shaolin.vogerp.bbs.ce.*;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    {
+                        Table orderInfoTable = (Table)@page.getElement("mytopicTable");
                         if (orderInfoTable.getSelectedRow() == null) {
                             Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                             return;
@@ -117,7 +196,38 @@
                 </ns2:exp>
             </ns2:ops>
 		</ns2:eventHandler>
-		
+		<ns2:eventHandler functionName="deleteSelfMachingTopic">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="deleteSelfMachingTopic-20170618-3542">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.bbs.be.TopicImpl;
+                    import org.shaolin.vogerp.bbs.ce.*;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.bbs.dao.BBSModel;
+                    {
+                        Table orderInfoTable = (Table)@page.getElement("mytopicTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
+                        if (UserContext.getUserContext() == null || !UserContext.getUserContext().isAdmin()) {
+                            Dialog.showMessageDialog("只有管理员才能删除贴子！", "", Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
+                        TopicImpl topic = (TopicImpl)orderInfoTable.getSelectedRow();
+                        topic.setState(TopicStatusType.VERIFY);
+                        topic.setEnabled(false);
+                        BBSModel.INSTANCE.update(topic);
+                        orderInfoTable.refresh();
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+		</ns2:eventHandler>
 		<ns2:eventHandler functionName="createCustServiceTopic">
 		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createCustServiceTopic-20170618-3542">
                 <ns2:exp>
@@ -247,6 +357,117 @@
 			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
 			    <ns2:ajaxLoad>true</ns2:ajaxLoad>
                 
+                <ns2:tab uiid="mytopicPanel">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>我的贴子</ns2:value>
+                    </ns2:title>
+                    <ns2:panel UIID="mytopicPanel">
+		                <ns2:layout xsi:type="ns2:TableLayoutType">
+		                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+		                    <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+		                </ns2:layout>
+		                <ns2:component xsi:type="ns2:UITableType" UIID="mytopicTable">
+		                    <ns2:beElement>org.shaolin.vogerp.bbs.be.Topic</ns2:beElement>
+		                    <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+		                    <ns2:defaultRowSize>20</ns2:defaultRowSize>
+		                    <ns2:showActionBar>true</ns2:showActionBar>
+		                    <ns2:showFilter>true</ns2:showFilter>
+		                    <ns2:query xsi:type="ns2:ExpressionPropertyType">
+		                        <ns2:expression xsi:type="ns2:ExpressionType">
+		                            <ns2:expressionString><![CDATA[
+		                            import java.util.List;
+		                            import java.util.ArrayList;
+		                            import org.shaolin.uimaster.page.ajax.TableConditions;
+		                            import org.shaolin.vogerp.bbs.be.TopicImpl;
+		                            import org.shaolin.vogerp.bbs.ce.TopicType;
+		                            import org.shaolin.vogerp.bbs.ce.TopicStatusType;
+		                            import org.shaolin.vogerp.bbs.dao.BBSModel;
+		                            import org.shaolin.bmdp.runtime.security.UserContext;
+		                            {
+		                                  if ($tableCondition == null) {
+		                                     $tableCondition = TableConditions.createCondition(new TopicImpl());
+		                                     $tableCondition.setCount(20);
+		                                     $tableCondition.addOrder("hotCount", false);
+		                                     $tableCondition.addOrder("createDate", false);
+		                                  }
+		                                  TopicImpl condition = (TopicImpl)$tableCondition.getCondition();
+		                                  if (UserContext.getUserContext() != null && UserContext.getUserContext().getUserId() > 0) {
+		                                  	 condition.setUserId(UserContext.getUserContext().getUserId());
+		                                  } else {
+		                                      return new ArrayList();
+		                                  }
+		                                  return BBSModel.INSTANCE.searchTopic(condition,
+		                                                $tableCondition.getOrders(),
+		                                                $tableCondition.getOffset(), 
+		                                                $tableCondition.getCount());
+		                            }]]></ns2:expressionString>
+		                        </ns2:expression>
+		                    </ns2:query>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>贴子描述</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.description</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+		                    </ns2:column>
+		                    <ns2:column xsi:type="ns2:UITableColumnType">
+		                        <ns2:title xsi:type="ns2:StringPropertyType">
+		                            <ns2:value>建立日期</ns2:value>
+		                        </ns2:title>
+		                        <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+		                        <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+		                          <ns2:type>DateRange</ns2:type>
+		                          <ns2:startCondition>rowBE.startCreateDate</ns2:startCondition> 
+		                          <ns2:endCondition>rowBE.endCreateDate</ns2:endCondition>
+		                        </ns2:uiType>
+		                        <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+		                            <ns2:expression xsi:type="ns2:ExpressionType">
+		                                <ns2:expressionString><![CDATA[
+		                                import org.shaolin.uimaster.page.od.formats.FormatUtil;
+		                                import java.util.Date;
+		                                {
+		                                    if ($value == null || "".equals($value)) {
+		                                        if ("rowBE.startCreateDate".equals($filterId)) {
+		                                            $rowBE.setStartCreateDate(null);
+		                                        } else {
+		                                            $rowBE.setEndCreateDate(null);
+		                                        }
+		                                    } else {
+		                                        Date d = (Date)FormatUtil.convertUIToData(FormatUtil.DATE, $value);
+		                                        if ("rowBE.startCreateDate".equals($filterId)) {
+		                                            $rowBE.setStartCreateDate(d);
+		                                        } else {
+		                                            $rowBE.setEndCreateDate(d);
+		                                        }
+		                                    }
+		                                }]]></ns2:expressionString>
+		                            </ns2:expression>
+		                        </ns2:updateCondition>
+		                    </ns2:column>
+		                    <ns2:defaultActions>
+		                        <ns2:defaultOpenAction>openSelfMachingTopic</ns2:defaultOpenAction>
+		                        <ns2:defaultDeleteAction>deleteSelfMachingTopic</ns2:defaultDeleteAction>
+		                    </ns2:defaultActions>
+		                    <ns2:actionGroup>
+		                        <ns2:type>radio</ns2:type>
+		                        <ns2:action>
+                                    <ns2:uiid>createSelfMachiningTopic</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>发贴</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>createSelfMachiningTopic</ns2:function>
+                                </ns2:action>
+		                    </ns2:actionGroup>
+		                </ns2:component>
+		                <ns2:layoutConstraint>
+		                    <ns2:componentId>mytopicTable</ns2:componentId>
+		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+		                        x="0" y="0" align="FULL"></ns2:constraint>
+		                </ns2:layoutConstraint>
+                    </ns2:panel>
+                </ns2:tab>
+                
                 <ns2:tab uiid="machiningPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
                         <ns2:value>机械加工</ns2:value>
@@ -373,7 +594,6 @@
 		                </ns2:layoutConstraint>
                     </ns2:panel>
                 </ns2:tab>
-               
                
                 <ns2:tab uiid="custServicePanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">

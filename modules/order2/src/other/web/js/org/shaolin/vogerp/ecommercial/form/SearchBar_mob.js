@@ -69,7 +69,22 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_SearchBar_mob */
-        /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_SearchBar_mob */
+
+        
+    
+    {
+       var cachedValue = UIMaster.getCookie("scopeSelectFilter");
+       if (cachedValue == null) {
+          UIMaster.setCookie("scopeSelectFilter", this.selectFilterUI.getValue());
+       } else {
+          this.selectFilterUI.setValue(cachedValue);
+          if (cachedValue != "1") {
+             this.selectFilterCondition(this.selectFilterUI, event);
+          }
+       }
+    }
+   
+            /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_SearchBar_mob */
     };
 
     Form.selectFilterCondition = org_shaolin_vogerp_ecommercial_form_SearchBar_mob_selectFilterCondition;
@@ -95,6 +110,10 @@ function org_shaolin_vogerp_ecommercial_form_SearchBar_mob(json)
         var o = this;
         var UIEntity = this;
 
+         {
+           UIMaster.setCookie("scopeSelectFilter", UIEntity.selectFilterUI.getValue());
+         }
+         
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectFilterCondition-20170409-1411",UIMaster.getValue(eventsource),o.__entityName);

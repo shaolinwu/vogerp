@@ -1,0 +1,14 @@
+spring.jta.enabled: true
+spring.jta.log-dir: C/Users/shaolinwu/Documents/workspace/logs
+spring.jta.transaction-manager-id: uimaster0
+
+persistentConstant:
+  hbmRoot: /Users/shaolinwu/Documents/workspace/apps/vogerp/modules/commonmodel/src/other/hbm
+  datasource:
+   url: jdbc:mysql://localhost:3306/uimaster
+   username: uimaster
+   password: uimaster
+   driver: com.mysql.jdbc.Driver
+   className: com.mysql.jdbc.jdbc2.optional.MysqlXADataSource
+  hibernate:
+   dialect: org.hibernate.dialect.MySQLInnoDBDialect

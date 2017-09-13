@@ -7,7 +7,18 @@ function org_shaolin_vogerp_bbs_page_BBSMain(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "machiningPanel",prefix + "custServicePanel"]
+        ,subComponents: [prefix + "mytopicPanel",prefix + "machiningPanel",prefix + "custServicePanel"]
+    });
+    var mytopicTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "mytopicTable"]
+    });
+
+    var mytopicPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "mytopicPanel"]
+        ,items: []
+        ,subComponents: [prefix + "mytopicTable"]
     });
     var machiningTopicTable = new UIMaster.ui.objectlist
     ({
@@ -41,6 +52,10 @@ function org_shaolin_vogerp_bbs_page_BBSMain(json)
 
     Form.functionsTab=functionsTab;
 
+    Form.mytopicPanel=mytopicPanel;
+
+    Form.mytopicTable=mytopicTable;
+
     Form.machiningPanel=machiningPanel;
 
     Form.machiningTopicTable=machiningTopicTable;
@@ -57,9 +72,15 @@ function org_shaolin_vogerp_bbs_page_BBSMain(json)
 
     Form.createMachiningTopic = org_shaolin_vogerp_bbs_page_BBSMain_createMachiningTopic;
 
+    Form.createSelfMachiningTopic = org_shaolin_vogerp_bbs_page_BBSMain_createSelfMachiningTopic;
+
     Form.openMachingTopic = org_shaolin_vogerp_bbs_page_BBSMain_openMachingTopic;
 
+    Form.openSelfMachingTopic = org_shaolin_vogerp_bbs_page_BBSMain_openSelfMachingTopic;
+
     Form.deleteMachingTopic = org_shaolin_vogerp_bbs_page_BBSMain_deleteMachingTopic;
+
+    Form.deleteSelfMachingTopic = org_shaolin_vogerp_bbs_page_BBSMain_deleteSelfMachingTopic;
 
     Form.createCustServiceTopic = org_shaolin_vogerp_bbs_page_BBSMain_createCustServiceTopic;
 
@@ -95,6 +116,17 @@ function org_shaolin_vogerp_bbs_page_BBSMain(json)
 
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_bbs_page_BBSMain_createSelfMachiningTopic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_bbs_page_BBSMain_createSelfMachiningTopic */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createSelfMachiningTopic-20170618-3542",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_bbs_page_BBSMain_createSelfMachiningTopic */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_bbs_page_BBSMain_openMachingTopic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_bbs_page_BBSMain_openMachingTopic */
         var o = this;
         var UIEntity = this;
@@ -106,6 +138,17 @@ function org_shaolin_vogerp_bbs_page_BBSMain(json)
 
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_bbs_page_BBSMain_openSelfMachingTopic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_bbs_page_BBSMain_openSelfMachingTopic */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openSelfMachingTopic-20170618-3542",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_bbs_page_BBSMain_openSelfMachingTopic */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_bbs_page_BBSMain_deleteMachingTopic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_bbs_page_BBSMain_deleteMachingTopic */
         var o = this;
         var UIEntity = this;
@@ -114,6 +157,17 @@ function org_shaolin_vogerp_bbs_page_BBSMain(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteMachingTopic-20170618-3542",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_bbs_page_BBSMain_deleteMachingTopic */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_bbs_page_BBSMain_deleteSelfMachingTopic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_bbs_page_BBSMain_deleteSelfMachingTopic */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"deleteSelfMachingTopic-20170618-3542",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_bbs_page_BBSMain_deleteSelfMachingTopic */
 
 
     /* auto generated eventlistener function declaration */

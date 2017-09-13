@@ -232,6 +232,9 @@ public class ModuleServiceImpl implements IServiceProvider, IModuleService {
 	}
 	
 	public List getModuleGroupToJson() {
+		if (UserContext.getUserContext() == null || UserContext.getUserContext().getOrgCode() == null) {
+			return Collections.emptyList();
+		}
         // find root
         IModuleGroup root = getModuleRootByOrgCode(UserContext.getUserContext().getOrgCode()); 
 		if (root == null) {

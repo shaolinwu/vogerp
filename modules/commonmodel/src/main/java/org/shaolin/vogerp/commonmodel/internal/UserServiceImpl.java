@@ -27,6 +27,7 @@ import org.shaolin.bmdp.runtime.cache.ICache;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.security.UserContext.OnlineUserChecker;
+import org.shaolin.bmdp.runtime.spi.IAppServiceManager.Env;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.bmdp.utils.DateParser;
@@ -189,6 +190,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		newAccount.setLoginIP(HttpUserUtil.getIP(request));
 		newAccount.setLatitude(registerInfo.getLatitude());
 		newAccount.setLongitude(registerInfo.getLongitude());
+		newAccount.setLocale("zh_CN");
 		this.setLocationInfo(newAccount);
 		CommonModel.INSTANCE.create(newAccount);
 		
@@ -202,10 +204,11 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		assignedMember.setStarttime(new Date());
 		CommonModel.INSTANCE.create(assignedMember);
 		
-		// assign modules
-		IModuleService moduleService = AppContext.get().getService(IModuleService.class);
-		moduleService.newAppModules(IModuleService.DEFAULT_USER_MODULES, org.getId(), org.getOrgCode());
-		
+		if (IServerServiceManager.INSTANCE.getRunningEnv() == Env.Production) {
+			// assign modules
+			IModuleService moduleService = AppContext.get().getService(IModuleService.class);
+			moduleService.newAppModules(IModuleService.DEFAULT_USER_MODULES, org.getId(), org.getOrgCode());
+		}
 		for (UserActionListener listener: listeners) {
 			listener.registered(userInfo);
 		}
@@ -392,11 +395,13 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			//add user-context thread bind
             UserContext.register(session, userContext, userLocale, userRoles, isMobile);
             UserContext.addUserData(WebflowConstants.USER_ROLE_KEY, userRoles);
-            AccountingServiceImpl accountingService = (AccountingServiceImpl)AppContext.get().getService(IAccountingService.class);
-            accountingService.registerLoginUserAccountInfo(userContext);
+            if (IServerServiceManager.INSTANCE.getRunningEnv() == Env.Production) {
+	            AccountingServiceImpl accountingService = (AccountingServiceImpl)AppContext.get().getService(IAccountingService.class);
+	            accountingService.registerLoginUserAccountInfo(userContext);
+            }
             for (UserActionListener listener: listeners) {
-    			listener.loggedIn(matchedUser, userInfo);
-    		}
+	    			listener.loggedIn(matchedUser, userInfo);
+	    		}
             registerOnlineUser(userContext);
             
 			boolean hasCookie = false;
