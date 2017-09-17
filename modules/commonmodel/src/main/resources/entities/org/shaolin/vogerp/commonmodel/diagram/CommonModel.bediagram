@@ -1189,5 +1189,9 @@
             <bediagram:description>年</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>  
+    
+    <bediagram:ceEntity>
+        <common:entityName>ExpressVendor</common:entityName>
+    </bediagram:ceEntity>  
       
 </bediagram:BEDiagram>

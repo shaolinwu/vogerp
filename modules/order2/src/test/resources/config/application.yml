@@ -3,7 +3,7 @@ spring.jta.log-dir: C/Users/shaolinwu/Documents/workspace/logs
 spring.jta.transaction-manager-id: uimaster0
 
 persistentConstant:
-  hbmRoot: /Users/shaolinwu/Documents/workspace/apps/vogerp/modules/ecommercial/src/other/hbm
+  hbmRoot: /Users/shaolinwu/Documents/workspace/apps/vogerp/modules/order2/src/other/hbm
   datasource:
    url: jdbc:mysql://localhost:3306/uimaster
    username: uimaster
@@ -12,3 +12,75 @@ persistentConstant:
    className: com.mysql.jdbc.jdbc2.optional.MysqlXADataSource
   hibernate:
    dialect: org.hibernate.dialect.MySQLInnoDBDialect
+
+webConstant:
+  runningMode: Dev
+  resourceServer: http://127.0.0.1:8080/uimaster
+  uploadServer: http://127.0.0.1:8080/uimaster/uploadFile
+  websocketServer: http://127.0.0.1:8090
+  resourcePath: ''
+  isHTTPs: false
+  isJAAS: false
+  formatHTML: true
+  customizedMode: false
+  contextRoot: /uimaster
+  ajaxServiceURL: /uimaster/ajaxservice
+  cssRootPath: /css
+  jsRootPath: /js
+  webport: 8080
+  hotdeployeable: true
+  hiddenValueMask: '***'
+  defaultOrgCode: jounioruser
+  actionPath: /uimaster/webflow.do
+  loginPath: /uimaster/login.do
+  frameWrap: /uimaster
+  loginPage: /uimaster/jsp/login.jsp
+  iloginPage: /uimaster/jsp/ilogin.jsp
+  indexPage: /uimaster/jsp/index.jsp
+  mainPage: /uimaster/jsp/main.jsp
+  errorPage: /uimaster/jsp/common/Failure.jsp
+  timeoutPage: /uimaster/jsp/common/sessionTimeout.jsp
+  nopermissionPage: /uimaster/jsp/common/noPermission.jsp
+  ajaxHandlingError: true
+  commoncss:
+   - ${webConstant.resourceServer}/uimaster/js/controls/swiper/swiper.css
+   - /uimaster/css/jquery-dataTable.css
+   - /uimaster/css/jquery-jstree.css
+   - /uimaster/css/jquery-ui.css
+   - /uimaster/css/iumaster.css
+  commonMobcss:
+   - /uimaster/js/controls/swiper/swiper.css
+   - /uimaster/css/jquery-dataTable.css
+   - /uimaster/css/jquery-jstree.css
+   - /uimaster/css/jquery-ui.css
+   - /uimaster/css/iumaster.css
+  commonMobAppcss:
+   - $APPROOT/js/controls/swiper/swiper.css #ssss
+   - $APPROOT/css/jquery-dataTable.css
+   - $APPROOT/css/jquery-jstree.css
+   - $APPROOT/css/jquery-ui.css
+   - $APPROOT/css/iumaster.css
+  commonjs:
+   - /uimaster/js/jquery.js
+   - /uimaster/js/jquery-ui.js
+   - /uimaster/js/controls/swiper/swiper.jquery.js
+   - /uimaster/js/jquery-dataTable.js
+   - /uimaster/js/jquery-jstree.js
+   - /uimaster/js/uimaster.js
+   - /uimaster/js/uimaster-widget.js
+  commonMobjs:
+   - /uimaster/js/jquery.js
+   - /uimaster/js/jquery-ui.js
+   - /uimaster/js/jquery-mobile.js
+   - /uimaster/js/controls/swiper/swiper.jquery.js
+   - /uimaster/js/jquery-jstree.js
+   - /uimaster/js/uimaster.js
+   - /uimaster/js/uimaster-widget.js
+  commonMobAppjs:
+   - $APPROOT/js/jquery.js
+   - $APPROOT/js/jquery-ui.js
+   - $APPROOT/js/jquery-mobile.js
+   - $APPROOT/js/controls/swiper/swiper.jquery.js
+   - $APPROOT/js/jquery-jstree.js
+   - $APPROOT/js/uimaster.js
+   - $APPROOT/js/uimaster-widget.js

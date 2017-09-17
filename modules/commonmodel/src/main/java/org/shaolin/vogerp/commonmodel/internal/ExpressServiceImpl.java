@@ -9,7 +9,9 @@ import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.Registry;
 import org.shaolin.bmdp.runtime.ce.IConstantEntity;
 import org.shaolin.bmdp.runtime.spi.IConstantService;
+import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
+import org.shaolin.bmdp.runtime.spi.IAppServiceManager.Env;
 import org.shaolin.bmdp.utils.HttpSender;
 import org.shaolin.vogerp.commonmodel.IExpressService;
 import org.slf4j.Logger;
@@ -36,11 +38,12 @@ public class ExpressServiceImpl implements IExpressService, IServiceProvider {
 		today = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		url = Registry.getInstance().getValue("/System/Vogerp/Express/ThirdPartyURL");
 		url = url + Registry.getInstance().getValue("/System/Vogerp/Express/ThirdPartyKey");
-		
-		IConstantService ceService = AppContext.get().getConstantService();
-		IConstantEntity venders = ceService.getConstantEntity("ExpressVendor");
-		Map<Integer, String> list = venders.getAllConstants(false);
-		venderList.putAll(list);
+		if (IServerServiceManager.INSTANCE.getRunningEnv() == Env.Production) {
+			IConstantService ceService = AppContext.get().getConstantService();
+			IConstantEntity venders = ceService.getConstantEntity("ExpressVendor");
+			Map<Integer, String> list = venders.getAllConstants(false);
+			venderList.putAll(list);
+		}
 	}
 	
 	@Override
