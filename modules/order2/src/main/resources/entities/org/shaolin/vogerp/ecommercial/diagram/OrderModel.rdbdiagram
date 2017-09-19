@@ -258,7 +258,8 @@
   <ns2:table>
     <entityName>ECOM_GOOfferPrice</entityName>
     <systemVersion>0</systemVersion>
-    <ns2:column name="OPID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="OID" type="BIGINT" isNull="false"></ns2:column>
     <ns2:column name="PRICE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="SAMPLEPHOTO" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="LEAVEWORDS" type="VARCHAR" isNull="true"></ns2:column>
@@ -269,12 +270,13 @@
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
-      <ns2:columnName>OPID</ns2:columnName>
+      <ns2:columnName>ID</ns2:columnName>
     </ns2:primaryKey>
     <ns2:mapping>
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.ecommercial.be.GOOfferPrice"></ns2:businessEntity>
-      <ns2:fieldMapping beFieldName="id" columnName="OPID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="orderId" columnName="OID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="price" columnName="PRICE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="samplePhoto" columnName="SAMPLEPHOTO"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="leaveWords" columnName="LEAVEWORDS"></ns2:fieldMapping>
@@ -293,7 +295,8 @@
   <ns2:table>
     <entityName>ECOM_ROOfferPrice</entityName>
     <systemVersion>0</systemVersion>
-    <ns2:column name="OPID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="OID" type="BIGINT" isNull="false"></ns2:column>
     <ns2:column name="PRICE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="SAMPLEPHOTO" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="LEAVEWORDS" type="VARCHAR" isNull="true"></ns2:column>
@@ -304,12 +307,13 @@
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
-      <ns2:columnName>OPID</ns2:columnName>
+      <ns2:columnName>ID</ns2:columnName>
     </ns2:primaryKey>
     <ns2:mapping>
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.ecommercial.be.ROOfferPrice"></ns2:businessEntity>
-      <ns2:fieldMapping beFieldName="id" columnName="OPID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="orderId" columnName="OID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="price" columnName="PRICE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="samplePhoto" columnName="SAMPLEPHOTO"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="leaveWords" columnName="LEAVEWORDS"></ns2:fieldMapping>
@@ -450,7 +454,8 @@
   <ns2:table>
     <entityName>ECOM_MOOfferPrice</entityName>
     <systemVersion>0</systemVersion>
-    <ns2:column name="OPID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="OID" type="BIGINT" isNull="false"></ns2:column>
     <ns2:column name="PRICE" type="DECIMAL" precision="2" isNull="true"></ns2:column>
     <ns2:column name="SAMPLEPHOTO" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="LEAVEWORDS" type="VARCHAR" isNull="true"></ns2:column>
@@ -461,12 +466,13 @@
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
-      <ns2:columnName>OPID</ns2:columnName>
+      <ns2:columnName>ID</ns2:columnName>
     </ns2:primaryKey>
     <ns2:mapping>
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.ecommercial.be.MOOfferPrice"></ns2:businessEntity>
-      <ns2:fieldMapping beFieldName="id" columnName="OPID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="orderId" columnName="OID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="price" columnName="PRICE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="samplePhoto" columnName="SAMPLEPHOTO"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="leaveWords" columnName="LEAVEWORDS"></ns2:fieldMapping>
@@ -485,7 +491,8 @@
   <ns2:table>
     <entityName>ECOM_MACHORDERCOMPONENT</entityName>
     <systemVersion>0</systemVersion>
-    <ns2:column name="MOCID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="MOID" type="BIGINT" isNull="false"></ns2:column>
     <ns2:column name="NAME" type="VARCHAR" length="30" isNull="false"></ns2:column>
     <ns2:column name="DESCRIPTION" type="VARCHAR" length="10" isNull="true"></ns2:column>
     <ns2:column name="CATEGORY" type="VARCHAR" length="256" isNull="true"></ns2:column>
@@ -497,12 +504,13 @@
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
-      <ns2:columnName>MOCID</ns2:columnName>
+      <ns2:columnName>ID</ns2:columnName>
     </ns2:primaryKey>
     <ns2:mapping>
       <systemVersion>0</systemVersion>
       <ns2:businessEntity entityName="org.shaolin.vogerp.ecommercial.be.MachOrderComponent"></ns2:businessEntity>
-      <ns2:fieldMapping beFieldName="id" columnName="MOCID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="morderId" columnName="MOID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="name" columnName="NAME"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="category" columnName="CATEGORY"></ns2:fieldMapping>
@@ -556,10 +564,10 @@
     </ns2:mapping>
   </ns2:table>
   
-  <ns2:joinTable name="ECOM_GOLDENORDER_ITEMS" srcTable="ECOM_GOLDENORDER" srcPKColumn="ID" srcCollection="offerPrices" tarTable="ECOM_GOOfferPrice" tarPKColumn="OPID"></ns2:joinTable>
-  <ns2:joinTable name="ECOM_RENTORDER_ITEMS" srcTable="ECOM_RENTORLOANORDER" srcPKColumn="ID" srcCollection="offerPrices" tarTable="ECOM_ROOfferPrice" tarPKColumn="OPID"></ns2:joinTable>
-  <ns2:joinTable name="ECOM_MACHININGORDER_ITEMS1" srcTable="ECOM_MACHININGORDER" srcPKColumn="ID" srcCollection="offerPrices" tarTable="ECOM_MOOfferPrice" tarPKColumn="OPID"></ns2:joinTable>
-  <ns2:joinTable name="ECOM_MACHININGORDER_ITEMS" srcTable="ECOM_MACHININGORDER" srcPKColumn="ID" srcCollection="components" tarTable="ECOM_MACHORDERCOMPONENT" tarPKColumn="MOCID"></ns2:joinTable>
+  <ns2:joinTable name="ECOM_GOLDENORDER_ITEMS" srcTable="ECOM_GOLDENORDER" srcPKColumn="ID" srcCollection="offerPrices" tarTable="ECOM_GOOfferPrice" tarPKColumn="OID"></ns2:joinTable>
+  <ns2:joinTable name="ECOM_RENTORDER_ITEMS" srcTable="ECOM_RENTORLOANORDER" srcPKColumn="ID" srcCollection="offerPrices" tarTable="ECOM_ROOfferPrice" tarPKColumn="OID"></ns2:joinTable>
+  <ns2:joinTable name="ECOM_MACHININGORDER_ITEMS1" srcTable="ECOM_MACHININGORDER" srcPKColumn="ID" srcCollection="offerPrices" tarTable="ECOM_MOOfferPrice" tarPKColumn="OID"></ns2:joinTable>
+  <ns2:joinTable name="ECOM_MACHININGORDER_ITEMS" srcTable="ECOM_MACHININGORDER" srcPKColumn="ID" srcCollection="components" tarTable="ECOM_MACHORDERCOMPONENT" tarPKColumn="MOID"></ns2:joinTable>
   
   <ns2:query queryName="searchGoldenOrder">
     <ns2:searchResult name="outObject" category="BusinessEntity">

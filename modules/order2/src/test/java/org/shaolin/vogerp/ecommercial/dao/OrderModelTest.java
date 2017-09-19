@@ -100,6 +100,7 @@ public class OrderModelTest extends SpringBootTestRoot {
          
         // offer a price.
         MOOfferPriceImpl offerPrice = new MOOfferPriceImpl();
+        offerPrice.setOrderId(morder.getId());
         offerPrice.setTakenCustomerId(UserContext.getUserContext().getUserId());
         offerPrice.setTakenCustInfo("test");
         offerPrice.setPrice(10.1);
@@ -122,6 +123,8 @@ public class OrderModelTest extends SpringBootTestRoot {
      // take the order!
         morder = OrderModel.INSTANCE.get(morder.getId(), MachiningOrderImpl.class);
         morder.setStatus(OrderStatusType.TAKEN);
+        Assert.assertNotNull(morder.getOfferPrices());
+        Assert.assertEquals(morder.getOfferPrices().size(), 1);
         OrderModel.INSTANCE.update(morder);
         morder.setSessionId("aaa23432432");
         OrderModel.INSTANCE.update(morder);
@@ -163,6 +166,7 @@ public class OrderModelTest extends SpringBootTestRoot {
         
      // offer a price.
         GOOfferPriceImpl offerPrice = new GOOfferPriceImpl();
+        offerPrice.setOrderId(order.getId());
         offerPrice.setTakenCustomerId(UserContext.getUserContext().getUserId());
         offerPrice.setTakenCustInfo("test");
         offerPrice.setPrice(10.1);
@@ -176,6 +180,8 @@ public class OrderModelTest extends SpringBootTestRoot {
         // take the order!
         order = OrderModel.INSTANCE.get(order.getId(), GoldenOrderImpl.class);
         order.setStatus(OrderStatusType.TAKEN);
+        Assert.assertNotNull(order.getOfferPrices());
+        Assert.assertEquals(order.getOfferPrices().size(), 1);
         OrderModel.INSTANCE.update(order);
         order.setSessionId("aaa23432432");
         OrderModel.INSTANCE.update(order);
@@ -209,6 +215,7 @@ public class OrderModelTest extends SpringBootTestRoot {
         
      // offer a price.
         ROOfferPriceImpl offerPrice = new ROOfferPriceImpl();
+        offerPrice.setOrderId(order.getId());
         offerPrice.setTakenCustomerId(UserContext.getUserContext().getUserId());
         offerPrice.setTakenCustInfo("test");
         offerPrice.setPrice(10.1);
@@ -222,6 +229,9 @@ public class OrderModelTest extends SpringBootTestRoot {
         // take the order!
         order = OrderModel.INSTANCE.get(order.getId(), RentOrLoanOrderImpl.class);
         order.setStatus(OrderStatusType.TAKEN);
+        Assert.assertNotNull(order.getOfferPrices());
+        Assert.assertEquals(order.getOfferPrices().size(), 1);
+        
         OrderModel.INSTANCE.update(order);
         order.setSessionId("aaa23432432");
         OrderModel.INSTANCE.update(order);

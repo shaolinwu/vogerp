@@ -332,6 +332,10 @@
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>morderId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
             <!-- 生产材料部件, 加工设备, 表面处理方式  和其它三方独立辅材料名称 -->
             <bediagram:name>name</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
@@ -434,6 +438,10 @@
         <common:entityName>OfferPrice</common:entityName>
         <bediagram:member pk="true">
             <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>orderId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
