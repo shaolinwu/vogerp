@@ -470,7 +470,14 @@
       </ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
          <ns2:expression>
-          <expressionString>{return true;}</expressionString>
+          <expressionString><![CDATA[
+           import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+           { 
+               if ($beObject.getStatus() == OrderStatusType.VERIFYING) {
+                  return false;
+               }
+               return true;
+           }]]></expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
