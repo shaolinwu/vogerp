@@ -27,7 +27,7 @@ import org.shaolin.vogerp.ecommercial.be.IEOrder;
 import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
 import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
 import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
 import org.shaolin.vogerp.ecommercial.util.OrderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +61,7 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
 	
 	public static void addProgressNote(final IEOrder order, final String note) {
 		try {
-			DeliveryInfoImpl info = OrderModel.INSTANCE.get(order.getDeliveryInfoId(), DeliveryInfoImpl.class);
+			DeliveryInfoImpl info = EOrderModel.INSTANCE.get(order.getDeliveryInfoId(), DeliveryInfoImpl.class);
 			JSONArray array = new JSONArray();
 			if (info.getProgressNote() != null && info.getProgressNote().trim().length() > 0) {
 				array = new JSONArray(info.getProgressNote());
@@ -72,7 +72,7 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
 			array.put(json);
 			info.setProgressNote(array.toString());
 			
-			OrderModel.INSTANCE.update(info);
+			EOrderModel.INSTANCE.update(info);
 			order.setDeliveryInfo(info);
 		} catch (Exception e) {
 			logger.warn("Add progress note error!", e);
@@ -87,7 +87,7 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
 		try {
 			IEOrder order = (IEOrder)this.getAttribute("order");
 			if (order.getDeliveryInfoId() > 0) {
-		        DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)OrderModel.INSTANCE.get(order.getDeliveryInfoId(), DeliveryInfoImpl.class);
+		        DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)EOrderModel.INSTANCE.get(order.getDeliveryInfoId(), DeliveryInfoImpl.class);
 		        order.setDeliveryInfo(deliveryInfo);
 		    } else {
 		    	context.generateHTML("\u5F53\u524D\u8BA2\u5355\u6CA1\u6709\u914D\u5236\u5730\u5740\u4FE1\u606F\uFF01");
@@ -98,8 +98,8 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
 		    	return;
 			}
 			IDeliveryInfo deliveryInfo = order.getDeliveryInfo();
-			IPersonalInfo provider = OrderModel.INSTANCE.get(deliveryInfo.getUserId(), PersonalInfoImpl.class);
-			IPersonalInfo takener = OrderModel.INSTANCE.get(deliveryInfo.getToUserId(), PersonalInfoImpl.class);
+			IPersonalInfo provider = EOrderModel.INSTANCE.get(deliveryInfo.getUserId(), PersonalInfoImpl.class);
+			IPersonalInfo takener = EOrderModel.INSTANCE.get(deliveryInfo.getToUserId(), PersonalInfoImpl.class);
 			boolean isCurrTaker = takener.getOrgId() == UserContext.getUserContext().getOrgId();
 			boolean isCurrProvider = provider.getOrgId() == UserContext.getUserContext().getOrgId();
 			

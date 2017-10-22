@@ -49,6 +49,6 @@ public class UpdateComponentCallBack implements CallBack {
 	public void fromJSON(JSONObject json) throws JSONException {
 		String uiid = json.getString("tid");
 		String entityPrefix = json.getString("prefix");
-		this.t = (Table)AjaxContextHelper.getAjaxContext().getElementByAbsoluteId(uiid);
+		this.t = (Table)AjaxContextHelper.getAjaxContext().getElementByAbsoluteId(uiid, Table.class);
 	}
 }

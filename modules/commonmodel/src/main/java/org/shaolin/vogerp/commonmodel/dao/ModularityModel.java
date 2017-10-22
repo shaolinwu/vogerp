@@ -16,15 +16,19 @@ import org.hibernate.criterion.Projections;
 import org.shaolin.bmdp.persistence.BEEntityDaoObject;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.persistence.query.operator.Operator;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This code is generated automatically, any change will be replaced after rebuild.
  */
+@Repository
+@Transactional
 public class ModularityModel extends BEEntityDaoObject {
 
     public static final ModularityModel INSTANCE = new ModularityModel();
 
-    private ModularityModel() {
+    public ModularityModel() {
     }
 
     public List<org.shaolin.vogerp.commonmodel.be.IRegistry> searchRegistryItems(org.shaolin.vogerp.commonmodel.be.RegistryImpl scFlow,

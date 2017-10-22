@@ -46,7 +46,7 @@
                   ComboBox citySubListUI = @page.getComboBox("citySubListUI");
                   String parentId = @page.getHidden("parentUI").getValue();
               
-                  TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(parentId);
+                  TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(parentId, Hidden.class);
                   textWidget.setValue(citySubListUI.getValue());
                   if (textWidget instanceof Label) {
                      ((Label)textWidget).setValue(citySubListUI.getValue());
@@ -73,7 +73,7 @@
                  ComboBox citySubListUI = @page.getComboBox("citySubListUI");
                  String parentId = @page.getHidden("parentUI").getValue();
              
-                 TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(parentId);
+                 TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(parentId, Hidden.class);
                  textWidget.setValue(citySubListUI.getValue());
                  if (textWidget instanceof Label) {
                     ((Label)textWidget).setValue(citySubListUI.getValue());
@@ -114,14 +114,8 @@
       <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIHiddenType" UIID="parentUI">
-      <ns2:secure>
-        <ns2:value>true</ns2:value>
-      </ns2:secure>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIHiddenType" UIID="clickEventUI">
-      <ns2:secure>
-        <ns2:value>true</ns2:value>
-      </ns2:secure>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="cityListPanel">
       <ns2:UISkin xsi:type="ns2:UISkinType">

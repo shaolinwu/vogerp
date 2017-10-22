@@ -16,6 +16,8 @@ import org.hibernate.criterion.Projections;
 import org.shaolin.bmdp.persistence.BEEntityDaoObject;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.persistence.query.operator.Operator;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.shaolin.vogerp.commonmodel.be.IPartyRelationship;
 import org.shaolin.vogerp.commonmodel.be.PartyRelationshipImpl;
@@ -28,11 +30,13 @@ import org.shaolin.vogerp.commonmodel.be.AssignedMemberImpl;
 /**
  * This code is generated automatically, any change will be replaced after rebuild.
  */
+@Repository
+@Transactional
 public class CommonModel extends BEEntityDaoObject {
 
     public static final CommonModel INSTANCE = new CommonModel();
 
-    private CommonModel() {
+    public CommonModel() {
     }
 
     public List<IPartyRelationship> listIPartyRelationships(int offset, int count) {

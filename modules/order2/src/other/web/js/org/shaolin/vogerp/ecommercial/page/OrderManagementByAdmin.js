@@ -145,6 +145,8 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
 
     Form.promoteRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_promoteRentOrder;
 
+    Form.promoteMachineOrder = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_promoteMachineOrder;
+
     Form.openGoldenOrder = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openGoldenOrder;
 
     Form.openRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openRentOrder;
@@ -197,6 +199,17 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"promoteRentOrder-20161017-2229",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_promoteRentOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_promoteMachineOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_promoteMachineOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"promoteMachineOrder-20161017-2229",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_promoteMachineOrder */
 
 
     /* auto generated eventlistener function declaration */

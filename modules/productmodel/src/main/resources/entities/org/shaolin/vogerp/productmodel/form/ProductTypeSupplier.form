@@ -35,10 +35,10 @@
             List result = ProductModel.INSTANCE.searchPTypeSupplier(condition, null, 0, 1);
             if (result != null && result.size() > 0) {
                 SupplierRelationshipImpl item = (SupplierRelationshipImpl)result.get(0);
-                ((Hidden)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeIdUI")).setValue(item.getId() + "");
-                ((Hidden)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeName0UI")).setValue(item.getProductType());
-	            ((TextField)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeNameUI")).setValue(CEUtil.getValue(item.getProductType()));
-	            AList supplierUI = (AList)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeSuppliersUI");
+                ((Hidden)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeIdUI", Hidden.class)).setValue(item.getId() + "");
+                ((Hidden)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeName0UI", Hidden.class)).setValue(item.getProductType());
+	            ((TextField)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeNameUI", TextField.class)).setValue(CEUtil.getValue(item.getProductType()));
+	            AList supplierUI = (AList)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeSuppliersUI", AList.class);
 	            supplierUI.removeAllOptions();
 	            if (item.getSupplierPTypes() != null && item.getSupplierPTypes().length() > 0) {
 	                String[] values = item.getSupplierPTypes().split(";");
@@ -48,7 +48,7 @@
 			            supplierUI.addOption(itemName, itemValue);
 		            }
 	            }
-	            AList consumerUI = (AList)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeConsumersUI");
+	            AList consumerUI = (AList)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeConsumersUI", AList.class);
 	            consumerUI.removeAllOptions();
 	            if (item.getConsumerPTypes() != null && item.getConsumerPTypes().length() > 0) {
 	                String[] values = item.getConsumerPTypes().split(";");
@@ -59,11 +59,11 @@
 		            }
 	            }
             } else {
-                ((Hidden)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeIdUI")).setValue("0");
-	            ((Hidden)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeName0UI")).setValue(selectedProductType);
-	            ((TextField)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeNameUI")).setValue(selectedProductName);
-	            ((AList)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeSuppliersUI")).removeAllOptions();
-	            ((AList)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeConsumersUI")).removeAllOptions();
+                ((Hidden)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeIdUI", Hidden.class)).setValue("0");
+	            ((Hidden)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeName0UI", Hidden.class)).setValue(selectedProductType);
+	            ((TextField)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeNameUI", TextField.class)).setValue(selectedProductName);
+	            ((AList)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeSuppliersUI", AList.class)).removeAllOptions();
+	            ((AList)@page.getElementByAbsoluteId("productTypeSupplierPanel.pTypeConsumersUI", AList.class)).removeAllOptions();
             }
             
         }]]></expressionString>
@@ -102,7 +102,7 @@
             if (@page.getCheckBox("productTypeSupplierPanel.selectConsumersTypeUI").isSelected()) {
                uiid = "productTypeSupplierPanel.pTypeConsumersUI";
             }             
-            AList supplierUI = (AList)@page.getElementByAbsoluteId(uiid);
+            AList supplierUI = (AList)@page.getElementByAbsoluteId(uiid, AList.class);
             String itemName = selectedProductName;
             String itemValue = selectedProductType;
             supplierUI.addOption(itemName, itemValue);

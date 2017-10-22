@@ -538,6 +538,10 @@
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>pid</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>country</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>

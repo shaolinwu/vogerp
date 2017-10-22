@@ -37,7 +37,7 @@ import org.shaolin.vogerp.ecommercial.ce.EOrderType;
 import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
 import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
 import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
-import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
 
 public class OrderUtil {
 	
@@ -61,15 +61,15 @@ public class OrderUtil {
 	
 	public static String getOrderInfo(IInterestEOrder rowBE) {
 		if (rowBE.getType() == EOrderType.GOLDENORDER) {
-            GoldenOrderImpl gorder = (GoldenOrderImpl)OrderModel.INSTANCE.get(rowBE.getOrderId(), GoldenOrderImpl.class);
+            GoldenOrderImpl gorder = (GoldenOrderImpl)EOrderModel.INSTANCE.get(rowBE.getOrderId(), GoldenOrderImpl.class);
             rowBE.setOrder(gorder);
             return OrderUtil.getOrderHTMLInfo(gorder);
         } else if (rowBE.getType() == EOrderType.MACHININGORDER) {
-            MachiningOrderImpl rorder = (MachiningOrderImpl)OrderModel.INSTANCE.get(rowBE.getOrderId(), MachiningOrderImpl.class);
+            MachiningOrderImpl rorder = (MachiningOrderImpl)EOrderModel.INSTANCE.get(rowBE.getOrderId(), MachiningOrderImpl.class);
             rowBE.setOrder(rorder);
             return OrderUtil.getOrderHTMLInfo(rorder);
         } else {
-            RentOrLoanOrderImpl rorder = (RentOrLoanOrderImpl)OrderModel.INSTANCE.get(rowBE.getOrderId(), RentOrLoanOrderImpl.class);
+            RentOrLoanOrderImpl rorder = (RentOrLoanOrderImpl)EOrderModel.INSTANCE.get(rowBE.getOrderId(), RentOrLoanOrderImpl.class);
             rowBE.setOrder(rorder);
             return OrderUtil.getOrderHTMLInfo(rorder);
         }
@@ -77,20 +77,20 @@ public class OrderUtil {
 	
 	public static void bindOrder(IInterestEOrder interestedOrder) {
 		if (interestedOrder.getType() == EOrderType.GOLDENORDER) {
-            GoldenOrderImpl gorder = (GoldenOrderImpl)OrderModel.INSTANCE.get(interestedOrder.getOrderId(), GoldenOrderImpl.class);
+            GoldenOrderImpl gorder = (GoldenOrderImpl)EOrderModel.INSTANCE.get(interestedOrder.getOrderId(), GoldenOrderImpl.class);
             interestedOrder.setOrder(gorder);
         } else if (interestedOrder.getType() == EOrderType.MACHININGORDER) {
-            MachiningOrderImpl rorder = (MachiningOrderImpl)OrderModel.INSTANCE.get(interestedOrder.getOrderId(), MachiningOrderImpl.class);
+            MachiningOrderImpl rorder = (MachiningOrderImpl)EOrderModel.INSTANCE.get(interestedOrder.getOrderId(), MachiningOrderImpl.class);
             interestedOrder.setOrder(rorder);
         } else {
-            RentOrLoanOrderImpl rorder = (RentOrLoanOrderImpl)OrderModel.INSTANCE.get(interestedOrder.getOrderId(), RentOrLoanOrderImpl.class);
+            RentOrLoanOrderImpl rorder = (RentOrLoanOrderImpl)EOrderModel.INSTANCE.get(interestedOrder.getOrderId(), RentOrLoanOrderImpl.class);
             interestedOrder.setOrder(rorder);
         }
 	}
 	
 	public static int checkPriceOffered(final IEOrder eorder, final long userId) {
 		if (eorder instanceof GoldenOrderImpl) {
-			GoldenOrderImpl gorder = OrderModel.INSTANCE.get(eorder.getId(), GoldenOrderImpl.class);
+			GoldenOrderImpl gorder = EOrderModel.INSTANCE.get(eorder.getId(), GoldenOrderImpl.class);
 			if (gorder == null || eorder.getStatus() != OrderStatusType.PUBLISHED
 					|| gorder.getOfferPrices() == null) {
 				return -1;
@@ -103,7 +103,7 @@ public class OrderUtil {
             	}
             }
 		} else if (eorder instanceof RentOrLoanOrderImpl) {
-			RentOrLoanOrderImpl rorder = OrderModel.INSTANCE.get(eorder.getId(), RentOrLoanOrderImpl.class);
+			RentOrLoanOrderImpl rorder = EOrderModel.INSTANCE.get(eorder.getId(), RentOrLoanOrderImpl.class);
 			if (rorder == null || rorder.getStatus() != OrderStatusType.PUBLISHED
 					|| rorder.getOfferPrices() == null) {
 				return -1;
@@ -116,7 +116,7 @@ public class OrderUtil {
             	}
             }
 		} else if  (eorder instanceof MachiningOrderImpl) {
-			MachiningOrderImpl rorder = OrderModel.INSTANCE.get(eorder.getId(), MachiningOrderImpl.class);
+			MachiningOrderImpl rorder = EOrderModel.INSTANCE.get(eorder.getId(), MachiningOrderImpl.class);
 			if (rorder == null || rorder.getStatus() != OrderStatusType.PUBLISHED
 					|| rorder.getOfferPrices() == null) {
 				return -1;
@@ -149,7 +149,7 @@ public class OrderUtil {
 		lockManager.acquireLock(eorder.getId());
 		try {
 			if (eorder instanceof GoldenOrderImpl) {
-				GoldenOrderImpl gorder = OrderModel.INSTANCE.get(eorder.getId(), GoldenOrderImpl.class);
+				GoldenOrderImpl gorder = EOrderModel.INSTANCE.get(eorder.getId(), GoldenOrderImpl.class);
 				if (gorder == null || eorder.getStatus() != OrderStatusType.PUBLISHED) {
 					return -1;
 				}
@@ -164,9 +164,9 @@ public class OrderUtil {
 	            	}
 	            }
 				gorder.getOfferPrices().add(newPrice);
-				OrderModel.INSTANCE.update(gorder, true); // we have manually committed the transaction here since it's 1 to n mapping. otherwise, will be wrong!
+				EOrderModel.INSTANCE.update(gorder, true); // we have manually committed the transaction here since it's 1 to n mapping. otherwise, will be wrong!
 			} else if (eorder instanceof RentOrLoanOrderImpl) {
-				RentOrLoanOrderImpl rorder = OrderModel.INSTANCE.get(eorder.getId(), RentOrLoanOrderImpl.class);
+				RentOrLoanOrderImpl rorder = EOrderModel.INSTANCE.get(eorder.getId(), RentOrLoanOrderImpl.class);
 				if (rorder == null || rorder.getStatus() != OrderStatusType.PUBLISHED) {
 					return -1;
 				}
@@ -181,9 +181,9 @@ public class OrderUtil {
 	            	}
 	            }
 				rorder.getOfferPrices().add(newPrice);
-				OrderModel.INSTANCE.update(rorder, true);// we have manually committed the transaction here since it's 1 to n mapping. otherwise, will be wrong!
+				EOrderModel.INSTANCE.update(rorder, true);// we have manually committed the transaction here since it's 1 to n mapping. otherwise, will be wrong!
 			} else if  (eorder instanceof MachiningOrderImpl) {
-				MachiningOrderImpl rorder = OrderModel.INSTANCE.get(eorder.getId(), MachiningOrderImpl.class);
+				MachiningOrderImpl rorder = EOrderModel.INSTANCE.get(eorder.getId(), MachiningOrderImpl.class);
 				if (rorder == null || rorder.getStatus() != OrderStatusType.PUBLISHED) {
 					return -1;
 				}
@@ -198,7 +198,7 @@ public class OrderUtil {
 	            	}
 	            }
 				rorder.getOfferPrices().add(newPrice);
-				OrderModel.INSTANCE.update(rorder, true);// we have manually committed the transaction here since it's 1 to n mapping. otherwise, will be wrong!
+				EOrderModel.INSTANCE.update(rorder, true);// we have manually committed the transaction here since it's 1 to n mapping. otherwise, will be wrong!
 			} 
 			// commit the update.
 			return 1;
@@ -210,7 +210,7 @@ public class OrderUtil {
 	public static double getLowestOfferPrice(IEOrder gorder, boolean reload) {
 		GoldenOrderImpl condition = new GoldenOrderImpl();
 		condition.setId(gorder.getId());
-		List<IGoldenOrder> result = OrderModel.INSTANCE.searchGoldenOrder(
+		List<IGoldenOrder> result = EOrderModel.INSTANCE.searchGoldenOrder(
 				condition, null, 0, 1);
 		gorder = result.get(0);
 		return getLowestOfferPrice(gorder);

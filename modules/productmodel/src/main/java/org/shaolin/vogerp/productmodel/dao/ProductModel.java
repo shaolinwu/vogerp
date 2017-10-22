@@ -16,6 +16,8 @@ import org.hibernate.criterion.Projections;
 import org.shaolin.bmdp.persistence.BEEntityDaoObject;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.persistence.query.operator.Operator;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.shaolin.vogerp.productmodel.be.IWarehouse;
 import org.shaolin.vogerp.productmodel.be.WarehouseImpl;
@@ -24,11 +26,13 @@ import org.shaolin.vogerp.productmodel.be.StorageItemImpl;
 /**
  * This code is generated automatically, any change will be replaced after rebuild.
  */
+@Repository
+@Transactional
 public class ProductModel extends BEEntityDaoObject {
 
     public static final ProductModel INSTANCE = new ProductModel();
 
-    private ProductModel() {
+    public ProductModel() {
     }
 
     public List<IWarehouse> listIWarehouses(int offset, int count) {

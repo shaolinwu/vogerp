@@ -136,11 +136,11 @@
             <expressionString><![CDATA[
         import java.util.List;
         import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
-        import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+        import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
         import org.shaolin.vogerp.ecommercial.util.OrderUtil;
         {
             long orderId = Long.valueOf(@page.getHidden("parentIdUI").getValue()).longValue();
-            MachiningOrderImpl order = (MachiningOrderImpl)OrderModel.INSTANCE.get(orderId, MachiningOrderImpl.class);
+            MachiningOrderImpl order = (MachiningOrderImpl)EOrderModel.INSTANCE.get(orderId, MachiningOrderImpl.class);
             OrderUtil.markTakenStatus(order);
             return order.getOfferPrices();
         }]]></expressionString>

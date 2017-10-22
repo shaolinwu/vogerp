@@ -16,15 +16,19 @@ import org.hibernate.criterion.Projections;
 import org.shaolin.bmdp.persistence.BEEntityDaoObject;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.persistence.query.operator.Operator;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This code is generated automatically, any change will be replaced after rebuild.
  */
-public class OrderModel extends BEEntityDaoObject {
+@Repository
+@Transactional
+public class EOrderModel extends BEEntityDaoObject {
 
-    public static final OrderModel INSTANCE = new OrderModel();
+    public static final EOrderModel INSTANCE = new EOrderModel();
 
-    private OrderModel() {
+    public EOrderModel() {
     }
 
     public List<org.shaolin.vogerp.ecommercial.be.IGoldenOrder> searchGoldenOrder(org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl scObject,

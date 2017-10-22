@@ -11,7 +11,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<vogerp.version>1.0.0-SNAPSHOT</vogerp.version>
         <uimaster.version>1.0.0-SNAPSHOT</uimaster.version>
-		<uimaster.package>/Users/shaolinwu/Documents/workspace//deploy</uimaster.package>
+		<uimaster.package>/Users/shaolinwu/Documents/workspace/deploy</uimaster.package>
 		<uimaster.commonjar>/Users/shaolinwu/Documents/workspace/deploy/apache-tomcat-8.0.9/webapps/uimaster/WEB-INF/lib</uimaster.commonjar>
 		<uimaster.entitydir>/Users/shaolinwu/Documents/workspace/deploy/apache-tomcat-8.0.9/webapps/uimaster/WEB-INF/classes</uimaster.entitydir>
 		<uimaster.webapp>/Users/shaolinwu/Documents/workspace/deploy/apache-tomcat-8.0.9/webapps/uimaster</uimaster.webapp>
@@ -72,10 +72,15 @@
 										}
 									}
 								}
-								
+
 								hbmResources = new File(project.basedir, '/src/other/hbm'); 
 								if (hbmResources.exists()) {
 									destFold = '${uimaster.webapp}' + "/WEB-INF/classes/hbm";
+									if (project.artifactId.equals("order") 
+									|| project.artifactId.equals("ecommercial")
+									|| project.artifactId.equals("productmodel")) {
+								        destFold = '${uimaster.webapp}' + "/WEB-INF/classes/hbmorder";
+								    }
 									ant.copy(todir: destFold) {
 										fileset(dir: hbmResources) {
 											filename(name: '**');

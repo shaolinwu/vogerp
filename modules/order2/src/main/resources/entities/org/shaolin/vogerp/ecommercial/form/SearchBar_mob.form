@@ -44,7 +44,7 @@
                   @page.getHidden("productType1UI").setValue(null);
              }
              
-             TabPane tab = (TabPane)@page.getElementByAbsoluteId("functionsTab");
+             TabPane tab = (TabPane)@page.getElementByAbsoluteId("functionsTab", TabPane.class);
              if (tab != null) {
                  String tableUiid = "";
                  if (tab.getSelectedIndex() == 0) {
@@ -58,7 +58,7 @@
                  } else if (tab.getSelectedIndex() == 4) {
                     tableUiid = "loanOrderTable";
                  } 
-                 Table t = (Table)@page.getElementByAbsoluteId(tableUiid);
+                 Table t = (Table)@page.getElementByAbsoluteId(tableUiid, Table.class);
                  t.refresh();
              }
           }

@@ -39,7 +39,6 @@
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ORDER_SALEORDER_ORDERITEM_JT" collectionElement="org.shaolin.vogerp.order.be.OrderItem" mappingType="One-to-Many" beFieldName="items"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="customerId" columnName="CUSTOMERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="deliveryInfoId" columnName="DELIVERYINFOID"></ns2:fieldMapping>
-      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="SALEORDERCUSTOMER" mappingType="One-to-One" beFieldName="customer" columnName="CUSTOMERID"></ns2:fieldMapping>
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="SALEORDERDELIVERYINFO" mappingType="One-to-One" beFieldName="deliveryInfo" columnName="DELIVERYINFOID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="purchasedOrderId" columnName="PURCHASEDORDERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>

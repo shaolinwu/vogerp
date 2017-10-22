@@ -31,6 +31,9 @@ public class CustomerInfoUtil {
 	}
 	
 	public static String getCustomerEnterpriseBasicInfo(IPersonalInfo customer) {
+		if (customer == null) {
+			return "";
+		}
 		if (customer.getOrganization() != null) {
 			if (customer.getOrganization().getOrgType() == OrgType.INDIVIDUAL) {
 				return getCustomerBasicInfo(customer) + "[\u4E2A\u4EBA\u7528\u6237]";
@@ -48,6 +51,9 @@ public class CustomerInfoUtil {
 	}
 	
 	public static String getSecureCustomerBasicInfo(IPersonalInfo customer) {
+		if (customer == null) {
+			return "";
+		}
 		if (customer.getOrganization() != null) {
 			if (customer.getOrganization().getOrgType() == OrgType.INDIVIDUAL) {
 				return getCustomerBasicInfo(customer) + "[\u4E2A\u4EBA\u7528\u6237]";

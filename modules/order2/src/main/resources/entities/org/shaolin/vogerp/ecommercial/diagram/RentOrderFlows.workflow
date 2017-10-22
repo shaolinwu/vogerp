@@ -49,7 +49,7 @@
                     import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
                     import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
@@ -61,15 +61,15 @@
 			                return;
 			            }
 		                if (gorder.getDeliveryInfo().getId() > 0) {
-			               OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
+			               EOrderModel.INSTANCE.update(gorder.getDeliveryInfo());
 			            } else {
-			               OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
+			               EOrderModel.INSTANCE.create(gorder.getDeliveryInfo());
 			               gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
 			            }
 			            if (gorder.getId() == 0) {
-			                OrderModel.INSTANCE.create(gorder);
+			                EOrderModel.INSTANCE.create(gorder);
 			            } else {
-			                OrderModel.INSTANCE.update(gorder);
+			                EOrderModel.INSTANCE.update(gorder);
 			            }
                         
                         form.closeIfinWindows();
@@ -107,7 +107,7 @@
                     import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
                     import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
@@ -119,15 +119,15 @@
 			                return;
 			            }
 		                if (gorder.getDeliveryInfo().getId() > 0) {
-			               OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
+			               EOrderModel.INSTANCE.update(gorder.getDeliveryInfo());
 			            } else {
-			               OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
+			               EOrderModel.INSTANCE.create(gorder.getDeliveryInfo());
 			               gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
 			            }
 			            if (gorder.getId() == 0) {
-			                OrderModel.INSTANCE.create(gorder);
+			                EOrderModel.INSTANCE.create(gorder);
 			            } else {
-			                OrderModel.INSTANCE.update(gorder);
+			                EOrderModel.INSTANCE.update(gorder);
 			            }
                         
                         form.closeIfinWindows();
@@ -165,7 +165,7 @@
                     import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
                     import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
@@ -177,15 +177,15 @@
 			                return;
 			            }
 		                if (gorder.getDeliveryInfo().getId() > 0) {
-			               OrderModel.INSTANCE.update(gorder.getDeliveryInfo());
+			               EOrderModel.INSTANCE.update(gorder.getDeliveryInfo());
 			            } else {
-			               OrderModel.INSTANCE.create(gorder.getDeliveryInfo());
+			               EOrderModel.INSTANCE.create(gorder.getDeliveryInfo());
 			               gorder.setDeliveryInfoId(gorder.getDeliveryInfo().getId());
 			            }
 			            if (gorder.getId() == 0) {
-			                OrderModel.INSTANCE.create(gorder);
+			                EOrderModel.INSTANCE.create(gorder);
 			            } else {
-			                OrderModel.INSTANCE.update(gorder);
+			                EOrderModel.INSTANCE.update(gorder);
 			            }
                         
                         form.closeIfinWindows();
@@ -224,7 +224,7 @@
                     import org.shaolin.vogerp.productmodel.be.ProductImpl;
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                     import org.shaolin.vogerp.ecommercial.be.ROrderSearchCriteriaImpl;
-                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                     import java.util.ArrayList;
                     import org.shaolin.uimaster.page.ajax.*;
@@ -242,9 +242,9 @@
                        sc.setOrderId($gOrder.getId());
                        sc.setCity($gOrder.getCity());
                        if ($gOrder.getProductId() > 0) {
-                          sc.setProductType(((ProductImpl)OrderModel.INSTANCE.get($gOrder.getProductId(), ProductImpl.class)).getType());
+                          sc.setProductType(((ProductImpl)EOrderModel.INSTANCE.get($gOrder.getProductId(), ProductImpl.class)).getType());
                        }
-                       OrderModel.INSTANCE.create(sc);
+                       EOrderModel.INSTANCE.create(sc);
                        
                        // notify all customers.
                        IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
@@ -288,7 +288,7 @@
                     import org.shaolin.vogerp.commonmodel.IUserService; 
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                     import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                     import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
                     { 
@@ -324,7 +324,7 @@
                     import org.shaolin.vogerp.commonmodel.IUserService; 
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                     import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                     import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
                     { 
@@ -364,7 +364,7 @@
                      import org.shaolin.vogerp.ecommercial.ce.EOrderType;
                      import org.shaolin.vogerp.ecommercial.be.InterestEOrderImpl;
                      import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                     import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                      import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                      import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                      import org.shaolin.bmdp.workflow.be.NotificationImpl;
@@ -386,7 +386,7 @@
                               message.setSubject("您的加工订单审核失败! 请打开订单查看详情。");
                               message.setDescription(OrderUtil.getOrderLink($order) + @flowContext.getEvent().getComments());
                           }
-                          OrderModel.INSTANCE.update($order);
+                          EOrderModel.INSTANCE.update($order);
                           message.setCreateDate(new java.util.Date());
 	                      
 	                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
@@ -479,7 +479,7 @@
                      import org.shaolin.bmdp.runtime.security.UserContext;
                      import org.shaolin.vogerp.ecommercial.ce.EOrderType;
                      import org.shaolin.vogerp.ecommercial.be.InterestEOrderImpl;
-                     import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                     import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                      import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                      import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                      import org.shaolin.bmdp.workflow.be.NotificationImpl;
@@ -497,9 +497,9 @@
                           condition.setOrgId(UserContext.getUserContext().getOrgId());
                           condition.setOrderId($goldenOrder.getId());
                           condition.setType(EOrderType.RENTORLOANORDER);
-                          long result = OrderModel.INSTANCE.searchInterestEOrderCount(condition);
+                          long result = EOrderModel.INSTANCE.searchInterestEOrderCount(condition);
                           if (result == 0) {
-                             OrderModel.INSTANCE.create(condition);
+                             EOrderModel.INSTANCE.create(condition);
                           }
                           
                           String message0 = $offerPrice.getLeaveWords();
@@ -623,7 +623,7 @@
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.vogerp.commonmodel.IUserService;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
@@ -653,7 +653,7 @@
                          }
                         
                          $gorder.setStatus(OrderStatusType.TAKEN);
-                         OrderModel.INSTANCE.update($gorder);
+                         EOrderModel.INSTANCE.update($gorder);
                          
                          IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                          IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class); 
@@ -777,7 +777,7 @@
                     import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     import org.shaolin.vogerp.commonmodel.IUserService;
-                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                     import org.shaolin.vogerp.commonmodel.IOrganizationService;
                     import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                     import org.shaolin.vogerp.accounting.be.IPayOrder;
@@ -787,10 +787,10 @@
                          IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                          payService.ensurePay($order.getSerialNumber());     
                          $order.setTakenStatus(OrderStatusType.TAKEN_COMPLETED);
-			             OrderModel.INSTANCE.update($order);
+			             EOrderModel.INSTANCE.update($order);
 			             
 			             if ($order.getDeliveryInfo() == null) {
-						    DeliveryInfoImpl takener = (DeliveryInfoImpl)OrderModel.INSTANCE.get($order.getDeliveryInfoId(), DeliveryInfoImpl.class);
+						    DeliveryInfoImpl takener = (DeliveryInfoImpl)EOrderModel.INSTANCE.get($order.getDeliveryInfoId(), DeliveryInfoImpl.class);
 			                $order.setDeliveryInfo(takener);
 			             }
 			             IDeliveryInfo deliveryInfo = $order.getDeliveryInfo();
@@ -923,7 +923,7 @@
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.vogerp.commonmodel.IUserService;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                     import org.shaolin.bmdp.runtime.AppContext; 
                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
@@ -933,7 +933,7 @@
                          }
                          if ($gorder.getStatus() == OrderStatusType.CREATED || $gorder.getStatus() == OrderStatusType.PUBLISHED) {
                              $gorder.setStatus(OrderStatusType.CANCELLED);
-                             OrderModel.INSTANCE.update($gorder);
+                             EOrderModel.INSTANCE.update($gorder);
                              
                              if ($gorder.getTakenCustomerId() > 0) {
                                  NotificationImpl message = new NotificationImpl();
@@ -1022,7 +1022,7 @@
                     import org.shaolin.vogerp.ecommercial.be.*;
                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                     {
@@ -1033,7 +1033,7 @@
 	                         $gorder.setStatus(OrderStatusType.FORBIDDEN);
 	                         
 	                         if ($gorder instanceof RentOrLoanOrderImpl) {
-	                            OrderModel.INSTANCE.update((RentOrLoanOrderImpl)$gorder);
+	                            EOrderModel.INSTANCE.update((RentOrLoanOrderImpl)$gorder);
 	                         } 
 	                         if ($gorder.getPublishedCustomerId() > 0) {
 		                         NotificationImpl message = new NotificationImpl();

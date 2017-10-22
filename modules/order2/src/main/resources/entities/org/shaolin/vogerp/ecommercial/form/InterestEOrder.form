@@ -13,7 +13,7 @@
         import org.shaolin.bmdp.runtime.security.UserContext;
         import org.shaolin.vogerp.ecommercial.be.*;
         import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-        import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+        import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
         import org.shaolin.vogerp.ecommercial.util.OrderUtil;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
@@ -34,8 +34,8 @@
 	               String updatedValue = @page.getLabel("offerPriceInfoLabel").getValue();
 	               offeredPrice.setPriceChangedCount(1);
 	               offeredPrice.setPrice(Double.parseDouble(updatedValue));
-	               OrderModel.INSTANCE.update((Object)offeredPrice);
-	               order = (InterestEOrderImpl)OrderModel.INSTANCE.get(order.getId(), InterestEOrderImpl.class);
+	               EOrderModel.INSTANCE.update((Object)offeredPrice);
+	               order = (InterestEOrderImpl)EOrderModel.INSTANCE.get(order.getId(), InterestEOrderImpl.class);
 	               order.getOrder().getOfferPrices(); //refreshing.
 	               @page.getLabel("offerPriceInfoLabel").setDisplayValue(OrderUtil.getOfferPriceInfo(offeredPrice));
 	            } else {

@@ -445,7 +445,7 @@
                                     import org.shaolin.uimaster.page.ajax.*;
 									import org.shaolin.bmdp.runtime.security.UserContext;
 		                            import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
-		                            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+		                            import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
 		                            import org.shaolin.vogerp.ecommercial.util.OrderUtil;
 		                            import org.shaolin.bmdp.runtime.AppContext;
 									import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
@@ -465,7 +465,7 @@
 		                                      //$page.log(UserContext.getUserContext().getLongitude() + "");
 		                                  }
 		                                  
-		                                  return OrderModel.INSTANCE.searchMachiningOrder(condition,
+		                                  return EOrderModel.INSTANCE.searchMachiningOrder(condition,
 	                                                $tableCondition.getOrders(),
 	                                                $tableCondition.getOffset(), 
 	                                                $tableCondition.getCount());
@@ -555,7 +555,7 @@
 									import org.shaolin.bmdp.runtime.security.UserContext;
 		                            import org.shaolin.vogerp.ecommercial.be.*;
 		                            import org.shaolin.vogerp.ecommercial.ce.*;
-		                            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+		                            import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
 		                            import org.shaolin.vogerp.ecommercial.util.OrderUtil;
 		                            import org.shaolin.bmdp.runtime.AppContext;
 									import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
@@ -573,7 +573,7 @@
 		                                  condition.setType(GoldenOrderType.PURCHASE);
 		                                  OrderUtil.updateSearchCriteria($page, condition);
 		                                  
-		                                  return OrderModel.INSTANCE.searchGoldenOrder(condition,
+		                                  return EOrderModel.INSTANCE.searchGoldenOrder(condition,
 	                                                $tableCondition.getOrders(),
 	                                                $tableCondition.getOffset(), 
 	                                                $tableCondition.getCount());
@@ -690,7 +690,7 @@
 									import org.shaolin.bmdp.runtime.security.UserContext;
                                     import org.shaolin.vogerp.ecommercial.be.*;
                                     import org.shaolin.vogerp.ecommercial.ce.*;
-                                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                                     import org.shaolin.bmdp.runtime.AppContext;
                                     import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
@@ -708,7 +708,7 @@
                                           condition.setType(GoldenOrderType.SALE);
                                           OrderUtil.updateSearchCriteria($page, condition);
 		                                  
-                                          return OrderModel.INSTANCE.searchGoldenOrder(condition,
+                                          return EOrderModel.INSTANCE.searchGoldenOrder(condition,
                                                     $tableCondition.getOrders(),
                                                     $tableCondition.getOffset(), 
                                                     $tableCondition.getCount());
@@ -824,7 +824,7 @@
                                     import org.shaolin.uimaster.page.ajax.*;
 									import org.shaolin.bmdp.runtime.security.UserContext;
                                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                                     import org.shaolin.vogerp.ecommercial.ce.*;
                                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                                     import org.shaolin.bmdp.runtime.AppContext;
@@ -842,7 +842,7 @@
                                           condition.setStatus(OrderStatusType.PUBLISHED);
                                           OrderUtil.updateSearchCriteria($page, condition);
                                           
-                                          return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
+                                          return EOrderModel.INSTANCE.searchRentOrLoanOrder(condition,
                                                     $tableCondition.getOrders(),
                                                     $tableCondition.getOffset(), 
                                                     $tableCondition.getCount());
@@ -959,7 +959,7 @@
 									import org.shaolin.bmdp.runtime.security.UserContext;
                                     import org.shaolin.vogerp.ecommercial.ce.*; 
                                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                                     import org.shaolin.bmdp.runtime.AppContext;
                                     import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
@@ -976,7 +976,7 @@
                                           condition.setStatus(OrderStatusType.PUBLISHED);
                                           OrderUtil.updateSearchCriteria($page, condition);
 		                                  
-                                          return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
+                                          return EOrderModel.INSTANCE.searchRentOrLoanOrder(condition,
                                                     $tableCondition.getOrders(),
                                                     $tableCondition.getOffset(), 
                                                     $tableCondition.getCount());
@@ -1093,7 +1093,7 @@
 									import org.shaolin.bmdp.runtime.security.UserContext;
                                     import org.shaolin.vogerp.ecommercial.ce.*; 
                                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                                     import org.shaolin.bmdp.runtime.AppContext;
                                     import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
@@ -1110,7 +1110,7 @@
                                           condition.setStatus(OrderStatusType.PUBLISHED);
                                           OrderUtil.updateSearchCriteria($page, condition);
 		                                  
-                                          return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
+                                          return EOrderModel.INSTANCE.searchRentOrLoanOrder(condition,
                                                     $tableCondition.getOrders(),
                                                     $tableCondition.getOffset(), 
                                                     $tableCondition.getCount());

@@ -23,7 +23,7 @@
             import org.shaolin.uimaster.page.ajax.*;
             import org.shaolin.vogerp.ecommercial.ce.*;
             import org.shaolin.vogerp.ecommercial.be.*;
-            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+            import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
             import org.shaolin.bmdp.runtime.security.UserContext;
             import org.shaolin.bmdp.json.JSONObject;
             {
@@ -38,7 +38,7 @@
                String orderName = "";
                String formName = "";
                if ("GoldenOrderImpl".equalsIgnoreCase(type)) {
-                   order = (GoldenOrderImpl)OrderModel.INSTANCE.get(orderId, GoldenOrderImpl.class);
+                   order = (GoldenOrderImpl)EOrderModel.INSTANCE.get(orderId, GoldenOrderImpl.class);
                    orgId = ((GoldenOrderImpl)order).getOrgId();
                    orderName = "采购订单详情";
                    formName = "org.shaolin.vogerp.ecommercial.form.GoldenOrderEditor";
@@ -53,7 +53,7 @@
 	                   input.put("editable", new Boolean(false));
 	               }
                } else if ("RentOrLoanOrderImpl".equalsIgnoreCase(type)) {
-                   order = (RentOrLoanOrderImpl)OrderModel.INSTANCE.get(orderId, RentOrLoanOrderImpl.class);
+                   order = (RentOrLoanOrderImpl)EOrderModel.INSTANCE.get(orderId, RentOrLoanOrderImpl.class);
                    orgId = ((RentOrLoanOrderImpl)order).getOrgId();
                    orderName = "租赁订单详情";
 	               formName = "org.shaolin.vogerp.ecommercial.form.RentOrderEditor";
@@ -67,7 +67,7 @@
 	                   input.put("editable", new Boolean(false));
 	               }
         	   } else if ("MachiningOrderImpl".equalsIgnoreCase(type)) {
-        	       order = (MachiningOrderImpl)OrderModel.INSTANCE.get(orderId, MachiningOrderImpl.class);
+        	       order = (MachiningOrderImpl)EOrderModel.INSTANCE.get(orderId, MachiningOrderImpl.class);
         	       orgId = ((MachiningOrderImpl)order).getOrgId();
         	       orderName = "加工订单详情";
 	        	   formName = "org.shaolin.vogerp.ecommercial.form.MachiningOrder";
@@ -114,7 +114,7 @@
             import org.shaolin.uimaster.page.ajax.*;
             import org.shaolin.vogerp.ecommercial.ce.*;
             import org.shaolin.vogerp.ecommercial.be.*;
-            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+            import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
             import org.shaolin.bmdp.runtime.security.UserContext;
             import org.shaolin.bmdp.json.JSONObject;
             {
@@ -129,17 +129,17 @@
                String orderName = "";
                String formName = "";
                if ("GoldenOrderImpl".equalsIgnoreCase(type)) {
-                   order = (GoldenOrderImpl)OrderModel.INSTANCE.get(orderId, GoldenOrderImpl.class);
+                   order = (GoldenOrderImpl)EOrderModel.INSTANCE.get(orderId, GoldenOrderImpl.class);
                    orgId = ((GoldenOrderImpl)order).getOrgId();
                    orderName = "采购竞价订单详情";
                    formName = "org.shaolin.vogerp.ecommercial.form.GOOfferPriceTable";
                } else if ("RentOrLoanOrderImpl".equalsIgnoreCase(type)) {
-                   order = (RentOrLoanOrderImpl)OrderModel.INSTANCE.get(orderId, RentOrLoanOrderImpl.class);
+                   order = (RentOrLoanOrderImpl)EOrderModel.INSTANCE.get(orderId, RentOrLoanOrderImpl.class);
                    orgId = ((RentOrLoanOrderImpl)order).getOrgId();
                    orderName = "租赁竞价订单详情";
 	               formName = "org.shaolin.vogerp.ecommercial.form.ROOfferPriceTable";
         	   } else if ("MachiningOrderImpl".equalsIgnoreCase(type)) {
-        	       order = (MachiningOrderImpl)OrderModel.INSTANCE.get(orderId, MachiningOrderImpl.class);
+        	       order = (MachiningOrderImpl)EOrderModel.INSTANCE.get(orderId, MachiningOrderImpl.class);
         	       orgId = ((MachiningOrderImpl)order).getOrgId();
         	       orderName = "加工竞价订单详情";
 	        	   formName = "org.shaolin.vogerp.ecommercial.form.MOOfferPriceTable";

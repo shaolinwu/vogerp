@@ -3,35 +3,34 @@
 function org_shaolin_vogerp_ecommercial_form_OrderPromotion(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var orderproductTypeUI = new UIMaster.ui.hidden
-    ({
-        ui: elementList[prefix + "orderproductTypeUI"]
-    });
-
     var ordeInfoUI = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "ordeInfoUI"]
     });
 
-    var productTypeTab = new UIMaster.ui.tab
+    var industryTypeUI = new UIMaster.ui.combobox
     ({
-        ui: elementList[prefix + "productTypeTab"]
-        ,items: []
-        ,subComponents: [prefix + "selectProductTypePanel",prefix + "autoProductTypePanel"]
+        ui: elementList[prefix + "industryTypeUI"]
     });
-    var productTypeUI = new org_shaolin_vogerp_productmodel_form_ProductHierarchySelector2({"prefix":prefix + "productTypeUI."});
-
-    var supplierSelector = new org_shaolin_vogerp_productmodel_form_ProductTypeSupplierSelector({"prefix":prefix + "supplierSelector."});
-
 
     var mserviceTypeUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "mserviceTypeUI"]
     });
 
+    var verifyTypeUI = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "verifyTypeUI"]
+    });
+
     var orgNameUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "orgNameUI"]
+    });
+
+    var onlineUserFirstUI = new UIMaster.ui.checkbox
+    ({
+        ui: elementList[prefix + "onlineUserFirstUI"]
     });
 
     var searchbtn = new UIMaster.ui.button
@@ -44,9 +43,14 @@ function org_shaolin_vogerp_ecommercial_form_OrderPromotion(json)
         ui: elementList[prefix + "orgInfoTable"]
     });
 
-    var chatbtn = new UIMaster.ui.button
+    var promotebtn = new UIMaster.ui.button
     ({
-        ui: elementList[prefix + "chatbtn"]
+        ui: elementList[prefix + "promotebtn"]
+    });
+
+    var checkpromotebtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "checkpromotebtn"]
     });
 
     var cancelbtn = new UIMaster.ui.button
@@ -60,7 +64,7 @@ function org_shaolin_vogerp_ecommercial_form_OrderPromotion(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "chatbtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "promotebtn",prefix + "checkpromotebtn",prefix + "cancelbtn"]
     });
 
     var fieldPanel1 = new UIMaster.ui.panel
@@ -70,45 +74,45 @@ function org_shaolin_vogerp_ecommercial_form_OrderPromotion(json)
         ,subComponents: [prefix + "orgInfoTable"]
     });
 
-    var moreConditionPanel = new UIMaster.ui.panel
+    var conditionPanel = new UIMaster.ui.panel
     ({
-        ui: elementList[prefix + "moreConditionPanel"]
+        ui: elementList[prefix + "conditionPanel"]
         ,items: []
-        ,subComponents: [prefix + "citySelector",prefix + "mserviceTypeUI",prefix + "orgNameUI"]
+        ,subComponents: [prefix + "citySelector",prefix + "industryTypeUI",prefix + "mserviceTypeUI",prefix + "verifyTypeUI",prefix + "orgNameUI",prefix + "onlineUserFirstUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "orderproductTypeUI",prefix + "ordeInfoUI",prefix + "productTypeTab",prefix + "moreConditionPanel",prefix + "searchbtn"]
+        ,subComponents: [prefix + "ordeInfoUI",prefix + "conditionPanel",prefix + "searchbtn"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [orderproductTypeUI,ordeInfoUI,productTypeTab,mserviceTypeUI,orgNameUI,searchbtn,orgInfoTable,chatbtn,cancelbtn,citySelector,fieldPanel,moreConditionPanel,fieldPanel1,actionPanel]
+        ,items: [ordeInfoUI,industryTypeUI,mserviceTypeUI,verifyTypeUI,orgNameUI,onlineUserFirstUI,searchbtn,orgInfoTable,promotebtn,checkpromotebtn,cancelbtn,citySelector,fieldPanel,conditionPanel,fieldPanel1,actionPanel]
     });
-
-    Form.orderproductTypeUI=orderproductTypeUI;
 
     Form.ordeInfoUI=ordeInfoUI;
 
-    Form.productTypeTab=productTypeTab;
-
-    Form.productTypeUI=productTypeUI;
-
-    Form.supplierSelector=supplierSelector;
+    Form.industryTypeUI=industryTypeUI;
 
     Form.mserviceTypeUI=mserviceTypeUI;
 
+    Form.verifyTypeUI=verifyTypeUI;
+
     Form.orgNameUI=orgNameUI;
+
+    Form.onlineUserFirstUI=onlineUserFirstUI;
 
     Form.searchbtn=searchbtn;
 
     Form.orgInfoTable=orgInfoTable;
 
-    Form.chatbtn=chatbtn;
+    Form.promotebtn=promotebtn;
+
+    Form.checkpromotebtn=checkpromotebtn;
 
     Form.cancelbtn=cancelbtn;
 
@@ -116,33 +120,37 @@ function org_shaolin_vogerp_ecommercial_form_OrderPromotion(json)
 
     Form.fieldPanel=fieldPanel;
 
-    Form.orderproductTypeUI=orderproductTypeUI;
-
     Form.ordeInfoUI=ordeInfoUI;
 
-    Form.productTypeTab=productTypeTab;
-
-    Form.productTypeUI=productTypeUI;
-
-    Form.supplierSelector=supplierSelector;
-
-    Form.moreConditionPanel=moreConditionPanel;
+    Form.conditionPanel=conditionPanel;
 
     Form.citySelector=citySelector;
 
+    Form.industryTypeUI=industryTypeUI;
+
     Form.mserviceTypeUI=mserviceTypeUI;
 
+    Form.verifyTypeUI=verifyTypeUI;
+
     Form.orgNameUI=orgNameUI;
+
+    Form.onlineUserFirstUI=onlineUserFirstUI;
 
     Form.searchbtn=searchbtn;
 
-    Form.moreConditionPanel=moreConditionPanel;
+    Form.conditionPanel=conditionPanel;
 
     Form.citySelector=citySelector;
 
+    Form.industryTypeUI=industryTypeUI;
+
     Form.mserviceTypeUI=mserviceTypeUI;
 
+    Form.verifyTypeUI=verifyTypeUI;
+
     Form.orgNameUI=orgNameUI;
+
+    Form.onlineUserFirstUI=onlineUserFirstUI;
 
     Form.fieldPanel1=fieldPanel1;
 
@@ -150,7 +158,9 @@ function org_shaolin_vogerp_ecommercial_form_OrderPromotion(json)
 
     Form.actionPanel=actionPanel;
 
-    Form.chatbtn=chatbtn;
+    Form.promotebtn=promotebtn;
+
+    Form.checkpromotebtn=checkpromotebtn;
 
     Form.cancelbtn=cancelbtn;
 
@@ -165,6 +175,8 @@ function org_shaolin_vogerp_ecommercial_form_OrderPromotion(json)
     Form.searchCustomer = org_shaolin_vogerp_ecommercial_form_OrderPromotion_searchCustomer;
 
     Form.promote = org_shaolin_vogerp_ecommercial_form_OrderPromotion_promote;
+
+    Form.checkPromoteContent = org_shaolin_vogerp_ecommercial_form_OrderPromotion_checkPromoteContent;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_OrderPromotion_invokeDynamicFunction;
 
@@ -209,6 +221,17 @@ function org_shaolin_vogerp_ecommercial_form_OrderPromotion(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"promote-20160325-112849",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_OrderPromotion_promote */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_form_OrderPromotion_checkPromoteContent(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_OrderPromotion_checkPromoteContent */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"checkPromoteContent-20170525-112849",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_OrderPromotion_checkPromoteContent */
 
 
     /* auto generated eventlistener function declaration */

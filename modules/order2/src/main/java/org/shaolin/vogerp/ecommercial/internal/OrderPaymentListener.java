@@ -12,7 +12,7 @@ import org.shaolin.vogerp.ecommercial.be.IRentOrLoanOrder;
 import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
 import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
 import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
 
 public class OrderPaymentListener implements PayOrderStatusListener {
 
@@ -23,26 +23,26 @@ public class OrderPaymentListener implements PayOrderStatusListener {
 		if (type == PayBusinessType.GOLDENPORDERBUSI || type == PayBusinessType.GOLDENSORDERBUSI) {
 			GoldenOrderImpl order = new GoldenOrderImpl();
 			order.setSerialNumber(serialNumber);
-			List<IGoldenOrder> result = OrderModel.INSTANCE.searchGoldenOrder(order, null, 0, 1);
+			List<IGoldenOrder> result = EOrderModel.INSTANCE.searchGoldenOrder(order, null, 0, 1);
 			if (result != null && result.size() > 0) {
 				result.get(0).setTakenStatus(OrderStatusType.TAKEN_PAYED);
-				OrderModel.INSTANCE.update(result.get(0));
+				EOrderModel.INSTANCE.update(result.get(0));
 			}
 		} else if (type == PayBusinessType.EQUIPMENTRENTBUSI || type == PayBusinessType.EQUIPMENTRENTBUSI) {
 			RentOrLoanOrderImpl order = new RentOrLoanOrderImpl();
 			order.setSerialNumber(serialNumber);
-			List<IRentOrLoanOrder> result = OrderModel.INSTANCE.searchRentOrLoanOrder(order, null, 0, 1);
+			List<IRentOrLoanOrder> result = EOrderModel.INSTANCE.searchRentOrLoanOrder(order, null, 0, 1);
 			if (result != null && result.size() > 0) {
 				result.get(0).setTakenStatus(OrderStatusType.TAKEN_PAYED);
-				OrderModel.INSTANCE.update(result.get(0));
+				EOrderModel.INSTANCE.update(result.get(0));
 			}
 		} else if (type == PayBusinessType.MACHININGBUSI) {
 			MachiningOrderImpl order = new MachiningOrderImpl();
 			order.setSerialNumber(serialNumber);
-			List<IMachiningOrder> result = OrderModel.INSTANCE.searchMachiningOrder(order, null, 0, 1);
+			List<IMachiningOrder> result = EOrderModel.INSTANCE.searchMachiningOrder(order, null, 0, 1);
 			if (result != null && result.size() > 0) {
 				result.get(0).setTakenStatus(OrderStatusType.TAKEN_PAYED);
-				OrderModel.INSTANCE.update(result.get(0));
+				EOrderModel.INSTANCE.update(result.get(0));
 			}
 		}
 	}
@@ -59,26 +59,26 @@ public class OrderPaymentListener implements PayOrderStatusListener {
 		if (type == PayBusinessType.GOLDENPORDERBUSI || type == PayBusinessType.GOLDENSORDERBUSI) {
 			GoldenOrderImpl order = new GoldenOrderImpl();
 			order.setSerialNumber(serialNumber);
-			List<IGoldenOrder> result = OrderModel.INSTANCE.searchGoldenOrder(order, null, 0, 1);
+			List<IGoldenOrder> result = EOrderModel.INSTANCE.searchGoldenOrder(order, null, 0, 1);
 			if (result != null && result.size() > 0) {
 				result.get(0).setStatus(OrderStatusType.CANCELLED);
-				OrderModel.INSTANCE.update(result.get(0));
+				EOrderModel.INSTANCE.update(result.get(0));
 			}
 		} else if (type == PayBusinessType.EQUIPMENTRENTBUSI || type == PayBusinessType.EQUIPMENTRENTBUSI) {
 			RentOrLoanOrderImpl order = new RentOrLoanOrderImpl();
 			order.setSerialNumber(serialNumber);
-			List<IRentOrLoanOrder> result = OrderModel.INSTANCE.searchRentOrLoanOrder(order, null, 0, 1);
+			List<IRentOrLoanOrder> result = EOrderModel.INSTANCE.searchRentOrLoanOrder(order, null, 0, 1);
 			if (result != null && result.size() > 0) {
 				result.get(0).setStatus(OrderStatusType.CANCELLED);
-				OrderModel.INSTANCE.update(result.get(0));
+				EOrderModel.INSTANCE.update(result.get(0));
 			}
 		} else if (type == PayBusinessType.MACHININGBUSI) {
 			MachiningOrderImpl order = new MachiningOrderImpl();
 			order.setSerialNumber(serialNumber);
-			List<IMachiningOrder> result = OrderModel.INSTANCE.searchMachiningOrder(order, null, 0, 1);
+			List<IMachiningOrder> result = EOrderModel.INSTANCE.searchMachiningOrder(order, null, 0, 1);
 			if (result != null && result.size() > 0) {
 				result.get(0).setStatus(OrderStatusType.CANCELLED);
-				OrderModel.INSTANCE.update(result.get(0));
+				EOrderModel.INSTANCE.update(result.get(0));
 			}
 		}
 	}

@@ -3,11 +3,6 @@
 function org_shaolin_vogerp_commonmodel_form_AddressInfoTable(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var parentIdUI = new UIMaster.ui.hidden
-    ({
-        ui: elementList[prefix + "parentIdUI"]
-    });
-
     var itemTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "itemTable"]
@@ -18,22 +13,18 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfoTable(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "parentIdUI",prefix + "itemTable"]
+        ,subComponents: [prefix + "itemTable"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentIdUI,itemTable,fieldPanel]
+        ,items: [itemTable,fieldPanel]
     });
-
-    Form.parentIdUI=parentIdUI;
 
     Form.itemTable=itemTable;
 
     Form.fieldPanel=fieldPanel;
-
-    Form.parentIdUI=parentIdUI;
 
     Form.itemTable=itemTable;
 

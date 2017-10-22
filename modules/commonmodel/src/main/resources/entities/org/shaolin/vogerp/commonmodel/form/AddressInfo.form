@@ -136,14 +136,8 @@
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="idUI">
-        <ns2:secure>
-          <ns2:value>true</ns2:value>
-        </ns2:secure>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="parentIdUI">
-        <ns2:secure>
-          <ns2:value>true</ns2:value>
-        </ns2:secure>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="contactorUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>

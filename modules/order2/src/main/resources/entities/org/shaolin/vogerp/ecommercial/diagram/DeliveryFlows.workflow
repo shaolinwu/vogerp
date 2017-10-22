@@ -45,7 +45,7 @@
 				            String expressNumber = @page.getTextField("expressNumberUI").getValue();
 				            order.getDeliveryInfo().setExpressVendor(expressVendor);
 				            order.getDeliveryInfo().setExpressNumber(expressNumber);
-				            OrderModel.INSTANCE.update(order.getDeliveryInfo());
+				            EOrderModel.INSTANCE.update(order.getDeliveryInfo());
 				            
 			                HashMap result = new HashMap();
                             result.put("order", order);
@@ -87,10 +87,10 @@
                     import org.shaolin.bmdp.runtime.security.UserContext;
                      {
                          $order.setTakenStatus(OrderStatusType.TAKEN_DELIVERY);
-			             OrderModel.INSTANCE.update($order);
+			             EOrderModel.INSTANCE.update($order);
 			             
 			             IDeliveryInfo deliveryInfo = $order.getDeliveryInfo();
-						 //IPersonalInfo takener = OrderModel.INSTANCE.get(deliveryInfo.getToUserId(), PersonalInfoImpl.class);
+						 //IPersonalInfo takener = EOrderModel.INSTANCE.get(deliveryInfo.getToUserId(), PersonalInfoImpl.class);
 			             
 			             String description = "("+OrderUtil.getOrderLink($order)+")" + $order.getDescription();
                          NotificationImpl message = new NotificationImpl();
@@ -175,16 +175,16 @@
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                      {
                          $order.setTakenStatus(OrderStatusType.TAKEN_COMPLETED);
-			             OrderModel.INSTANCE.update($order);
+			             EOrderModel.INSTANCE.update($order);
                          IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                          payService.ensurePay($order.getSerialNumber());     
 			             
 			             if ($order.getDeliveryInfo() == null) {
-						    DeliveryInfoImpl takener = (DeliveryInfoImpl)OrderModel.INSTANCE.get($order.getDeliveryInfoId(), DeliveryInfoImpl.class);
+						    DeliveryInfoImpl takener = (DeliveryInfoImpl)EOrderModel.INSTANCE.get($order.getDeliveryInfoId(), DeliveryInfoImpl.class);
 			                $order.setDeliveryInfo(takener);
 			             }
 			             IDeliveryInfo deliveryInfo = $order.getDeliveryInfo();
-						 //IPersonalInfo takener = OrderModel.INSTANCE.get(deliveryInfo.getToUserId(), PersonalInfoImpl.class);
+						 //IPersonalInfo takener = EOrderModel.INSTANCE.get(deliveryInfo.getToUserId(), PersonalInfoImpl.class);
 			             
 			             String description = "("+OrderUtil.getOrderLink($order)+")" + $order.getDescription();
                          NotificationImpl message = new NotificationImpl();

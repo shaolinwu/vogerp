@@ -5,6 +5,7 @@ import java.util.List;
 import org.shaolin.vogerp.commonmodel.be.ILegalOrganizationInfo;
 import org.shaolin.vogerp.commonmodel.be.IOrganization;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
+import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
 
 public interface IOrganizationService {
 	
@@ -24,6 +25,8 @@ public interface IOrganizationService {
 	 * @return
 	 */
 	public List[] getAllOrganizations(int offset, int count);
+	
+	public List<IOrganization> getOrganizations(String industryType, OrgVerifyStatusType verifyType, String cityId, int offset, int count);
 	
 	/**
 	 * Get admin organization.

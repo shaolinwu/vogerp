@@ -44,7 +44,7 @@
                   ComboBox provinListUI = @page.getComboBox("provinListUI");
               
                   ComboBox cityListUI = @page.getComboBox("cityListUI");
-                  TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(@page.getHidden("parentUI").getValue());
+                  TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(@page.getHidden("parentUI").getValue(), Label.class);
                   textWidget.setValue(cityListUI.getValue());
                   if (textWidget instanceof Label) {
                      ((Label)textWidget).setValue(cityListUI.getValue());

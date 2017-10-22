@@ -155,11 +155,11 @@
             <expressionString><![CDATA[
         import java.util.List;
         import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
-        import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+        import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
         import org.shaolin.vogerp.ecommercial.util.OrderUtil;
         {
             long orderId = Long.valueOf(@page.getHidden("parentIdUI").getValue()).longValue();
-            GoldenOrderImpl order = (GoldenOrderImpl)OrderModel.INSTANCE.get(orderId, GoldenOrderImpl.class);
+            GoldenOrderImpl order = (GoldenOrderImpl)EOrderModel.INSTANCE.get(orderId, GoldenOrderImpl.class);
             OrderUtil.markTakenStatus(order);
             return order.getOfferPrices();
         }]]></expressionString>

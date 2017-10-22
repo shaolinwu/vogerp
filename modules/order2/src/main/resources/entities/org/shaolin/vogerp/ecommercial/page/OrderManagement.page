@@ -313,7 +313,7 @@
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
-                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                     {
                         Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
                         if (orderInfoTable.getSelectedRow() == null) {
@@ -321,7 +321,7 @@
                             return;
                         }
                         GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
-                        GoldenOrderImpl order = (GoldenOrderImpl)OrderModel.INSTANCE.get(defaultUser.getId(), GoldenOrderImpl.class);
+                        GoldenOrderImpl order = (GoldenOrderImpl)EOrderModel.INSTANCE.get(defaultUser.getId(), GoldenOrderImpl.class);
                         
                         HashMap input = new HashMap();
                         input.put("beObject", order);
@@ -344,7 +344,7 @@
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                     {
                         Table orderInfoTable = (Table)@page.getElement("rentOrderTable");
                         if (orderInfoTable.getSelectedRow() == null) {
@@ -352,7 +352,7 @@
                             return;
                         }
                         RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)orderInfoTable.getSelectedRow();
-                        RentOrLoanOrderImpl order = (RentOrLoanOrderImpl)OrderModel.INSTANCE.get(defaultUser.getId(), RentOrLoanOrderImpl.class);
+                        RentOrLoanOrderImpl order = (RentOrLoanOrderImpl)EOrderModel.INSTANCE.get(defaultUser.getId(), RentOrLoanOrderImpl.class);
                         
                         HashMap input = new HashMap();
                         input.put("beObject", order);
@@ -375,7 +375,7 @@
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
-                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                     {
                         Table orderInfoTable = (Table)@page.getElement("machiningTable");
                         if (orderInfoTable.getSelectedRow() == null) {
@@ -384,7 +384,7 @@
                         }
                         MachiningOrderImpl defaultUser = (MachiningOrderImpl)orderInfoTable.getSelectedRow();
                         
-                        MachiningOrderImpl order = (MachiningOrderImpl)OrderModel.INSTANCE.get(defaultUser.getId(), MachiningOrderImpl.class);
+                        MachiningOrderImpl order = (MachiningOrderImpl)EOrderModel.INSTANCE.get(defaultUser.getId(), MachiningOrderImpl.class);
                         
                         HashMap input = new HashMap();
                         input.put("beObject", order);
@@ -980,7 +980,7 @@
                                     import java.util.List;
                                     import org.shaolin.uimaster.page.ajax.TableConditions;
                                     import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
-                                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                                     import org.shaolin.bmdp.runtime.AppContext; 
                                     import org.shaolin.vogerp.commonmodel.IUserService;
                                     import org.shaolin.bmdp.runtime.security.UserContext;
@@ -994,7 +994,7 @@
                                           $tableCondition.addOrder("statusInt", false);
                                           MachiningOrderImpl condition = (MachiningOrderImpl)$tableCondition.getCondition();
                                           condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-                                          return OrderModel.INSTANCE.searchMachiningOrder(condition,
+                                          return EOrderModel.INSTANCE.searchMachiningOrder(condition,
                                                         $tableCondition.getOrders(),
                                                         $tableCondition.getOffset(), 
                                                         $tableCondition.getCount());
@@ -1129,7 +1129,7 @@
 		                            import java.util.List;
 		                            import org.shaolin.uimaster.page.ajax.TableConditions;
 		                            import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
-		                            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+		                            import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
 		                            import org.shaolin.bmdp.runtime.AppContext; 
                                     import org.shaolin.vogerp.commonmodel.IUserService;
                                     import org.shaolin.bmdp.runtime.security.UserContext;
@@ -1145,7 +1145,7 @@
 		                                  if (!AppContext.isMasterNode()) {
 			                                  condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
 		                                  }
-		                                  return OrderModel.INSTANCE.searchGoldenOrder(condition,
+		                                  return EOrderModel.INSTANCE.searchGoldenOrder(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 
 		                                                $tableCondition.getCount());
@@ -1288,7 +1288,7 @@
                                     import java.util.List;
                                     import org.shaolin.uimaster.page.ajax.TableConditions;
                                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                                     import org.shaolin.bmdp.runtime.AppContext; 
                                     import org.shaolin.vogerp.commonmodel.IUserService;
                                     import org.shaolin.bmdp.runtime.security.UserContext;
@@ -1302,7 +1302,7 @@
                                           $tableCondition.addOrder("statusInt", false);
                                           RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
                                           condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-                                          return OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
+                                          return EOrderModel.INSTANCE.searchRentOrLoanOrder(condition,
                                                         $tableCondition.getOrders(),
                                                         $tableCondition.getOffset(), 
                                                         $tableCondition.getCount());
@@ -1453,7 +1453,7 @@
                                     import java.util.List;
                                     import org.shaolin.uimaster.page.ajax.TableConditions;
                                     import org.shaolin.vogerp.ecommercial.be.InterestEOrderImpl;
-                                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                                     import org.shaolin.bmdp.runtime.AppContext; 
                                     import org.shaolin.vogerp.commonmodel.IUserService;
                                     import org.shaolin.bmdp.runtime.security.UserContext;
@@ -1466,7 +1466,7 @@
                                           }
                                           InterestEOrderImpl condition = (InterestEOrderImpl)$tableCondition.getCondition();
                                           condition.setOrgId(UserContext.getUserContext().getOrgId());
-                                          return OrderModel.INSTANCE.searchInterestEOrder(condition,
+                                          return EOrderModel.INSTANCE.searchInterestEOrder(condition,
                                                         $tableCondition.getOrders(),
                                                         $tableCondition.getOffset(), 
                                                         $tableCondition.getCount());
@@ -1477,7 +1477,7 @@
                                 <ns2:expression xsi:type="ns2:ExpressionType">
                                     <ns2:expressionString><![CDATA[
                                     import java.util.List;
-                                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                                     import org.shaolin.bmdp.runtime.AppContext; 
                                     import org.shaolin.vogerp.commonmodel.IUserService;
                                     import org.shaolin.bmdp.runtime.security.UserContext;

@@ -19,7 +19,7 @@
         import org.shaolin.uimaster.page.ajax.*;
         { 
             String selectedImage = @page.getImage("photoUI").getSelectedImage();
-            TextField callBackUI = (TextField)@page.getElementByAbsoluteId(@page.getHidden("callbackUIIDUI").getValue());
+            TextField callBackUI = (TextField)@page.getElementByAbsoluteId(@page.getHidden("callbackUIIDUI").getValue(), TextField.class);
             callBackUI.setValue(selectedImage);
             
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 

@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
@@ -18,6 +21,7 @@ import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 import org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfoImpl;
 import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
 import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
 import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 
 public class OrganizationServiceImpl implements IOrganizationService, IServiceProvider {
@@ -63,6 +67,30 @@ public class OrganizationServiceImpl implements IOrganizationService, IServicePr
 		result[0] = nameList;
 		result[1] = nameListDisplay;
 		return result;
+	}
+	
+	private static final String ORG_FILTER_SQL = "SELECT a.ID, a.NAME FROM comm_organization a left join comm_personinfo b on a.id=b.ORGID, comm_personalaccount c "
+			+ "where a.id=c.PERSONALID and a.TYPE=? and a.VERISTATE=? and c.LOCATIONINFO=? limit 100";
+	
+	@Override
+	public List<IOrganization> getOrganizations(String industryType, 
+			OrgVerifyStatusType verifyType, String cityId, int offset, int count) {
+		Session session = HibernateUtil.getSession();
+	    	SQLQuery sqlQuery = session.createSQLQuery(ORG_FILTER_SQL);
+	    	sqlQuery.setString(0, industryType);
+	    	sqlQuery.setInteger(1, verifyType.getIntValue());
+	    	sqlQuery.setString(2, cityId);
+	    	
+	    	List<Object[]> list = sqlQuery.list();
+	    	HibernateUtil.releaseSession(session, true);
+	    	ArrayList<IOrganization> valueResult = new ArrayList<IOrganization>();
+	    	for (Object[] row : list) {
+	    		IOrganization item = new OrganizationImpl();
+	    		item.setId((Long)row[0]);
+	    		item.setName(row[1].toString());
+	    		valueResult.add(item);
+	    	}
+	    	return valueResult;
 	}
 	
 	public IOrganization getAdminOrganization() {

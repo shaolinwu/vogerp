@@ -22,7 +22,7 @@
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
         import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
-        import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+        import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             HashMap out = (HashMap)form.ui2Data();
@@ -31,16 +31,16 @@
             defaultUser.setType(GoldenOrderType.SALE);
             if (defaultUser.getDeliveryInfo() != null) {
                 if (defaultUser.getDeliveryInfo().getId() > 0) {
-                   OrderModel.INSTANCE.update(defaultUser.getDeliveryInfo());
+                   EOrderModel.INSTANCE.update(defaultUser.getDeliveryInfo());
                 } else {
-                   OrderModel.INSTANCE.create(defaultUser.getDeliveryInfo());
+                   EOrderModel.INSTANCE.create(defaultUser.getDeliveryInfo());
                 }
                 defaultUser.setDeliveryInfoId(defaultUser.getDeliveryInfo().getId());
             }
             if (defaultUser.getId() == 0) {
-                OrderModel.INSTANCE.create(defaultUser, true);
+                EOrderModel.INSTANCE.create(defaultUser, true);
             } else {
-                OrderModel.INSTANCE.update(defaultUser, true);
+                EOrderModel.INSTANCE.update(defaultUser, true);
             }
 
             form.closeIfinWindows();

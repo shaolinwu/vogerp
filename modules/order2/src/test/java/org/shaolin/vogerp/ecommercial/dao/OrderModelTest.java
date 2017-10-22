@@ -36,7 +36,7 @@ import org.shaolin.vogerp.ecommercial.util.OrderUtil;
 
 import junit.framework.Assert;
 
-public class OrderModelTest extends SpringBootTestRoot {
+public class EOrderModelTest extends SpringBootTestRoot {
 
     @Test
     public void testCreateOrders() {
@@ -93,10 +93,10 @@ public class OrderModelTest extends SpringBootTestRoot {
         morder.setLongitude(UserContext.getUserContext().getLongitude());
         morder.setLatitude(UserContext.getUserContext().getLatitude());
         morder.setDeliveryInfo(new DeliveryInfoImpl());
-        OrderModel.INSTANCE.create(morder.getDeliveryInfo());
+        EOrderModel.INSTANCE.create(morder.getDeliveryInfo());
         morder.setDeliveryInfoId(morder.getDeliveryInfo().getId());
         morder.setStatus(OrderStatusType.PUBLISHED);
-        OrderModel.INSTANCE.create(morder);
+        EOrderModel.INSTANCE.create(morder);
          
         // offer a price.
         MOOfferPriceImpl offerPrice = new MOOfferPriceImpl();
@@ -115,19 +115,19 @@ public class OrderModelTest extends SpringBootTestRoot {
         condition.setOrgId(UserContext.getUserContext().getOrgId());
         condition.setOrderId(morder.getId());
         condition.setType(EOrderType.MACHININGORDER);
-        long result = OrderModel.INSTANCE.searchInterestEOrderCount(condition);
+        long result = EOrderModel.INSTANCE.searchInterestEOrderCount(condition);
         if (result == 0) {
-           OrderModel.INSTANCE.create(condition);
+           EOrderModel.INSTANCE.create(condition);
         }
         
      // take the order!
-        morder = OrderModel.INSTANCE.get(morder.getId(), MachiningOrderImpl.class);
+        morder = EOrderModel.INSTANCE.get(morder.getId(), MachiningOrderImpl.class);
         morder.setStatus(OrderStatusType.TAKEN);
         Assert.assertNotNull(morder.getOfferPrices());
         Assert.assertEquals(morder.getOfferPrices().size(), 1);
-        OrderModel.INSTANCE.update(morder);
+        EOrderModel.INSTANCE.update(morder);
         morder.setSessionId("aaa23432432");
-        OrderModel.INSTANCE.update(morder);
+        EOrderModel.INSTANCE.update(morder);
 //        it's hard to invoke workflow engin in test case.
 //        FlowEvent e = new FlowEvent("PublishMachiningOrder");
 //		e.setAttribute("_AdhocNodeName", "publishMOrder");
@@ -159,10 +159,10 @@ public class OrderModelTest extends SpringBootTestRoot {
         order.setCount(1);
         
         order.setDeliveryInfo(new DeliveryInfoImpl());
-        OrderModel.INSTANCE.create(order.getDeliveryInfo());
+        EOrderModel.INSTANCE.create(order.getDeliveryInfo());
         order.setDeliveryInfoId(order.getDeliveryInfo().getId());
         order.setStatus(OrderStatusType.PUBLISHED);
-        OrderModel.INSTANCE.create(order);
+        EOrderModel.INSTANCE.create(order);
         
      // offer a price.
         GOOfferPriceImpl offerPrice = new GOOfferPriceImpl();
@@ -178,13 +178,13 @@ public class OrderModelTest extends SpringBootTestRoot {
         Assert.assertEquals(state, 1);
         
         // take the order!
-        order = OrderModel.INSTANCE.get(order.getId(), GoldenOrderImpl.class);
+        order = EOrderModel.INSTANCE.get(order.getId(), GoldenOrderImpl.class);
         order.setStatus(OrderStatusType.TAKEN);
         Assert.assertNotNull(order.getOfferPrices());
         Assert.assertEquals(order.getOfferPrices().size(), 1);
-        OrderModel.INSTANCE.update(order);
+        EOrderModel.INSTANCE.update(order);
         order.setSessionId("aaa23432432");
-        OrderModel.INSTANCE.update(order);
+        EOrderModel.INSTANCE.update(order);
     }
     
     public void createRentOrder() {
@@ -208,10 +208,10 @@ public class OrderModelTest extends SpringBootTestRoot {
         order.setLatitude(UserContext.getUserContext().getLatitude());
         
         order.setDeliveryInfo(new DeliveryInfoImpl());
-        OrderModel.INSTANCE.create(order.getDeliveryInfo());
+        EOrderModel.INSTANCE.create(order.getDeliveryInfo());
         order.setDeliveryInfoId(order.getDeliveryInfo().getId());
         order.setStatus(OrderStatusType.PUBLISHED);
-        OrderModel.INSTANCE.create(order);
+        EOrderModel.INSTANCE.create(order);
         
      // offer a price.
         ROOfferPriceImpl offerPrice = new ROOfferPriceImpl();
@@ -227,14 +227,14 @@ public class OrderModelTest extends SpringBootTestRoot {
         Assert.assertEquals(state, 1);
         
         // take the order!
-        order = OrderModel.INSTANCE.get(order.getId(), RentOrLoanOrderImpl.class);
+        order = EOrderModel.INSTANCE.get(order.getId(), RentOrLoanOrderImpl.class);
         order.setStatus(OrderStatusType.TAKEN);
         Assert.assertNotNull(order.getOfferPrices());
         Assert.assertEquals(order.getOfferPrices().size(), 1);
         
-        OrderModel.INSTANCE.update(order);
+        EOrderModel.INSTANCE.update(order);
         order.setSessionId("aaa23432432");
-        OrderModel.INSTANCE.update(order);
+        EOrderModel.INSTANCE.update(order);
     }
     
     public void acceptOrders() {

@@ -2,7 +2,7 @@
 <bediagram:BEDiagram xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:bediagram="http://bmdp.shaolin.org/datamodel/BEDiagram"
 	xmlns:common="http://bmdp.shaolin.org/datamodel/Common">
-	<name>OrderModel</name>
+	<name>EOrderModel</name>
 	<bePackage>org.shaolin.vogerp.ecommercial.be</bePackage>
 	<cePackage>org.shaolin.vogerp.ecommercial.ce</cePackage>
 	<diagramPackage>org.shaolin.vogerp.ecommercial.diagram</diagramPackage>

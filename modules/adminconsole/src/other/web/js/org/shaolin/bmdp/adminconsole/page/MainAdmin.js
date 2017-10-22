@@ -3,66 +3,29 @@
 function org_shaolin_bmdp_adminconsole_page_MainAdmin(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var frame1 = new UIMaster.ui.frame
+    var welcomeLabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "frame1"]
-    });
-
-    var frame2 = new UIMaster.ui.frame
-    ({
-        ui: elementList[prefix + "frame2"]
-    });
-
-    var topPanel1 = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "topPanel1"]
-        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: []
-        ,subComponents: [prefix + "frame2"]
-    });
-
-    var topPanel0 = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "topPanel0"]
-        ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: []
-        ,subComponents: [prefix + "frame1"]
+        ui: elementList[prefix + "welcomeLabel"]
     });
 
     var topPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "topPanel"]
         ,items: []
-        ,subComponents: [prefix + "topPanel0",prefix + "topPanel1"]
+        ,subComponents: [prefix + "welcomeLabel"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [frame1,frame2,topPanel,topPanel0,topPanel1]
+        ,items: [welcomeLabel,topPanel]
     });
 
-    Form.frame1=frame1;
-
-    Form.frame2=frame2;
+    Form.welcomeLabel=welcomeLabel;
 
     Form.topPanel=topPanel;
 
-    Form.topPanel0=topPanel0;
-
-    Form.frame1=frame1;
-
-    Form.topPanel1=topPanel1;
-
-    Form.frame2=frame2;
-
-    Form.topPanel0=topPanel0;
-
-    Form.frame1=frame1;
-
-    Form.topPanel1=topPanel1;
-
-    Form.frame2=frame2;
+    Form.welcomeLabel=welcomeLabel;
 
     Form.user_constructor = function()
     {

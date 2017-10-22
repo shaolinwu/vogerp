@@ -64,13 +64,6 @@
 		</bediagram:member>
 		<bediagram:member>
 			<!-- what kind of the party, the contact info from the party and etc. -->
-			<bediagram:name>customer</bediagram:name>
-			<bediagram:type xsi:type="bediagram:BEObjRefType">
-		        <bediagram:targetEntity entityName="org.shaolin.vogerp.commonmodel.be.PersonalInfo" />
-		    </bediagram:type>
-		</bediagram:member>
-		<bediagram:member>
-			<!-- what kind of the party, the contact info from the party and etc. -->
 			<bediagram:name>deliveryInfoId</bediagram:name>
 			<bediagram:type xsi:type="bediagram:LongType" />
 		</bediagram:member>

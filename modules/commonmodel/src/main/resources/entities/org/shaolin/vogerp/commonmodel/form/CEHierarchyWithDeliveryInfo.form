@@ -61,7 +61,7 @@
 		   long pid = Long.parseLong(@page.getHidden("pidUI").getValue());
 		   
 		   String parentUIID = @page.getHidden("parentUI").getValue();
-		   TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(parentUIID);
+		   TextWidget textWidget = (TextWidget)@page.getElementByAbsoluteId(parentUIID, TextField.class);
 		   if (textWidget != null) {
 			   textWidget.setValue(addressId);
 			   if (textWidget instanceof Label) {

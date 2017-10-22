@@ -55,7 +55,7 @@
             import org.shaolin.uimaster.page.AjaxContext;
             import org.shaolin.uimaster.page.ajax.*;
             import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
-            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+            import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
             import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
             import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
             {
@@ -98,7 +98,7 @@
               import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
               import org.shaolin.vogerp.ecommercial.be.IMachiningOrder;
               import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
-              import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+              import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
               import org.shaolin.bmdp.runtime.AppContext; 
               import org.shaolin.vogerp.commonmodel.IUserService;
               import org.shaolin.bmdp.runtime.security.UserContext;
@@ -117,7 +117,7 @@
                     //condition.setPublishedCustomerId(UserContext.getUserContext().getUserId());
                     condition.setTakenCustomerId(UserContext.getUserContext().getUserId());
                     condition.setStatus(OrderStatusType.TAKEN);
-                    List result = OrderModel.INSTANCE.searchMachiningOrder(condition,
+                    List result = EOrderModel.INSTANCE.searchMachiningOrder(condition,
                                   $tableCondition.getOrders(),
                                   $tableCondition.getOffset(), 
                                   $tableCondition.getCount());
@@ -185,12 +185,12 @@
               <ns2:expression xsi:type="ns2:ExpressionType">
                   <ns2:expressionString><![CDATA[
                   import org.shaolin.bmdp.runtime.AppContext;
-                  import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                  import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                   import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                   import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
                   {
                       if ($rowBE.getTakenCustomerId() > 0) {
-                         // PersonalInfoImpl pInfo = (PersonalInfoImpl)OrderModel.INSTANCE.get($rowBE.getTakenCustomerId(), PersonalInfoImpl.class);
+                         // PersonalInfoImpl pInfo = (PersonalInfoImpl)EOrderModel.INSTANCE.get($rowBE.getTakenCustomerId(), PersonalInfoImpl.class);
                          // $rowBE.setTakenCustomer(pInfo);
                          return CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getTakenCustomerId());
                       }
@@ -269,7 +269,7 @@
     <ns2:DataToUIMappingOperation>
       <expressionString>
       import org.shaolin.vogerp.order.be.DeliveryInfoImpl;
-      import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+      import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
       {
         @odContext.executeAllMappings();
       }</expressionString>

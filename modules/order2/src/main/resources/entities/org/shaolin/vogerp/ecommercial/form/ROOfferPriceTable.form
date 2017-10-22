@@ -133,11 +133,11 @@
             <expressionString><![CDATA[
         import java.util.List;
         import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-        import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+        import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
         import org.shaolin.vogerp.ecommercial.util.OrderUtil;
         {
             long orderId = Long.valueOf(@page.getHidden("parentIdUI").getValue()).longValue();
-            RentOrLoanOrderImpl order = (RentOrLoanOrderImpl)OrderModel.INSTANCE.get(orderId, RentOrLoanOrderImpl.class);
+            RentOrLoanOrderImpl order = (RentOrLoanOrderImpl)EOrderModel.INSTANCE.get(orderId, RentOrLoanOrderImpl.class);
             OrderUtil.markTakenStatus(order);
             return order.getOfferPrices();
         }]]></expressionString>

@@ -64,7 +64,7 @@
             import org.shaolin.uimaster.page.ajax.*;
             import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
             import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
-            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+            import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
             import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
             import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
             {
@@ -187,12 +187,12 @@
               <ns2:expression xsi:type="ns2:ExpressionType">
                   <ns2:expressionString><![CDATA[
                   import org.shaolin.bmdp.runtime.AppContext;
-                  import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                  import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                   import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
                   import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
                   {
                       if ($rowBE.getTakenCustomerId() > 0) {
-                         // PersonalInfoImpl pInfo = (PersonalInfoImpl)OrderModel.INSTANCE.get($rowBE.getTakenCustomerId(), PersonalInfoImpl.class);
+                         // PersonalInfoImpl pInfo = (PersonalInfoImpl)EOrderModel.INSTANCE.get($rowBE.getTakenCustomerId(), PersonalInfoImpl.class);
                          // $rowBE.setTakenCustomer(pInfo);
                          return CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getTakenCustomerId());
                       }

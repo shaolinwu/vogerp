@@ -15,6 +15,7 @@
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     import org.shaolin.vogerp.commonmodel.IUserService;
                     {
                         Table orderInfoTable = (Table)@page.getElement("goldenOrderTable");
@@ -23,6 +24,10 @@
                             return;
                         }
                         GoldenOrderImpl defaultUser = (GoldenOrderImpl)orderInfoTable.getSelectedRow();
+                        if (defaultUser.getStatus() != OrderStatusType.PUBLISHED) {
+                            Dialog.showMessageDialog("只有发布状态的订单可以进行在线营销！", "", Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
                         input.put("editable", new Boolean(true));
@@ -44,6 +49,7 @@
                     import org.shaolin.uimaster.page.AjaxContext;
                     import org.shaolin.uimaster.page.ajax.*;
                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                     import org.shaolin.vogerp.commonmodel.IUserService;
                     {
                         Table orderInfoTable = (Table)@page.getElement("rentOrderTable");
@@ -52,6 +58,44 @@
                             return;
                         }
                         RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)orderInfoTable.getSelectedRow();
+                        if (defaultUser.getStatus() != OrderStatusType.PUBLISHED) {
+                            Dialog.showMessageDialog("只有发布状态的订单可以进行在线营销！", "", Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
+                        HashMap input = new HashMap();
+                        input.put("beObject", defaultUser);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("gorderForm", "org.shaolin.vogerp.ecommercial.form.OrderPromotion", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("在线客户营销", null, true);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="promoteMachineOrder">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="promoteMachineOrder-20161017-2229">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
+                    {
+                        Table orderInfoTable = (Table)@page.getElement("machiningTable");
+                        if (orderInfoTable.getSelectedRow() == null) {
+                            Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
+                        MachiningOrderImpl defaultUser = (MachiningOrderImpl)orderInfoTable.getSelectedRow();
+                        if (defaultUser.getStatus() != OrderStatusType.PUBLISHED) {
+                            Dialog.showMessageDialog("只有发布状态的订单可以进行在线营销！", "", Dialog.WARNING_MESSAGE, null);
+                            return;
+                        }
                         HashMap input = new HashMap();
                         input.put("beObject", defaultUser);
                         input.put("editable", new Boolean(true));
@@ -324,7 +368,7 @@
                                     import org.shaolin.uimaster.page.ajax.TableConditions;
                                     import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
                                     import org.shaolin.vogerp.ecommercial.ce.*;
-                                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                                     import org.shaolin.vogerp.ecommercial.dao.CustOrderModel;
                                     import org.shaolin.bmdp.runtime.AppContext; 
                                     import org.shaolin.vogerp.commonmodel.IUserService;
@@ -338,7 +382,7 @@
                                           }
                                           $tableCondition.addOrder("statusInt", true);
                                           MachiningOrderImpl condition = (MachiningOrderImpl)$tableCondition.getCondition();
-                                          List orders = OrderModel.INSTANCE.searchMachiningOrder(condition,
+                                          List orders = EOrderModel.INSTANCE.searchMachiningOrder(condition,
                                                         $tableCondition.getOrders(),
                                                         $tableCondition.getOffset(), 
                                                         $tableCondition.getCount());
@@ -443,14 +487,6 @@
                             <ns2:actionGroup>
                                 <ns2:type>radio</ns2:type>
                                 <ns2:action>
-                                    <ns2:uiid>openMOrderTracker</ns2:uiid>
-                                    <ns2:title xsi:type="ns2:StringPropertyType">
-                                        <ns2:value>状态</ns2:value>
-                                    </ns2:title>
-                                    <ns2:icon>ui-icon-note</ns2:icon>
-                                    <ns2:function>openMOrderTracker</ns2:function>
-                                </ns2:action>
-                                <ns2:action>
                                     <ns2:uiid>verifiedMOrder</ns2:uiid>
                                     <ns2:title xsi:type="ns2:StringPropertyType">
                                         <ns2:value>验证通过</ns2:value>
@@ -465,6 +501,22 @@
                                     </ns2:title>
                                     <ns2:icon>ui-icon-note</ns2:icon>
                                     <ns2:function>unverifiedMOrder</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>promoteMachineOrder</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>在线客户营销</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>promoteMachineOrder</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>openMOrderTracker</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>状态跟踪</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>openMOrderTracker</ns2:function>
                                 </ns2:action>
                                 <ns2:action>
                                     <ns2:uiid>disableMOrder</ns2:uiid>
@@ -505,7 +557,7 @@
 		                            import org.shaolin.uimaster.page.ajax.TableConditions;
 		                            import org.shaolin.vogerp.ecommercial.ce.*;
 		                            import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
-		                            import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+		                            import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                                     import org.shaolin.vogerp.ecommercial.dao.CustOrderModel;
 		                            import org.shaolin.bmdp.runtime.AppContext; 
                                     import org.shaolin.vogerp.commonmodel.IUserService;
@@ -519,7 +571,7 @@
 		                                  }
 		                                  $tableCondition.addOrder("statusInt", true);
 		                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
-		                                  List orders = OrderModel.INSTANCE.searchGoldenOrder(condition,
+		                                  List orders = EOrderModel.INSTANCE.searchGoldenOrder(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 
 		                                                $tableCondition.getCount());
@@ -574,10 +626,10 @@
                                         import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                                         import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
                                         import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
-                                        import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                        import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                                         {
                                            if ($rowBE.getStatus() == OrderStatusType.TAKEN) {
-                                              PersonalInfoImpl user = (PersonalInfoImpl)OrderModel.INSTANCE.get($rowBE.getTakenCustomerId(), PersonalInfoImpl.class);
+                                              PersonalInfoImpl user = (PersonalInfoImpl)EOrderModel.INSTANCE.get($rowBE.getTakenCustomerId(), PersonalInfoImpl.class);
                                               $rowBE.setTakenCustomer(user);
                                               return $rowBE.getStatus().getDisplayName() + "("+CustomerInfoUtil.getCustomerEnterpriseBasicInfo($rowBE.getTakenCustomer())+")";
                                            } else {
@@ -728,7 +780,7 @@
                                     import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
                                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
                                     import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-                                    import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+                                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
                                     import org.shaolin.vogerp.ecommercial.dao.CustOrderModel;
                                     import org.shaolin.bmdp.runtime.AppContext; 
                                     import org.shaolin.vogerp.commonmodel.IUserService;
@@ -742,7 +794,7 @@
                                           }
                                           $tableCondition.addOrder("statusInt", true);
                                           RentOrLoanOrderImpl condition = (RentOrLoanOrderImpl)$tableCondition.getCondition();
-                                          List orders = OrderModel.INSTANCE.searchRentOrLoanOrder(condition,
+                                          List orders = EOrderModel.INSTANCE.searchRentOrLoanOrder(condition,
                                                         $tableCondition.getOrders(),
                                                         $tableCondition.getOffset(), 
                                                         $tableCondition.getCount());

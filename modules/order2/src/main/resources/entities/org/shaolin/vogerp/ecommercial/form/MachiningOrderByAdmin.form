@@ -414,7 +414,7 @@
 		                import org.shaolin.uimaster.page.ajax.TableConditions;
 		                import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
 		                import org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl;
-		                import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+		                import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
 		                import org.shaolin.bmdp.runtime.AppContext; 
 		                import org.shaolin.vogerp.commonmodel.IUserService;
 		                import org.shaolin.bmdp.runtime.security.UserContext;
@@ -428,7 +428,7 @@
 		                      if (condition.getCategory() == MachiningCategoryType.NOT_SPECIFIED) {
 		                         condition.setCategory(MachiningCategoryType.MATERIAL);
 		                      }
-		                      return OrderModel.INSTANCE.searchMachiningComponent(condition,
+		                      return EOrderModel.INSTANCE.searchMachiningComponent(condition,
 		                                    $tableCondition.getOrders(),
 		                                    $tableCondition.getOffset(), 
 		                                    $tableCondition.getCount());

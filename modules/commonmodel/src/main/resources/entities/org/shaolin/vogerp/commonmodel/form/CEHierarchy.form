@@ -128,7 +128,7 @@
                 import org.shaolin.bmdp.runtime.ce.ConstantServiceImpl;
                 {
                    String formId = "";
-                   String entityName = ((Tree)@page.getElementByAbsoluteId("ceentityPanel.typeUI.ceTree")).getSelectedItemId();
+                   String entityName = ((Tree)@page.getElementByAbsoluteId("ceentityPanel.typeUI.ceTree", Tree.class)).getSelectedItemId();
                    if (entityName == null || entityName.trim().isEmpty()) {
                        return;
                    }

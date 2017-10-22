@@ -29,35 +29,24 @@
         import org.shaolin.bmdp.runtime.AppContext;
         import org.shaolin.bmdp.runtime.security.UserContext;
         import org.shaolin.bmdp.runtime.ce.IConstantEntity;
-        import org.shaolin.bmdp.workflow.be.ChatHistoryImpl;
         import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
-        import org.shaolin.vogerp.productmodel.be.ProductImpl;
-        import org.shaolin.vogerp.productmodel.dao.ProductModel;
-        import org.shaolin.vogerp.productmodel.IProductService;
-        import org.shaolin.vogerp.ecommercial.dao.OrderModel;
+        import org.shaolin.vogerp.commonmodel.IOrganizationService;
+        import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
         import org.shaolin.vogerp.commonmodel.ce.AMemberType;
         { 
             Table orderInfoTable = (Table)@page.getElement("orgInfoTable");
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid());
             HashMap input = (HashMap)form.ui2Data();
-            ProductImpl product = (ProductImpl)input.get("product");
             String selectedCity = (String)input.get("selectedCity");
             String orgName = @page.getTextField("orgNameUI").getValue();
             AMemberType mserviceType = (AMemberType)input.get("mserviceType");
-            product.setCity(selectedCity);
-	        
-	        int index = ((TabPane)@page.getElement("productTypeTab")).getSelectedIndex();
-	        IProductService pservice = (IProductService)AppContext.get().getService(IProductService.class);
-            if (index == 1) {
-	            // max 100 memebers supposed, 2-8 principle.
-	           	List orgs = (List)pservice.getPossibleProductSuppliers(product, orgName, mserviceType, true, 0, 100);
-                orderInfoTable.setListData(orgs, true);
-            } else {
-                // max 100 memebers supposed, 2-8 principle.
-                List orgs = (List)pservice.getPossibleProductWithoutSuppliers(product, orgName, mserviceType, 0, 100);
-                orderInfoTable.setListData(orgs, true);
-            }
-            
+            String industryType = @page.getComboBox("industryType").getValue();
+			OrgVerifyStatusType verifyType = (OrgVerifyStatusType)input.get("verifyType");
+		    int offset=0;
+		    int count=100;
+	        IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
+            List result = orgService.getOrganizations(industryType, verifyType, selectedCity, offset, count);
+            orderInfoTable.setListData(result, true);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -84,13 +73,37 @@
             if (orderInfoTable.getSelectedRows() == null || orderInfoTable.getSelectedRows().size() == 0) {
                 return;
             }
+            String orderInfo = @page.getHidden("ordeInfoUI").getValue();
             IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
             List rows = orderInfoTable.getSelectedRows();
             for (int i =0; i<rows.size(); i++) {
-            	OrganizationImpl org = (OrganizationImpl)rows.get(i);
-            	String orderInfo = @page.getHidden("ordeInfoUI").getValue();
-            	orgService.notifyOrganizer("您有 一个新订单。", orderInfo, org);
+	            	OrganizationImpl org = (OrganizationImpl)rows.get(i);
+	            	orgService.notifyOrganizer("通知：刚刚发布了一个新的订单。", orderInfo, org);
             }
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+    <ns2:eventHandler functionName="checkPromoteContent">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="checkPromoteContent-20170525-112849">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.List;
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.bmdp.runtime.AppContext;
+        import org.shaolin.bmdp.runtime.security.UserContext;
+        import org.shaolin.bmdp.workflow.be.ChatHistoryImpl;
+        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+        import org.shaolin.vogerp.ecommercial.be.*;
+        import org.shaolin.vogerp.commonmodel.IUserService;
+        import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+        import org.shaolin.vogerp.commonmodel.IOrganizationService;
+        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+        { 
+           String orderInfo = @page.getHidden("ordeInfoUI").getValue();
+           // show in text area widget.
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -107,14 +120,8 @@
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
       </ns2:layout>
-      <ns2:component xsi:type="ns2:UIHiddenType" UIID="orderproductTypeUI">
-        <ns2:secure>
-          <ns2:value>true</ns2:value>
-        </ns2:secure>
-      </ns2:component>
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="ordeInfoUI">
         <ns2:secure>
           <ns2:value>true</ns2:value>
@@ -131,28 +138,12 @@
            </ns2:value>
         </ns2:Property>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITabPaneType" UIID="productTypeTab">
-	    <ns2:ajaxLoad>false</ns2:ajaxLoad>
-           <ns2:tab uiid="selectProductTypePanel">
-               <ns2:title xsi:type="ns2:StringPropertyType">
-                   <ns2:value>手工选择产品供应类型</ns2:value>
-               </ns2:title>
-               <ns2:refEntity UIID="productTypeUI">
-                  <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductHierarchySelector2" />
-               </ns2:refEntity>
-		   </ns2:tab>
-		   <ns2:tab uiid="autoProductTypePanel">
-              <ns2:title xsi:type="ns2:StringPropertyType">
-                <ns2:value>自动选择产品供应类型</ns2:value>
-              </ns2:title>
-              <ns2:refEntity UIID="supplierSelector">
-                <ns2:referenceEntity entityName="org.shaolin.vogerp.productmodel.form.ProductTypeSupplierSelector" />
-              </ns2:refEntity>
-		</ns2:tab>
-	  </ns2:component>
-      <ns2:component xsi:type="ns2:UIPanelType" UIID="moreConditionPanel">
+      <ns2:component xsi:type="ns2:UIPanelType" UIID="conditionPanel">
 	      <ns2:layout xsi:type="ns2:TableLayoutType">
-	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+	        <ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
+	        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+	        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+	        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 	        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 	        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
 	        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
@@ -161,9 +152,19 @@
 	         <ns2:UIStyle></ns2:UIStyle>
 	         <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CityOnlySelelctor" />
 	      </ns2:component>
+	      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="industryTypeUI">
+	        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+	            <value>行业类型： </value>
+	        </ns2:widgetLabel>
+	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="mserviceTypeUI">
 	        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
 	            <value>会员等级： </value>
+	        </ns2:widgetLabel>
+	      </ns2:component>
+	      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="verifyTypeUI">
+	        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+	            <value>验证用户： </value>
 	        </ns2:widgetLabel>
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UITextFieldType" UIID="orgNameUI">
@@ -172,17 +173,35 @@
 	        </ns2:widgetLabel>
 	        <ns2:UIStyle></ns2:UIStyle>
 	      </ns2:component>
+	      <ns2:component xsi:type="ns2:UICheckBoxType" UIID="onlineUserFirstUI">
+	        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+	            <value>在线用户优先</value>
+	        </ns2:widgetLabel>
+	        <ns2:UIStyle></ns2:UIStyle>
+	      </ns2:component>
 	      <ns2:layoutConstraint>
-	        <ns2:componentId>mserviceTypeUI</ns2:componentId>
+	        <ns2:componentId>citySelector</ns2:componentId>
 	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
 	      </ns2:layoutConstraint>
 	      <ns2:layoutConstraint>
-	        <ns2:componentId>citySelector</ns2:componentId>
+	        <ns2:componentId>industryTypeUI</ns2:componentId>
 	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
 	      </ns2:layoutConstraint>
 	      <ns2:layoutConstraint>
-	        <ns2:componentId>orgNameUI</ns2:componentId>
+	        <ns2:componentId>mserviceTypeUI</ns2:componentId>
 	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="2" y="0" align="FULL"></ns2:constraint>
+	      </ns2:layoutConstraint>
+	      <ns2:layoutConstraint>
+	        <ns2:componentId>verifyTypeUI</ns2:componentId>
+	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="3" y="0" align="FULL"></ns2:constraint>
+	      </ns2:layoutConstraint>
+	      <ns2:layoutConstraint>
+	        <ns2:componentId>orgNameUI</ns2:componentId>
+	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="4" y="0" align="FULL"></ns2:constraint>
+	      </ns2:layoutConstraint>
+	      <ns2:layoutConstraint>
+	        <ns2:componentId>onlineUserFirstUI</ns2:componentId>
+	        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="5" y="0" align="FULL"></ns2:constraint>
 	      </ns2:layoutConstraint>
 	  </ns2:component>  
       <ns2:component xsi:type="ns2:UIButtonType" UIID="searchbtn">
@@ -194,16 +213,12 @@
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>productTypeTab</ns2:componentId>
+        <ns2:componentId>conditionPanel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>moreConditionPanel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
         <ns2:componentId>searchbtn</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel1">
@@ -262,36 +277,6 @@
               </ns2:title>
               <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
               <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
-              <!-- 
-              <ns2:uiType xsi:type="ns2:UITableColHTMLType">
-                <ns2:type>DateRange</ns2:type>
-                <ns2:startCondition>rowBE.startCreateDate</ns2:startCondition> 
-                <ns2:endCondition>rowBE.endCreateDate</ns2:endCondition>
-              </ns2:uiType>
-              <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                  <ns2:expression xsi:type="ns2:ExpressionType">
-                      <ns2:expressionString><![CDATA[
-                      import org.shaolin.uimaster.page.od.formats.FormatUtil;
-                      import java.util.Date;
-                      {
-                          if ($value == null || "".equals($value)) {
-                              if ("rowBE.startCreateDate".equals($filterId)) {
-                                  $rowBE.setStartCreateDate(null);
-                              } else {
-                                  $rowBE.setEndCreateDate(null);
-                              }
-                          } else {
-                              Date d = (Date)FormatUtil.convertUIToData(FormatUtil.DATE, $value);
-                              if ("rowBE.startCreateDate".equals($filterId)) {
-                                  $rowBE.setStartCreateDate(d);
-                              } else {
-                                  $rowBE.setEndCreateDate(d);
-                              }
-                          }
-                      }]]></ns2:expressionString>
-                  </ns2:expression>
-              </ns2:updateCondition>
-               -->
           </ns2:column>
           <ns2:defaultActions>
               <ns2:defaultOpenAction>openCustomerDetail</ns2:defaultOpenAction>
@@ -307,16 +292,25 @@
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
-      <ns2:component xsi:type="ns2:UIButtonType" UIID="chatbtn">
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="promotebtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="promote"></ns2:handler>
         </ns2:EventListener>
         <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>推广营销</ns2:value>
+          <ns2:value>推广</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="checkpromotebtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="checkPromoteContent"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>查看营销内容</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
@@ -329,7 +323,11 @@
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>chatbtn</ns2:componentId>
+        <ns2:componentId>promotebtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>checkpromotebtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
@@ -355,16 +353,16 @@
     <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
       <type entityName="org.shaolin.vogerp.ecommercial.be.EOrder"></type>
     </ns2:DataEntity>
-    <ns2:DataEntity scope="InOut" name="product" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.productmodel.be.Product"></type>
-    </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="mserviceType" category="JavaClass">
       <type entityName="org.shaolin.bmdp.runtime.ce.IConstantEntity"></type>
     </ns2:DataEntity>
-    <ns2:DataEntity scope="InOut" name="selectedCity" category="JavaPrimitive">
-      <type entityName="java.lang.String"></type>
+    <ns2:DataEntity scope="InOut" name="industryType" category="JavaClass">
+      <type entityName="org.shaolin.bmdp.runtime.ce.IConstantEntity"></type>
     </ns2:DataEntity>
-    <ns2:DataEntity scope="Internal" name="pType" category="JavaPrimitive">
+    <ns2:DataEntity scope="InOut" name="verifyType" category="JavaClass">
+      <type entityName="org.shaolin.bmdp.runtime.ce.IConstantEntity"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="selectedCity" category="JavaPrimitive">
       <type entityName="java.lang.String"></type>
     </ns2:DataEntity>
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
@@ -376,22 +374,16 @@
        <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="selectedCity" paramName="selectedCity"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
-      <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductHierarchySelector2"></ns2:mappingRule>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="product.type" paramName="subvalue"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="product.subType" paramName="value"></ns2:DataComponent>
-      <ns2:UIComponent componentPath="productTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="industryTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="industryType" paramName="CEValue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
         <ns2:expression>
           <expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
-      <ns2:mappingRule entityName="org.shaolin.vogerp.productmodel.form.ProductTypeSupplierSelector"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="supplierSelector" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="pType" paramName="pType"></ns2:DataComponent>
-    </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
       <ns2:UIComponent componentPath="mserviceTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="mserviceType" paramName="CEValue"></ns2:DataComponent>
@@ -401,27 +393,28 @@
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="verifyTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="verifyType" paramName="CEValue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
+        <ns2:expression>
+          <expressionString>"org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType"</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+    </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
-        import org.shaolin.vogerp.productmodel.be.ProductImpl;
-        import org.shaolin.vogerp.productmodel.dao.ProductModel;
         import org.shaolin.bmdp.runtime.security.UserContext;
         {
           $selectedCity = UserContext.getUserContext().getCity();
-          $product = new ProductImpl();
-          if ($beObject.getProductId() > 0) {
-			  $product = (ProductImpl)ProductModel.INSTANCE.get($beObject.getProductId(), ProductImpl.class);
-			  $pType = $product.getSubType() != null? $product.getSubType() : $product.getType();
-          }
 		  @odContext.executeAllMappings();
 		}
 		]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString><![CDATA[
-      import org.shaolin.vogerp.productmodel.be.ProductImpl;
       {
-         $product = new ProductImpl();
 		 @odContext.executeAllMappings();
       }
      ]]></expressionString>

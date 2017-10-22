@@ -50,7 +50,7 @@
             HashMap out = (HashMap)form.ui2Data();
             
             ProductPriceImpl defaultUser = (ProductPriceImpl)out.get("beObject");
-            Table constantTable = (Table)@page.getElementByAbsoluteId("productInfoForm.infoPanel1.itemTable");
+            Table constantTable = (Table)@page.getElementByAbsoluteId("productInfoForm.infoPanel1.itemTable", Table.class);
             constantTable.addRow(defaultUser);
             
             form.closeIfinWindows();
@@ -75,7 +75,7 @@
             HashMap out = (HashMap)form.ui2Data();
             
             ProductPriceImpl defaultUser = (ProductPriceImpl)out.get("beObject");
-            Table constantTable = (Table)@page.getElementByAbsoluteId("productInfoForm.infoPanel1.itemTable");
+            Table constantTable = (Table)@page.getElementByAbsoluteId("productInfoForm.infoPanel1.itemTable", Table.class);
             constantTable.setRow(constantTable.getSelectedIndex(), defaultUser);
             
             form.closeIfinWindows();

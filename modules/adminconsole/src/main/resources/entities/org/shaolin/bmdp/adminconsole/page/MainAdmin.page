@@ -15,126 +15,20 @@
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="topPanel">
 				<ns2:layout xsi:type="ns2:TableLayoutType">
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-					<ns2:columnWidthWeight>0.5</ns2:columnWidthWeight>
-					<ns2:columnWidthWeight>0.5</ns2:columnWidthWeight>
+					<ns2:columnWidthWeight>1</ns2:columnWidthWeight>
 				</ns2:layout>
-				<ns2:component xsi:type="ns2:UIPanelType" UIID="topPanel0">
-				    <ns2:UISkin xsi:type="ns2:UISkinType">
-						<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
-						<ns2:param name="text">
-							<ns2:value xsi:type="ns2:StringPropertyType">
-								<ns2:value>在线订单管理</ns2:value>
-							</ns2:value>
-						</ns2:param>
-					</ns2:UISkin>
-					<ns2:layout xsi:type="ns2:TableLayoutType">
-						<ns2:rowHeightWeight>600</ns2:rowHeightWeight>
-						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-					</ns2:layout>
-					<ns2:component xsi:type="ns2:UIFrameType" UIID="frame1" chunkName="org.shaolin.vogerp.commonmodel.diagram.ModularityModel" nodeName="OrderManagementByAdmin">
-					</ns2:component>
-					<ns2:layoutConstraint>
-						<ns2:componentId>frame1</ns2:componentId>
-						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-							x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
-					</ns2:layoutConstraint>
-				</ns2:component>
-				<ns2:component xsi:type="ns2:UIPanelType" UIID="topPanel1">
-				    <ns2:UISkin xsi:type="ns2:UISkinType">
-						<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
-						<ns2:param name="text">
-							<ns2:value xsi:type="ns2:StringPropertyType">
-								<ns2:value>注册用户管理</ns2:value>
-							</ns2:value>
-						</ns2:param>
-					</ns2:UISkin>
-					<ns2:layout xsi:type="ns2:TableLayoutType">
-						<ns2:rowHeightWeight>600</ns2:rowHeightWeight>
-						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-					</ns2:layout>
-					<ns2:component xsi:type="ns2:UIFrameType" UIID="frame2" chunkName="org.shaolin.vogerp.commonmodel.diagram.ModularityModel" nodeName="OrgManager">
-					</ns2:component>
-					<ns2:layoutConstraint>
-						<ns2:componentId>frame2</ns2:componentId>
-						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-							x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
-					</ns2:layoutConstraint>
-				</ns2:component>
-				
+				<ns2:component xsi:type="ns2:UILabelType" UIID="welcomeLabel">
+			        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+			        <ns2:text xsi:type="ns2:StringPropertyType">
+			          <ns2:value>欢迎来到加工达人管理运营中心！</ns2:value>
+			        </ns2:text>
+			    </ns2:component>
 				<ns2:layoutConstraint>
-					<ns2:componentId>topPanel0</ns2:componentId>
-					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-						x="0" y="0" align="FULL" cellUIClass="advImagesUICss"></ns2:constraint>
-				</ns2:layoutConstraint>
-				<ns2:layoutConstraint>
-					<ns2:componentId>topPanel1</ns2:componentId>
-					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-						x="1" y="0" align="FULL" cellUIClass="advImagesUICss"></ns2:constraint>
-				</ns2:layoutConstraint>
-			</ns2:component>
-			
-			<!-- 
-			<ns2:component xsi:type="ns2:UIPanelType" UIID="secondPanel">
-				<ns2:layout xsi:type="ns2:TableLayoutType">
-					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-					<ns2:columnWidthWeight>0.5</ns2:columnWidthWeight>
-					<ns2:columnWidthWeight>0.5</ns2:columnWidthWeight>
-				</ns2:layout>
-				
-				<ns2:component xsi:type="ns2:UIPanelType" UIID="secondPanel0">
-				    <ns2:UISkin xsi:type="ns2:UISkinType">
-						<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
-						<ns2:param name="text">
-							<ns2:value xsi:type="ns2:StringPropertyType">
-								<ns2:value>用户支付管理</ns2:value>
-							</ns2:value>
-						</ns2:param>
-					</ns2:UISkin>
-					<ns2:layout xsi:type="ns2:TableLayoutType">
-						<ns2:rowHeightWeight>600</ns2:rowHeightWeight>
-						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-					</ns2:layout>
-					<ns2:component xsi:type="ns2:UIFrameType" UIID="frame3" chunkName="org.shaolin.vogerp.commonmodel.diagram.ModularityModel" nodeName="PayOrderAdminManager">
-					</ns2:component>
-					<ns2:layoutConstraint>
-						<ns2:componentId>frame3</ns2:componentId>
-						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-							x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
-					</ns2:layoutConstraint>
-				</ns2:component>
-				<ns2:component xsi:type="ns2:UIPanelType" UIID="secondPanel1">
-				    <ns2:UISkin xsi:type="ns2:UISkinType">
-						<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
-						<ns2:param name="text">
-							<ns2:value xsi:type="ns2:StringPropertyType">
-								<ns2:value>任务管理</ns2:value>
-							</ns2:value>
-						</ns2:param>
-					</ns2:UISkin>
-					<ns2:layout xsi:type="ns2:TableLayoutType">
-						<ns2:rowHeightWeight>600</ns2:rowHeightWeight>
-						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-					</ns2:layout>
-					<ns2:component xsi:type="ns2:UIFrameType" UIID="frame4" chunkName="org.shaolin.vogerp.commonmodel.diagram.ModularityModel" nodeName="UserNotification">
-					</ns2:component>
-					<ns2:layoutConstraint>
-						<ns2:componentId>frame4</ns2:componentId>
-						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-							x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
-					</ns2:layoutConstraint>
-				</ns2:component>
-				<ns2:layoutConstraint>
-					<ns2:componentId>secondPanel0</ns2:componentId>
+					<ns2:componentId>welcomeLabel</ns2:componentId>
 					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 						x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
 				</ns2:layoutConstraint>
-				<ns2:layoutConstraint>
-					<ns2:componentId>secondPanel1</ns2:componentId>
-					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-						x="1" y="0" align="FULL" cellUIClass=""></ns2:constraint>
-				</ns2:layoutConstraint>
 			</ns2:component>
-			 -->
 			  <ns2:layoutConstraint>
 					<ns2:componentId>topPanel</ns2:componentId>
 					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
@@ -157,10 +51,6 @@
 			<ns2:expressionString><![CDATA[
 			import org.shaolin.bmdp.runtime.AppContext;
 		    import org.shaolin.vogerp.commonmodel.IUserService;
-		    import org.shaolin.vogerp.commonmodel.be.PersonalAccountImpl;
-		    import org.shaolin.uimaster.page.flow.WebflowConstants;
-		    import org.shaolin.bmdp.runtime.security.UserContext;
-		    import org.shaolin.bmdp.workflow.be.NotificationImpl;
 			{
 			   @odContext.executeAllMappings();
 			}]]></ns2:expressionString>
