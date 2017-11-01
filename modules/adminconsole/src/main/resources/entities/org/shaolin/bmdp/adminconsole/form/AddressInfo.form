@@ -260,6 +260,25 @@
       <ns2:componentId>fieldPanel</ns2:componentId>
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
+    <ns2:constructorCode><![CDATA[
+       { 
+           // notify user open up the GPS.
+           if(navigator.geolocation) {
+	         var latitudeInfo = this.latitudeInfo;
+	         var longitudeInfo = this.longitudeInfo;
+	         navigator.geolocation.getCurrentPosition(
+                function(p){
+                    latitudeInfo.setValue(p.coords.latitude);
+                    longitudeInfo.setValue(p.coords.longitude);
+                },
+                function(e){
+                    var msg = e.code + "\n" + e.message;
+                    console.log(msg);
+                }
+	         );
+	       }
+       }]]>
+    </ns2:constructorCode>
   </ns2:body>
   <ns2:mapping>
     <systemVersion>0</systemVersion>

@@ -238,6 +238,15 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
 
         
 		        { 
+		            // get user cookie.
+		            if (this.errorInfo.value == "") {
+		               $(this.veriCode).parent().parent().css("display", "none");
+		               $(this.veriCodeQuestion).parent().parent().parent().css("display", "none");
+		            }
+		            var tempUserName = UIMaster.getCookie("userName");
+		            if (tempUserName != null) {
+		               this.userName.setValue(tempUserName);
+		            }
 		            // notify user open up the GPS.
 		            $("<div style='display:none;' id='mapcontainer'><div>").appendTo($(document.forms[0]));
 				    var map = new AMap.Map('mapcontainer');
@@ -270,6 +279,8 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
     Form.genVerifiCode = org_shaolin_bmdp_adminconsole_page_Login_genVerifiCode;
 
     Form.verifiCode = org_shaolin_bmdp_adminconsole_page_Login_verifiCode;
+
+    Form.showVerficationCode = org_shaolin_bmdp_adminconsole_page_Login_showVerficationCode;
 
     Form.showHelp = org_shaolin_bmdp_adminconsole_page_Login_showHelp;
 
@@ -329,6 +340,18 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
 
 
     /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_page_Login_showVerficationCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_showVerficationCode */
+        var o = this;
+        var UIEntity = this;
+
+		      {
+		         $(this.veriCode).parent().parent().css("display", "block");
+		         $(this.veriCodeQuestion).parent().parent().parent().css("display", "block");
+		      }
+		          }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_showVerficationCode */
+
+
+    /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_page_Login_showHelp(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_showHelp */
         var o = this;
         var UIEntity = this;
@@ -357,6 +380,8 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
 
 		      {
 		        this.password.setValue(md5(this.password.getValue()).toUpperCase());
+		        UIMaster.setCookie("userName", this.userName.getValue());
+		        //UIMaster.setCookie("password", this.password.getValue());
 		      }
 		      
         o.Submit_OutFunctionName(eventsource);

@@ -2,9 +2,9 @@
 <ns2:UIPage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common"
 	xsi:schemaLocation="">
-	<entityName>org.shaolin.bmdp.adminconsole.page.Login</entityName>
+	<entityName>org.shaolin.bmdp.adminconsole.page.PartnerLogin_mob</entityName>
 	<systemVersion>0</systemVersion>
-	<description>个人用户登录</description>
+	<description>加工商户登录</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 	    <ns2:eventHandler functionName="genVerifiCode">
             <ns2:ops xsi:type="ns2:OpCallAjaxType" name="genVerifiCode-20151227-1839">
@@ -45,8 +45,7 @@
                 { 
                     TextField veriCode = @page.getTextField("veriCode");
                     IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
-                    if (@page.getRequest().getSession().getAttribute("has_first_token") == null 
-                       || userService.checkVerifiAnswer(veriCode.getValue(), @page.getRequest())) {
+                    if (userService.checkVerifiAnswer(veriCode.getValue(), @page.getRequest())) {
                        veriCode.addStyle("background-color", "greenyellow");
                        @page.executeJavaScript("javascript:defaultname.Login(defaultname.verifiCode);");
                     } else {
@@ -69,17 +68,8 @@
 		      ]]></ns2:expressionString>
             </ns2:ops>
         </ns2:eventHandler>
-        <ns2:eventHandler functionName="showHelp">
-		    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-                <ns2:expressionString><![CDATA[
-		      {
-		        window.open("http://120.25.197.58:8099/xwiki");
-		      }
-		      ]]></ns2:expressionString>
-            </ns2:ops>
-        </ns2:eventHandler>
         <ns2:eventHandler functionName="forgetPassword">
-		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="forgetPassword-20170125-1839">
+		    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="forgetPassword-20170125-1849">
                 <ns2:exp>
                     <expressionString><![CDATA[
                 import java.util.HashMap;
@@ -93,7 +83,7 @@
                       RefForm form = new RefForm("userForm", "org.shaolin.bmdp.adminconsole.form.ForgetPassword", input);
                       @page.addElement(form);
                       
-                      form.openInWindows("找回密码", null, false);
+                      form.openInWindows("找回密码", null, true);
                 }
                 ]]></expressionString>
                 </ns2:exp>
@@ -105,8 +95,6 @@
                 <ns2:expressionString><![CDATA[
 		      {
 		        this.password.setValue(md5(this.password.getValue()).toUpperCase());
-		        UIMaster.setCookie("userName", this.userName.getValue());
-		        //UIMaster.setCookie("password", this.password.getValue());
 		      }
 		      ]]></ns2:expressionString>
           </ns2:ops>
@@ -114,39 +102,11 @@
 		<ns2:eventHandler functionName="Register"></ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:layout xsi:type="ns2:TableLayoutType">
-			    <ns2:rowHeightWeight>0</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>150</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>350</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>80</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			</ns2:layout>
-			<ns2:component xsi:type="ns2:UIPanelType" UIID="topBannerPanel">
-				<ns2:layout xsi:type="ns2:TableLayoutType">
-					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-					<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-				</ns2:layout>
-				<ns2:component xsi:type="ns2:UIImageType" UIID="helpIcon">
-                    <ns2:Property name="text" >
-                        <ns2:value xsi:type="ns2:StringPropertyType">
-                             <value>帮助中心</value>
-                       </ns2:value>
-                    </ns2:Property>
-                    <ns2:src xsi:type="ns2:ImagePropertyType">
-                        <ns2:location>/help.png</ns2:location>
-                    </ns2:src>
-                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
-                        <ns2:handler functionName="showHelp" />
-                    </ns2:EventListener>
-                    <ns2:showWords xsi:type="ns2:BooleanPropertyType">
-                        <ns2:value>true</ns2:value>
-                    </ns2:showWords>
-                </ns2:component>
-                <ns2:layoutConstraint>
-                    <ns2:componentId>helpIcon</ns2:componentId>
-                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                        x="0" y="0" align="FULL"></ns2:constraint>
-                </ns2:layoutConstraint>
-			</ns2:component>
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="topPanel">
 				<ns2:layout xsi:type="ns2:TableLayoutType">
 					<ns2:rowHeightWeight>30</ns2:rowHeightWeight>
@@ -167,253 +127,161 @@
                         x="0" y="1" align="FULL"></ns2:constraint>
                 </ns2:layoutConstraint>
 			</ns2:component>
-			
-			<ns2:component xsi:type="ns2:UIPanelType" UIID="middlePanel">
+			<ns2:component xsi:type="ns2:UIPanelType" UIID="loginPanel">
 				<ns2:layout xsi:type="ns2:TableLayoutType">
-				    <ns2:rowHeightWeight>0</ns2:rowHeightWeight>
-					<ns2:columnWidthWeight>400</ns2:columnWidthWeight>
-					<ns2:columnWidthWeight>0</ns2:columnWidthWeight>
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 				</ns2:layout>
-				<ns2:component xsi:type="ns2:UIImageType" UIID="advImagesUI">
-	               <ns2:isGallery xsi:type="ns2:BooleanPropertyType">
-	                   <ns2:value>true</ns2:value>
-	               </ns2:isGallery>
-	               <ns2:Property name="value">
-	                <ns2:value xsi:type="ns2:ExpressionPropertyType">
-			         <ns2:expression>
-			           <expressionString><![CDATA[
-			           import java.util.List;
-			           import org.shaolin.bmdp.runtime.Registry;
-			           import org.shaolin.bmdp.runtime.AppContext;
-			           import org.shaolin.vogerp.campaign.be.ICampaign;
-			           import org.shaolin.vogerp.campaign.ce.CampaignType;
-			           import org.shaolin.vogerp.campaign.ICampaignService;
-			           import org.shaolin.bmdp.runtime.security.UserContext;
-			           { 
-			               ICampaignService service = (ICampaignService)AppContext.get().getService(ICampaignService.class);
-			               List result = service.getTodaysCampaign(CampaignType.FESTIVAL, UserContext.getUserContext().getUserRoles());
-			               if (result != null && result.size() > 0) {
-			                   return ((ICampaign)result.get(0)).getAdvLoginImages();
-			               } else {
-			                   result = service.getTodaysCampaign(CampaignType.ADV, UserContext.getUserContext().getUserRoles());
-			                   if (result != null && result.size() > 0) {
-			                       return ((ICampaign)result.get(0)).getAdvLoginImages();
-			                   } 
-			               }
-			               return "/images/adv/mainpage"; 
-			           }]]></expressionString>
-			         </ns2:expression>
-		           </ns2:value>
-	            </ns2:Property>
-	                  <ns2:Property name="thumbnails">
-	                    <ns2:value xsi:type="ns2:BooleanPropertyType">
-	                       <value>false</value>
-	                    </ns2:value>
-	                  </ns2:Property>
-	               	  <ns2:Property name="height">
-	                      <ns2:value xsi:type="ns2:NumericPropertyType">
-			              <value>320</value>
-			           	</ns2:value>
-	                  </ns2:Property>
-	                  <ns2:Property name="width">
-	                      <ns2:value xsi:type="ns2:StringPropertyType">
-	                        <value>420</value>
-	                     </ns2:value>
-	                  </ns2:Property>
-	                  <ns2:Property name="mode">
-	                      <ns2:value xsi:type="ns2:StringPropertyType">
-	                        <value>slider</value>
-	                     </ns2:value>
-	                  </ns2:Property>
-	                  <ns2:Property name="slideshowAutostart">
-	                      <ns2:value xsi:type="ns2:StringPropertyType">
-	                        <value>true</value>
-	                     </ns2:value>
-	                  </ns2:Property>
-	                  <ns2:Property name="thumbnailsFullScreen">
-	                      <ns2:value xsi:type="ns2:BooleanPropertyType">
-	                        <value>false</value>
-	                     </ns2:value>
-	                  </ns2:Property>
-	                  <ns2:Property name="enableSelectSync">
-		            <ns2:value xsi:type="ns2:BooleanPropertyType">
-		                <value>false</value>
-		            </ns2:value>
-		         </ns2:Property>
-	           </ns2:component>
-				<ns2:component xsi:type="ns2:UIPanelType" UIID="loginPanel">
-					<ns2:layout xsi:type="ns2:TableLayoutType">
-						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-						<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-						<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-					</ns2:layout>
-					<ns2:component xsi:type="ns2:UIHiddenType" UIID="latitudeInfo" />
-				    <ns2:component xsi:type="ns2:UIHiddenType" UIID="longitudeInfo" />
-					<ns2:component xsi:type="ns2:UILabelType" UIID="errorInfo">
-					   <ns2:Property name="needAjaxSupport">
-			               <ns2:value xsi:type="ns2:BooleanPropertyType">
-			                   <value>true</value>
-			               </ns2:value>
-			           </ns2:Property>
+				<ns2:component xsi:type="ns2:UIHiddenType" UIID="latitudeInfo" />
+				<ns2:component xsi:type="ns2:UIHiddenType" UIID="longitudeInfo" />
+				<ns2:component xsi:type="ns2:UILabelType" UIID="errorInfo">
+				   <ns2:Property name="needAjaxSupport">
+		               <ns2:value xsi:type="ns2:BooleanPropertyType">
+		                   <value>true</value>
+		               </ns2:value>
+		           </ns2:Property>
+				</ns2:component>
+				<ns2:component xsi:type="ns2:UITextFieldType" UIID="userName">
+					<ns2:title xsi:type="ns2:StringPropertyType">
+						<ns2:value>用户名</ns2:value>
+					</ns2:title>
+					<ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+						<ns2:value>用户名/手机号</ns2:value>
+					</ns2:widgetLabel>
+					<ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+						<ns2:value>false</ns2:value>
+					</ns2:allowBlank>
+					<ns2:allowBlankText xsi:type="ns2:StringPropertyType">
+						<ns2:value>用户名不能为空!</ns2:value>
+					</ns2:allowBlankText>
+				</ns2:component>
+				<ns2:component xsi:type="ns2:UIPasswordFieldType" UIID="password">
+					<ns2:title xsi:type="ns2:StringPropertyType">
+						<ns2:value>密码</ns2:value>
+					</ns2:title>
+					<ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+						<ns2:value>密码</ns2:value>
+					</ns2:widgetLabel>
+					<ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+						<ns2:value>false</ns2:value>
+					</ns2:allowBlank>
+					<ns2:allowBlankText xsi:type="ns2:StringPropertyType">
+						<ns2:value>密码不能为空!</ns2:value>
+					</ns2:allowBlankText>
+				</ns2:component>
+                <ns2:component xsi:type="ns2:UILabelType" UIID="veriCodeQuestion">
+                    <ns2:Property name="needAjaxSupport">
+		               <ns2:value xsi:type="ns2:BooleanPropertyType">
+		                   <value>true</value>
+		               </ns2:value>
+		            </ns2:Property>
+                    <ns2:text xsi:type="ns2:StringPropertyType">
+                        <ns2:value>请您点一下，谢谢</ns2:value>
+                    </ns2:text>
+                    <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+                        <ns2:value>验证问题</ns2:value>
+                    </ns2:widgetLabel>
+                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
+                        <ns2:handler functionName="genVerifiCode" />
+                    </ns2:EventListener>
+                </ns2:component>
+				<ns2:component xsi:type="ns2:UITextFieldType" UIID="veriCode">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>回答</ns2:value>
+                    </ns2:title>
+                    <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+                        <ns2:value>回答</ns2:value>
+                    </ns2:widgetLabel>
+                    <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+                        <ns2:value>false</ns2:value>
+                    </ns2:allowBlank>
+                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
+                        <ns2:handler functionName="verifiCode" />
+                    </ns2:EventListener>
+                </ns2:component>
+                <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+	                <ns2:layout xsi:type="ns2:TableLayoutType">
+	                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+	                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+	                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+	                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+	                </ns2:layout>
+					<ns2:component xsi:type="ns2:UIButtonType" UIID="loginBtn">
+						<ns2:text xsi:type="ns2:StringPropertyType">
+							<ns2:value>登录</ns2:value>
+						</ns2:text>
+						<ns2:EventListener xsi:type="ns2:ClickListenerType">
+							<ns2:handler functionName="verifiCode" />
+						</ns2:EventListener>
 					</ns2:component>
-					<ns2:component xsi:type="ns2:UITextFieldType" UIID="userName">
-						<ns2:title xsi:type="ns2:StringPropertyType">
-							<ns2:value>用户名</ns2:value>
-						</ns2:title>
-						<ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-							<ns2:value>用户名/手机号</ns2:value>
-						</ns2:widgetLabel>
-						<ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
-							<ns2:value>false</ns2:value>
-						</ns2:allowBlank>
-						<ns2:allowBlankText xsi:type="ns2:StringPropertyType">
-							<ns2:value>The user name must not be null.</ns2:value>
-						</ns2:allowBlankText>
-					</ns2:component>
-					<ns2:component xsi:type="ns2:UIPasswordFieldType" UIID="password">
-						<ns2:title xsi:type="ns2:StringPropertyType">
-							<ns2:value>密码</ns2:value>
-						</ns2:title>
-						<ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-							<ns2:value>密码</ns2:value>
-						</ns2:widgetLabel>
-						<ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
-							<ns2:value>false</ns2:value>
-						</ns2:allowBlank>
-						<ns2:allowBlankText xsi:type="ns2:StringPropertyType">
-							<ns2:value>The password must not be null.</ns2:value>
-						</ns2:allowBlankText>
-					</ns2:component>
-	                <ns2:component xsi:type="ns2:UILabelType" UIID="veriCodeQuestion">
-	                    <ns2:Property name="needAjaxSupport">
-			               <ns2:value xsi:type="ns2:BooleanPropertyType">
-			                   <value>true</value>
-			               </ns2:value>
-			            </ns2:Property>
+					<ns2:component xsi:type="ns2:UIButtonType" UIID="registerBtn">
 	                    <ns2:text xsi:type="ns2:StringPropertyType">
-	                        <ns2:value>请您点一下，谢谢</ns2:value>
+	                        <ns2:value>注册</ns2:value>
 	                    </ns2:text>
-	                    <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-	                        <ns2:value>验证问题</ns2:value>
-	                    </ns2:widgetLabel>
 	                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
-	                        <ns2:handler functionName="genVerifiCode" />
+	                        <ns2:handler functionName="Register" />
 	                    </ns2:EventListener>
 	                </ns2:component>
-					<ns2:component xsi:type="ns2:UITextFieldType" UIID="veriCode">
-	                    <ns2:title xsi:type="ns2:StringPropertyType">
-	                        <ns2:value>回答</ns2:value>
-	                    </ns2:title>
-	                    <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-	                        <ns2:value>回答</ns2:value>
-	                    </ns2:widgetLabel>
-	                    <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
-	                        <ns2:value>false</ns2:value>
-	                    </ns2:allowBlank>
+	                <ns2:component xsi:type="ns2:UILinkType" UIID="forgetPwdBtn">
+	                    <ns2:text xsi:type="ns2:StringPropertyType">
+	                        <ns2:value>忘记密码</ns2:value>
+	                    </ns2:text>
 	                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
-	                        <ns2:handler functionName="verifiCode" />
+	                        <ns2:handler functionName="forgetPassword" />
 	                    </ns2:EventListener>
-	                </ns2:component>
-	                <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
-		                <ns2:layout xsi:type="ns2:TableLayoutType">
-		                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-		                    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-		                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-		                    <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-		                </ns2:layout>
-						<ns2:component xsi:type="ns2:UIButtonType" UIID="loginBtn">
-							<ns2:text xsi:type="ns2:StringPropertyType">
-								<ns2:value>登录</ns2:value>
-							</ns2:text>
-							<ns2:Property name="skipSetAsEnabled">
-					            <ns2:value xsi:type="ns2:BooleanPropertyType">
-							         <ns2:value>true</ns2:value>
-						        </ns2:value>
-				            </ns2:Property>
-							<ns2:EventListener xsi:type="ns2:ClickListenerType">
-								<ns2:handler functionName="verifiCode" />
-							</ns2:EventListener>
-						</ns2:component>
-						<ns2:component xsi:type="ns2:UIButtonType" UIID="registerBtn">
-		                    <ns2:text xsi:type="ns2:StringPropertyType">
-		                        <ns2:value>注册</ns2:value>
-		                    </ns2:text>
-		                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
-		                        <ns2:handler functionName="Register" />
-		                    </ns2:EventListener>
-		                </ns2:component>
-		                <ns2:component xsi:type="ns2:UILinkType" UIID="forgetPwdBtn">
-		                    <ns2:text xsi:type="ns2:StringPropertyType">
-		                        <ns2:value>忘记密码</ns2:value>
-		                    </ns2:text>
-		                    <ns2:EventListener xsi:type="ns2:ClickListenerType">
-		                        <ns2:handler functionName="forgetPassword" />
-		                    </ns2:EventListener>
-		                </ns2:component>
-		                <ns2:layoutConstraint>
-		                    <ns2:componentId>loginBtn</ns2:componentId>
-		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-		                        x="0" y="0" align="FULL"></ns2:constraint>
-		                </ns2:layoutConstraint>
-		                <ns2:layoutConstraint>
-		                    <ns2:componentId>registerBtn</ns2:componentId>
-		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-		                        x="1" y="0" align="FULL"></ns2:constraint>
-		                </ns2:layoutConstraint>
-		                <ns2:layoutConstraint>
-		                    <ns2:componentId>forgetPwdBtn</ns2:componentId>
-		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-		                        x="0" y="1" align="FULL"></ns2:constraint>
-		                </ns2:layoutConstraint>
 	                </ns2:component>
 	                <ns2:layoutConstraint>
-	                    <ns2:componentId>errorInfo</ns2:componentId>
+	                    <ns2:componentId>loginBtn</ns2:componentId>
 	                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 	                        x="0" y="0" align="FULL"></ns2:constraint>
 	                </ns2:layoutConstraint>
-					<ns2:layoutConstraint>
-	                    <ns2:componentId>userName</ns2:componentId>
+	                <ns2:layoutConstraint>
+	                    <ns2:componentId>registerBtn</ns2:componentId>
+	                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+	                        x="1" y="0" align="FULL"></ns2:constraint>
+	                </ns2:layoutConstraint>
+	                <ns2:layoutConstraint>
+	                    <ns2:componentId>forgetPwdBtn</ns2:componentId>
 	                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 	                        x="0" y="1" align="FULL"></ns2:constraint>
 	                </ns2:layoutConstraint>
-					<ns2:layoutConstraint>
-						<ns2:componentId>password</ns2:componentId>
-						<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-							x="0" y="2" align="FULL"></ns2:constraint>
-					</ns2:layoutConstraint>
-					<ns2:layoutConstraint>
-	                    <ns2:componentId>veriCodeQuestion</ns2:componentId>
-	                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-	                        x="0" y="3" align="FULL"></ns2:constraint>
-	                </ns2:layoutConstraint>
-					<ns2:layoutConstraint>
-	                    <ns2:componentId>veriCode</ns2:componentId>
-	                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-	                        x="0" y="4" align="FULL"></ns2:constraint>
-	                </ns2:layoutConstraint>
-	                <ns2:layoutConstraint>
-	                    <ns2:componentId>actionPanel</ns2:componentId>
-	                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-	                        x="0" y="5" align="FULL"></ns2:constraint>
-	                </ns2:layoutConstraint>
-				</ns2:component>
+                </ns2:component>
+                <ns2:layoutConstraint>
+                    <ns2:componentId>errorInfo</ns2:componentId>
+                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                        x="0" y="0" align="FULL"></ns2:constraint>
+                </ns2:layoutConstraint>
 				<ns2:layoutConstraint>
-					<ns2:componentId>advImagesUI</ns2:componentId>
+                    <ns2:componentId>userName</ns2:componentId>
+                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                        x="0" y="1" align="FULL"></ns2:constraint>
+                </ns2:layoutConstraint>
+				<ns2:layoutConstraint>
+					<ns2:componentId>password</ns2:componentId>
 					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-						x="0" y="0" align="FULL"></ns2:constraint>
+						x="0" y="2" align="FULL"></ns2:constraint>
 				</ns2:layoutConstraint>
 				<ns2:layoutConstraint>
-					<ns2:componentId>loginPanel</ns2:componentId>
-					<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-						x="1" y="0" align="FULL"></ns2:constraint>
-				</ns2:layoutConstraint>
-				
+                    <ns2:componentId>veriCodeQuestion</ns2:componentId>
+                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                        x="0" y="3" align="FULL"></ns2:constraint>
+                </ns2:layoutConstraint>
+				<ns2:layoutConstraint>
+                    <ns2:componentId>veriCode</ns2:componentId>
+                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                        x="0" y="4" align="FULL"></ns2:constraint>
+                </ns2:layoutConstraint>
+                <ns2:layoutConstraint>
+                    <ns2:componentId>actionPanel</ns2:componentId>
+                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                        x="0" y="5" align="FULL"></ns2:constraint>
+                </ns2:layoutConstraint>
 			</ns2:component>
-			
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="bottomPanel">
 				<ns2:layout xsi:type="ns2:TableLayoutType">
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -431,29 +299,25 @@
                 </ns2:layoutConstraint>
 			</ns2:component>
 			<ns2:layoutConstraint>
-				<ns2:componentId>topBannerPanel</ns2:componentId>
+				<ns2:componentId>topPanel</ns2:componentId>
 				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 					x="0" y="0" align="FULL"></ns2:constraint>
 			</ns2:layoutConstraint>
 			<ns2:layoutConstraint>
-				<ns2:componentId>topPanel</ns2:componentId>
+				<ns2:componentId>loginPanel</ns2:componentId>
 				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
 					x="0" y="1" align="FULL"></ns2:constraint>
 			</ns2:layoutConstraint>
 			<ns2:layoutConstraint>
-				<ns2:componentId>middlePanel</ns2:componentId>
-				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-					x="0" y="2" align="FULL"></ns2:constraint>
-			</ns2:layoutConstraint>
-			<ns2:layoutConstraint>
 				<ns2:componentId>bottomPanel</ns2:componentId>
 				<ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-					x="0" y="3" align="FULL"></ns2:constraint>
+					x="0" y="2" align="FULL"></ns2:constraint>
 			</ns2:layoutConstraint>
 			<ns2:constructorCode><![CDATA[
 		        { 
 		            // get user cookie.
 		            if (this.errorInfo.value == "") {
+		               this.veriCode.setValue("a");
 		               $(this.veriCode).parent().parent().css("display", "none");
 		               $(this.veriCodeQuestion).parent().parent().parent().css("display", "none");
 		            }
@@ -499,15 +363,15 @@
 		<ns2:DataEntity category="JavaClass" name="verifyCode" scope="InOut">
             <ns2:type entityName="java.lang.String" />
         </ns2:DataEntity>
-        <ns2:DataEntity category="JavaClass" name="latitude" scope="InOut">
+		<ns2:DataEntity category="JavaClass" name="errorCode" scope="In">
+			<ns2:type entityName="java.lang.String" />
+		</ns2:DataEntity>
+		<ns2:DataEntity category="JavaClass" name="latitude" scope="InOut">
             <ns2:type entityName="java.lang.String" />
         </ns2:DataEntity>
         <ns2:DataEntity category="JavaClass" name="longitude" scope="InOut">
             <ns2:type entityName="java.lang.String" />
         </ns2:DataEntity>
-		<ns2:DataEntity category="JavaClass" name="errorCode" scope="In">
-			<ns2:type entityName="java.lang.String" />
-		</ns2:DataEntity>
 		<ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType"
 			name="simpleMapping0">
 			<ns2:mappingRule
@@ -572,14 +436,12 @@
 			  IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
 			  if ($errorCode != null && !$errorCode.isEmpty()) {
 			  	  $errorCode = service.getErrorInfo($errorCode);
-			  } else {
-			      // the first of loading page.
-			      service.preLogin(@odContext.getRequest());
-			      if (@odContext.getRequest().getSession().getAttribute("has_first_token") != null) {
-				      $errorCode = "欢迎来到加工达人登录页面！";
-				  }
 			  }
-			  @odContext.executeAllMappings();
+			  service.preLogin(@odContext.getRequest());
+			  if ($errorCode == null && @odContext.getRequest().getSession().getAttribute("has_first_token") != null) {
+			      $errorCode = "欢迎来到加工达人登录页面！";
+			  }
+			   @odContext.executeAllMappings();
 			}]]></ns2:expressionString>
 		</ns2:serverOperation>
 		<ns2:clientAction xsi:type="ns2:ExpressionType">

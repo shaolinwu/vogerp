@@ -4,7 +4,7 @@
 	xsi:schemaLocation="">
 	<entityName>org.shaolin.bmdp.adminconsole.page.Login_mob</entityName>
 	<systemVersion>0</systemVersion>
-	<description>登录</description>
+	<description>个人用户登录</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 	    <ns2:eventHandler functionName="genVerifiCode">
             <ns2:ops xsi:type="ns2:OpCallAjaxType" name="genVerifiCode-20151227-1839">
@@ -44,22 +44,29 @@
                 import org.shaolin.bmdp.runtime.AppContext;
                 { 
                     TextField veriCode = @page.getTextField("veriCode");
-                    if (veriCode.getValue() == null) {
-                       veriCode.addStyle("background-image", "none");
-                       veriCode.addStyle("background-color", "red");
-                       return;
-                    }
                     IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
-                    if (userService.checkVerifiAnswer(veriCode.getValue(), @page.getRequest())) {
+                    if (@page.getRequest().getSession().getAttribute("has_first_token") == null 
+                       || userService.checkVerifiAnswer(veriCode.getValue(), @page.getRequest())) {
                        veriCode.addStyle("background-color", "greenyellow");
                        @page.executeJavaScript("javascript:defaultname.Login(defaultname.verifiCode);");
                     } else {
                        veriCode.addStyle("background-image", "none");
                        veriCode.addStyle("background-color", "red");
+                       @page.executeJavaScript("javascript:defaultname.showVerficationCode(defaultname.verifiCode);");
                     }
                 }
                 ]]></expressionString>
                 </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="showVerficationCode">
+		    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+                <ns2:expressionString><![CDATA[
+		      {
+		         $(this.veriCode).parent().parent().css("display", "block");
+		         $(this.veriCodeQuestion).parent().parent().parent().css("display", "block");
+		      }
+		      ]]></ns2:expressionString>
             </ns2:ops>
         </ns2:eventHandler>
         <ns2:eventHandler functionName="forgetPassword">
@@ -89,6 +96,8 @@
                 <ns2:expressionString><![CDATA[
 		      {
 		        this.password.setValue(md5(this.password.getValue()).toUpperCase());
+		        UIMaster.setCookie("userName", this.userName.getValue());
+		        //UIMaster.setCookie("password", this.password.getValue());
 		      }
 		      ]]></ns2:expressionString>
           </ns2:ops>
@@ -309,6 +318,16 @@
 			</ns2:layoutConstraint>
 			<ns2:constructorCode><![CDATA[
 		        { 
+		            // get user cookie.
+		            if (this.errorInfo.value == "") {
+		               this.veriCode.setValue("a");
+		               $(this.veriCode).parent().parent().css("display", "none");
+		               $(this.veriCodeQuestion).parent().parent().parent().css("display", "none");
+		            }
+		            var tempUserName = UIMaster.getCookie("userName");
+		            if (tempUserName != null) {
+		               this.userName.setValue(tempUserName);
+		            }
 		            // notify user open up the GPS.
 		            $("<div style='display:none;' id='mapcontainer'><div>").appendTo($(document.forms[0]));
 				    var map = new AMap.Map('mapcontainer');
@@ -417,12 +436,17 @@
 			import org.shaolin.bmdp.runtime.AppContext;
 			import org.shaolin.vogerp.commonmodel.IUserService;
 			{
+			  IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
 			  if ($errorCode != null && !$errorCode.isEmpty()) {
-			  	  IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
 			  	  $errorCode = service.getErrorInfo($errorCode);
+			  } else {
+			      // the first of loading page.
+			      service.preLogin(@odContext.getRequest());
+			      if (@odContext.getRequest().getSession().getAttribute("has_first_token") != null) {
+				      $errorCode = "欢迎来到加工达人登录页面！";
+				  }
 			  }
-			  
-			   @odContext.executeAllMappings();
+			  @odContext.executeAllMappings();
 			}]]></ns2:expressionString>
 		</ns2:serverOperation>
 		<ns2:clientAction xsi:type="ns2:ExpressionType">

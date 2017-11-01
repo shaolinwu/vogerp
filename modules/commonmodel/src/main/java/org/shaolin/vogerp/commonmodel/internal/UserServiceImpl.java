@@ -259,14 +259,14 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	@Override
 	public boolean checkVerifiAnswer(String answer, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		Object value = session.getAttribute(WebflowConstants.USER_TOKEN);
-		if (value == null) {
-			return false;
-		}
-		//allows the first try has no verified code. its quite useful for App login and tolerated.
+		//allows the first try has no verified code. its quite useful for App login and first tolerated login.
 		if (session.getAttribute("has_first_token") == null) {
 			session.setAttribute("has_first_token", "");
 			return true;
+		}
+		Object value = session.getAttribute(WebflowConstants.USER_TOKEN);
+		if (value == null) {
+			return false;
 		}
 		return value.toString().equalsIgnoreCase(answer);
 	}

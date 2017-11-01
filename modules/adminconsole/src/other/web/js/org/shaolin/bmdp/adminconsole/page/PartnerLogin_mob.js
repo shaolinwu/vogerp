@@ -1,6 +1,6 @@
 /* null */
 /* auto generated constructor */
-function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
+function org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
     var vogerplogo = new UIMaster.ui.image
@@ -165,7 +165,7 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
 
     Form.user_constructor = function()
     {
-        /* Construct_FIRST:org_shaolin_bmdp_adminconsole_page_Login_mob */
+        /* Construct_FIRST:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob */
 
         
 		        { 
@@ -205,54 +205,54 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
 				    }
 		        }
 		    
-            /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_Login_mob */
+            /* Construct_LAST:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob */
     };
 
-    Form.genVerifiCode = org_shaolin_bmdp_adminconsole_page_Login_mob_genVerifiCode;
+    Form.genVerifiCode = org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_genVerifiCode;
 
-    Form.verifiCode = org_shaolin_bmdp_adminconsole_page_Login_mob_verifiCode;
+    Form.verifiCode = org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_verifiCode;
 
-    Form.showVerficationCode = org_shaolin_bmdp_adminconsole_page_Login_mob_showVerficationCode;
+    Form.showVerficationCode = org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_showVerficationCode;
 
-    Form.forgetPassword = org_shaolin_bmdp_adminconsole_page_Login_mob_forgetPassword;
+    Form.forgetPassword = org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_forgetPassword;
 
-    Form.Login = org_shaolin_bmdp_adminconsole_page_Login_mob_Login;
+    Form.Login = org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_Login;
 
-    Form.Register = org_shaolin_bmdp_adminconsole_page_Login_mob_Register;
+    Form.Register = org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_Register;
 
-    Form.initPageJs = org_shaolin_bmdp_adminconsole_page_Login_mob_initPageJs;
+    Form.initPageJs = org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_initPageJs;
 
-    Form.finalizePageJs = org_shaolin_bmdp_adminconsole_page_Login_mob_finalizePageJs;
+    Form.finalizePageJs = org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_finalizePageJs;
 
-    Form.Submit_OutFunctionName = org_shaolin_bmdp_adminconsole_page_Login_mob_Submit_OutFunctionName;
+    Form.Submit_OutFunctionName = org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_Submit_OutFunctionName;
 
-    Form.Register_OutFunctionName = org_shaolin_bmdp_adminconsole_page_Login_mob_Register_OutFunctionName;
+    Form.Register_OutFunctionName = org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_Register_OutFunctionName;
 
     Form.__AJAXSubmit = false;
     
-    Form.__entityName="org.shaolin.bmdp.adminconsole.page.Login_mob";
+    Form.__entityName="org.shaolin.bmdp.adminconsole.page.PartnerLogin_mob";
 
     Form.init();
     return Form;
 };
 
     /* EventHandler Functions */
-/* Other_Func_FIRST:org_shaolin_bmdp_adminconsole_page_Login_mob */
-/* Other_Func_LAST:org_shaolin_bmdp_adminconsole_page_Login_mob */
+/* Other_Func_FIRST:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob */
+/* Other_Func_LAST:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_bmdp_adminconsole_page_Login_mob_genVerifiCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_mob_genVerifiCode */
+    function org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_genVerifiCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_genVerifiCode */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"genVerifiCode-20151227-1839",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_mob_genVerifiCode */
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_genVerifiCode */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_bmdp_adminconsole_page_Login_mob_verifiCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_mob_verifiCode */
+    function org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_verifiCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_verifiCode */
         var o = this;
         var UIEntity = this;
 
@@ -266,11 +266,11 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifiCode-20151227-1839",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_mob_verifiCode */
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_verifiCode */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_bmdp_adminconsole_page_Login_mob_showVerficationCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_mob_showVerficationCode */
+    function org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_showVerficationCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_showVerficationCode */
         var o = this;
         var UIEntity = this;
 
@@ -278,59 +278,57 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
 		         $(this.veriCode).parent().parent().css("display", "block");
 		         $(this.veriCodeQuestion).parent().parent().parent().css("display", "block");
 		      }
-		          }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_mob_showVerficationCode */
+		          }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_showVerficationCode */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_bmdp_adminconsole_page_Login_mob_forgetPassword(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_mob_forgetPassword */
+    function org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_forgetPassword(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_forgetPassword */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"forgetPassword-20170125-1849",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_mob_forgetPassword */
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_forgetPassword */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_bmdp_adminconsole_page_Login_mob_Login(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_mob_Login */
+    function org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_Login(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_Login */
         var o = this;
         var UIEntity = this;
 
 		      {
 		        this.password.setValue(md5(this.password.getValue()).toUpperCase());
-		        UIMaster.setCookie("userName", this.userName.getValue());
-		        //UIMaster.setCookie("password", this.password.getValue());
 		      }
 		      
         o.Submit_OutFunctionName(eventsource);
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_mob_Login */
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_Login */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_bmdp_adminconsole_page_Login_mob_Register(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_mob_Register */
+    function org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_Register(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_Register */
         var o = this;
         var UIEntity = this;
 
         o.Register_OutFunctionName(eventsource);
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_mob_Register */
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_Register */
 
 
-    function org_shaolin_bmdp_adminconsole_page_Login_mob_initPageJs(){/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_mob_initPageJs */
+    function org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_initPageJs(){/* Gen_First:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_initPageJs */
         var constraint_result = true;
         var UIEntity = this;
 {
 			// hello, my first js.
 			}
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_mob_initPageJs */
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_initPageJs */
 
 
-    function org_shaolin_bmdp_adminconsole_page_Login_mob_finalizePageJs(){/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_mob_finalizePageJs */
+    function org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_finalizePageJs(){/* Gen_First:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_finalizePageJs */
 
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_mob_finalizePageJs */
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_finalizePageJs */
 
 
-    function org_shaolin_bmdp_adminconsole_page_Login_mob_Submit_OutFunctionName(eventsource) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_mob_Submit_OutFunctionName */
+    function org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_Submit_OutFunctionName(eventsource) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_Submit_OutFunctionName */
         var constraint_result = true;
         var myForm;
         if (this.formName != undefined)
@@ -358,9 +356,9 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
           myForm.submit();
         }
         return constraint_result;
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_mob_Submit_OutFunctionName */
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_Submit_OutFunctionName */
 
-    function org_shaolin_bmdp_adminconsole_page_Login_mob_Register_OutFunctionName(eventsource) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_Login_mob_Register_OutFunctionName */
+    function org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_Register_OutFunctionName(eventsource) {/* Gen_First:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_Register_OutFunctionName */
         var constraint_result = true;
         var myForm;
         if (this.formName != undefined)
@@ -390,6 +388,6 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
           myForm.submit();
         }
         return constraint_result;
-    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_mob_Register_OutFunctionName */
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_PartnerLogin_mob_Register_OutFunctionName */
 
 

@@ -102,6 +102,7 @@
       </ns2:next>
     </ns2:out>
   </ns2:webNode>
+  
   <ns2:webNode xsi:type="ns2:PageNodeType" name="LoginPage">
     <ns2:variables name="userName" category="JavaClass">
       <type entityName="java.lang.String"></type>
@@ -176,6 +177,88 @@
     </ns2:out>  
     <ns2:sourceEntity entityName="org.shaolin.bmdp.adminconsole.page.Login"></ns2:sourceEntity>
   </ns2:webNode>
+  
+  <ns2:webNode xsi:type="ns2:PageNodeType" name="PartnerLoginPage">
+    <ns2:variables name="userName" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="password" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="errorCode" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+     <ns2:variables name="verifyCode" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="latitude" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:variables name="longitude" category="JavaClass">
+      <type entityName="java.lang.String"></type>
+      <default>
+        <expressionString><![CDATA[""]]></expressionString>
+      </default>
+    </ns2:variables>
+    <ns2:out xsi:type="ns2:DisplayOutType" name="Submit">
+      <ns2:next>
+        <ns2:destNode>Authentication</ns2:destNode>
+        <ns2:outDataMappingToNode name="userName">
+          <expression>
+            <expressionString><![CDATA[$userName]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="password">
+          <expression>
+            <expressionString><![CDATA[$password]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="verifyCode">
+          <expression>
+            <expressionString><![CDATA[$verifyCode]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="longitude">
+          <expression>
+            <expressionString><![CDATA[$longitude]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="latitude">
+          <expression>
+            <expressionString><![CDATA[$latitude]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="isPartnerLogin">
+          <expression>
+            <expressionString><![CDATA[Boolean.TRUE]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+      </ns2:next>
+    </ns2:out>
+    <ns2:out xsi:type="ns2:DisplayOutType" name="Register">
+      <ns2:next>
+        <ns2:destNode>Registration</ns2:destNode>
+      </ns2:next>
+    </ns2:out>  
+    <ns2:sourceEntity entityName="org.shaolin.bmdp.adminconsole.page.PartnerLogin"></ns2:sourceEntity>
+  </ns2:webNode>
+  
+  
   <ns2:webNode xsi:type="ns2:LogicNodeType" name="Authentication">
     <ns2:variables name="userName" category="JavaClass">
       <type entityName="java.lang.String"></type>
@@ -213,6 +296,12 @@
         <expressionString><![CDATA[""]]></expressionString>
       </default>
     </ns2:variables>
+    <ns2:variables name="isPartnerLogin" category="JavaClass">
+      <type entityName="java.lang.Boolean"></type>
+      <default>
+        <expressionString><![CDATA[Boolean.FALSE]]></expressionString>
+      </default>
+    </ns2:variables>
     <ns2:operation>
       <expressionString><![CDATA[
       import org.shaolin.bmdp.runtime.AppContext;
@@ -236,10 +325,39 @@
     </ns2:operation>
     <ns2:out xsi:type="ns2:ConditionalOutType" name="Fail">
       <ns2:conditionExpression>
-      	<expressionString><![CDATA[{return !$errorCode.isEmpty();}]]></expressionString>
+      	<expressionString><![CDATA[{return !$errorCode.isEmpty() && $isPartnerLogin == Boolean.FALSE;}]]></expressionString>
       </ns2:conditionExpression>
       <ns2:next>
         <ns2:destNode>LoginPage</ns2:destNode>
+        <ns2:outDataMappingToNode name="userName">
+          <expression>
+            <expressionString><![CDATA[$userName]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="password">
+          <expression>
+            <!-- don't pass the password to client! -->
+            <expressionString><![CDATA[""]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="errorCode">
+          <expression>
+            <expressionString><![CDATA[$errorCode]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+        <ns2:outDataMappingToNode name="verifyCode">
+          <expression>
+            <expressionString><![CDATA[""]]></expressionString>
+          </expression>
+        </ns2:outDataMappingToNode>
+      </ns2:next>
+    </ns2:out>
+    <ns2:out xsi:type="ns2:ConditionalOutType" name="Fail1">
+      <ns2:conditionExpression>
+      	<expressionString><![CDATA[{return !$errorCode.isEmpty() && $isPartnerLogin != Boolean.FALSE;}]]></expressionString>
+      </ns2:conditionExpression>
+      <ns2:next>
+        <ns2:destNode>PartnerLoginPage</ns2:destNode>
         <ns2:outDataMappingToNode name="userName">
           <expression>
             <expressionString><![CDATA[$userName]]></expressionString>
