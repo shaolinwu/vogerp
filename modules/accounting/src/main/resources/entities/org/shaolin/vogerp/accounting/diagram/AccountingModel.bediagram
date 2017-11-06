@@ -84,6 +84,18 @@
             <bediagram:type xsi:type="bediagram:DoubleType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>serviceChargeId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>serviceChargeAAmount</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>serviceChargeBAmount</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>startCreateDate</bediagram:name>
             <bediagram:type xsi:type="bediagram:DateTimeType" />
         </bediagram:member>
@@ -181,7 +193,7 @@
             <bediagram:type xsi:type="bediagram:BooleanType" />
         </bediagram:member>
     </bediagram:beEntity>
-    <!-- all request actions for a pay order. -->
+    <!-- all request actions for a pay order such refunding, withdraw. -->
     <bediagram:beEntity needPersist="true" needOrgId="true">
         <common:entityName>PayOrderRequest</common:entityName>
         <bediagram:member pk="true">
@@ -275,8 +287,7 @@
            一进一出一般为当月里发生，或者在一张凭证中发生，也有不在当期发生的一进一出。
  Accounting Voucher/Accounting Document/Transaction
   -->
-	<bediagram:beEntity needOrgId="true" needPersist="true"
-	needTask="true" needUIEntity="true">
+	<bediagram:beEntity needOrgId="true" needPersist="true" needTask="true">
 		<common:entityName>AccountVoucher</common:entityName>
 		<bediagram:member pk="true">
 			<bediagram:name>id</bediagram:name>
@@ -312,14 +323,6 @@
 		<bediagram:member>
 			<bediagram:name>comment</bediagram:name>
 			<bediagram:type xsi:type="bediagram:StringType" />
-		</bediagram:member>
-		<bediagram:member>
-			<bediagram:name>doubleEnties</bediagram:name>
-			<bediagram:type xsi:type="bediagram:BEListType">
-				<bediagram:elementType xsi:type="bediagram:BEObjRefType">
-					<bediagram:targetEntity entityName="DoubleEntry" />
-				</bediagram:elementType>
-			</bediagram:type>
 		</bediagram:member>
 		<bediagram:member>
 			<!-- 合计, 不需要存储字段 -->
@@ -377,10 +380,37 @@
 			<bediagram:type xsi:type="bediagram:DateTimeType" />
 		</bediagram:member>
 	</bediagram:beEntity>
-	
+	<!-- Service charges configuration. 各类业务手续费配制。 -->
+	<bediagram:beEntity needPersist="true" needUIEntity="true">
+        <common:entityName>ServiceChargeTemplate</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 打款帐号手续费百分比。-->
+            <bediagram:name>chargeARate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 收钱帐号手续费百分比。-->
+            <bediagram:name>chargeBRate</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 支付的业务类型 -->
+            <bediagram:name>payBusinessType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="PayBusinessType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>version</bediagram:name>
+            <bediagram:type xsi:type="bediagram:IntType" />
+        </bediagram:member>
+    </bediagram:beEntity>
 	<!-- 复式记账法/通用记账凭证 -->
-	<bediagram:beEntity needPersist="true" needUIEntity="true"
-	needUITableEditor="true">
+	<bediagram:beEntity needPersist="true" >
 		<common:entityName>DoubleEntry</common:entityName>
 		<bediagram:member pk="true">
 			<bediagram:name>id</bediagram:name>
@@ -404,105 +434,41 @@
 			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
 		<bediagram:member>
+			<!-- 凭证号/payNumber -->
+			<bediagram:name>voucherNumber</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 结算方式 -->
+			<bediagram:name>settlementMethod</bediagram:name>
+			<bediagram:type xsi:type="bediagram:CEObjRefType">
+				<bediagram:targetEntity entityName="SettlementMethodType" />
+			</bediagram:type>
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 结算号 -->
+			<bediagram:name>settlementNumber</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
+			<!-- 借方Account -->
+			<bediagram:name>debitAccount</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
 			<!-- 借方金额 -->
 			<bediagram:name>debitAmount</bediagram:name>
 			<bediagram:type xsi:type="bediagram:DoubleType" />
 		</bediagram:member>
 		<bediagram:member>
+			<!-- 贷方Account -->
+			<bediagram:name>creditAccount</bediagram:name>
+			<bediagram:type xsi:type="bediagram:StringType" />
+		</bediagram:member>
+		<bediagram:member>
 			<!-- 贷方金额 -->
 			<bediagram:name>creditAmount</bediagram:name>
 			<bediagram:type xsi:type="bediagram:DoubleType" />
-		</bediagram:member>
-	</bediagram:beEntity>
-	
-	<!-- 预算是企业用来财务控制的一般方法，对资金的使用进行统一计划的一种机制。可分为月，季或年度预算等。 
-	
-	企业预算一般分为业务预算、资本支出预算、财务预算三种。业务预算指的是与企业基本生产经营活动相关的预算，
-	主要包括销售预算、生产预算、材料预算、人工预算、费用预算（制造费用预算、期间费用预算）等。资本支出预算是
-	企业长期投资项目（如固定资产购建、扩建等）的预算。财务预算指有关现金收支、经营成果、财务状况的预算，包括
-	现金预算、预计利润表、预计资产负债表。销售预算是整个预算编制工作的起点和主要依据。
-	公司应根据当年的经营目标，通过市场预测，结合各种产品的历史销售量、销售价格等数据，确定预测年度的销售数量、单价和销售收入。
-	在销售预算的基础上，编制生产预算，根据预测销售量、预测期初和期末的存货量，得出预测生产量。然后，根据生产
-	预算，编制材料预算、人工预算，制造费用预算。制造费用预算的编制分变动制造费用和固定制造费用两部分，变动
-	制造费用预算的编制以生产预算为基础，根据预计的各种产品产量以及单位产品所需工时和每小时的变动制造费用
-	率计算编制。产品成本预算根据生产预算、材料预算、人工预算、制造费用预算编制。销售费用预算根据销售预算编制
-	而成。管理费用预算一般根据历史实际开支为基础编制。现金预算是财务预算的核心。现金预算的内容包括现金的收入
-	、支出、盈赤（现金的多余或不足）、筹措与利用等。现金预算的编制以各项业务预算、资本支出预算的数据为基础。
-	预计损益表是对企业经营成果的预测，根据业务预算编制而成。预计资产负债表是对企业财务状况的预测，根据期初
-	资产负债表、业务预算编制而成。
-	-->
-	<bediagram:beEntity needPersist="true" needUIEntity="true">
-		<common:entityName>Budget</common:entityName>
-		<bediagram:member pk="true">
-			<bediagram:name>id</bediagram:name>
-			<bediagram:type xsi:type="bediagram:LongType" />
-		</bediagram:member>
-		<bediagram:member>
-			<bediagram:name>dateType</bediagram:name>
-			<bediagram:type xsi:type="bediagram:CEObjRefType">
-				<bediagram:targetEntity entityName="BudgetDateType" />
-			</bediagram:type>
-		</bediagram:member>
-		<bediagram:member>
-			<bediagram:name>startDate</bediagram:name>
-			<bediagram:type xsi:type="bediagram:DateTimeType" />
-		</bediagram:member>
-		<bediagram:member>
-			<bediagram:name>endDate</bediagram:name>
-			<bediagram:type xsi:type="bediagram:DateTimeType" />
-	    </bediagram:member>
-        <bediagram:member>
-			<bediagram:name>partyType</bediagram:name>
-			<bediagram:type xsi:type="bediagram:StringType" />
-		</bediagram:member>
-		<bediagram:member>
-			<!-- 定期预算就是以会计年度为单位编制的各类预算。滚动预算又称永续预算，其主要特点在于：
-			不将预算期与会计年度挂钩，而是始终保持十二个月，每过去一个月，就根据新的情况进行调整和修订后几个月的预算，
-			并在原预算基础上增补下一个月预算，从而逐期向后滚动，连续不断地以预算形式规划未来经营活动。
-			定期预算与滚动预算的区别：
-			定期预算一般以会计年度为单位定期编制，滚动预算不将预算期与会计年度挂钩，而是连续不断向后滚动,始终保持十二个月。 -->
-			<bediagram:name>isRolling</bediagram:name>
-			<bediagram:type xsi:type="bediagram:BooleanType" />
-		</bediagram:member>
-		<bediagram:member>
-            <bediagram:name>type</bediagram:name>
-            <bediagram:type xsi:type="bediagram:CEObjRefType">
-                <bediagram:targetEntity entityName="ClassifyOfAccounts" />
-            </bediagram:type>
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>state</bediagram:name>
-            <bediagram:type xsi:type="bediagram:CEObjRefType">
-                <bediagram:targetEntity entityName="BudgetStatusType" />
-            </bediagram:type>
-        </bediagram:member>
-        <bediagram:member>	
-            <bediagram:name>items</bediagram:name>
-            <bediagram:type xsi:type="bediagram:BEListType">
-                <bediagram:elementType xsi:type="bediagram:BEObjRefType">
-                    <bediagram:targetEntity entityName="BudgetItem" />
-                </bediagram:elementType>
-            </bediagram:type>
-        </bediagram:member>
-        <bediagram:member>
-			<bediagram:name>comments</bediagram:name>
-			<bediagram:type xsi:type="bediagram:StringType" />
-		</bediagram:member>
-	</bediagram:beEntity>
-
-	<bediagram:beEntity needPersist="true" needUIEntity="true" needUITableEditor="true">
-		<common:entityName>BudgetItem</common:entityName>
-		<bediagram:member pk="true">
-			<bediagram:name>id</bediagram:name>
-			<bediagram:type xsi:type="bediagram:LongType" />
-		</bediagram:member>
-		<bediagram:member>
-			<bediagram:name>amount</bediagram:name>
-			<bediagram:type xsi:type="bediagram:DoubleType" />
-		</bediagram:member>
-		<bediagram:member>
-			<bediagram:name>reason</bediagram:name>
-			<bediagram:type xsi:type="bediagram:StringType" />
 		</bediagram:member>
 	</bediagram:beEntity>
 
@@ -513,7 +479,7 @@
 	起到12月31日止。此外，还可进一步分为季度与月度。有了会计期间假定，才有了企业“某年盈利多少”，“某年亏损多少”等说法。
 	 -->	
 	<!-- 资产负债表 -->
-	<bediagram:beEntity needHistory="true" needPersist="true" needUIEntity="true">
+	<bediagram:beEntity>
 		<common:entityName>InBalanceSheet</common:entityName>
 		<bediagram:member pk="true">
 			<bediagram:name>id</bediagram:name>
@@ -526,7 +492,7 @@
 	</bediagram:beEntity>
 	
 	<!-- 损益表是反映企业在一定会计期间经营成果的报表由于它反映的是某一期间的情况，所以，又称为动态报表。有时，利润表也称为损益表、收益表。 -->
-	<bediagram:beEntity needHistory="true" needPersist="true" needUIEntity="true">
+	<bediagram:beEntity>
 		<common:entityName>ProfitSheet</common:entityName>
 		<bediagram:member pk="true">
 			<bediagram:name>id</bediagram:name>
@@ -539,7 +505,7 @@
 	</bediagram:beEntity>
 	
 	<!-- 现金流表 -->
-	<bediagram:beEntity needHistory="true" needPersist="true" needUIEntity="true">
+	<bediagram:beEntity>
 		<common:entityName>CashFlowSheet</common:entityName>
 		<bediagram:member pk="true">
 			<bediagram:name>id</bediagram:name>
@@ -616,76 +582,23 @@
 	</bediagram:ceEntity>
 	
 	<bediagram:ceEntity>
-		<common:entityName>BudgetStatusType</common:entityName>
-		<bediagram:constantValue>
-			<bediagram:value>Created</bediagram:value>
-			<bediagram:intValue>0</bediagram:intValue>
-			<bediagram:description>Created</bediagram:description>
-		</bediagram:constantValue>
-		<bediagram:constantValue>
-			<bediagram:value>Requested</bediagram:value>
-			<bediagram:intValue>1</bediagram:intValue>
-			<bediagram:description>Requested</bediagram:description>
-		</bediagram:constantValue>
-		<bediagram:constantValue>
-			<bediagram:value>Rejected</bediagram:value>
-			<bediagram:intValue>2</bediagram:intValue>
-			<bediagram:description>Rejected</bediagram:description>
-		</bediagram:constantValue>
-		<bediagram:constantValue>
-			<bediagram:value>Cancelled</bediagram:value>
-			<bediagram:intValue>3</bediagram:intValue>
-			<bediagram:description>Cancelled</bediagram:description>
-		</bediagram:constantValue>
-		<bediagram:constantValue>
-			<bediagram:value>Approved</bediagram:value>
-			<bediagram:intValue>4</bediagram:intValue>
-			<bediagram:description>Approved</bediagram:description>
-		</bediagram:constantValue>
-	</bediagram:ceEntity>
-	
-	<bediagram:ceEntity>
-		<common:entityName>BudgetDateType</common:entityName>
-		<bediagram:constantValue>
-			<bediagram:value>Yearly</bediagram:value>
-			<bediagram:intValue>0</bediagram:intValue>
-			<bediagram:description>Yearly</bediagram:description>
-		</bediagram:constantValue>
-		<bediagram:constantValue>
-			<bediagram:value>Seasonly</bediagram:value>
-			<bediagram:intValue>1</bediagram:intValue>
-			<bediagram:description>Seasonly</bediagram:description>
-		</bediagram:constantValue>
-		<bediagram:constantValue>
-			<bediagram:value>Monthly</bediagram:value>
-			<bediagram:intValue>2</bediagram:intValue>
-			<bediagram:description>Monthly</bediagram:description>
-		</bediagram:constantValue>
-		<bediagram:constantValue>
-			<bediagram:value>Weekly</bediagram:value>
-			<bediagram:intValue>3</bediagram:intValue>
-			<bediagram:description>Weekly</bediagram:description>
-		</bediagram:constantValue>
-	</bediagram:ceEntity>
-	
-	<bediagram:ceEntity>
-  <common:entityName>VoucherType</common:entityName>
-  <bediagram:constantValue>
-   <bediagram:value>Receiver</bediagram:value>
-   <bediagram:intValue>0</bediagram:intValue>
-   <bediagram:description>Receiver Voucher</bediagram:description>
-  </bediagram:constantValue>
-  <bediagram:constantValue>
-   <bediagram:value>Payment</bediagram:value>
-   <bediagram:intValue>1</bediagram:intValue>
-   <bediagram:description>Payment Voucher</bediagram:description>
-  </bediagram:constantValue>
-  <bediagram:constantValue>
-   <bediagram:value>Transfer</bediagram:value>
-   <bediagram:intValue>2</bediagram:intValue>
-   <bediagram:description>Transfer Receiver</bediagram:description>
-  </bediagram:constantValue>
- </bediagram:ceEntity>
+	  <common:entityName>VoucherType</common:entityName>
+	  <bediagram:constantValue>
+	   <bediagram:value>Receiver</bediagram:value>
+	   <bediagram:intValue>0</bediagram:intValue>
+	   <bediagram:description>Receiver Voucher</bediagram:description>
+	  </bediagram:constantValue>
+	  <bediagram:constantValue>
+	   <bediagram:value>Payment</bediagram:value>
+	   <bediagram:intValue>1</bediagram:intValue>
+	   <bediagram:description>Payment Voucher</bediagram:description>
+	  </bediagram:constantValue>
+	  <bediagram:constantValue>
+	   <bediagram:value>Transfer</bediagram:value>
+	   <bediagram:intValue>2</bediagram:intValue>
+	   <bediagram:description>Transfer Receiver</bediagram:description>
+	  </bediagram:constantValue>
+	 </bediagram:ceEntity>
  
 	 <bediagram:ceEntity>
 		<!-- 结算方式一般有银行转账、支票、或银行汇票 -->

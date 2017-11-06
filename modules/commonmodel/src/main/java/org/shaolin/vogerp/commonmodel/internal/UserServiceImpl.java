@@ -227,12 +227,12 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	private void setLocationInfo(PersonalAccountImpl newAccount) {
 		try {//could be slow.
 			String result = WebConfig.getUserCityInfo(newAccount.getLoginIP());
-			logger.info("Search for city location from ip: " + newAccount.getLoginIP() + ", result: " + result);
+			logger.debug("Search for city location from ip: " + newAccount.getLoginIP() + ", result: " + result);
 			if(result != null && result.trim().length() > 0) {
 				newAccount.setLocationInfo(result);
 			}
 			double[] coordinations = WebConfig.getUserLocation(newAccount.getLoginIP());
-			logger.info("Search for geo-location from ip: " + newAccount.getLoginIP() + ", result: " + Arrays.toString(coordinations));
+			logger.debug("Search for geo-location from ip: " + newAccount.getLoginIP() + ", result: " + Arrays.toString(coordinations));
 			if (coordinations != null && coordinations.length == 2) {
 				newAccount.setLongitude(coordinations[0]);
 				newAccount.setLatitude(coordinations[1]);
@@ -240,6 +240,15 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		} catch (Exception e) {
 			logger.warn("Failed to access user Location info: " + e.getMessage());
 		}
+	}
+	
+	public String getUserCityInfo(HttpServletRequest request) {
+		try {
+			return WebConfig.getUserCityInfo(request.getRemoteAddr());
+		} catch (Exception e) {
+			logger.warn("Failed to access user Location info: " + e.getMessage());
+		}
+		return "";
 	}
 	
 	public PasswordCheckResult checkPasswordPattern(String password) {

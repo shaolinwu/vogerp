@@ -70,6 +70,8 @@ public interface IUserService {
 	
 	public String getUserLocation(long userId);
 	
+	public String getUserCityInfo(HttpServletRequest request);
+	
 	public boolean hasAddressConfigured(long userId);
 	
 	public void addAddressInfo(String json) throws JSONException;

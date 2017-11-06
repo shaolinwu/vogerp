@@ -73,7 +73,6 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 		entry.setCreditAmount(Double.valueOf(amount * 100).intValue() / 100); //round up fen.
 		entry.setGeneralLedger(ClassifyOfAccounts.PROFIT);
 		entry.setSubLedger(incomingCOAType);
-		item.getDoubleEnties().add(entry);
 		AccountingModel.INSTANCE.create(item);
 		return item;
 	}
@@ -93,7 +92,6 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 		entry.setDebitAmount(Double.valueOf(amount * 100).intValue() / 100); //round up fen.
 		entry.setGeneralLedger(ClassifyOfAccounts.COST);
 		entry.setSubLedger(outgoingCOAType);
-		item.getDoubleEnties().add(entry);
 		AccountingModel.INSTANCE.create(item);
 		return item;
 	}
@@ -108,12 +106,14 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 		double totalAmount = 0;
 		for (IPayOrder order: orders) {
 			totalAmount += (order.getAmount()/100);
+			totalAmount -= Math.abs(order.getAmount() * order.getServiceChargeBAmount());
 		}
 		
 		condition.setWithdrawn(true);
 		orders = AccountingModel.INSTANCE.searchWithdrawnPaymentOrder(condition, null, 0, -1);
 		for (IPayOrder order: orders) {
 			totalAmount += (order.getAmount()/100);
+			totalAmount -= Math.abs(order.getAmount() * order.getServiceChargeBAmount());
 		}
 		return totalAmount;
 	}
@@ -128,6 +128,7 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 		double totalWithdrawnAmount = 0;
 		for (IPayOrder order: orders) {
 			totalWithdrawnAmount += (order.getAmount()/100);
+			totalWithdrawnAmount -= Math.abs(order.getAmount() * order.getServiceChargeBAmount());
 		}
 		return totalWithdrawnAmount;
 	}

@@ -12,7 +12,7 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "PayVoucherInfoPanel1",prefix + "PayVoucherInfoPanel2",prefix + "PayVoucherInfoPanel"]
+        ,subComponents: [prefix + "PayVoucherInfoPanel1",prefix + "PayVoucherInfoPanel2",prefix + "PayVoucherInfoPanel",prefix + "chargeServiceInfoPanel"]
     });
     var payOrderRequestTable = new UIMaster.ui.objectlist
     ({
@@ -47,6 +47,17 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin(json)
         ,items: []
         ,subComponents: [prefix + "receivepayOrderRequestTable"]
     });
+    var chargeServiceTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "chargeServiceTable"]
+    });
+
+    var chargeServiceInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "chargeServiceInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "chargeServiceTable"]
+    });
 
     var actionPanel = new UIMaster.ui.panel
     ({
@@ -77,6 +88,10 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin(json)
     Form.PayVoucherInfoPanel=PayVoucherInfoPanel;
 
     Form.receivepayOrderRequestTable=receivepayOrderRequestTable;
+
+    Form.chargeServiceInfoPanel=chargeServiceInfoPanel;
+
+    Form.chargeServiceTable=chargeServiceTable;
 
     Form.actionPanel=actionPanel;
 

@@ -106,4 +106,17 @@
      ]]></expressionString>
 		</ns2:exp>
 	</ns2:service>
+	<ns2:service name="getHttpCity">
+		<ns2:exp>
+			<expressionString><![CDATA[
+      import org.shaolin.bmdp.runtime.AppContext;
+      import org.shaolin.vogerp.commonmodel.IUserService;
+      import org.shaolin.bmdp.json.JSONObject;
+      {
+       IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
+       return service.getUserCityInfo(@request);
+      }
+     ]]></expressionString>
+		</ns2:exp>
+	</ns2:service>
 </ns2:WebService>

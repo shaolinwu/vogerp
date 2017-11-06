@@ -267,7 +267,27 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfo(json)
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_commonmodel_form_AddressInfo */
-        /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_AddressInfo */
+
+        
+       { 
+           // notify user open up the GPS.
+           if(navigator.geolocation) {
+	         var latitudeInfo = this.latitudeInfo;
+	         var longitudeInfo = this.longitudeInfo;
+	         navigator.geolocation.getCurrentPosition(
+                function(p){
+                    latitudeInfo.setValue(p.coords.latitude);
+                    longitudeInfo.setValue(p.coords.longitude);
+                },
+                function(e){
+                    var msg = e.code + "\n" + e.message;
+                    console.log(msg);
+                }
+	         );
+	       }
+       }
+    
+            /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_AddressInfo */
     };
 
     Form.Save = org_shaolin_vogerp_commonmodel_form_AddressInfo_Save;

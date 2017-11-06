@@ -15,10 +15,14 @@ import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
 import org.shaolin.vogerp.accounting.IPaymentService;
 import org.shaolin.vogerp.accounting.PayOrderStatusListener;
 import org.shaolin.vogerp.accounting.PaymentException;
+import org.shaolin.vogerp.accounting.be.DoubleEntryImpl;
 import org.shaolin.vogerp.accounting.be.ICustomerAccount;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
+import org.shaolin.vogerp.accounting.be.IServiceChargeTemplate;
 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 import org.shaolin.vogerp.accounting.be.PayOrderRequestImpl;
+import org.shaolin.vogerp.accounting.be.ServiceChargeTemplateImpl;
+import org.shaolin.vogerp.accounting.ce.ClassifyOfAccounts;
 import org.shaolin.vogerp.accounting.ce.PayBusinessType;
 import org.shaolin.vogerp.accounting.ce.PayOrderRequestType;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
@@ -46,6 +50,10 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	private AlipayHandler alipayHandler;
 	private WepayHandler wepayHandler;
 	private DevTestHandler devTestHandler;
+	
+	// the super account of us.
+	public static final String SUPER_ACCOUNT = "1";
+	public static final Long SUPER_ORGIG = 1L;
 	
 	public PaymentServiceImpl() {
 	}
@@ -86,6 +94,7 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		order.setEnabled(true);
 		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order, null, 0, 1);
 		if (result != null && result.size() > 0) {
+			//mideng.
 			return result.get(0);
 		}
 		order.setPayBusinessType(type);
@@ -97,6 +106,15 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		order.setOrderSerialNumber(orderSerialNumber);
 		order.setAmount(amount * 100); //round up to fen as required.
 		
+		ServiceChargeTemplateImpl scObject = new ServiceChargeTemplateImpl();
+		scObject.setPayBusinessType(type);
+		scObject.setVersion(0);//get the newest version.
+		List<IServiceChargeTemplate> result1 = AccountingModel.INSTANCE.searchServiceCharge(scObject, null, 0, 1);
+		if (result1 != null && result1.size() > 0) {
+			order.setServiceChargeAAmount(Math.abs(order.getAmount() * result1.get(0).getChargeARate()));
+			order.setServiceChargeBAmount(Math.abs(order.getAmount() * result1.get(0).getChargeBRate()));
+			order.setServiceChargeId(result1.get(0).getId());
+		}
 		AccountingModel.INSTANCE.create(order);
 		return order;
 	}
@@ -119,6 +137,15 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		order.setOrderSerialNumber(orderSerialNumber);
 		order.setAmount(amount * 100); //round up fen.
 		
+		ServiceChargeTemplateImpl scObject = new ServiceChargeTemplateImpl();
+		scObject.setPayBusinessType(type);
+		scObject.setVersion(0);//get the newest version.
+		List<IServiceChargeTemplate> result1 = AccountingModel.INSTANCE.searchServiceCharge(scObject, null, 0, 1);
+		if (result1 != null && result1.size() > 0) {
+			order.setServiceChargeAAmount(Math.abs(order.getAmount() * result1.get(0).getChargeARate()));
+			order.setServiceChargeBAmount(Math.abs(order.getAmount() * result1.get(0).getChargeBRate()));
+			order.setServiceChargeId(result1.get(0).getId());
+		}
 		AccountingModel.INSTANCE.create(order);
 		return order;
 	}
@@ -130,18 +157,28 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		order.setEnabled(true);
 		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order, null, 0, 1);
 		if (result != null && result.size() > 0) {
+			//mideng
 			return result.get(0);
 		}
 		
 		order.setPayBusinessType(type);
-		order.setOrgId(1); // fixed id here.
-		order.setUserId(1);
+		order.setOrgId(SUPER_ORGIG); // fixed id here.
+		order.setUserId(SUPER_ORGIG);
 		order.setEndUserId(endUserId);
 		order.setSerialNumber(PaymentUtil.genPayOrderSerialNumber());
 		order.setStatus(PayOrderStatusType.NOTPAYED);
 		order.setOrderSerialNumber(orderSerialNumber);
 		order.setAmount(amount * 100); //round up fen.
 		
+		ServiceChargeTemplateImpl scObject = new ServiceChargeTemplateImpl();
+		scObject.setPayBusinessType(type);
+		scObject.setVersion(0);//get the newest version.
+		List<IServiceChargeTemplate> result1 = AccountingModel.INSTANCE.searchServiceCharge(scObject, null, 0, 1);
+		if (result1 != null && result1.size() > 0) {
+			order.setServiceChargeAAmount(Math.abs(order.getAmount() * result1.get(0).getChargeARate()));
+			order.setServiceChargeBAmount(Math.abs(order.getAmount() * result1.get(0).getChargeBRate()));
+			order.setServiceChargeId(result1.get(0).getId());
+		}
 		AccountingModel.INSTANCE.create(order);
 		return order;
 	}
@@ -253,7 +290,7 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 	}
 	
 	/**
-	 * Confirms payment order to end user.
+	 * Confirms payment order to the end user.
 	 */
 	public void ensurePay(final String orderSNumber) throws PaymentException {
 		PayOrderImpl order = new PayOrderImpl();
@@ -261,10 +298,48 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		order.setEnabled(true);
 		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order, null, 0, 1);
 		if (result != null && result.size() > 0) {
-			result.get(0).setStatus(PayOrderStatusType.AGREEDPAYTOEND);
-			AccountingModel.INSTANCE.update(result.get(0));
+			IPayOrder payOrder = result.get(0);
+			payOrder.setStatus(PayOrderStatusType.AGREEDPAYTOEND);
+			AccountingModel.INSTANCE.update(payOrder);
+			//differential accounting supported: record pay to double entry's table.
+			//so, we are able to track all profits from it.
+			//charge the service fee from the published user.
+			if(payOrder.getServiceChargeAAmount() > 0) {
+				DoubleEntryImpl entry = new DoubleEntryImpl();
+				entry.setCreditAccount(SUPER_ACCOUNT);
+				entry.setCreditAmount(payOrder.getServiceChargeAAmount());
+				entry.setDebitAccount(payOrder.getCustomerAPayAccount());
+				entry.setDebitAmount(payOrder.getServiceChargeAAmount());
+				entry.setVoucherNumber(payOrder.getSerialNumber());
+				entry.setSettlementMethod(payOrder.getCustomerAPaymentMethod());
+				entry.setSettlementNumber(payOrder.getCustomerAPayAccount());
+				entry.setGeneralLedger(ClassifyOfAccounts.PROFIT);
+				entry.setSubLedger(payOrder.getPayBusinessType().getDisplayName());
+				AccountingModel.INSTANCE.create(entry);
+			}
+			//charge the service fee from the end user.
+			if(payOrder.getServiceChargeBAmount() > 0) {
+				DoubleEntryImpl entry = new DoubleEntryImpl();
+				entry.setCreditAccount(SUPER_ACCOUNT);
+				entry.setCreditAmount(payOrder.getServiceChargeBAmount());
+				entry.setDebitAccount(payOrder.getCustomerBPayAccount());
+				entry.setDebitAmount(payOrder.getServiceChargeBAmount());
+				entry.setVoucherNumber(payOrder.getSerialNumber());
+				entry.setSettlementMethod(payOrder.getCustomerBPaymentMethod());
+				entry.setSettlementNumber(payOrder.getCustomerBPayAccount());
+				entry.setGeneralLedger(ClassifyOfAccounts.PROFIT);
+				entry.setSubLedger(payOrder.getPayBusinessType().getDisplayName());
+				AccountingModel.INSTANCE.create(entry);
+			}
+			NotificationImpl message = new NotificationImpl();
+			message.setPartyId(payOrder.getEndUserId());
+			message.setSubject("恭喜您有新的收入" + payOrder.getAmount()*100 + "元！");
+			message.setCreateDate(new Date());
+			
+			ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+			service.addNotification(message, true);
 		} else {
-			throw new PaymentException("Unable to find order number: " + orderSNumber);
+			throw new PaymentException("Unable to find the pay order: " + orderSNumber);
 		}
 	}
 	

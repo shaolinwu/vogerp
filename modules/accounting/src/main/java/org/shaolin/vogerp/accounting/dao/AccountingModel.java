@@ -16,45 +16,19 @@ import org.hibernate.criterion.Projections;
 import org.shaolin.bmdp.persistence.BEEntityDaoObject;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.persistence.query.operator.Operator;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import org.shaolin.vogerp.accounting.be.IInBalanceSheet;
-import org.shaolin.vogerp.accounting.be.InBalanceSheetImpl;
-import org.shaolin.vogerp.accounting.be.IProfitSheet;
-import org.shaolin.vogerp.accounting.be.ProfitSheetImpl;
-import org.shaolin.vogerp.accounting.be.ICashFlowSheet;
-import org.shaolin.vogerp.accounting.be.CashFlowSheetImpl;
 /**
  * This code is generated automatically, any change will be replaced after rebuild.
  */
+@Repository
+@Transactional
 public class AccountingModel extends BEEntityDaoObject {
 
     public static final AccountingModel INSTANCE = new AccountingModel();
 
-    private AccountingModel() {
-    }
-
-    public List<IInBalanceSheet> listIInBalanceSheets(int offset, int count) {
-        return list(offset, count, IInBalanceSheet.class, InBalanceSheetImpl.class);
-    }
-
-    public long listIInBalanceSheetCount() {
-        return count(IInBalanceSheet.class);
-    }
-
-    public List<IProfitSheet> listIProfitSheets(int offset, int count) {
-        return list(offset, count, IProfitSheet.class, ProfitSheetImpl.class);
-    }
-
-    public long listIProfitSheetCount() {
-        return count(IProfitSheet.class);
-    }
-
-    public List<ICashFlowSheet> listICashFlowSheets(int offset, int count) {
-        return list(offset, count, ICashFlowSheet.class, CashFlowSheetImpl.class);
-    }
-
-    public long listICashFlowSheetCount() {
-        return count(ICashFlowSheet.class);
+    public AccountingModel() {
     }
 
     public List<org.shaolin.vogerp.accounting.be.ICustomerAccount> searchAccount(org.shaolin.vogerp.accounting.be.CustomerAccountImpl scObject,
@@ -249,54 +223,6 @@ public class AccountingModel extends BEEntityDaoObject {
         return this._count(inObjectCriteria);
     }
 
-    public List<org.shaolin.vogerp.accounting.be.IAccountVoucher> searchAccountVoucher(org.shaolin.vogerp.accounting.be.AccountVoucherImpl scFlow,
-           List<Order> orders, int offset, int count) {
-            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.AccountVoucherImpl.class, "inFlow");
-            if (orders == null) {
-            } else {
-                this._addOrders(inFlowCriteria, orders);
-            }
-
-            if (scFlow.getId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
-            }
-            if (scFlow.getOrgId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));
-            }
-            if (scFlow.getSeqNumber() != null && scFlow.getSeqNumber().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.seqNumber", scFlow.getSeqNumber()));
-            }
-            if (scFlow.getVoucherType() != null && scFlow.getVoucherType() != org.shaolin.vogerp.accounting.ce.VoucherType.NOT_SPECIFIED) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.voucherTypeInt", scFlow.getVoucherType().getIntValue()));
-            }
-
-        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
-
-        List result = this._list(offset, count, inFlowCriteria);
-        return result;
-    }
-
-    public long searchAccountVoucherCount(org.shaolin.vogerp.accounting.be.AccountVoucherImpl scFlow) {
-            Criteria inFlowCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.AccountVoucherImpl.class, "inFlow");
-
-            if (scFlow.getId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.id", scFlow.getId()));
-            }
-            if (scFlow.getOrgId() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgId", scFlow.getOrgId()));
-            }
-            if (scFlow.getSeqNumber() != null && scFlow.getSeqNumber().length() > 0) {
-                inFlowCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inFlow.seqNumber", scFlow.getSeqNumber()));
-            }
-            if (scFlow.getVoucherType() != null && scFlow.getVoucherType() != org.shaolin.vogerp.accounting.ce.VoucherType.NOT_SPECIFIED) {
-                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.voucherTypeInt", scFlow.getVoucherType().getIntValue()));
-            }
-
-        inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow._enable", scFlow.isEnabled()));
-
-        return this._count(inFlowCriteria);
-    }
-
     public List<org.shaolin.vogerp.accounting.be.IPayOrderRequest> searchPayOrderRequest(org.shaolin.vogerp.accounting.be.PayOrderRequestImpl scObject,
            List<Order> orders, int offset, int count) {
             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.PayOrderRequestImpl.class, "inObject");
@@ -375,14 +301,23 @@ public class AccountingModel extends BEEntityDaoObject {
         return this._count(inObjectCriteria);
     }
 
-    public List<org.shaolin.vogerp.accounting.be.IBudget> searchBudget(org.shaolin.vogerp.accounting.be.BudgetImpl scObject,
+    public List<org.shaolin.vogerp.accounting.be.IServiceChargeTemplate> searchServiceCharge(org.shaolin.vogerp.accounting.be.ServiceChargeTemplateImpl scObject,
            List<Order> orders, int offset, int count) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.BudgetImpl.class, "inObject");
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.ServiceChargeTemplateImpl.class, "inObject");
             if (orders == null) {
             } else {
                 this._addOrders(inObjectCriteria, orders);
             }
 
+            if (scObject.getId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.id", scObject.getId()));
+            }
+            if (true) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.version", scObject.getVersion()));
+            }
+            if (scObject.getPayBusinessType() != null && scObject.getPayBusinessType() != org.shaolin.vogerp.accounting.ce.PayBusinessType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.payBusinessTypeInt", scObject.getPayBusinessType().getIntValue()));
+            }
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 
@@ -390,105 +325,18 @@ public class AccountingModel extends BEEntityDaoObject {
         return result;
     }
 
-    public long searchBudgetCount(org.shaolin.vogerp.accounting.be.BudgetImpl scObject) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.BudgetImpl.class, "inObject");
+    public long searchServiceChargeCount(org.shaolin.vogerp.accounting.be.ServiceChargeTemplateImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.ServiceChargeTemplateImpl.class, "inObject");
 
-
-        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
-
-        return this._count(inObjectCriteria);
-    }
-
-    public List<org.shaolin.vogerp.accounting.be.IBudgetItem> searchBudgetItem(org.shaolin.vogerp.accounting.be.BudgetItemImpl scObject,
-           List<Order> orders, int offset, int count) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.BudgetItemImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
+            if (scObject.getId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.id", scObject.getId()));
             }
-
-
-        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
-
-        List result = this._list(offset, count, inObjectCriteria);
-        return result;
-    }
-
-    public long searchBudgetItemCount(org.shaolin.vogerp.accounting.be.BudgetItemImpl scObject) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.BudgetItemImpl.class, "inObject");
-
-
-        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
-
-        return this._count(inObjectCriteria);
-    }
-
-    public List<org.shaolin.vogerp.accounting.be.IInBalanceSheet> searchInBalanceSheet(org.shaolin.vogerp.accounting.be.InBalanceSheetImpl scObject,
-           List<Order> orders, int offset, int count) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.InBalanceSheetImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
+            if (true) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.version", scObject.getVersion()));
             }
-
-
-        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
-
-        List result = this._list(offset, count, inObjectCriteria);
-        return result;
-    }
-
-    public long searchInBalanceSheetCount(org.shaolin.vogerp.accounting.be.InBalanceSheetImpl scObject) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.InBalanceSheetImpl.class, "inObject");
-
-
-        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
-
-        return this._count(inObjectCriteria);
-    }
-
-    public List<org.shaolin.vogerp.accounting.be.IProfitSheet> searchProfitSheet(org.shaolin.vogerp.accounting.be.ProfitSheetImpl scObject,
-           List<Order> orders, int offset, int count) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.ProfitSheetImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
+            if (scObject.getPayBusinessType() != null && scObject.getPayBusinessType() != org.shaolin.vogerp.accounting.ce.PayBusinessType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.payBusinessTypeInt", scObject.getPayBusinessType().getIntValue()));
             }
-
-
-        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
-
-        List result = this._list(offset, count, inObjectCriteria);
-        return result;
-    }
-
-    public long searchProfitSheetCount(org.shaolin.vogerp.accounting.be.ProfitSheetImpl scObject) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.ProfitSheetImpl.class, "inObject");
-
-
-        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
-
-        return this._count(inObjectCriteria);
-    }
-
-    public List<org.shaolin.vogerp.accounting.be.ICashFlowSheet> searchCashFlowSheet(org.shaolin.vogerp.accounting.be.CashFlowSheetImpl scObject,
-           List<Order> orders, int offset, int count) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.CashFlowSheetImpl.class, "inObject");
-            if (orders == null) {
-            } else {
-                this._addOrders(inObjectCriteria, orders);
-            }
-
-
-        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
-
-        List result = this._list(offset, count, inObjectCriteria);
-        return result;
-    }
-
-    public long searchCashFlowSheetCount(org.shaolin.vogerp.accounting.be.CashFlowSheetImpl scObject) {
-            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.CashFlowSheetImpl.class, "inObject");
-
 
         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
 

@@ -222,6 +222,37 @@
 		    </ns2:ops>
         </ns2:eventHandler>
         
+        <ns2:eventHandler functionName="openMOrderTracker">
+          <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openMOrderTracker-20171017-2229">
+              <ns2:exp>
+                  <ns2:expressionString><![CDATA[
+                  import java.util.HashMap;
+                  import org.shaolin.uimaster.page.AjaxContext;
+                  import org.shaolin.uimaster.page.ajax.*;
+                  import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
+                  import org.shaolin.bmdp.runtime.AppContext;
+                  import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+                  {
+                      Table personalInfoTable = (Table)@page.getElement("machiningTable");
+                      if (personalInfoTable.getSelectedRow() == null) {
+                          Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
+                          return;
+                      }
+                      MachiningOrderImpl defaultUser = (MachiningOrderImpl)personalInfoTable.getSelectedRow();
+                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+                      
+                      HashMap input = new HashMap();
+                      input.put("sessionId", defaultUser.getSessionId());
+                      input.put("editable", new Boolean(true));
+                      RefForm form = new RefForm("mOrderForm", "org.shaolin.bmdp.workflow.form.SessionTracker", input);
+                      @page.addElement(form);
+                      
+                      form.openInWindows("订单跟踪", null, true);
+                  }
+                  ]]></ns2:expressionString>
+              </ns2:exp>
+          </ns2:ops>
+      </ns2:eventHandler>
         <ns2:eventHandler functionName="openGOrderTracker">
           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openGOrderTracker-20161017-2229">
               <ns2:exp>

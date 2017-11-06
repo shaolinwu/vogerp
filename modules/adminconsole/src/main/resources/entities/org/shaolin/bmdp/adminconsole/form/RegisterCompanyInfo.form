@@ -323,6 +323,7 @@
           ArrayList displayItems = new ArrayList();
           CEOperationUtil.getCEComboBox(values, displayItems, 
                AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.productmodel.ce.ProductType"));
+          $beObject.setOrgType("org.shaolin.vogerp.productmodel.ce.ProductType,1");
           $values = values;
           $displayItems = displayItems;
           

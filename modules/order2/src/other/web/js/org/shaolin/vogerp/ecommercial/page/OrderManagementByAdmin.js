@@ -157,6 +157,8 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
 
     Form.disableRentOrder = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableRentOrder;
 
+    Form.openMOrderTracker = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openMOrderTracker;
+
     Form.openGOrderTracker = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openGOrderTracker;
 
     Form.openRentOrderTracker = org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openRentOrderTracker;
@@ -277,6 +279,17 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin(json)
 			        }).open();   
 		        }
 		            }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_disableRentOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openMOrderTracker(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openMOrderTracker */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openMOrderTracker-20171017-2229",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagementByAdmin_openMOrderTracker */
 
 
     /* auto generated eventlistener function declaration */

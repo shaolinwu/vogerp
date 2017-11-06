@@ -240,7 +240,7 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
 		        { 
 		            // get user cookie.
 		            if (this.errorInfo.value == "") {
-		               $(this.veriCode).parent().parent().css("display", "none");
+		               $(this.veriCode).parent().css("display", "none");
 		               $(this.veriCodeQuestion).parent().parent().parent().css("display", "none");
 		            }
 		            var tempUserName = UIMaster.getCookie("userName");
@@ -327,6 +327,9 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         var UIEntity = this;
 
 		        {   
+		            if (this.errorInfo.value == "") {
+		                this.veriCode.validate = function(){return null;};
+		            }
 		            var constraint_result = this.Form.validate();
 		            if (constraint_result != true && constraint_result != null) {
 		                return false;
@@ -345,7 +348,7 @@ function org_shaolin_bmdp_adminconsole_page_Login(json)
         var UIEntity = this;
 
 		      {
-		         $(this.veriCode).parent().parent().css("display", "block");
+		         $(this.veriCode).parent().css("display", "block");
 		         $(this.veriCodeQuestion).parent().parent().parent().css("display", "block");
 		      }
 		          }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Login_showVerficationCode */

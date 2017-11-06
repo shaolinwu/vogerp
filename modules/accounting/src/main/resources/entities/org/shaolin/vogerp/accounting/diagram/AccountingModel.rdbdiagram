@@ -36,11 +36,14 @@
     <ns2:column name="PARENTID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="ORGID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="USERID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="ServiceChargeId" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="ORDERSERIALNUMBER" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="SERIALNUMBER" type="VARCHAR" length="50" isNull="true"></ns2:column>
     <ns2:column name="OUTTRADENO" type="VARCHAR" length="50" isNull="true"></ns2:column>
     <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="AMOUNT" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="ServiceChargeAAmount" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="ServiceChargeBAmount" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="PAYRETURNURL" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="PAYBUSITYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="STATUS" type="INTEGER" length="2" isNull="true"></ns2:column>
@@ -81,6 +84,10 @@
       <ns2:fieldMapping beFieldName="thirdTransactionTime" columnName="ThirdTransactionTime"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="thirdGenSerialNumber2" columnName="ThirdGenSerialNumber2"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="thirdTransactionTime2" columnName="ThirdTransactionTime2"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="serviceChargeId" columnName="ServiceChargeId"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="serviceChargeAAmount" columnName="ServiceChargeAAmount"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="serviceChargeBAmount" columnName="ServiceChargeBAmount"></ns2:fieldMapping>
+      
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_sessionId" columnName="_sessionId"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
@@ -147,53 +154,29 @@
        -->
     </ns2:mapping>
   </ns2:table>
-  
   <ns2:table>
-    <entityName>ACCT_VOUCHER</entityName>
+    <entityName>ACCT_SERVICECHARGETEMP</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="ORGID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="RELATEDTRANSID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="SEQNUMBER" type="VARCHAR" length="5" isNull="true"></ns2:column>
-    <ns2:column name="VOUCHERTYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
-    <ns2:column name="VOUCHERNUMBER" type="INTEGER" length="5" isNull="true"></ns2:column>
-    <ns2:column name="SUBVOUCHERS" type="INTEGER" length="2" isNull="true"></ns2:column>
-    <ns2:column name="MANAGER" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="ENTERED" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="PREPARED" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="AUDITOR" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="CASHIER" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="RECEIVER" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="SETTLEMETHOD" type="INTEGER" length="2" isNull="true"></ns2:column>
-    <ns2:column name="SETTLENUMBER" type="INTEGER" length="5" isNull="true"></ns2:column>
+    <ns2:column name="ChargeARate" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="ChargeBRate" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="PayBusinessType" type="INTEGER" length="1" default="1"></ns2:column>
+    <ns2:column name="Version" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
-    <ns2:column name="COMMENT" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
       <ns2:columnName>ID</ns2:columnName>
     </ns2:primaryKey>
     <ns2:mapping>
       <systemVersion>0</systemVersion>
-      <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.AccountVoucher"></ns2:businessEntity>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.ServiceChargeTemplate"></ns2:businessEntity>
       <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="orgId" columnName="ORGID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="relatedTransId" columnName="RELATEDTRANSID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="seqNumber" columnName="SEQNUMBER"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="voucherType" columnName="VOUCHERTYPE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="voucherNumber" columnName="VOUCHERNUMBER"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="subVoucherNumber" columnName="SUBVOUCHERS"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="manager" columnName="MANAGER"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="entered" columnName="ENTERED"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="prepared" columnName="PREPARED"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="auditor" columnName="AUDITOR"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="cashier" columnName="CASHIER"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="receiver" columnName="RECEIVER"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="settlementMethod" columnName="SETTLEMETHOD"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="settlementNumber" columnName="SETTLENUMBER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="chargeARate" columnName="ChargeARate"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="chargeBRate" columnName="ChargeBRate"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="payBusinessType" columnName="PayBusinessType"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="version" columnName="Version"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="comment" columnName="COMMENT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
-      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ACCT_VOUCHER_DOUBLEENTRY_JT" collectionElement="org.shaolin.vogerp.accounting.be.DoubleEntry" mappingType="One-to-Many" beFieldName="doubleEnties"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
   <ns2:table>
@@ -202,9 +185,15 @@
     <ns2:column name="DID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="GENLEDGER" type="INTEGER" length="2" isNull="true"></ns2:column>
     <ns2:column name="SUBLEDGER" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="DebitAccount" type="VARCHAR" isNull="false"></ns2:column>
+    <ns2:column name="CreditAccount" type="VARCHAR" isNull="false"></ns2:column>
     <ns2:column name="DEBITAMOUNT" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="CREDITAMOUNT" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="COMMENT" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="VOUCHERNUMBER" type="VARCHAR" length="38" isNull="true"></ns2:column>
+    <ns2:column name="SETTLEMETHOD" type="INTEGER" length="2" isNull="true"></ns2:column>
+    <ns2:column name="SETTLENUMBER" type="VARCHAR" length="38" isNull="true"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
       <ns2:columnName>DID</ns2:columnName>
@@ -215,138 +204,17 @@
       <ns2:fieldMapping beFieldName="id" columnName="DID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="generalLedger" columnName="GENLEDGER"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="subLedger" columnName="SUBLEDGER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="debitAccount" columnName="DebitAccount"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="creditAccount" columnName="CreditAccount"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="debitAmount" columnName="DEBITAMOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="creditAmount" columnName="CREDITAMOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="comment" columnName="COMMENT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="settlementMethod" columnName="SETTLEMETHOD"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="settlementNumber" columnName="SETTLENUMBER"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
   </ns2:table>
-  <ns2:table>
-    <entityName>ACCT_BUDGET</entityName>
-    <systemVersion>0</systemVersion>
-    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="DATETYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
-    <ns2:column name="STARTDATE" type="DATETIME" isNull="true"></ns2:column>
-    <ns2:column name="ENDDATE" type="DATETIME" isNull="true"></ns2:column>
-    <ns2:column name="PARTYTYPE" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="ISROLLING" type="BIT" isNull="true"></ns2:column>
-    <ns2:column name="TYPE" type="INTEGER" length="2" isNull="true"></ns2:column>
-    <ns2:column name="STATE" type="INTEGER" length="2" isNull="true"></ns2:column>
-    <ns2:column name="COMMENTS" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
-    <ns2:primaryKey>
-      <ns2:columnName>ID</ns2:columnName>
-    </ns2:primaryKey>
-    <ns2:mapping>
-      <systemVersion>0</systemVersion>
-      <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.Budget"></ns2:businessEntity>
-      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="dateType" columnName="DATETYPE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="startDate" columnName="STARTDATE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="endDate" columnName="ENDDATE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="partyType" columnName="PARTYTYPE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="isRolling" columnName="ISROLLING"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="type" columnName="TYPE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="state" columnName="STATE"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="comments" columnName="COMMENTS"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
-    </ns2:mapping>
-  </ns2:table>
-  <ns2:table>
-    <entityName>ACCT_BUDGETITEM</entityName>
-    <systemVersion>0</systemVersion>
-    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="AMOUNT" type="DECIMAL" isNull="true"></ns2:column>
-    <ns2:column name="REASON" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
-    <ns2:primaryKey>
-      <ns2:columnName>ID</ns2:columnName>
-    </ns2:primaryKey>
-    <ns2:mapping>
-      <systemVersion>0</systemVersion>
-      <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.BudgetItem"></ns2:businessEntity>
-      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="amount" columnName="AMOUNT"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="reason" columnName="REASON"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
-    </ns2:mapping>
-  </ns2:table>
-  <ns2:table>
-    <entityName>ACCT_INBALANCESHEET</entityName>
-    <systemVersion>0</systemVersion>
-    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="TRANSID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
-    <ns2:column name="_version" type="INTEGER" length="2" default="0"></ns2:column>
-    <ns2:column name="_starttime" type="TIMESTAMP"></ns2:column>
-    <ns2:column name="_endtime" type="TIMESTAMP"></ns2:column>
-    <ns2:column name="_optuserid" type="BIGINT" length="38" default="0"></ns2:column>
-    <ns2:primaryKey>
-      <ns2:columnName>ID</ns2:columnName>
-    </ns2:primaryKey>
-    <ns2:mapping>
-      <systemVersion>0</systemVersion>
-      <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.InBalanceSheet"></ns2:businessEntity>
-      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="transId" columnName="TRANSID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_version" columnName="_version"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_starttime" columnName="_starttime"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_endtime" columnName="_endtime"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_optuserid" columnName="_optuserid"></ns2:fieldMapping>
-    </ns2:mapping>
-  </ns2:table>
-  <ns2:table>
-    <entityName>ACCT_PROFITSHEET</entityName>
-    <systemVersion>0</systemVersion>
-    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="TRANSID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
-    <ns2:column name="_version" type="INTEGER" length="2" default="0"></ns2:column>
-    <ns2:column name="_starttime" type="TIMESTAMP"></ns2:column>
-    <ns2:column name="_endtime" type="TIMESTAMP"></ns2:column>
-    <ns2:column name="_optuserid" type="BIGINT" length="38" default="0"></ns2:column>
-    <ns2:primaryKey>
-      <ns2:columnName>ID</ns2:columnName>
-    </ns2:primaryKey>
-    <ns2:mapping>
-      <systemVersion>0</systemVersion>
-      <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.ProfitSheet"></ns2:businessEntity>
-      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="transId" columnName="TRANSID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_version" columnName="_version"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_starttime" columnName="_starttime"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_endtime" columnName="_endtime"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_optuserid" columnName="_optuserid"></ns2:fieldMapping>
-    </ns2:mapping>
-  </ns2:table>
-  <ns2:table>
-    <entityName>ACCT_CASHFLOWSHEET</entityName>
-    <systemVersion>0</systemVersion>
-    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
-    <ns2:column name="TRANSID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
-    <ns2:column name="_version" type="INTEGER" length="2" default="0"></ns2:column>
-    <ns2:column name="_starttime" type="TIMESTAMP"></ns2:column>
-    <ns2:column name="_endtime" type="TIMESTAMP"></ns2:column>
-    <ns2:column name="_optuserid" type="BIGINT" length="38" default="0"></ns2:column>
-    <ns2:primaryKey>
-      <ns2:columnName>ID</ns2:columnName>
-    </ns2:primaryKey>
-    <ns2:mapping>
-      <systemVersion>0</systemVersion>
-      <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.CashFlowSheet"></ns2:businessEntity>
-      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="transId" columnName="TRANSID"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_version" columnName="_version"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_starttime" columnName="_starttime"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_endtime" columnName="_endtime"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="_optuserid" columnName="_optuserid"></ns2:fieldMapping>
-    </ns2:mapping>
-  </ns2:table>
-  <ns2:joinTable name="ACCT_VOUCHER_DOUBLEENTRY_JT" srcTable="ACCT_VOUCHER" srcPKColumn="ID" srcCollection="doubleEnties" tarTable="ACCT_DOUBLEENTRY" tarPKColumn="DID"></ns2:joinTable>
   
   <ns2:query queryName="searchAccount">
     <ns2:searchResult name="outObject" category="BusinessEntity">
@@ -693,84 +561,6 @@
     </ns2:searchConditionMapping>
   </ns2:query>  
   
-  <ns2:query queryName="searchAccountVoucher">
-    <ns2:searchResult name="outObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.accounting.be.AccountVoucher"></type>
-    </ns2:searchResult>
-    <ns2:fromData name="inFlow" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.accounting.be.AccountVoucher"></type>
-    </ns2:fromData>
-    <ns2:searchResultMapping>
-      <ns2:fieldMapping>
-        <ns2:toDataFieldPath>outObject</ns2:toDataFieldPath>
-        <ns2:value xsi:type="ns2:SimpleFieldValueType">
-          <ns2:valueFieldPath>inFlow</ns2:valueFieldPath>
-        </ns2:value>
-      </ns2:fieldMapping>
-    </ns2:searchResultMapping>
-    <ns2:searchConditionMapping name="Search">
-      <ns2:fieldMapping>
-        <ns2:toDataFieldPath>inFlow.id</ns2:toDataFieldPath>
-        <ns2:conditionValue>
-          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
-            <ns2:type>=</ns2:type>
-          </ns2:operator>
-          <ns2:value xsi:type="ns2:SimpleFieldValueType">
-            <ns2:valueFieldPath>scFlow.id</ns2:valueFieldPath>
-          </ns2:value>
-          <ns2:condition>
-            <expressionString><![CDATA[scFlow.getId() > 0]]></expressionString>
-          </ns2:condition>
-        </ns2:conditionValue>
-      </ns2:fieldMapping>
-      <ns2:fieldMapping>
-         <ns2:toDataFieldPath>inFlow.orgId</ns2:toDataFieldPath>
-         <ns2:conditionValue>
-             <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
-                 <ns2:type>=</ns2:type>
-             </ns2:operator>
-             <ns2:value xsi:type="ns2:SimpleFieldValueType">
-                 <ns2:valueFieldPath>scFlow.orgId</ns2:valueFieldPath>
-             </ns2:value>
-             <ns2:condition>
-                 <expressionString><![CDATA[scFlow.getOrgId() > 0]]></expressionString>
-             </ns2:condition>
-         </ns2:conditionValue>
-      </ns2:fieldMapping>
-      <ns2:fieldMapping>
-        <ns2:toDataFieldPath>inFlow.seqNumber</ns2:toDataFieldPath>
-        <ns2:conditionValue>
-          <ns2:operator xsi:type="ns2:StarLikeOperatorType" isReverse="false">
-            <ns2:type>LIKE %*</ns2:type>
-          </ns2:operator>
-          <ns2:value xsi:type="ns2:SimpleFieldValueType">
-            <ns2:valueFieldPath>scFlow.seqNumber</ns2:valueFieldPath>
-          </ns2:value>
-          <ns2:condition>
-            <expressionString><![CDATA[scFlow.getSeqNumber() != null && scFlow.getSeqNumber().length() > 0]]></expressionString>
-          </ns2:condition>
-        </ns2:conditionValue>
-      </ns2:fieldMapping>
-      <ns2:fieldMapping>
-        <ns2:toDataFieldPath>inFlow.voucherTypeInt</ns2:toDataFieldPath>
-        <ns2:conditionValue>
-          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
-            <ns2:type>=</ns2:type>
-          </ns2:operator>
-          <ns2:value xsi:type="ns2:SimpleFieldValueType">
-            <ns2:valueFieldPath>scFlow.getVoucherType().getIntValue()</ns2:valueFieldPath>
-          </ns2:value>
-          <ns2:condition>
-            <expressionString><![CDATA[scFlow.getVoucherType() != null && scFlow.getVoucherType() != org.shaolin.vogerp.accounting.ce.VoucherType.NOT_SPECIFIED]]></expressionString>
-          </ns2:condition>
-        </ns2:conditionValue>
-      </ns2:fieldMapping>
-      <ns2:searchConditionData name="scFlow" category="BusinessEntity">
-        <type entityName="org.shaolin.vogerp.accounting.be.AccountVoucher"></type>
-      </ns2:searchConditionData>
-    </ns2:searchConditionMapping>
-  </ns2:query>
-  
   <ns2:query queryName="searchPayOrderRequest">
     <ns2:searchResult name="outObject" category="BusinessEntity">
       <type entityName="org.shaolin.vogerp.accounting.be.PayOrderRequest"></type>
@@ -884,12 +674,13 @@
       </ns2:searchConditionData>
     </ns2:searchConditionMapping>
   </ns2:query>
-  <ns2:query queryName="searchBudget">
+  
+  <ns2:query queryName="searchServiceCharge">
     <ns2:searchResult name="outObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.accounting.be.Budget"></type>
+      <type entityName="org.shaolin.vogerp.accounting.be.ServiceChargeTemplate"></type>
     </ns2:searchResult>
     <ns2:fromData name="inObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.accounting.be.Budget"></type>
+      <type entityName="org.shaolin.vogerp.accounting.be.ServiceChargeTemplate"></type>
     </ns2:fromData>
     <ns2:searchResultMapping>
       <ns2:fieldMapping>
@@ -900,92 +691,50 @@
       </ns2:fieldMapping>
     </ns2:searchResultMapping>
     <ns2:searchConditionMapping name="Search">
-      <ns2:searchConditionData name="scObject" category="BusinessEntity">
-        <type entityName="org.shaolin.vogerp.accounting.be.Budget"></type>
-      </ns2:searchConditionData>
-    </ns2:searchConditionMapping>
-  </ns2:query>
-  <ns2:query queryName="searchBudgetItem">
-    <ns2:searchResult name="outObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.accounting.be.BudgetItem"></type>
-    </ns2:searchResult>
-    <ns2:fromData name="inObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.accounting.be.BudgetItem"></type>
-    </ns2:fromData>
-    <ns2:searchResultMapping>
       <ns2:fieldMapping>
-        <ns2:toDataFieldPath>outObject</ns2:toDataFieldPath>
-        <ns2:value xsi:type="ns2:SimpleFieldValueType">
-          <ns2:valueFieldPath>inObject</ns2:valueFieldPath>
-        </ns2:value>
+        <ns2:toDataFieldPath>inObject.id</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.id</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getId() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
       </ns2:fieldMapping>
-    </ns2:searchResultMapping>
-    <ns2:searchConditionMapping name="Search">
-      <ns2:searchConditionData name="scObject" category="BusinessEntity">
-        <type entityName="org.shaolin.vogerp.accounting.be.BudgetItem"></type>
-      </ns2:searchConditionData>
-    </ns2:searchConditionMapping>
-  </ns2:query>
-  <ns2:query queryName="searchInBalanceSheet">
-    <ns2:searchResult name="outObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.accounting.be.InBalanceSheet"></type>
-    </ns2:searchResult>
-    <ns2:fromData name="inObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.accounting.be.InBalanceSheet"></type>
-    </ns2:fromData>
-    <ns2:searchResultMapping>
       <ns2:fieldMapping>
-        <ns2:toDataFieldPath>outObject</ns2:toDataFieldPath>
-        <ns2:value xsi:type="ns2:SimpleFieldValueType">
-          <ns2:valueFieldPath>inObject</ns2:valueFieldPath>
-        </ns2:value>
+        <ns2:toDataFieldPath>inObject.version</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.version</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[true]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
       </ns2:fieldMapping>
-    </ns2:searchResultMapping>
-    <ns2:searchConditionMapping name="Search">
-      <ns2:searchConditionData name="scObject" category="BusinessEntity">
-        <type entityName="org.shaolin.vogerp.accounting.be.InBalanceSheet"></type>
-      </ns2:searchConditionData>
-    </ns2:searchConditionMapping>
-  </ns2:query>
-  <ns2:query queryName="searchProfitSheet">
-    <ns2:searchResult name="outObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.accounting.be.ProfitSheet"></type>
-    </ns2:searchResult>
-    <ns2:fromData name="inObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.accounting.be.ProfitSheet"></type>
-    </ns2:fromData>
-    <ns2:searchResultMapping>
       <ns2:fieldMapping>
-        <ns2:toDataFieldPath>outObject</ns2:toDataFieldPath>
-        <ns2:value xsi:type="ns2:SimpleFieldValueType">
-          <ns2:valueFieldPath>inObject</ns2:valueFieldPath>
-        </ns2:value>
+        <ns2:toDataFieldPath>inObject.payBusinessTypeInt</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getPayBusinessType().getIntValue()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getPayBusinessType() != null && scObject.getPayBusinessType() != org.shaolin.vogerp.accounting.ce.PayBusinessType.NOT_SPECIFIED]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
       </ns2:fieldMapping>
-    </ns2:searchResultMapping>
-    <ns2:searchConditionMapping name="Search">
       <ns2:searchConditionData name="scObject" category="BusinessEntity">
-        <type entityName="org.shaolin.vogerp.accounting.be.ProfitSheet"></type>
-      </ns2:searchConditionData>
-    </ns2:searchConditionMapping>
-  </ns2:query>
-  <ns2:query queryName="searchCashFlowSheet">
-    <ns2:searchResult name="outObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.accounting.be.CashFlowSheet"></type>
-    </ns2:searchResult>
-    <ns2:fromData name="inObject" category="BusinessEntity">
-      <type entityName="org.shaolin.vogerp.accounting.be.CashFlowSheet"></type>
-    </ns2:fromData>
-    <ns2:searchResultMapping>
-      <ns2:fieldMapping>
-        <ns2:toDataFieldPath>outObject</ns2:toDataFieldPath>
-        <ns2:value xsi:type="ns2:SimpleFieldValueType">
-          <ns2:valueFieldPath>inObject</ns2:valueFieldPath>
-        </ns2:value>
-      </ns2:fieldMapping>
-    </ns2:searchResultMapping>
-    <ns2:searchConditionMapping name="Search">
-      <ns2:searchConditionData name="scObject" category="BusinessEntity">
-        <type entityName="org.shaolin.vogerp.accounting.be.CashFlowSheet"></type>
+        <type entityName="org.shaolin.vogerp.accounting.be.ServiceChargeTemplate"></type>
       </ns2:searchConditionData>
     </ns2:searchConditionMapping>
   </ns2:query>

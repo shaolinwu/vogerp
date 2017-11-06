@@ -517,6 +517,7 @@
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
       import java.util.ArrayList;
+      import org.shaolin.bmdp.runtime.security.UserContext;
       import org.shaolin.bmdp.runtime.AppContext;
       import org.shaolin.bmdp.runtime.ce.CEUtil;
       import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
@@ -524,12 +525,13 @@
       import org.shaolin.bmdp.runtime.spi.IConstantService;
       import org.shaolin.bmdp.runtime.ce.IConstantEntity;
       {
-          if ($beObject.getProvince() == null) {
-             $beObject.setProvince("CityList,110000");
-          }
           $cityValues = new ArrayList();
           $cityDisplayItems = new ArrayList();
           IConstantService cs = IServerServiceManager.INSTANCE.getConstantService();
+          if ($beObject.getProvince() == null || $beObject.getProvince().length() == 0) {
+             IConstantEntity pitem = cs.getParent(CEUtil.toCEValue(UserContext.getUserContext().getCity()));
+             $beObject.setProvince(pitem.getEntityName() +","+ pitem.getIntValue());
+          }
           IConstantEntity item = cs.getChildren(CEUtil.toCEValue($beObject.getProvince()));
           if (item != null) {
              CEOperationUtil.getCEItems($cityValues, $cityDisplayItems, item);
@@ -537,7 +539,8 @@
           
           if ($beObject.getCity() == null || $beObject.getCity().length() == 0
              || $beObject.getCity().equals("-1")) {
-             $beObject.setCity($cityValues.get(0).toString());
+             //$beObject.setCity($cityValues.get(0).toString());
+             $beObject.setCity(UserContext.getUserContext().getCity());
           }
           $districtValues = new ArrayList();
           $districtDisplayItems = new ArrayList();
