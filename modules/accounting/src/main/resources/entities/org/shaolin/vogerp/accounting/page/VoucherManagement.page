@@ -18,7 +18,6 @@
          import org.shaolin.vogerp.accounting.be.AccountVoucherImpl;
          {
              AccountVoucherImpl defaultUser = new AccountVoucherImpl();
-             defaultUser.setDoubleEnties(new ArrayList());
              defaultUser.setCreateDate(new Date());
              HashMap input = new HashMap();
              input.put("beObject", defaultUser);
@@ -100,6 +99,7 @@
              import org.shaolin.vogerp.accounting.dao.AccountingModel;
              import org.shaolin.bmdp.runtime.security.UserContext;
              {
+                /**
                 if ($tableCondition == null) {
                    $tableCondition = TableConditions.createCondition(new AccountVoucherImpl());
                    $tableCondition.setCount(10);
@@ -112,6 +112,7 @@
                               $tableCondition.getOrders(),
                               $tableCondition.getOffset(), 
                               $tableCondition.getCount());
+                */
              }]]></ns2:expressionString>
 								</ns2:expression>
 							</ns2:query>
