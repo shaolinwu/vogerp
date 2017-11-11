@@ -599,6 +599,7 @@
 	                                                     + $gorder.getDescription());
 		                         @flowContext.bindSession(payOrder);
 	                         }
+	                         org.shaolin.bmdp.persistence.HibernateUtil.releaseSession(true);
 	                         
 			                 HashMap input = new HashMap();
 				             input.put("beObject", payOrder);

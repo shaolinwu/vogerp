@@ -596,6 +596,7 @@
                          $gorder.setStatus(OrderStatusType.TAKEN);
                          EOrderModel.INSTANCE.update($gorder);
                          
+                         IUserService userService = (IUserService)AppContext.get().getService(IUserService.class); 
                          IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                          IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
                          long orgId = orgService.getOrgIdByPartyId($selectedPrice.getTakenCustomerId()); 
@@ -603,10 +604,11 @@
                              						orgId, $selectedPrice.getTakenCustomerId(), UserContext.getUserContext().getUserId(),
                              						$gorder.getSerialNumber(), $gorder.getEndPrice());
                          if (payOrder.getDescription() == null) {
-	                         payOrder.setDescription("[" + $gorder.getPublishedCustomer().getOrganization().getDescription() + "]" 
+	                         payOrder.setDescription("[" + userService.getPersonalInfo($gorder.getPublishedCustomerId()).getOrganization().getDescription() + "]" 
 	                                                    + $gorder.getDescription());
 	                         @flowContext.bindSession(payOrder);
                          }
+                         org.shaolin.bmdp.persistence.HibernateUtil.releaseSession(true);
                          HashMap input = new HashMap();
 			             input.put("beObject", payOrder);
 			             input.put("editable", new Boolean(true));

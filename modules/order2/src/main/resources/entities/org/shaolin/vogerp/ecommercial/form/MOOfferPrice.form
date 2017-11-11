@@ -62,7 +62,7 @@
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         { 
-            @page.getImage("samplePhotoUI.photoUI").clearAll(); 
+            //@page.getImage("samplePhotoUI.photoUI").clearAll(); 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             form.closeIfinWindows(true);
             @page.removeForm(@page.getEntityUiid()); 
@@ -143,7 +143,7 @@
                    <isFuncRef>false</isFuncRef>
                    <funcCode><![CDATA[
                    {
-                       if (this.value.length > 0) {
+                       if (this.value > 0) {
                            if (/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(this.value)) {
                              return true;
                            } else {
@@ -292,7 +292,7 @@
           <expressionString><![CDATA[
           import org.shaolin.vogerp.ecommercial.util.OrderUtil;
           {
-            if ($beObject.getEndPrice() > 0) {
+            if ($beObject.getEndPrice() > 1) {
                return $beObject.getEndPrice()-1;
             } if ($beObject.getOfferPrices() != null && $beObject.getOfferPrices().size() > 0) {
                return OrderUtil.getLowestOfferPrice($beObject) - 1;

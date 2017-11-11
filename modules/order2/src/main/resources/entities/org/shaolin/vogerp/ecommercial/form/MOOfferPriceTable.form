@@ -111,11 +111,6 @@
           <ns2:value>true</ns2:value>
         </ns2:secure>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UIHiddenType" UIID="takenCustomerIdUI">
-        <ns2:secure>
-          <ns2:value>true</ns2:value>
-        </ns2:secure>
-      </ns2:component>
       <ns2:component xsi:type="ns2:UITableType" UIID="itemTable">
         <ns2:beElement>org.shaolin.vogerp.ecommercial.be.MOOfferPrice</ns2:beElement>
         <ns2:defaultRowSize>20</ns2:defaultRowSize>

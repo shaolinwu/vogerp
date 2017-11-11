@@ -27,7 +27,7 @@ function org_shaolin_vogerp_ecommercial_form_GOOfferPrice(json)
             func: function() {
                 
                    {
-                       if (this.value.length > 0) {
+                       if (this.value > 0) {
                            if (/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(this.value)) {
                              return true;
                            } else {

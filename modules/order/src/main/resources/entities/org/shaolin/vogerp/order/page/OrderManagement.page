@@ -573,35 +573,6 @@
                             </ns2:column>
                             <ns2:column xsi:type="ns2:UITableColumnType">
                                 <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>Customer Info</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.customuerId</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        {
-                                            return $rowBE.getCustomer().getFirstName() + " " + $rowBE.getCustomer().getLastName();
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:rowExpression>
-                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        {
-                                            if (!"".equals($value) && !"null".equals($value)) {
-                                                //$rowBE.getCustomer().setName($value);
-                                            } else {
-                                                //`$rowBE.getCustomer().setName(null);
-                                            }
-                                        }]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:updateCondition>
-                            </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
                                     <ns2:value>Description</ns2:value>
                                 </ns2:title>
                                 <ns2:beFieldId>rowBE.description</ns2:beFieldId>

@@ -8,11 +8,6 @@ function org_shaolin_vogerp_ecommercial_form_MOOfferPriceTable(json)
         ui: elementList[prefix + "parentIdUI"]
     });
 
-    var takenCustomerIdUI = new UIMaster.ui.hidden
-    ({
-        ui: elementList[prefix + "takenCustomerIdUI"]
-    });
-
     var itemTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "itemTable"]
@@ -39,18 +34,16 @@ function org_shaolin_vogerp_ecommercial_form_MOOfferPriceTable(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "parentIdUI",prefix + "takenCustomerIdUI",prefix + "itemTable"]
+        ,subComponents: [prefix + "parentIdUI",prefix + "itemTable"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentIdUI,takenCustomerIdUI,itemTable,chatbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [parentIdUI,itemTable,chatbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.parentIdUI=parentIdUI;
-
-    Form.takenCustomerIdUI=takenCustomerIdUI;
 
     Form.itemTable=itemTable;
 
@@ -61,8 +54,6 @@ function org_shaolin_vogerp_ecommercial_form_MOOfferPriceTable(json)
     Form.fieldPanel=fieldPanel;
 
     Form.parentIdUI=parentIdUI;
-
-    Form.takenCustomerIdUI=takenCustomerIdUI;
 
     Form.itemTable=itemTable;
 

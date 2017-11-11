@@ -257,17 +257,17 @@
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-core</artifactId>
-				<version>4.2.3.Final</version>
+				<version>4.3.10.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-entitymanager</artifactId>
-				<version>4.2.3.Final</version>
+				<version>4.3.10.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-testing</artifactId>
-				<version>4.2.3.Final</version>
+				<version>4.3.10.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>com.esotericsoftware.kryo</groupId>
