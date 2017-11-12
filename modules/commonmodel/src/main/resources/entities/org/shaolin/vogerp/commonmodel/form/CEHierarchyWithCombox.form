@@ -173,7 +173,9 @@
       <expressionString><![CDATA[
       import java.util.ArrayList;
       {
-          $ceValue = org.shaolin.bmdp.runtime.ce.CEUtil.toCEValue($value);
+          if ($value != null && $value.length() > 0) {
+              $ceValue = org.shaolin.bmdp.runtime.ce.CEUtil.toCEValue($value);
+          }
 	      @odContext.executeAllMappings();
       }   
     ]]></expressionString>
