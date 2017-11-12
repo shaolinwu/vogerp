@@ -815,7 +815,7 @@
         
         <ns2:mission-node name="cancelGOrder" expiredDays="0" expiredHours="0" autoTrigger="false">
             <ns2:description>取消本订单</ns2:description>
-            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.RLoanOrderEditor"
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderEditor"
                 actionName="cancelGOrder" actionText="取消本订单">
                 <ns2:expression>
                     <expressionString><![CDATA[
@@ -852,9 +852,7 @@
 	                    import org.shaolin.bmdp.runtime.security.UserContext;
 	                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
 	                    {
-	                       return UserContext.hasRole("GenericOrganizationType.Director,0") 
-	                              && $beObject.getId() > 0 
-	                              && $beObject.getStatus() == OrderStatusType.PUBLISHED
+	                       return $beObject.getId() > 0 && $beObject.getStatus() == OrderStatusType.PUBLISHED 
 	                              && UserContext.getUserContext().getOrgId() == $beObject.getOrgId();
 	                    }
 	                ]]></expressionString>
@@ -897,9 +895,7 @@
 	                    import org.shaolin.bmdp.runtime.security.UserContext;
 	                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
 	                    {
-	                       return UserContext.hasRole("GenericOrganizationType.Director,0") 
-	                              && $beObject.getId() > 0 
-	                              && $beObject.getStatus() == OrderStatusType.PUBLISHED
+	                       return $beObject.getId() > 0 && $beObject.getStatus() == OrderStatusType.PUBLISHED
 	                              && UserContext.getUserContext().getOrgId() == $beObject.getOrgId();
 	                    }
 	                ]]></expressionString>

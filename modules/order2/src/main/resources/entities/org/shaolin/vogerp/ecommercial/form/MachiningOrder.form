@@ -103,7 +103,7 @@
 	          <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 	          <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 	        </ns2:layout>
-        <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="photoUI">
+        <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="photoUIForm">
           <ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.CADUploader" />
         </ns2:component>
         <ns2:component xsi:type="ns2:UIPanelType" UIID="attributePanel">
@@ -340,7 +340,7 @@
           </ns2:layoutConstraint>
        </ns2:component>
        <ns2:layoutConstraint>
-        <ns2:componentId>photoUI</ns2:componentId>
+        <ns2:componentId>photoUIForm</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
@@ -450,7 +450,7 @@
     </ns2:DataEntity>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
       <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.CADUploader"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="photoUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:UIComponent componentPath="photoUIForm" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.modelFile" paramName="modelFile"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.photos" paramName="imagePath"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="allowNumber">
@@ -554,15 +554,30 @@
       <expressionString><![CDATA[
       import org.shaolin.bmdp.runtime.security.UserContext;
       import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+      import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
       {
         OrderUtil.setPublishedUserAddress($beObject);
+        if ($beObject.getMaterialType() == null) {
+           $beObject.setMaterialType("SteelMaterial,8");
+        }
+        if($beObject.getDeliveryInfo() == null) {
+           $beObject.setDeliveryInfo(new DeliveryInfoImpl());
+        }
         @odContext.executeAllMappings();
       }]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
-      <expressionString>{
-@odContext.executeAllMappings();
-}</expressionString>
+      <expressionString><![CDATA[
+      import org.shaolin.bmdp.runtime.security.UserContext;
+      import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+      import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
+      {
+        if($beObject.getDeliveryInfo() == null) {
+           $beObject.setDeliveryInfo(new DeliveryInfoImpl());
+        } 
+        @odContext.executeAllMappings();
+      }
+      ]]></expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>
 </ns2:UIEntity>

@@ -11,7 +11,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
         ,items: []
         ,subComponents: [prefix + "basicInfoPanel",prefix + "deliveryInfoPanel"]
     });
-    var photoUI = new org_shaolin_vogerp_ecommercial_form_CADUploader({"prefix":prefix + "photoUI."});
+    var photoUIForm = new org_shaolin_vogerp_ecommercial_form_CADUploader({"prefix":prefix + "photoUIForm."});
 
     var serialNumberUILabel = new UIMaster.ui.label
     ({
@@ -108,7 +108,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     ({
         ui: elementList[prefix + "basicInfoPanel"]
         ,items: []
-        ,subComponents: [prefix + "photoUI",prefix + "attributePanel"]
+        ,subComponents: [prefix + "photoUIForm",prefix + "attributePanel"]
     });
     var deliveryInfoUI = new org_shaolin_vogerp_ecommercial_form_DeliveryInfoSimpleView({"prefix":prefix + "deliveryInfoUI."});
 
@@ -168,7 +168,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.basicInfoPanel=basicInfoPanel;
 
-    Form.photoUI=photoUI;
+    Form.photoUIForm=photoUIForm;
 
     Form.attributePanel=attributePanel;
 
@@ -220,7 +220,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.basicInfoPanel=basicInfoPanel;
 
-    Form.photoUI=photoUI;
+    Form.photoUIForm=photoUIForm;
 
     Form.attributePanel=attributePanel;
 

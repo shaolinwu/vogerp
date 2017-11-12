@@ -678,7 +678,47 @@
 	                    import org.shaolin.bmdp.runtime.security.UserContext;
 	                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
 	                    {
-	                       return $beObject.getStatus() == OrderStatusType.PUBLISHED;
+	                       return $beObject.getStatus() == OrderStatusType.PUBLISHED 
+	                              && UserContext.getUserContext().getOrgId() == $beObject.getOrgId();
+	                    }
+	                ]]></expressionString>
+                </ns2:filter>
+            </ns2:uiAction>
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.MachiningOrderWithResult"
+                actionName="cancelGOrder" actionText="取消本订单">
+                <ns2:expression>
+                    <expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import java.util.Date;
+                    import java.util.ArrayList;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
+                    import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
+                    import org.shaolin.vogerp.ecommercial.dao.*;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.vogerp.commonmodel.IUserService; 
+                    { 
+                        RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+                        HashMap out = (HashMap)form.ui2Data();
+                        MachiningOrderImpl gorder = (MachiningOrderImpl)out.get("beObject");
+                        
+                        form.closeIfinWindows();
+                        @page.removeForm(@page.getEntityUiid()); 
+                        
+                        HashMap result = new HashMap();
+                        result.put("gorder", out.get("beObject"));
+                        return result;
+                    }
+                    ]]></expressionString>
+                </ns2:expression>
+                <ns2:filter>
+	                <expressionString><![CDATA[
+	                    import org.shaolin.bmdp.runtime.security.UserContext;
+	                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+	                    {
+	                       return $beObject.getStatus() == OrderStatusType.PUBLISHED 
+	                              && UserContext.getUserContext().getOrgId() == $beObject.getOrgId();
 	                    }
 	                ]]></expressionString>
                 </ns2:filter>

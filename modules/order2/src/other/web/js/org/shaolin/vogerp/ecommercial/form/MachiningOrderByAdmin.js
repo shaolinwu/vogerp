@@ -91,7 +91,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
         ui: elementList[prefix + "cancelbtn"]
     });
 
-    var photoUI = new org_shaolin_vogerp_ecommercial_form_CADUploader({"prefix":prefix + "photoUI."});
+    var photoUIForm = new org_shaolin_vogerp_ecommercial_form_CADUploader({"prefix":prefix + "photoUIForm."});
 
     var materialTypeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "materialTypeUI."});
 
@@ -128,13 +128,13 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "photoUI",prefix + "attributePanel",prefix + "componentTable",prefix + "machineToolTable",prefix + "skinTable",prefix + "thirdComponentTable",prefix + "attributePanel1"]
+        ,subComponents: [prefix + "photoUIForm",prefix + "attributePanel",prefix + "componentTable",prefix + "machineToolTable",prefix + "skinTable",prefix + "thirdComponentTable",prefix + "attributePanel1"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [selectTableUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,differentiationUILabel,differentiationUI,countUILabel,countUI,materialTypeUILabel,taxRateUILabel,taxRateUI,selectMComponentTable,closeDialogBtn,viewbtn,savebtn,cancelbtn,photoUI,materialTypeUI,componentTable,machineToolTable,skinTable,thirdComponentTable,fieldPanel,attributePanel,attributePanel1,actionPanel]
+        ,items: [selectTableUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,differentiationUILabel,differentiationUI,countUILabel,countUI,materialTypeUILabel,taxRateUILabel,taxRateUI,selectMComponentTable,closeDialogBtn,viewbtn,savebtn,cancelbtn,photoUIForm,materialTypeUI,componentTable,machineToolTable,skinTable,thirdComponentTable,fieldPanel,attributePanel,attributePanel1,actionPanel]
     });
 
     Form.selectTableUI=selectTableUI;
@@ -171,7 +171,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
     Form.cancelbtn=cancelbtn;
 
-    Form.photoUI=photoUI;
+    Form.photoUIForm=photoUIForm;
 
     Form.materialTypeUI=materialTypeUI;
 
@@ -185,7 +185,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
     Form.fieldPanel=fieldPanel;
 
-    Form.photoUI=photoUI;
+    Form.photoUIForm=photoUIForm;
 
     Form.attributePanel=attributePanel;
 

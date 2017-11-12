@@ -16,7 +16,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor(json)
         ,items: []
         ,subComponents: [prefix + "photoPanel",prefix + "prodcutInfoPanel"]
     });
-    var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
+    var photoUIForm = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUIForm."});
 
     var serialNumberUILabel = new UIMaster.ui.label
     ({
@@ -109,7 +109,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor(json)
     ({
         ui: elementList[prefix + "photoPanel"]
         ,items: []
-        ,subComponents: [prefix + "photoUI",prefix + "attributePanel"]
+        ,subComponents: [prefix + "photoUIForm",prefix + "attributePanel"]
     });
     var htmlDescUI = new UIMaster.ui.textarea
     ({
@@ -162,7 +162,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor(json)
 
     Form.photoPanel=photoPanel;
 
-    Form.photoUI=photoUI;
+    Form.photoUIForm=photoUIForm;
 
     Form.attributePanel=attributePanel;
 
@@ -202,7 +202,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenSaleOrderEditor(json)
 
     Form.photoPanel=photoPanel;
 
-    Form.photoUI=photoUI;
+    Form.photoUIForm=photoUIForm;
 
     Form.attributePanel=attributePanel;
 

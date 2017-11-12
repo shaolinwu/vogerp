@@ -10,7 +10,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderEditor(json)
         ,items: []
         ,subComponents: [prefix + "photoPanel",prefix + "deliveryInfoPanel"]
     });
-    var photoUI = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUI."});
+    var photoUIForm = new org_shaolin_vogerp_commonmodel_form_ImageUploader({"prefix":prefix + "photoUIForm."});
 
     var serialNumberUILabel = new UIMaster.ui.label
     ({
@@ -142,7 +142,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderEditor(json)
     ({
         ui: elementList[prefix + "photoPanel"]
         ,items: []
-        ,subComponents: [prefix + "photoUI",prefix + "attributePanel"]
+        ,subComponents: [prefix + "photoUIForm",prefix + "attributePanel"]
     });
     var deliveryInfoUI = new org_shaolin_vogerp_ecommercial_form_DeliveryInfoSimpleView({"prefix":prefix + "deliveryInfoUI."});
 
@@ -207,7 +207,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderEditor(json)
 
     Form.photoPanel=photoPanel;
 
-    Form.photoUI=photoUI;
+    Form.photoUIForm=photoUIForm;
 
     Form.attributePanel=attributePanel;
 
@@ -261,7 +261,7 @@ function org_shaolin_vogerp_ecommercial_form_RentOrderEditor(json)
 
     Form.photoPanel=photoPanel;
 
-    Form.photoUI=photoUI;
+    Form.photoUIForm=photoUIForm;
 
     Form.attributePanel=attributePanel;
 
