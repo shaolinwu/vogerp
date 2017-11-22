@@ -2,58 +2,6 @@
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
   <entityName>org.shaolin.vogerp.ecommercial.form.RentOrLoanOrderTrack</entityName>
   <systemVersion>0</systemVersion>
-  <ns2:eventHandler functionName="openRentOrder">
-    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-        <ns2:expressionString><![CDATA[
-        {   
-            this.paymentTable.syncBodyDataToServer();
-            this.paymentTable.sync();
-        }
-        ]]></ns2:expressionString>
-    </ns2:ops>
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="openRentOrder-2016-12133543">
-        <ns2:exp>
-            <ns2:expressionString><![CDATA[
-            import java.util.HashMap;
-            import org.shaolin.uimaster.page.AjaxContext;
-            import org.shaolin.uimaster.page.ajax.*;
-            import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-            import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
-            import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
-            import org.shaolin.bmdp.runtime.AppContext;
-            import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
-            {
-                Table t = (Table)@page.getElement("paymentTable");
-                if (t.getSelectedRow() == null) {
-                    Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
-                    return;
-                }
-                RentOrLoanOrderImpl defaultUser = (RentOrLoanOrderImpl)t.getSelectedRow();
-                
-                HashMap input = new HashMap();
-                input.put("beObject", defaultUser);
-               	input.put("editable", new Boolean(false));
-               	
-               	String formName = "org.shaolin.vogerp.ecommercial.form.RentOrderEditor";
-               	if (defaultUser.getType() == RentOrLoanOrderType.LOAN) {
-               	   formName = "org.shaolin.vogerp.ecommercial.form.RLoanOrderEditor";
-               	}
-               	if (defaultUser.getType() == RentOrLoanOrderType.FINDMASTER) {
-                   formName = "org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderEditor";
-                   if (defaultUser.getStatus() == OrderStatusType.TAKEN) { 
-                       formName = "org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderTrack";
-                   }
-                }
-               	
-                RefForm form = new RefForm("rentOrLoanOrder", formName, input);
-                @page.addElement(form);
-                
-                form.openInWindows("租赁订单详情", null, true);
-            }
-            ]]></ns2:expressionString>
-        </ns2:exp>
-    </ns2:ops>
-  </ns2:eventHandler>
   <ns2:eventHandler functionName="orderTrackDetail">
     <ns2:ops xsi:type="ns2:OpExecuteScriptType">
         <ns2:expressionString><![CDATA[
@@ -90,7 +38,7 @@
                 String formName = "org.shaolin.vogerp.ecommercial.form.OrderPaymentAndDeliveryTrack";
                 if (defaultUser.getType() == RentOrLoanOrderType.FINDMASTER) {
                    input.put("beObject", defaultUser);
-                   formName = "org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderTrack";
+                   formName = "org.shaolin.vogerp.ecommercial.form.OrderPaymentWithMasterTrack";
                 }
                 
                 RefForm form = new RefForm("orderTrackForm", formName, input);

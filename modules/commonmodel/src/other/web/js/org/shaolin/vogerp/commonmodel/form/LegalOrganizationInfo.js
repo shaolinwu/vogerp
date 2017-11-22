@@ -39,6 +39,11 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         ui: elementList[prefix + "typeUILabel"]
     });
 
+    var typeUI = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "typeUI"]
+    });
+
     var descriptionUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "descriptionUILabel"]
@@ -101,8 +106,6 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         ui: elementList[prefix + "okbtn"]
     });
 
-    var typeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "typeUI."});
-
     var personalPhoto = new org_shaolin_vogerp_commonmodel_form_SingleImageUploader({"prefix":prefix + "personalPhoto."});
 
     var personalIdentifierPhoto = new org_shaolin_vogerp_commonmodel_form_SingleImageUploader({"prefix":prefix + "personalIdentifierPhoto."});
@@ -128,7 +131,7 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,verifiedUI,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,locationphotoLabel,termsUI,okbtn,typeUI,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,locationPhoto,fieldPanel,actionPanel]
+        ,items: [idUI,verifiedUI,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,typeUI,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,locationphotoLabel,termsUI,okbtn,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,locationPhoto,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -144,6 +147,8 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     Form.nameUI=nameUI;
 
     Form.typeUILabel=typeUILabel;
+
+    Form.typeUI=typeUI;
 
     Form.descriptionUILabel=descriptionUILabel;
 
@@ -168,8 +173,6 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     Form.termsUI=termsUI;
 
     Form.okbtn=okbtn;
-
-    Form.typeUI=typeUI;
 
     Form.personalPhoto=personalPhoto;
 

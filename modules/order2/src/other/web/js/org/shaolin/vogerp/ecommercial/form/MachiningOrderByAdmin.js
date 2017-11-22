@@ -55,6 +55,11 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
         ui: elementList[prefix + "materialTypeUILabel"]
     });
 
+    var materialTypeUI = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "materialTypeUI"]
+    });
+
     var taxRateUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "taxRateUILabel"]
@@ -92,8 +97,6 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     });
 
     var photoUIForm = new org_shaolin_vogerp_ecommercial_form_CADUploader({"prefix":prefix + "photoUIForm."});
-
-    var materialTypeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "materialTypeUI."});
 
     var componentTable = new org_shaolin_vogerp_ecommercial_form_MachOrderComponentTable({"prefix":prefix + "componentTable."});
 
@@ -134,7 +137,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [selectTableUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,differentiationUILabel,differentiationUI,countUILabel,countUI,materialTypeUILabel,taxRateUILabel,taxRateUI,selectMComponentTable,closeDialogBtn,viewbtn,savebtn,cancelbtn,photoUIForm,materialTypeUI,componentTable,machineToolTable,skinTable,thirdComponentTable,fieldPanel,attributePanel,attributePanel1,actionPanel]
+        ,items: [selectTableUI,serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,differentiationUILabel,differentiationUI,countUILabel,countUI,materialTypeUILabel,materialTypeUI,taxRateUILabel,taxRateUI,selectMComponentTable,closeDialogBtn,viewbtn,savebtn,cancelbtn,photoUIForm,componentTable,machineToolTable,skinTable,thirdComponentTable,fieldPanel,attributePanel,attributePanel1,actionPanel]
     });
 
     Form.selectTableUI=selectTableUI;
@@ -157,6 +160,8 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
     Form.materialTypeUILabel=materialTypeUILabel;
 
+    Form.materialTypeUI=materialTypeUI;
+
     Form.taxRateUILabel=taxRateUILabel;
 
     Form.taxRateUI=taxRateUI;
@@ -172,8 +177,6 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     Form.cancelbtn=cancelbtn;
 
     Form.photoUIForm=photoUIForm;
-
-    Form.materialTypeUI=materialTypeUI;
 
     Form.componentTable=componentTable;
 

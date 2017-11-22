@@ -43,6 +43,11 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
         ui: elementList[prefix + "typeUILabel"]
     });
 
+    var typeUI = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "typeUI"]
+    });
+
     var descriptionUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "descriptionUILabel"]
@@ -63,8 +68,6 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
         ui: elementList[prefix + "cancelbtn"]
     });
 
-    var typeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "typeUI."});
-
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
@@ -82,7 +85,7 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [parentIdUI,idUILabel,idUI,orgCodeUILabel,orgCodeUI,nameUILabel,nameUI,typeUILabel,descriptionUILabel,descriptionUI,okbtn,cancelbtn,typeUI,fieldPanel,actionPanel]
+        ,items: [parentIdUI,idUILabel,idUI,orgCodeUILabel,orgCodeUI,nameUILabel,nameUI,typeUILabel,typeUI,descriptionUILabel,descriptionUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.parentIdUI=parentIdUI;
@@ -101,6 +104,8 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
 
     Form.typeUILabel=typeUILabel;
 
+    Form.typeUI=typeUI;
+
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
@@ -108,8 +113,6 @@ function org_shaolin_vogerp_commonmodel_form_Organization(json)
     Form.okbtn=okbtn;
 
     Form.cancelbtn=cancelbtn;
-
-    Form.typeUI=typeUI;
 
     Form.fieldPanel=fieldPanel;
 

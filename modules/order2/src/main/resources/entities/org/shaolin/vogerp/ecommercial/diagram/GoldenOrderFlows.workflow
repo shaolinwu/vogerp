@@ -433,7 +433,7 @@
 			                 Dialog.showMessageDialog("竞价失败，请刷新订单状态！", "提醒", Dialog.WARNING_MESSAGE, null);
 			                 return;
 			              } else if (state == -2) {
-			                 Dialog.showMessageDialog("您已出价一次，不可重复竞价！", "提醒", Dialog.WARNING_MESSAGE, null);
+			                 Dialog.showMessageDialog("您的出价次数已满，不可重复竞价！", "提醒", Dialog.WARNING_MESSAGE, null);
 			                 return;
 			              } 
                           
@@ -595,8 +595,7 @@
 	                         IPayOrder payOrder = accountingService.createSelfPayOrder(PayBusinessType.GOLDENPORDERBUSI, 
 	                         						$gorder.getTakenCustomerId(), $gorder.getSerialNumber(), $gorder.getEndPrice());
 	                         if (payOrder.getDescription() == null) {
-		                         payOrder.setDescription("[" + $selectedPrice.getTakenCustomer().getOrganization().getDescription() + "]" 
-	                                                     + $gorder.getDescription());
+		                         payOrder.setDescription($gorder.getDescription());
 		                         @flowContext.bindSession(payOrder);
 	                         }
 	                         org.shaolin.bmdp.persistence.HibernateUtil.releaseSession(true);
@@ -613,8 +612,7 @@
                              						orgId, $gorder.getTakenCustomerId(), UserContext.getUserContext().getUserId(),
                              						$gorder.getSerialNumber(), $gorder.getEndPrice());
                              if (payOrder.getDescription() == null) {
-	                             payOrder.setDescription("[" + $selectedPrice.getTakenCustomer().getOrganization().getDescription() + "]" 
-	                                                     + $gorder.getDescription());
+	                             payOrder.setDescription($gorder.getDescription());
 		                         @flowContext.bindSession(payOrder);
 	                         }
 	                         String description = "("+OrderUtil.getOrderLink($gorder)+")" + $gorder.getDescription();
@@ -626,7 +624,7 @@
 	                         
 	                         ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
 	                         service.addNotification(message, true);
-	                         Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
+	                         Dialog.showMessageDialog("我们已通知对方尽快确认您的订单，请您耐心等待对方确认付款。", "", Dialog.INFORMATION_MESSAGE, null);
                          }
                     }
                      ]]></expressionString>

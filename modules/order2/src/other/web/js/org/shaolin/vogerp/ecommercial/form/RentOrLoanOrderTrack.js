@@ -27,8 +27,6 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack(json)
             /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack */
     };
 
-    Form.openRentOrder = org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_openRentOrder;
-
     Form.orderTrackDetail = org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_orderTrackDetail;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_invokeDynamicFunction;
@@ -42,22 +40,6 @@ function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack */
 /* Other_Func_LAST:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack */
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_openRentOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_openRentOrder */
-        var o = this;
-        var UIEntity = this;
-
-        {   
-            this.paymentTable.syncBodyDataToServer();
-            this.paymentTable.sync();
-        }
-        
-        // cal ajax function. 
-
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openRentOrder-2016-12133543",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_openRentOrder */
-
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_orderTrackDetail(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack_orderTrackDetail */

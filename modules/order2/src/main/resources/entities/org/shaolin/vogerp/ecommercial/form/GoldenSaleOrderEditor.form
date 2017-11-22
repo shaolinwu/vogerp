@@ -475,20 +475,15 @@
       import org.shaolin.vogerp.ecommercial.util.OrderUtil;
       import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
       {
-        if($beObject.getDeliveryInfo() == null) {
-           $beObject.setDeliveryInfo(new DeliveryInfoImpl());
-        }
         OrderUtil.setPublishedUserAddress($beObject);
         @odContext.executeAllMappings();
       }]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString><![CDATA[
-      import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
+      import org.shaolin.vogerp.ecommercial.util.OrderUtil;
       {
-         if($beObject.getDeliveryInfo() == null) {
-           $beObject.setDeliveryInfo(new DeliveryInfoImpl());
-         }
+         OrderUtil.setPublishedUserAddress($beObject);
          @odContext.executeAllMappings();
       }]]></expressionString>
     </ns2:UIToDataMappingOperation>

@@ -636,7 +636,7 @@
                          title = "找个师傅订单";
                          formName = "org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderEditor";
                          if (defaultUser.getStatus() == OrderStatusType.TAKEN) { 
-                             formName = "org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderTrack";
+                             formName = "org.shaolin.vogerp.ecommercial.form.OrderPaymentWithMasterTrack";
                          }
                       }
                       RefForm form = new RefForm("rentOrLoanOrder", formName, input);

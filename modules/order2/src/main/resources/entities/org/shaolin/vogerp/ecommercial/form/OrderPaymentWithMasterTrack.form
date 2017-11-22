@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns7="http://bmdp.shaolin.org/datamodel/FlowDiagram" xmlns:ns6="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns5="http://bmdp.shaolin.org/datamodel/Workflow" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
-  <entityName>org.shaolin.vogerp.ecommercial.form.OrderPaymentAndDeliveryTrack</entityName>
+  <entityName>org.shaolin.vogerp.ecommercial.form.OrderPaymentWithMasterTrack</entityName>
   <systemVersion>0</systemVersion>
-  <description>采购与租凭订单成交后跟踪</description>
+  <description>找大师／专家订单后跟踪</description>
   <ns2:eventHandler functionName="payOrder">
     <ns2:ops xsi:type="ns2:OpExecuteScriptType">
         <ns2:expressionString><![CDATA[
@@ -10,7 +10,7 @@
         }
         ]]></ns2:expressionString>
     </ns2:ops>
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="payOrder-20170218-2044">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="payOrder-20170518-1723">
         <ns2:exp>
             <ns2:expressionString><![CDATA[
             import java.util.HashMap;
@@ -47,47 +47,6 @@
         </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
-  
-  <ns2:eventHandler functionName="addProductionNote">
-    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-        <ns2:expressionString><![CDATA[
-        {   
-           $(this.addProductInfo).css("display", "block");
-           $(this.addProductInfo).dialog();
-        }
-        ]]></ns2:expressionString>
-    </ns2:ops>
-  </ns2:eventHandler>
-  <ns2:eventHandler functionName="savePregressNote">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="savePregressNote-20170325-215225">
-      <ns2:exp>
-        <expressionString><![CDATA[
-        import org.shaolin.uimaster.page.AjaxContext;
-        import org.shaolin.uimaster.page.ajax.*;
-        import org.shaolin.vogerp.ecommercial.uiwidget.OrderPaymentAndDeliveryUI;
-        import org.shaolin.vogerp.ecommercial.be.*;
-        import org.shaolin.vogerp.ecommercial.ce.*;
-        import org.shaolin.vogerp.ecommercial.dao.*;
-        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
-        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
-        { 
-            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            IEOrder order = (IEOrder)form.getInputParameter("order");
-            
-            String note = @page.getTextArea("descProgressUI").getValue();
-            OrderPaymentAndDeliveryUI.addProgressNote(order, note);
-            @page.getTextArea("descProgressUI").setValue("");
-        }]]></expressionString>
-      </ns2:exp>
-    </ns2:ops>
-    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-        <ns2:expressionString><![CDATA[
-        {   
-           $(this.addProductInfo).dialog("close");
-        }
-        ]]></ns2:expressionString>
-    </ns2:ops>
-  </ns2:eventHandler>
   <ns2:eventHandler functionName="updateExpress">
      <ns2:ops xsi:type="ns2:OpExecuteScriptType">
         <ns2:expressionString><![CDATA[
@@ -98,7 +57,6 @@
         ]]></ns2:expressionString>
     </ns2:ops>
   </ns2:eventHandler>
-  
   <ns2:eventHandler functionName="commentOrder">
     <ns2:ops xsi:type="ns2:OpExecuteScriptType">
         <ns2:expressionString><![CDATA[
@@ -239,12 +197,10 @@
        <ns2:layout xsi:type="ns2:TableLayoutType">
          <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
          <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
          <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
        </ns2:layout>
        <ns2:component xsi:type="ns2:UICustWidgetType" UIID="trackFormUI">
-         <ns2:custType>org.shaolin.vogerp.ecommercial.uiwidget.OrderPaymentAndDeliveryUI</ns2:custType>
+         <ns2:custType>org.shaolin.vogerp.ecommercial.uiwidget.OrderPaymentWithMasterUI</ns2:custType>
          <ns2:Property name="order">
             <ns2:value xsi:type="ns2:ExpressionPropertyType">
                  <ns2:expression>
@@ -256,82 +212,6 @@
             </ns2:value>
          </ns2:Property>
        </ns2:component>
-       <ns2:component xsi:type="ns2:UIPanelType" UIID="addProductInfo">
-          <ns2:Property name="style">
-             <ns2:value xsi:type="ns2:StringPropertyType">
-                 <value>display:none</value>
-             </ns2:value>
-          </ns2:Property>
-	      <ns2:layout xsi:type="ns2:TableLayoutType">
-	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-	        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-	      </ns2:layout>
-	      <ns2:component xsi:type="ns2:UITextAreaType" UIID="descProgressUI">
-	        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-	          <ns2:value>添加生产进度描述</ns2:value>
-	        </ns2:widgetLabel>
-	      </ns2:component>
-	      <ns2:component xsi:type="ns2:UIButtonType" UIID="descProgressbtn">
-	        <ns2:EventListener xsi:type="ns2:ClickListenerType">
-	          <ns2:handler functionName="savePregressNote"></ns2:handler>
-	        </ns2:EventListener>
-	        <ns2:text xsi:type="ns2:StringPropertyType">
-	          <ns2:value>确定</ns2:value>
-	        </ns2:text>
-	      </ns2:component>
-	      <ns2:layoutConstraint>
-		      <ns2:componentId>descProgressUI</ns2:componentId>
-		      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
-		    </ns2:layoutConstraint>
-		   <ns2:layoutConstraint>
-		      <ns2:componentId>descProgressbtn</ns2:componentId>
-		      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
-		    </ns2:layoutConstraint>
-	    </ns2:component>
-	    <ns2:component xsi:type="ns2:UIPanelType" UIID="addDeliveryInfo">
-	      <ns2:Property name="style">
-             <ns2:value xsi:type="ns2:StringPropertyType">
-                 <value>display:none</value>
-             </ns2:value>
-          </ns2:Property>
-	      <ns2:layout xsi:type="ns2:TableLayoutType">
-	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-	        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-	        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-	      </ns2:layout>
-	      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="expressVendorUI">
-	        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-	          <ns2:value>选择快递公司</ns2:value>
-	        </ns2:widgetLabel>
-	      </ns2:component>
-	      <ns2:component xsi:type="ns2:UITextFieldType" UIID="expressNumberUI">
-	        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-	          <ns2:value>快递编号</ns2:value>
-	        </ns2:widgetLabel>
-	      </ns2:component>
-	      <ns2:component xsi:type="ns2:UIButtonType" UIID="expressbtn">
-	        <ns2:EventListener xsi:type="ns2:ClickListenerType">
-	          <ns2:handler functionName="deliveryOrder"></ns2:handler>
-	        </ns2:EventListener>
-	        <ns2:text xsi:type="ns2:StringPropertyType">
-	          <ns2:value>保存</ns2:value>
-	        </ns2:text>
-	      </ns2:component>
-	        <ns2:layoutConstraint>
-		      <ns2:componentId>expressVendorUI</ns2:componentId>
-		      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
-		    </ns2:layoutConstraint>
-		    <ns2:layoutConstraint>
-		      <ns2:componentId>expressNumberUI</ns2:componentId>
-		      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
-		    </ns2:layoutConstraint>
-		    <ns2:layoutConstraint>
-		      <ns2:componentId>expressbtn</ns2:componentId>
-		      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL"></ns2:constraint>
-		    </ns2:layoutConstraint>
-	    </ns2:component>
 	    <ns2:component xsi:type="ns2:UIPanelType" UIID="addCommentInfo">
           <ns2:Property name="style">
              <ns2:value xsi:type="ns2:StringPropertyType">
@@ -451,16 +331,8 @@
 	      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
 	    </ns2:layoutConstraint>
 	    <ns2:layoutConstraint>
-	      <ns2:componentId>addProductInfo</ns2:componentId>
-	      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
-	    </ns2:layoutConstraint>
-	    <ns2:layoutConstraint>
-	      <ns2:componentId>addDeliveryInfo</ns2:componentId>
-	      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL"></ns2:constraint>
-	    </ns2:layoutConstraint>
-	    <ns2:layoutConstraint>
 	      <ns2:componentId>addCommentInfo</ns2:componentId>
-	      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL"></ns2:constraint>
+	      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
 	    </ns2:layoutConstraint>
     </ns2:component> 
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
@@ -537,18 +409,6 @@
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
-    <ns2:DataEntity scope="Internal" name="values" category="JavaClass">
-      <type entityName="java.util.ArrayList"></type>
-    </ns2:DataEntity>
-    <ns2:DataEntity scope="Internal" name="displayItems" category="JavaClass">
-      <type entityName="java.util.ArrayList"></type>
-    </ns2:DataEntity>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoice"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="expressVendorUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="values" paramName="OptionValues"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="displayItems" paramName="OptionDisplayValues"></ns2:DataComponent>
-    </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
       import java.util.ArrayList;
@@ -558,11 +418,6 @@
       import org.shaolin.bmdp.runtime.AppContext;
       import org.shaolin.vogerp.commonmodel.IExpressService;
       {
-         IExpressService service = (IExpressService)AppContext.get().getService(IExpressService.class);
-         Map result = service.queryVendorsList();
-         $values = new ArrayList(result.keySet());
-		 $displayItems = new ArrayList(result.values());
-      
          @odContext.executeAllMappings();
       }]]></expressionString>
     </ns2:DataToUIMappingOperation>

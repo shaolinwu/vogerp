@@ -73,7 +73,21 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
         ui: elementList[prefix + "materialTypeUILabel"]
     });
 
-    var materialTypeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "materialTypeUI."});
+    var materialTypeUI = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "materialTypeUI"]
+      ,allowBlank:false
+        ,validators:[
+        {
+            func: function() {
+                
+	                    { 
+	                    return this.value != "org.shaolin.vogerp.ecommercial.ce.MachiningMaterialType";
+	                    }
+            }
+            ,msg: "\u8BF7\u9009\u62E9\u52A0\u5DE5\u6750\u6599\uFF01"
+        }
+]    });
 
     var needCreateModelUILabel = new UIMaster.ui.label
     ({

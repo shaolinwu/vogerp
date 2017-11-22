@@ -445,7 +445,7 @@
 			                Dialog.showMessageDialog("竞价失败，请刷新订单状态！", "提醒", Dialog.WARNING_MESSAGE, null);
 			                return;
 			            } else if (state == -2) {
-			                Dialog.showMessageDialog("您已出价一次，不可重复竞价！", "提醒", Dialog.WARNING_MESSAGE, null);
+			                Dialog.showMessageDialog("您的出价次数已满，不可重复竞价！", "提醒", Dialog.WARNING_MESSAGE, null);
 			                return;
 			            } 
                           

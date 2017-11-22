@@ -223,8 +223,7 @@
 	          <ns2:value>选择材料</ns2:value>
 	        </ns2:text>
 	      </ns2:component>
-	      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="materialTypeUI">
-	         <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox" />
+	      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="materialTypeUI">
 	         <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
                <ns2:value>false</ns2:value>
              </ns2:allowBlank>
@@ -506,17 +505,17 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.count" paramName="Number"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
-      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
       <ns2:UIComponent componentPath="materialTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.materialType" paramName="value"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.materialType" paramName="CEStrValue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
         <ns2:expression>
           <expressionString>"org.shaolin.vogerp.ecommercial.ce.MachiningMaterialType"</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="singleLevel">
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Expendlevels">
         <ns2:expression>
-          <expressionString>{return Boolean.FALSE;}</expressionString>
+          <expressionString>{return 3;}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
@@ -560,9 +559,6 @@
         if ($beObject.getMaterialType() == null) {
            $beObject.setMaterialType("SteelMaterial,8");
         }
-        if($beObject.getDeliveryInfo() == null) {
-           $beObject.setDeliveryInfo(new DeliveryInfoImpl());
-        }
         @odContext.executeAllMappings();
       }]]></expressionString>
     </ns2:DataToUIMappingOperation>
@@ -572,9 +568,7 @@
       import org.shaolin.vogerp.ecommercial.util.OrderUtil;
       import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
       {
-        if($beObject.getDeliveryInfo() == null) {
-           $beObject.setDeliveryInfo(new DeliveryInfoImpl());
-        } 
+        OrderUtil.setPublishedUserAddress($beObject);
         @odContext.executeAllMappings();
       }
       ]]></expressionString>

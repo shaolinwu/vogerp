@@ -489,7 +489,7 @@
 			                 Dialog.showMessageDialog("竞价失败，请刷新订单状态！", "提醒", Dialog.WARNING_MESSAGE, null);
 			                 return;
 			              } else if (state == -2) {
-			                 Dialog.showMessageDialog("您已出价一次，不可重复竞价！", "提醒", Dialog.WARNING_MESSAGE, null);
+			                 Dialog.showMessageDialog("您的出价次数已满，不可重复竞价！", "提醒", Dialog.WARNING_MESSAGE, null);
 			                 return;
 			              } 
                           
@@ -662,8 +662,7 @@
 	                         IPayOrder payOrder = accountingService.createSelfPayOrder(PayBusinessType.EQUIPMENTRENTBUSI, 
 	                         						$gorder.getTakenCustomerId(), $gorder.getSerialNumber(), $gorder.getEndPrice());
                              if (payOrder.getDescription() == null) {
-	                             payOrder.setDescription("[" + $selectedPrice.getTakenCustomer().getOrganization().getDescription() + "]" 
-	                                                     + $gorder.getDescription());
+	                             payOrder.setDescription($gorder.getDescription());
 	                             @flowContext.bindSession(payOrder);
                              }
                              org.shaolin.bmdp.persistence.HibernateUtil.releaseSession(true);
@@ -681,8 +680,7 @@
 	                         				$gorder.getSerialNumber(), $gorder.getEndPrice());
 	                         if (payOrder.getDescription() == null) {
 		                         payOrder.setOrgId(orgService.getOrgIdByPartyId($gorder.getTakenCustomerId()));
-	                             payOrder.setDescription("[" + $selectedPrice.getTakenCustomer().getOrganization().getDescription() + "]" 
-	                                                     + $gorder.getDescription());
+	                             payOrder.setDescription($gorder.getDescription());
 	                             @flowContext.bindSession(payOrder);
                              }
 	                         String description = "("+OrderUtil.getOrderLink($gorder)+")" + $gorder.getDescription();
@@ -694,7 +692,7 @@
 	                         
 	                         ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
 	                         service.addNotification(message, true);
-	                         Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
+	                         Dialog.showMessageDialog("我们已通知对方尽快确认您的订单，请您耐心等待对方确认付款。", "", Dialog.INFORMATION_MESSAGE, null);
                          }
                          
                     }
@@ -709,8 +707,8 @@
         
         <ns2:mission-node name="ensurePayMasterOrder" expiredDays="0" expiredHours="0" autoTrigger="false">
             <ns2:description>确认支付给师傅</ns2:description>
-            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.RLoanMasterOrderTrack"
-                actionName="ensuprePay" actionText="确认支付">
+            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.OrderPaymentWithMasterTrack"
+                actionName="ensuprePay" actionText="确认完成工作">
                 <ns2:expression>
                     <expressionString><![CDATA[
                     import java.util.HashMap;
@@ -729,7 +727,7 @@
                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                     { 
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-                        RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)form.getInputParameter("beObject");
+                        RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)form.getInputParameter("order");
                         
                         HashMap result = new HashMap();
                         result.put("order", gorder);
@@ -745,9 +743,10 @@
                 <ns2:filter><expressionString><![CDATA[
                     import org.shaolin.bmdp.runtime.security.UserContext;
                     import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
+                    import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
                     {
-                       return $beObject.getOrgId() == UserContext.getUserContext().getOrgId() 
-                              && $beObject.getTakenStatus() == OrderStatusType.TAKEN_PAYED;
+                       return ((RentOrLoanOrderImpl)$order).getOrgId() == UserContext.getUserContext().getOrgId() 
+                              && ((RentOrLoanOrderImpl)$order).getTakenStatus() == OrderStatusType.TAKEN_PAYED;
                     }
                 ]]></expressionString></ns2:filter>
             </ns2:uiAction>
@@ -805,7 +804,7 @@
                          
                          ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
                          service.addNotification(message, true);
-			             Dialog.showMessageDialog("确认付款成功！", "", Dialog.INFORMATION_MESSAGE, null);
+			             Dialog.showMessageDialog("订单成交成功！", "", Dialog.INFORMATION_MESSAGE, null);
                     }
                      ]]></expressionString>
                 </ns2:expression>

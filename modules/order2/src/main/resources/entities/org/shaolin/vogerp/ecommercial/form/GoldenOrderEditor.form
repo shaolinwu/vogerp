@@ -534,7 +534,10 @@
       }]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
-      <expressionString><![CDATA[{
+      <expressionString><![CDATA[
+      import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+      {
+      OrderUtil.setPublishedUserAddress($beObject);
       @odContext.executeAllMappings();
       }]]></expressionString>
     </ns2:UIToDataMappingOperation>

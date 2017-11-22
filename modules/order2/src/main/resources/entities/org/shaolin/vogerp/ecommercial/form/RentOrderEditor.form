@@ -581,18 +581,21 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.deliveryInfo" paramName="beObject"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
-      <expressionString>
+      <expressionString><![CDATA[
       import org.shaolin.bmdp.runtime.security.UserContext;
       import org.shaolin.vogerp.ecommercial.util.OrderUtil;
       {
         OrderUtil.setPublishedUserAddress($beObject);
         @odContext.executeAllMappings();
-      }</expressionString>
+      }]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
-      <expressionString>{
+      <expressionString><![CDATA[
+      import org.shaolin.vogerp.ecommercial.util.OrderUtil;
+      {
+        OrderUtil.setPublishedUserAddress($beObject);
         @odContext.executeAllMappings();
-      }</expressionString>
+      }]]></expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>
 </ns2:UIEntity>

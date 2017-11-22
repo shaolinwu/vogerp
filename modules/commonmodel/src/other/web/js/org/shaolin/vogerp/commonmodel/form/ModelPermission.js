@@ -8,6 +8,11 @@ function org_shaolin_vogerp_commonmodel_form_ModelPermission(json)
         ui: elementList[prefix + "typeUILabel"]
     });
 
+    var typeUI = new UIMaster.ui.combobox
+    ({
+        ui: elementList[prefix + "typeUI"]
+    });
+
     var modulesUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "modulesUILabel"]
@@ -22,8 +27,6 @@ function org_shaolin_vogerp_commonmodel_form_ModelPermission(json)
     ({
         ui: elementList[prefix + "cancelbtn"]
     });
-
-    var typeUI = new org_shaolin_vogerp_commonmodel_form_CEHierarchyWithCombox({"prefix":prefix + "typeUI."});
 
     var modulesUI = new org_shaolin_vogerp_commonmodel_form_ListToListSelector({"prefix":prefix + "modulesUI."});
 
@@ -44,18 +47,18 @@ function org_shaolin_vogerp_commonmodel_form_ModelPermission(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [typeUILabel,modulesUILabel,okbtn,cancelbtn,typeUI,modulesUI,fieldPanel,actionPanel]
+        ,items: [typeUILabel,typeUI,modulesUILabel,okbtn,cancelbtn,modulesUI,fieldPanel,actionPanel]
     });
 
     Form.typeUILabel=typeUILabel;
+
+    Form.typeUI=typeUI;
 
     Form.modulesUILabel=modulesUILabel;
 
     Form.okbtn=okbtn;
 
     Form.cancelbtn=cancelbtn;
-
-    Form.typeUI=typeUI;
 
     Form.modulesUI=modulesUI;
 

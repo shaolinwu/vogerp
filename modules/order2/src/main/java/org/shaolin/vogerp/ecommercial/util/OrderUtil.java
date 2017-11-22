@@ -145,7 +145,8 @@ public class OrderUtil {
 	 */
 	public static int addAPrice(final IEOrder eorder,
 			final IOfferPrice newPrice) {
-		//TODO: we need the distributed lock manager for all nodes here since this is a competition.
+		// TODO: we need the distributed lock manager for all nodes here since this is a
+		// competition.
 		lockManager.acquireLock(eorder.getId());
 		try {
 			if (eorder instanceof GoldenOrderImpl) {
@@ -157,14 +158,20 @@ public class OrderUtil {
 					gorder.setOfferPrices(new HashSet());
 				}
 				// check whether has offered price already.
+				int offeredPriceCount = 0;
 				Set<IOfferPrice> priceList = gorder.getOfferPrices();
-	            for (IOfferPrice price : priceList) {
-	            	if (price.getTakenCustomerId() == newPrice.getTakenCustomerId()) {
-	            		return -2;
-	            	}
-	            }
+				for (IOfferPrice price : priceList) {
+					if (price.getTakenCustomerId() == newPrice.getTakenCustomerId()) {
+						offeredPriceCount++;
+					}
+				}
+				if (offeredPriceCount >= 2) {
+					return -2;
+				}
 				gorder.getOfferPrices().add(newPrice);
-				EOrderModel.INSTANCE.update(gorder, true); // we have manually committed the transaction here since it's 1 to n mapping. otherwise, will be wrong!
+				EOrderModel.INSTANCE.update(gorder, true); 
+				// we have manually committed the transaction here since it's
+				// 1 to n mapping. otherwise, it will be wrong!
 			} else if (eorder instanceof RentOrLoanOrderImpl) {
 				RentOrLoanOrderImpl rorder = EOrderModel.INSTANCE.get(eorder.getId(), RentOrLoanOrderImpl.class);
 				if (rorder == null || rorder.getStatus() != OrderStatusType.PUBLISHED) {
@@ -174,15 +181,21 @@ public class OrderUtil {
 					rorder.setOfferPrices(new HashSet());
 				}
 				// check whether has offered price already.
+				int offeredPriceCount = 0;
 				Set<IOfferPrice> priceList = rorder.getOfferPrices();
-	            for (IOfferPrice price : priceList) {
-	            	if (price.getTakenCustomerId() == newPrice.getTakenCustomerId()) {
-	            		return -2;
-	            	}
-	            }
+				for (IOfferPrice price : priceList) {
+					if (price.getTakenCustomerId() == newPrice.getTakenCustomerId()) {
+						offeredPriceCount++;
+					}
+					if (offeredPriceCount >= 2) {
+						return -2;
+					}
+				}
 				rorder.getOfferPrices().add(newPrice);
-				EOrderModel.INSTANCE.update(rorder, true);// we have manually committed the transaction here since it's 1 to n mapping. otherwise, will be wrong!
-			} else if  (eorder instanceof MachiningOrderImpl) {
+				EOrderModel.INSTANCE.update(rorder, true);
+				// we have manually committed the transaction here since it's
+				// 1 to n mapping. otherwise, it will be wrong!
+			} else if (eorder instanceof MachiningOrderImpl) {
 				MachiningOrderImpl rorder = EOrderModel.INSTANCE.get(eorder.getId(), MachiningOrderImpl.class);
 				if (rorder == null || rorder.getStatus() != OrderStatusType.PUBLISHED) {
 					return -1;
@@ -191,15 +204,21 @@ public class OrderUtil {
 					rorder.setOfferPrices(new HashSet());
 				}
 				// check whether has offered price already.
+				int offeredPriceCount = 0;
 				Set<IOfferPrice> priceList = rorder.getOfferPrices();
-	            for (IOfferPrice price : priceList) {
-	            	if (price.getTakenCustomerId() == newPrice.getTakenCustomerId()) {
-	            		return -2;
-	            	}
-	            }
+				for (IOfferPrice price : priceList) {
+					if (price.getTakenCustomerId() == newPrice.getTakenCustomerId()) {
+						offeredPriceCount++;
+					}
+				}
+				if (offeredPriceCount >= 2) {
+					return -2;
+				}
 				rorder.getOfferPrices().add(newPrice);
-				EOrderModel.INSTANCE.update(rorder, true);// we have manually committed the transaction here since it's 1 to n mapping. otherwise, will be wrong!
-			} 
+				EOrderModel.INSTANCE.update(rorder, true);
+				// we have manually committed the transaction here since it's
+				// 1 to n mapping. otherwise, it will be wrong!
+			}
 			// commit the update.
 			return 1;
 		} finally {

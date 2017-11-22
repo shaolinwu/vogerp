@@ -287,8 +287,9 @@
       <ns2:fieldMapping beFieldName="priceChangedCount" columnName="PRICECHANGEDCOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
-      <!-- cause performance issue in terms of frontend user access. also we break the rule of micro service case.
-      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_GOOfferPrice0" mappingType="One-to-One" beFieldName="takenCustomer" columnName="TAKENCUSTOMERID"></ns2:fieldMapping>
+      <!-- cause performance issue in terms of frontend user access. also we break the rule of micro-service case.
+      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_GOOfferPrice0" 
+      mappingType="One-to-One" beFieldName="takenCustomer" columnName="TAKENCUSTOMERID"></ns2:fieldMapping>
       -->
     </ns2:mapping>
   </ns2:table>
@@ -325,7 +326,6 @@
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <!-- cause performance issue in terms of frontend user access.
-      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_GOOfferPrice1" mappingType="One-to-One" beFieldName="takenCustomer" columnName="TAKENCUSTOMERID"></ns2:fieldMapping>
        -->
     </ns2:mapping>
   </ns2:table>
@@ -483,8 +483,6 @@
       <ns2:fieldMapping beFieldName="priceChangedCount" columnName="PRICECHANGEDCOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
-      <!-- cause performance issue in terms of frontend user access.
-      <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ECOM_GOOfferPrice1" mappingType="One-to-One" beFieldName="takenCustomer" columnName="TAKENCUSTOMERID"></ns2:fieldMapping>
       -->
     </ns2:mapping>
   </ns2:table>

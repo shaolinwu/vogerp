@@ -3,9 +3,12 @@ package org.shaolin.vogerp.ecommercial.uiwidget;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.shaolin.bmdp.json.JSONException;
+import org.shaolin.bmdp.json.JSONObject;
 import org.shaolin.uimaster.page.AjaxContext;
 import org.shaolin.uimaster.page.UserRequestContext;
 import org.shaolin.uimaster.page.cache.UIFormObject;
+import org.shaolin.uimaster.page.javacc.VariableEvaluator;
 import org.shaolin.uimaster.page.od.formats.FormatUtil;
 import org.shaolin.uimaster.page.widgets.HTMLWidgetType;
 import org.shaolin.vogerp.ecommercial.be.IMachOrderComponent;
@@ -89,4 +92,8 @@ public class ComponentListUI extends HTMLWidgetType {
 		return totalPrice;
 	}
 	
+	public JSONObject createJsonModel(VariableEvaluator ee) throws JSONException
+    {
+      return null;
+    }
 }

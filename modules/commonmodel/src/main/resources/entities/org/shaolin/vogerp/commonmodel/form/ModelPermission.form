@@ -81,8 +81,7 @@
           <ns2:key>org.shaolin.vogerp.productmodel.be.ModelPermission.type</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="typeUI">
-         <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox" />
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="typeUI">
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="modulesUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -176,12 +175,17 @@
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
       <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="type" paramName="value"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="type" paramName="CEStrValue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
         <ns2:expression>
           <expressionString>"org.shaolin.vogerp.commonmodel.ce.GenericOrganizationType"</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Expendlevels">
+        <ns2:expression>
+          <expressionString>{return 1;}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>

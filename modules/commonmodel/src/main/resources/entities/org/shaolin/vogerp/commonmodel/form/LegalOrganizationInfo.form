@@ -121,8 +121,7 @@
           <ns2:key>org.shaolin.vogerp.commonmodel.be.Organization.types</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="typeUI">
-         <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox" />
+      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="typeUI">
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="descriptionUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -397,17 +396,17 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="orgInfo.name" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping3">
-      <ns2:mappingRule entityName="org.shaolin.vogerp.commonmodel.form.CEHierarchyWithCombox"></ns2:mappingRule>
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
       <ns2:UIComponent componentPath="typeUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="orgInfo.type" paramName="value"></ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="ceName">
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="orgInfo.type" paramName="CEStrValue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
         <ns2:expression>
           <expressionString>"org.shaolin.vogerp.productmodel.ce.ProductType"</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="singleLevel">
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Expendlevels">
         <ns2:expression>
-          <expressionString>{return Boolean.TRUE;}</expressionString>
+          <expressionString>{return 1;}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
