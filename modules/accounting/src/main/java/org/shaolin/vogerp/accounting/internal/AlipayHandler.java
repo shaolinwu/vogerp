@@ -254,6 +254,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 		try {
 			AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
 			request.setBizContent("{\"out_trade_no\":\""+order.getOutTradeNo()+"\"}");
+			logger.info("Post Ali query request: " + request.toString());
 			AlipayTradeQueryResponse response = alipayClient.execute(request);
 			if(response.isSuccess()) { 
 				JSONObject responseInfo = new JSONObject(response.getBody());

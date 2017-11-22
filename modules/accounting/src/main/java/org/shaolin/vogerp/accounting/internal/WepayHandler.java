@@ -371,6 +371,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 			keyValues.append("&key=").append(MCH_APISECURE_KEY);
 			// take this link for verification. https://pay.weixin.qq.com/wiki/tools/signverify/
 			values.put("sign", encodeMD5(keyValues.toString(), "UTF-8").toUpperCase());
+			logger.info("Post Weixi query request: " + values.toString());
 			String result = sender.doPostSSL(UNIFIEDQUERY_URL, StringUtil.convertMapToXML(values, "xml"), "UTF-8", "text/xml");
 			//xml format
 			Map resultMap = StringUtil.xml2map(result);
@@ -390,7 +391,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 					return FAIL;
 				}
 				String out_trade_no = jsonObj.getString("out_trade_no");
-	    		jsonObj.put("transaction_fee", jsonObj.getInt("total_fee"));
+	    			jsonObj.put("transaction_fee", jsonObj.getInt("total_fee"));
 				jsonObj.put("transaction_id", out_trade_no);
 				jsonObj.put("transaction_type", TransactionType.PAY.toString());
 				jsonObj.put("message_detail", "");

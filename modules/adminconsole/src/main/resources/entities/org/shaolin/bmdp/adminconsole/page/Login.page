@@ -76,7 +76,7 @@
 		    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
                 <ns2:expressionString><![CDATA[
 		      {
-		        window.open("http://120.25.197.58:8099/xwiki");
+		        window.open("https://www.vogerp.com/uimaster/webflow.do?_chunkname=org.shaolin.vogerp.commonmodel.diagram.ModularityModel&_nodename=BBSMain&_page=org.shaolin.vogerp.bbs.page.BBSMain&_framename=BBSMain&_framePrefix=");
 		      }
 		      ]]></ns2:expressionString>
             </ns2:ops>
