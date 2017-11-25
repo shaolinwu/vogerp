@@ -157,7 +157,7 @@
 	    import org.shaolin.vogerp.ecommercial.be.MachOrderComponentImpl;
         { 
            Table table = @page.getTable("selectMComponentTable");
-           if (table.getSelectedIndex() > 0) {
+           if (table.getSelectedIndex() >= 0) {
               MachiningComponentImpl condition = (MachiningComponentImpl)table.getConditions().getCondition();
               MachiningComponentImpl component = (MachiningComponentImpl)table.getSelectedRow();
               MachOrderComponentImpl morderComponent = new MachOrderComponentImpl();

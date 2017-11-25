@@ -314,10 +314,13 @@
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString><![CDATA[
-      import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
+      import org.shaolin.uimaster.page.ajax.Table;
+      import org.shaolin.vogerp.ecommercial.be.MOOfferPriceImpl;
       {
 		@odContext.executeAllMappings();
-		$selectedPrice = (ROOfferPriceImpl)@page.getTable("itemTable").getSelectedRow();
+		//we must use the absolute id to access the ajax widget.
+		Table t = ((Table)@page.getElementByAbsoluteId(@odContext.getHtmlContext().getHTMLPrefix() + "itemTable", Table.class));
+		$selectedPrice = (MOOfferPriceImpl)t.getSelectedRow();
       }
     ]]></expressionString>
     </ns2:UIToDataMappingOperation>

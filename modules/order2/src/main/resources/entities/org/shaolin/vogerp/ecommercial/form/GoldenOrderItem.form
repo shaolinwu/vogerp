@@ -279,11 +279,12 @@
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString><![CDATA[
+      import org.shaolin.uimaster.page.ajax.Table;
       import org.shaolin.uimaster.page.AjaxContext;
       import org.shaolin.uimaster.page.ajax.*;
       {
 		@odContext.executeAllMappings();
-		Table tableWidget = (Table)@page.getElement("itemTable");
+		Table tableWidget = ((Table)@page.getElementByAbsoluteId(@odContext.getHtmlContext().getHTMLPrefix() + "itemTable", Table.class));
 		$list = tableWidget.getListData();
 	  }]]></expressionString>
     </ns2:UIToDataMappingOperation>

@@ -393,10 +393,11 @@
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
       <expressionString><![CDATA[
+      import org.shaolin.uimaster.page.ajax.Table;
       import org.shaolin.vogerp.ecommercial.be.GOOfferPriceImpl;
       {
 		@odContext.executeAllMappings();
-		$selectedPrice = (GOOfferPriceImpl)@page.getTable("itemTable").getSelectedRow();
+		$selectedPrice = (GOOfferPriceImpl)((Table)@page.getElementByAbsoluteId(@odContext.getHtmlContext().getHTMLPrefix() + "itemTable", Table.class)).getSelectedRow();
       }
      ]]></expressionString>
     </ns2:UIToDataMappingOperation>

@@ -231,10 +231,12 @@
       <expressionString><![CDATA[
       import java.util.List;
       import java.util.ArrayList;
+      import org.shaolin.uimaster.page.ajax.Table;
       import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
       import org.shaolin.vogerp.ecommercial.be.MachiningComponentImpl;
       {
-		$beObject = (MachiningComponentImpl)@page.getTable("mComponentTable").getSelectedRow();
+        Table t = ((Table)@page.getElementByAbsoluteId(@odContext.getHtmlContext().getHTMLPrefix() + "mComponentTable", Table.class));
+		$beObject = (MachiningComponentImpl)t.getSelectedRow();
       }
      ]]></expressionString>
     </ns2:UIToDataMappingOperation>

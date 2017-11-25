@@ -251,11 +251,13 @@
       <expressionString><![CDATA[
       import java.util.List;
       import java.util.HashSet;
+      import org.shaolin.uimaster.page.ajax.Table;
       import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
       import org.shaolin.vogerp.ecommercial.be.MachOrderComponentImpl;
       {
 		@odContext.executeAllMappings();
-		$list = @page.getTable("itemTable").getListData();
+		//we must use the absolute id to access the ajax widget.
+		$list = ((Table)@page.getElementByAbsoluteId(@odContext.getHtmlContext().getHTMLPrefix() + "itemTable", Table.class)).getListData();
 		if ($beObject.getComponents() == null) {
 		   $beObject.setComponents(new HashSet());
 		}
