@@ -196,7 +196,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		newAccount.setLongitude(registerInfo.getLongitude());
 		newAccount.setLocale("zh_CN");
 		this.setLocationInfo(newAccount);
-		if (newAccount.getLocationInfo() == null || newAccount.getLocationInfo().trim().length() > 0) {
+		if (newAccount.getLocationInfo() == null || newAccount.getLocationInfo().trim().length() == 0) {
 			newAccount.setLocationInfo(registerInfo.getAddress().getCity());
 		}
 		CommonModel.INSTANCE.create(newAccount);
