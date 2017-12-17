@@ -356,6 +356,7 @@
                 </ns2:expression>
             </ns2:process>
             <ns2:eventDest>
+                <ns2:dest name="estimatePrice"></ns2:dest>
                 <ns2:dest name="offerPrice"></ns2:dest>
                 <ns2:dest name="cancelGOrder"></ns2:dest>
                 <ns2:dest name="forbiddenMOrder"></ns2:dest>

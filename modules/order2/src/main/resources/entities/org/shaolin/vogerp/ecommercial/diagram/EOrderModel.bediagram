@@ -350,6 +350,11 @@
             <bediagram:type xsi:type="bediagram:IntType" />
         </bediagram:member>
         <bediagram:member>
+            <!-- 多版本支持，稳定业务常量 -->
+            <bediagram:name>version</bediagram:name>
+            <bediagram:type xsi:type="bediagram:IntType" />
+        </bediagram:member>
+        <bediagram:member>
             <!-- 步骤类型：  生产材料部件, 加工设备, 表面处理方式  和其它三方独立辅材料 -->
             <bediagram:name>category</bediagram:name>
             <bediagram:type xsi:type="bediagram:CEObjRefType">

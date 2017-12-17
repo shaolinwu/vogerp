@@ -129,7 +129,11 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			return false;
 		}
 		if (registerInfo.getUserType() == null || registerInfo.getUserType() == OrgType.NOT_SPECIFIED) {
-			logger.debug("Does not specify the user type! " + registerInfo.getPhoneNumber());
+			logger.warn("Does not specify the user type! " + registerInfo.getPhoneNumber());
+			return false;
+		}
+		if (registerInfo.getPassword() == null || registerInfo.getPassword().trim().length() == 0) {
+			logger.warn("Password does not specify!");
 			return false;
 		}
 		PersonalAccountImpl account = new PersonalAccountImpl();
@@ -192,6 +196,9 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		newAccount.setLongitude(registerInfo.getLongitude());
 		newAccount.setLocale("zh_CN");
 		this.setLocationInfo(newAccount);
+		if (newAccount.getLocationInfo() == null || newAccount.getLocationInfo().trim().length() > 0) {
+			newAccount.setLocationInfo(registerInfo.getAddress().getCity());
+		}
 		CommonModel.INSTANCE.create(newAccount);
 		
 		AssignedMemberImpl assignedMember = new AssignedMemberImpl();

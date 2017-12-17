@@ -343,12 +343,20 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 			            if (constraint_result != true && constraint_result != null) {
 			                return false;
 			            }
-		            } else {
+			            this.registerInfo.passwordUI.validate=function(){return null;}
+			            this.registerInfo.password1UI.validate=function(){return null;}
+			            var encrytedPassword = md5(this.registerInfo.passwordUI.getValue()).toUpperCase();
+			            this.registerInfo.passwordUI.setValue(encrytedPassword);
+			        } else {
 		                constraint_result = this.registerCompanyInfo.Form.validate();
 			            if (constraint_result != true && constraint_result != null) {
 			                return false;
 			            }
-		            }
+			            this.registerCompanyInfo.passwordUI.validate=function(){return null;}
+                        this.registerCompanyInfo.password1UI.validate=function(){return null;}
+			            var encrytedPassword = md5(this.registerCompanyInfo.passwordUI.getValue()).toUpperCase();
+			            this.registerCompanyInfo.passwordUI.setValue(encrytedPassword);
+			        }
 		            constraint_result = this.veriCode.validate();
 		            if (constraint_result != true && constraint_result != null) {
 		                return false;
@@ -357,11 +365,9 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 		            if (constraint_result != true && constraint_result != null) {
 		                return false;
 		            }
-		            UIMaster.ui.sync.set({_uiid:UIMaster.getUIID(this.registerInfo.passwordUI),_valueName:"value",_value:md5(this.registerInfo.passwordUI.getValue()).toUpperCase(),_framePrefix:UIMaster.getFramePrefix(this.termsUI)});
-		            UIMaster.ui.sync.set({_uiid:UIMaster.getUIID(this.registerCompanyInfo.passwordUI),_valueName:"value",_value:md5(this.registerCompanyInfo.passwordUI.getValue()).toUpperCase(),_framePrefix:UIMaster.getFramePrefix(this.termsUI)});
-		            
+                    
 		            if (MobileAppMode) {
-		               // webview does not support form.
+		               // webview does not support submitting a form directly!
 		               
 		               UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"AppRegister-20151227-1839",UIMaster.getValue(eventsource),o.__entityName);
 		               

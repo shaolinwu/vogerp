@@ -114,7 +114,7 @@
                       if ($tableCondition == null) {
                          $tableCondition = TableConditions.createCondition(new MachiningComponentImpl());
                          $tableCondition.setCount(20);
-                               $tableCondition.addOrder("createDate", false);
+                         $tableCondition.addOrder("createDate", false);
                       }
                       MachiningComponentImpl condition = (MachiningComponentImpl)$tableCondition.getCondition();
                       condition.setCategory(MachiningCategoryType.MACHININGTOOL);

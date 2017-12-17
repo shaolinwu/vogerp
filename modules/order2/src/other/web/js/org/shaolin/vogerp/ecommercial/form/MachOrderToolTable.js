@@ -12,6 +12,7 @@ function org_shaolin_vogerp_ecommercial_form_MachOrderToolTable(json)
     ({
         ui: elementList[prefix + "itemTable"]
         ,disableRefreshClear: true
+        ,disableActionBarFloating: true
     });
 
     var fieldPanel = new UIMaster.ui.panel
