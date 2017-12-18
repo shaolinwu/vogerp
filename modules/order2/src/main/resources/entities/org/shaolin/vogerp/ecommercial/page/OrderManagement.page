@@ -167,8 +167,6 @@
                         return;
                     }
 		            
-		            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-		
 		            GoldenOrderImpl order = new GoldenOrderImpl();
 		            order.setOrgId(UserContext.getUserContext().getOrgId());
 		            order.setSerialNumber(OrderUtil.genSerialNumber());

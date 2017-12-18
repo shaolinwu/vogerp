@@ -98,17 +98,27 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
         ui: elementList[prefix + "nameUI"]
     });
 
+    var recommandUserNameUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "recommandUserNameUILabel"]
+    });
+
+    var recommandUserNameUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "recommandUserNameUI"]
+    });
+
     var fieldPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "phoneNumberUILabel",prefix + "phoneNumberUI",prefix + "passwordUILabel",prefix + "passwordUI",prefix + "password1UILabel",prefix + "password1UI",prefix + "nameUILabel",prefix + "nameUI"]
+        ,subComponents: [prefix + "phoneNumberUILabel",prefix + "phoneNumberUI",prefix + "passwordUILabel",prefix + "passwordUI",prefix + "password1UILabel",prefix + "password1UI",prefix + "nameUILabel",prefix + "nameUI",prefix + "recommandUserNameUILabel",prefix + "recommandUserNameUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [phoneNumberUILabel,phoneNumberUI,passwordUILabel,passwordUI,password1UILabel,password1UI,nameUILabel,nameUI,fieldPanel]
+        ,items: [phoneNumberUILabel,phoneNumberUI,passwordUILabel,passwordUI,password1UILabel,password1UI,nameUILabel,nameUI,recommandUserNameUILabel,recommandUserNameUI,fieldPanel]
     });
 
     Form.phoneNumberUILabel=phoneNumberUILabel;
@@ -126,6 +136,10 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
     Form.nameUILabel=nameUILabel;
 
     Form.nameUI=nameUI;
+
+    Form.recommandUserNameUILabel=recommandUserNameUILabel;
+
+    Form.recommandUserNameUI=recommandUserNameUI;
 
     Form.fieldPanel=fieldPanel;
 
@@ -144,6 +158,10 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
     Form.nameUILabel=nameUILabel;
 
     Form.nameUI=nameUI;
+
+    Form.recommandUserNameUILabel=recommandUserNameUILabel;
+
+    Form.recommandUserNameUI=recommandUserNameUI;
 
     Form.user_constructor = function()
     {

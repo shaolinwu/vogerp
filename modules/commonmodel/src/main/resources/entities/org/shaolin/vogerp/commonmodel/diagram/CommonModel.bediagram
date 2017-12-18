@@ -412,6 +412,11 @@
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
+            <!-- 推荐注册用户将享有的分润 -->
+            <bediagram:name>recommandUserName</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>info</bediagram:name>
             <bediagram:type xsi:type="bediagram:BEObjRefType">
                 <bediagram:targetEntity entityName="PersonalInfo" />
@@ -489,6 +494,11 @@
         </bediagram:member>
         <bediagram:member>
             <bediagram:name>password</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- 推荐注册用户将享有的分润 -->
+            <bediagram:name>recommandUserName</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>

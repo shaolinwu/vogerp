@@ -6,19 +6,16 @@ function org_shaolin_vogerp_commonmodel_page_AboutTeam(json)
     var textUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "textUI"]
-        ,htmlValue: "关于我们： 本系统由上海抚企信息科技有限公司提供。您有任何需要帮助，请拨打以下电话，或者访问我们的在线客服论坛。非常感谢您的光临！ "
     });
 
     var text1UI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "text1UI"]
-        ,htmlValue: "版本信息： www.vogerp.com 3.0.release 2017-06-01"
     });
 
     var contactUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "contactUI"]
-        ,htmlValue: "联系电话: <a href="tel:159-2146-0670">159-2146-0670</a>  坐机： <a href="tel:021-31009779">021-31009779</a>"
     });
 
     var Form = new UIMaster.ui.panel

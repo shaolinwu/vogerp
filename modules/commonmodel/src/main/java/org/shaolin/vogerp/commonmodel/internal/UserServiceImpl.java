@@ -191,6 +191,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		newAccount.setPersonalId(userInfo.getId());
 		newAccount.setUserName(registerInfo.getPhoneNumber());
 		newAccount.setPassword(registerInfo.getPassword().toUpperCase());
+		newAccount.setRecommandUserName(registerInfo.getRecommandUserName());
 		newAccount.setLoginIP(HttpUserUtil.getIP(request));
 		newAccount.setLatitude(registerInfo.getLatitude());
 		newAccount.setLongitude(registerInfo.getLongitude());

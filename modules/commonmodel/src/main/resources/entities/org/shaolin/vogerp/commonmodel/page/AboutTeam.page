@@ -23,23 +23,35 @@
 			</ns2:layout>
 			<ns2:component xsi:type="ns2:UILabelType" UIID="textUI">
 		        <ns2:Property name="htmlValue">
-	               <ns2:value xsi:type="ns2:StringPropertyType">
-	                   <value>关于我们： 本系统由上海抚企信息科技有限公司提供。您有任何需要帮助，请拨打以下电话，或者访问我们的在线客服论坛。非常感谢您的光临！ </value>
-	               </ns2:value>
+		           <ns2:value xsi:type="ns2:ExpressionPropertyType">
+		                 <ns2:expression>
+		                   <expressionString><![CDATA[{
+		                      return "关于我们：加工达人App由上海抚企信息科技有限公司提供，垂直于机械零件加工行业业务为主的互联网应用体系。您有任何需要帮助，请拨打以下电话，或者访问我们的在线客服论坛。非常感谢您的光临！";
+		                   }]]></expressionString>
+		                 </ns2:expression>
+		            </ns2:value>
 	            </ns2:Property>
 		    </ns2:component>
 		    <ns2:component xsi:type="ns2:UILabelType" UIID="text1UI">
 		        <ns2:Property name="htmlValue">
-	               <ns2:value xsi:type="ns2:StringPropertyType">
-	                   <value>版本信息： www.vogerp.com 3.0.release 2017-06-01</value>
-	               </ns2:value>
+		           <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                         <ns2:expression>
+                           <expressionString><![CDATA[{
+                              return "版本信息：加工达人 1.0.release 2017-12-18";
+                           }]]></expressionString>
+                         </ns2:expression>
+                    </ns2:value>
 	            </ns2:Property>
 		    </ns2:component>
 		    <ns2:component xsi:type="ns2:UILabelType" UIID="contactUI">
 		        <ns2:Property name="htmlValue">
-	               <ns2:value xsi:type="ns2:StringPropertyType">
-	                   <value><![CDATA[联系电话: <a href="tel:159-2146-0670">159-2146-0670</a>  坐机： <a href="tel:021-31009779">021-31009779</a>]]></value>
-	               </ns2:value>
+		           <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                         <ns2:expression>
+                           <expressionString><![CDATA[{
+                              return "联系电话: <a href='tel:159-2146-0670'>159-2146-0670</a></br>坐机： <a href='tel:021-31009779'>021-31009779</a>";
+                           }]]></expressionString>
+                         </ns2:expression>
+                    </ns2:value>
 	            </ns2:Property>
 		    </ns2:component>
             <ns2:layoutConstraint>
