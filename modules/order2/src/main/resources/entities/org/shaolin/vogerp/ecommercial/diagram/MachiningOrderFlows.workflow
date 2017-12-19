@@ -264,64 +264,15 @@
             </ns2:process>
             <ns2:eventDest>
             	<ns2:dest name="verifyMOrder"></ns2:dest>
+            	<ns2:dest name="offerPrice"></ns2:dest>
             	<ns2:dest name="publishMOrder"></ns2:dest>
-                <ns2:dest name="estimatePrice"></ns2:dest>
             	<ns2:dest name="cancelGOrder"></ns2:dest>
             	<ns2:dest name="forbiddenMOrder"></ns2:dest>
             </ns2:eventDest>
         </ns2:mission-node>
-        
+        <!-- 不在需要这个节点, 但保持老业务流程逻辑兼容。-->
         <ns2:mission-node name="estimatePrice" expiredDays="0" expiredHours="0" autoTrigger="false" multipleInvoke="true">
             <ns2:description>加工订单管理员估价</ns2:description>
-            <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.MachiningOrderByAdmin"
-                actionName="estimatePrice" actionText="完成估价">
-                <ns2:expression>
-                    <expressionString><![CDATA[
-			        import java.util.HashMap;
-			        import java.util.Date;
-			        import java.util.ArrayList;
-			        import org.shaolin.uimaster.page.AjaxContext;
-			        import org.shaolin.uimaster.page.ajax.*;
-			        import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
-			        import org.shaolin.vogerp.ecommercial.be.ROOfferPriceImpl;
-			        import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-			        import org.shaolin.vogerp.ecommercial.dao.*;
-			        import org.shaolin.bmdp.runtime.AppContext; 
-			        import org.shaolin.vogerp.commonmodel.IUserService; 
-			        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
-			        { 
-			            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-			            HashMap out = (HashMap)form.ui2Data();
-			
-			            MachiningOrderImpl order = (MachiningOrderImpl)out.get("beObject");
-			            if (order.getEstimatedPrice() <= 0) {
-			            	Dialog.showMessageDialog("出价必需大于0", "", Dialog.WARNING_MESSAGE, null);
-			                return;
-			            }
-			            if (order.getStatus() == OrderStatusType.VERIFYING) {
-			                Dialog.showMessageDialog("订单还在审核中，不能完成估价操作！", "", Dialog.WARNING_MESSAGE, null);
-			                return;
-			            }
-			            EOrderModel.INSTANCE.update(order);
-			            
-			            form.closeIfinWindows();
-			            @page.removeForm(@page.getEntityUiid()); 
-			            
-			            HashMap result = new HashMap();
-			            result.put("goldenOrder", order);
-			            return result;
-			        }
-                    ]]></expressionString>
-                </ns2:expression>
-                <ns2:filter><expressionString><![CDATA[
-                    import org.shaolin.bmdp.runtime.security.UserContext;
-                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                    {
-                       return (UserContext.hasRole("Admin,0") || UserContext.hasRole("org.shaolin.vogerp.commonmodel.ce.GenericOrganizationType,3"))
-                           && $beObject.getStatus() == OrderStatusType.PUBLISHED;
-                    }
-                ]]></expressionString></ns2:filter>
-            </ns2:uiAction>
             <ns2:participant partyType="GenericOrganizationType.Director,0"/>
             <ns2:process>
                 <ns2:var name="goldenOrder" category="BusinessEntity" scope="InOut">
@@ -331,38 +282,15 @@
                     <expressionString><![CDATA[
                      import java.util.List;
                      import java.util.ArrayList;
-                     import org.shaolin.uimaster.page.ajax.*;
-                     import org.shaolin.bmdp.runtime.AppContext;
-                     import org.shaolin.bmdp.runtime.security.UserContext;
-                     import org.shaolin.vogerp.ecommercial.ce.EOrderType;
-                     import org.shaolin.vogerp.ecommercial.be.InterestEOrderImpl;
-                     import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
-                     import org.shaolin.vogerp.ecommercial.util.OrderUtil;
-                     import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
-                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
                      {
-                          NotificationImpl message = new NotificationImpl();
-                          message.setPartyId($goldenOrder.getPublishedCustomerId());
-                          message.setSubject("您有新的加工订单报价信息。");
-                          message.setDescription(OrderUtil.getOrderLink($goldenOrder) + $goldenOrder.getDescription());
-                          message.setCreateDate(new java.util.Date());
-	                      
-	                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
-	                      service.addNotification(message, true);
-	                      
-	                      Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
                      }
                      ]]></expressionString>
                 </ns2:expression>
             </ns2:process>
             <ns2:eventDest>
-                <ns2:dest name="estimatePrice"></ns2:dest>
                 <ns2:dest name="offerPrice"></ns2:dest>
-                <ns2:dest name="cancelGOrder"></ns2:dest>
-                <ns2:dest name="forbiddenMOrder"></ns2:dest>
             </ns2:eventDest>
         </ns2:mission-node>
-        
         <ns2:mission-node name="offerPrice" expiredDays="0" expiredHours="0" autoTrigger="false" multipleInvoke="true">
             <ns2:description>抢购加工订单竟价</ns2:description>
             <ns2:uiAction actionPage="org.shaolin.vogerp.ecommercial.form.MOOfferPrice"
