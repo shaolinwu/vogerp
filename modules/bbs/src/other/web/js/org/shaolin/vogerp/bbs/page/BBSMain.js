@@ -70,6 +70,10 @@ function org_shaolin_vogerp_bbs_page_BBSMain(json)
         /* Construct_LAST:org_shaolin_vogerp_bbs_page_BBSMain */
     };
 
+    Form.createQuestionTopic = org_shaolin_vogerp_bbs_page_BBSMain_createQuestionTopic;
+
+    Form.createComplainingTopic = org_shaolin_vogerp_bbs_page_BBSMain_createComplainingTopic;
+
     Form.createMachiningTopic = org_shaolin_vogerp_bbs_page_BBSMain_createMachiningTopic;
 
     Form.createSelfMachiningTopic = org_shaolin_vogerp_bbs_page_BBSMain_createSelfMachiningTopic;
@@ -103,6 +107,28 @@ function org_shaolin_vogerp_bbs_page_BBSMain(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_bbs_page_BBSMain */
 /* Other_Func_LAST:org_shaolin_vogerp_bbs_page_BBSMain */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_bbs_page_BBSMain_createQuestionTopic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_bbs_page_BBSMain_createQuestionTopic */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createQuestionTopic-20170618-3542",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_bbs_page_BBSMain_createQuestionTopic */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_bbs_page_BBSMain_createComplainingTopic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_bbs_page_BBSMain_createComplainingTopic */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createComplainingTopic-20170618-3542",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_bbs_page_BBSMain_createComplainingTopic */
+
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_bbs_page_BBSMain_createMachiningTopic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_bbs_page_BBSMain_createMachiningTopic */

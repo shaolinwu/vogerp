@@ -117,7 +117,7 @@
 	        item.put("_framename", "userNotificator");
 	        
 	        JSONObject item1 = new JSONObject();
-	        item1.put("name", "论坛");
+	        item1.put("name", "问题与建议");
 	        item1.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
 	        item1.put("_nodename", "BBSMain");
 	        item1.put("_page", "org.shaolin.vogerp.bbs.page.BBSMain");

@@ -7,29 +7,29 @@ function org_shaolin_vogerp_bbs_page_BBSAdmin(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "machiningPanel",prefix + "custServicePanel"]
+        ,subComponents: [prefix + "questionListPanel",prefix + "complainingListPanel"]
     });
-    var machiningTopicTable = new UIMaster.ui.objectlist
+    var questionListTable = new UIMaster.ui.objectlist
     ({
-        ui: elementList[prefix + "machiningTopicTable"]
-    });
-
-    var machiningPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "machiningPanel"]
-        ,items: []
-        ,subComponents: [prefix + "machiningTopicTable"]
-    });
-    var custServiceTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "custServiceTable"]
+        ui: elementList[prefix + "questionListTable"]
     });
 
-    var custServicePanel = new UIMaster.ui.panel
+    var questionListPanel = new UIMaster.ui.panel
     ({
-        ui: elementList[prefix + "custServicePanel"]
+        ui: elementList[prefix + "questionListPanel"]
         ,items: []
-        ,subComponents: [prefix + "custServiceTable"]
+        ,subComponents: [prefix + "questionListTable"]
+    });
+    var complainingTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "complainingTable"]
+    });
+
+    var complainingListPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "complainingListPanel"]
+        ,items: []
+        ,subComponents: [prefix + "complainingTable"]
     });
 
     var Form = new UIMaster.ui.panel
@@ -41,13 +41,13 @@ function org_shaolin_vogerp_bbs_page_BBSAdmin(json)
 
     Form.functionsTab=functionsTab;
 
-    Form.machiningPanel=machiningPanel;
+    Form.questionListPanel=questionListPanel;
 
-    Form.machiningTopicTable=machiningTopicTable;
+    Form.questionListTable=questionListTable;
 
-    Form.custServicePanel=custServicePanel;
+    Form.complainingListPanel=complainingListPanel;
 
-    Form.custServiceTable=custServiceTable;
+    Form.complainingTable=complainingTable;
 
     Form.user_constructor = function()
     {
@@ -55,9 +55,9 @@ function org_shaolin_vogerp_bbs_page_BBSAdmin(json)
         /* Construct_LAST:org_shaolin_vogerp_bbs_page_BBSAdmin */
     };
 
-    Form.createTopic = org_shaolin_vogerp_bbs_page_BBSAdmin_createTopic;
+    Form.openQuestionTopic = org_shaolin_vogerp_bbs_page_BBSAdmin_openQuestionTopic;
 
-    Form.openTopic = org_shaolin_vogerp_bbs_page_BBSAdmin_openTopic;
+    Form.openComplainingTopic = org_shaolin_vogerp_bbs_page_BBSAdmin_openComplainingTopic;
 
     Form.initPageJs = org_shaolin_vogerp_bbs_page_BBSAdmin_initPageJs;
 
@@ -76,25 +76,25 @@ function org_shaolin_vogerp_bbs_page_BBSAdmin(json)
 /* Other_Func_LAST:org_shaolin_vogerp_bbs_page_BBSAdmin */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_bbs_page_BBSAdmin_createTopic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_bbs_page_BBSAdmin_createTopic */
+    function org_shaolin_vogerp_bbs_page_BBSAdmin_openQuestionTopic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_bbs_page_BBSAdmin_openQuestionTopic */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createTopic-20170618-3542",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_bbs_page_BBSAdmin_createTopic */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openQuestionTopic-20171218-1142",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_bbs_page_BBSAdmin_openQuestionTopic */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_bbs_page_BBSAdmin_openTopic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_bbs_page_BBSAdmin_openTopic */
+    function org_shaolin_vogerp_bbs_page_BBSAdmin_openComplainingTopic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_bbs_page_BBSAdmin_openComplainingTopic */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openTopic-20170618-3542",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_bbs_page_BBSAdmin_openTopic */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openComplainingTopic-20171218-1142",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_bbs_page_BBSAdmin_openComplainingTopic */
 
 
     function org_shaolin_vogerp_bbs_page_BBSAdmin_initPageJs(){/* Gen_First:org_shaolin_vogerp_bbs_page_BBSAdmin_initPageJs */

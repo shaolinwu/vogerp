@@ -6,6 +6,84 @@
 	<systemVersion>0</systemVersion>
 	<description>BBS论坛</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
+	    <ns2:eventHandler functionName="createQuestionTopic">
+           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createQuestionTopic-20170618-3542">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.bbs.be.TopicImpl;
+                    import org.shaolin.vogerp.bbs.ce.*;
+                    import org.shaolin.vogerp.bbs.util.BBSUtil;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
+                    {
+                        IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+                        if (!userService.checkUserOnline(@page.getRequest().getSession())) {
+                            Dialog.showMessageDialog("请登录系统后再提问！", "", Dialog.WARNING_MESSAGE, null);
+                            @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\", true);");
+                            return;
+                        }
+                    
+                        TopicImpl topic = new TopicImpl();
+                        topic.setType(TopicType.QUESTION);
+                        topic.setState(TopicStatusType.PUBLISHED);
+                        topic.setUserId(UserContext.getUserContext().getUserId());
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", topic);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("topicForm", "org.shaolin.vogerp.bbs.form.QuestionTopic", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("提问贴", new TableCallBack("mytopicTable"), true);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
+        <ns2:eventHandler functionName="createComplainingTopic">
+           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createComplainingTopic-20170618-3542">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.bmdp.runtime.AppContext;
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.bbs.be.TopicImpl;
+                    import org.shaolin.vogerp.bbs.ce.*;
+                    import org.shaolin.vogerp.bbs.util.BBSUtil;
+                    import org.shaolin.bmdp.runtime.security.UserContext;
+                    import org.shaolin.vogerp.commonmodel.IUserService;
+                    {
+                        IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+                        if (!userService.checkUserOnline(@page.getRequest().getSession())) {
+                            Dialog.showMessageDialog("请登录系统后发贴！", "", Dialog.WARNING_MESSAGE, null);
+                            @page.executeJavaScript("UIMaster.util.forwardToPage(\"/uimaster/jsp/index.jsp\", true);");
+                            return;
+                        }
+                    
+                        TopicImpl topic = new TopicImpl();
+                        topic.setType(TopicType.COMPLAINING);
+                        topic.setState(TopicStatusType.PUBLISHED);
+                        topic.setUserId(UserContext.getUserContext().getUserId());
+                        
+                        HashMap input = new HashMap();
+                        input.put("beObject", topic);
+                        input.put("editable", new Boolean(true));
+                        RefForm form = new RefForm("topicForm", "org.shaolin.vogerp.bbs.form.ComplainingTopic", input);
+                        @page.addElement(form);
+                        
+                        form.openInWindows("投诉建议", new TableCallBack("mytopicTable"), true);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
 		<ns2:eventHandler functionName="createMachiningTopic">
 		   <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createMachiningTopic-20170618-3542">
                 <ns2:exp>
@@ -155,6 +233,12 @@
                             // allow to be edited if user posted the topic with verifying state.
                            formName = "org.shaolin.vogerp.bbs.form.Topic";
                         }
+                        if (topic.getType() == TopicType.COMPLAINING) {
+                           formName = "org.shaolin.vogerp.bbs.form.ComplainingTopic";
+                        } else if (topic.getType() == TopicType.QUESTION) {
+                           formName = "org.shaolin.vogerp.bbs.form.QuestionTopic";
+                        }
+                        
                         RefForm form = new RefForm("topicForm", formName, input);
                         @page.addElement(form);
                         
@@ -458,6 +542,22 @@
                                     <ns2:icon>ui-icon-note</ns2:icon>
                                     <ns2:function>createSelfMachiningTopic</ns2:function>
                                 </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>createQuestionTopic</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>提问</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>createQuestionTopic</ns2:function>
+                                </ns2:action>
+                                <ns2:action>
+                                    <ns2:uiid>createComplainingTopic</ns2:uiid>
+                                    <ns2:title xsi:type="ns2:StringPropertyType">
+                                        <ns2:value>投诉</ns2:value>
+                                    </ns2:title>
+                                    <ns2:icon>ui-icon-note</ns2:icon>
+                                    <ns2:function>createComplainingTopic</ns2:function>
+                                </ns2:action>
 		                    </ns2:actionGroup>
 		                </ns2:component>
 		                <ns2:layoutConstraint>
@@ -470,7 +570,7 @@
                 
                 <ns2:tab uiid="machiningPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
-                        <ns2:value>机械加工</ns2:value>
+                        <ns2:value>机械加工贴子</ns2:value>
                     </ns2:title>
                     <ns2:panel UIID="machiningPanel">
 		                <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -575,6 +675,7 @@
 		                        <ns2:defaultOpenAction>openMachingTopic</ns2:defaultOpenAction>
 		                        <ns2:defaultDeleteAction>deleteMachingTopic</ns2:defaultDeleteAction>
 		                    </ns2:defaultActions>
+		                    <!-- 
 		                    <ns2:actionGroup>
 		                        <ns2:type>radio</ns2:type>
 		                        <ns2:action>
@@ -586,6 +687,7 @@
                                     <ns2:function>createMachiningTopic</ns2:function>
                                 </ns2:action>
 		                    </ns2:actionGroup>
+		                     -->
 		                </ns2:component>
 		                <ns2:layoutConstraint>
 		                    <ns2:componentId>machiningTopicTable</ns2:componentId>

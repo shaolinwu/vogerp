@@ -1,0 +1,260 @@
+<?xml version="1.0" ?>
+<ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns7="http://bmdp.shaolin.org/datamodel/FlowDiagram" xmlns:ns6="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns5="http://bmdp.shaolin.org/datamodel/Workflow" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
+  <entityName>org.shaolin.vogerp.bbs.form.QuestionTopicViewer</entityName>
+  <systemVersion>0</systemVersion>
+  <ns2:eventHandler functionName="replyTopic">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="replyTopic1-20170609-122142">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.bbs.be.*;
+        { 
+           RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+           TopicImpl topic = (TopicImpl)form.getInputParameter("beObject");
+           
+           CommentImpl comment = new CommentImpl();
+		   comment.setTopicId(topic.getId());
+           
+           HashMap input = new HashMap();
+           input.put("beObject", comment);
+           input.put("editable", new Boolean(true));
+           RefForm form1 = new RefForm("commentForm", "org.shaolin.vogerp.bbs.form.Comment", input);
+           @page.addElement(form1);
+           
+           form1.openInWindows("回复", new TableCallBack("commentsTable"), true);
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="resolveTopic">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="resolveTopic-20170609-122142">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import java.util.HashMap;
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        import org.shaolin.vogerp.bbs.be.*;
+        import org.shaolin.vogerp.bbs.be.TopicImpl;
+        import org.shaolin.vogerp.bbs.ce.TopicType;
+        import org.shaolin.vogerp.bbs.ce.TopicStatusType;
+        { 
+           RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+           TopicImpl topic = (TopicImpl)form.getInputParameter("beObject");
+           condition.setState(TopicStatusType.RESLOVED);
+           form.closeIfinWindows(true);
+           @page.removeForm(@page.getEntityUiid()); 
+           
+           Dialog.showMessageDialog("状态更新成功！", "", Dialog.INFORMATION_MESSAGE, null);
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="replyComment">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="replyComment1-20170609-122142">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+           //TODO:
+        
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  
+  <ns2:eventHandler functionName="Cancel">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail1-20170609-122142">
+      <ns2:exp>
+        <expressionString><![CDATA[
+        import org.shaolin.uimaster.page.AjaxContext;
+        import org.shaolin.uimaster.page.ajax.*;
+        { 
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            form.closeIfinWindows(true);
+            @page.removeForm(@page.getEntityUiid()); 
+        }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+  </ns2:eventHandler>
+  <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
+    <ns2:layout xsi:type="ns2:TableLayoutType">
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+      <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+    </ns2:layout>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>1.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="idUI">
+        <ns2:secure>
+          <ns2:value>true</ns2:value>
+        </ns2:secure>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="descriptionUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
+           <ns2:value>描述：</ns2:value>
+        </ns2:widgetLabel>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UITableType" UIID="commentsTable">
+          <ns2:beElement>org.shaolin.vogerp.bbs.be.Comment</ns2:beElement>
+          <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Normal</ns2:selectMode>
+          <ns2:defaultRowSize>20</ns2:defaultRowSize>
+          <ns2:showActionBar>true</ns2:showActionBar>
+          <ns2:showFilter>true</ns2:showFilter>
+          <ns2:query xsi:type="ns2:ExpressionPropertyType">
+              <ns2:expression xsi:type="ns2:ExpressionType">
+                  <ns2:expressionString><![CDATA[
+                  import java.util.List;
+                  import org.shaolin.uimaster.page.ajax.TableConditions;
+                  import org.shaolin.vogerp.bbs.be.CommentImpl;
+                  import org.shaolin.vogerp.bbs.ce.TopicType;
+                  import org.shaolin.vogerp.bbs.ce.TopicStatusType;
+                  import org.shaolin.vogerp.bbs.dao.BBSModel;
+                  import org.shaolin.bmdp.runtime.security.UserContext;
+                  {
+                        CommentImpl condition = (CommentImpl)$tableCondition.getCondition();
+                        return BBSModel.INSTANCE.searchComment(condition,
+                                      $tableCondition.getOrders(),
+                                      $tableCondition.getOffset(), 
+                                      $tableCondition.getCount());
+                  }]]></ns2:expressionString>
+              </ns2:expression>
+          </ns2:query>
+          <ns2:column xsi:type="ns2:UITableColumnType">
+              <ns2:title xsi:type="ns2:StringPropertyType">
+                  <ns2:value>贴子描述</ns2:value>
+              </ns2:title>
+              <ns2:beFieldId>rowBE.description</ns2:beFieldId>
+              <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+          </ns2:column>
+          <ns2:column xsi:type="ns2:UITableColumnType">
+              <ns2:title xsi:type="ns2:StringPropertyType">
+                  <ns2:value>日期</ns2:value>
+              </ns2:title>
+              <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+              <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+          </ns2:column>
+          <ns2:defaultActions>
+          </ns2:defaultActions>
+          <ns2:actionGroup>
+              <ns2:type>radio</ns2:type>
+              <ns2:action>
+                  <ns2:uiid>replyTopic</ns2:uiid>
+                  <ns2:title xsi:type="ns2:StringPropertyType">
+                      <ns2:value>留言</ns2:value>
+                  </ns2:title>
+                  <ns2:icon>ui-icon-note</ns2:icon>
+                  <ns2:function>replyTopic</ns2:function>
+              </ns2:action>
+              <ns2:action>
+                  <ns2:uiid>replyComment</ns2:uiid>
+                  <ns2:title xsi:type="ns2:StringPropertyType">
+                      <ns2:value>回复留言</ns2:value>
+                  </ns2:title>
+                  <ns2:icon>ui-icon-note</ns2:icon>
+                  <ns2:function>replyComment</ns2:function>
+              </ns2:action>
+          </ns2:actionGroup>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>descriptionUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>commentsTable</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass=""></ns2:constraint>
+      </ns2:layoutConstraint>
+      
+    </ns2:component>
+    <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
+      <ns2:layout xsi:type="ns2:TableLayoutType">
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+      </ns2:layout>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="resolvebtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="resolveTopic"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>问题己解决</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="cancelbtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="Cancel"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
+          <ns2:bundle>Common</ns2:bundle>
+          <ns2:key>Closebtn</ns2:key>
+        </ns2:text>
+      </ns2:component>
+      <ns2:layoutConstraint>
+        <ns2:componentId>resolvebtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>cancelbtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+    </ns2:component>
+    <ns2:layoutConstraint>
+      <ns2:componentId>fieldPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+    <ns2:layoutConstraint>
+      <ns2:componentId>actionPanel</ns2:componentId>
+      <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
+    </ns2:layoutConstraint>
+  </ns2:body>
+  <ns2:mapping>
+    <systemVersion>0</systemVersion>
+    <ns2:DataEntity scope="InOut" name="beObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.bbs.be.Topic"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="tableCondition" category="JavaClass">
+      <type entityName="org.shaolin.uimaster.page.ajax.TableConditions"></type>
+    </ns2:DataEntity>
+    <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
+      <type entityName="java.lang.Boolean"></type>
+    </ns2:DataEntity>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="descriptionUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.description" paramName="StringData"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:DataToUIMappingOperation>
+      <expressionString><![CDATA[
+      import java.util.List;
+      import org.shaolin.uimaster.page.ajax.TableConditions;
+      import org.shaolin.vogerp.bbs.be.CommentImpl;
+      import org.shaolin.vogerp.bbs.ce.TopicType;
+      import org.shaolin.vogerp.bbs.ce.TopicStatusType;
+      import org.shaolin.vogerp.bbs.dao.BBSModel;
+      import org.shaolin.bmdp.runtime.security.UserContext;
+      import org.shaolin.uimaster.page.ajax.TableConditions;
+      {
+	       $tableCondition = TableConditions.createCondition(new CommentImpl());
+	       $tableCondition.setCount(20);
+	       $tableCondition.addOrder("createDate", false);
+	       CommentImpl condition = (CommentImpl)$tableCondition.getCondition();
+	       condition.setTopicId($beObject.getId());
+	       
+	       @odContext.executeAllMappings();
+      }]]></expressionString>
+    </ns2:DataToUIMappingOperation>
+    <ns2:UIToDataMappingOperation>
+      <expressionString><![CDATA[
+      {
+        @odContext.executeAllMappings();
+    }]]></expressionString>
+    </ns2:UIToDataMappingOperation>
+  </ns2:mapping>
+</ns2:UIEntity>

@@ -108,6 +108,16 @@
 			<bediagram:intValue>2</bediagram:intValue>
 			<bediagram:description>在线客服</bediagram:description>
 		</bediagram:constantValue>
+		<bediagram:constantValue>
+            <bediagram:value>Question</bediagram:value>
+            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:description>用户提问</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Complaining</bediagram:value>
+            <bediagram:intValue>4</bediagram:intValue>
+            <bediagram:description>用户投诉</bediagram:description>
+        </bediagram:constantValue>
 	</bediagram:ceEntity>
 	
 	<bediagram:ceEntity>
@@ -132,6 +142,11 @@
 			<bediagram:intValue>3</bediagram:intValue>
 			<bediagram:description>停止发布</bediagram:description>
 		</bediagram:constantValue>
+		<bediagram:constantValue>
+            <bediagram:value>Resloved</bediagram:value>
+            <bediagram:intValue>4</bediagram:intValue>
+            <bediagram:description>问题解决</bediagram:description>
+        </bediagram:constantValue>
 	</bediagram:ceEntity>
 	
 </bediagram:BEDiagram>

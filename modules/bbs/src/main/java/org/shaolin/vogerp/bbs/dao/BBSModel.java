@@ -16,15 +16,19 @@ import org.hibernate.criterion.Projections;
 import org.shaolin.bmdp.persistence.BEEntityDaoObject;
 import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.persistence.query.operator.Operator;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This code is generated automatically, any change will be replaced after rebuild.
  */
+@Repository
+@Transactional
 public class BBSModel extends BEEntityDaoObject {
 
     public static final BBSModel INSTANCE = new BBSModel();
 
-    private BBSModel() {
+    public BBSModel() {
     }
 
     public List<org.shaolin.vogerp.bbs.be.ITopic> searchTopic(org.shaolin.vogerp.bbs.be.TopicImpl scObject,
