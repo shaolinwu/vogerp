@@ -362,14 +362,18 @@
             </bediagram:type>
         </bediagram:member>
         <bediagram:member>
+            <!-- 暂时不用 -->
             <bediagram:name>education</bediagram:name>
             <bediagram:type xsi:type="bediagram:CEObjRefType">
                 <bediagram:targetEntity entityName="EducationLevel" />
             </bediagram:type>
         </bediagram:member>
         <bediagram:member>
+            <!-- 表示工种类型 -->
             <bediagram:name>major</bediagram:name>
-            <bediagram:type xsi:type="bediagram:StringType" />
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="MasterType" />
+            </bediagram:type>
         </bediagram:member>
         <bediagram:member>
             <bediagram:name>addresses</bediagram:name>
@@ -1050,6 +1054,95 @@
 			<bediagram:description>Adv</bediagram:description>
 		</bediagram:constantValue>
 	</bediagram:ceEntity>
+	
+	<!-- 加工或其它行业师傅类型 -->
+    <bediagram:ceEntity>
+        <common:entityName>MasterType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>Master1</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>电工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/1.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master2</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>机械设备维修工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/2.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master3</bediagram:value>
+            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:description>电焊工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/3.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master4</bediagram:value>
+            <bediagram:intValue>4</bediagram:intValue>
+            <bediagram:description>电加工设备操作工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/4.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master5</bediagram:value>
+            <bediagram:intValue>5</bediagram:intValue>
+            <bediagram:description>钳工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/5.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master6</bediagram:value>
+            <bediagram:intValue>6</bediagram:intValue>
+            <bediagram:description>车工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/6.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master7</bediagram:value>
+            <bediagram:intValue>7</bediagram:intValue>
+            <bediagram:description>铣工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/7.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master8</bediagram:value>
+            <bediagram:intValue>8</bediagram:intValue>
+            <bediagram:description>刨工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/8.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master9</bediagram:value>
+            <bediagram:intValue>9</bediagram:intValue>
+            <bediagram:description>磨工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/9.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master10</bediagram:value>
+            <bediagram:intValue>10</bediagram:intValue>
+            <bediagram:description>冲压工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/10.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master11</bediagram:value>
+            <bediagram:intValue>11</bediagram:intValue>
+            <bediagram:description>铸造工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/11.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master12</bediagram:value>
+            <bediagram:intValue>12</bediagram:intValue>
+            <bediagram:description>锻造工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/12.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master13</bediagram:value>
+            <bediagram:intValue>13</bediagram:intValue>
+            <bediagram:description>热处理工</bediagram:description>
+            <bediagram:icon>/images/gorder/master/13.png</bediagram:icon>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Master14</bediagram:value>
+            <bediagram:intValue>14</bediagram:intValue>
+            <bediagram:description>其它工种</bediagram:description>
+            <bediagram:icon>/images/gorder/master/-1.png</bediagram:icon>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
 	
 	<!-- 中国建设银行——CCB
 中国农业银行——ABC 

@@ -61,15 +61,15 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
       ,allowBlank:false
     });
 
-    var educationUILabel = new UIMaster.ui.label
+    var majorUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "educationUILabel"]
+        ui: elementList[prefix + "majorUILabel"]
     });
 
-    var educationUI = new UIMaster.ui.combobox
+    var majorUI = new UIMaster.ui.combobox
     ({
-        ui: elementList[prefix + "educationUI"]
-      ,allowBlank:false
+        ui: elementList[prefix + "majorUI"]
+      ,allowBlank:true
     });
 
     var okbtn = new UIMaster.ui.button
@@ -88,13 +88,13 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "firstNameUILabel",prefix + "firstNameUI",prefix + "genderUILabel",prefix + "genderUI",prefix + "discriptionUILabel",prefix + "discriptionUI",prefix + "birthdayUILabel",prefix + "birthdayUI",prefix + "languageUILabel",prefix + "languageUI",prefix + "educationUILabel",prefix + "educationUI"]
+        ,subComponents: [prefix + "idUI",prefix + "firstNameUILabel",prefix + "firstNameUI",prefix + "genderUILabel",prefix + "genderUI",prefix + "discriptionUILabel",prefix + "discriptionUI",prefix + "birthdayUILabel",prefix + "birthdayUI",prefix + "languageUILabel",prefix + "languageUI",prefix + "majorUILabel",prefix + "majorUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,firstNameUILabel,firstNameUI,genderUILabel,genderUI,discriptionUILabel,discriptionUI,birthdayUILabel,birthdayUI,languageUILabel,languageUI,educationUILabel,educationUI,okbtn,fieldPanel,actionPanel]
+        ,items: [idUI,firstNameUILabel,firstNameUI,genderUILabel,genderUI,discriptionUILabel,discriptionUI,birthdayUILabel,birthdayUI,languageUILabel,languageUI,majorUILabel,majorUI,okbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -119,9 +119,9 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
 
     Form.languageUI=languageUI;
 
-    Form.educationUILabel=educationUILabel;
+    Form.majorUILabel=majorUILabel;
 
-    Form.educationUI=educationUI;
+    Form.majorUI=majorUI;
 
     Form.okbtn=okbtn;
 
@@ -149,9 +149,9 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
 
     Form.languageUI=languageUI;
 
-    Form.educationUILabel=educationUILabel;
+    Form.majorUILabel=majorUILabel;
 
-    Form.educationUI=educationUI;
+    Form.majorUI=majorUI;
 
     Form.actionPanel=actionPanel;
 
