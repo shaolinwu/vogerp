@@ -517,7 +517,7 @@
 	                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
 	                      service.addNotification(message, true);
 	                      
-	                      Dialog.showMessageDialog("操作成功！", "", Dialog.INFORMATION_MESSAGE, null);
+	                      Dialog.showMessageDialog("出价操作成功！您可以在 发布订单-》我的出价历史 列表功能中继续回复咨询。", "", Dialog.INFORMATION_MESSAGE, null);
                      }
                      ]]></expressionString>
                 </ns2:expression>

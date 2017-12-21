@@ -18,7 +18,7 @@
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             InterestEOrderImpl order = (InterestEOrderImpl)form.getInputParameter("beObject");
-            
+            OrderUtil.bindOrder(order);
             if (order.getOrder().getStatus() == OrderStatusType.PUBLISHED) {
 	            IOfferPrice offeredPrice = null;
 	      	    Set items = order.getOrder().getOfferPrices();
