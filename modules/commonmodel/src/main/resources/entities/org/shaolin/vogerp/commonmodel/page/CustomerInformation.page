@@ -133,7 +133,7 @@
                 </ns2:tab>
                 <ns2:tab uiid="certifyForm">
                     <ns2:title xsi:type="ns2:StringPropertyType">
-                        <ns2:value>企业用户验证</ns2:value>
+                        <ns2:value>商家认证</ns2:value>
                     </ns2:title>
                     <ns2:refEntity UIID="certifyForm">
                        <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo" />

@@ -200,6 +200,9 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		if (newAccount.getLocationInfo() == null || newAccount.getLocationInfo().trim().length() == 0) {
 			newAccount.setLocationInfo(registerInfo.getAddress().getCity());
 		}
+		if (newAccount.getLocationInfo() == null) {
+			newAccount.setLocationInfo("CityShanghai0,310100");//default location is Shanghai.
+		}
 		CommonModel.INSTANCE.create(newAccount);
 		
 		AssignedMemberImpl assignedMember = new AssignedMemberImpl();
@@ -621,20 +624,22 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	}
 	
 	@Override
+	public IPersonalInfo getPersonalInfo(long userId, boolean freshObject) {
+		userSecondaryCache.remove(userId);
+		return CommonModel.INSTANCE.get(userId, PersonalInfoImpl.class);
+	}
+	
+	@Override
 	public List<IPersonalInfo> getPersonalInfos(Set<Long> userIds) {
 		if (userIds == null || userIds.size() == 0) {
 			return Collections.emptyList();
 		}
 		Session session = HibernateUtil.getReadOnlySession();
-		try {
-			Criteria criteria = session.createCriteria(org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl.class, "pinfo");
-			Object[] values = new Object[userIds.size()];
-			userIds.toArray(values);
-			criteria.add(Restrictions.in("pinfo.id", values));
-			return criteria.list();
-		} finally {
-			HibernateUtil.releaseSession(session, true);
-		}
+		Criteria criteria = session.createCriteria(org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl.class, "pinfo");
+		Object[] values = new Object[userIds.size()];
+		userIds.toArray(values);
+		criteria.add(Restrictions.in("pinfo.id", values));
+		return criteria.list();
 	}
 	
 	@Override

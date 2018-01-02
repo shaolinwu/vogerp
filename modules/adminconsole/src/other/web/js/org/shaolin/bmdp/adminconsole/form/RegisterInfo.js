@@ -171,6 +171,8 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
 
     Form.verifiPhoneNumber = org_shaolin_bmdp_adminconsole_form_RegisterInfo_verifiPhoneNumber;
 
+    Form.verifiRecommandPhoneNumber = org_shaolin_bmdp_adminconsole_form_RegisterInfo_verifiRecommandPhoneNumber;
+
     Form.invokeDynamicFunction = org_shaolin_bmdp_adminconsole_form_RegisterInfo_invokeDynamicFunction;
 
     Form.__entityName="org.shaolin.bmdp.adminconsole.form.RegisterInfo";
@@ -202,6 +204,28 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifiPhoneNumber-20160101-1112432",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_bmdp_adminconsole_form_RegisterInfo_verifiPhoneNumber */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_form_RegisterInfo_verifiRecommandPhoneNumber(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_form_RegisterInfo_verifiRecommandPhoneNumber */
+        var o = this;
+        var UIEntity = this;
+
+        {   
+            if(this.recommandUserNameUI.getValue() == ""
+              || this.recommandUserNameUI.getValue().trim() == "") {
+               return;
+            }
+            var constraint_result = this.recommandUserNameUI.validate();
+            if (constraint_result != true && constraint_result != null) {
+                return false;
+            }
+        }
+        
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifiRecommandPhoneNumber-20171220-1112432",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_form_RegisterInfo_verifiRecommandPhoneNumber */
 
 
     /* auto generated eventlistener function declaration */

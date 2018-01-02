@@ -65,13 +65,36 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="userNameUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_adminconsole_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.bmdp.adminconsole.form.UserAccount.userName</ns2:key>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>登录帐号</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="userNameUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:Property name="htmlValue">
+            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                 <ns2:expression>
+                   <expressionString><![CDATA[
+                  import org.shaolin.vogerp.commonmodel.ce.OrgType;
+		          import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
+		          import org.shaolin.bmdp.runtime.AppContext; 
+		          import org.shaolin.vogerp.commonmodel.IUserService; 
+		          import org.shaolin.vogerp.commonmodel.be.IPersonalInfo; 
+		          {
+		            IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+		            IPersonalInfo customer = userService.getPersonalInfo($beObject.getUserId());
+		            if (customer.getOrganization().getOrgType() == OrgType.COMPANY) {
+		               if (customer.getOrganization().getVeriState() == OrgVerifyStatusType.VERIFIED) {
+		                   return $beObject.getUserAccount() + "<span style='color:green'>(已验证)</span>";
+		               }
+		               return $beObject.getUserAccount() + "<span style='color:yellow'>(未验证)</span>";
+		            } else {
+		               return $beObject.getUserAccount();
+		            }
+		          }]]></expressionString>
+                 </ns2:expression>
+            </ns2:value>
+        </ns2:Property>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="orgInfoUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -158,11 +181,6 @@
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="userNameUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.userAccount" paramName="StringData"></ns2:DataComponent>
-    </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping1">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
       <ns2:UIComponent componentPath="orgInfoUI" paramName="UIWidgetType"></ns2:UIComponent>
@@ -181,15 +199,15 @@
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
       {
-        //@odContext.addTempUserData("accountData", $beObject);
 		@odContext.executeAllMappings();
       }   
       ]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
-      <expressionString>{
-@odContext.executeAllMappings();
-}</expressionString>
+      <expressionString>
+      {
+	    @odContext.executeAllMappings();
+	  }</expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>
 </ns2:UIEntity>

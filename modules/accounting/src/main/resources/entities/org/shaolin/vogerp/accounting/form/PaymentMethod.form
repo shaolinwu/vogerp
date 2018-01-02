@@ -196,15 +196,20 @@
             <ns2:value xsi:type="ns2:ExpressionPropertyType">
 	         <ns2:expression>
 	           <expressionString><![CDATA[
+	           import java.lang.StringBuilder;
+	           import org.shaolin.uimaster.page.od.formats.FormatUtil;
 	           { 
-	               String info = "<p style='text-align: left;'>支付操作说明：<br>1). 支付完成后，请关闭本窗口，并“刷新”页面查看支付是否成功。在网页里选择微信支付的用户，请扫描二维码支付；"
-	                           + "<br>2). 针对“预支付业务”订单在业务未完成情况下，支付方可以在“收入支出”功能里选择订单“申请退款”操作。在业务完成后，收款方可以选择提现操作；";
+	               StringBuilder sb = new StringBuilder();
+	               sb.append("<p style='text-align: left;'>支付操作说明：<br>1). 支付完成后，请关闭本窗口，并“刷新”页面查看支付是否成功。在网页里选择微信支付的用户，请扫描二维码支付；");
+	               sb.append("<br>2). 针对“预支付业务”订单在业务未完成情况下，支付方可以在“收入支出”功能里选择订单“申请退款”操作。在业务完成后，收款方可以选择提现操作；");
 	               if (beObject.getServiceChargeAAmount() > 0) {
-	                  info = info + "<br>3). 本次业务操作将包含服务手续费<span style=color:red>";
-	                  info = info + (beObject.getServiceChargeAAmount());
-	                  info = info + "元</span>。订单确认收货后，将不退还这笔服务费用，请您悉知；"; 
+	                  sb.append("<br>3). 本次业务操作将包含服务手续费<span style=color:red>");
+	                  sb.append(beObject.getServiceChargeAAmount());
+	                  sb.append("元</span>。订单确认收货后，将不退还这笔服务费用，请您悉知；"); 
 	               }
-	               return info + "</p>";
+	               sb.append("<br>本次付款金额：<span style='color:red;font-size:large'>").append(FormatUtil.getCurrency(beObject.getAmount()/100, null, true)).append("</span>");
+	               sb.append("</p>");
+	               return sb.toString();
 	           }]]></expressionString>
 	         </ns2:expression>
 	        </ns2:value>

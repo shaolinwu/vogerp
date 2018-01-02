@@ -311,6 +311,12 @@
 			        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
 			        import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
 			        { 
+			            // only enterprised user allows to give a price.
+			            if (!UserContext.getUserContext().isVerified()) {
+			               Dialog.showMessageDialog("只能验证过的 加工商户 才可竟价。同时，个人用户不能参与竟价。", "提醒", Dialog.WARNING_MESSAGE, null);
+			               return ;
+			            }
+			            
 			            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
 			            HashMap out = (HashMap)form.ui2Data();
 			            MachiningOrderImpl order = (MachiningOrderImpl)out.get("beObject");

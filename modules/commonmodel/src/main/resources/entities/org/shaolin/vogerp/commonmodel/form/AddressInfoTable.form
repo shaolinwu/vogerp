@@ -223,17 +223,17 @@
           <ns2:expression>
             <expressionString><![CDATA[
             import java.util.List;
-        import java.util.ArrayList;
-        import org.shaolin.bmdp.runtime.AppContext;
-		import org.shaolin.bmdp.runtime.security.UserContext;
-	    import org.shaolin.vogerp.commonmodel.IUserService;
-	    import org.shaolin.vogerp.commonmodel.be.*;
-	    import org.shaolin.vogerp.commonmodel.dao.CommonModel;
-        {
-            IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
-            IPersonalInfo info = (IPersonalInfo)CommonModel.INSTANCE.get(UserContext.getUserContext().getUserId(), PersonalInfoImpl.class);
-			return new ArrayList(info.getAddresses());
-        }]]></expressionString>
+	        import java.util.ArrayList;
+	        import org.shaolin.bmdp.runtime.AppContext;
+			import org.shaolin.bmdp.runtime.security.UserContext;
+		    import org.shaolin.vogerp.commonmodel.IUserService;
+		    import org.shaolin.vogerp.commonmodel.be.*;
+		    import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+	        {
+	            IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+	            IPersonalInfo info = (IPersonalInfo)CommonModel.INSTANCE.get(UserContext.getUserContext().getUserId(), PersonalInfoImpl.class);
+				return new ArrayList(info.getAddresses());
+	        }]]></expressionString>
           </ns2:expression>
         </ns2:query>
         <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
@@ -357,6 +357,14 @@
       <ns2:componentId>fieldPanel</ns2:componentId>
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
+    <ns2:constructorCode><![CDATA[
+       {
+          if (Form.itemTable.rowEmpty()) {
+              $("<div style=\"background-color:yellow;font-size: large;\">\u8BF7\u914D\u5236\u4E00\u4E2A\u9ED8\u8BA4\u5730\u5740\uFF01</div>").prependTo($(Form.fieldPanel));          
+          }
+       }
+    ]]>
+    </ns2:constructorCode>
   </ns2:body>
   <ns2:mapping>
     <systemVersion>0</systemVersion>

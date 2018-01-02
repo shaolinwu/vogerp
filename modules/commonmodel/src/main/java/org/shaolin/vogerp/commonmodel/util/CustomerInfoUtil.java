@@ -45,6 +45,17 @@ public class CustomerInfoUtil {
 		}
 	}
 	
+	public static boolean isVerfiedUser(IPersonalInfo customer) {
+		if (customer == null || customer.getOrganization() == null) {
+			return false;
+		}
+		if (customer.getOrganization().getOrgType() == OrgType.COMPANY
+				&& customer.getOrganization().getVeriState()==OrgVerifyStatusType.VERIFIED) {
+			return true;
+		}
+		return false;
+	}
+	
 	public static String getSecureCustomerBasicInfo(long userId) {
 		IUserService service = (IUserService)AppContext.get().getService(IUserService.class);
 	    return CustomerInfoUtil.getSecureCustomerBasicInfo(service.getPersonalInfo(userId));

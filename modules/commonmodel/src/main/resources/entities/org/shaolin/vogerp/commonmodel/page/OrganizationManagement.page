@@ -498,6 +498,7 @@
 		        </ns2:DataComponent>
 	        </ns2:odmapping>
          </ns2:tab>
+         <!-- 
          <ns2:tab uiid="employeeInfoPanel">
              <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
                  <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
@@ -614,7 +615,6 @@
 		               <ns2:defaultActions>
 		                   <ns2:defaultNewAction>createUser</ns2:defaultNewAction>
 		                   <ns2:defaultOpenAction>openUserDetail</ns2:defaultOpenAction>
-		                   <!-- can be default actions. -->
 		                   <ns2:defaultDeleteAction>deleteUser</ns2:defaultDeleteAction>
 		               </ns2:defaultActions>
 		               <ns2:actionGroup>
@@ -644,6 +644,7 @@
 		           </ns2:layoutConstraint>
              </ns2:panel>
          </ns2:tab>
+          -->
      </ns2:component>
 			<ns2:layoutConstraint>
       <ns2:componentId>functionsTab</ns2:componentId>

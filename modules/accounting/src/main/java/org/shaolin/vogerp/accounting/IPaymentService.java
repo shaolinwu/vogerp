@@ -50,6 +50,8 @@ public interface IPaymentService {
 	
 	public IPayOrder queryForPayOrder(final String orderSerialNumber);
 	
+	public PayOrderStatusType queryForPayOrderState(String orderSeriaNumber);
+	
 	/**
 	 * Query for a payment state!
 	 * 

@@ -24,13 +24,6 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
         ,needAjaxSupport: true
     });
 
-    var selectModeUI = new UIMaster.ui.radiobuttongroup
-    ({
-        ui: elementList[prefix + "selectModeUI"]
-        ,horizontalLayout: true
-        ,value: "0"
-    });
-
     var veriCodeQuestionUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "veriCodeQuestionUILabel"]
@@ -76,8 +69,6 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
     var registerInfo = new org_shaolin_bmdp_adminconsole_form_RegisterInfo({"prefix":prefix + "registerInfo."});
 
-    var registerCompanyInfo = new org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo({"prefix":prefix + "registerCompanyInfo."});
-
     var bottomPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "bottomPanel"]
@@ -97,7 +88,7 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
         ui: elementList[prefix + "loginPanel"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
         ,items: []
-        ,subComponents: [prefix + "errorInfo",prefix + "selectModeUI",prefix + "registerInfo",prefix + "registerCompanyInfo",prefix + "verifyCodePanel"]
+        ,subComponents: [prefix + "errorInfo",prefix + "registerInfo",prefix + "verifyCodePanel"]
     });
 
     var topPanel = new UIMaster.ui.panel
@@ -110,7 +101,7 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [latitudeInfo,longitudeInfo,vogerplogo,errorInfo,selectModeUI,veriCodeQuestionUILabel,veriCodeQuestion,veriCodeUILabel,veriCode,termsUI,registerBtn,loginBtn,bottomPanelInfo,registerInfo,registerCompanyInfo,topPanel,loginPanel,verifyCodePanel,bottomPanel]
+        ,items: [latitudeInfo,longitudeInfo,vogerplogo,errorInfo,veriCodeQuestionUILabel,veriCodeQuestion,veriCodeUILabel,veriCode,termsUI,registerBtn,loginBtn,bottomPanelInfo,registerInfo,topPanel,loginPanel,verifyCodePanel,bottomPanel]
     });
 
     Form.latitudeInfo=latitudeInfo;
@@ -120,8 +111,6 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
     Form.vogerplogo=vogerplogo;
 
     Form.errorInfo=errorInfo;
-
-    Form.selectModeUI=selectModeUI;
 
     Form.veriCodeQuestionUILabel=veriCodeQuestionUILabel;
 
@@ -141,8 +130,6 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
     Form.registerInfo=registerInfo;
 
-    Form.registerCompanyInfo=registerCompanyInfo;
-
     Form.topPanel=topPanel;
 
     Form.vogerplogo=vogerplogo;
@@ -151,11 +138,7 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
     Form.errorInfo=errorInfo;
 
-    Form.selectModeUI=selectModeUI;
-
     Form.registerInfo=registerInfo;
-
-    Form.registerCompanyInfo=registerCompanyInfo;
 
     Form.verifyCodePanel=verifyCodePanel;
 
@@ -199,7 +182,6 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
         
 		        { 
-		            $(this.registerCompanyInfo.Form).parent().css("display", "none");
 		            // notify user open up the GPS.
 		            if(navigator.geolocation){
 				        var latitudeInfo = this.latitudeInfo;
@@ -271,13 +253,7 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
         var UIEntity = this;
 
 		        {   
-		            if (this.selectModeUI.getValue() == "0") {
-		                $(this.registerInfo.Form).parent().css("display", "block");
-		                $(this.registerCompanyInfo.Form).parent().css("display", "none");
-		            } else {
-		                $(this.registerInfo.Form).parent().css("display", "none");
-		                $(this.registerCompanyInfo.Form).parent().css("display", "block");
-		            }
+	                $(this.registerInfo.Form).parent().css("display", "block");
 		        }
 		            }/* Gen_Last:org_shaolin_bmdp_adminconsole_page_Registration_switchRegisterUserPanel */
 
@@ -288,16 +264,9 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
         var UIEntity = this;
 
 		        {   
-		            if (this.selectModeUI.getValue() == "0") {
-		                var constraint_result = this.registerInfo.Form.validate();
-			            if (constraint_result != true && constraint_result != null) {
-			                return false;
-			            }
-		            } else {
-		               var constraint_result = this.registerCompanyInfo.Form.validate();
-			            if (constraint_result != true && constraint_result != null) {
-			                return false;
-			            }
+	                var constraint_result = this.registerInfo.Form.validate();
+		            if (constraint_result != true && constraint_result != null) {
+		                return false;
 		            }
 		            var constraint_result = this.veriCode.validate();
 		            if (constraint_result != true && constraint_result != null) {
@@ -338,25 +307,14 @@ function org_shaolin_bmdp_adminconsole_page_Registration(json)
 
 		        {   
 		            constraint_result = this.Form.validate();
-					if (this.selectModeUI.getValue() == "0") {
-		                constraint_result = this.registerInfo.Form.validate();
-			            if (constraint_result != true && constraint_result != null) {
-			                return false;
-			            }
-			            this.registerInfo.passwordUI.validate=function(){return null;}
-			            this.registerInfo.password1UI.validate=function(){return null;}
-			            var encrytedPassword = md5(this.registerInfo.passwordUI.getValue()).toUpperCase();
-			            this.registerInfo.passwordUI.setValue(encrytedPassword);
-			        } else {
-		                constraint_result = this.registerCompanyInfo.Form.validate();
-			            if (constraint_result != true && constraint_result != null) {
-			                return false;
-			            }
-			            this.registerCompanyInfo.passwordUI.validate=function(){return null;}
-                        this.registerCompanyInfo.password1UI.validate=function(){return null;}
-			            var encrytedPassword = md5(this.registerCompanyInfo.passwordUI.getValue()).toUpperCase();
-			            this.registerCompanyInfo.passwordUI.setValue(encrytedPassword);
-			        }
+	                constraint_result = this.registerInfo.Form.validate();
+		            if (constraint_result != true && constraint_result != null) {
+		                return false;
+		            }
+		            this.registerInfo.passwordUI.validate=function(){return null;}
+		            this.registerInfo.password1UI.validate=function(){return null;}
+		            var encrytedPassword = md5(this.registerInfo.passwordUI.getValue()).toUpperCase();
+		            this.registerInfo.passwordUI.setValue(encrytedPassword);
 		            constraint_result = this.veriCode.validate();
 		            if (constraint_result != true && constraint_result != null) {
 		                return false;

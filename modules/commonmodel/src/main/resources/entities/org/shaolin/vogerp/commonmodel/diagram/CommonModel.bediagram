@@ -250,6 +250,10 @@
             </bediagram:type>
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>acceptTerms</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BooleanType" />
+        </bediagram:member>
+        <bediagram:member>
             <!-- 验证状态-->
             <bediagram:name>veriState</bediagram:name>
             <bediagram:type xsi:type="bediagram:CEObjRefType">

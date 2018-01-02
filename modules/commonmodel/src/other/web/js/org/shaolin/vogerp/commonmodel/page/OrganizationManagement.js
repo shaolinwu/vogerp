@@ -7,7 +7,7 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "organizationInfoPanel",prefix + "organizationTypePanel",prefix + "employeeInfoPanel"]
+        ,subComponents: [prefix + "organizationInfoPanel",prefix + "organizationTypePanel"]
     });
     var organizationInfoTable = new UIMaster.ui.objectlist
     ({
@@ -22,17 +22,6 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
     });
     var organizationTypePanel = new org_shaolin_vogerp_commonmodel_form_CEHierarchy({"prefix":prefix + "organizationTypePanel."});
 
-    var employeeInfoTablel = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "employeeInfoTablel"]
-    });
-
-    var employeeInfoPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "employeeInfoPanel"]
-        ,items: []
-        ,subComponents: [prefix + "employeeInfoTablel"]
-    });
 
     var Form = new UIMaster.ui.panel
     ({
@@ -48,10 +37,6 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
     Form.organizationInfoTable=organizationInfoTable;
 
     Form.organizationTypePanel=organizationTypePanel;
-
-    Form.employeeInfoPanel=employeeInfoPanel;
-
-    Form.employeeInfoTablel=employeeInfoTablel;
 
     Form.user_constructor = function()
     {

@@ -15,6 +15,7 @@ import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
 import org.shaolin.vogerp.commonmodel.be.IContactInfo;
+import org.shaolin.vogerp.commonmodel.be.IPersonalAccount;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 
 public class CustCommonModel extends BEEntityDaoObject {
@@ -66,15 +67,20 @@ public class CustCommonModel extends BEEntityDaoObject {
     }
     
     public void updateAddresse(long userId, IAddressInfo item) {
-    	IUserService userService = AppContext.get().getService(IUserService.class);
-    	IPersonalInfo customer = userService.getPersonalInfo(userId);
+        IUserService userService = AppContext.get().getService(IUserService.class);
+    	    IPersonalInfo customer = userService.getPersonalInfo(userId, true);
 		Set<IAddressInfo> existing = customer.getAddresses();
 		if (item.getId() == 0) {
 			if (item.getDistrict() != null && ("-1".equals(item.getDistrict()) || !"null".equals(item.getDistrict()))) {
 				item.setDistrict(null);
 			}
 			customer.getAddresses().add(item);
-			CommonModel.INSTANCE.update(customer, true); // we have manually committed the transaction here since it's 1 to n mapping. otherwise, will be wrong!
+			IPersonalAccount account = userService.getPersonalAccount(userId);
+			account.setLocationInfo(item.getCity());
+			CommonModel.INSTANCE.update(account);
+			CommonModel.INSTANCE.update(customer, true); 
+			// we have manually committed the transaction here since it's 1 to n mapping. otherwise, will be wrong!
+			UserContext.getUserContext().setCity(item.getCity());
 		} else {
 			for (IAddressInfo b: existing) {
 				if (b.getId() == item.getId()) {

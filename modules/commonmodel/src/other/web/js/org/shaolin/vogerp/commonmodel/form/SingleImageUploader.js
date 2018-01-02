@@ -17,6 +17,7 @@ function org_shaolin_vogerp_commonmodel_form_SingleImageUploader(json)
     ({
         ui: elementList[prefix + "photoUI"]
         ,isGallery: false
+        ,needAjaxSupport: true
         ,width: "100%"
         ,height: "300px"
         ,mobheight: "220px"

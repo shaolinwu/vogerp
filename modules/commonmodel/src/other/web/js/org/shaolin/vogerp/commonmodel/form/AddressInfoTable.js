@@ -31,7 +31,16 @@ function org_shaolin_vogerp_commonmodel_form_AddressInfoTable(json)
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_commonmodel_form_AddressInfoTable */
-        /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_AddressInfoTable */
+
+        
+       {
+          if (Form.itemTable.rowEmpty()) {
+              $("<div style=\"background-color:yellow;font-size: large;\">\u8BF7\u914D\u5236\u4E00\u4E2A\u9ED8\u8BA4\u5730\u5740\uFF01</div>").prependTo($(Form.fieldPanel));          
+          }
+       }
+    
+    
+            /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_AddressInfoTable */
     };
 
     Form.createItem = org_shaolin_vogerp_commonmodel_form_AddressInfoTable_createItem;

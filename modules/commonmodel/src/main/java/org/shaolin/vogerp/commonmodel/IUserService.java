@@ -64,6 +64,8 @@ public interface IUserService {
 	
 	public IPersonalInfo getPersonalInfo(long userId);
 	
+	public IPersonalInfo getPersonalInfo(long userId, boolean freshObject);
+	
 	public List<IPersonalInfo> getPersonalInfos(Set<Long> userIds);
 	
 	public String getUserName(long userId);

@@ -39,7 +39,7 @@
             } else {
                 p.addStyle("background-image", "none");
                 p.addStyle("background-color", "red");
-                p.showConstraint("该手机号已存在，请您登录使用。");
+                p.showConstraint("该手机号已注册，请您使用其它手机号。");
                 //TODO: 发短信到手机，关于初始密码.
             }
         }]]></expressionString>

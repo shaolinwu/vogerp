@@ -13,6 +13,17 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         ui: elementList[prefix + "verifiedUI"]
     });
 
+    var orgTypeUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "orgTypeUI"]
+    });
+
+    var agreementUI = new UIMaster.ui.link
+    ({
+        ui: elementList[prefix + "agreementUI"]
+        ,label: "阅读加工达人《商户协议书》"
+    });
+
     var orgIdUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "orgIdUILabel"]
@@ -97,13 +108,18 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     var termsUI = new UIMaster.ui.checkbox
     ({
         ui: elementList[prefix + "termsUI"]
-        ,label: "同意《抢单达人会员及网上支付协议》"
+        ,label: "同意《加工达人商户会员认证及网上支付协议》"
         ,mustCheck: true
     });
 
-    var okbtn = new UIMaster.ui.button
+    var applyForVeriBtn = new UIMaster.ui.button
     ({
-        ui: elementList[prefix + "okbtn"]
+        ui: elementList[prefix + "applyForVeriBtn"]
+    });
+
+    var closeBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "closeBtn"]
     });
 
     var personalPhoto = new org_shaolin_vogerp_commonmodel_form_SingleImageUploader({"prefix":prefix + "personalPhoto."});
@@ -112,31 +128,35 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     var busiLicensePhoto = new org_shaolin_vogerp_commonmodel_form_SingleImageUploader({"prefix":prefix + "busiLicensePhoto."});
 
-    var locationPhoto = new org_shaolin_vogerp_commonmodel_form_SingleImageUploader({"prefix":prefix + "locationPhoto."});
+    var locationPhoto = new org_shaolin_vogerp_commonmodel_form_MultiImageUploader({"prefix":prefix + "locationPhoto."});
 
     var actionPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "okbtn"]
+        ,subComponents: [prefix + "applyForVeriBtn",prefix + "closeBtn"]
     });
 
-    var fieldPanel = new UIMaster.ui.panel
+    var fieldPanel2 = new UIMaster.ui.panel
     ({
-        ui: elementList[prefix + "fieldPanel"]
+        ui: elementList[prefix + "fieldPanel2"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "verifiedUI",prefix + "orgIdUILabel",prefix + "orgIdUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "legalPersonUILabel",prefix + "legalPersonUI",prefix + "busiLicenseNumberUILabel",prefix + "busiLicenseNumberUI",prefix + "personalPhotoLabel",prefix + "personalPhoto",prefix + "personalIdentifierPhotoLabel",prefix + "personalIdentifierPhoto",prefix + "busiLicensePhotoLabel",prefix + "busiLicensePhoto",prefix + "locationphotoLabel",prefix + "locationPhoto",prefix + "termsUI"]
+        ,subComponents: [prefix + "idUI",prefix + "verifiedUI",prefix + "orgTypeUI",prefix + "agreementUI",prefix + "orgIdUILabel",prefix + "orgIdUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "legalPersonUILabel",prefix + "legalPersonUI",prefix + "busiLicenseNumberUILabel",prefix + "busiLicenseNumberUI",prefix + "personalPhotoLabel",prefix + "personalPhoto",prefix + "personalIdentifierPhotoLabel",prefix + "personalIdentifierPhoto",prefix + "busiLicensePhotoLabel",prefix + "busiLicensePhoto",prefix + "locationphotoLabel",prefix + "locationPhoto",prefix + "termsUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,verifiedUI,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,typeUI,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,locationphotoLabel,termsUI,okbtn,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,locationPhoto,fieldPanel,actionPanel]
+        ,items: [idUI,verifiedUI,orgTypeUI,agreementUI,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,typeUI,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,locationphotoLabel,termsUI,applyForVeriBtn,closeBtn,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,locationPhoto,fieldPanel2,actionPanel]
     });
 
     Form.idUI=idUI;
 
     Form.verifiedUI=verifiedUI;
+
+    Form.orgTypeUI=orgTypeUI;
+
+    Form.agreementUI=agreementUI;
 
     Form.orgIdUILabel=orgIdUILabel;
 
@@ -172,7 +192,9 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.termsUI=termsUI;
 
-    Form.okbtn=okbtn;
+    Form.applyForVeriBtn=applyForVeriBtn;
+
+    Form.closeBtn=closeBtn;
 
     Form.personalPhoto=personalPhoto;
 
@@ -182,11 +204,15 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.locationPhoto=locationPhoto;
 
-    Form.fieldPanel=fieldPanel;
+    Form.fieldPanel2=fieldPanel2;
 
     Form.idUI=idUI;
 
     Form.verifiedUI=verifiedUI;
+
+    Form.orgTypeUI=orgTypeUI;
+
+    Form.agreementUI=agreementUI;
 
     Form.orgIdUILabel=orgIdUILabel;
 
@@ -232,7 +258,9 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.actionPanel=actionPanel;
 
-    Form.okbtn=okbtn;
+    Form.applyForVeriBtn=applyForVeriBtn;
+
+    Form.closeBtn=closeBtn;
 
     Form.user_constructor = function()
     {
@@ -240,21 +268,27 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
         
        try {
-	       if (Form.verifiedUI.value== "2") {
-	           $("<div style=\"background-color:greenyellow;font-size: x-large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u901A\u8FC7\u3002</div>").prependTo($(Form.fieldPanel));
-	       } else if (Form.verifiedUI.value == "3") {
-	           $("<div style=\"background-color:red;font-size: x-large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u672A\u901A\u8FC7\uFF01\u8BF7\u4FEE\u6539\u4FE1\u606F\u540E\u91CD\u65B0\u7533\u8BF7\u3002</div>").prependTo($(Form.fieldPanel));
-	       } else if (Form.verifiedUI.value == "1") {
-	           $("<div style=\"background-color:yellow;font-size: x-large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u5BA1\u6838\u4E2D\u3002\u3002\u3002</div>").prependTo($(Form.fieldPanel));
-	           $(Form.actionPanel).css("display", "none");
-	       } else {
-	           $("<div style=\"background-color:darkgrey;font-size: x-large;\">\u8EAB\u4EFD\u672A\u9A8C\u8BC1\uFF01</div>").prependTo($(Form.fieldPanel));
+           if (Form.orgTypeUI.value=="0") {
+               $("<div style=\"background-color:yellow;font-size: large;\">\u60A8\u662F\u4E2A\u4EBA\u7528\u6237\u3002\u9700\u8981\u63D0\u4EA4\u4EE5\u4E0B\u8D44\u6599\u7533\u8BF7\u6210\u4E3A\u5546\u6237\u3002\u8C22\u8C22\uFF01</div>").prependTo($(Form.fieldPanel2));
+           } else {
+		       if (Form.verifiedUI.value== "2") {
+		           $("<div style=\"background-color:greenyellow;font-size: large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u901A\u8FC7\u3002</div>").prependTo($(Form.fieldPanel2));
+		       } else if (Form.verifiedUI.value == "3") {
+		           $("<div style=\"background-color:red;font-size: x-large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u672A\u901A\u8FC7\uFF01\u8BF7\u4FEE\u6539\u4FE1\u606F\u540E\u91CD\u65B0\u7533\u8BF7\u3002</div>").prependTo($(Form.fieldPanel2));
+		       } else if (Form.verifiedUI.value == "1") {
+		           $("<div style=\"background-color:yellow;font-size: large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u5BA1\u6838\u4E2D\u3002\u3002\u3002</div>").prependTo($(Form.fieldPanel2));
+		           $(Form.actionPanel).css("display", "none");
+		       } else {
+		           $("<div style=\"background-color:darkgrey;font-size: large;\">\u8EAB\u4EFD\u672A\u9A8C\u8BC1\uFF01</div>").prependTo($(Form.fieldPanel2));
+		       }
 	       }
        } catch (e) {}
     
     
             /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo */
     };
+
+    Form.applyForVerification = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_applyForVerification;
 
     Form.Close = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Close;
 
@@ -273,6 +307,17 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo */
 /* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_applyForVerification(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_applyForVerification */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"applyForVerification-2018-0101-0101",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_applyForVerification */
+
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Close(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Close */

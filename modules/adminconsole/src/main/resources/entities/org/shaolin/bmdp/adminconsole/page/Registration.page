@@ -28,13 +28,7 @@
             <ns2:ops xsi:type="ns2:OpExecuteScriptType">
 		        <ns2:expressionString><![CDATA[
 		        {   
-		            if (this.selectModeUI.getValue() == "0") {
-		                $(this.registerInfo.Form).parent().css("display", "block");
-		                $(this.registerCompanyInfo.Form).parent().css("display", "none");
-		            } else {
-		                $(this.registerInfo.Form).parent().css("display", "none");
-		                $(this.registerCompanyInfo.Form).parent().css("display", "block");
-		            }
+	                $(this.registerInfo.Form).parent().css("display", "block");
 		        }
 		        ]]></ns2:expressionString>
 		    </ns2:ops>
@@ -43,16 +37,9 @@
             <ns2:ops xsi:type="ns2:OpExecuteScriptType">
 		        <ns2:expressionString><![CDATA[
 		        {   
-		            if (this.selectModeUI.getValue() == "0") {
-		                var constraint_result = this.registerInfo.Form.validate();
-			            if (constraint_result != true && constraint_result != null) {
-			                return false;
-			            }
-		            } else {
-		               var constraint_result = this.registerCompanyInfo.Form.validate();
-			            if (constraint_result != true && constraint_result != null) {
-			                return false;
-			            }
+	                var constraint_result = this.registerInfo.Form.validate();
+		            if (constraint_result != true && constraint_result != null) {
+		                return false;
 		            }
 		            var constraint_result = this.veriCode.validate();
 		            if (constraint_result != true && constraint_result != null) {
@@ -103,25 +90,14 @@
 		        <ns2:expressionString><![CDATA[
 		        {   
 		            constraint_result = this.Form.validate();
-					if (this.selectModeUI.getValue() == "0") {
-		                constraint_result = this.registerInfo.Form.validate();
-			            if (constraint_result != true && constraint_result != null) {
-			                return false;
-			            }
-			            this.registerInfo.passwordUI.validate=function(){return null;}
-			            this.registerInfo.password1UI.validate=function(){return null;}
-			            var encrytedPassword = md5(this.registerInfo.passwordUI.getValue()).toUpperCase();
-			            this.registerInfo.passwordUI.setValue(encrytedPassword);
-			        } else {
-		                constraint_result = this.registerCompanyInfo.Form.validate();
-			            if (constraint_result != true && constraint_result != null) {
-			                return false;
-			            }
-			            this.registerCompanyInfo.passwordUI.validate=function(){return null;}
-                        this.registerCompanyInfo.password1UI.validate=function(){return null;}
-			            var encrytedPassword = md5(this.registerCompanyInfo.passwordUI.getValue()).toUpperCase();
-			            this.registerCompanyInfo.passwordUI.setValue(encrytedPassword);
-			        }
+	                constraint_result = this.registerInfo.Form.validate();
+		            if (constraint_result != true && constraint_result != null) {
+		                return false;
+		            }
+		            this.registerInfo.passwordUI.validate=function(){return null;}
+		            this.registerInfo.password1UI.validate=function(){return null;}
+		            var encrytedPassword = md5(this.registerInfo.passwordUI.getValue()).toUpperCase();
+		            this.registerInfo.passwordUI.setValue(encrytedPassword);
 		            constraint_result = this.veriCode.validate();
 		            if (constraint_result != true && constraint_result != null) {
 		                return false;
@@ -158,12 +134,9 @@
                 { 
                     RegisterInfoImpl registerInfo = new RegisterInfoImpl();
                     registerInfo.setUserType(OrgType.INDIVIDUAL);
+                    registerInfo.setAddress(new AddressInfoImpl());
+                    
                     String formType = "registerInfo";
-                    if (((RadioButtonGroup)@page.getElement("selectModeUI")).getValue().equals("1")) {
-                       formType = "registerCompanyInfo";
-                       registerInfo.setUserType(OrgType.COMPANY);
-	                   registerInfo.setAddress(new AddressInfoImpl());
-                    }
                     HashMap input = new HashMap();
                     input.put("beObject", registerInfo);
                     RefForm form = (RefForm)@page.getElement(formType); 
@@ -223,8 +196,6 @@
 				    <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-					<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 				</ns2:layout>
 				<ns2:component xsi:type="ns2:UILabelType" UIID="errorInfo">
@@ -234,54 +205,8 @@
 		               </ns2:value>
 		           </ns2:Property>
 				</ns2:component>
-				<ns2:component xsi:type="ns2:UIRadioButtonGroupType" UIID="selectModeUI">
-				    <ns2:Property name="horizontalLayout" >
-			         <ns2:value xsi:type="ns2:BooleanPropertyType">
-			            <value>true</value>
-			         </ns2:value>
-			        </ns2:Property>
-			        <ns2:Property name="value" >
-			         <ns2:value xsi:type="ns2:StringPropertyType">
-			            <value>0</value>
-			         </ns2:value>
-			        </ns2:Property>
-			        <ns2:Property name="optionValue">
-			            <ns2:value xsi:type="ns2:ExpressionPropertyType">
-					         <ns2:expression>
-					           <expressionString><![CDATA[
-					           import java.util.ArrayList;
-					           { 
-					               ArrayList options = new ArrayList();
-					               options.add("0");
-					               options.add("1");
-					               return options; 
-					           }]]></expressionString>
-					         </ns2:expression>
-				        </ns2:value>
-		            </ns2:Property>
-		            <ns2:Property name="optionDisplayValue">
-			            <ns2:value xsi:type="ns2:ExpressionPropertyType">
-					         <ns2:expression>
-					           <expressionString><![CDATA[
-					           import java.util.ArrayList;
-					           { 
-					               ArrayList options = new ArrayList();
-					               options.add("个人用户");
-					               options.add("工商企业用户");
-					               return options; 
-					           }]]></expressionString>
-					         </ns2:expression>
-				        </ns2:value>
-		            </ns2:Property>
-			        <ns2:EventListener xsi:type="ns2:ItemChangeListenerType">
-			          <ns2:handler functionName="switchRegisterUserPanel"></ns2:handler>
-			        </ns2:EventListener>
-				</ns2:component>
 				<ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="registerInfo">
                     <ns2:referenceEntity entityName="org.shaolin.bmdp.adminconsole.form.RegisterInfo"></ns2:referenceEntity>
-                </ns2:component>
-                <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="registerCompanyInfo">
-                    <ns2:referenceEntity entityName="org.shaolin.bmdp.adminconsole.form.RegisterCompanyInfo"></ns2:referenceEntity>
                 </ns2:component>
                 <ns2:component xsi:type="ns2:UIPanelType" UIID="verifyCodePanel">
 	                <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -404,30 +329,20 @@
 	                        x="1" y="3" align="FULL"></ns2:constraint>
 	                </ns2:layoutConstraint>
 	            </ns2:component>
-	            <ns2:layoutConstraint>
-                    <ns2:componentId>selectModeUI</ns2:componentId>
+                <ns2:layoutConstraint>
+                    <ns2:componentId>errorInfo</ns2:componentId>
                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                         x="0" y="0" align="FULL"></ns2:constraint>
                 </ns2:layoutConstraint>
                 <ns2:layoutConstraint>
-                    <ns2:componentId>errorInfo</ns2:componentId>
-                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                        x="0" y="1" align="FULL"></ns2:constraint>
-                </ns2:layoutConstraint>
-                <ns2:layoutConstraint>
                     <ns2:componentId>registerInfo</ns2:componentId>
                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                        x="0" y="2" align="FULL"></ns2:constraint>
-                </ns2:layoutConstraint>
-                <ns2:layoutConstraint>
-                    <ns2:componentId>registerCompanyInfo</ns2:componentId>
-                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                        x="0" y="3" align="FULL"></ns2:constraint>
+                        x="0" y="1" align="FULL"></ns2:constraint>
                 </ns2:layoutConstraint>
 				<ns2:layoutConstraint>
                     <ns2:componentId>verifyCodePanel</ns2:componentId>
                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                        x="0" y="4" align="FULL"></ns2:constraint>
+                        x="0" y="2" align="FULL"></ns2:constraint>
                 </ns2:layoutConstraint>
 			</ns2:component>
 			<ns2:component xsi:type="ns2:UIPanelType" UIID="bottomPanel">
@@ -463,7 +378,6 @@
 			</ns2:layoutConstraint>
 			<ns2:constructorCode><![CDATA[
 		        { 
-		            $(this.registerCompanyInfo.Form).parent().css("display", "none");
 		            // notify user open up the GPS.
 		            if(navigator.geolocation){
 				        var latitudeInfo = this.latitudeInfo;
@@ -510,11 +424,6 @@
             <ns2:UIComponent componentPath="registerInfo" paramName="UIWidgetType"></ns2:UIComponent>
             <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="registerInfo" paramName="beObject"></ns2:DataComponent>
         </ns2:ComponentMapping>
-        <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
-            <ns2:mappingRule entityName="org.shaolin.bmdp.adminconsole.form.RegisterCompanyInfo"></ns2:mappingRule>
-            <ns2:UIComponent componentPath="registerCompanyInfo" paramName="UIWidgetType"></ns2:UIComponent>
-            <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="registerInfo" paramName="beObject"></ns2:DataComponent>
-        </ns2:ComponentMapping>
 	</ns2:ODMapping>
 	<ns2:in>
 		<ns2:serverOperation xsi:type="ns2:ExpressionType">
@@ -553,13 +462,8 @@
 			{
 			  $registerInfo = new RegisterInfoImpl();
 			  $registerInfo.setAddress(new AddressInfoImpl());
-			  if ("0".equals(@page.getRadioBtnGroup("selectModeUI").getValue())) {
-			     @odContext.executeMapping("simpleMapping3");
-			     $registerInfo.setUserType(OrgType.INDIVIDUAL);
-			  } else {
-			     @odContext.executeMapping("simpleMapping4");
-			     $registerInfo.setUserType(OrgType.COMPANY);
-			  }
+			  $registerInfo.setUserType(OrgType.INDIVIDUAL);
+		      @odContext.executeMapping("simpleMapping3");
 			}]]></ns2:expressionString>
 		</ns2:serverOperation>
 	</ns2:out>
