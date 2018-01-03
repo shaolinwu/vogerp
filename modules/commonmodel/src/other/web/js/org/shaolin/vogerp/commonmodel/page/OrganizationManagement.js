@@ -7,7 +7,18 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "organizationInfoPanel",prefix + "organizationTypePanel"]
+        ,subComponents: [prefix + "orgVerificationPanel",prefix + "organizationInfoPanel",prefix + "organizationTypePanel"]
+    });
+    var orgVerificationTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "orgVerificationTable"]
+    });
+
+    var orgVerificationPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "orgVerificationPanel"]
+        ,items: []
+        ,subComponents: [prefix + "orgVerificationTable"]
     });
     var organizationInfoTable = new UIMaster.ui.objectlist
     ({
@@ -31,6 +42,10 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
     });
 
     Form.functionsTab=functionsTab;
+
+    Form.orgVerificationPanel=orgVerificationPanel;
+
+    Form.orgVerificationTable=orgVerificationTable;
 
     Form.organizationInfoPanel=organizationInfoPanel;
 
@@ -107,7 +122,7 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifyAccount-20170110-1222",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifyAccount-20171210-1222",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_verifyAccount */
 
 

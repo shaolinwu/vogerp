@@ -1,109 +1,133 @@
 <?xml version="1.0" ?>
 <ns2:UIEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://bmdp.shaolin.org/datamodel/PageDiagram" xmlns:ns4="http://bmdp.shaolin.org/datamodel/RDBDiagram" xmlns:ns3="http://bmdp.shaolin.org/datamodel/BEDiagram" xmlns:ns2="http://bmdp.shaolin.org/datamodel/Page" xmlns="http://bmdp.shaolin.org/datamodel/Common" xsi:schemaLocation="">
-  <entityName>org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo</entityName>
+  <entityName>org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfoByAdmin</entityName>
   <systemVersion>0</systemVersion>
-  <ns2:eventHandler functionName="applyForVerification">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="applyForVerification-2018-0101-0101">
+  <ns2:eventHandler functionName="verifyCustomerInfoFailed">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="verifyCustomerInfoFailed-2018-0101-0101">
       <ns2:exp>
         <expressionString><![CDATA[
        import java.util.HashMap;
-       import java.util.Date;
-       import java.util.ArrayList;
-       import org.shaolin.bmdp.runtime.Registry;
-       import org.shaolin.bmdp.runtime.AppContext; 
-       import org.shaolin.uimaster.page.AjaxContext;
-       import org.shaolin.uimaster.page.ajax.*;
-       import org.shaolin.bmdp.utils.DateUtil;
-       import org.shaolin.bmdp.runtime.security.UserContext;
-       import org.shaolin.vogerp.ecommercial.dao.*;
+      import java.util.Date;
+      import java.util.ArrayList;
+      import java.util.List;
+      import org.shaolin.uimaster.page.AjaxContext;
+      import org.shaolin.uimaster.page.ajax.*;
+      import org.shaolin.bmdp.runtime.AppContext; 
+      import org.shaolin.vogerp.ecommercial.dao.*;
        import org.shaolin.vogerp.commonmodel.IUserService; 
+      import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+      import org.shaolin.bmdp.workflow.be.NotificationImpl;
+      import org.shaolin.bmdp.runtime.security.UserContext;
        import org.shaolin.vogerp.commonmodel.be.*;
        import org.shaolin.vogerp.commonmodel.ce.*;
        import org.shaolin.vogerp.commonmodel.IMemberService;
        import org.shaolin.vogerp.commonmodel.IOrganizationService;
        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
-       import org.shaolin.vogerp.accounting.be.IPayOrder;
-       import org.shaolin.vogerp.accounting.ce.PayBusinessType;
-       import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
-       import org.shaolin.vogerp.accounting.IPaymentService;
+      { 
+          RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+          LegalOrganizationInfoImpl defaultUser = (LegalOrganizationInfoImpl)form.getInputParameter("beObject");
+          if (defaultUser.getId() == 0) {
+             @page.executeJavaScript("alert(\"请先保存信息 !\");");
+             return;
+          }
+          
+          OrganizationImpl orgInfo = (OrganizationImpl)form.getInputParameter("orgInfo");
+          orgInfo.setVeriState(OrgVerifyStatusType.FAILED);
+          orgInfo.setVerifierId(UserContext.getUserContext().getUserId());
+          CommonModel.INSTANCE.update(orgInfo);
+          
+          // notify customer.
+          IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+          PersonalInfoImpl condition = new PersonalInfoImpl();
+          condition.setOrgId(orgInfo.getId());
+          List result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, 1);
+          IPersonalInfo publisher = (IPersonalInfo)result.get(0);
+          
+          String subject = "您的帐号未验证通过！";
+          String description = "原因： 信息不明确。";
+          NotificationImpl message = new NotificationImpl();
+          message.setPartyId(publisher.getId());
+          message.setSubject(subject);
+          message.setDescription(description);
+          message.setCreateDate(new Date());
+          
+          ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+          service.addNotification(message, true);
+          
+          if (form.isInWindows()) {
+              form.closeIfinWindows(true);
+              @page.removeForm(@page.getEntityUiid()); 
+          }
+          Dialog.showMessageDialog("更新成功！", "", Dialog.INFORMATION_MESSAGE, null);
+      }]]></expressionString>
+      </ns2:exp>
+    </ns2:ops>
+    <ns2:ops></ns2:ops>
+  </ns2:eventHandler>
+  <ns2:eventHandler functionName="verifiedLegalInfo">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="verifiedLegalInfo-2018-0101-0101">
+      <ns2:exp>
+        <expressionString><![CDATA[
+       import java.util.HashMap;
+      import java.util.Date;
+      import java.util.List;
+      import java.util.ArrayList;
+      import org.shaolin.bmdp.runtime.security.UserContext;
+      import org.shaolin.uimaster.page.AjaxContext;
+      import org.shaolin.uimaster.page.ajax.*;
+      import org.shaolin.bmdp.runtime.AppContext; 
+      import org.shaolin.vogerp.ecommercial.dao.*;
+       import org.shaolin.vogerp.commonmodel.IUserService; 
+      import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+      import org.shaolin.bmdp.workflow.be.NotificationImpl;
+       import org.shaolin.vogerp.commonmodel.be.*;
+       import org.shaolin.vogerp.commonmodel.ce.*;
+       import org.shaolin.vogerp.commonmodel.IMemberService;
+       import org.shaolin.vogerp.commonmodel.IOrganizationService;
+       import org.shaolin.vogerp.commonmodel.dao.CommonModel;
        { 
            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-           HashMap out = (HashMap)form.ui2Data();
-           
-           IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
-           OrganizationImpl orgInfo = (OrganizationImpl)orgService.getOrganizationInfo();
-           LegalOrganizationInfoImpl templLegalInfo = (LegalOrganizationInfoImpl)out.get("beObject");
-           if (orgInfo.getVeriState() == OrgVerifyStatusType.VERIFYING) {
-	           IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
-	           IPayOrder payOrder = accountingService.queryForPayOrder("AM-"+templLegalInfo.getId());
-	           if (payOrder.getStatus() == PayOrderStatusType.NOTPAYED) {
-	               HashMap input = new HashMap();
-		           input.put("beObject", payOrder);
-		           input.put("editable", new Boolean(true));
-		           RefForm form2 = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PaymentMethod", input);
-		           @page.addElement(form2);
-		           form2.openInWindows("商户认证支付方式选择", null, true);
-	           } else {
-                   Dialog.showMessageDialog("管理员审核中，请耐心等待。谢谢！", "", Dialog.INFORMATION_MESSAGE, null);
-               }
-               return;
-           }
-           if (orgInfo.getVeriState() == OrgVerifyStatusType.VERIFIED) {
-               Dialog.showMessageDialog("您已是我们的认证商户，无需再次认证。谢谢！", "", Dialog.INFORMATION_MESSAGE, null);
-               return;
+           LegalOrganizationInfoImpl defaultUser = (LegalOrganizationInfoImpl)form.getInputParameter("beObject");
+           if (defaultUser.getId() == 0) {
+               OrganizationImpl orgInfo = (OrganizationImpl)form.getInputParameter("orgInfo");
+               defaultUser.setOrgId(orgInfo.getId());
+               CommonModel.INSTANCE.create(defaultUser, true);
            }
            
-           orgInfo.setVeriState(OrgVerifyStatusType.VERIFYING);
-           if (templLegalInfo.getId() == 0) {
-               OrganizationImpl tempInfo = (OrganizationImpl)out.get("orgInfo");
-               orgInfo.setName(tempInfo.getName());
-               orgInfo.setType(tempInfo.getType());
-               orgInfo.setDescription(tempInfo.getDescription());
-               CommonModel.INSTANCE.update(orgInfo);
-               
-               templLegalInfo.setOrgId(orgInfo.getId());
-               CommonModel.INSTANCE.create(templLegalInfo, true);
-           } else {
-               CommonModel.INSTANCE.update(templLegalInfo, true);
+           OrganizationImpl orgInfo = (OrganizationImpl)form.getInputParameter("orgInfo");
+           orgInfo.setVeriState(OrgVerifyStatusType.VERIFIED);
+           orgInfo.setVerifierId(UserContext.getUserContext().getUserId());
+           CommonModel.INSTANCE.update(orgInfo);
+           
+           // notify customer.
+           PersonalInfoImpl condition = new PersonalInfoImpl();
+           condition.setOrgId(orgInfo.getId());
+           List result = CommonModel.INSTANCE.searchPersonInfo(condition, null, 0, 1);
+           IPersonalInfo publisher = (IPersonalInfo)result.get(0);
+           
+           String subject = "恭喜您的帐号通过认证！现以成为加工达人商户会员。";
+           String description = "";
+           NotificationImpl message = new NotificationImpl();
+           message.setPartyId(publisher.getId());
+           message.setSubject(subject);
+           message.setDescription(description);
+           message.setCreateDate(new Date());
+           
+           ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+           service.addNotification(message, true);
+           
+           if (form.isInWindows()) {
+               form.closeIfinWindows(true);
+               @page.removeForm(@page.getEntityUiid()); 
            }
-           
-            //make a payment!
-           IMemberService memberService = (IMemberService)AppContext.get().getService(IMemberService.class);
-           IAssignedMember member = memberService.getUserMember(orgInfo.getId());
-           if (member == null) {
-               AssignedMemberImpl assignedMember = new AssignedMemberImpl();
-               assignedMember.setOrgId(orgInfo.getId());
-               assignedMember.setType(AMemberType.GENERAL);
-               assignedMember.setDescription("Defualt");
-               Date assingedDate = new Date();
-               DateUtil.increaseMonths(assingedDate, Registry.getInstance().getValue("/System/Vogerp/UserMemberRule/DefaultMonth", 6));
-               assignedMember.setEndtime(assingedDate);
-               assignedMember.setStarttime(new Date());
-               CommonModel.INSTANCE.create(assignedMember);
-               member = assignedMember;
-           }
-           double price = memberService.getServicePrice(member, AMemberFunctionType.A);
-           IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
-           PayOrderStatusType porderStatus = accountingService.queryForPayOrderState("AM-"+templLegalInfo.getId());
-           IPayOrder payOrder = accountingService.createPayAdminOrder(PayBusinessType.MEMBERBUSI, 
-                       UserContext.getUserContext().getUserId(), "AM-"+templLegalInfo.getId(), price);
-           CommonModel.INSTANCE.create(payOrder);
-           
-           HashMap input = new HashMap();
-           input.put("beObject", payOrder);
-           input.put("editable", new Boolean(true));
-           RefForm form2 = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PaymentMethod", input);
-           @page.addElement(form2);
-           form2.openInWindows("商户认证支付方式选择", null, true);
-           Dialog.showMessageDialog("提交审核中...请您支付("+price+")元商户认证费用, 谢谢！", "", Dialog.INFORMATION_MESSAGE, null);
-           
+           Dialog.showMessageDialog("更新成功！", "", Dialog.INFORMATION_MESSAGE, null);
        }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
     <ns2:ops></ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="Close">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="Close-847970502">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="Close-847970502ddd">
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
@@ -125,31 +149,6 @@
     </ns2:ops>
     <ns2:ops></ns2:ops>
   </ns2:eventHandler>
-  <ns2:eventHandler functionName="Cancel">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail1712758469">
-      <ns2:exp>
-        <expressionString><![CDATA[
-        import org.shaolin.uimaster.page.AjaxContext;
-        import org.shaolin.uimaster.page.ajax.*;
-        { 
-            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
-            if (form != null && form.isInWindows()) {
-	            form.closeIfinWindows(true);
-	            @page.removeForm(@page.getEntityUiid()); 
-            }
-        }]]></expressionString>
-      </ns2:exp>
-    </ns2:ops>
-  </ns2:eventHandler>
-  <ns2:eventHandler functionName="openUserTerms">
-    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-        <ns2:expressionString><![CDATA[
-        {   
-            UIMaster.ui.mask.openHtml("/html/hints/payterms.html");
-        }
-        ]]></ns2:expressionString>
-    </ns2:ops>
-  </ns2:eventHandler> 
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -158,8 +157,6 @@
     </ns2:layout>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="fieldPanel2">
       <ns2:layout xsi:type="ns2:TableLayoutType">
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -182,20 +179,6 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="orgTypeUI">
       </ns2:component>
-      <ns2:component xsi:type="ns2:UILinkType" UIID="agreementUI">
-         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-         <ns2:Property name="label">
-         <ns2:value xsi:type="ns2:StringPropertyType">
-             <value>阅读加工达人《商户协议书》</value>
-         </ns2:value>
-         </ns2:Property>
-         <ns2:text xsi:type="ns2:StringPropertyType">
-           <ns2:value>阅读加工达人《商户协议书》</ns2:value>
-         </ns2:text>
-         <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="openUserTerms"></ns2:handler>
-        </ns2:EventListener>
-      </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="orgIdUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -217,7 +200,7 @@
           <ns2:value>公司全称</ns2:value>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="nameUI">
+      <ns2:component xsi:type="ns2:UILabelType" UIID="nameUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
         <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
              <ns2:value>false</ns2:value>
@@ -247,7 +230,7 @@
           <ns2:key>org.shaolin.vogerp.commonmodel.be.Organization.description</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextAreaType" UIID="descriptionUI">
+      <ns2:component xsi:type="ns2:UILabelType" UIID="descriptionUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="legalPersonUILabel">
@@ -257,7 +240,7 @@
           <ns2:key>org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfo.legalPerson</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="legalPersonUI">
+      <ns2:component xsi:type="ns2:UILabelType" UIID="legalPersonUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
         <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
             <ns2:value>false</ns2:value>
@@ -267,25 +250,13 @@
              <value>100</value>
          </ns2:maxLength>
       </ns2:component>
-      <!-- 
-      <ns2:component xsi:type="ns2:UILabelType" UIID="tradeLicenseNumberUILabel">
-        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.commonmodel.be.LegalOrganizationInfo.tradeLicenseNumber</ns2:key>
-        </ns2:text>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="tradeLicenseNumberUI">
-        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-      </ns2:component>
-       -->
       <ns2:component xsi:type="ns2:UILabelType" UIID="busiLicenseNumberUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
           <ns2:value>统一社会信用代码</ns2:value>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="busiLicenseNumberUI">
+      <ns2:component xsi:type="ns2:UILabelType" UIID="busiLicenseNumberUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
         <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
             <ns2:value>false</ns2:value>
@@ -327,133 +298,108 @@
       <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="locationPhoto">
          <ns2:referenceEntity entityName="org.shaolin.vogerp.commonmodel.form.MultiImageUploader" />
       </ns2:component>
-      <ns2:component xsi:type="ns2:UICheckBoxType" UIID="termsUI">
-         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-         <ns2:Property name="label">
-	     <ns2:value xsi:type="ns2:StringPropertyType">
-	         <value>同意《加工达人商户会员认证及网上支付协议》</value>
-	     </ns2:value>
-		 </ns2:Property>
-		 <ns2:Property name="mustCheck">
-		     <ns2:value xsi:type="ns2:BooleanPropertyType">
-		         <value>true</value>
-		     </ns2:value>
-		 </ns2:Property>
-             <ns2:text xsi:type="ns2:StringPropertyType">
-               <ns2:value>加工达人商户认证书</ns2:value>
-             </ns2:text>
-            <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
-		     <ns2:value>false</ns2:value>
-		 </ns2:allowBlank>
-		 <ns2:EventListener xsi:type="ns2:CustomListenerType" eventName="linkevent">
-             <ns2:handler functionName="openUserTerms" />
-         </ns2:EventListener>
-      </ns2:component>
-      <ns2:layoutConstraint>
-        <ns2:componentId>agreementUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>orgIdUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>orgIdUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>nameUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>nameUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>typeUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>typeUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>descriptionUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>descriptionUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>legalPersonUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>legalPersonUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>busiLicenseNumberUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>busiLicenseNumberUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>personalPhotoLabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="7" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>personalPhoto</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="7" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>personalIdentifierPhotoLabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="8" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>personalIdentifierPhoto</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="8" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>busiLicensePhotoLabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="9" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="7" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>busiLicensePhoto</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="9" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="7" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>locationphotoLabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="10" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="8" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>locationPhoto</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="10" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
-        <ns2:componentId>termsUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="11" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="8" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
       <ns2:layout xsi:type="ns2:TableLayoutType">
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="applyForVeriBtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="applyForVerification"></ns2:handler>
+          <ns2:handler functionName="verifiedLegalInfo"></ns2:handler>
         </ns2:EventListener>
-        <ns2:editable xsi:type="ns2:ExpressionPropertyType">
-          <ns2:expression>
-            <expressionString>{return !$isVerified.booleanValue();}</expressionString>
-          </ns2:expression>
-        </ns2:editable>
         <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>提交审核</ns2:value>
+          <ns2:value>审核通过</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="verifyInfoFailedBtn">
+        <ns2:EventListener xsi:type="ns2:ClickListenerType">
+          <ns2:handler functionName="verifyCustomerInfoFailed"></ns2:handler>
+        </ns2:EventListener>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>审核不通过</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="closeBtn">
@@ -465,10 +411,21 @@
             <expressionString>{return $editable;}</expressionString>
           </ns2:expression>
         </ns2:editable>
+         <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>关闭</ns2:value>
+        </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>applyForVeriBtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>verifyInfoFailedBtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>closeBtn</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="2" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
@@ -479,25 +436,6 @@
       <ns2:componentId>actionPanel</ns2:componentId>
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
-    <ns2:constructorCode><![CDATA[
-       try {
-           if (Form.orgTypeUI.value=="0") {
-               $("<div style=\"background-color:yellow;font-size: large;\">\u60A8\u662F\u4E2A\u4EBA\u7528\u6237\u3002\u9700\u8981\u63D0\u4EA4\u4EE5\u4E0B\u8D44\u6599\u7533\u8BF7\u6210\u4E3A\u5546\u6237\u3002\u8C22\u8C22\uFF01</div>").prependTo($(Form.fieldPanel2));
-           } else {
-		       if (Form.verifiedUI.value== "2") {
-		           $("<div style=\"background-color:greenyellow;font-size: large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u901A\u8FC7\u3002</div>").prependTo($(Form.fieldPanel2));
-		       } else if (Form.verifiedUI.value == "3") {
-		           $("<div style=\"background-color:red;font-size: x-large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u672A\u901A\u8FC7\uFF01\u8BF7\u4FEE\u6539\u4FE1\u606F\u540E\u91CD\u65B0\u7533\u8BF7\u3002</div>").prependTo($(Form.fieldPanel2));
-		       } else if (Form.verifiedUI.value == "1") {
-		           $("<div style=\"background-color:yellow;font-size: large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u5BA1\u6838\u4E2D\u3002\u3002\u3002</div>").prependTo($(Form.fieldPanel2));
-		           $(Form.actionPanel).css("display", "none");
-		       } else {
-		           $("<div style=\"background-color:darkgrey;font-size: large;\">\u5982\u679C\u60A8\u662F\u52A0\u5DE5\u5546\u6237\uFF0C\u8BF7\u53C2\u4E0E\u8EAB\u4EFD\u8BA4\u8BC1\u3002\u8C22\u8C22\uFF01</div>").prependTo($(Form.fieldPanel2));
-		       }
-	       }
-       } catch (e) {}
-    ]]>
-    </ns2:constructorCode>
   </ns2:body>
   <ns2:mapping>
     <systemVersion>0</systemVersion>
@@ -573,7 +511,7 @@
       </ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
          <ns2:expression>
-          <expressionString>{return !$isVerified.booleanValue();}</expressionString>
+          <expressionString>{return false;}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
@@ -588,7 +526,7 @@
       </ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
          <ns2:expression>
-          <expressionString>{return !$isVerified.booleanValue();}</expressionString>
+          <expressionString>{return false;}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
@@ -603,7 +541,7 @@
       </ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
          <ns2:expression>
-          <expressionString>{return !$isVerified.booleanValue();}</expressionString>
+          <expressionString>{return false;}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
@@ -630,7 +568,7 @@
       </ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
          <ns2:expression>
-          <expressionString>{return !$isVerified.booleanValue();}</expressionString>
+          <expressionString>{return false;}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
@@ -652,11 +590,6 @@
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping14">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISelect"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="termsUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.acceptTerms" paramName="Value"></ns2:DataComponent>
-    </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
       import org.shaolin.bmdp.utils.StringUtil;
@@ -669,24 +602,6 @@
       import org.shaolin.vogerp.commonmodel.dao.CommonModel;
       import org.shaolin.vogerp.commonmodel.IOrganizationService;
       {
-          if ($orgInfo == null) {
-              // self login.
-		      IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
-		      $orgInfo = (OrganizationImpl)orgService.getOrganizationInfo();
-		      $beObject = (LegalOrganizationInfoImpl)orgService.getLegalInfo(UserContext.getUserContext().getOrgId());
-		      if ($beObject == null) {
-		          $beObject = new LegalOrganizationInfoImpl();
-		          $beObject.setOrgId(UserContext.getUserContext().getOrgId());
-	              $beObject.setLegalPhoto("/images/user/"+$orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
-	              $beObject.setLegalIdentifierPhoto("/images/user/"+$orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
-	              $beObject.setBusiLicensePhoto("/images/user/"+$orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
-	              $beObject.setLocationPhoto("/images/user/"+$orgInfo.getId()+"/location");
-	              CommonModel.INSTANCE.create($beObject, true);
-	          }
-	      } else {
-	          // admin login.
-	      }
-          $isVerified = ($orgInfo.getVeriState() == OrgVerifyStatusType.VERIFYING || $orgInfo.getVeriState() == OrgVerifyStatusType.VERIFIED);
 	      @odContext.executeAllMappings();
      }]]></expressionString>
     </ns2:DataToUIMappingOperation>
@@ -702,19 +617,6 @@
       import org.shaolin.vogerp.commonmodel.IOrganizationService;
       import org.shaolin.vogerp.commonmodel.dao.CommonModel;
       {
-        long orgId = Long.parseLong(@page.getLabel("orgIdUI").getValue());
-        if ($orgInfo == null) {
-	        IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
-	        OrganizationImpl orgInfo = (OrganizationImpl)CommonModel.INSTANCE.get(orgId, OrganizationImpl.class);
-	        LegalOrganizationInfoImpl legalInfo = (LegalOrganizationInfoImpl)orgService.getLegalInfo(orgId);
-	        if (legalInfo == null) {
-	            legalInfo = new LegalOrganizationInfoImpl();
-	        }
-	        
-	        $orgInfo = orgInfo;
-	        $beObject = legalInfo;
-        }
-        @odContext.executeAllMappings();
       }</expressionString>
     </ns2:UIToDataMappingOperation>
   </ns2:mapping>

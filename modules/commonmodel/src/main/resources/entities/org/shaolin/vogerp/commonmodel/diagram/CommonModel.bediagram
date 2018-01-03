@@ -253,18 +253,6 @@
             <bediagram:name>acceptTerms</bediagram:name>
             <bediagram:type xsi:type="bediagram:BooleanType" />
         </bediagram:member>
-        <bediagram:member>
-            <!-- 验证状态-->
-            <bediagram:name>veriState</bediagram:name>
-            <bediagram:type xsi:type="bediagram:CEObjRefType">
-                <bediagram:targetEntity entityName="OrgVerifyStatusType" />
-            </bediagram:type>
-        </bediagram:member>
-        <bediagram:member>
-            <!-- 验证人-->
-            <bediagram:name>verifierId</bediagram:name>
-            <bediagram:type xsi:type="bediagram:LongType" />
-        </bediagram:member>
 	</bediagram:beEntity>
 
 	<bediagram:beEntity needOrgId="true" needUIEntity="true">

@@ -1,6 +1,6 @@
 /* null */
 /* auto generated constructor */
-function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
+function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
     var idUI = new UIMaster.ui.hidden
@@ -16,12 +16,6 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     var orgTypeUI = new UIMaster.ui.hidden
     ({
         ui: elementList[prefix + "orgTypeUI"]
-    });
-
-    var agreementUI = new UIMaster.ui.link
-    ({
-        ui: elementList[prefix + "agreementUI"]
-        ,label: "阅读加工达人《商户协议书》"
     });
 
     var orgIdUILabel = new UIMaster.ui.label
@@ -40,7 +34,7 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         ui: elementList[prefix + "nameUILabel"]
     });
 
-    var nameUI = new UIMaster.ui.textfield
+    var nameUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "nameUI"]
     });
@@ -60,7 +54,7 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         ui: elementList[prefix + "descriptionUILabel"]
     });
 
-    var descriptionUI = new UIMaster.ui.textarea
+    var descriptionUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "descriptionUI"]
     });
@@ -70,7 +64,7 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         ui: elementList[prefix + "legalPersonUILabel"]
     });
 
-    var legalPersonUI = new UIMaster.ui.textfield
+    var legalPersonUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "legalPersonUI"]
     });
@@ -80,7 +74,7 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         ui: elementList[prefix + "busiLicenseNumberUILabel"]
     });
 
-    var busiLicenseNumberUI = new UIMaster.ui.textfield
+    var busiLicenseNumberUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "busiLicenseNumberUI"]
     });
@@ -105,16 +99,14 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         ui: elementList[prefix + "locationphotoLabel"]
     });
 
-    var termsUI = new UIMaster.ui.checkbox
-    ({
-        ui: elementList[prefix + "termsUI"]
-        ,label: "同意《加工达人商户会员认证及网上支付协议》"
-        ,mustCheck: true
-    });
-
     var applyForVeriBtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "applyForVeriBtn"]
+    });
+
+    var verifyInfoFailedBtn = new UIMaster.ui.button
+    ({
+        ui: elementList[prefix + "verifyInfoFailedBtn"]
     });
 
     var closeBtn = new UIMaster.ui.button
@@ -134,20 +126,20 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "applyForVeriBtn",prefix + "closeBtn"]
+        ,subComponents: [prefix + "applyForVeriBtn",prefix + "verifyInfoFailedBtn",prefix + "closeBtn"]
     });
 
     var fieldPanel2 = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "fieldPanel2"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "verifiedUI",prefix + "orgTypeUI",prefix + "agreementUI",prefix + "orgIdUILabel",prefix + "orgIdUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "legalPersonUILabel",prefix + "legalPersonUI",prefix + "busiLicenseNumberUILabel",prefix + "busiLicenseNumberUI",prefix + "personalPhotoLabel",prefix + "personalPhoto",prefix + "personalIdentifierPhotoLabel",prefix + "personalIdentifierPhoto",prefix + "busiLicensePhotoLabel",prefix + "busiLicensePhoto",prefix + "locationphotoLabel",prefix + "locationPhoto",prefix + "termsUI"]
+        ,subComponents: [prefix + "idUI",prefix + "verifiedUI",prefix + "orgTypeUI",prefix + "orgIdUILabel",prefix + "orgIdUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "legalPersonUILabel",prefix + "legalPersonUI",prefix + "busiLicenseNumberUILabel",prefix + "busiLicenseNumberUI",prefix + "personalPhotoLabel",prefix + "personalPhoto",prefix + "personalIdentifierPhotoLabel",prefix + "personalIdentifierPhoto",prefix + "busiLicensePhotoLabel",prefix + "busiLicensePhoto",prefix + "locationphotoLabel",prefix + "locationPhoto"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,verifiedUI,orgTypeUI,agreementUI,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,typeUI,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,locationphotoLabel,termsUI,applyForVeriBtn,closeBtn,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,locationPhoto,fieldPanel2,actionPanel]
+        ,items: [idUI,verifiedUI,orgTypeUI,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,typeUI,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,locationphotoLabel,applyForVeriBtn,verifyInfoFailedBtn,closeBtn,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,locationPhoto,fieldPanel2,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -155,8 +147,6 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     Form.verifiedUI=verifiedUI;
 
     Form.orgTypeUI=orgTypeUI;
-
-    Form.agreementUI=agreementUI;
 
     Form.orgIdUILabel=orgIdUILabel;
 
@@ -190,9 +180,9 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.locationphotoLabel=locationphotoLabel;
 
-    Form.termsUI=termsUI;
-
     Form.applyForVeriBtn=applyForVeriBtn;
+
+    Form.verifyInfoFailedBtn=verifyInfoFailedBtn;
 
     Form.closeBtn=closeBtn;
 
@@ -212,8 +202,6 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.orgTypeUI=orgTypeUI;
 
-    Form.agreementUI=agreementUI;
-
     Form.orgIdUILabel=orgIdUILabel;
 
     Form.orgIdUI=orgIdUI;
@@ -254,106 +242,73 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.locationPhoto=locationPhoto;
 
-    Form.termsUI=termsUI;
-
     Form.actionPanel=actionPanel;
 
     Form.applyForVeriBtn=applyForVeriBtn;
+
+    Form.verifyInfoFailedBtn=verifyInfoFailedBtn;
 
     Form.closeBtn=closeBtn;
 
     Form.user_constructor = function()
     {
-        /* Construct_FIRST:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo */
-
-        
-       try {
-           if (Form.orgTypeUI.value=="0") {
-               $("<div style=\"background-color:yellow;font-size: large;\">\u60A8\u662F\u4E2A\u4EBA\u7528\u6237\u3002\u9700\u8981\u63D0\u4EA4\u4EE5\u4E0B\u8D44\u6599\u7533\u8BF7\u6210\u4E3A\u5546\u6237\u3002\u8C22\u8C22\uFF01</div>").prependTo($(Form.fieldPanel2));
-           } else {
-		       if (Form.verifiedUI.value== "2") {
-		           $("<div style=\"background-color:greenyellow;font-size: large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u901A\u8FC7\u3002</div>").prependTo($(Form.fieldPanel2));
-		       } else if (Form.verifiedUI.value == "3") {
-		           $("<div style=\"background-color:red;font-size: x-large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u672A\u901A\u8FC7\uFF01\u8BF7\u4FEE\u6539\u4FE1\u606F\u540E\u91CD\u65B0\u7533\u8BF7\u3002</div>").prependTo($(Form.fieldPanel2));
-		       } else if (Form.verifiedUI.value == "1") {
-		           $("<div style=\"background-color:yellow;font-size: large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u5BA1\u6838\u4E2D\u3002\u3002\u3002</div>").prependTo($(Form.fieldPanel2));
-		           $(Form.actionPanel).css("display", "none");
-		       } else {
-		           $("<div style=\"background-color:darkgrey;font-size: large;\">\u5982\u679C\u60A8\u662F\u52A0\u5DE5\u5546\u6237\uFF0C\u8BF7\u53C2\u4E0E\u8EAB\u4EFD\u8BA4\u8BC1\u3002\u8C22\u8C22\uFF01</div>").prependTo($(Form.fieldPanel2));
-		       }
-	       }
-       } catch (e) {}
-    
-    
-            /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo */
+        /* Construct_FIRST:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin */
+        /* Construct_LAST:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin */
     };
 
-    Form.applyForVerification = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_applyForVerification;
+    Form.verifyCustomerInfoFailed = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin_verifyCustomerInfoFailed;
 
-    Form.Close = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Close;
+    Form.verifiedLegalInfo = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin_verifiedLegalInfo;
 
-    Form.Cancel = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Cancel;
+    Form.Close = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin_Close;
 
-    Form.openUserTerms = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_openUserTerms;
+    Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin_invokeDynamicFunction;
 
-    Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_invokeDynamicFunction;
-
-    Form.__entityName="org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo";
+    Form.__entityName="org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfoByAdmin";
 
     Form.init();
     return Form;
 };
 
     /* EventHandler Functions */
-/* Other_Func_FIRST:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo */
-/* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo */
+/* Other_Func_FIRST:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin */
+/* Other_Func_LAST:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin */
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_applyForVerification(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_applyForVerification */
+    function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin_verifyCustomerInfoFailed(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin_verifyCustomerInfoFailed */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"applyForVerification-2018-0101-0101",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_applyForVerification */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifyCustomerInfoFailed-2018-0101-0101",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin_verifyCustomerInfoFailed */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Close(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Close */
+    function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin_verifiedLegalInfo(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin_verifiedLegalInfo */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"Close-847970502",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Close */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifiedLegalInfo-2018-0101-0101",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin_verifiedLegalInfo */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Cancel(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Cancel */
+    function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin_Close(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin_Close */
         var o = this;
         var UIEntity = this;
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail1712758469",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_Cancel */
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"Close-847970502ddd",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin_Close */
 
 
     /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_openUserTerms(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_openUserTerms */
-        var o = this;
-        var UIEntity = this;
-
-        {   
-            UIMaster.ui.mask.openHtml("/html/hints/payterms.html");
-        }
-            }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_openUserTerms */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_invokeDynamicFunction */
+    function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin_invokeDynamicFunction(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin_invokeDynamicFunction */
         var o = this;
         var UIEntity = this;
 
@@ -371,7 +326,7 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         
         }
         }).open();
-    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_invokeDynamicFunction */
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin_invokeDynamicFunction */
 
 
 

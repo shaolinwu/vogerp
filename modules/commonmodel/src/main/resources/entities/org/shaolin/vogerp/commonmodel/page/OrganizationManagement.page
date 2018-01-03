@@ -59,7 +59,7 @@
             </ns2:ops>
         </ns2:eventHandler>
         <ns2:eventHandler functionName="verifyAccount">
-            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="verifyAccount-20170110-1222">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="verifyAccount-20171210-1222">
                 <ns2:exp>
                     <ns2:expressionString><![CDATA[
                     import java.util.HashMap;
@@ -70,7 +70,7 @@
       				import org.shaolin.vogerp.commonmodel.IOrganizationService;
       				import org.shaolin.bmdp.utils.StringUtil;
                     {
-                        Table personalInfoTable = (Table)@page.getElement("organizationInfoTable");
+                        Table personalInfoTable = (Table)@page.getElement("orgVerificationTable");
                         if (personalInfoTable.getSelectedRow() == null) {
                             Dialog.showMessageDialog("您没有选择任何表条目！", "", Dialog.WARNING_MESSAGE, null);
                             return;
@@ -82,20 +82,14 @@
 				           legalInfo = new LegalOrganizationInfoImpl();
 					       legalInfo.setOrgId(orgInfo.getId());
 					    }
-				        //for security consideration, we have to generate the random numbers.
-				        if (legalInfo.getLegalPhoto() == null) {
-				           legalInfo.setLegalPhoto("/user/"+orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
-				           legalInfo.setLegalIdentifierPhoto("/user/"+orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
-				           legalInfo.setBusiLicensePhoto("/user/"+orgInfo.getId()+"/"+StringUtil.genRandomStr()+".jpg");
-				        }
                         HashMap input = new HashMap();
                         input.put("orgInfo", orgInfo);
                         input.put("beObject", legalInfo);
                         input.put("editable", new Boolean(true));
-                        RefForm form = new RefForm("organizationForm", "org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo", input);
+                        RefForm form = new RefForm("organizationForm", "org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfoByAdmin", input);
                         @page.addElement(form);
                         
-                        form.openInWindows("Check Organization Information", new TableCallBack("organizationInfoTable"), true);
+                        form.openInWindows("商户认证", new TableCallBack("orgVerificationTable"), true);
                     }
                     ]]></ns2:expressionString>
                 </ns2:exp>
@@ -311,6 +305,104 @@
 			</ns2:layout>
 			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
 			    <ns2:ajaxLoad>true</ns2:ajaxLoad>
+			 
+			 <ns2:tab uiid="orgVerificationPanel">
+             <ns2:title xsi:type="ns2:StringPropertyType">
+                 <ns2:value>商户认证列表</ns2:value>
+             </ns2:title>
+             <ns2:panel UIID="orgVerificationPanel">
+                 <ns2:layout xsi:type="ns2:TableLayoutType">
+                     <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                     <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+                 </ns2:layout>
+                 <ns2:component xsi:type="ns2:UITableType" UIID="orgVerificationTable">
+                     <ns2:beElement>org.shaolin.vogerp.commonmodel.be.Organization</ns2:beElement>
+                     <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+                     <ns2:defaultRowSize>10</ns2:defaultRowSize>
+                     <ns2:showActionBar>true</ns2:showActionBar>
+                     <ns2:showFilter>true</ns2:showFilter>
+                     <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                         <ns2:expression xsi:type="ns2:ExpressionType">
+                             <ns2:expressionString><![CDATA[
+                             import java.util.List;
+                             import org.shaolin.bmdp.runtime.AppContext;
+                             import org.shaolin.uimaster.page.ajax.TableConditions;
+                             import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                             import org.shaolin.vogerp.commonmodel.IOrganizationService;
+                             import org.shaolin.vogerp.commonmodel.be.OrganizationImpl;
+                             import org.shaolin.vogerp.commonmodel.be.OrganizationContractImpl;
+                             import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
+                             import org.shaolin.uimaster.page.flow.WebflowConstants;
+                             {
+                                   IOrganizationService orgService = (IOrganizationService)
+                                   AppContext.get().getService(IOrganizationService.class);
+                                   if ($tableCondition == null) {
+                                      $tableCondition = TableConditions.createCondition(new OrganizationImpl());
+                                      $tableCondition.setCount(10);
+                                      $tableCondition.addOrder("createDate", false);
+                                   }
+                                   OrganizationImpl condition = (OrganizationImpl)$tableCondition.getCondition();
+                                   condition.setVeriState(OrgVerifyStatusType.VERIFYING);
+                                   return CommonModel.INSTANCE.searchSubOrganizationInfo(condition,
+                                                 $tableCondition.getOrders(),
+                                                 $tableCondition.getOffset(), 
+                                                 $tableCondition.getCount());
+                             }]]></ns2:expressionString>
+                         </ns2:expression>
+                     </ns2:query>
+                     <ns2:column xsi:type="ns2:UITableColumnType">
+                         <ns2:title xsi:type="ns2:StringPropertyType">
+                             <ns2:value>组织ID</ns2:value>
+                         </ns2:title>
+                         <ns2:beFieldId>rowBE.orgCode</ns2:beFieldId>
+                         <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                     </ns2:column>
+                     <ns2:column xsi:type="ns2:UITableColumnType">
+                         <ns2:title xsi:type="ns2:StringPropertyType">
+                             <ns2:value>公司名称</ns2:value>
+                         </ns2:title>
+                         <ns2:beFieldId>rowBE.name</ns2:beFieldId>
+                         <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
+                     </ns2:column>
+                     <ns2:column xsi:type="ns2:UITableColumnType">
+                         <ns2:title xsi:type="ns2:StringPropertyType">
+                             <ns2:value>行业类型</ns2:value>
+                         </ns2:title>
+                         <ns2:beFieldId>rowBE.type</ns2:beFieldId>
+                         <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                     </ns2:column>
+                     <ns2:column xsi:type="ns2:UITableColumnType">
+                         <ns2:title xsi:type="ns2:StringPropertyType">
+                             <ns2:value>建立时间</ns2:value>
+                         </ns2:title>
+                         <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+                         <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                           <ns2:type>Label</ns2:type>
+                         </ns2:uiType>
+                     </ns2:column>
+                     <ns2:defaultActions>
+                        <ns2:defaultOpenAction>verifyAccount</ns2:defaultOpenAction>
+                     </ns2:defaultActions>
+                     <ns2:actionGroup>
+                       <ns2:type>radio</ns2:type>
+                       <ns2:action>
+                              <ns2:uiid>verifyAccount</ns2:uiid>
+                              <ns2:title xsi:type="ns2:StringPropertyType">
+                                  <ns2:value>验证帐号</ns2:value>
+                              </ns2:title>
+                              <ns2:icon>ui-icon-note</ns2:icon>
+                              <ns2:function>verifyAccount</ns2:function>
+                          </ns2:action>
+                   </ns2:actionGroup>
+                 </ns2:component>
+                 <ns2:layoutConstraint>
+                     <ns2:componentId>orgVerificationTable</ns2:componentId>
+                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                         x="0" y="0" align="FULL"></ns2:constraint>
+                 </ns2:layoutConstraint>
+             </ns2:panel>
+         </ns2:tab>   
+			    
              <ns2:tab uiid="organizationInfoPanel">
              <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
                  <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
@@ -461,17 +553,6 @@
                          <ns2:defaultOpenAction>openOrgDetail</ns2:defaultOpenAction>
                          <!-- can be default actions. -->
                      </ns2:defaultActions>
-                     <ns2:actionGroup>
-	                   <ns2:type>radio</ns2:type>
-	                   <ns2:action>
-                              <ns2:uiid>verifyAccount</ns2:uiid>
-                              <ns2:title xsi:type="ns2:StringPropertyType">
-                                  <ns2:value>验证帐号</ns2:value>
-                              </ns2:title>
-                              <ns2:icon>ui-icon-note</ns2:icon>
-                              <ns2:function>verifyAccount</ns2:function>
-                          </ns2:action>
-	               </ns2:actionGroup>
                  </ns2:component>
                  <ns2:layoutConstraint>
                      <ns2:componentId>organizationInfoTable</ns2:componentId>
@@ -498,153 +579,7 @@
 		        </ns2:DataComponent>
 	        </ns2:odmapping>
          </ns2:tab>
-         <!-- 
-         <ns2:tab uiid="employeeInfoPanel">
-             <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
-                 <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
-                 <ns2:key>org.shaolin.vogerp.commonmodel.page.OrganizationManagement.employeeInfoPanel</ns2:key>
-             </ns2:title>
-             <ns2:panel UIID="employeeInfoPanel">
-		           <ns2:layout xsi:type="ns2:TableLayoutType">
-		               <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-		               <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-		           </ns2:layout>
-		           <ns2:component xsi:type="ns2:UITableType" UIID="employeeInfoTablel">
-		               <ns2:beElement>org.shaolin.vogerp.commonmodel.be.PersonalInfo</ns2:beElement>
-		               <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
-		               <ns2:defaultRowSize>10</ns2:defaultRowSize>
-		               <ns2:showActionBar>true</ns2:showActionBar>
-		               <ns2:showFilter>true</ns2:showFilter>
-		               <ns2:query xsi:type="ns2:ExpressionPropertyType">
-		                   <ns2:expression xsi:type="ns2:ExpressionType">
-		                       <ns2:expressionString><![CDATA[
-		                       import java.util.List;
-		                       import org.shaolin.uimaster.page.ajax.TableConditions;
-		                       import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
-		                       import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
-		                       import org.shaolin.vogerp.commonmodel.dao.CommonModel;
-		                       {
-		                             if ($tableCondition == null) {
-		                                $tableCondition = TableConditions.createCondition(new PersonalInfoImpl());
-		                                $tableCondition.setCount(10);
-		                                $tableCondition.addOrder("createDate", false);
-		                             }
-		                             PersonalInfoImpl condition = (PersonalInfoImpl)$tableCondition.getCondition();
-		                             condition.setOrgId(org.shaolin.bmdp.runtime.security.UserContext.getUserContext().getOrgId());
-		                             return CommonModel.INSTANCE.searchPersonInfo(condition,
-		                                           $tableCondition.getOrders(),
-		                                           $tableCondition.getOffset(), 
-		                                           $tableCondition.getCount());
-		                       }]]></ns2:expressionString>
-		                   </ns2:expression>
-		               </ns2:query>
-		               <ns2:column xsi:type="ns2:UITableColumnType">
-		                   <ns2:title xsi:type="ns2:StringPropertyType">
-		                       <ns2:value>Employee Id</ns2:value>
-		                   </ns2:title>
-		                   <ns2:beFieldId>rowBE.empId</ns2:beFieldId>
-		                   <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-		               </ns2:column>
-		               <ns2:column xsi:type="ns2:UITableColumnType">
-		                   <ns2:title xsi:type="ns2:StringPropertyType">
-		                       <ns2:value>Name</ns2:value>
-		                   </ns2:title>
-		                   <ns2:beFieldId>rowBE.firstName</ns2:beFieldId>
-		                   <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Text</ns2:type></ns2:uiType>
-		                   <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-		                       <ns2:expression xsi:type="ns2:ExpressionType">
-		                           <ns2:expressionString><![CDATA[$rowBE.getLastName() + " " + $rowBE.getFirstName()]]></ns2:expressionString>
-		                       </ns2:expression>
-		                   </ns2:rowExpression>
-		                   <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-		                       <ns2:expression xsi:type="ns2:ExpressionType">
-		                           <ns2:expressionString><![CDATA[{
-		                               if($value.indexOf(" ") != -1) {
-		                                   String[] items = $value.split(" ");
-		                                   String firstName = items[0];
-		                                   String lastName = items[1];
-		                                   $rowBE.setFirstName(firstName);
-		                                   $rowBE.setLastName(lastName);
-		                               } else {
-		                                   //prefer the first name if there is no space
-		                                   $rowBE.setFirstName($value);
-		                               }
-		                           }]]></ns2:expressionString>
-		                       </ns2:expression>
-		                   </ns2:updateCondition>
-		               </ns2:column>
-		               <ns2:column xsi:type="ns2:UITableColumnType">
-		                   <ns2:title xsi:type="ns2:StringPropertyType">
-		                       <ns2:value>Type</ns2:value>
-		                   </ns2:title>
-		                   <ns2:beFieldId>rowBE.type</ns2:beFieldId>
-		                   <ns2:uiType xsi:type="ns2:UITableColHTMLType">
-		                      <ns2:type>ComBox</ns2:type>
-		                      <ns2:cetype>org.shaolin.vogerp.commonmodel.ce.GenericOrganizationType</ns2:cetype>
-		                   </ns2:uiType>
-		                   <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
-		                       <ns2:expression xsi:type="ns2:ExpressionType">
-		                           <ns2:expressionString><![CDATA[
-		                           import org.shaolin.vogerp.commonmodel.ce.OrganizationType;
-		                           import org.shaolin.bmdp.runtime.AppContext;
-		                           import org.shaolin.bmdp.runtime.ce.IConstantEntity;
-		                           {
-		                              $rowBE.setType($value);
-		                           }]]></ns2:expressionString>
-		                       </ns2:expression>
-		                   </ns2:updateCondition>
-		                   <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-	                     	  <ns2:expression xsi:type="ns2:ExpressionType">
-	                             <ns2:expressionString><![CDATA[
-	                             import org.shaolin.bmdp.runtime.AppContext;
-	                             {
-	                             	return org.shaolin.bmdp.runtime.ce.CEUtil.getValue($rowBE.getType());
-	                             }]]></ns2:expressionString>
-	                         </ns2:expression>
-	                       </ns2:rowExpression>
-		               </ns2:column>
-		               <ns2:column xsi:type="ns2:UITableColumnType">
-                         <ns2:title xsi:type="ns2:StringPropertyType">
-                             <ns2:value>建立时间</ns2:value>
-                         </ns2:title>
-                         <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
-                         <ns2:uiType xsi:type="ns2:UITableColHTMLType">
-                           <ns2:type>Label</ns2:type>
-                         </ns2:uiType>
-                     </ns2:column>
-		               <ns2:defaultActions>
-		                   <ns2:defaultNewAction>createUser</ns2:defaultNewAction>
-		                   <ns2:defaultOpenAction>openUserDetail</ns2:defaultOpenAction>
-		                   <ns2:defaultDeleteAction>deleteUser</ns2:defaultDeleteAction>
-		               </ns2:defaultActions>
-		               <ns2:actionGroup>
-		                   <ns2:type>radio</ns2:type>
-		                   <ns2:action>
-                               <ns2:uiid>assignAccount</ns2:uiid>
-                               <ns2:title xsi:type="ns2:StringPropertyType">
-                                   <ns2:value>分配登录帐号</ns2:value>
-                               </ns2:title>
-                               <ns2:icon>ui-icon-note</ns2:icon>
-                               <ns2:function>assignAccount</ns2:function>
-                           </ns2:action>
-		                   <ns2:action>
-		                       <ns2:uiid>assignRoles</ns2:uiid>
-		                       <ns2:title xsi:type="ns2:StringPropertyType">
-		                           <ns2:value>分配权限</ns2:value>
-		                       </ns2:title>
-		                       <ns2:icon>ui-icon-note</ns2:icon>
-		                       <ns2:function>assignRoles</ns2:function>
-		                   </ns2:action>
-		               </ns2:actionGroup>
-		           </ns2:component>
-		           <ns2:layoutConstraint>
-		               <ns2:componentId>employeeInfoTablel</ns2:componentId>
-		               <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-		                   x="0" y="0" align="FULL"></ns2:constraint>
-		           </ns2:layoutConstraint>
-             </ns2:panel>
-         </ns2:tab>
-          -->
+         
      </ns2:component>
 			<ns2:layoutConstraint>
       <ns2:componentId>functionsTab</ns2:componentId>
