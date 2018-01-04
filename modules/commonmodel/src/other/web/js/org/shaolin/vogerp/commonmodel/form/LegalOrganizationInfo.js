@@ -32,7 +32,6 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     var orgIdUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "orgIdUI"]
-        ,needAjaxSupport: true
     });
 
     var nameUILabel = new UIMaster.ui.label
@@ -313,6 +312,13 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         var o = this;
         var UIEntity = this;
 
+        {   
+            var constraint_result = this.Form.validate();
+	        if (constraint_result != true && constraint_result != null) {
+	            return false;
+	        }
+        }
+        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"applyForVerification-2018-0101-0101",UIMaster.getValue(eventsource),o.__entityName);

@@ -18,6 +18,11 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin(json)
         ui: elementList[prefix + "orgTypeUI"]
     });
 
+    var adminCommentIU = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "adminCommentIU"]
+    });
+
     var orgIdUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "orgIdUILabel"]
@@ -133,13 +138,13 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin(json)
     ({
         ui: elementList[prefix + "fieldPanel2"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "verifiedUI",prefix + "orgTypeUI",prefix + "orgIdUILabel",prefix + "orgIdUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "legalPersonUILabel",prefix + "legalPersonUI",prefix + "busiLicenseNumberUILabel",prefix + "busiLicenseNumberUI",prefix + "personalPhotoLabel",prefix + "personalPhoto",prefix + "personalIdentifierPhotoLabel",prefix + "personalIdentifierPhoto",prefix + "busiLicensePhotoLabel",prefix + "busiLicensePhoto",prefix + "locationphotoLabel",prefix + "locationPhoto"]
+        ,subComponents: [prefix + "idUI",prefix + "verifiedUI",prefix + "orgTypeUI",prefix + "adminCommentIU",prefix + "orgIdUILabel",prefix + "orgIdUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "legalPersonUILabel",prefix + "legalPersonUI",prefix + "busiLicenseNumberUILabel",prefix + "busiLicenseNumberUI",prefix + "personalPhotoLabel",prefix + "personalPhoto",prefix + "personalIdentifierPhotoLabel",prefix + "personalIdentifierPhoto",prefix + "busiLicensePhotoLabel",prefix + "busiLicensePhoto",prefix + "locationphotoLabel",prefix + "locationPhoto"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,verifiedUI,orgTypeUI,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,typeUI,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,locationphotoLabel,applyForVeriBtn,verifyInfoFailedBtn,closeBtn,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,locationPhoto,fieldPanel2,actionPanel]
+        ,items: [idUI,verifiedUI,orgTypeUI,adminCommentIU,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,typeUI,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,locationphotoLabel,applyForVeriBtn,verifyInfoFailedBtn,closeBtn,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,locationPhoto,fieldPanel2,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -147,6 +152,8 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin(json)
     Form.verifiedUI=verifiedUI;
 
     Form.orgTypeUI=orgTypeUI;
+
+    Form.adminCommentIU=adminCommentIU;
 
     Form.orgIdUILabel=orgIdUILabel;
 
@@ -201,6 +208,8 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin(json)
     Form.verifiedUI=verifiedUI;
 
     Form.orgTypeUI=orgTypeUI;
+
+    Form.adminCommentIU=adminCommentIU;
 
     Form.orgIdUILabel=orgIdUILabel;
 
@@ -279,6 +288,26 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin(json)
         var o = this;
         var UIEntity = this;
 
+        {   
+         var o = this;
+          new UIMaster.ui.dialog({
+              dialogType: UIMaster.ui.dialog.INPUT_DIALOG,
+              message:'Reason',
+              messageType:UIMaster.ui.dialog.Information,
+              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+              title:'',
+              height:150,
+              width:300,
+              handler: function(v) {
+                 if (this.value == null || this.value == "") return;
+                 o.adminCommentIU.setValue(this.value);
+                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifyCustomerInfoFailed-2018-0101-0101",UIMaster.getValue(eventsource),o.__entityName);
+              }
+          }).open();
+          if (true)
+             return; 
+        }
+        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifyCustomerInfoFailed-2018-0101-0101",UIMaster.getValue(eventsource),o.__entityName);

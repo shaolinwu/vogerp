@@ -3,6 +3,29 @@
   <entityName>org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfoByAdmin</entityName>
   <systemVersion>0</systemVersion>
   <ns2:eventHandler functionName="verifyCustomerInfoFailed">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+         var o = this;
+          new UIMaster.ui.dialog({
+              dialogType: UIMaster.ui.dialog.INPUT_DIALOG,
+              message:'Reason',
+              messageType:UIMaster.ui.dialog.Information,
+              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
+              title:'',
+              height:150,
+              width:300,
+              handler: function(v) {
+                 if (this.value == null || this.value == "") return;
+                 o.adminCommentIU.setValue(this.value);
+                 UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifyCustomerInfoFailed-2018-0101-0101",UIMaster.getValue(eventsource),o.__entityName);
+              }
+          }).open();
+          if (true)
+             return; 
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="verifyCustomerInfoFailed-2018-0101-0101">
       <ns2:exp>
         <expressionString><![CDATA[
@@ -34,6 +57,7 @@
           OrganizationImpl orgInfo = (OrganizationImpl)form.getInputParameter("orgInfo");
           orgInfo.setVeriState(OrgVerifyStatusType.FAILED);
           orgInfo.setVerifierId(UserContext.getUserContext().getUserId());
+          orgInfo.setOrgType(OrgType.COMPANY);
           CommonModel.INSTANCE.update(orgInfo);
           
           // notify customer.
@@ -44,7 +68,7 @@
           IPersonalInfo publisher = (IPersonalInfo)result.get(0);
           
           String subject = "您的帐号未验证通过！";
-          String description = "原因： 信息不明确。";
+          String description = "原因：" + @page.getHidden("adminCommentIU").getValue();
           NotificationImpl message = new NotificationImpl();
           message.setPartyId(publisher.getId());
           message.setSubject(subject);
@@ -94,9 +118,13 @@
                CommonModel.INSTANCE.create(defaultUser, true);
            }
            
+           //TODO: check whether is payed or not.
+           
+           
            OrganizationImpl orgInfo = (OrganizationImpl)form.getInputParameter("orgInfo");
            orgInfo.setVeriState(OrgVerifyStatusType.VERIFIED);
            orgInfo.setVerifierId(UserContext.getUserContext().getUserId());
+           orgInfo.setOrgType(OrgType.COMPANY);
            CommonModel.INSTANCE.update(orgInfo);
            
            // notify customer.
@@ -178,6 +206,8 @@
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="verifiedUI">
       </ns2:component>
       <ns2:component xsi:type="ns2:UIHiddenType" UIID="orgTypeUI">
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="adminCommentIU">
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="orgIdUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>

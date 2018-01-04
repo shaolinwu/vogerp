@@ -318,6 +318,9 @@ public class CommonModel extends BEEntityDaoObject {
             if (scFlow.getType() != null && scFlow.getType().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.type", scFlow.getType()));
             }
+            if (scFlow.getOrgType() != null && scFlow.getOrgType() != org.shaolin.vogerp.commonmodel.ce.OrgType.NOT_SPECIFIED) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgTypeInt", scFlow.getOrgType().getIntValue()));
+            }
             if (scFlow.getVeriState() != null && scFlow.getVeriState() != org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType.NOT_SPECIFIED) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.veriStateInt", scFlow.getVeriState().getIntValue()));
             }
@@ -345,6 +348,9 @@ public class CommonModel extends BEEntityDaoObject {
             }
             if (scFlow.getType() != null && scFlow.getType().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.type", scFlow.getType()));
+            }
+            if (scFlow.getOrgType() != null && scFlow.getOrgType() != org.shaolin.vogerp.commonmodel.ce.OrgType.NOT_SPECIFIED) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.orgTypeInt", scFlow.getOrgType().getIntValue()));
             }
             if (scFlow.getVeriState() != null && scFlow.getVeriState() != org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType.NOT_SPECIFIED) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.veriStateInt", scFlow.getVeriState().getIntValue()));

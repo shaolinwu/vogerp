@@ -3,6 +3,16 @@
   <entityName>org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo</entityName>
   <systemVersion>0</systemVersion>
   <ns2:eventHandler functionName="applyForVerification">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+            var constraint_result = this.Form.validate();
+	        if (constraint_result != true && constraint_result != null) {
+	            return false;
+	        }
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="applyForVerification-2018-0101-0101">
       <ns2:exp>
         <expressionString><![CDATA[
@@ -205,11 +215,6 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="orgIdUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
-        <ns2:Property name="needAjaxSupport">
-	      <ns2:value xsi:type="ns2:BooleanPropertyType">
-	        <value>true</value>
-	      </ns2:value>
-	    </ns2:Property>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="nameUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -351,7 +356,7 @@
       </ns2:component>
       <ns2:layoutConstraint>
         <ns2:componentId>agreementUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>orgIdUILabel</ns2:componentId>
@@ -702,18 +707,6 @@
       import org.shaolin.vogerp.commonmodel.IOrganizationService;
       import org.shaolin.vogerp.commonmodel.dao.CommonModel;
       {
-        long orgId = Long.parseLong(@page.getLabel("orgIdUI").getValue());
-        if ($orgInfo == null) {
-	        IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
-	        OrganizationImpl orgInfo = (OrganizationImpl)CommonModel.INSTANCE.get(orgId, OrganizationImpl.class);
-	        LegalOrganizationInfoImpl legalInfo = (LegalOrganizationInfoImpl)orgService.getLegalInfo(orgId);
-	        if (legalInfo == null) {
-	            legalInfo = new LegalOrganizationInfoImpl();
-	        }
-	        
-	        $orgInfo = orgInfo;
-	        $beObject = legalInfo;
-        }
         @odContext.executeAllMappings();
       }</expressionString>
     </ns2:UIToDataMappingOperation>

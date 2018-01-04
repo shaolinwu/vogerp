@@ -7,7 +7,7 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "orgVerificationPanel",prefix + "organizationInfoPanel",prefix + "organizationTypePanel"]
+        ,subComponents: [prefix + "orgVerificationPanel",prefix + "organizationInfoPanel",prefix + "indiviualInfoPanel",prefix + "organizationTypePanel"]
     });
     var orgVerificationTable = new UIMaster.ui.objectlist
     ({
@@ -31,6 +31,17 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
         ,items: []
         ,subComponents: [prefix + "organizationInfoTable"]
     });
+    var indiviualInfoTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "indiviualInfoTable"]
+    });
+
+    var indiviualInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "indiviualInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "indiviualInfoTable"]
+    });
     var organizationTypePanel = new org_shaolin_vogerp_commonmodel_form_CEHierarchy({"prefix":prefix + "organizationTypePanel."});
 
 
@@ -50,6 +61,10 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
     Form.organizationInfoPanel=organizationInfoPanel;
 
     Form.organizationInfoTable=organizationInfoTable;
+
+    Form.indiviualInfoPanel=indiviualInfoPanel;
+
+    Form.indiviualInfoTable=indiviualInfoTable;
 
     Form.organizationTypePanel=organizationTypePanel;
 
