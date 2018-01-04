@@ -7,6 +7,7 @@ import java.util.Set;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.runtime.ce.CEUtil;
 import org.shaolin.bmdp.utils.StringUtil;
+import org.shaolin.vogerp.commonmodel.IOrganizationService;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.IAddressInfo;
 import org.shaolin.vogerp.commonmodel.be.IContactInfo;
@@ -141,6 +142,28 @@ public class CustomerInfoUtil {
     		sb.append("(").append(address.getDescription()).append(")");
     	}
     	return sb.toString();
+    }
+    
+    public static String addressToString2(long orgId) {
+    	IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
+    	IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
+    	List<IPersonalInfo> personalInfoList = orgService.getEmployeese(orgId);
+    	if (personalInfoList == null || personalInfoList.size() == 0) {
+    		return null;
+    	}
+    	Set<IAddressInfo> list = userService.getPersonalInfo(personalInfoList.get(0).getId()).getAddresses();
+    	if (list != null && list.size() > 0) {
+    		IAddressInfo defaultAddress = null;
+    		for (IAddressInfo a : list) {
+    			if (a.getDefaultAddress()) {
+    				defaultAddress = a;
+    				break;
+    			}
+    		}
+    		IAddressInfo info = defaultAddress != null? defaultAddress : list.iterator().next();
+    		return CustomerInfoUtil.addressToString(info);
+    	}
+    	return null;
     }
     
 }

@@ -64,6 +64,16 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin(json)
         ui: elementList[prefix + "descriptionUI"]
     });
 
+    var addressUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "addressUILabel"]
+    });
+
+    var addressUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "addressUI"]
+    });
+
     var legalPersonUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "legalPersonUILabel"]
@@ -138,13 +148,13 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin(json)
     ({
         ui: elementList[prefix + "fieldPanel2"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "verifiedUI",prefix + "orgTypeUI",prefix + "adminCommentIU",prefix + "orgIdUILabel",prefix + "orgIdUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "legalPersonUILabel",prefix + "legalPersonUI",prefix + "busiLicenseNumberUILabel",prefix + "busiLicenseNumberUI",prefix + "personalPhotoLabel",prefix + "personalPhoto",prefix + "personalIdentifierPhotoLabel",prefix + "personalIdentifierPhoto",prefix + "busiLicensePhotoLabel",prefix + "busiLicensePhoto",prefix + "locationphotoLabel",prefix + "locationPhoto"]
+        ,subComponents: [prefix + "idUI",prefix + "verifiedUI",prefix + "orgTypeUI",prefix + "adminCommentIU",prefix + "orgIdUILabel",prefix + "orgIdUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "typeUILabel",prefix + "typeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "addressUILabel",prefix + "addressUI",prefix + "legalPersonUILabel",prefix + "legalPersonUI",prefix + "busiLicenseNumberUILabel",prefix + "busiLicenseNumberUI",prefix + "personalPhotoLabel",prefix + "personalPhoto",prefix + "personalIdentifierPhotoLabel",prefix + "personalIdentifierPhoto",prefix + "busiLicensePhotoLabel",prefix + "busiLicensePhoto",prefix + "locationphotoLabel",prefix + "locationPhoto"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,verifiedUI,orgTypeUI,adminCommentIU,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,typeUI,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,locationphotoLabel,applyForVeriBtn,verifyInfoFailedBtn,closeBtn,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,locationPhoto,fieldPanel2,actionPanel]
+        ,items: [idUI,verifiedUI,orgTypeUI,adminCommentIU,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,typeUI,descriptionUILabel,descriptionUI,addressUILabel,addressUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,locationphotoLabel,applyForVeriBtn,verifyInfoFailedBtn,closeBtn,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,locationPhoto,fieldPanel2,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -170,6 +180,10 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin(json)
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
+
+    Form.addressUILabel=addressUILabel;
+
+    Form.addressUI=addressUI;
 
     Form.legalPersonUILabel=legalPersonUILabel;
 
@@ -226,6 +240,10 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfoByAdmin(json)
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
+
+    Form.addressUILabel=addressUILabel;
+
+    Form.addressUI=addressUI;
 
     Form.legalPersonUILabel=legalPersonUILabel;
 
