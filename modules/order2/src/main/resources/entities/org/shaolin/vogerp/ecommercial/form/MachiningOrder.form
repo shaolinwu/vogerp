@@ -340,6 +340,7 @@
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
             <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
           </ns2:layout>
@@ -352,6 +353,39 @@
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="serialNumberUI">
             <ns2:UIStyle></ns2:UIStyle>
+          </ns2:component>
+          <ns2:component xsi:type="ns2:UILabelType" UIID="severityUILabel">
+            <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+            <ns2:text xsi:type="ns2:StringPropertyType">
+              <ns2:value>加工等级</ns2:value>
+            </ns2:text>
+          </ns2:component>
+          <ns2:component xsi:type="ns2:UIComboBoxType" UIID="severityUI">
+             <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+               <ns2:value>false</ns2:value>
+             </ns2:allowBlank>
+          </ns2:component>
+          <ns2:component xsi:type="ns2:UILabelType" UIID="materialTypeUILabel">
+            <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+            <ns2:text xsi:type="ns2:StringPropertyType">
+              <ns2:value>主材料</ns2:value>
+            </ns2:text>
+          </ns2:component>
+          <ns2:component xsi:type="ns2:UIComboBoxType" UIID="materialTypeUI">
+             <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+               <ns2:value>false</ns2:value>
+             </ns2:allowBlank>
+             <ns2:validator xsi:type="ns2:ValidatorsPropertyType">
+                <ns2:validator xsi:type="ns2:ValidatorPropertyType">
+                        <isFuncRef>false</isFuncRef>
+                        <funcCode><![CDATA[
+                        { 
+                        return this.value != "org.shaolin.vogerp.ecommercial.ce.MachiningMaterialType";
+                        }]]></funcCode>
+                        <!-- 请选择加工材料！ -->
+                        <errMsg>\u8BF7\u9009\u62E9\u52A0\u5DE5\u6750\u6599\uFF01</errMsg>
+                </ns2:validator>
+             </ns2:validator>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="descriptionUILabel">
             <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
@@ -369,7 +403,7 @@
             </ns2:Property>
             <ns2:Property name="placeholder">
                <ns2:value xsi:type="ns2:StringPropertyType">
-                   <value>请详细写明您的加工要求。</value>
+                   <value>请写明您的加工基本信息。</value>
                </ns2:value>
             </ns2:Property>
             <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
@@ -383,7 +417,7 @@
           <ns2:component xsi:type="ns2:UILabelType" UIID="differentiationUILabel">
 	        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
 	        <ns2:text xsi:type="ns2:StringPropertyType">
-	          <ns2:value>公差描述</ns2:value>
+	          <ns2:value>精度描述</ns2:value>
 	        </ns2:text>
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UITextAreaType" UIID="differentiationUI">
@@ -396,7 +430,7 @@
             </ns2:Property>
             <ns2:Property name="placeholder">
                <ns2:value xsi:type="ns2:StringPropertyType">
-                   <value>请详细写明您的加工公差要求。</value>
+                   <value>请详细写明您的加工精度要求。</value>
                </ns2:value>
             </ns2:Property>
 	      </ns2:component>
@@ -425,28 +459,6 @@
 	                    }]]></funcCode>
 	                    <!-- 大于1！ -->
 	                    <errMsg></errMsg>
-	            </ns2:validator>
-	         </ns2:validator>
-	      </ns2:component>
-	      <ns2:component xsi:type="ns2:UILabelType" UIID="materialTypeUILabel">
-	        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-	        <ns2:text xsi:type="ns2:StringPropertyType">
-	          <ns2:value>选择材料</ns2:value>
-	        </ns2:text>
-	      </ns2:component>
-	      <ns2:component xsi:type="ns2:UIComboBoxType" UIID="materialTypeUI">
-	         <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
-               <ns2:value>false</ns2:value>
-             </ns2:allowBlank>
-	         <ns2:validator xsi:type="ns2:ValidatorsPropertyType">
-	            <ns2:validator xsi:type="ns2:ValidatorPropertyType">
-	                    <isFuncRef>false</isFuncRef>
-	                    <funcCode><![CDATA[
-	                    { 
-	                    return this.value != "org.shaolin.vogerp.ecommercial.ce.MachiningMaterialType";
-	                    }]]></funcCode>
-	                    <!-- 请选择加工材料！ -->
-	                    <errMsg>\u8BF7\u9009\u62E9\u52A0\u5DE5\u6750\u6599\uFF01</errMsg>
 	            </ns2:validator>
 	         </ns2:validator>
 	      </ns2:component>
@@ -501,52 +513,60 @@
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>descriptionUILabel</ns2:componentId>
+            <ns2:componentId>severityUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>descriptionUI</ns2:componentId>
+            <ns2:componentId>severityUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>differentiationUILabel</ns2:componentId>
+            <ns2:componentId>materialTypeUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>differentiationUI</ns2:componentId>
+            <ns2:componentId>materialTypeUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="2" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>countUILabel</ns2:componentId>
+            <ns2:componentId>descriptionUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>countUI</ns2:componentId>
+            <ns2:componentId>descriptionUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>materialTypeUILabel</ns2:componentId>
+            <ns2:componentId>differentiationUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>materialTypeUI</ns2:componentId>
+            <ns2:componentId>differentiationUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>needCreateModelUILabel</ns2:componentId>
-            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass=""></ns2:constraint>
+            <ns2:componentId>countUILabel</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="5" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>needCreateModelUI</ns2:componentId>
+            <ns2:componentId>countUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>termsUILabel</ns2:componentId>
+            <ns2:componentId>needCreateModelUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="6" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>termsUI</ns2:componentId>
+            <ns2:componentId>needCreateModelUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass=""></ns2:constraint>
+          </ns2:layoutConstraint>
+          <ns2:layoutConstraint>
+            <ns2:componentId>termsUILabel</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="7" align="FULL" cellUIClass=""></ns2:constraint>
+          </ns2:layoutConstraint>
+          <ns2:layoutConstraint>
+            <ns2:componentId>termsUI</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="7" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
        </ns2:component>
        <ns2:layoutConstraint>
@@ -913,6 +933,16 @@
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
       <ns2:UIComponent componentPath="countUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.count" paramName="Number"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping44">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="severityUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.severityType" paramName="CEValue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
+        <ns2:expression>
+          <expressionString>"org.shaolin.vogerp.ecommercial.ce.MachiningSeverityType"</expressionString>
+        </ns2:expression>
+      </ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping4">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>

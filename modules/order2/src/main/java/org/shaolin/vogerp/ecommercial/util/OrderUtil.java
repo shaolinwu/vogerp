@@ -35,6 +35,7 @@ import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
 import org.shaolin.vogerp.ecommercial.be.RentOrLoanOrderImpl;
 import org.shaolin.vogerp.ecommercial.ce.EOrderType;
 import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
+import org.shaolin.vogerp.ecommercial.ce.MachiningCategoryType;
 import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
 import org.shaolin.vogerp.ecommercial.ce.RentOrLoanOrderType;
 import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
@@ -348,7 +349,11 @@ public class OrderUtil {
 		Set<IMachOrderComponent> components = morder.getComponents();
 		if (components != null && components.size() > 0) {
 			for (IMachOrderComponent comp : components) {
-				totalPrice += (comp.getPrice() * comp.getEstiWeight());
+				if (comp.getCategory() == MachiningCategoryType.MACHININGTOOL) {
+					totalPrice += (comp.getPrice() * comp.getEstiMakingHour());
+				} else {
+					totalPrice += (comp.getPrice() * comp.getEstiWeight());
+				}
 			}
 		}
 		totalPrice += morder.getTaxRate() * totalPrice;

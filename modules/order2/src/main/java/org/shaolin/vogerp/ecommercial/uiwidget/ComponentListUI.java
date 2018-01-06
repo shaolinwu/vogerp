@@ -77,11 +77,12 @@ public class ComponentListUI extends HTMLWidgetType {
 		for (IMachOrderComponent comp: fiterComponents) {
 			context.generateHTML("<LI>");
 			String price = FormatUtil.getCurrency((comp.getPrice()*comp.getEstiWeight()), null, false);
-			totalPrice += (comp.getPrice()*comp.getEstiWeight());
 			context.generateHTML(comp.getName() +"," +price);
 			if (comp.getCategory() == MachiningCategoryType.MACHININGTOOL) {
+				totalPrice += (comp.getPrice()*comp.getEstiMakingHour());
 				context.generateHTML("(\u5355\u4EF7:"+comp.getPrice()+",\u5DE5\u65F6:"+comp.getEstiMakingHour()+")");
 			} else {
+				totalPrice += (comp.getPrice()*comp.getEstiWeight());
 				context.generateHTML("(\u5355\u4EF7:"+comp.getPrice()+",\u7528\u91CF:"+comp.getEstiWeight()
 										+",\u5355\u4F4D:"+comp.getWeightUnit().getDisplayName()+")");
 			}

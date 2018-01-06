@@ -13,6 +13,16 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
         ui: elementList[prefix + "serialNumberUI"]
     });
 
+    var severityUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "severityUILabel"]
+    });
+
+    var severityUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "severityUI"]
+    });
+
     var descriptionUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "descriptionUILabel"]
@@ -88,7 +98,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "differentiationUILabel",prefix + "differentiationUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "severityUILabel",prefix + "severityUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "differentiationUILabel",prefix + "differentiationUI",prefix + "countUILabel",prefix + "countUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -101,12 +111,16 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [serialNumberUILabel,serialNumberUI,descriptionUILabel,descriptionUI,differentiationUILabel,differentiationUI,countUILabel,countUI,materialTypeUILabel,materialTypeUI,componentListUI,offerPriceBtn,cancelbtn,photoUI,fieldPanel,attributePanel,attributePanel1,actionPanel]
+        ,items: [serialNumberUILabel,serialNumberUI,severityUILabel,severityUI,descriptionUILabel,descriptionUI,differentiationUILabel,differentiationUI,countUILabel,countUI,materialTypeUILabel,materialTypeUI,componentListUI,offerPriceBtn,cancelbtn,photoUI,fieldPanel,attributePanel,attributePanel1,actionPanel]
     });
 
     Form.serialNumberUILabel=serialNumberUILabel;
 
     Form.serialNumberUI=serialNumberUI;
+
+    Form.severityUILabel=severityUILabel;
+
+    Form.severityUI=severityUI;
 
     Form.descriptionUILabel=descriptionUILabel;
 
@@ -142,6 +156,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
 
     Form.serialNumberUI=serialNumberUI;
 
+    Form.severityUILabel=severityUILabel;
+
+    Form.severityUI=severityUI;
+
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
@@ -167,6 +185,10 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
     Form.serialNumberUILabel=serialNumberUILabel;
 
     Form.serialNumberUI=serialNumberUI;
+
+    Form.severityUILabel=severityUILabel;
+
+    Form.severityUI=severityUI;
 
     Form.descriptionUILabel=descriptionUILabel;
 

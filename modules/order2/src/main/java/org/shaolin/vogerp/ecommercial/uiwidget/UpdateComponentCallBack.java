@@ -27,7 +27,7 @@ public class UpdateComponentCallBack implements CallBack {
 		for (; i<list.size(); i++) {
 			if (component.getId() > 0 && component.getId() == list.get(i).getId()) {
 				break;
-			} else if (component.getName() == list.get(i).getName()) {
+			} else if (component.getName().equals(list.get(i).getName())) {
 				break;
 			}
 		}

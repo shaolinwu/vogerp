@@ -409,7 +409,13 @@
             <bediagram:name>materialType</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
-        
+        <bediagram:member>
+            <!-- 加工等级-->
+            <bediagram:name>severityType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="MachiningSeverityType" />
+            </bediagram:type>
+        </bediagram:member>
         <!--估价报告-->
         <bediagram:member>
             <bediagram:name>components</bediagram:name>
@@ -745,6 +751,30 @@
             <bediagram:value>Sale</bediagram:value>
             <bediagram:intValue>1</bediagram:intValue>
             <bediagram:description>销售订单</bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
+    
+    <bediagram:ceEntity>
+        <common:entityName>MachiningSeverityType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>Level0</bediagram:value>
+            <bediagram:intValue>0</bediagram:intValue>
+            <bediagram:description>普通精度级别</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Level1</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>低精度级别</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Level2</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>高精度级别</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Level3</bediagram:value>
+            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:description>超高精度级别</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
     
