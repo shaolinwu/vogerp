@@ -87,11 +87,12 @@
 		             }
 		             PayOrderImpl order = (PayOrderImpl)orderInfoTable.getSelectedRow();
 		             if (order.getStatus() == PayOrderStatusType.NOTPAYED) {
-		                 IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
-		                 String json = accountingService.prepay(order);
-		                 @page.getRequest().getSession().setAttribute("__payJson", json);
-		                 @page.executeJavaScript("window.open('/uimaster/jsp/paywindow.jsp')");
-		                 Dialog.showMessageDialog("请点击“刷新”按钮查看支付是否成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
+		                 HashMap input = new HashMap();
+	                     input.put("beObject", order);
+	                     input.put("editable", new Boolean(true));
+	                     RefForm form2 = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PaymentMethod", input);
+	                     @page.addElement(form2);
+	                     form2.openInWindows("支付方式选择", null, true);
 		             } else {
 		                 @page.executeJavaScript("alert('"+order.getStatus().getDisplayName()+"');");  
 		             }

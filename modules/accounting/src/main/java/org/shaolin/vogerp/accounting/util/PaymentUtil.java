@@ -201,8 +201,10 @@ public class PaymentUtil {
 		StringBuffer sb = new StringBuffer();
 		if (payOrder.getStatus() == PayOrderStatusType.NOTPAYED) {
 			// DO NOT perform any payment action here! let's do that by business flow!
-//            sb.append("<button type='pay' class='uimaster_button ui-btn-inline' onclick='javascript:defaultname.");
-//            sb.append(formId).append("pay(this, event);'>\u652F\u4ED8</button>");
+			if (payOrder.getPayBusinessType() == PayBusinessType.MEMBERBUSI) {
+	            sb.append("<button type='pay' class='uimaster_button ui-btn-inline' onclick='javascript:defaultname.");
+	            sb.append(formId).append("pay(this, event);'>\u652F\u4ED8</button>");
+			}
 //            sb.append("<button type='cancel' class='uimaster_button ui-btn-inline onclick='javascript:defaultname.");
 //            sb.append(formId).append("cancelPayment(this, event);'>\u53D6\u6D88</button>");
 		} else if (payOrder.getStatus() == PayOrderStatusType.PAYED && 
