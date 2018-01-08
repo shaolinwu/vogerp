@@ -891,6 +891,10 @@
 			              if (item.getOrder().getStatus() != OrderStatusType.PUBLISHED) {
 			                 input.put("isEditable", Boolean.FALSE);
                           }
+                          if (offeredPrice != null && item.getOrder().getTakenCustomerId() == offeredPrice.getTakenCustomerId()) {
+			                 // we can continue chatting to the taken customer.
+			                 input.put("isEditable", Boolean.TRUE);
+			              }
                           input.put("orderInfo", item.getOrder().getDescription());
                           input.put("price", offeredPrice.getPrice() + "");
 		                  input.put("orgId", chatItem.getOrgId() + "");
