@@ -21,7 +21,7 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     var agreementUI = new UIMaster.ui.link
     ({
         ui: elementList[prefix + "agreementUI"]
-        ,label: "阅读加工达人《商户协议书》"
+        ,label: "阅读加工达人《商户加工协议书》"
     });
 
     var orgIdUILabel = new UIMaster.ui.label
@@ -295,6 +295,8 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.openUserTerms = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_openUserTerms;
 
+    Form.openUserTerms1 = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_openUserTerms1;
+
     Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_invokeDynamicFunction;
 
     Form.__entityName="org.shaolin.vogerp.commonmodel.form.LegalOrganizationInfo";
@@ -356,6 +358,17 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
             UIMaster.ui.mask.openHtml("/html/hints/payterms.html");
         }
             }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_openUserTerms */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_openUserTerms1(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_openUserTerms1 */
+        var o = this;
+        var UIEntity = this;
+
+        {   
+            UIMaster.ui.mask.openHtml("/html/hints/machorderterms.html");
+        }
+            }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo_openUserTerms1 */
 
 
     /* auto generated eventlistener function declaration */

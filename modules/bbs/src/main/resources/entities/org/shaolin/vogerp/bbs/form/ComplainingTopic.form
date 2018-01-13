@@ -38,7 +38,7 @@
   </ns2:eventHandler>
   
   <ns2:eventHandler functionName="Cancel">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20170609-122142">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20170609-122122">
       <ns2:exp>
         <expressionString><![CDATA[
         import org.shaolin.uimaster.page.AjaxContext;

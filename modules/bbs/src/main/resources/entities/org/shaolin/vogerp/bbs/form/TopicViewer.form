@@ -10,6 +10,7 @@
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.bbs.be.*;
+        import org.shaolin.vogerp.bbs.ce.*;
         { 
            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
            TopicImpl topic = (TopicImpl)form.getInputParameter("beObject");

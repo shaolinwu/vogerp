@@ -10,6 +10,7 @@
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.bbs.be.*;
+        import org.shaolin.vogerp.bbs.ce.*;
         { 
            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
            TopicImpl topic = (TopicImpl)form.getInputParameter("beObject");
@@ -29,7 +30,7 @@
     </ns2:ops>
   </ns2:eventHandler>
   <ns2:eventHandler functionName="resolveTopic">
-    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="resolveTopic-20170609-122142">
+    <ns2:ops xsi:type="ns2:OpCallAjaxType" name="resolveTopic-20170611-082142">
       <ns2:exp>
         <expressionString><![CDATA[
         import java.util.HashMap;
