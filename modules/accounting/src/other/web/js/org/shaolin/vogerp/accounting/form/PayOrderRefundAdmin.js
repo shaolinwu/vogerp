@@ -33,16 +33,6 @@ function org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin(json)
         ui: elementList[prefix + "payOrderIdsUI"]
     });
 
-    var thirdPartyAccountUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "thirdPartyAccountUILabel"]
-    });
-
-    var thirdPartyAccountUI = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "thirdPartyAccountUI"]
-    });
-
     var thirdPartyAccountTypeUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "thirdPartyAccountTypeUILabel"]
@@ -68,7 +58,7 @@ function org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin(json)
         ui: elementList[prefix + "commentUILabel"]
     });
 
-    var commentUI = new UIMaster.ui.textfield
+    var commentUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "commentUI"]
     });
@@ -106,13 +96,13 @@ function org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "typeUILabel",prefix + "typeUI",prefix + "stateUILabel",prefix + "stateUI",prefix + "payOrderIdsUILabel",prefix + "payOrderIdsUI",prefix + "thirdPartyAccountUILabel",prefix + "thirdPartyAccountUI",prefix + "thirdPartyAccountTypeUILabel",prefix + "thirdPartyAccountTypeUI",prefix + "amountUILabel",prefix + "amountUI",prefix + "commentUILabel",prefix + "commentUI"]
+        ,subComponents: [prefix + "typeUILabel",prefix + "typeUI",prefix + "stateUILabel",prefix + "stateUI",prefix + "payOrderIdsUILabel",prefix + "payOrderIdsUI",prefix + "thirdPartyAccountTypeUILabel",prefix + "thirdPartyAccountTypeUI",prefix + "amountUILabel",prefix + "amountUI",prefix + "commentUILabel",prefix + "commentUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [typeUILabel,typeUI,stateUILabel,stateUI,payOrderIdsUILabel,payOrderIdsUI,thirdPartyAccountUILabel,thirdPartyAccountUI,thirdPartyAccountTypeUILabel,thirdPartyAccountTypeUI,amountUILabel,amountUI,commentUILabel,commentUI,payorderInfoUI,okbtn1,cancelbtn,fieldPanel,fieldPanel1,actionPanel]
+        ,items: [typeUILabel,typeUI,stateUILabel,stateUI,payOrderIdsUILabel,payOrderIdsUI,thirdPartyAccountTypeUILabel,thirdPartyAccountTypeUI,amountUILabel,amountUI,commentUILabel,commentUI,payorderInfoUI,okbtn1,cancelbtn,fieldPanel,fieldPanel1,actionPanel]
     });
 
     Form.typeUILabel=typeUILabel;
@@ -126,10 +116,6 @@ function org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin(json)
     Form.payOrderIdsUILabel=payOrderIdsUILabel;
 
     Form.payOrderIdsUI=payOrderIdsUI;
-
-    Form.thirdPartyAccountUILabel=thirdPartyAccountUILabel;
-
-    Form.thirdPartyAccountUI=thirdPartyAccountUI;
 
     Form.thirdPartyAccountTypeUILabel=thirdPartyAccountTypeUILabel;
 
@@ -162,10 +148,6 @@ function org_shaolin_vogerp_accounting_form_PayOrderRefundAdmin(json)
     Form.payOrderIdsUILabel=payOrderIdsUILabel;
 
     Form.payOrderIdsUI=payOrderIdsUI;
-
-    Form.thirdPartyAccountUILabel=thirdPartyAccountUILabel;
-
-    Form.thirdPartyAccountUI=thirdPartyAccountUI;
 
     Form.thirdPartyAccountTypeUILabel=thirdPartyAccountTypeUILabel;
 

@@ -39,6 +39,13 @@
                     import org.shaolin.bmdp.json.JSONObject;
                     {
                         // only notified when success for deriving workflow.
+                        ICoordinatorService coorService = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+                        NotificationImpl message = new NotificationImpl();
+                        message.setPartyId($payOrder.getUserId());
+                        message.setSubject("您收到一笔预付款！");
+                        message.setDescription("预付款： " + ($payOrder.getAmount()/100) + "元！来自订单: " + $payOrder.getOrderSerialNumber());
+                        message.setCreateDate(new Date());
+                        coorService.addNotification(message, false);
                     }
                     ]]></expressionString>
                 </ns2:expression>
@@ -155,6 +162,7 @@
             </ns2:process>
             <ns2:eventDest>
                 <ns2:dest name="confirmRefundPayOrder"></ns2:dest>
+                <ns2:dest name="refundPrepayment"></ns2:dest>
             </ns2:eventDest>
         </ns2:mission-node>
         
@@ -285,13 +293,21 @@
                         AccountingModel.INSTANCE.update($payOrder);
                         
                         ICoordinatorService coorService = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
-			    		NotificationImpl message = new NotificationImpl();
-			    		message.setPartyId($payOrder.getEndUserId());
-			    		message.setSubject("您有退款成功通知！");
-			    		message.setDescription("退款： " + ($payOrder.getAmount()/100) + "元！来自订单: " + $payOrder.getOrderSerialNumber());
-			    		message.setCreateDate(new Date());
-			    		coorService.addNotification(message, false);
-			    		Dialog.showMessageDialog("更新成功!","提醒",Dialog.INFORMATION_MESSAGE, null);
+			    		    NotificationImpl message = new NotificationImpl();
+			    		    message.setPartyId($payOrder.getEndUserId());
+			    		    message.setSubject("您的订单退款成功！");
+			    	 	    message.setDescription("退款： " + ($payOrder.getAmount()/100) + "元！来自订单: " + $payOrder.getOrderSerialNumber());
+			    		    message.setCreateDate(new Date());
+			    		    coorService.addNotification(message, false);
+			    		    
+                         NotificationImpl message1 = new NotificationImpl();
+                         message1.setPartyId($payOrder.getUserId());
+                         message1.setSubject("请注意！！！您有一笔拍下的订单己成功被退款！");
+                         message1.setDescription("退款： " + ($payOrder.getAmount()/100) + "元！来自订单: " + $payOrder.getOrderSerialNumber());
+                         message1.setCreateDate(new Date());
+                         coorService.addNotification(message1, false);
+			    		    
+			    		    Dialog.showMessageDialog("更新成功!","提醒",Dialog.INFORMATION_MESSAGE, null);
                     }
                     ]]></expressionString>
                 </ns2:expression>

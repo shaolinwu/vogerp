@@ -40,17 +40,21 @@
 			        import java.util.HashMap;
 			        import org.shaolin.uimaster.page.AjaxContext;
 			        import org.shaolin.uimaster.page.ajax.*;
+			        import org.shaolin.vogerp.accounting.be.IPayOrder;
 			        import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 			        import org.shaolin.vogerp.accounting.be.IPayOrderRequest;
+			        import org.shaolin.vogerp.accounting.dao.AccountingModel;
 			        {
 			            Table orderInfoTable = (Table)@page.getElement("payOrderRefundTable");
 			            if (orderInfoTable.getSelectedRow() == null) {
 			                return;
 			            }
-			            IPayOrderRequest defaultUser = (IPayOrderRequest)orderInfoTable.getSelectedRow();
-			            
+			            IPayOrderRequest request = (IPayOrderRequest)orderInfoTable.getSelectedRow();
+			            IPayOrder payOrder = (IPayOrder)AccountingModel.INSTANCE.get(request.getPayOrderId(), PayOrderImpl.class);
+			            request.setPayOrder(payOrder);
 			            HashMap input = new HashMap();
-			            input.put("beObject", defaultUser);
+			            input.put("beObject", request);
+			            input.put("payOrder", payOrder);
 			            input.put("editable", new Boolean(true));
 			            RefForm form = new RefForm("payOrderForm", "org.shaolin.vogerp.accounting.form.PayOrderRefundAdmin", input);
 			            @page.addElement(form);

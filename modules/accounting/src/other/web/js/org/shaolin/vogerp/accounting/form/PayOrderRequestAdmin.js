@@ -58,7 +58,7 @@ function org_shaolin_vogerp_accounting_form_PayOrderRequestAdmin(json)
         ui: elementList[prefix + "amountUILabel"]
     });
 
-    var amountUI = new UIMaster.ui.textfield
+    var amountUI = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "amountUI"]
     });
@@ -68,7 +68,7 @@ function org_shaolin_vogerp_accounting_form_PayOrderRequestAdmin(json)
         ui: elementList[prefix + "commentUILabel"]
     });
 
-    var commentUI = new UIMaster.ui.textfield
+    var commentUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "commentUI"]
     });

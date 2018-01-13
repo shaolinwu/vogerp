@@ -160,6 +160,15 @@
         ]]></ns2:expressionString>
     </ns2:ops>
   </ns2:eventHandler> 
+  <ns2:eventHandler functionName="openUserTerms1">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {   
+            UIMaster.ui.mask.openHtml("/html/hints/machorderterms.html");
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
+  </ns2:eventHandler>
   <ns2:body xsi:type="ns2:UIPanelType" UIID="Form">
     <ns2:layout xsi:type="ns2:TableLayoutType">
       <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
@@ -196,14 +205,14 @@
          <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
          <ns2:Property name="label">
          <ns2:value xsi:type="ns2:StringPropertyType">
-             <value>阅读加工达人《商户协议书》</value>
+             <value>阅读加工达人《商户加工协议书》</value>
          </ns2:value>
          </ns2:Property>
          <ns2:text xsi:type="ns2:StringPropertyType">
-           <ns2:value>阅读加工达人《商户协议书》</ns2:value>
+           <ns2:value>阅读加工达人《商户加工协议书》</ns2:value>
          </ns2:text>
          <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="openUserTerms"></ns2:handler>
+          <ns2:handler functionName="openUserTerms1"></ns2:handler>
         </ns2:EventListener>
       </ns2:component>
       <ns2:component xsi:type="ns2:UILabelType" UIID="orgIdUILabel">

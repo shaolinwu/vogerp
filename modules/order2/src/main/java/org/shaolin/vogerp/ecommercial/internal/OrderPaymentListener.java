@@ -61,7 +61,7 @@ public class OrderPaymentListener implements PayOrderStatusListener {
 			order.setSerialNumber(serialNumber);
 			List<IGoldenOrder> result = EOrderModel.INSTANCE.searchGoldenOrder(order, null, 0, 1);
 			if (result != null && result.size() > 0) {
-				result.get(0).setStatus(OrderStatusType.CANCELLED);
+				result.get(0).setTakenStatus(OrderStatusType.CANCELLED);
 				EOrderModel.INSTANCE.update(result.get(0));
 			}
 		} else if (type == PayBusinessType.EQUIPMENTRENTBUSI || type == PayBusinessType.EQUIPMENTRENTBUSI) {
@@ -69,7 +69,7 @@ public class OrderPaymentListener implements PayOrderStatusListener {
 			order.setSerialNumber(serialNumber);
 			List<IRentOrLoanOrder> result = EOrderModel.INSTANCE.searchRentOrLoanOrder(order, null, 0, 1);
 			if (result != null && result.size() > 0) {
-				result.get(0).setStatus(OrderStatusType.CANCELLED);
+				result.get(0).setTakenStatus(OrderStatusType.CANCELLED);
 				EOrderModel.INSTANCE.update(result.get(0));
 			}
 		} else if (type == PayBusinessType.MACHININGBUSI) {
@@ -77,7 +77,7 @@ public class OrderPaymentListener implements PayOrderStatusListener {
 			order.setSerialNumber(serialNumber);
 			List<IMachiningOrder> result = EOrderModel.INSTANCE.searchMachiningOrder(order, null, 0, 1);
 			if (result != null && result.size() > 0) {
-				result.get(0).setStatus(OrderStatusType.CANCELLED);
+				result.get(0).setTakenStatus(OrderStatusType.CANCELLED);
 				EOrderModel.INSTANCE.update(result.get(0));
 			}
 		}

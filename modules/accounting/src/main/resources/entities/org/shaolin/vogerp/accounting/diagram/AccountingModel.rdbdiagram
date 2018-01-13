@@ -143,12 +143,12 @@
       <ns2:fieldMapping beFieldName="userId" columnName="USERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="amount" columnName="AMOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="payOrderIds" columnName="PAYORDERIDS"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="payOrderId" columnName="PAYORDERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="comment" columnName="COMMENT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="thirdPartyAccount" columnName="THIRDPARTYACCOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="thirdPartyAccountType" columnName="THIRDPARTYACCOUNTTYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="payOrderId" columnName="PAYORDERID"></ns2:fieldMapping>
       <!-- payorder id is optional for refund only. 
       <ns2:fieldMapping xsi:type="ns2:ListFieldMappingType" associationName="ACCT_PAYOORDERREQUEST1" mappingType="One-to-One" beFieldName="payOrder" columnName="PAYORDERID"></ns2:fieldMapping>
        -->

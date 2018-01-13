@@ -229,13 +229,16 @@
           <ns2:key>org.shaolin.vogerp.accounting.be.PayOrderRequest.amount</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="amountUI">
+      <ns2:component xsi:type="ns2:UILabelType" UIID="amountUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
         <ns2:Property name="htmlValue">
            <ns2:value xsi:type="ns2:ExpressionPropertyType">
                  <ns2:expression>
                    <expressionString><![CDATA[
                    { 
+                       if ($beObject.getPayOrder() == null) {
+                          return "还未实现。。。";
+                       }
                        return $beObject.getPayOrder().getAmount()/100 + "";
                    }]]></expressionString>
                  </ns2:expression>
@@ -249,7 +252,7 @@
           <ns2:key>org.shaolin.vogerp.accounting.be.PayOrderRequest.comment</ns2:key>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="commentUI">
+      <ns2:component xsi:type="ns2:UITextAreaType" UIID="commentUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
       </ns2:component>
       <ns2:layoutConstraint>
