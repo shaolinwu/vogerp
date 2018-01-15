@@ -192,7 +192,7 @@
                   <ns2:expressionString><![CDATA[
                   import org.shaolin.bmdp.utils.StringUtil;
                   {
-                     return $rowBE.getEndPrice()/100;
+                     return $rowBE.getEndPrice();
                   }
                   ]]></ns2:expressionString>
               </ns2:expression>

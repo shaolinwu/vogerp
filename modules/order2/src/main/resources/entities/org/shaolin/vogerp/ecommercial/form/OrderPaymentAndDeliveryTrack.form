@@ -125,10 +125,11 @@
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
             IEOrder order = (IEOrder)form.getInputParameter("order");
             
+            String qualityLevel = @page.getComboBox("qualityUI").getValue();
+            String serviceLevel = @page.getComboBox("serviceUI").getValue();
             String note = @page.getTextArea("descCommentUI").getValue();
-            //TODO:
-            
-            //@page.getTextArea("descProgressUI").setValue("");
+            OrderPaymentAndDeliveryUI.addComment(order, note, qualityLevel, serviceLevel);
+            @page.getTextArea("descCommentUI").setValue("");
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
@@ -269,7 +270,7 @@
 	      </ns2:layout>
 	      <ns2:component xsi:type="ns2:UITextAreaType" UIID="descProgressUI">
 	        <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
-	          <ns2:value>添加生产进度描述</ns2:value>
+	          <ns2:value>添加详细生产进度描述</ns2:value>
 	        </ns2:widgetLabel>
 	      </ns2:component>
 	      <ns2:component xsi:type="ns2:UIButtonType" UIID="descProgressbtn">

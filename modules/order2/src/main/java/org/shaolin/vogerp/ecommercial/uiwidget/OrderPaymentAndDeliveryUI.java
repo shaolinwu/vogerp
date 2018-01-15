@@ -79,6 +79,19 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
 		}
 	}
 	
+	public static void addComment(final IEOrder order, final String serviceComment, final String qualityLevel, final String serviceLevel) {
+		try {
+			DeliveryInfoImpl info = EOrderModel.INSTANCE.get(order.getDeliveryInfoId(), DeliveryInfoImpl.class);
+			info.setServiceComment(serviceComment);
+			info.setServiceLevel(Integer.parseInt(serviceLevel));
+			info.setQualityLevel(Integer.parseInt(qualityLevel));
+			EOrderModel.INSTANCE.update(info);
+			order.setDeliveryInfo(info);
+		} catch (Exception e) {
+			logger.warn("Add comment error!", e);
+		}
+	}
+	
 	@Override
 	public void generateEndHTML(UserRequestContext context, UIFormObject ownerEntity, int depth) {
 		generateWidget(context);
@@ -115,9 +128,9 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
 			if (state == PayOrderStatusType.NOTPAYED) {
 				context.generateHTML("<tr class=\"order_step\">");
 				if (isCurrTaker) {
-					context.generateHTML("<td>1.\u7B49\u5F85\u652F\u4ED8</td><td>1.<button onclick=\""+funcRef+"payOrder(defaultname." + htmlId + ");\" class=\"ui-btn-inline\">\u652F\u4ED8</button></td>");
+					context.generateHTML("<td>1.<button onclick=\""+funcRef+"payOrder(defaultname." + htmlId + ");\" class=\"ui-btn-inline\">\u652F\u4ED8</button></td>");
 				} else {
-					context.generateHTML("<td>1.\u7B49\u5F85\u652F\u4ED8</td><td>1." + state.getDisplayName() + "</td>");
+					context.generateHTML("<td>1." + state.getDisplayName() + "</td>");
 				}
 				context.generateHTML("</tr>");
 			} else {
@@ -169,11 +182,17 @@ public class OrderPaymentAndDeliveryUI extends HTMLWidgetType {
 			if (order.getTakenStatus() == OrderStatusType.TAKEN_COMPLETED) {
 				context.generateHTML("<tr class=\"order_step\">");
 				if (isCurrTaker) {
-					context.generateHTML("<td>5.<button onclick=\""+funcRef+"commentOrder(defaultname." + htmlId + ");\" class=\"ui-btn-inline\">\u8BC4\u4EF7</button></td>");
+					context.generateHTML("<td>4.\u5df2\u786E\u8BA4\u6536\u8d27. \u8BF7<button onclick=\""+funcRef+"commentOrder(defaultname." + htmlId + ");\" class=\"ui-btn-inline\">\u8BC4\u4EF7</button>");
 				} else {
-					context.generateHTML("<td>5.<button onclick=\""+funcRef+"commentOrder(defaultname." + htmlId + ");\" class=\"ui-btn-inline\">\u8BC4\u4EF7</button></td>");
+					context.generateHTML("<td>4.\u5df2\u786E\u8BA4\u6536\u8d27. \u8BC4\u4EF7: ");
 				}
-				context.generateHTML("</tr>");
+				context.generateHTML("<DIV>");
+				context.generateHTML(deliveryInfo.getServiceComment());
+				//TODO:
+//				deliveryInfo.getServiceLevel();
+//				deliveryInfo.getQualityLevel();
+				context.generateHTML("</DIV>");
+				context.generateHTML("</td></tr>");
 			}
 			
 			context.generateHTML("</table>");

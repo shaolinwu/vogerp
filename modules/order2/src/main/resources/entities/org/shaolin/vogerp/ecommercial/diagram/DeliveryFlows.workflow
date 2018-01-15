@@ -30,7 +30,6 @@
 			        import org.shaolin.vogerp.ecommercial.ce.*;
 			        import org.shaolin.vogerp.ecommercial.dao.*;
 			        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
-			        import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
 			        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 			        { 
 			            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
@@ -43,9 +42,12 @@
 			                || order.getTakenStatus() == OrderStatusType.TAKEN_PAYED) {
 				            String expressVendor = @page.getComboBox("expressVendorUI").getValue();
 				            String expressNumber = @page.getTextField("expressNumberUI").getValue();
-				            order.getDeliveryInfo().setExpressVendor(expressVendor);
-				            order.getDeliveryInfo().setExpressNumber(expressNumber);
-				            EOrderModel.INSTANCE.update(order.getDeliveryInfo());
+				            DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)CommonModel.INSTANCE.get(order.getDeliveryInfoId(),
+				                    DeliveryInfoImpl.class);
+				            deliveryInfo.setExpressVendor(expressVendor);
+				            deliveryInfo.setExpressNumber(expressNumber);
+				            EOrderModel.INSTANCE.update(deliveryInfo);
+				            order.setDeliveryInfo(deliveryInfo);
 				            
 			                HashMap result = new HashMap();
                             result.put("order", order);
@@ -78,6 +80,7 @@
 			        import org.shaolin.uimaster.page.ajax.*;
 			        import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 			        import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
+			        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 			        import org.shaolin.vogerp.ecommercial.be.*;
 			        import org.shaolin.vogerp.ecommercial.ce.*;
 			        import org.shaolin.vogerp.ecommercial.dao.*;
@@ -88,9 +91,7 @@
                      {
                          $order.setTakenStatus(OrderStatusType.TAKEN_DELIVERY);
 			             EOrderModel.INSTANCE.update($order);
-			             
-			             IDeliveryInfo deliveryInfo = $order.getDeliveryInfo();
-						 //IPersonalInfo takener = EOrderModel.INSTANCE.get(deliveryInfo.getToUserId(), PersonalInfoImpl.class);
+			             DeliveryInfoImpl deliveryInfo = (DeliveryInfoImpl)CommonModel.INSTANCE.get($order.getDeliveryInfoId(), DeliveryInfoImpl.class);
 			             
 			             String description = "("+OrderUtil.getOrderLink($order)+")" + $order.getDescription();
                          NotificationImpl message = new NotificationImpl();
@@ -129,7 +130,6 @@
 			        import org.shaolin.vogerp.ecommercial.ce.*;
 			        import org.shaolin.vogerp.ecommercial.dao.*;
 			        import org.shaolin.vogerp.ecommercial.util.OrderUtil;
-			        import org.shaolin.vogerp.ecommercial.be.DeliveryInfoImpl;
 			        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
