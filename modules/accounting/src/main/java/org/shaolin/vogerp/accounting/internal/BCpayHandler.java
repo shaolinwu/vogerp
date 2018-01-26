@@ -106,26 +106,26 @@ public class BCpayHandler implements IAjaxCommand, PaymentHandler {
 	
 	public String transfer(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException {
 		TransferParameter param = new TransferParameter();
-		if (customerAccount.getThirdPartyAccountType() == SettlementMethodType.WEIXI) {
+		if (customerAccount.getWeixiAccount() != null && customerAccount.getWeixiAccount().length() > 0) {
 			//weixipay
 			param.setChannel(BCEumeration.TRANSFER_CHANNEL.WX_TRANSFER);
 			param.setTransferNo("Tsf" + order.getSerialNumber()); 
 			// PaymentUtil.genWeiXiTransferNumber()
 			// request 10 numbers as transfer number.
-		} else if (customerAccount.getThirdPartyAccountType() == SettlementMethodType.ALIPAY) {
+		} else if (customerAccount.getAlipayAccount() != null && customerAccount.getAlipayAccount().length() > 0) {
 			//alipay
 			param.setChannel(BCEumeration.TRANSFER_CHANNEL.ALI_TRANSFER);
 			param.setTransferNo("Tsf" + order.getSerialNumber());
 		}
-		param.setChannelUserId(customerAccount.getThirdPartyAccount());
-		param.setChannelUserName(customerAccount.getThirdPartyAccountName());
+//		param.setChannelUserId(customerAccount.getThirdPartyAccount());
+//		param.setChannelUserName(customerAccount.getThirdPartyAccountName());
 		param.setTotalFee(((int)order.getAmount()));
 		param.setDescription("\u62A2\u5355\u8FBE\u4EBA\u8F6C\u5E10\u8BA2\u5355: " + order.getOrderSerialNumber() + ": " + 
 				(order.getDescription()!=null ? StringUtil.escapeAsEmtpy(StringUtil.getAbbreviatoryString(order.getDescription(), 15)) : ""));
 		param.setAccountName(Registry.getInstance().getValue("/System/payment/orgName"));
 		try {
 			String url = BCPay.startTransfer(param);
-			if (customerAccount.getThirdPartyAccountType() == SettlementMethodType.WEIXI) {
+			if (customerAccount.getWeixiAccount() != null && customerAccount.getWeixiAccount().length() > 0) {
 				String result = url;
 				//TODO: check result.
 			}

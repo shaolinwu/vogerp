@@ -19,7 +19,6 @@
             HashMap out = (HashMap)form.ui2Data();
 
             CustomerAccountImpl defaultUser = (CustomerAccountImpl)out.get("beObject");
-            defaultUser.setThirdPartyAccountType(SettlementMethodType.ALIPAY);
             if (defaultUser.getId() == 0) {
                 AccountingModel.INSTANCE.create(defaultUser);
             } else {
@@ -60,30 +59,45 @@
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
-      <ns2:component xsi:type="ns2:UIHiddenType" UIID="idUI">
-        <ns2:secure>
-          <ns2:value>true</ns2:value>
-        </ns2:secure>
-      </ns2:component>
-      <ns2:component xsi:type="ns2:UILabelType" UIID="thirdPartyAccountUILabel">
+      <ns2:component xsi:type="ns2:UILabelType" UIID="weixiAccountUILabel">
         <ns2:UIStyle></ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>支付宝帐号(用于企业客户业务提现)</ns2:value>
+          <ns2:value>微信帐号</ns2:value>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="thirdPartyAccountUI">
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="weixiAccountUI">
+        <ns2:UIStyle></ns2:UIStyle>
+        <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+          <ns2:value>false</ns2:value>
+        </ns2:allowBlank>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UILabelType" UIID="alipayAccountUILabel">
+        <ns2:UIStyle></ns2:UIStyle>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>支付宝帐号</ns2:value>
+        </ns2:text>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UITextFieldType" UIID="alipayAccountUI">
         <ns2:UIStyle></ns2:UIStyle>
         <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
           <ns2:value>false</ns2:value>
         </ns2:allowBlank>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>thirdPartyAccountUILabel</ns2:componentId>
+        <ns2:componentId>weixiAccountUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>thirdPartyAccountUI</ns2:componentId>
+        <ns2:componentId>weixiAccountUI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass=""></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>alipayAccountUILabel</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass=""></ns2:constraint>
+      </ns2:layoutConstraint>
+      <ns2:layoutConstraint>
+        <ns2:componentId>alipayAccountUI</ns2:componentId>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:component xsi:type="ns2:UIPanelType" UIID="actionPanel">
@@ -141,19 +155,15 @@
     <ns2:DataEntity scope="InOut" name="editable" category="JavaPrimitive">
       <type entityName="java.lang.Boolean"></type>
     </ns2:DataEntity>
-    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping0">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UITextWithNumber"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="idUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="Number">
-        <ns2:expression>
-          <expressionString>$beObject.getId()</expressionString>
-        </ns2:expression>
-      </ns2:DataComponent>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="weixiAccountUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.weixiAccount" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping2">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="thirdPartyAccountUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.thirdPartyAccount" paramName="StringData"></ns2:DataComponent>
+      <ns2:UIComponent componentPath="alipayAccountUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.alipayAccount" paramName="StringData"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>{

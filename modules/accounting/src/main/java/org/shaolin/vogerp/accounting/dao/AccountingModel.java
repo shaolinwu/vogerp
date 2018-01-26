@@ -343,5 +343,35 @@ public class AccountingModel extends BEEntityDaoObject {
         return this._count(inObjectCriteria);
     }
 
+    public List<org.shaolin.vogerp.accounting.be.ICustomerAccount> searchUserAccount(org.shaolin.vogerp.accounting.be.CustomerAccountImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.CustomerAccountImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+            if (scObject.getUserId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.userId", scObject.getUserId()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long searchUserAccountCount(org.shaolin.vogerp.accounting.be.CustomerAccountImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.CustomerAccountImpl.class, "inObject");
+
+            if (scObject.getUserId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.userId", scObject.getUserId()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
+    }
+
 }
 

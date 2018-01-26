@@ -198,7 +198,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 	}
 	
 	public String transfer(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException {
-		//TODO:
+		//TODO: currently the transaction of two accounts made by administrator manually.
 		throw new UnsupportedOperationException();
 	}
 	
@@ -269,12 +269,13 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 					
 					PayOrderTransactionLogImpl translog = new PayOrderTransactionLogImpl();
 			        translog.setPaymentMethod(SettlementMethodType.ALIPAY);
+			        translog.setPayOrderId(order.getId());
 			        translog.setLog(jsonObj.toString());
 			        translog.setCreateDate(new Date());
-		    		translog.setIsCorrect(true);
-		    		updatePayOrder(translog, out_trade_no, jsonObj);
-		    		AccountingModel.INSTANCE.create(translog, true);
-		    		return SUCCESS;
+		    		    translog.setIsCorrect(true);
+		    		    updatePayOrder(translog, out_trade_no, jsonObj);
+		    		    AccountingModel.INSTANCE.create(translog, true);
+		    		    return SUCCESS;
 				}
 			}
 	    	return FAIL;
@@ -320,7 +321,6 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 				
 				if (params.containsKey("trade_status") && params.get("trade_status").equals("TRADE_SUCCESS")) {
 					translog.setIsCorrect(true);
-					AccountingModel.INSTANCE.create(translog, true);
 					
 					String out_trade_no = params.get("out_trade_no");
 					JSONObject jsonObj = new JSONObject(new HashMap(requestParams));
@@ -357,6 +357,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(payOrder, null, 0, 1);
 		if (result != null && result.size() > 0) {
 			payOrder = (PayOrderImpl)result.get(0);
+			translog.setPayOrderId(payOrder.getId());
 			if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
 				// already notified.
 				return SUCCESS;

@@ -384,8 +384,8 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		request.setPayOrderIds(ids.toString());
 		request.setCreateDate(new Date());
 		request.setUserId(customerAccount.getUserId());
-		request.setThirdPartyAccount(customerAccount.getThirdPartyAccount());
-		request.setThirdPartyAccountType(customerAccount.getThirdPartyAccountType());
+//		request.setThirdPartyAccount(customerAccount.getThirdPartyAccount());
+//		request.setThirdPartyAccountType(customerAccount.getThirdPartyAccountType());
 		AccountingModel.INSTANCE.create(request);
 		
 		//notify admin

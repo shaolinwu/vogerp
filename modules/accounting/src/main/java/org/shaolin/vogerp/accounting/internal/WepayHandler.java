@@ -225,6 +225,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 			// take this link for verification. https://pay.weixin.qq.com/wiki/tools/signverify/
 			values.put("sign", encodeMD5(keyValues.toString(), "UTF-8").toUpperCase());
 			String result = sender.doPostSSL(UNIFIEDPAY_URL, StringUtil.convertMapToXML(values, "xml"), "UTF-8", "text/xml");
+			//logger.info("Wepay.prepay result: " + result);
 			//xml format
 			Map resultMap = StringUtil.xml2map(result);
 			// invoke result
@@ -232,6 +233,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 				// business result
 				PayOrderTransactionLogImpl translog = new PayOrderTransactionLogImpl();
 		        translog.setLog(resultMap.toString());
+		        translog.setPayOrderId(payOrder.getId());
 		        translog.setPaymentMethod(SettlementMethodType.WEIXI);
 		        
 				if (SUCCESS.equalsIgnoreCase(resultMap.get("result_code").toString())) {
@@ -240,6 +242,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 					AccountingModel.INSTANCE.create(translog, true);
 					if (UserContext.isMobileRequest() && UserContext.isAppClient()) {
 						//resultMap.get("prepay_id")
+						resultMap.put("mch_skey", MCH_APISECURE_KEY);
 						return (new JSONObject(resultMap)).toString();
 					}
 					return resultMap.get("code_url").toString(); // for end user payment url which will be generated as 2 dimension code picture!
@@ -262,7 +265,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 	}
 	
 	public String transfer(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException {
-		//TODO:
+		//TODO: currently the transaction of two accounts made by administrator manually.
 		throw new UnsupportedOperationException();
 	}
 
@@ -400,18 +403,21 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 				}
 				PayOrderTransactionLogImpl translog = new PayOrderTransactionLogImpl();
 		        translog.setPaymentMethod(SettlementMethodType.WEIXI);
+		        translog.setPayOrderId(payOrder.getId());
 		        translog.setLog(jsonObj.toString());
 		        translog.setCreateDate(new Date());
-		    	if (SUCCESS.equalsIgnoreCase(resultMap.get("trade_state").toString())) {
-		    		jsonObj.put("trade_success", true);
-		    		translog.setIsCorrect(true);
-		    		updatePayOrder(translog, jsonObj, out_trade_no);
-		    	} else {
-		    		translog.setIsCorrect(false);
-		    	}
-		    	AccountingModel.INSTANCE.create(translog, true);
+			    	if (SUCCESS.equalsIgnoreCase(resultMap.get("trade_state").toString())) {
+			    		jsonObj.put("trade_success", true);
+			    		translog.setIsCorrect(true);
+			    		updatePayOrder(translog, jsonObj, out_trade_no);
+			    	} else {
+			    		translog.setIsCorrect(false);
+			    	}
+			    	AccountingModel.INSTANCE.create(translog, true);
 				
 				return resultMap.get("trade_state").toString();
+			} else {
+				logger.info("Wexin returned with FAIL state: " + resultMap.toString());
 			}
 			return FAIL;
 		} catch (Exception e) {
@@ -451,13 +457,13 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 	        keyValues.append("key=").append(MCH_APISECURE_KEY);
 	        JSONObject jsonObj = new JSONObject(resultMap);
 		    String sign = jsonObj.getString("sign");
-		    if (sign.equals(encodeMD5(keyValues.toString(), "UTF-8").toUpperCase()) || WepayHandler.enableDebugger) { //for secure check.
-		    	
-		    	if (SUCCESS.equalsIgnoreCase(resultMap.get("return_code").toString())) {
-		    		translog.setIsCorrect(true);
-		    		
-		    		String out_trade_no = jsonObj.getString("out_trade_no");
-		    		jsonObj.put("transaction_fee", jsonObj.get("total_fee"));
+		    if (sign.equals(encodeMD5(keyValues.toString(), "UTF-8").toUpperCase()) || WepayHandler.enableDebugger) {
+		    	    //for secure check.
+			    	if (SUCCESS.equalsIgnoreCase(resultMap.get("return_code").toString())) {
+			    		translog.setIsCorrect(true);
+			    		
+			    		String out_trade_no = jsonObj.getString("out_trade_no");
+			    		jsonObj.put("transaction_fee", jsonObj.get("total_fee"));
 					jsonObj.put("trade_success", true);
 					jsonObj.put("transaction_id", out_trade_no);
 					jsonObj.put("message_detail", "");
@@ -466,14 +472,14 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 						logger.info("Received a callback payment: " + out_trade_no);
 					}
 					
-			    	return updatePayOrder(translog, jsonObj, out_trade_no);
+				    	return updatePayOrder(translog, jsonObj, out_trade_no);
 				} else {
 					translog.setIsCorrect(false);
 				}
-		    	//we have to send a success string back to Wepay as required. 
+			    	//we have to send a success string back to Wepay as required. 
 				return SUCCESS;
 		    } else {
-		    	translog.setIsCorrect(false);
+		    		translog.setIsCorrect(false);
 		    }
 		} catch (Throwable e) {
 			logger.warn("Error occurred while calling back from BeeCloud: " + e.getMessage(), e);
@@ -492,6 +498,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(payOrder, null, 0, 1);
 		if (result != null && result.size() > 0) {
 			payOrder = (PayOrderImpl)result.get(0);
+			translog.setPayOrderId(payOrder.getId());
 			if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
 				// already notified.
 				return SUCCESS;

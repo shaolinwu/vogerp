@@ -228,26 +228,31 @@
                 <ns2:exp>
                     <ns2:expressionString><![CDATA[
                  import java.util.HashMap;
-                 import java.util.ArrayList;
+                 import java.util.List;
                  import java.util.Date;
                  import org.shaolin.uimaster.page.AjaxContext;
                  import org.shaolin.uimaster.page.AjaxActionHelper;
                  import org.shaolin.uimaster.page.ajax.*;
                  import org.shaolin.vogerp.accounting.be.*;
                  import org.shaolin.vogerp.accounting.ce.*;
+                 import org.shaolin.vogerp.accounting.dao.AccountingModel;
                  import org.shaolin.bmdp.runtime.security.UserContext;
                  {
                     HashMap input = new HashMap();
-                    ICustomerAccount beObject = (ICustomerAccount)UserContext.getUserData("AccountInfo", true);
-                    if (beObject == null) {
+                    CustomerAccountImpl beObject = new CustomerAccountImpl();
+                    beObject.setUserId(UserContext.getUserContext().getUserId());
+                    List list = AccountingModel.INSTANCE.searchUserAccount(beObject, null, 0, 1);
+                    if (list == null || list.size() == 0) {
                        beObject = new CustomerAccountImpl();
+                    } else {
+                       beObject = (CustomerAccountImpl)list.get(0);
                     }
                     input.put("beObject", beObject);
 		            input.put("editable", new Boolean(true));
 		            RefForm form = new RefForm("settingsForm", "org.shaolin.vogerp.accounting.form.CustomerAccount", input);
 		            @page.addElement(form);
 		            
-		            form.openInWindows("提钱帐号设置", null, true);
+		            form.openInWindows("提现帐号设置", null, true);
                  }
                  ]]></ns2:expressionString>
                 </ns2:exp>
@@ -321,7 +326,7 @@
 					        </ns2:component>
 					        <ns2:component xsi:type="ns2:UILabelType" UIID="hintUILabel2">
 					          <ns2:text xsi:type="ns2:StringPropertyType">
-					            <ns2:value>*： 目前加工达人只支持提现到支付宝帐号，请您点击设置按钮进行配制。谢谢！</ns2:value>
+					            <ns2:value>*： 目前加工达人只支持提现到支付宝和微信帐号提现，请您点击“设置”按钮进行提现帐号配制。谢谢！</ns2:value>
 					          </ns2:text>
 					        </ns2:component>
 					        <ns2:layoutConstraint>

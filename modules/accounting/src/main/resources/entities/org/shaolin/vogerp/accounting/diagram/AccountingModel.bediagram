@@ -24,18 +24,12 @@
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
-            <bediagram:name>thirdPartyAccount</bediagram:name>
+            <bediagram:name>weixiAccount</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>
-            <bediagram:name>thirdPartyAccountName</bediagram:name>
+            <bediagram:name>alipayAccount</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>thirdPartyAccountType</bediagram:name>
-            <bediagram:type xsi:type="bediagram:CEObjRefType">
-				<bediagram:targetEntity entityName="SettlementMethodType" />
-			</bediagram:type>
         </bediagram:member>
     </bediagram:beEntity>    
 	
@@ -176,6 +170,10 @@
         <common:entityName>PayOrderTransactionLog</common:entityName>
         <bediagram:member pk="true">
             <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>payOrderId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
         <bediagram:member>
