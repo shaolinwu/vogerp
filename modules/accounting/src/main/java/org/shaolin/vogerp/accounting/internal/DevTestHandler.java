@@ -15,8 +15,8 @@ import org.shaolin.vogerp.accounting.IPaymentService;
 import org.shaolin.vogerp.accounting.IPaymentService.TransactionType;
 import org.shaolin.vogerp.accounting.PaymentException;
 import org.shaolin.vogerp.accounting.PaymentHandler;
-import org.shaolin.vogerp.accounting.be.ICustomerAccount;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
+import org.shaolin.vogerp.accounting.be.IPayOrderRequest;
 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 import org.shaolin.vogerp.accounting.be.PayOrderTransactionLogImpl;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
@@ -70,7 +70,11 @@ public class DevTestHandler implements PaymentHandler {
 		}
 	}
 	
-	public String transfer(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException {
+	public String transfer(IPayOrderRequest request0) throws PaymentException {
+		throw new UnsupportedOperationException();
+	}
+	
+	public String queryTransferResult(final IPayOrderRequest request0) throws PaymentException {
 		throw new UnsupportedOperationException();
 	}
 	

@@ -10,7 +10,9 @@
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="USERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="WEIXIACCOUNT" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="WEIXIUSERNAME" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="ALIPAYACCOUNT" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="ALIPAYUSERNAME" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
@@ -23,6 +25,8 @@
       <ns2:fieldMapping beFieldName="userId" columnName="USERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="weixiAccount" columnName="WEIXIACCOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="alipayAccount" columnName="ALIPAYACCOUNT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="weixiUserName" columnName="WEIXIUSERNAME"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="alipayUserName" columnName="ALIPAYUSERNAME"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
@@ -126,9 +130,10 @@
     <ns2:column name="USERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="AMOUNT" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="PAYORDERIDS" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="SerialNumber" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="ResponsedOrderId" type="VARCHAR" isNull="true"></ns2:column>
+    <ns2:column name="ResponsedResult" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="COMMENT" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="THIRDPARTYACCOUNT" type="VARCHAR" isNull="true"></ns2:column>
-    <ns2:column name="THIRDPARTYACCOUNTTYPE" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
     <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
     <ns2:primaryKey>
@@ -144,9 +149,10 @@
       <ns2:fieldMapping beFieldName="amount" columnName="AMOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="payOrderIds" columnName="PAYORDERIDS"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="payOrderId" columnName="PAYORDERID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="serialNumber" columnName="SerialNumber"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="responsedOrderId" columnName="ResponsedOrderId"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="responsedResult" columnName="ResponsedResult"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="comment" columnName="COMMENT"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="thirdPartyAccount" columnName="THIRDPARTYACCOUNT"></ns2:fieldMapping>
-      <ns2:fieldMapping beFieldName="thirdPartyAccountType" columnName="THIRDPARTYACCOUNTTYPE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
       <!-- payorder id is optional for refund only. 

@@ -51,8 +51,8 @@ import org.shaolin.vogerp.accounting.IPaymentService;
 import org.shaolin.vogerp.accounting.IPaymentService.TransactionType;
 import org.shaolin.vogerp.accounting.PaymentException;
 import org.shaolin.vogerp.accounting.PaymentHandler;
-import org.shaolin.vogerp.accounting.be.ICustomerAccount;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
+import org.shaolin.vogerp.accounting.be.IPayOrderRequest;
 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 import org.shaolin.vogerp.accounting.be.PayOrderTransactionLogImpl;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
@@ -264,7 +264,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 		return "";
 	}
 	
-	public String transfer(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException {
+	public String transfer(IPayOrderRequest request0) throws PaymentException {
 		//TODO: currently the transaction of two accounts made by administrator manually.
 		throw new UnsupportedOperationException();
 	}
@@ -335,7 +335,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 				order.setStatus(PayOrderStatusType.REFUND);
                 AccountingModel.INSTANCE.update(order, true);
                 IPaymentService payService = AppContext.get().getService(IPaymentService.class);
-    			payService.notifyPayRefund(order);
+    			    payService.notifyPayRefund(order);
 				return SUCCESS;
 			} else {
 				// TODO failed post process
@@ -440,7 +440,7 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 	        }
 	        String jsonStr = json.toString();
 	        if (jsonStr.trim().length() == 0) {
-	        	return FAIL;
+	        		return FAIL;
 	        }
 	        translog = new PayOrderTransactionLogImpl();
 	        translog.setPaymentMethod(SettlementMethodType.WEIXI);
@@ -480,15 +480,16 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 				return SUCCESS;
 		    } else {
 		    		translog.setIsCorrect(false);
+		    		return FAIL;
 		    }
 		} catch (Throwable e) {
 			logger.warn("Error occurred while calling back from BeeCloud: " + e.getMessage(), e);
+			return FAIL;
 		} finally {
 			if (translog != null) {
 				AccountingModel.INSTANCE.create(translog, true);
 			}
 		}
-		return FAIL;
 	}
 
 	private String updatePayOrder(PayOrderTransactionLogImpl translog, JSONObject jsonObj, String out_trade_no)

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.shaolin.vogerp.accounting.be.ICustomerAccount;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
+import org.shaolin.vogerp.accounting.be.IPayOrderRequest;
 import org.shaolin.vogerp.accounting.ce.PayBusinessType;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
 
@@ -39,6 +40,10 @@ public interface IPaymentService {
 	public boolean isRequestedForWithdraw(final long userId);
 	
 	public void requestForWithdraw(List<IPayOrder> payOrders, ICustomerAccount customerAccount) throws PaymentException;
+	
+	public String approveWithdraw(final IPayOrderRequest request0) throws PaymentException;
+	
+	public String queryForWithdraw(final IPayOrderRequest request0) throws PaymentException;
 	
 	public void requestForRefund(final IPayOrder order) throws PaymentException;
 	

@@ -39,6 +39,14 @@ public class PaymentUtil {
 				+ "-" + (int)(Math.random() * 10000);
 	}
 	
+	public synchronized static String genWithdrawSerialNumber() {
+		DateParser parse = new DateParser(new Date());
+		return parse.getCNDateString() 
+				+ "" + parse.format(parse.getHours(), 2) 
+				+ "" + parse.format(parse.getMilliSeconds(), 5)
+				+ "" + (int)(Math.random() * 10000);
+	}
+	
 	public static String getPaymentTitle(final IPayOrder order) {
 		String title = "(" + order.getPayBusinessType().getDescription() + ")" 
 						+ order.getDescription()!=null?order.getDescription():"";

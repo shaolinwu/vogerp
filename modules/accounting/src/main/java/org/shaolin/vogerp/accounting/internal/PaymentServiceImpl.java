@@ -18,6 +18,7 @@ import org.shaolin.vogerp.accounting.PaymentException;
 import org.shaolin.vogerp.accounting.be.DoubleEntryImpl;
 import org.shaolin.vogerp.accounting.be.ICustomerAccount;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
+import org.shaolin.vogerp.accounting.be.IPayOrderRequest;
 import org.shaolin.vogerp.accounting.be.IServiceChargeTemplate;
 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 import org.shaolin.vogerp.accounting.be.PayOrderRequestImpl;
@@ -105,7 +106,9 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		order.setStatus(PayOrderStatusType.NOTPAYED);
 		order.setOrderSerialNumber(orderSerialNumber);
 		order.setAmount(amount * 100); //round up to fen as required.
-		
+		if (amount >= 50000) { // single payment order must be less then 50000 RMB.
+			throw new IllegalArgumentException("Single payment order must be less then 50000 RMB. current amount is " + amount);
+		}
 		ServiceChargeTemplateImpl scObject = new ServiceChargeTemplateImpl();
 		scObject.setPayBusinessType(type);
 		scObject.setVersion(0);//get the newest version.
@@ -136,7 +139,9 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		order.setStatus(PayOrderStatusType.NOTPAYED);
 		order.setOrderSerialNumber(orderSerialNumber);
 		order.setAmount(amount * 100); //round up fen.
-		
+		if (amount >= 50000) { // single payment order must be less then 50000 RMB.
+			throw new IllegalArgumentException("Single payment order must be less then 50000 RMB. current amount is " + amount);
+		}
 		ServiceChargeTemplateImpl scObject = new ServiceChargeTemplateImpl();
 		scObject.setPayBusinessType(type);
 		scObject.setVersion(0);//get the newest version.
@@ -169,7 +174,9 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		order.setStatus(PayOrderStatusType.NOTPAYED);
 		order.setOrderSerialNumber(orderSerialNumber);
 		order.setAmount(amount * 100); //round up fen.
-		
+		if (amount >= 50000) { // single payment order must be less then 50000 RMB.
+			throw new IllegalArgumentException("Single payment order must be less then 50000 RMB. current amount is " + amount);
+		}
 		ServiceChargeTemplateImpl scObject = new ServiceChargeTemplateImpl();
 		scObject.setPayBusinessType(type);
 		scObject.setVersion(0);//get the newest version.
@@ -384,8 +391,7 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		request.setPayOrderIds(ids.toString());
 		request.setCreateDate(new Date());
 		request.setUserId(customerAccount.getUserId());
-//		request.setThirdPartyAccount(customerAccount.getThirdPartyAccount());
-//		request.setThirdPartyAccountType(customerAccount.getThirdPartyAccountType());
+		request.setSerialNumber(PaymentUtil.genWithdrawSerialNumber());
 		AccountingModel.INSTANCE.create(request);
 		
 		//notify admin
@@ -395,6 +401,21 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		message.setDescription("");
 		message.setCreateDate(new Date());
 		coorService.addNotificationToAdmin(message, false);
+	}
+	
+	public String approveWithdraw(final IPayOrderRequest request0) throws PaymentException {
+		if (Registry.getAppRunningMode() == RunningMode.Dev) {
+			return devTestHandler.transfer(request0);
+		}
+		// unsupported Weixi withdraw.
+		return alipayHandler.transfer(request0);
+	}
+
+	public String queryForWithdraw(final IPayOrderRequest request0) throws PaymentException {
+		if (Registry.getAppRunningMode() == RunningMode.Dev) {
+			return devTestHandler.queryTransferResult(request0);
+		}
+		return alipayHandler.queryTransferResult(request0);
 	}
 	
 	/**
@@ -425,14 +446,6 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		}
 	}
 	
-	public boolean isRequestedForRefund(final IPayOrder order) {
-		PayOrderRequestImpl request = new PayOrderRequestImpl();
-		request.setPayOrderId(order.getId());
-		request.setType(PayOrderRequestType.REFUND);
-		request.setState(RequestStatusType.REQUEST);
-		return AccountingModel.INSTANCE.searchPayOrderRequestCount(request) == 1;
-	}
-
 	/**
 	 * refund
 	 *
@@ -451,6 +464,14 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		} else {
 			throw new PaymentException("Unsupported payment method: " + order.getCustomerAPaymentMethod());
 		}
+	}
+
+	public boolean isRequestedForRefund(final IPayOrder order) {
+		PayOrderRequestImpl request = new PayOrderRequestImpl();
+		request.setPayOrderId(order.getId());
+		request.setType(PayOrderRequestType.REFUND);
+		request.setState(RequestStatusType.REQUEST);
+		return AccountingModel.INSTANCE.searchPayOrderRequestCount(request) == 1;
 	}
 
 	public void cancelPayment(final IPayOrder order) throws PaymentException {

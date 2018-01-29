@@ -28,6 +28,7 @@ import org.shaolin.vogerp.accounting.PaymentException;
 import org.shaolin.vogerp.accounting.PaymentHandler;
 import org.shaolin.vogerp.accounting.be.ICustomerAccount;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
+import org.shaolin.vogerp.accounting.be.IPayOrderRequest;
 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 import org.shaolin.vogerp.accounting.be.PayOrderTransactionLogImpl;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
@@ -104,35 +105,8 @@ public class BCpayHandler implements IAjaxCommand, PaymentHandler {
 		throw new PaymentException("Order is not in unpay state!");
 	}
 	
-	public String transfer(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException {
-		TransferParameter param = new TransferParameter();
-		if (customerAccount.getWeixiAccount() != null && customerAccount.getWeixiAccount().length() > 0) {
-			//weixipay
-			param.setChannel(BCEumeration.TRANSFER_CHANNEL.WX_TRANSFER);
-			param.setTransferNo("Tsf" + order.getSerialNumber()); 
-			// PaymentUtil.genWeiXiTransferNumber()
-			// request 10 numbers as transfer number.
-		} else if (customerAccount.getAlipayAccount() != null && customerAccount.getAlipayAccount().length() > 0) {
-			//alipay
-			param.setChannel(BCEumeration.TRANSFER_CHANNEL.ALI_TRANSFER);
-			param.setTransferNo("Tsf" + order.getSerialNumber());
-		}
-//		param.setChannelUserId(customerAccount.getThirdPartyAccount());
-//		param.setChannelUserName(customerAccount.getThirdPartyAccountName());
-		param.setTotalFee(((int)order.getAmount()));
-		param.setDescription("\u62A2\u5355\u8FBE\u4EBA\u8F6C\u5E10\u8BA2\u5355: " + order.getOrderSerialNumber() + ": " + 
-				(order.getDescription()!=null ? StringUtil.escapeAsEmtpy(StringUtil.getAbbreviatoryString(order.getDescription(), 15)) : ""));
-		param.setAccountName(Registry.getInstance().getValue("/System/payment/orgName"));
-		try {
-			String url = BCPay.startTransfer(param);
-			if (customerAccount.getWeixiAccount() != null && customerAccount.getWeixiAccount().length() > 0) {
-				String result = url;
-				//TODO: check result.
-			}
-			return url;
-		} catch (Exception e) {
-			throw new PaymentException("Transfer URL error: " + e.getMessage(), e);
-		}
+	public String transfer(IPayOrderRequest request0) throws PaymentException {
+		return "-1";
 	}
 	
 	public String refund(final IPayOrder order) throws PaymentException {

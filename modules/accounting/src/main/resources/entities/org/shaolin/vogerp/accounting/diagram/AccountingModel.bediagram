@@ -28,7 +28,15 @@
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>weixiUserName</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>alipayAccount</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>alipayUserName</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
     </bediagram:beEntity>    
@@ -215,10 +223,25 @@
             <bediagram:type xsi:type="bediagram:DoubleType" />
         </bediagram:member>
         <bediagram:member>
+            <!-- serialNumber for this request-->
+            <bediagram:name>serialNumber</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <!-- responsed order id from third party.-->
+            <bediagram:name>responsedOrderId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
             <!-- what are the payorders accordingly.-->
             <bediagram:name>payOrderIds</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
         </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>responsedResult</bediagram:name>
+            <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        
         <bediagram:member>
             <bediagram:name>comment</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
@@ -228,16 +251,6 @@
         <bediagram:member>
             <bediagram:name>userId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>thirdPartyAccount</bediagram:name>
-            <bediagram:type xsi:type="bediagram:StringType" />
-        </bediagram:member>
-        <bediagram:member>
-            <bediagram:name>thirdPartyAccountType</bediagram:name>
-            <bediagram:type xsi:type="bediagram:CEObjRefType">
-				<bediagram:targetEntity entityName="SettlementMethodType" />
-			</bediagram:type>
         </bediagram:member>
         
         <!-- for refunding a pay order only!-->
@@ -717,13 +730,18 @@
             <bediagram:description>申请中</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
-            <bediagram:value>Success</bediagram:value>
+            <bediagram:value>Requested</bediagram:value>
             <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>已提交申请</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>Success</bediagram:value>
+            <bediagram:intValue>3</bediagram:intValue>
             <bediagram:description>申请成功</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Fail</bediagram:value>
-            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:intValue>4</bediagram:intValue>
             <bediagram:description>申请失败</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>

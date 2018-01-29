@@ -35,11 +35,14 @@ import org.shaolin.vogerp.accounting.IPaymentService;
 import org.shaolin.vogerp.accounting.IPaymentService.TransactionType;
 import org.shaolin.vogerp.accounting.PaymentException;
 import org.shaolin.vogerp.accounting.PaymentHandler;
+import org.shaolin.vogerp.accounting.be.CustomerAccountImpl;
 import org.shaolin.vogerp.accounting.be.ICustomerAccount;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
+import org.shaolin.vogerp.accounting.be.IPayOrderRequest;
 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 import org.shaolin.vogerp.accounting.be.PayOrderTransactionLogImpl;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+import org.shaolin.vogerp.accounting.ce.RequestStatusType;
 import org.shaolin.vogerp.accounting.ce.SettlementMethodType;
 import org.shaolin.vogerp.accounting.dao.AccountingModel;
 import org.shaolin.vogerp.accounting.util.PaymentUtil;
@@ -51,10 +54,14 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.internal.util.AlipaySignature;
+import com.alipay.api.request.AlipayFundTransOrderQueryRequest;
+import com.alipay.api.request.AlipayFundTransToaccountTransferRequest;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.request.AlipayTradeRefundRequest;
 import com.alipay.api.request.AlipayTradeWapPayRequest;
+import com.alipay.api.response.AlipayFundTransOrderQueryResponse;
+import com.alipay.api.response.AlipayFundTransToaccountTransferResponse;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.alipay.api.response.AlipayTradeRefundResponse;
@@ -197,9 +204,99 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 		return "";
 	}
 	
-	public String transfer(final IPayOrder order, ICustomerAccount customerAccount) throws PaymentException {
-		//TODO: currently the transaction of two accounts made by administrator manually.
-		throw new UnsupportedOperationException();
+	/**
+	 * //https://docs.open.alipay.com/309/106236/
+	 * //https://docs.open.alipay.com/api_28/alipay.fund.trans.toaccount.transfer
+	 */
+	public String transfer(IPayOrderRequest request0) throws PaymentException {
+		if (request0.getState() == RequestStatusType.SUCCESS) {
+			return SUCCESS;
+		}
+		CustomerAccountImpl condition = new CustomerAccountImpl();
+		condition.setUserId(request0.getUserId());
+		List<ICustomerAccount> result = AccountingModel.INSTANCE.searchAccount(condition, null, 0, 1);
+		if (result == null || result.size() == 0) {
+			return "-2";
+		}
+		ICustomerAccount customerAccount = result.get(0);
+		if (customerAccount.getAlipayAccount() == null || customerAccount.getAlipayAccount().trim().length() == 0) {
+			return "-2";
+		}
+		if (request0.getPayOrderIds() == null) {
+			return "-3";
+		}
+		
+		try {
+			List<IPayOrder> payOrders = PaymentUtil.getRequestedPayOrderList(request0);
+			if (request0.getResponsedOrderId() != null) {
+				String transResult = queryTransferResult(request0);
+				if (SUCCESS.equals(transResult)) {
+					return SUCCESS;
+				}
+			}
+			AlipayFundTransToaccountTransferRequest request = new AlipayFundTransToaccountTransferRequest();
+			JSONObject json = new JSONObject();
+			json.put("out_biz_no", request0.getSerialNumber());
+			json.put("payee_type", "ALIPAY_LOGONID");//支付宝登录号，支持邮箱和手机号格式。
+			json.put("payee_account", customerAccount.getAlipayAccount());
+			json.put("amount", request0.getAmount() / 100);//转账金额，单位：元。
+			json.put("payer_show_name", "");//付款方姓名
+			json.put("payee_real_name", customerAccount.getAlipayUserName());//收款方真实姓名, 校验该账户在支付宝登记的实名是否与收款方真实姓名一致。
+			json.put("remark", payOrders.get(0).getDescription());
+			request.setBizContent(json.toString());
+			AlipayFundTransToaccountTransferResponse response = alipayClient.execute(request);
+			if(response.isSuccess()){
+                for (IPayOrder order : payOrders) {
+                   //updated all related payorder state.
+                   order.setWithdrawn(true);
+                   AccountingModel.INSTANCE.update(order);
+                }
+				request0.setResponsedOrderId(response.getOrderId());
+				request0.setResponsedResult(response.getBody());
+				request0.setState(RequestStatusType.REQUESTED);
+				AccountingModel.INSTANCE.update(request0);
+				
+				ICoordinatorService coorService = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
+			    NotificationImpl message = new NotificationImpl();
+			    message.setPartyId(request0.getUserId());
+			    message.setSubject("提现申请成功");
+			    message.setDescription("请等待您的支付宝帐号("+customerAccount.getAlipayAccount()+")收到" + request0.getAmount() + "元。");
+			    message.setCreateDate(new Date());
+			    coorService.addNotification(message, false);
+				return SUCCESS;
+			} else {
+				request0.setState(RequestStatusType.FAIL);
+				request0.setResponsedResult(response.getBody());
+				AccountingModel.INSTANCE.update(request0);
+				return response.getBody();
+			}
+		} catch (Throwable e) {
+			logger.warn("Alipay transfer error occurred!", e);
+			return FAIL;
+		}
+	}
+	
+	public String queryTransferResult(final IPayOrderRequest request0) throws PaymentException {
+		if (request0.getState() == RequestStatusType.SUCCESS) {
+			return SUCCESS;
+		}
+		try {
+			AlipayFundTransOrderQueryRequest request = new AlipayFundTransOrderQueryRequest();
+			request.setBizContent("{" +
+			"    \"out_biz_no\":\""+request0.getSerialNumber()+"\"," +
+			"    \"order_id\":\""+request0.getResponsedOrderId()+"\"}"); //order_id支付宝转账单据号
+			AlipayFundTransOrderQueryResponse response = alipayClient.execute(request);
+			if(response.isSuccess()){
+				request0.setState(RequestStatusType.SUCCESS);
+				AccountingModel.INSTANCE.update(request0);
+				return SUCCESS;
+			} else {
+				return response.getBody();
+			}
+		} catch (Throwable e) {
+			logger.warn("Alipay transfer error occurred!", e);
+			return FAIL;
+		}
 	}
 	
 	/**
@@ -227,7 +324,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 				order.setStatus(PayOrderStatusType.REFUND);
                 AccountingModel.INSTANCE.update(order, true);
                 IPaymentService payService = AppContext.get().getService(IPaymentService.class);
-    			payService.notifyPayRefund(order);
+    			    payService.notifyPayRefund(order);
                 
 				return SUCCESS;
 			} else {
@@ -340,14 +437,15 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 			} else {
 				translog.setIsCorrect(false);
 			}
+			return FAIL;
 		} catch (Throwable e) {
 			logger.warn("Error occurred while calling back from Alipay: " + e.getMessage(), e);
+			return FAIL;
 		} finally {
 			if (translog != null) {
 				AccountingModel.INSTANCE.create(translog, true);
 			}
 		}
-		return FAIL;
 	}
 
 	private String updatePayOrder(PayOrderTransactionLogImpl translog, String out_trade_no, JSONObject jsonObj)
