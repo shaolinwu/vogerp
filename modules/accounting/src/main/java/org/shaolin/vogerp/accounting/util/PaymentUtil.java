@@ -266,7 +266,9 @@ public class PaymentUtil {
 		List<IPayOrder> orders = getRequestedPayOrderList(request);
 		StringBuilder sb = new StringBuilder();
 		sb.append("<div>");
+		double tatol = 0;
 		for (IPayOrder order : orders) {
+			tatol += order.getAmount();
 			sb.append("<div>");
 			sb.append("\u8BA2\u5355\u53F7").append(order.getSerialNumber());
 			sb.append(", \u989D\u5EA6").append(order.getAmount()/100);
@@ -274,6 +276,7 @@ public class PaymentUtil {
 			sb.append(", \u63CF\u8FF0: ").append(order.getDescription());
 			sb.append("</div>");
 		}
+		sb.append("<div>Tatol Amount: ").append(tatol/100).append("</div>");
 		sb.append("</div>");
 		return sb.toString();
 	}

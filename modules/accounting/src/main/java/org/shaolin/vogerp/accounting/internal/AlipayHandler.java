@@ -240,7 +240,7 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 			json.put("payee_type", "ALIPAY_LOGONID");//支付宝登录号，支持邮箱和手机号格式。
 			json.put("payee_account", customerAccount.getAlipayAccount());
 			json.put("amount", request0.getAmount() / 100);//转账金额，单位：元。
-			json.put("payer_show_name", "");//付款方姓名
+			//json.put("payer_show_name", );//付款方姓名
 			json.put("payee_real_name", customerAccount.getAlipayUserName());//收款方真实姓名, 校验该账户在支付宝登记的实名是否与收款方真实姓名一致。
 			json.put("remark", payOrders.get(0).getDescription());
 			request.setBizContent(json.toString());

@@ -43,16 +43,6 @@ function org_shaolin_vogerp_accounting_form_PayOrderRequestAdmin(json)
         ui: elementList[prefix + "thirdPartyAccountUI"]
     });
 
-    var amountUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "amountUILabel"]
-    });
-
-    var amountUI = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "amountUI"]
-    });
-
     var commentUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "commentUILabel"]
@@ -106,13 +96,13 @@ function org_shaolin_vogerp_accounting_form_PayOrderRequestAdmin(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "typeUILabel",prefix + "typeUI",prefix + "stateUILabel",prefix + "stateUI",prefix + "payOrderIdsUILabel",prefix + "payOrderIdsUI",prefix + "thirdPartyAccountUILabel",prefix + "thirdPartyAccountUI",prefix + "amountUILabel",prefix + "amountUI",prefix + "commentUILabel",prefix + "commentUI"]
+        ,subComponents: [prefix + "typeUILabel",prefix + "typeUI",prefix + "stateUILabel",prefix + "stateUI",prefix + "payOrderIdsUILabel",prefix + "payOrderIdsUI",prefix + "thirdPartyAccountUILabel",prefix + "thirdPartyAccountUI",prefix + "commentUILabel",prefix + "commentUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [typeUILabel,typeUI,stateUILabel,stateUI,payOrderIdsUILabel,payOrderIdsUI,thirdPartyAccountUILabel,thirdPartyAccountUI,amountUILabel,amountUI,commentUILabel,commentUI,payorderInfoUI,okbtn,resultbtn,okbtn1,cancelbtn,fieldPanel,fieldPanel1,actionPanel]
+        ,items: [typeUILabel,typeUI,stateUILabel,stateUI,payOrderIdsUILabel,payOrderIdsUI,thirdPartyAccountUILabel,thirdPartyAccountUI,commentUILabel,commentUI,payorderInfoUI,okbtn,resultbtn,okbtn1,cancelbtn,fieldPanel,fieldPanel1,actionPanel]
     });
 
     Form.typeUILabel=typeUILabel;
@@ -130,10 +120,6 @@ function org_shaolin_vogerp_accounting_form_PayOrderRequestAdmin(json)
     Form.thirdPartyAccountUILabel=thirdPartyAccountUILabel;
 
     Form.thirdPartyAccountUI=thirdPartyAccountUI;
-
-    Form.amountUILabel=amountUILabel;
-
-    Form.amountUI=amountUI;
 
     Form.commentUILabel=commentUILabel;
 
@@ -166,10 +152,6 @@ function org_shaolin_vogerp_accounting_form_PayOrderRequestAdmin(json)
     Form.thirdPartyAccountUILabel=thirdPartyAccountUILabel;
 
     Form.thirdPartyAccountUI=thirdPartyAccountUI;
-
-    Form.amountUILabel=amountUILabel;
-
-    Form.amountUI=amountUI;
 
     Form.commentUILabel=commentUILabel;
 
