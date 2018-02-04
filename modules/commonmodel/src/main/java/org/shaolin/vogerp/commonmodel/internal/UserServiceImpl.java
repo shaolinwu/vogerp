@@ -7,6 +7,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +40,6 @@ import org.shaolin.bmdp.utils.HttpUserUtil;
 import org.shaolin.uimaster.page.MobilitySupport;
 import org.shaolin.uimaster.page.WebConfig;
 import org.shaolin.uimaster.page.flow.WebflowConstants;
-import org.shaolin.vogerp.accounting.IAccountingService;
 import org.shaolin.vogerp.accounting.internal.AccountingServiceImpl;
 import org.shaolin.vogerp.commonmodel.ICaptcherService;
 import org.shaolin.vogerp.commonmodel.IModuleService;
@@ -63,7 +65,7 @@ import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUserChecker {
+public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUserChecker, Runnable {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	
@@ -76,10 +78,24 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	// for boosting the user login speed and getting hot user details.
     private final ICache<Long, PersonalInfoImpl> userSecondaryCache;
 	
+    // IP filter of preventing attacker!
+    private final ConcurrentHashMap<String, Integer> ipAttackFilter = new ConcurrentHashMap<String, Integer>(256);
+    
+    private static ScheduledExecutorService scheduler;
+    
 	public UserServiceImpl() {
 		UserContext.setOnlineUserChecker(this);
 		userSecondaryCache = CacheManager.getInstance().getCache(CACHE_NAME, 100, false, Long.class, 
 				PersonalInfoImpl.class);
+		scheduler = IServerServiceManager.INSTANCE.getSchedulerService()
+				.createScheduler("system", "wf-coordinator", Runtime.getRuntime().availableProcessors());
+		scheduler.scheduleAtFixedRate(this, 1, 1, TimeUnit.DAYS);
+	}
+	
+	public void run() {
+		userSecondaryCache.clear();
+		ipAttackFilter.clear();
+		scheduler.scheduleAtFixedRate(this, 1, 1, TimeUnit.DAYS);
 	}
 	
 	public void addListener(UserActionListener listener) {
@@ -98,7 +114,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		if (userSecondaryCache.containsKey(user.getId())) {
 			userSecondaryCache.put(user.getId(), (PersonalInfoImpl)user);
         } else {
-        	userSecondaryCache.put(user.getId(), (PersonalInfoImpl)user);
+            userSecondaryCache.put(user.getId(), (PersonalInfoImpl)user);
         }
 	}
 	
@@ -133,9 +149,21 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			return false;
 		}
 		if (registerInfo.getPassword() == null || registerInfo.getPassword().trim().length() == 0) {
-			logger.warn("Password does not specify!");
+			logger.warn("Password does not specify! register account: " + registerInfo.getPhoneNumber());
 			return false;
 		}
+		String userIPAddress = HttpUserUtil.getIP(request);
+		if (userIPAddress == null || userIPAddress.length() == 0) {
+			logger.warn("Accessed user ip must not be empty! register account: " + registerInfo.getPhoneNumber());
+			return false;
+		}
+		// one ip only allows to register 3 users per day.
+		if (ipAttackFilter.containsKey(userIPAddress) && ipAttackFilter.get(userIPAddress).intValue() > 3) {
+			logger.warn("IP Filter detected potential IP attacker!!! ip address: " + userIPAddress 
+					+ ", register account: " + registerInfo.getPhoneNumber());
+			return false;
+		}
+		
 		PersonalAccountImpl account = new PersonalAccountImpl();
 		account.setUserName(registerInfo.getPhoneNumber());
 		List<IPersonalAccount> result = CommonModel.INSTANCE.searchUserAccount(account, null, 0, 1);
@@ -210,7 +238,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		assignedMember.setType(AMemberType.GENERAL);
 		assignedMember.setDescription("Defualt");
 		Date assingedDate = new Date();
-		DateUtil.increaseMonths(assingedDate, Registry.getInstance().getValue("/System/Vogerp/UserMemberRule/DefaultMonth", 1));//TODO: must be configurable online.
+		DateUtil.increaseMonths(assingedDate, Registry.getInstance().getValue("/System/Vogerp/UserMemberRule/DefaultMonth", 1));
 		assignedMember.setEndtime(assingedDate);
 		assignedMember.setStarttime(new Date());
 		CommonModel.INSTANCE.create(assignedMember);
@@ -220,10 +248,18 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			IModuleService moduleService = AppContext.get().getService(IModuleService.class);
 			moduleService.newAppModules(IModuleService.DEFAULT_USER_MODULES, org.getId(), org.getOrgCode());
 		}
+		
+		IPersonalAccount recommandUserAccount = getPersonalInfoByName(registerInfo.getRecommandUserName());
+		long recommandedUserId = recommandUserAccount == null? 0 : recommandUserAccount.getPersonalId();
+		AccountingServiceImpl.notifyRegistered(userInfo.getId(), recommandedUserId);
 		for (UserActionListener listener: listeners) {
 			listener.registered(userInfo);
 		}
-		
+		if (ipAttackFilter.containsKey(userIPAddress)) {
+			ipAttackFilter.put(userIPAddress, ipAttackFilter.get(userIPAddress).intValue() + 1);
+		} else {
+			ipAttackFilter.put(userIPAddress, new Integer(1));
+		}
 		// manually commit the transaction.
 		HibernateUtil.releaseSession(true);
 		// the rollback operation is performed outside.
@@ -374,7 +410,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			if (userSecondaryCache.containsKey(userId)) {
 				userInfo = userSecondaryCache.get(userId);
 	        } else {
-	        	userSecondaryCache.put(userId, userInfo);
+	        	    userSecondaryCache.put(userId, userInfo);
 	        }
 			
 			UserContext userContext = new UserContext();
@@ -416,8 +452,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
             UserContext.register(session, userContext, userLocale, userRoles, isMobile);
             UserContext.addUserData(WebflowConstants.USER_ROLE_KEY, userRoles);
             if (IServerServiceManager.INSTANCE.getRunningEnv() == Env.Production) {
-	            AccountingServiceImpl accountingService = (AccountingServiceImpl)AppContext.get().getService(IAccountingService.class);
-	            accountingService.registerLoginUserAccountInfo(userContext);
+	            AccountingServiceImpl.registerLoginUserAccountInfo(userContext);
             }
             for (UserActionListener listener: listeners) {
 	    			listener.loggedIn(matchedUser, userInfo);
@@ -612,6 +647,17 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		PersonalAccountImpl account = new PersonalAccountImpl();
 		account.setInfo(userInfo);
 		List<IPersonalAccount> result = CommonModel.INSTANCE.searchUserAccount(account, null, 0, 1);
+		return result.get(0);
+	}
+	
+	@Override
+	public IPersonalAccount getPersonalInfoByName(String mobilePhone) {
+		PersonalAccountImpl account = new PersonalAccountImpl();
+		account.setUserName(mobilePhone);
+		List<IPersonalAccount> result = CommonModel.INSTANCE.searchUserAccount(account, null, 0, 1);
+		if (result == null || result.size() == 0) {
+			return null;
+		}
 		return result.get(0);
 	}
 	

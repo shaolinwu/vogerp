@@ -288,7 +288,9 @@
 					        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 					        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-					        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
+					        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+					        <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 					      </ns2:layout>
 	                        <ns2:component xsi:type="ns2:UILabelType" UIID="totalAmountUI">
 					          <ns2:Property name="text">
@@ -324,9 +326,43 @@
 						        </ns2:value>
 				              </ns2:Property>
 					        </ns2:component>
+					        <ns2:component xsi:type="ns2:UILabelType" UIID="totalCoinUI">
+                              <ns2:Property name="text">
+                                <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                                     <ns2:expression>
+                                       <expressionString><![CDATA[
+                                       import org.shaolin.bmdp.runtime.AppContext;
+                                       import org.shaolin.bmdp.runtime.security.UserContext;
+                                       import org.shaolin.vogerp.accounting.IAccountingService;
+                                       { 
+                                           IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+                                           int availabeAmount = accountingService.queryUserTotalCoin(UserContext.getUserContext().getUserId());
+                                           return "加工币个数： " + availabeAmount + " (本币可用于支付订单费用)"; 
+                                       }]]></expressionString>
+                                     </ns2:expression>
+                                </ns2:value>
+                              </ns2:Property>
+                            </ns2:component>
+					        <ns2:component xsi:type="ns2:UILabelType" UIID="totalScoreUI">
+                              <ns2:Property name="text">
+                                <ns2:value xsi:type="ns2:ExpressionPropertyType">
+                                     <ns2:expression>
+                                       <expressionString><![CDATA[
+                                       import org.shaolin.bmdp.runtime.AppContext;
+                                       import org.shaolin.bmdp.runtime.security.UserContext;
+                                       import org.shaolin.vogerp.accounting.IAccountingService;
+                                       { 
+                                           IAccountingService accountingService = (IAccountingService)AppContext.get().getService(IAccountingService.class);
+                                           int availabeAmount = accountingService.queryUserTotalScore(UserContext.getUserContext().getUserId());
+                                           return "总积分： " + availabeAmount + " (积分越高，表示您的信用越好哟)"; 
+                                       }]]></expressionString>
+                                     </ns2:expression>
+                                </ns2:value>
+                              </ns2:Property>
+                            </ns2:component>
 					        <ns2:component xsi:type="ns2:UILabelType" UIID="hintUILabel2">
 					          <ns2:text xsi:type="ns2:StringPropertyType">
-					            <ns2:value>*： 目前加工达人只支持提现到支付宝和微信帐号提现，请您点击“设置”按钮进行提现帐号配制。谢谢！</ns2:value>
+					            <ns2:value>*： 目前加工达人只支持提现到“支付宝”，请您点击“设置”按钮进行提现帐号配制。谢谢！</ns2:value>
 					          </ns2:text>
 					        </ns2:component>
 					        <ns2:layoutConstraint>
@@ -340,9 +376,19 @@
 	                                x="0" y="1" align="FULL"></ns2:constraint>
 	                        </ns2:layoutConstraint>
 	                        <ns2:layoutConstraint>
+                                <ns2:componentId>totalCoinUI</ns2:componentId>
+                                <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                                    x="0" y="2" align="FULL"></ns2:constraint>
+                            </ns2:layoutConstraint>
+                            <ns2:layoutConstraint>
+                                <ns2:componentId>totalScoreUI</ns2:componentId>
+                                <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                                    x="0" y="3" align="FULL"></ns2:constraint>
+                            </ns2:layoutConstraint>
+	                        <ns2:layoutConstraint>
 	                            <ns2:componentId>hintUILabel2</ns2:componentId>
 	                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-	                                x="0" y="2" align="FULL"></ns2:constraint>
+	                                x="0" y="4" align="FULL"></ns2:constraint>
 	                        </ns2:layoutConstraint>
 					    </ns2:component>
 				        <ns2:component xsi:type="ns2:UIPanelType" UIID="buttonPanel1">
@@ -796,6 +842,249 @@
                         </ns2:layoutConstraint>
                     </ns2:panel>
                 </ns2:tab>
+                
+                <ns2:tab uiid="coinInfoPanel">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>加工币记录</ns2:value>
+                    </ns2:title>
+                    <ns2:panel UIID="coinInfoPanel">
+                        <ns2:layout xsi:type="ns2:TableLayoutType">
+                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+                        </ns2:layout>
+                        <ns2:component xsi:type="ns2:UITableType" UIID="coinTable">
+                            <ns2:beElement>org.shaolin.vogerp.accounting.be.CustomerCoin</ns2:beElement>
+                            <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+                            <ns2:defaultRowSize>20</ns2:defaultRowSize>
+                            <ns2:showActionBar>true</ns2:showActionBar>
+                            <ns2:showFilter>true</ns2:showFilter>
+                            <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                                <ns2:expression xsi:type="ns2:ExpressionType">
+                                    <ns2:expressionString><![CDATA[
+                                     import java.util.List;
+                                     import org.shaolin.uimaster.page.ajax.TableConditions;
+                                     import org.shaolin.vogerp.accounting.be.*;
+                                     import org.shaolin.vogerp.accounting.ce.*;
+                                     import org.shaolin.vogerp.accounting.dao.AccountingModel;
+                                     import org.shaolin.bmdp.runtime.security.UserContext;
+                                     {
+                                        if ($tableCondition == null) {
+                                           $tableCondition = TableConditions.createCondition(new CustomerCoinImpl());
+                                           $tableCondition.setCount(20);
+                                           $tableCondition.addOrder("createDate", false);
+                                        }
+                                        CustomerCoinImpl condition = (CustomerCoinImpl)$tableCondition.getCondition();
+                                        condition.setUserId(UserContext.getUserContext().getUserId());
+                                        return AccountingModel.INSTANCE.searchUserCoin(condition,
+                                                      $tableCondition.getOrders(),
+                                                      $tableCondition.getOffset(), 
+                                                      $tableCondition.getCount());
+                                     }]]></ns2:expressionString>
+                                </ns2:expression>
+                            </ns2:query>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>顺号</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.id</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Label</ns2:type>
+                                </ns2:uiType>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.utils.StringUtil;
+                                        {
+                                           return $rowBE.getId() + "";
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:rowExpression>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>加工币个数</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.coin</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Text</ns2:type>
+                                </ns2:uiType>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.utils.StringUtil;
+                                        {
+                                           return $rowBE.getCoin() + "";
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:rowExpression>
+                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.runtime.AppContext;
+                                        import org.shaolin.vogerp.commonmodel.ce.Gender;
+                                        {
+                                            $rowBE.setCoin(Integer.valueOf($value).intValue());
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:updateCondition>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                              <ns2:title xsi:type="ns2:StringPropertyType">
+                                  <ns2:value>获取原因</ns2:value>
+                              </ns2:title>
+                              <ns2:beFieldId>rowBE.reason</ns2:beFieldId>
+                              <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
+                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.runtime.AppContext;
+                                        import org.shaolin.vogerp.accounting.ce.CoinOrScoreReasonType;
+                                        {
+                                            $rowBE.setReason((CoinOrScoreReasonType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.accounting.ce.CoinOrScoreReasonType").getByIntValue(Integer.valueOf($value).intValue()));
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:updateCondition>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>是否以兑换</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.spent</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Label</ns2:type>
+                                </ns2:uiType>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                              <ns2:title xsi:type="ns2:StringPropertyType">
+                                  <ns2:value>是否冻结</ns2:value>
+                              </ns2:title>
+                              <ns2:beFieldId>rowBE.frezzen</ns2:beFieldId>
+                              <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                            </ns2:column>
+                            <ns2:defaultActions>
+                            </ns2:defaultActions>
+                        </ns2:component>
+                        <ns2:layoutConstraint>
+                            <ns2:componentId>coinTable</ns2:componentId>
+                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                                x="0" y="0" align="FULL"></ns2:constraint>
+                        </ns2:layoutConstraint>
+                    </ns2:panel>
+                </ns2:tab>
+                
+                <ns2:tab uiid="scoreInfoPanel">
+                    <ns2:title xsi:type="ns2:StringPropertyType">
+                        <ns2:value>积分记录</ns2:value>
+                    </ns2:title>
+                    <ns2:panel UIID="scoreInfoPanel">
+                        <ns2:layout xsi:type="ns2:TableLayoutType">
+                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+                        </ns2:layout>
+                        <ns2:component xsi:type="ns2:UITableType" UIID="scoreTable">
+                            <ns2:beElement>org.shaolin.vogerp.accounting.be.CustomerScore</ns2:beElement>
+                            <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+                            <ns2:defaultRowSize>20</ns2:defaultRowSize>
+                            <ns2:showActionBar>true</ns2:showActionBar>
+                            <ns2:showFilter>true</ns2:showFilter>
+                            <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                                <ns2:expression xsi:type="ns2:ExpressionType">
+                                    <ns2:expressionString><![CDATA[
+                                     import java.util.List;
+                                     import org.shaolin.uimaster.page.ajax.TableConditions;
+                                     import org.shaolin.vogerp.accounting.be.*;
+                                     import org.shaolin.vogerp.accounting.ce.*;
+                                     import org.shaolin.vogerp.accounting.dao.AccountingModel;
+                                     import org.shaolin.bmdp.runtime.security.UserContext;
+                                     {
+                                        if ($tableCondition == null) {
+                                           $tableCondition = TableConditions.createCondition(new CustomerScoreImpl());
+                                           $tableCondition.setCount(20);
+                                           $tableCondition.addOrder("createDate", false);
+                                        }
+                                        CustomerScoreImpl condition = (CustomerScoreImpl)$tableCondition.getCondition();
+                                        condition.setUserId(UserContext.getUserContext().getUserId());
+                                        return AccountingModel.INSTANCE.searchUserScore(condition,
+                                                      $tableCondition.getOrders(),
+                                                      $tableCondition.getOffset(), 
+                                                      $tableCondition.getCount());
+                                     }]]></ns2:expressionString>
+                                </ns2:expression>
+                            </ns2:query>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>顺号</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.id</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Label</ns2:type>
+                                </ns2:uiType>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.utils.StringUtil;
+                                        {
+                                           return $rowBE.getId() + "";
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:rowExpression>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                                <ns2:title xsi:type="ns2:StringPropertyType">
+                                    <ns2:value>积分数</ns2:value>
+                                </ns2:title>
+                                <ns2:beFieldId>rowBE.score</ns2:beFieldId>
+                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                                    <ns2:type>Text</ns2:type>
+                                </ns2:uiType>
+                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.utils.StringUtil;
+                                        {
+                                           return $rowBE.getScore() + "";
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:rowExpression>
+                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.runtime.AppContext;
+                                        import org.shaolin.vogerp.commonmodel.ce.Gender;
+                                        {
+                                            $rowBE.setScore(Integer.valueOf($value).intValue());
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:updateCondition>
+                            </ns2:column>
+                            <ns2:column xsi:type="ns2:UITableColumnType">
+                              <ns2:title xsi:type="ns2:StringPropertyType">
+                                  <ns2:value>获取原因</ns2:value>
+                              </ns2:title>
+                              <ns2:beFieldId>rowBE.reason</ns2:beFieldId>
+                              <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>ComBox</ns2:type></ns2:uiType>
+                                <ns2:updateCondition xsi:type="ns2:ExpressionPropertyType">
+                                    <ns2:expression xsi:type="ns2:ExpressionType">
+                                        <ns2:expressionString><![CDATA[
+                                        import org.shaolin.bmdp.runtime.AppContext;
+                                        import org.shaolin.vogerp.accounting.ce.CoinOrScoreReasonType;
+                                        {
+                                            $rowBE.setReason((CoinOrScoreReasonType)AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.accounting.ce.CoinOrScoreReasonType").getByIntValue(Integer.valueOf($value).intValue()));
+                                        }]]></ns2:expressionString>
+                                    </ns2:expression>
+                                </ns2:updateCondition>
+                            </ns2:column>
+                            <ns2:defaultActions>
+                            </ns2:defaultActions>
+                        </ns2:component>
+                        <ns2:layoutConstraint>
+                            <ns2:componentId>scoreTable</ns2:componentId>
+                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                                x="0" y="0" align="FULL"></ns2:constraint>
+                        </ns2:layoutConstraint>
+                    </ns2:panel>
+                </ns2:tab>
+                
 			</ns2:component>
 			<ns2:layoutConstraint>
 				<ns2:componentId>functionsTab</ns2:componentId>

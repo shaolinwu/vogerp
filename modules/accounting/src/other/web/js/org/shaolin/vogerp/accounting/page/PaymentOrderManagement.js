@@ -7,7 +7,7 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "MyWalletPanel",prefix + "PayVoucherInfoPanel1",prefix + "PayVoucherInfoPanel"]
+        ,subComponents: [prefix + "MyWalletPanel",prefix + "PayVoucherInfoPanel1",prefix + "PayVoucherInfoPanel",prefix + "coinInfoPanel",prefix + "scoreInfoPanel"]
     });
     var totalAmountUI = new UIMaster.ui.label
     ({
@@ -19,6 +19,16 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
         ui: elementList[prefix + "withdrawAmountUI"]
     });
 
+    var totalCoinUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "totalCoinUI"]
+    });
+
+    var totalScoreUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "totalScoreUI"]
+    });
+
     var hintUILabel2 = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "hintUILabel2"]
@@ -28,7 +38,7 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
     ({
         ui: elementList[prefix + "buttonPanel0"]
         ,items: []
-        ,subComponents: [prefix + "totalAmountUI",prefix + "withdrawAmountUI",prefix + "hintUILabel2"]
+        ,subComponents: [prefix + "totalAmountUI",prefix + "withdrawAmountUI",prefix + "totalCoinUI",prefix + "totalScoreUI",prefix + "hintUILabel2"]
     });
     var settingBtnUI = new UIMaster.ui.button
     ({
@@ -79,6 +89,28 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
         ,items: []
         ,subComponents: [prefix + "receivePayOrderTable"]
     });
+    var coinTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "coinTable"]
+    });
+
+    var coinInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "coinInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "coinTable"]
+    });
+    var scoreTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "scoreTable"]
+    });
+
+    var scoreInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "scoreInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "scoreTable"]
+    });
 
     var Form = new UIMaster.ui.panel
     ({
@@ -97,6 +129,10 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
 
     Form.withdrawAmountUI=withdrawAmountUI;
 
+    Form.totalCoinUI=totalCoinUI;
+
+    Form.totalScoreUI=totalScoreUI;
+
     Form.hintUILabel2=hintUILabel2;
 
     Form.buttonPanel1=buttonPanel1;
@@ -114,6 +150,14 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagement(json)
     Form.PayVoucherInfoPanel=PayVoucherInfoPanel;
 
     Form.receivePayOrderTable=receivePayOrderTable;
+
+    Form.coinInfoPanel=coinInfoPanel;
+
+    Form.coinTable=coinTable;
+
+    Form.scoreInfoPanel=scoreInfoPanel;
+
+    Form.scoreTable=scoreTable;
 
     Form.user_constructor = function()
     {

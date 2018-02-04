@@ -12,7 +12,7 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "PayVoucherInfoPanel1",prefix + "PayVoucherInfoPanel2",prefix + "PayVoucherInfoPanel",prefix + "chargeServiceInfoPanel"]
+        ,subComponents: [prefix + "PayVoucherInfoPanel1",prefix + "PayVoucherInfoPanel2",prefix + "PayVoucherInfoPanel",prefix + "chargeServiceInfoPanel",prefix + "coinPolicyInfoPanel",prefix + "coinInfoPanel",prefix + "scoreInfoPanel"]
     });
     var payOrderRequestTable = new UIMaster.ui.objectlist
     ({
@@ -58,6 +58,39 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin(json)
         ,items: []
         ,subComponents: [prefix + "chargeServiceTable"]
     });
+    var coinPolicyTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "coinPolicyTable"]
+    });
+
+    var coinPolicyInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "coinPolicyInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "coinPolicyTable"]
+    });
+    var coinTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "coinTable"]
+    });
+
+    var coinInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "coinInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "coinTable"]
+    });
+    var scoreTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "scoreTable"]
+    });
+
+    var scoreInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "scoreInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "scoreTable"]
+    });
 
     var actionPanel = new UIMaster.ui.panel
     ({
@@ -92,6 +125,18 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin(json)
     Form.chargeServiceInfoPanel=chargeServiceInfoPanel;
 
     Form.chargeServiceTable=chargeServiceTable;
+
+    Form.coinPolicyInfoPanel=coinPolicyInfoPanel;
+
+    Form.coinPolicyTable=coinPolicyTable;
+
+    Form.coinInfoPanel=coinInfoPanel;
+
+    Form.coinTable=coinTable;
+
+    Form.scoreInfoPanel=scoreInfoPanel;
+
+    Form.scoreTable=scoreTable;
 
     Form.actionPanel=actionPanel;
 

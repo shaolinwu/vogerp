@@ -373,5 +373,107 @@ public class AccountingModel extends BEEntityDaoObject {
         return this._count(inObjectCriteria);
     }
 
+    public List<org.shaolin.vogerp.accounting.be.ICustomerCoin> searchUserCoin(org.shaolin.vogerp.accounting.be.CustomerCoinImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.CustomerCoinImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+            if (scObject.getUserId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.userId", scObject.getUserId()));
+            }
+            if (scObject.getCoin() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.userId", scObject.getCoin()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long searchUserCoinCount(org.shaolin.vogerp.accounting.be.CustomerCoinImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.CustomerCoinImpl.class, "inObject");
+
+            if (scObject.getUserId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.userId", scObject.getUserId()));
+            }
+            if (scObject.getCoin() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.userId", scObject.getCoin()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
+    }
+
+    public List<org.shaolin.vogerp.accounting.be.ICustomerScore> searchUserScore(org.shaolin.vogerp.accounting.be.CustomerScoreImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.CustomerScoreImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+            if (scObject.getUserId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.userId", scObject.getUserId()));
+            }
+            if (scObject.getScore() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.userId", scObject.getScore()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long searchUserScoreCount(org.shaolin.vogerp.accounting.be.CustomerScoreImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.CustomerScoreImpl.class, "inObject");
+
+            if (scObject.getUserId() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.userId", scObject.getUserId()));
+            }
+            if (scObject.getScore() > 0) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.userId", scObject.getScore()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
+    }
+
+    public List<org.shaolin.vogerp.accounting.be.ICoinPolicyTemplate> searchCoinPolicy(org.shaolin.vogerp.accounting.be.CoinPolicyTemplateImpl scObject,
+           List<Order> orders, int offset, int count) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.CoinPolicyTemplateImpl.class, "inObject");
+            if (orders == null) {
+            } else {
+                this._addOrders(inObjectCriteria, orders);
+            }
+
+            if (scObject.getReason() != null && scObject.getReason() != org.shaolin.vogerp.accounting.ce.CoinOrScoreReasonType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.reasonInt", scObject.getReason().getIntValue()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        List result = this._list(offset, count, inObjectCriteria);
+        return result;
+    }
+
+    public long searchCoinPolicyCount(org.shaolin.vogerp.accounting.be.CoinPolicyTemplateImpl scObject) {
+            Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.accounting.be.CoinPolicyTemplateImpl.class, "inObject");
+
+            if (scObject.getReason() != null && scObject.getReason() != org.shaolin.vogerp.accounting.ce.CoinOrScoreReasonType.NOT_SPECIFIED) {
+                inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.reasonInt", scObject.getReason().getIntValue()));
+            }
+
+        inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+        return this._count(inObjectCriteria);
+    }
+
 }
 

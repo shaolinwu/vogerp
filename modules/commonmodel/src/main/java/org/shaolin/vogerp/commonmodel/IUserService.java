@@ -62,6 +62,8 @@ public interface IUserService {
 	
 	public IPersonalAccount getPersonalAccount(long userId);
 	
+	public IPersonalAccount getPersonalInfoByName(String mobilePhone);
+	
 	public IPersonalInfo getPersonalInfo(long userId);
 	
 	public IPersonalInfo getPersonalInfo(long userId, boolean freshObject);

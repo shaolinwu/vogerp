@@ -6,13 +6,18 @@ import org.shaolin.bmdp.runtime.security.UserContext;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
 import org.shaolin.vogerp.accounting.IAccountingService;
 import org.shaolin.vogerp.accounting.be.AccountVoucherImpl;
+import org.shaolin.vogerp.accounting.be.CoinPolicyTemplateImpl;
 import org.shaolin.vogerp.accounting.be.CustomerAccountImpl;
+import org.shaolin.vogerp.accounting.be.CustomerCoinImpl;
+import org.shaolin.vogerp.accounting.be.CustomerScoreImpl;
 import org.shaolin.vogerp.accounting.be.DoubleEntryImpl;
 import org.shaolin.vogerp.accounting.be.IAccountVoucher;
+import org.shaolin.vogerp.accounting.be.ICoinPolicyTemplate;
 import org.shaolin.vogerp.accounting.be.ICustomerAccount;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
 import org.shaolin.vogerp.accounting.ce.ClassifyOfAccounts;
+import org.shaolin.vogerp.accounting.ce.CoinOrScoreReasonType;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
 import org.shaolin.vogerp.accounting.ce.SettlementMethodType;
 import org.shaolin.vogerp.accounting.ce.VoucherType;
@@ -21,12 +26,22 @@ import org.shaolin.vogerp.accounting.util.PaymentUtil;
 
 public class AccountingServiceImpl implements IAccountingService, IServiceProvider {
 
+	public static void notifyRegistered(long userId, long recommandedUserId) {
+		PaymentUtil.addCoin(userId, CoinOrScoreReasonType.REASON1);
+		PaymentUtil.addScore(userId, CoinOrScoreReasonType.REASON1);
+		if (recommandedUserId > 0) {
+			PaymentUtil.addCoin(recommandedUserId, CoinOrScoreReasonType.REASON2);
+			PaymentUtil.addScore(recommandedUserId, CoinOrScoreReasonType.REASON2);
+		}
+	}
+	
+	
 	/**
 	 * Do not expose this method into interface.
 	 * 
 	 * @param userContext
 	 */
-	public void registerLoginUserAccountInfo(UserContext userContext) {
+	public static void registerLoginUserAccountInfo(UserContext userContext) {
 		CustomerAccountImpl condition = new CustomerAccountImpl();
 		condition.setUserId(userContext.getUserId());
 		
@@ -106,14 +121,12 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 		double totalAmount = 0;
 		for (IPayOrder order: orders) {
 			totalAmount += (order.getAmount()/100);
-			totalAmount -= Math.abs(order.getAmount() * order.getServiceChargeBAmount());
 		}
 		
 		condition.setWithdrawn(true);
 		orders = AccountingModel.INSTANCE.searchWithdrawnPaymentOrder(condition, null, 0, -1);
 		for (IPayOrder order: orders) {
 			totalAmount += (order.getAmount()/100);
-			totalAmount -= Math.abs(order.getAmount() * order.getServiceChargeBAmount());
 		}
 		return totalAmount;
 	}
@@ -128,7 +141,6 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 		double totalWithdrawnAmount = 0;
 		for (IPayOrder order: orders) {
 			totalWithdrawnAmount += (order.getAmount()/100);
-			totalWithdrawnAmount -= Math.abs(order.getAmount() * order.getServiceChargeBAmount());
 		}
 		return totalWithdrawnAmount;
 	}
@@ -144,6 +156,78 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 			totalAmount += (order.getAmount()/100);
 		}
 		return totalAmount;
+	}
+	
+	public int queryUserTotalCoin(long userId) {
+		CustomerCoinImpl condition = new CustomerCoinImpl();
+        condition.setUserId(userId);
+        condition.setSpent(false);
+        condition.setFrezzen(false);
+        List result = AccountingModel.INSTANCE.searchUserCoin(condition, null, 0, -1);
+        int totalScores = 0;
+        if (result.size() > 0) {
+           for (int i=0; i<result.size(); i++) {
+               totalScores += ((CustomerCoinImpl)result.get(i)).getCoin();
+           }
+        }
+        return totalScores;
+	}
+	
+	public int queryUserTotalScore(long userId) {
+		CustomerScoreImpl condition = new CustomerScoreImpl();
+        condition.setUserId(userId);
+        condition.setSpent(false);
+        condition.setFrezzen(false);
+        List result = AccountingModel.INSTANCE.searchUserScore(condition, null, 0, -1);
+        int totalScores = 0;
+        if (result.size() > 0) {
+           for (int i=0; i<result.size(); i++) {
+               totalScores += ((CustomerScoreImpl)result.get(i)).getScore();
+           }
+        }
+        return totalScores;
+	}
+	
+	public boolean addScore(long userId, CoinOrScoreReasonType reason) {
+		if (userId <= 0 || reason == CoinOrScoreReasonType.NOT_SPECIFIED) {
+			return false;
+		}
+		CoinPolicyTemplateImpl condition1 = new CoinPolicyTemplateImpl();
+		condition1.setReason(reason);
+		List<ICoinPolicyTemplate> result = AccountingModel.INSTANCE.searchCoinPolicy(condition1, null, 0, 1);
+		if (result == null || result.size() == 0) {
+			return false;
+		}
+		
+		CustomerScoreImpl condition = new CustomerScoreImpl();
+        condition.setUserId(userId);
+        condition.setScore(result.get(0).getRewardScore());
+        condition.setReason(reason);
+        condition.setSpent(false);
+        condition.setFrezzen(false);
+        AccountingModel.INSTANCE.create(condition);
+        return true;
+	}
+	
+	public boolean addCoin(long userId, CoinOrScoreReasonType reason) {
+		if (userId <= 0 || reason == CoinOrScoreReasonType.NOT_SPECIFIED) {
+			return false;
+		}
+		CoinPolicyTemplateImpl condition1 = new CoinPolicyTemplateImpl();
+		condition1.setReason(reason);
+		List<ICoinPolicyTemplate> result = AccountingModel.INSTANCE.searchCoinPolicy(condition1, null, 0, 1);
+		if (result == null || result.size() == 0) {
+			return false;
+		}
+		
+		CustomerCoinImpl condition = new CustomerCoinImpl();
+        condition.setUserId(userId);
+        condition.setCoin(result.get(0).getRewardCoin());
+        condition.setReason(reason);
+        condition.setSpent(false);
+        condition.setFrezzen(false);
+        AccountingModel.INSTANCE.create(condition);
+        return true;
 	}
 	
 	@Override

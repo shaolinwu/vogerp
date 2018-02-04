@@ -93,22 +93,24 @@
       <ns2:exp>
         <expressionString><![CDATA[
        import java.util.HashMap;
-      import java.util.Date;
-      import java.util.List;
-      import java.util.ArrayList;
-      import org.shaolin.bmdp.runtime.security.UserContext;
-      import org.shaolin.uimaster.page.AjaxContext;
-      import org.shaolin.uimaster.page.ajax.*;
-      import org.shaolin.bmdp.runtime.AppContext; 
-      import org.shaolin.vogerp.ecommercial.dao.*;
+       import java.util.Date;
+       import java.util.List;
+       import java.util.ArrayList;
+       import org.shaolin.bmdp.runtime.security.UserContext;
+       import org.shaolin.uimaster.page.AjaxContext;
+       import org.shaolin.uimaster.page.ajax.*;
+       import org.shaolin.bmdp.runtime.AppContext; 
+       import org.shaolin.vogerp.ecommercial.dao.*;
        import org.shaolin.vogerp.commonmodel.IUserService; 
-      import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
-      import org.shaolin.bmdp.workflow.be.NotificationImpl;
+       import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
+       import org.shaolin.bmdp.workflow.be.NotificationImpl;
        import org.shaolin.vogerp.commonmodel.be.*;
        import org.shaolin.vogerp.commonmodel.ce.*;
        import org.shaolin.vogerp.commonmodel.IMemberService;
        import org.shaolin.vogerp.commonmodel.IOrganizationService;
        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+       import org.shaolin.vogerp.accounting.util.PaymentUtil;
+       import org.shaolin.vogerp.accounting.ce.CoinOrScoreReasonType;
        { 
            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
            LegalOrganizationInfoImpl defaultUser = (LegalOrganizationInfoImpl)form.getInputParameter("beObject");
@@ -120,12 +122,17 @@
            
            //TODO: check whether is payed or not.
            
-           
            OrganizationImpl orgInfo = (OrganizationImpl)form.getInputParameter("orgInfo");
            orgInfo.setVeriState(OrgVerifyStatusType.VERIFIED);
            orgInfo.setVerifierId(UserContext.getUserContext().getUserId());
            orgInfo.setOrgType(OrgType.COMPANY);
            CommonModel.INSTANCE.update(orgInfo);
+           
+           // add reward.
+           IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
+           long userId = ((IPersonalInfo)orgService.getEmployeese(orgInfo.getId()).get(0)).getId();
+           PaymentUtil.addScore(userId, CoinOrScoreReasonType.REASON4);
+           PaymentUtil.addCoin(userId, CoinOrScoreReasonType.REASON4);
            
            // notify customer.
            PersonalInfoImpl condition = new PersonalInfoImpl();

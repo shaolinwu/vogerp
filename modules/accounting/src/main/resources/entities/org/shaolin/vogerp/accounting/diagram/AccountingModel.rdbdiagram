@@ -32,18 +32,73 @@
     </ns2:mapping>
   </ns2:table>
   <ns2:table>
+    <entityName>ACCT_CUSTCOIN</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="USERID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="COIN" type="INTEGER" isNull="true"></ns2:column>
+    <ns2:column name="REASON" type="INTEGER" isNull="true"></ns2:column>
+    <ns2:column name="SPENT" type="INTEGER" isNull="true"></ns2:column>
+    <ns2:column name="FREZZEN" type="INTEGER" isNull="true"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.CustomerCoin"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="userId" columnName="USERID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="coin" columnName="COIN"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="reason" columnName="REASON"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="spent" columnName="SPENT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="frezzen" columnName="FREZZEN"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>ACCT_CUSTSCORE</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="USERID" type="BIGINT" isNull="true"></ns2:column>
+    <ns2:column name="SCORE" type="INTEGER" isNull="true"></ns2:column>
+    <ns2:column name="REASON" type="INTEGER" isNull="true"></ns2:column>
+    <ns2:column name="SPENT" type="INTEGER" isNull="true"></ns2:column>
+    <ns2:column name="FREZZEN" type="INTEGER" isNull="true"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.CustomerScore"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="userId" columnName="USERID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="score" columnName="SCORE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="reason" columnName="REASON"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="spent" columnName="SPENT"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="frezzen" columnName="FREZZEN"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
     <entityName>ACCT_PAYORDER</entityName>
     <systemVersion>0</systemVersion>
     <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
     <ns2:column name="PARENTID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="ORGID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="USERID" type="BIGINT" isNull="true"></ns2:column>
-    <ns2:column name="ServiceChargeId" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="ORDERSERIALNUMBER" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="SERIALNUMBER" type="VARCHAR" length="50" isNull="true"></ns2:column>
     <ns2:column name="OUTTRADENO" type="VARCHAR" length="50" isNull="true"></ns2:column>
     <ns2:column name="DESCRIPTION" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="AMOUNT" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="INITAMOUNT" type="DECIMAL" isNull="true"></ns2:column>
+    <ns2:column name="ServiceChargeId" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="ServiceChargeAAmount" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="ServiceChargeBAmount" type="DECIMAL" isNull="true"></ns2:column>
     <ns2:column name="PAYRETURNURL" type="VARCHAR" isNull="true"></ns2:column>
@@ -74,6 +129,7 @@
       <ns2:fieldMapping beFieldName="serialNumber" columnName="SERIALNUMBER"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="outTradeNo" columnName="OUTTRADENO"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="description" columnName="DESCRIPTION"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="initAmount" columnName="INITAMOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="amount" columnName="AMOUNT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="status" columnName="STATUS"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="withdrawn" columnName="WITHDRAWN"></ns2:fieldMapping>
@@ -181,6 +237,29 @@
       <ns2:fieldMapping beFieldName="chargeBRate" columnName="ChargeBRate"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="payBusinessType" columnName="PayBusinessType"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="version" columnName="Version"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
+    </ns2:mapping>
+  </ns2:table>
+  <ns2:table>
+    <entityName>ACCT_COINPOLICYTEMP</entityName>
+    <systemVersion>0</systemVersion>
+    <ns2:column name="ID" type="BIGINT" isNull="false" autoIncrement="true"></ns2:column>
+    <ns2:column name="REWARDCOIN" type="INTEGER" isNull="true"></ns2:column>
+    <ns2:column name="REWARDSCORE" type="INTEGER" isNull="true"></ns2:column>
+    <ns2:column name="REASON" type="INTEGER" length="1" default="1"></ns2:column>
+    <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
+    <ns2:column name="_enable" type="INTEGER" length="2" default="1"></ns2:column>
+    <ns2:primaryKey>
+      <ns2:columnName>ID</ns2:columnName>
+    </ns2:primaryKey>
+    <ns2:mapping>
+      <systemVersion>0</systemVersion>
+      <ns2:businessEntity entityName="org.shaolin.vogerp.accounting.be.CoinPolicyTemplate"></ns2:businessEntity>
+      <ns2:fieldMapping beFieldName="id" columnName="ID"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="rewardCoin" columnName="REWARDCOIN"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="rewardScore" columnName="REWARDSCORE"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="reason" columnName="REASON"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="_enable" columnName="_enable"></ns2:fieldMapping>
     </ns2:mapping>
@@ -777,6 +856,137 @@
       </ns2:fieldMapping>
       <ns2:searchConditionData name="scObject" category="BusinessEntity">
         <type entityName="org.shaolin.vogerp.accounting.be.CustomerAccount"></type>
+      </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  
+  <ns2:query queryName="searchUserCoin">
+    <ns2:searchResult name="outObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.accounting.be.CustomerCoin"></type>
+    </ns2:searchResult>
+    <ns2:fromData name="inObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.accounting.be.CustomerCoin"></type>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>outObject</ns2:toDataFieldPath>
+        <ns2:value xsi:type="ns2:SimpleFieldValueType">
+          <ns2:valueFieldPath>inObject</ns2:valueFieldPath>
+        </ns2:value>
+      </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.userId</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.userId</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getUserId() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.coin</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getCoin() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:searchConditionData name="scObject" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.accounting.be.CustomerCoin"></type>
+      </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  
+  
+  <ns2:query queryName="searchUserScore">
+    <ns2:searchResult name="outObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.accounting.be.CustomerScore"></type>
+    </ns2:searchResult>
+    <ns2:fromData name="inObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.accounting.be.CustomerScore"></type>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>outObject</ns2:toDataFieldPath>
+        <ns2:value xsi:type="ns2:SimpleFieldValueType">
+          <ns2:valueFieldPath>inObject</ns2:valueFieldPath>
+        </ns2:value>
+      </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.userId</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.userId</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getUserId() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.score</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getScore() > 0]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:searchConditionData name="scObject" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.accounting.be.CustomerScore"></type>
+      </ns2:searchConditionData>
+    </ns2:searchConditionMapping>
+  </ns2:query>
+  
+  <ns2:query queryName="searchCoinPolicy">
+    <ns2:searchResult name="outObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.accounting.be.CoinPolicyTemplate"></type>
+    </ns2:searchResult>
+    <ns2:fromData name="inObject" category="BusinessEntity">
+      <type entityName="org.shaolin.vogerp.accounting.be.CoinPolicyTemplate"></type>
+    </ns2:fromData>
+    <ns2:searchResultMapping>
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>outObject</ns2:toDataFieldPath>
+        <ns2:value xsi:type="ns2:SimpleFieldValueType">
+          <ns2:valueFieldPath>inObject</ns2:valueFieldPath>
+        </ns2:value>
+      </ns2:fieldMapping>
+    </ns2:searchResultMapping>
+    <ns2:searchConditionMapping name="Search">
+      <ns2:fieldMapping>
+        <ns2:toDataFieldPath>inObject.reasonInt</ns2:toDataFieldPath>
+        <ns2:conditionValue>
+          <ns2:operator xsi:type="ns2:LogicOperatorType" isReverse="false">
+            <ns2:type>=</ns2:type>
+          </ns2:operator>
+          <ns2:value xsi:type="ns2:SimpleFieldValueType">
+            <ns2:valueFieldPath>scObject.getReason().getIntValue()</ns2:valueFieldPath>
+          </ns2:value>
+          <ns2:condition>
+            <expressionString><![CDATA[scObject.getReason() != null && scObject.getReason() != org.shaolin.vogerp.accounting.ce.CoinOrScoreReasonType.NOT_SPECIFIED]]></expressionString>
+          </ns2:condition>
+        </ns2:conditionValue>
+      </ns2:fieldMapping>
+      <ns2:searchConditionData name="scObject" category="BusinessEntity">
+        <type entityName="org.shaolin.vogerp.accounting.be.CoinPolicyTemplate"></type>
       </ns2:searchConditionData>
     </ns2:searchConditionMapping>
   </ns2:query>

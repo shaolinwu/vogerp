@@ -11,10 +11,12 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.shaolin.bmdp.runtime.AppContext;
 import org.shaolin.bmdp.utils.DateParser;
 import org.shaolin.bmdp.utils.StringUtil;
+import org.shaolin.vogerp.accounting.IAccountingService;
 import org.shaolin.vogerp.accounting.IPaymentService;
 import org.shaolin.vogerp.accounting.be.IPayOrder;
 import org.shaolin.vogerp.accounting.be.IPayOrderRequest;
 import org.shaolin.vogerp.accounting.be.PayOrderImpl;
+import org.shaolin.vogerp.accounting.ce.CoinOrScoreReasonType;
 import org.shaolin.vogerp.accounting.ce.PayBusinessType;
 import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
 import org.shaolin.vogerp.accounting.dao.AccountingModel;
@@ -279,5 +281,15 @@ public class PaymentUtil {
 		sb.append("<div>Tatol Amount: ").append(tatol/100).append("</div>");
 		sb.append("</div>");
 		return sb.toString();
+	}
+	
+	public static boolean addCoin(long userId, CoinOrScoreReasonType reason) {
+		IAccountingService accountingService = AppContext.get().getService(IAccountingService.class);
+		return accountingService.addCoin(userId, reason);
+	}
+	
+	public static boolean addScore(long userId, CoinOrScoreReasonType reason) {
+		IAccountingService accountingService = AppContext.get().getService(IAccountingService.class);
+		return accountingService.addScore(userId, reason);
 	}
 }

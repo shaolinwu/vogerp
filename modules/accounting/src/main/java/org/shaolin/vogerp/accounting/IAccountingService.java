@@ -2,6 +2,7 @@ package org.shaolin.vogerp.accounting;
 
 import org.shaolin.vogerp.accounting.be.IAccountVoucher;
 import org.shaolin.vogerp.accounting.be.ICustomerAccount;
+import org.shaolin.vogerp.accounting.ce.CoinOrScoreReasonType;
 
 public interface IAccountingService {
 
@@ -17,4 +18,11 @@ public interface IAccountingService {
 	
 	public double queryUserTotalSpent(long userId);
 	
+	public int queryUserTotalCoin(long userId);
+	
+	public int queryUserTotalScore(long userId);
+	
+	public boolean addScore(long userId, CoinOrScoreReasonType reason);
+	
+	public boolean addCoin(long userId, CoinOrScoreReasonType reason);
 }

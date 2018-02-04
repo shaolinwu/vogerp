@@ -306,12 +306,10 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		List<IPayOrder> result = AccountingModel.INSTANCE.searchPaymentOrder(order, null, 0, 1);
 		if (result != null && result.size() > 0) {
 			IPayOrder payOrder = result.get(0);
-			payOrder.setStatus(PayOrderStatusType.AGREEDPAYTOEND);
-			AccountingModel.INSTANCE.update(payOrder);
 			//differential accounting supported: record pay to double entry's table.
 			//so, we are able to track all profits from it.
 			//charge the service fee from the published user.
-			if(payOrder.getServiceChargeAAmount() > 0) {
+			if(payOrder.getServiceChargeAAmount() > 0 && payOrder.getServiceChargeAAmount() < payOrder.getAmount()) {
 				DoubleEntryImpl entry = new DoubleEntryImpl();
 				entry.setCreditAccount(SUPER_ACCOUNT);
 				entry.setCreditAmount(payOrder.getServiceChargeAAmount());
@@ -323,6 +321,8 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 				entry.setGeneralLedger(ClassifyOfAccounts.PROFIT);
 				entry.setSubLedger(payOrder.getPayBusinessType().getDisplayName());
 				AccountingModel.INSTANCE.create(entry);
+				// charged the pay user fees.
+				payOrder.setAmount(payOrder.getAmount() - order.getServiceChargeAAmount());
 			}
 			//charge the service fee from the end user.
 			if(payOrder.getServiceChargeBAmount() > 0) {
@@ -337,7 +337,12 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 				entry.setGeneralLedger(ClassifyOfAccounts.PROFIT);
 				entry.setSubLedger(payOrder.getPayBusinessType().getDisplayName());
 				AccountingModel.INSTANCE.create(entry);
+				// charged the taken user fees.
+				payOrder.setAmount(payOrder.getAmount() - order.getServiceChargeBAmount());
 			}
+			payOrder.setStatus(PayOrderStatusType.AGREEDPAYTOEND);
+			AccountingModel.INSTANCE.update(payOrder);
+			
 			NotificationImpl message = new NotificationImpl();
 			message.setPartyId(payOrder.getEndUserId());
 			message.setSubject("恭喜您有新的收入" + payOrder.getAmount()*100 + "元！");

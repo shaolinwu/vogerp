@@ -173,11 +173,17 @@
 			        import org.shaolin.vogerp.accounting.IPaymentService;
 			        import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
                     import org.shaolin.bmdp.workflow.be.NotificationImpl;
+                    import org.shaolin.vogerp.accounting.util.PaymentUtil;
+                    import org.shaolin.vogerp.accounting.ce.CoinOrScoreReasonType;
                      {
                          $order.setTakenStatus(OrderStatusType.TAKEN_COMPLETED);
 			             EOrderModel.INSTANCE.update($order);
                          IPaymentService payService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
                          payService.ensurePay($order.getSerialNumber());     
+			             
+			             //plus rewards.
+			             PaymentUtil.addScore($order.getTakenCustomerId(), CoinOrScoreReasonType.REASON3);
+                         PaymentUtil.addCoin($order.getTakenCustomerId(), CoinOrScoreReasonType.REASON3);
 			             
 			             if ($order.getDeliveryInfo() == null) {
 						    DeliveryInfoImpl takener = (DeliveryInfoImpl)EOrderModel.INSTANCE.get($order.getDeliveryInfoId(), DeliveryInfoImpl.class);

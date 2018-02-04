@@ -41,6 +41,67 @@
         </bediagram:member>
     </bediagram:beEntity>    
 	
+	<!-- User Coin Definition -->
+    <bediagram:beEntity needPersist="true">
+        <common:entityName>CustomerCoin</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>userId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>coin</bediagram:name>
+            <bediagram:type xsi:type="bediagram:IntType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>reason</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="CoinOrScoreReasonType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>spent</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BooleanType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>frezzen</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BooleanType" />
+        </bediagram:member>
+    </bediagram:beEntity>
+    
+    <!-- User Score Definition -->
+    <bediagram:beEntity needPersist="true">
+        <common:entityName>CustomerScore</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>userId</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>score</bediagram:name>
+            <bediagram:type xsi:type="bediagram:IntType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>reason</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="CoinOrScoreReasonType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>spent</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BooleanType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>frezzen</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BooleanType" />
+        </bediagram:member>
+    </bediagram:beEntity>
 	<!--to pay an bill of any order. -->
 	<bediagram:beEntity needOrgId="true" needPersist="true"
       needTask="true" needUIEntity="true">
@@ -80,6 +141,10 @@
         <bediagram:member>
             <bediagram:name>description</bediagram:name>
             <bediagram:type xsi:type="bediagram:StringType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>initAmount</bediagram:name>
+            <bediagram:type xsi:type="bediagram:DoubleType" />
         </bediagram:member>
         <bediagram:member>
             <bediagram:name>amount</bediagram:name>
@@ -391,6 +456,7 @@
 			<bediagram:type xsi:type="bediagram:DateTimeType" />
 		</bediagram:member>
 	</bediagram:beEntity>
+	
 	<!-- Service charges configuration. 各类业务手续费配制。 -->
 	<bediagram:beEntity needPersist="true" needUIEntity="true">
         <common:entityName>ServiceChargeTemplate</common:entityName>
@@ -420,6 +486,28 @@
             <bediagram:type xsi:type="bediagram:IntType" />
         </bediagram:member>
     </bediagram:beEntity>
+    <bediagram:beEntity needPersist="true" needUIEntity="true">
+        <common:entityName>CoinPolicyTemplate</common:entityName>
+        <bediagram:member pk="true">
+            <bediagram:name>id</bediagram:name>
+            <bediagram:type xsi:type="bediagram:LongType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>rewardCoin</bediagram:name>
+            <bediagram:type xsi:type="bediagram:IntType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>rewardScore</bediagram:name>
+            <bediagram:type xsi:type="bediagram:IntType" />
+        </bediagram:member>
+        <bediagram:member>
+            <bediagram:name>reason</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="CoinOrScoreReasonType" />
+            </bediagram:type>
+        </bediagram:member>
+    </bediagram:beEntity>
+    
 	<!-- 复式记账法/通用记账凭证 -->
 	<bediagram:beEntity needPersist="true" >
 		<common:entityName>DoubleEntry</common:entityName>
@@ -743,6 +831,34 @@
             <bediagram:value>Fail</bediagram:value>
             <bediagram:intValue>4</bediagram:intValue>
             <bediagram:description>申请失败</bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
+    <bediagram:ceEntity>
+        <common:entityName>CoinOrScoreReasonType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>reason1</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>用户注册</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>reason2</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>推荐注册</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>reason3</bediagram:value>
+            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:description>成交加工订单</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>reason4</bediagram:value>
+            <bediagram:intValue>4</bediagram:intValue>
+            <bediagram:description>商户验证成功</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>reason5</bediagram:value>
+            <bediagram:intValue>5</bediagram:intValue>
+            <bediagram:description>每月成交5单</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
 </bediagram:BEDiagram>

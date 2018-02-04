@@ -3,16 +3,6 @@
 function org_shaolin_vogerp_accounting_form_CustomerAccount(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var weixiAccountUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "weixiAccountUILabel"]
-    });
-
-    var weixiAccountUI = new UIMaster.ui.textfield
-    ({
-        ui: elementList[prefix + "weixiAccountUI"]
-    });
-
     var alipayAccountUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "alipayAccountUILabel"]
@@ -21,6 +11,16 @@ function org_shaolin_vogerp_accounting_form_CustomerAccount(json)
     var alipayAccountUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "alipayAccountUI"]
+    });
+
+    var alipayUserNameLabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "alipayUserNameLabel"]
+    });
+
+    var alipayUserNameUI = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "alipayUserNameUI"]
     });
 
     var okbtn = new UIMaster.ui.button
@@ -44,22 +44,22 @@ function org_shaolin_vogerp_accounting_form_CustomerAccount(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "weixiAccountUILabel",prefix + "weixiAccountUI",prefix + "alipayAccountUILabel",prefix + "alipayAccountUI"]
+        ,subComponents: [prefix + "alipayAccountUILabel",prefix + "alipayAccountUI",prefix + "alipayUserNameLabel",prefix + "alipayUserNameUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [weixiAccountUILabel,weixiAccountUI,alipayAccountUILabel,alipayAccountUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [alipayAccountUILabel,alipayAccountUI,alipayUserNameLabel,alipayUserNameUI,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
-
-    Form.weixiAccountUILabel=weixiAccountUILabel;
-
-    Form.weixiAccountUI=weixiAccountUI;
 
     Form.alipayAccountUILabel=alipayAccountUILabel;
 
     Form.alipayAccountUI=alipayAccountUI;
+
+    Form.alipayUserNameLabel=alipayUserNameLabel;
+
+    Form.alipayUserNameUI=alipayUserNameUI;
 
     Form.okbtn=okbtn;
 
@@ -67,13 +67,13 @@ function org_shaolin_vogerp_accounting_form_CustomerAccount(json)
 
     Form.fieldPanel=fieldPanel;
 
-    Form.weixiAccountUILabel=weixiAccountUILabel;
-
-    Form.weixiAccountUI=weixiAccountUI;
-
     Form.alipayAccountUILabel=alipayAccountUILabel;
 
     Form.alipayAccountUI=alipayAccountUI;
+
+    Form.alipayUserNameLabel=alipayUserNameLabel;
+
+    Form.alipayUserNameUI=alipayUserNameUI;
 
     Form.actionPanel=actionPanel;
 
