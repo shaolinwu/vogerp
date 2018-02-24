@@ -81,6 +81,26 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
         ui: elementList[prefix + "taxRateUI"]
     });
 
+    var needCreateModelUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "needCreateModelUILabel"]
+    });
+
+    var needCreateModelUI = new UIMaster.ui.checkbox
+    ({
+        ui: elementList[prefix + "needCreateModelUI"]
+    });
+
+    var needEstimatedPriceUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "needEstimatedPriceUILabel"]
+    });
+
+    var needEstimatedPriceUI = new UIMaster.ui.checkbox
+    ({
+        ui: elementList[prefix + "needEstimatedPriceUI"]
+    });
+
     var selectMComponentTable = new UIMaster.ui.objectlist
     ({
         ui: elementList[prefix + "selectMComponentTable"]
@@ -135,7 +155,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "severityUILabel",prefix + "severityUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "differentiationUILabel",prefix + "differentiationUI",prefix + "countUILabel",prefix + "countUI",prefix + "taxRateUILabel",prefix + "taxRateUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "severityUILabel",prefix + "severityUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "differentiationUILabel",prefix + "differentiationUI",prefix + "countUILabel",prefix + "countUI",prefix + "taxRateUILabel",prefix + "taxRateUI",prefix + "needCreateModelUILabel",prefix + "needCreateModelUI",prefix + "needEstimatedPriceUILabel",prefix + "needEstimatedPriceUI"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -148,7 +168,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [selectTableUI,serialNumberUILabel,serialNumberUI,severityUILabel,severityUI,materialTypeUILabel,materialTypeUI,descriptionUILabel,descriptionUI,differentiationUILabel,differentiationUI,countUILabel,countUI,taxRateUILabel,taxRateUI,selectMComponentTable,closeDialogBtn,viewbtn,savebtn,cancelbtn,photoUIForm,componentTable,machineToolTable,skinTable,thirdComponentTable,fieldPanel,attributePanel,attributePanel1,actionPanel]
+        ,items: [selectTableUI,serialNumberUILabel,serialNumberUI,severityUILabel,severityUI,materialTypeUILabel,materialTypeUI,descriptionUILabel,descriptionUI,differentiationUILabel,differentiationUI,countUILabel,countUI,taxRateUILabel,taxRateUI,needCreateModelUILabel,needCreateModelUI,needEstimatedPriceUILabel,needEstimatedPriceUI,selectMComponentTable,closeDialogBtn,viewbtn,savebtn,cancelbtn,photoUIForm,componentTable,machineToolTable,skinTable,thirdComponentTable,fieldPanel,attributePanel,attributePanel1,actionPanel]
     });
 
     Form.selectTableUI=selectTableUI;
@@ -180,6 +200,14 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     Form.taxRateUILabel=taxRateUILabel;
 
     Form.taxRateUI=taxRateUI;
+
+    Form.needCreateModelUILabel=needCreateModelUILabel;
+
+    Form.needCreateModelUI=needCreateModelUI;
+
+    Form.needEstimatedPriceUILabel=needEstimatedPriceUILabel;
+
+    Form.needEstimatedPriceUI=needEstimatedPriceUI;
 
     Form.selectMComponentTable=selectMComponentTable;
 
@@ -235,6 +263,14 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
 
     Form.taxRateUI=taxRateUI;
 
+    Form.needCreateModelUILabel=needCreateModelUILabel;
+
+    Form.needCreateModelUI=needCreateModelUI;
+
+    Form.needEstimatedPriceUILabel=needEstimatedPriceUILabel;
+
+    Form.needEstimatedPriceUI=needEstimatedPriceUI;
+
     Form.componentTable=componentTable;
 
     Form.machineToolTable=machineToolTable;
@@ -278,6 +314,14 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderByAdmin(json)
     Form.taxRateUILabel=taxRateUILabel;
 
     Form.taxRateUI=taxRateUI;
+
+    Form.needCreateModelUILabel=needCreateModelUILabel;
+
+    Form.needCreateModelUI=needCreateModelUI;
+
+    Form.needEstimatedPriceUILabel=needEstimatedPriceUILabel;
+
+    Form.needEstimatedPriceUI=needEstimatedPriceUI;
 
     Form.attributePanel1=attributePanel1;
 

@@ -242,6 +242,8 @@
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
             <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
           </ns2:layout>
@@ -336,6 +338,24 @@
 	      <ns2:component xsi:type="ns2:UITextFieldType" UIID="taxRateUI">
 	        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
 	      </ns2:component>
+	      <ns2:component xsi:type="ns2:UILabelType" UIID="needCreateModelUILabel">
+            <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+            <ns2:text xsi:type="ns2:StringPropertyType">
+              <ns2:value>需要设计建模图</ns2:value>
+            </ns2:text>
+          </ns2:component>
+          <ns2:component xsi:type="ns2:UICheckBoxType" UIID="needCreateModelUI">
+            <ns2:UIStyle></ns2:UIStyle>
+          </ns2:component>
+          <ns2:component xsi:type="ns2:UILabelType" UIID="needEstimatedPriceUILabel">
+            <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+            <ns2:text xsi:type="ns2:StringPropertyType">
+              <ns2:value>需要预估价</ns2:value>
+            </ns2:text>
+          </ns2:component>
+          <ns2:component xsi:type="ns2:UICheckBoxType" UIID="needEstimatedPriceUI">
+            <ns2:UIStyle></ns2:UIStyle>
+          </ns2:component>
           <ns2:layoutConstraint>
             <ns2:componentId>serialNumberUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
@@ -392,7 +412,24 @@
             <ns2:componentId>taxRateUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
           </ns2:layoutConstraint>
+          <ns2:layoutConstraint>
+            <ns2:componentId>needCreateModelUILabel</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="7" align="FULL" cellUIClass=""></ns2:constraint>
+          </ns2:layoutConstraint>
+          <ns2:layoutConstraint>
+            <ns2:componentId>needCreateModelUI</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="7" align="FULL" cellUIClass=""></ns2:constraint>
+          </ns2:layoutConstraint>
+          <ns2:layoutConstraint>
+            <ns2:componentId>needEstimatedPriceUILabel</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="8" align="FULL" cellUIClass=""></ns2:constraint>
+          </ns2:layoutConstraint>
+          <ns2:layoutConstraint>
+            <ns2:componentId>needEstimatedPriceUI</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="8" align="FULL" cellUIClass=""></ns2:constraint>
+          </ns2:layoutConstraint>
        </ns2:component>
+       
        <ns2:component xsi:type="ns2:UIReferenceEntityType" UIID="componentTable">
           <ns2:widgetLabel xsi:type="ns2:StringPropertyType">
               <ns2:value>配制材料和加工工艺</ns2:value>
@@ -736,6 +773,16 @@
       <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.MachOrderThirdCompTable"></ns2:mappingRule>
       <ns2:UIComponent componentPath="thirdComponentTable" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject" paramName="beObject"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping10">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISelect"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="needCreateModelUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.needCreateModel" paramName="Value"></ns2:DataComponent>
+    </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping11">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISelect"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="needEstimatedPriceUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.needEstimatedPrice" paramName="Value"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:DataToUIMappingOperation>
       <expressionString>{

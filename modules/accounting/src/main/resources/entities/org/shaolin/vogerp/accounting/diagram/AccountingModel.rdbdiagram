@@ -38,6 +38,7 @@
     <ns2:column name="USERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="COIN" type="INTEGER" isNull="true"></ns2:column>
     <ns2:column name="REASON" type="INTEGER" isNull="true"></ns2:column>
+    <ns2:column name="REASONDETAIL" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="SPENT" type="INTEGER" isNull="true"></ns2:column>
     <ns2:column name="FREZZEN" type="INTEGER" isNull="true"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
@@ -52,6 +53,7 @@
       <ns2:fieldMapping beFieldName="userId" columnName="USERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="coin" columnName="COIN"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="reason" columnName="REASON"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="reasonDetails" columnName="REASONDETAIL"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="spent" columnName="SPENT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="frezzen" columnName="FREZZEN"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>
@@ -65,6 +67,7 @@
     <ns2:column name="USERID" type="BIGINT" isNull="true"></ns2:column>
     <ns2:column name="SCORE" type="INTEGER" isNull="true"></ns2:column>
     <ns2:column name="REASON" type="INTEGER" isNull="true"></ns2:column>
+    <ns2:column name="REASONDETAIL" type="VARCHAR" isNull="true"></ns2:column>
     <ns2:column name="SPENT" type="INTEGER" isNull="true"></ns2:column>
     <ns2:column name="FREZZEN" type="INTEGER" isNull="true"></ns2:column>
     <ns2:column name="CREATEDATE" type="DATETIME" isNull="true"></ns2:column>
@@ -79,6 +82,7 @@
       <ns2:fieldMapping beFieldName="userId" columnName="USERID"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="score" columnName="SCORE"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="reason" columnName="REASON"></ns2:fieldMapping>
+      <ns2:fieldMapping beFieldName="reasonDetails" columnName="REASONDETAIL"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="spent" columnName="SPENT"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="frezzen" columnName="FREZZEN"></ns2:fieldMapping>
       <ns2:fieldMapping beFieldName="createDate" columnName="CREATEDATE"></ns2:fieldMapping>

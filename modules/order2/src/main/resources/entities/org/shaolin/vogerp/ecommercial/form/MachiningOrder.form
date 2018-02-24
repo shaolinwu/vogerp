@@ -341,6 +341,7 @@
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
             <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
             <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
           </ns2:layout>
@@ -471,6 +472,15 @@
 	      <ns2:component xsi:type="ns2:UICheckBoxType" UIID="needCreateModelUI">
 	        <ns2:UIStyle></ns2:UIStyle>
 	      </ns2:component>
+	      <ns2:component xsi:type="ns2:UILabelType" UIID="needEstimatedPriceUILabel">
+            <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
+            <ns2:text xsi:type="ns2:StringPropertyType">
+              <ns2:value>需要预估价</ns2:value>
+            </ns2:text>
+          </ns2:component>
+          <ns2:component xsi:type="ns2:UICheckBoxType" UIID="needEstimatedPriceUI">
+            <ns2:UIStyle></ns2:UIStyle>
+          </ns2:component>
 	      <ns2:component xsi:type="ns2:UILabelType" UIID="termsUILabel">
 	        <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
 	        <ns2:text xsi:type="ns2:StringPropertyType">
@@ -561,12 +571,20 @@
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="6" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>termsUILabel</ns2:componentId>
+            <ns2:componentId>needEstimatedPriceUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="7" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>termsUI</ns2:componentId>
+            <ns2:componentId>needEstimatedPriceUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="7" align="FULL" cellUIClass=""></ns2:constraint>
+          </ns2:layoutConstraint>
+          <ns2:layoutConstraint>
+            <ns2:componentId>termsUILabel</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="8" align="FULL" cellUIClass=""></ns2:constraint>
+          </ns2:layoutConstraint>
+          <ns2:layoutConstraint>
+            <ns2:componentId>termsUI</ns2:componentId>
+            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="8" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
        </ns2:component>
        <ns2:layoutConstraint>
@@ -579,7 +597,7 @@
       </ns2:layoutConstraint>
       </ns2:panel>
       </ns2:tab>
-      
+      <!-- 
       <ns2:tab uiid="configInfoPanel">
           <ns2:title xsi:type="ns2:StringPropertyType">
               <ns2:value>配制信息</ns2:value>
@@ -733,7 +751,7 @@
 		      </ns2:layoutConstraint>
 		   </ns2:panel>
       </ns2:tab>
-      
+      -->
       <ns2:tab uiid="deliveryInfoPanel">
 	      <ns2:title xsi:type="ns2:StringPropertyType">
 	          <ns2:value>寄送地址信息</ns2:value>
@@ -801,16 +819,7 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
-        <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
-      <ns2:component xsi:type="ns2:UIButtonType" UIID="viewbtn">
-        <ns2:EventListener xsi:type="ns2:ClickListenerType">
-          <ns2:handler functionName="PreView"></ns2:handler>
-        </ns2:EventListener>
-        <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>预览报价单</ns2:value>
-        </ns2:text>
-      </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="savebtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="TempSave"></ns2:handler>
@@ -829,16 +838,12 @@
         </ns2:text>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>viewbtn</ns2:componentId>
+        <ns2:componentId>savebtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
-        <ns2:componentId>savebtn</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
-      </ns2:layoutConstraint>
-      <ns2:layoutConstraint>
         <ns2:componentId>cancelbtn</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="2" y="0" align="FULL"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <ns2:layoutConstraint>
@@ -850,6 +855,7 @@
       <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
     </ns2:layoutConstraint>
     <ns2:constructorCode><![CDATA[
+       /**
        $(this.attributePanel1).parent().css("display", "none");
        $(this.attributePanel1).css("display", "block");
        var othis = this;
@@ -866,6 +872,7 @@
        this.componentTable.selectOne = overrideSelectOne;
        this.machineToolTable.selectOne = overrideSelectOne;
        this.skinTable.selectOne = overrideSelectOne;
+       */
     ]]>
     </ns2:constructorCode>
   </ns2:body>
@@ -964,6 +971,11 @@
       <ns2:UIComponent componentPath="needCreateModelUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.needCreateModel" paramName="Value"></ns2:DataComponent>
     </ns2:ComponentMapping>
+    <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping55">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISelect"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="needEstimatedPriceUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.needEstimatedPrice" paramName="Value"></ns2:DataComponent>
+    </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping6">
       <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
       <ns2:UIComponent componentPath="invoiceTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
@@ -989,6 +1001,7 @@
       <ns2:UIComponent componentPath="deliveryInfoUI" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.deliveryInfo" paramName="beObject"></ns2:DataComponent>
     </ns2:ComponentMapping>
+    <!--  
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping9">
       <ns2:mappingRule entityName="org.shaolin.vogerp.ecommercial.form.MachOrderComponentTable"></ns2:mappingRule>
       <ns2:UIComponent componentPath="componentTable" paramName="UIWidgetType"></ns2:UIComponent>
@@ -1004,6 +1017,7 @@
       <ns2:UIComponent componentPath="skinTable" paramName="UIWidgetType"></ns2:UIComponent>
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject" paramName="beObject"></ns2:DataComponent>
     </ns2:ComponentMapping>
+    -->
     <ns2:DataToUIMappingOperation>
       <expressionString><![CDATA[
       import org.shaolin.bmdp.runtime.security.UserContext;

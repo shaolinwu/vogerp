@@ -14,7 +14,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
         ,vertical: true
         ,closeOthersByDefault: true
         ,items: []
-        ,subComponents: [prefix + "basicInfoPanel",prefix + "configInfoPanel",prefix + "deliveryInfoPanel"]
+        ,subComponents: [prefix + "basicInfoPanel",prefix + "deliveryInfoPanel"]
     });
     var photoUIForm = new org_shaolin_vogerp_ecommercial_form_CADUploader({"prefix":prefix + "photoUIForm."});
 
@@ -115,6 +115,16 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
         ui: elementList[prefix + "needCreateModelUI"]
     });
 
+    var needEstimatedPriceUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "needEstimatedPriceUILabel"]
+    });
+
+    var needEstimatedPriceUI = new UIMaster.ui.checkbox
+    ({
+        ui: elementList[prefix + "needEstimatedPriceUI"]
+    });
+
     var termsUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "termsUILabel"]
@@ -132,42 +142,13 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "severityUILabel",prefix + "severityUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "differentiationUILabel",prefix + "differentiationUI",prefix + "countUILabel",prefix + "countUI",prefix + "needCreateModelUILabel",prefix + "needCreateModelUI",prefix + "termsUILabel",prefix + "termsUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "severityUILabel",prefix + "severityUI",prefix + "materialTypeUILabel",prefix + "materialTypeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "differentiationUILabel",prefix + "differentiationUI",prefix + "countUILabel",prefix + "countUI",prefix + "needCreateModelUILabel",prefix + "needCreateModelUI",prefix + "needEstimatedPriceUILabel",prefix + "needEstimatedPriceUI",prefix + "termsUILabel",prefix + "termsUI"]
     });
     var basicInfoPanel = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "basicInfoPanel"]
         ,items: []
         ,subComponents: [prefix + "photoUIForm",prefix + "attributePanel"]
-    });
-    var componentTable = new org_shaolin_vogerp_ecommercial_form_MachOrderComponentTable({"prefix":prefix + "componentTable."});
-
-    var machineToolTable = new org_shaolin_vogerp_ecommercial_form_MachOrderToolTable({"prefix":prefix + "machineToolTable."});
-
-    var skinTable = new org_shaolin_vogerp_ecommercial_form_MachOrderSkinTable({"prefix":prefix + "skinTable."});
-
-    var selectMComponentTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "selectMComponentTable"]
-        ,style: "display:none;"
-    });
-
-    var closeDialogBtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "closeDialogBtn"]
-    });
-
-    var attributePanel1 = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "attributePanel1"]
-        ,items: []
-        ,subComponents: [prefix + "selectMComponentTable",prefix + "closeDialogBtn"]
-    });
-    var configInfoPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "configInfoPanel"]
-        ,items: []
-        ,subComponents: [prefix + "componentTable",prefix + "machineToolTable",prefix + "skinTable",prefix + "attributePanel1"]
     });
     var deliveryInfoUI = new org_shaolin_vogerp_ecommercial_form_DeliveryInfoSimpleView({"prefix":prefix + "deliveryInfoUI."});
 
@@ -198,11 +179,6 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
         ,subComponents: [prefix + "deliveryInfoUI",prefix + "invoiceTypeUILabel",prefix + "invoiceTypeUI",prefix + "invoiceSignUILabel",prefix + "invoiceSignUI"]
     });
 
-    var viewbtn = new UIMaster.ui.button
-    ({
-        ui: elementList[prefix + "viewbtn"]
-    });
-
     var savebtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "savebtn"]
@@ -217,7 +193,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "viewbtn",prefix + "savebtn",prefix + "cancelbtn"]
+        ,subComponents: [prefix + "savebtn",prefix + "cancelbtn"]
     });
 
     var fieldPanel = new UIMaster.ui.panel
@@ -230,7 +206,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [selectTableUI,funcsPanel,viewbtn,savebtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [selectTableUI,funcsPanel,savebtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.selectTableUI=selectTableUI;
@@ -271,23 +247,13 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.needCreateModelUI=needCreateModelUI;
 
+    Form.needEstimatedPriceUILabel=needEstimatedPriceUILabel;
+
+    Form.needEstimatedPriceUI=needEstimatedPriceUI;
+
     Form.termsUILabel=termsUILabel;
 
     Form.termsUI=termsUI;
-
-    Form.configInfoPanel=configInfoPanel;
-
-    Form.componentTable=componentTable;
-
-    Form.machineToolTable=machineToolTable;
-
-    Form.skinTable=skinTable;
-
-    Form.attributePanel1=attributePanel1;
-
-    Form.selectMComponentTable=selectMComponentTable;
-
-    Form.closeDialogBtn=closeDialogBtn;
 
     Form.deliveryInfoPanel=deliveryInfoPanel;
 
@@ -300,8 +266,6 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     Form.invoiceSignUILabel=invoiceSignUILabel;
 
     Form.invoiceSignUI=invoiceSignUI;
-
-    Form.viewbtn=viewbtn;
 
     Form.savebtn=savebtn;
 
@@ -345,23 +309,13 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.needCreateModelUI=needCreateModelUI;
 
+    Form.needEstimatedPriceUILabel=needEstimatedPriceUILabel;
+
+    Form.needEstimatedPriceUI=needEstimatedPriceUI;
+
     Form.termsUILabel=termsUILabel;
 
     Form.termsUI=termsUI;
-
-    Form.configInfoPanel=configInfoPanel;
-
-    Form.componentTable=componentTable;
-
-    Form.machineToolTable=machineToolTable;
-
-    Form.skinTable=skinTable;
-
-    Form.attributePanel1=attributePanel1;
-
-    Form.selectMComponentTable=selectMComponentTable;
-
-    Form.closeDialogBtn=closeDialogBtn;
 
     Form.deliveryInfoPanel=deliveryInfoPanel;
 
@@ -377,8 +331,6 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.actionPanel=actionPanel;
 
-    Form.viewbtn=viewbtn;
-
     Form.savebtn=savebtn;
 
     Form.cancelbtn=cancelbtn;
@@ -388,6 +340,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
         /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_MachiningOrder */
 
         
+       /**
        $(this.attributePanel1).parent().css("display", "none");
        $(this.attributePanel1).css("display", "block");
        var othis = this;
@@ -404,6 +357,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
        this.componentTable.selectOne = overrideSelectOne;
        this.machineToolTable.selectOne = overrideSelectOne;
        this.skinTable.selectOne = overrideSelectOne;
+       */
     
     
             /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_MachiningOrder */

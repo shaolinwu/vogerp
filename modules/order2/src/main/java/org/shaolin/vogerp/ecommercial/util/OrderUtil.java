@@ -241,7 +241,7 @@ public class OrderUtil {
 		if (gorder.getOfferPrices() != null) {
 			Set<IOfferPrice> offerPrices = gorder.getOfferPrices();
 			for (IOfferPrice p : offerPrices) {
-				if (lowestPrice > p.getPrice()) {
+				if (lowestPrice <= 0 || lowestPrice > p.getPrice()) {
 					lowestPrice = p.getPrice();
 				}
 			}
@@ -255,7 +255,7 @@ public class OrderUtil {
 		if (gorder.getOfferPrices() != null) {
 			Set<IOfferPrice> offerPrices = gorder.getOfferPrices();
 			for (IOfferPrice p : offerPrices) {
-				if (lowestPrice > p.getPrice()) {
+				if (lowestPrice <= 0 || lowestPrice > p.getPrice()) {
 					lowestPrice = p.getPrice();
 					custId = p.getTakenCustomerId();
 				}

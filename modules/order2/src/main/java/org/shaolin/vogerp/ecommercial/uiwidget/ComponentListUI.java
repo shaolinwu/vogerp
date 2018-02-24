@@ -46,7 +46,7 @@ public class ComponentListUI extends HTMLWidgetType {
 				
 					double tax = morder.getTaxRate() * totalPrice;
 					context.generateHTML("<DIV>\u7A0E\u7387:"+FormatUtil.getCurrency(tax, null, true)+"</DIV>");
-					context.generateHTML("<DIV style='font-weight:bold;color:red'>\u603B\u7ED3:"+FormatUtil.getCurrency(totalPrice + tax, null, true)+"</DIV>");
+					context.generateHTML("<DIV style='font-weight:bold;color:red'>\u53C2\u8003\u603B\u4EF7:"+FormatUtil.getCurrency(totalPrice + tax, null, true)+"</DIV>");
 				} catch (Exception e) {
 					logger.warn("Error occurred while generating Machining order: " + e.getMessage(), e);
 				}

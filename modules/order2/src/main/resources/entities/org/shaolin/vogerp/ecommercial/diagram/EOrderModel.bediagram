@@ -416,7 +416,11 @@
                 <bediagram:targetEntity entityName="MachiningSeverityType" />
             </bediagram:type>
         </bediagram:member>
-        <!--估价报告-->
+        <!--估价报价-->
+        <bediagram:member>
+            <bediagram:name>needEstimatedPrice</bediagram:name>
+            <bediagram:type xsi:type="bediagram:BooleanType" />
+        </bediagram:member>
         <bediagram:member>
             <bediagram:name>components</bediagram:name>
             <bediagram:type xsi:type="bediagram:BESetType">
