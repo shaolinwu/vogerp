@@ -339,10 +339,6 @@
                           return;
                       }
                       MachiningOrderImpl order = (MachiningOrderImpl)personalInfoTable.getSelectedRow();
-                      if (order.getEstimatedPrice() == 0) {
-                          Dialog.showMessageDialog("订单还在估价中。。。请稍等！", "", Dialog.INFORMATION_MESSAGE, null);
-                          return;
-                      }
                       HashMap input = new HashMap();
                       input.put("beObject", order);
                       input.put("editable", new Boolean(false));

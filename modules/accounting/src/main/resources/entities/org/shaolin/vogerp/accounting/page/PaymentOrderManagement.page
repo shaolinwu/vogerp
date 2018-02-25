@@ -199,7 +199,7 @@
 						double availabeAmount = accountingService.queryUserTotalAvailableAmount(UserContext.getUserContext().getUserId());
                         if (availabeAmount > 0) {
 	                        ICustomerAccount customerAccount = (ICustomerAccount)UserContext.getUserData("AccountInfo", true);
-	                        if (customerAccount == null || customerAccount.getThirdPartyAccount() == null) {
+	                        if (customerAccount == null || customerAccount.getAlipayAccount() == null) {
 	                           Dialog.showMessageDialog("您还没有配制支付宝帐号，请点击设置按钮！", "没有第三方交易帐号", Dialog.WARNING_MESSAGE, null);
 	                           return;
 	                        }

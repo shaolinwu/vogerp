@@ -290,15 +290,34 @@
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
+        <ns2:eventHandler functionName="refreshMemeberCache">
+           <ns2:ops xsi:type="ns2:OpCallAjaxType" name="refreshMemeberCache-20160728-2343">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+                    import java.util.HashMap;
+                    import org.shaolin.bmdp.runtime.AppContext; 
+                    import org.shaolin.uimaster.page.AjaxContext;
+                    import org.shaolin.uimaster.page.AjaxActionHelper;
+                    import org.shaolin.uimaster.page.ajax.*;
+                    import org.shaolin.vogerp.commonmodel.IMemberService;
+                    {
+                        IMemberService memberService = (IMemberService)AppContext.get().getService(IMemberService.class);
+                        memberService.reload();
+                        Dialog.showMessageDialog("更新成功!", "", Dialog.INFORMATION_MESSAGE, null);
+                    }
+                    ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
-   <ns2:UISkin xsi:type="ns2:UISkinType">
-        <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
-        <ns2:param name="text">
-            <ns2:value xsi:type="ns2:StringPropertyType">
-                <ns2:value></ns2:value>
-            </ns2:value>
-        </ns2:param>
-    </ns2:UISkin>
+		   <ns2:UISkin xsi:type="ns2:UISkinType">
+		        <ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel</ns2:skinName>
+		        <ns2:param name="text">
+		            <ns2:value xsi:type="ns2:StringPropertyType">
+		                <ns2:value></ns2:value>
+		            </ns2:value>
+		        </ns2:param>
+		    </ns2:UISkin>
 			<ns2:layout xsi:type="ns2:TableLayoutType">
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
@@ -334,8 +353,6 @@
                              import org.shaolin.vogerp.commonmodel.ce.OrgVerifyStatusType;
                              import org.shaolin.uimaster.page.flow.WebflowConstants;
                              {
-                                   IOrganizationService orgService = (IOrganizationService)
-                                   AppContext.get().getService(IOrganizationService.class);
                                    if ($tableCondition == null) {
                                       $tableCondition = TableConditions.createCondition(new OrganizationImpl());
                                       $tableCondition.setCount(10);
@@ -373,6 +390,32 @@
                      </ns2:column>
                      <ns2:column xsi:type="ns2:UITableColumnType">
                          <ns2:title xsi:type="ns2:StringPropertyType">
+                             <ns2:value>是否己付费</ns2:value>
+                         </ns2:title>
+                         <ns2:beFieldId>rowBE.type</ns2:beFieldId>
+                         <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                         <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
+                              <ns2:expression xsi:type="ns2:ExpressionType">
+                                 <ns2:expressionString><![CDATA[
+                                 import org.shaolin.bmdp.runtime.AppContext;
+						         import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+						         import org.shaolin.vogerp.accounting.IPaymentService;
+						         import org.shaolin.vogerp.commonmodel.be.*;
+							     import org.shaolin.vogerp.commonmodel.ce.*;
+							     import org.shaolin.vogerp.commonmodel.IMemberService;
+							     import org.shaolin.vogerp.commonmodel.IOrganizationService;
+                                 {
+                                    IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
+                                    ILegalOrganizationInfo legalInfo = orgService.getLegalInfo($rowBE.getId());
+                                    IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
+                                    PayOrderStatusType porderStatus = accountingService.queryForPayStatus("AM-"+legalInfo.getId());
+                                    return porderStatus.getDisplayName();
+                                 }]]></ns2:expressionString>
+                             </ns2:expression>
+                         </ns2:rowExpression>
+                     </ns2:column>
+                     <ns2:column xsi:type="ns2:UITableColumnType">
+                         <ns2:title xsi:type="ns2:StringPropertyType">
                              <ns2:value>建立时间</ns2:value>
                          </ns2:title>
                          <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
@@ -386,13 +429,13 @@
                      <ns2:actionGroup>
                        <ns2:type>radio</ns2:type>
                        <ns2:action>
-                              <ns2:uiid>verifyAccount</ns2:uiid>
-                              <ns2:title xsi:type="ns2:StringPropertyType">
-                                  <ns2:value>验证帐号</ns2:value>
-                              </ns2:title>
-                              <ns2:icon>ui-icon-note</ns2:icon>
-                              <ns2:function>verifyAccount</ns2:function>
-                          </ns2:action>
+                           <ns2:uiid>verifyAccount</ns2:uiid>
+                           <ns2:title xsi:type="ns2:StringPropertyType">
+                               <ns2:value>验证帐号</ns2:value>
+                           </ns2:title>
+                           <ns2:icon>ui-icon-note</ns2:icon>
+                           <ns2:function>verifyAccount</ns2:function>
+                       </ns2:action>
                    </ns2:actionGroup>
                  </ns2:component>
                  <ns2:layoutConstraint>
@@ -432,8 +475,6 @@
 				             import org.shaolin.vogerp.commonmodel.ce.*;
 				             import org.shaolin.uimaster.page.flow.WebflowConstants;
                              {
-					               IOrganizationService orgService = (IOrganizationService)
-					               AppContext.get().getService(IOrganizationService.class);
                                    if ($tableCondition == null) {
                                       $tableCondition = TableConditions.createCondition(new OrganizationImpl());
                                       $tableCondition.setCount(10);
@@ -592,8 +633,6 @@
                              import org.shaolin.vogerp.commonmodel.ce.*;
                              import org.shaolin.uimaster.page.flow.WebflowConstants;
                              {
-                                   IOrganizationService orgService = (IOrganizationService)
-                                   AppContext.get().getService(IOrganizationService.class);
                                    if ($tableCondition == null) {
                                       $tableCondition = TableConditions.createCondition(new OrganizationImpl());
                                       $tableCondition.setCount(10);
@@ -687,6 +726,105 @@
              </ns2:panel>
          </ns2:tab>
          
+         <ns2:tab uiid="memberServiceInfoPanel">
+             <ns2:title xsi:type="ns2:StringPropertyType">
+                 <ns2:value>会员费率表</ns2:value>
+             </ns2:title>
+             <ns2:panel UIID="memberServiceInfoPanel">
+                 <ns2:layout xsi:type="ns2:TableLayoutType">
+                     <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+                     <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
+                 </ns2:layout>
+                 <ns2:component xsi:type="ns2:UITableType" UIID="memberServiceTable">
+                     <ns2:beElement>org.shaolin.vogerp.commonmodel.be.MemberServiceRule</ns2:beElement>
+                     <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
+                     <ns2:defaultRowSize>10</ns2:defaultRowSize>
+                     <ns2:showActionBar>true</ns2:showActionBar>
+                     <ns2:showFilter>true</ns2:showFilter>
+                     <ns2:query xsi:type="ns2:ExpressionPropertyType">
+                         <ns2:expression xsi:type="ns2:ExpressionType">
+                             <ns2:expressionString><![CDATA[
+                             import java.util.List;
+                             import org.shaolin.bmdp.runtime.AppContext;
+                             import org.shaolin.uimaster.page.ajax.TableConditions;
+                             import org.shaolin.vogerp.commonmodel.dao.CommonModel;
+                             import org.shaolin.vogerp.commonmodel.IOrganizationService;
+                             import org.shaolin.vogerp.commonmodel.be.MemberServiceRuleImpl;
+                             import org.shaolin.vogerp.commonmodel.ce.*;
+                             import org.shaolin.uimaster.page.flow.WebflowConstants;
+                             {
+                                   if ($tableCondition == null) {
+                                      $tableCondition = TableConditions.createCondition(new MemberServiceRuleImpl());
+                                      $tableCondition.setCount(10);
+                                      $tableCondition.addOrder("createDate", false);
+                                   }
+                                   MemberServiceRuleImpl condition = (MemberServiceRuleImpl)$tableCondition.getCondition();
+                                   return CommonModel.INSTANCE.searchMemberService(condition,
+                                                 $tableCondition.getOrders(),
+                                                 $tableCondition.getOffset(), 
+                                                 $tableCondition.getCount());
+                             }]]></ns2:expressionString>
+                         </ns2:expression>
+                     </ns2:query>
+                     <ns2:column xsi:type="ns2:UITableColumnType">
+                         <ns2:title xsi:type="ns2:StringPropertyType">
+                             <ns2:value>会员类型</ns2:value>
+                         </ns2:title>
+                         <ns2:beFieldId>rowBE.type</ns2:beFieldId>
+                         <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                     </ns2:column>
+                     <ns2:column xsi:type="ns2:UITableColumnType">
+                         <ns2:title xsi:type="ns2:StringPropertyType">
+                             <ns2:value>功能类型</ns2:value>
+                         </ns2:title>
+                         <ns2:beFieldId>rowBE.functionId</ns2:beFieldId>
+                         <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                     </ns2:column>
+                     <ns2:column xsi:type="ns2:UITableColumnType">
+                         <ns2:title xsi:type="ns2:StringPropertyType">
+                             <ns2:value>描述</ns2:value>
+                         </ns2:title>
+                         <ns2:beFieldId>rowBE.description</ns2:beFieldId>
+                         <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                     </ns2:column>
+                     <ns2:column xsi:type="ns2:UITableColumnType">
+                         <ns2:title xsi:type="ns2:StringPropertyType">
+                             <ns2:value>费率</ns2:value>
+                         </ns2:title>
+                         <ns2:beFieldId>rowBE.price</ns2:beFieldId>
+                         <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
+                     </ns2:column>
+                     <ns2:column xsi:type="ns2:UITableColumnType">
+                         <ns2:title xsi:type="ns2:StringPropertyType">
+                             <ns2:value>建立时间</ns2:value>
+                         </ns2:title>
+                         <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
+                         <ns2:uiType xsi:type="ns2:UITableColHTMLType">
+                           <ns2:type>Label</ns2:type>
+                         </ns2:uiType>
+                     </ns2:column>
+                     <ns2:defaultActions>
+                     </ns2:defaultActions>
+                     <ns2:actionGroup>
+                       <ns2:type>radio</ns2:type>
+                       <ns2:action>
+                           <ns2:uiid>refreshMemeberCache</ns2:uiid>
+                           <ns2:title xsi:type="ns2:StringPropertyType">
+                               <ns2:value>刷新缓存</ns2:value>
+                           </ns2:title>
+                           <ns2:icon>ui-icon-note</ns2:icon>
+                           <ns2:function>refreshMemeberCache</ns2:function>
+                       </ns2:action>
+                    </ns2:actionGroup>
+                 </ns2:component>
+                 <ns2:layoutConstraint>
+                     <ns2:componentId>memberServiceTable</ns2:componentId>
+                     <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                         x="0" y="0" align="FULL"></ns2:constraint>
+                 </ns2:layoutConstraint>
+             </ns2:panel>
+         </ns2:tab>
+         <!-- 
          <ns2:tab uiid="organizationTypePanel">
              <ns2:title xsi:type="ns2:ResourceBundlePropertyType">
                  <ns2:bundle>org_shaolin_vogerp_commonmodel_i18n</ns2:bundle>
@@ -705,7 +843,7 @@
 		        </ns2:DataComponent>
 	        </ns2:odmapping>
          </ns2:tab>
-         
+          -->
      </ns2:component>
 			<ns2:layoutConstraint>
       <ns2:componentId>functionsTab</ns2:componentId>

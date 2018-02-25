@@ -111,6 +111,10 @@
        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
        import org.shaolin.vogerp.accounting.util.PaymentUtil;
        import org.shaolin.vogerp.accounting.ce.CoinOrScoreReasonType;
+       import org.shaolin.vogerp.accounting.be.IPayOrder;
+       import org.shaolin.vogerp.accounting.ce.PayBusinessType;
+       import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+       import org.shaolin.vogerp.accounting.IPaymentService;
        { 
            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
            LegalOrganizationInfoImpl defaultUser = (LegalOrganizationInfoImpl)form.getInputParameter("beObject");
@@ -120,8 +124,13 @@
                CommonModel.INSTANCE.create(defaultUser, true);
            }
            
-           //TODO: check whether is payed or not.
-           
+           // check whether is payed or not.
+           IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
+           PayOrderStatusType porderStatus = accountingService.queryForPayStatus("AM-"+defaultUser.getId());
+           if (payOrder.getStatus() != PayOrderStatusType.PAYED) {
+               Dialog.showMessageDialog("商户未支付完成！", "", Dialog.WARNING_MESSAGE, null);
+               return;
+           }
            OrganizationImpl orgInfo = (OrganizationImpl)form.getInputParameter("orgInfo");
            orgInfo.setVeriState(OrgVerifyStatusType.VERIFIED);
            orgInfo.setVerifierId(UserContext.getUserContext().getUserId());

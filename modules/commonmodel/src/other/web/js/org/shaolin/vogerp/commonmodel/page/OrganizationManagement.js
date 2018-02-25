@@ -7,7 +7,7 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "orgVerificationPanel",prefix + "organizationInfoPanel",prefix + "indiviualInfoPanel",prefix + "organizationTypePanel"]
+        ,subComponents: [prefix + "orgVerificationPanel",prefix + "organizationInfoPanel",prefix + "indiviualInfoPanel",prefix + "memberServiceInfoPanel"]
     });
     var orgVerificationTable = new UIMaster.ui.objectlist
     ({
@@ -42,8 +42,17 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
         ,items: []
         ,subComponents: [prefix + "indiviualInfoTable"]
     });
-    var organizationTypePanel = new org_shaolin_vogerp_commonmodel_form_CEHierarchy({"prefix":prefix + "organizationTypePanel."});
+    var memberServiceTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "memberServiceTable"]
+    });
 
+    var memberServiceInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "memberServiceInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "memberServiceTable"]
+    });
 
     var Form = new UIMaster.ui.panel
     ({
@@ -66,7 +75,9 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
 
     Form.indiviualInfoTable=indiviualInfoTable;
 
-    Form.organizationTypePanel=organizationTypePanel;
+    Form.memberServiceInfoPanel=memberServiceInfoPanel;
+
+    Form.memberServiceTable=memberServiceTable;
 
     Form.user_constructor = function()
     {
@@ -91,6 +102,8 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
     Form.assignRoles = org_shaolin_vogerp_commonmodel_page_OrganizationManagement_assignRoles;
 
     Form.assignAccount = org_shaolin_vogerp_commonmodel_page_OrganizationManagement_assignAccount;
+
+    Form.refreshMemeberCache = org_shaolin_vogerp_commonmodel_page_OrganizationManagement_refreshMemeberCache;
 
     Form.initPageJs = org_shaolin_vogerp_commonmodel_page_OrganizationManagement_initPageJs;
 
@@ -222,6 +235,17 @@ function org_shaolin_vogerp_commonmodel_page_OrganizationManagement(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"assignAccount-20160718-2342",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_assignAccount */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_page_OrganizationManagement_refreshMemeberCache(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_refreshMemeberCache */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"refreshMemeberCache-20160728-2343",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_refreshMemeberCache */
 
 
     function org_shaolin_vogerp_commonmodel_page_OrganizationManagement_initPageJs(){/* Gen_First:org_shaolin_vogerp_commonmodel_page_OrganizationManagement_initPageJs */
