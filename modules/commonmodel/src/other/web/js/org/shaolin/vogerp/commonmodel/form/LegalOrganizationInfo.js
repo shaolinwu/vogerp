@@ -111,9 +111,9 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
         ,mustCheck: true
     });
 
-    var applyForVeriBtn = new UIMaster.ui.button
+    var payForVeriBtn = new UIMaster.ui.button
     ({
-        ui: elementList[prefix + "applyForVeriBtn"]
+        ui: elementList[prefix + "payForVeriBtn"]
     });
 
     var closeBtn = new UIMaster.ui.button
@@ -133,7 +133,7 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     ({
         ui: elementList[prefix + "actionPanel"]
         ,items: []
-        ,subComponents: [prefix + "applyForVeriBtn",prefix + "closeBtn"]
+        ,subComponents: [prefix + "payForVeriBtn",prefix + "closeBtn"]
     });
 
     var fieldPanel2 = new UIMaster.ui.panel
@@ -146,7 +146,7 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,verifiedUI,orgTypeUI,agreementUI,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,typeUI,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,locationphotoLabel,termsUI,applyForVeriBtn,closeBtn,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,locationPhoto,fieldPanel2,actionPanel]
+        ,items: [idUI,verifiedUI,orgTypeUI,agreementUI,orgIdUILabel,orgIdUI,nameUILabel,nameUI,typeUILabel,typeUI,descriptionUILabel,descriptionUI,legalPersonUILabel,legalPersonUI,busiLicenseNumberUILabel,busiLicenseNumberUI,personalPhotoLabel,personalIdentifierPhotoLabel,busiLicensePhotoLabel,locationphotoLabel,termsUI,payForVeriBtn,closeBtn,personalPhoto,personalIdentifierPhoto,busiLicensePhoto,locationPhoto,fieldPanel2,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -191,7 +191,7 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.termsUI=termsUI;
 
-    Form.applyForVeriBtn=applyForVeriBtn;
+    Form.payForVeriBtn=payForVeriBtn;
 
     Form.closeBtn=closeBtn;
 
@@ -257,7 +257,7 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 
     Form.actionPanel=actionPanel;
 
-    Form.applyForVeriBtn=applyForVeriBtn;
+    Form.payForVeriBtn=payForVeriBtn;
 
     Form.closeBtn=closeBtn;
 
@@ -276,7 +276,6 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
 		           $("<div style=\"background-color:red;font-size: x-large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u672A\u901A\u8FC7\uFF01\u8BF7\u4FEE\u6539\u4FE1\u606F\u540E\u91CD\u65B0\u7533\u8BF7\u3002</div>").prependTo($(Form.fieldPanel2));
 		       } else if (Form.verifiedUI.value == "1") {
 		           $("<div style=\"background-color:yellow;font-size: large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u5BA1\u6838\u4E2D\u3002\u3002\u3002</div>").prependTo($(Form.fieldPanel2));
-		           $(Form.actionPanel).css("display", "none");
 		       } else {
 		           $("<div style=\"background-color:darkgrey;font-size: large;\">\u5982\u679C\u60A8\u662F\u52A0\u5DE5\u5546\u6237\uFF0C\u8BF7\u53C2\u4E0E\u8EAB\u4EFD\u8BA4\u8BC1\u3002\u8C22\u8C22\uFF01</div>").prependTo($(Form.fieldPanel2));
 		       }

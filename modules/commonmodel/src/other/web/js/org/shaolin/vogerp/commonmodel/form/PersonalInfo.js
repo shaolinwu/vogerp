@@ -39,15 +39,14 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
         ui: elementList[prefix + "discriptionUI"]
     });
 
-    var birthdayUILabel = new UIMaster.ui.label
+    var cityUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "birthdayUILabel"]
+        ui: elementList[prefix + "cityUILabel"]
     });
 
-    var birthdayUI = new UIMaster.ui.calendar
+    var cityListUI = new UIMaster.ui.combobox
     ({
-        ui: elementList[prefix + "birthdayUI"]
-        ,isDataOnly: true
+        ui: elementList[prefix + "cityListUI"]
     });
 
     var languageUILabel = new UIMaster.ui.label
@@ -88,13 +87,13 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "firstNameUILabel",prefix + "firstNameUI",prefix + "genderUILabel",prefix + "genderUI",prefix + "discriptionUILabel",prefix + "discriptionUI",prefix + "birthdayUILabel",prefix + "birthdayUI",prefix + "languageUILabel",prefix + "languageUI",prefix + "majorUILabel",prefix + "majorUI"]
+        ,subComponents: [prefix + "idUI",prefix + "firstNameUILabel",prefix + "firstNameUI",prefix + "genderUILabel",prefix + "genderUI",prefix + "discriptionUILabel",prefix + "discriptionUI",prefix + "cityUILabel",prefix + "cityListUI",prefix + "languageUILabel",prefix + "languageUI",prefix + "majorUILabel",prefix + "majorUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,firstNameUILabel,firstNameUI,genderUILabel,genderUI,discriptionUILabel,discriptionUI,birthdayUILabel,birthdayUI,languageUILabel,languageUI,majorUILabel,majorUI,okbtn,fieldPanel,actionPanel]
+        ,items: [idUI,firstNameUILabel,firstNameUI,genderUILabel,genderUI,discriptionUILabel,discriptionUI,cityUILabel,cityListUI,languageUILabel,languageUI,majorUILabel,majorUI,okbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -111,9 +110,9 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
 
     Form.discriptionUI=discriptionUI;
 
-    Form.birthdayUILabel=birthdayUILabel;
+    Form.cityUILabel=cityUILabel;
 
-    Form.birthdayUI=birthdayUI;
+    Form.cityListUI=cityListUI;
 
     Form.languageUILabel=languageUILabel;
 
@@ -141,9 +140,9 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
 
     Form.discriptionUI=discriptionUI;
 
-    Form.birthdayUILabel=birthdayUILabel;
+    Form.cityUILabel=cityUILabel;
 
-    Form.birthdayUI=birthdayUI;
+    Form.cityListUI=cityListUI;
 
     Form.languageUILabel=languageUILabel;
 
@@ -166,6 +165,8 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
     Form.Save = org_shaolin_vogerp_commonmodel_form_PersonalInfo_Save;
 
     Form.Cancel = org_shaolin_vogerp_commonmodel_form_PersonalInfo_Cancel;
+
+    Form.updateCityLocation = org_shaolin_vogerp_commonmodel_form_PersonalInfo_updateCityLocation;
 
     Form.invokeDynamicFunction = org_shaolin_vogerp_commonmodel_form_PersonalInfo_invokeDynamicFunction;
 
@@ -206,6 +207,17 @@ function org_shaolin_vogerp_commonmodel_form_PersonalInfo(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail99521939",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_PersonalInfo_Cancel */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_commonmodel_form_PersonalInfo_updateCityLocation(eventsource,event) {/* Gen_First:org_shaolin_vogerp_commonmodel_form_PersonalInfo_updateCityLocation */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"updateCityLocation-20180227-1939",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_commonmodel_form_PersonalInfo_updateCityLocation */
 
 
     /* auto generated eventlistener function declaration */

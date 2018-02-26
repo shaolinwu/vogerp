@@ -457,17 +457,32 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
-      <ns2:component xsi:type="ns2:UIButtonType" UIID="applyForVeriBtn">
+      <ns2:component xsi:type="ns2:UIButtonType" UIID="payForVeriBtn">
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="applyForVerification"></ns2:handler>
         </ns2:EventListener>
         <ns2:editable xsi:type="ns2:ExpressionPropertyType">
           <ns2:expression>
-            <expressionString>{return !$isVerified.booleanValue();}</expressionString>
+            <expressionString><![CDATA[
+            import org.shaolin.bmdp.runtime.AppContext;
+            import org.shaolin.vogerp.accounting.ce.PayOrderStatusType;
+            import org.shaolin.vogerp.accounting.IPaymentService;
+            import org.shaolin.vogerp.commonmodel.be.*;
+            import org.shaolin.vogerp.commonmodel.ce.*;
+            import org.shaolin.vogerp.commonmodel.IMemberService;
+            import org.shaolin.vogerp.commonmodel.IOrganizationService;
+            {
+               IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
+               ILegalOrganizationInfo legalInfo = orgService.getLegalInfo($orgInfo.getId());
+               IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
+               PayOrderStatusType porderStatus = accountingService.queryForPayStatus("AM-"+legalInfo.getId());
+               return porderStatus != PayOrderStatusType.PAYED;
+            }
+            ]]></expressionString>
           </ns2:expression>
         </ns2:editable>
         <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>提交审核</ns2:value>
+          <ns2:value>支付商户验证费用</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UIButtonType" UIID="closeBtn">
@@ -481,7 +496,7 @@
         </ns2:editable>
       </ns2:component>
       <ns2:layoutConstraint>
-        <ns2:componentId>applyForVeriBtn</ns2:componentId>
+        <ns2:componentId>payForVeriBtn</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
@@ -504,7 +519,6 @@
 		           $("<div style=\"background-color:red;font-size: x-large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u672A\u901A\u8FC7\uFF01\u8BF7\u4FEE\u6539\u4FE1\u606F\u540E\u91CD\u65B0\u7533\u8BF7\u3002</div>").prependTo($(Form.fieldPanel2));
 		       } else if (Form.verifiedUI.value == "1") {
 		           $("<div style=\"background-color:yellow;font-size: large;\">\u8EAB\u4EFD\u9A8C\u8BC1\u5BA1\u6838\u4E2D\u3002\u3002\u3002</div>").prependTo($(Form.fieldPanel2));
-		           $(Form.actionPanel).css("display", "none");
 		       } else {
 		           $("<div style=\"background-color:darkgrey;font-size: large;\">\u5982\u679C\u60A8\u662F\u52A0\u5DE5\u5546\u6237\uFF0C\u8BF7\u53C2\u4E0E\u8EAB\u4EFD\u8BA4\u8BC1\u3002\u8C22\u8C22\uFF01</div>").prependTo($(Form.fieldPanel2));
 		       }
