@@ -136,6 +136,9 @@ public class CommonModel extends BEEntityDaoObject {
             if (scFlow.getUserName() != null && scFlow.getUserName().trim().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.userName", scFlow.getUserName()));
             }
+            if (scFlow.getLocationInfo() != null && scFlow.getLocationInfo().trim().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.locationInfo", scFlow.getLocationInfo()));
+            }
             if (scFlow.getInfo() != null && scFlow.getInfo().getId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.personalId", scFlow.getInfo().getId()));
             }
@@ -151,6 +154,9 @@ public class CommonModel extends BEEntityDaoObject {
 
             if (scFlow.getUserName() != null && scFlow.getUserName().trim().length() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.userName", scFlow.getUserName()));
+            }
+            if (scFlow.getLocationInfo() != null && scFlow.getLocationInfo().trim().length() > 0) {
+                inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.locationInfo", scFlow.getLocationInfo()));
             }
             if (scFlow.getInfo() != null && scFlow.getInfo().getId() > 0) {
                 inFlowCriteria.add(createCriterion(Operator.EQUALS, "inFlow.personalId", scFlow.getInfo().getId()));

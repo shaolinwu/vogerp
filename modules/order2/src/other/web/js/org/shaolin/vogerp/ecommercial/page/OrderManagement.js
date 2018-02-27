@@ -3,6 +3,11 @@
 function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
+    var verifyHintUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "verifyHintUI"]
+    });
+
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
@@ -100,8 +105,10 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [functionsTab,purchaseOrderLabel,saleOrderLabel,hintsLabel,loanOrderLabel,rentOrderLabel,selectGTypePanel,selectRentOrderTypePanel]
+        ,items: [verifyHintUI,functionsTab,purchaseOrderLabel,saleOrderLabel,hintsLabel,loanOrderLabel,rentOrderLabel,selectGTypePanel,selectRentOrderTypePanel]
     });
+
+    Form.verifyHintUI=verifyHintUI;
 
     Form.functionsTab=functionsTab;
 

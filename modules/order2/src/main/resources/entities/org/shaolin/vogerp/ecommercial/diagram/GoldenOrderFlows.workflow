@@ -318,6 +318,7 @@
 	                          message.setDescription(OrderUtil.getOrderLink($order) + $order.getDescription());
 	                          
 	                          //promote to other interested users as well!
+	                          message.setCity(UserContext.getUserContext().getCity());
 	                          message.setLatitude($order.getLatitude());
 		                      message.setLongitude($order.getLongitude());
 		                      message.setPartyType(UserContext.getUserContext().getOrgType());

@@ -37,6 +37,7 @@ function org_shaolin_vogerp_commonmodel_form_LegalOrganizationInfo(json)
     var nameUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "nameUILabel"]
+        ,placeholder: "请仔细填写公司名称。"
     });
 
     var nameUI = new UIMaster.ui.textfield

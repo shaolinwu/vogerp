@@ -233,6 +233,11 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="nameUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:Property name="placeholder">
+           <ns2:value xsi:type="ns2:StringPropertyType">
+               <value>如您是加工商户，请填写公司名称。</value>
+           </ns2:value>
+        </ns2:Property>
         <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
             <ns2:value>false</ns2:value>
         </ns2:allowBlank>

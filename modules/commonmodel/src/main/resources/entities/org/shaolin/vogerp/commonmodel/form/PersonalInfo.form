@@ -78,6 +78,7 @@
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.bmdp.runtime.security.UserContext;
+        import org.shaolin.uimaster.page.flow.WebflowConstants;
         import org.shaolin.vogerp.commonmodel.IUserService;
         import org.shaolin.vogerp.commonmodel.ce.EmployeeLevel;
         import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
@@ -92,6 +93,7 @@
           PersonalAccountImpl personalAccount = (PersonalAccountImpl)userService.getPersonalAccount(userContext.getUserId());
           personalAccount.setLocationInfo(selectedCity);
           CommonModel.INSTANCE.update(personalAccount);
+          @page.getRequest().getSession().setAttribute(WebflowConstants.USER_SESSION_KEY, userContext);
           Dialog.showMessageDialog("当前城市变更成功！订单推送区域将切换为当前城市。", "", Dialog.INFORMATION_MESSAGE, null);
         }]]></expressionString>
       </ns2:exp>

@@ -96,6 +96,7 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
     var nameUI = new UIMaster.ui.textfield
     ({
         ui: elementList[prefix + "nameUI"]
+        ,placeholder: "如您是加工商户，请填写公司名称。"
     });
 
     var recommandUserNameUILabel = new UIMaster.ui.label

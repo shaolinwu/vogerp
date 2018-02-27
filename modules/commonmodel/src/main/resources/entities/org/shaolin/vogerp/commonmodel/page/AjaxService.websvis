@@ -78,7 +78,7 @@
         import org.shaolin.bmdp.json.JSONObject;
         {
            JSONObject item = new JSONObject();
-	        item.put("name", " 可抢订单");
+	        item.put("name", " 可接订单");
 	        item.put("_chunkname", "org.shaolin.vogerp.commonmodel.diagram.ModularityModel");
 	        item.put("_nodename", "OnlineOrderList");
 	        item.put("_page", "org.shaolin.vogerp.ecommercial.page.OnlineOrderList");

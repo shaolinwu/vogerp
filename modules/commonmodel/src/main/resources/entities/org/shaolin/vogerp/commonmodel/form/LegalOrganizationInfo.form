@@ -62,7 +62,7 @@
                Dialog.showMessageDialog("您已是我们的认证商户，无需再次认证。谢谢！", "", Dialog.INFORMATION_MESSAGE, null);
                return;
            }
-           
+           orgInfo.setOrgType(OrgType.COMPANY);
            orgInfo.setVeriState(OrgVerifyStatusType.VERIFYING);
            if (templLegalInfo.getId() == 0) {
                OrganizationImpl tempInfo = (OrganizationImpl)out.get("orgInfo");
@@ -230,6 +230,11 @@
         <ns2:text xsi:type="ns2:StringPropertyType">
           <ns2:value>公司全称</ns2:value>
         </ns2:text>
+        <ns2:Property name="placeholder">
+           <ns2:value xsi:type="ns2:StringPropertyType">
+               <value>请仔细填写公司名称。</value>
+           </ns2:value>
+        </ns2:Property>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="nameUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>

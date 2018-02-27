@@ -956,8 +956,31 @@
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			</ns2:layout>
+			<ns2:component xsi:type="ns2:UILabelType" UIID="verifyHintUI">
+			    <ns2:Property name="htmlValue">
+		            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+		                 <ns2:expression>
+		                   <expressionString><![CDATA[
+		                   import org.shaolin.bmdp.runtime.AppContext;
+				            import org.shaolin.vogerp.commonmodel.be.*;
+				            import org.shaolin.vogerp.commonmodel.ce.*;
+				            import org.shaolin.vogerp.commonmodel.IOrganizationService;
+				            {
+				               String info = "欢迎来到加工达人! 本平台以遵守诚信加工为原则，请您也遵守我们的原则接发单哟。";
+				               IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
+				               IOrganization orgObject = orgService.getOrganizationInfo();
+				               if (orgObject.getVeriState() == OrgVerifyStatusType.UNVERIFIED) {
+				                  info = info + "<br>如您是加工商家，请进入 基本信息--》商家认证 页面。";
+				               }
+				               return info;
+				            }]]></expressionString>
+		                 </ns2:expression>
+		            </ns2:value>
+		         </ns2:Property>
+	        </ns2:component>
 			<ns2:component xsi:type="ns2:UITabPaneType" UIID="functionsTab">
 			    <ns2:ajaxLoad>true</ns2:ajaxLoad>
 			    
@@ -1628,17 +1651,21 @@
 			        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
 			      </ns2:layoutConstraint>
 			  </ns2:component>
-			   <ns2:layoutConstraint>
-                  <ns2:componentId>functionsTab</ns2:componentId>
+			  <ns2:layoutConstraint>
+                  <ns2:componentId>verifyHintUI</ns2:componentId>
                   <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL"></ns2:constraint>
                </ns2:layoutConstraint>
-               <ns2:layoutConstraint>
-                  <ns2:componentId>selectGTypePanel</ns2:componentId>
+			   <ns2:layoutConstraint>
+                  <ns2:componentId>functionsTab</ns2:componentId>
                   <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL"></ns2:constraint>
                </ns2:layoutConstraint>
                <ns2:layoutConstraint>
-                  <ns2:componentId>selectRentOrderTypePanel</ns2:componentId>
+                  <ns2:componentId>selectGTypePanel</ns2:componentId>
                   <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="2" align="FULL"></ns2:constraint>
+               </ns2:layoutConstraint>
+               <ns2:layoutConstraint>
+                  <ns2:componentId>selectRentOrderTypePanel</ns2:componentId>
+                  <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL"></ns2:constraint>
                </ns2:layoutConstraint>
 		  </ns2:body>
 	</ns2:UIEntity>

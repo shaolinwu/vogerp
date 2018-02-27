@@ -562,7 +562,7 @@
         </ns2:fieldMapping>
     </ns2:searchResultMapping>
     <ns2:searchConditionMapping name="Search">
-    	<ns2:fieldMapping>
+        	<ns2:fieldMapping>
             <ns2:toDataFieldPath>inFlow.userName</ns2:toDataFieldPath>
             <ns2:conditionValue>
                 <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
@@ -573,6 +573,20 @@
                 </ns2:value>
                 <ns2:condition>
                     <expressionString><![CDATA[scFlow.getUserName() != null && scFlow.getUserName().trim().length() > 0]]></expressionString>
+                </ns2:condition>
+            </ns2:conditionValue>
+        </ns2:fieldMapping>
+        <ns2:fieldMapping>
+            <ns2:toDataFieldPath>inFlow.locationInfo</ns2:toDataFieldPath>
+            <ns2:conditionValue>
+                <ns2:operator isReverse="false" xsi:type="ns2:LogicOperatorType">
+                    <ns2:type>=</ns2:type>
+                </ns2:operator>
+                <ns2:value xsi:type="ns2:SimpleFieldValueType">
+                    <ns2:valueFieldPath>scFlow.locationInfo</ns2:valueFieldPath>
+                </ns2:value>
+                <ns2:condition>
+                    <expressionString><![CDATA[scFlow.getLocationInfo() != null && scFlow.getLocationInfo().trim().length() > 0]]></expressionString>
                 </ns2:condition>
             </ns2:conditionValue>
         </ns2:fieldMapping>
