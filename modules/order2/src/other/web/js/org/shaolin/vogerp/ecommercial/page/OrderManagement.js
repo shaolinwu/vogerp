@@ -12,7 +12,7 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "machiningInfoPanel",prefix + "goldenOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "interestEOrderPanel"]
+        ,subComponents: [prefix + "machiningInfoPanel",prefix + "rentOrderInfoPanel",prefix + "interestEOrderPanel"]
     });
     var machiningTable = new UIMaster.ui.objectlist
     ({
@@ -24,17 +24,6 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         ui: elementList[prefix + "machiningInfoPanel"]
         ,items: []
         ,subComponents: [prefix + "machiningTable"]
-    });
-    var goldenOrderTable = new UIMaster.ui.objectlist
-    ({
-        ui: elementList[prefix + "goldenOrderTable"]
-    });
-
-    var goldenOrderInfoPanel = new UIMaster.ui.panel
-    ({
-        ui: elementList[prefix + "goldenOrderInfoPanel"]
-        ,items: []
-        ,subComponents: [prefix + "goldenOrderTable"]
     });
     var rentOrderTable = new UIMaster.ui.objectlist
     ({
@@ -115,10 +104,6 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     Form.machiningInfoPanel=machiningInfoPanel;
 
     Form.machiningTable=machiningTable;
-
-    Form.goldenOrderInfoPanel=goldenOrderInfoPanel;
-
-    Form.goldenOrderTable=goldenOrderTable;
 
     Form.rentOrderInfoPanel=rentOrderInfoPanel;
 

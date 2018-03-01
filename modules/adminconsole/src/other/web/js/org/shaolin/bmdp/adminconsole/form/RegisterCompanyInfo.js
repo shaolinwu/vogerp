@@ -80,7 +80,7 @@ function org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo(json)
         {
             func: function() {
                 
-                    { 
+                    {
                     return this.value == passwordUI.value;
                     }
             }
@@ -194,7 +194,7 @@ function org_shaolin_bmdp_adminconsole_form_RegisterCompanyInfo(json)
         var o = this;
         var UIEntity = this;
 
-        {   
+        {
             //if(event.keyCode != 13 || event.keyCode != 9) {
                //return;
             //}

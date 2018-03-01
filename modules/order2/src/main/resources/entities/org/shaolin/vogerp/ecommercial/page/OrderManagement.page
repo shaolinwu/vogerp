@@ -1132,7 +1132,7 @@
                         </ns2:layoutConstraint>
                     </ns2:panel>
                 </ns2:tab>
-			    
+			    <!-- 
                 <ns2:tab uiid="goldenOrderInfoPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
                         <ns2:value>我的抢购单</ns2:value>
@@ -1289,7 +1289,7 @@
 		                </ns2:layoutConstraint>
                     </ns2:panel>
                   </ns2:tab>
-                  
+                   -->
                   <ns2:tab uiid="rentOrderInfoPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
                         <ns2:value>我的租赁单</ns2:value>

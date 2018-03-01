@@ -718,13 +718,13 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		MD5Util instance = new MD5Util();
 		PersonalAccountImpl sc = new PersonalAccountImpl();
 		sc.setUserName(user.getUserName());
-		sc.setPassword(instance.md5(origiPassword));
+		sc.setPassword(instance.md5(origiPassword).toUpperCase());
 		List<IPersonalAccount> result = CommonModel.INSTANCE.authenticateUserInfo(sc, null, 0, -1);
 		if (result.size() == 0) {
 			return false;
 		}
-		user.setPassword(instance.md5(newPassword).toUpperCase());
-		CommonModel.INSTANCE.update(user);
+		result.get(0).setPassword(instance.md5(newPassword).toUpperCase());
+		CommonModel.INSTANCE.update(result.get(0));
 		return true;
 	}
 
@@ -771,7 +771,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			result.get(0).setPassword(instance.md5(password).toUpperCase());
 			CommonModel.INSTANCE.update(result.get(0));
 			IShortMsgService msgService = AppContext.get().getService(IShortMsgService.class);
-	    return ((ShortMsgServiceImpl)msgService).sendFindPassword(phoneNumber, password);
+			return ((ShortMsgServiceImpl)msgService).sendFindPassword(phoneNumber, password);
 		}
 		return false;
 	}

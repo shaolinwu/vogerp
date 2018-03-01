@@ -80,7 +80,7 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
         {
             func: function() {
                 
-                    { 
+                    {
                     return this.value == passwordUI.value;
                     }
             }
@@ -191,7 +191,7 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
         var o = this;
         var UIEntity = this;
 
-        {   
+        {
             //if(event.keyCode != 13 || event.keyCode != 9) {
                //return;
             //}
@@ -212,7 +212,7 @@ function org_shaolin_bmdp_adminconsole_form_RegisterInfo(json)
         var o = this;
         var UIEntity = this;
 
-        {   
+        {
             if(this.recommandUserNameUI.getValue() == ""
               || this.recommandUserNameUI.getValue().trim() == "") {
                return;

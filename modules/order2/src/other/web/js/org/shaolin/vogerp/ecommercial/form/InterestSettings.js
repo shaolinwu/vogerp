@@ -3,20 +3,12 @@
 function org_shaolin_vogerp_ecommercial_form_InterestSettings(json)
 {
     var prefix = (typeof(json) == "string") ? json : json.prefix; 
-    var machiningListUI = new UIMaster.ui.combobox
+    var machiningListUI = new UIMaster.ui.list
     ({
         ui: elementList[prefix + "machiningListUI"]
         ,colCount: 10
         ,size: 10
         ,multiple: false
-    });
-
-    var selectedMachiningListUI = new UIMaster.ui.combobox
-    ({
-        ui: elementList[prefix + "selectedMachiningListUI"]
-        ,colCount: 10
-        ,size: 10
-        ,multiple: true
     });
 
     var moveToRightBtn = new UIMaster.ui.button
@@ -27,6 +19,14 @@ function org_shaolin_vogerp_ecommercial_form_InterestSettings(json)
     var removeSelectedBtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "removeSelectedBtn"]
+    });
+
+    var selectedMachiningListUI = new UIMaster.ui.list
+    ({
+        ui: elementList[prefix + "selectedMachiningListUI"]
+        ,colCount: 10
+        ,size: 10
+        ,multiple: true
     });
 
     var changePricebtn = new UIMaster.ui.button
@@ -57,22 +57,22 @@ function org_shaolin_vogerp_ecommercial_form_InterestSettings(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "machiningListUI",prefix + "selectedMachiningListUI",prefix + "buttonPanel"]
+        ,subComponents: [prefix + "machiningListUI",prefix + "buttonPanel",prefix + "selectedMachiningListUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [machiningListUI,selectedMachiningListUI,moveToRightBtn,removeSelectedBtn,changePricebtn,cancelbtn,fieldPanel,buttonPanel,actionPanel]
+        ,items: [machiningListUI,moveToRightBtn,removeSelectedBtn,selectedMachiningListUI,changePricebtn,cancelbtn,fieldPanel,buttonPanel,actionPanel]
     });
 
     Form.machiningListUI=machiningListUI;
 
-    Form.selectedMachiningListUI=selectedMachiningListUI;
-
     Form.moveToRightBtn=moveToRightBtn;
 
     Form.removeSelectedBtn=removeSelectedBtn;
+
+    Form.selectedMachiningListUI=selectedMachiningListUI;
 
     Form.changePricebtn=changePricebtn;
 
@@ -82,13 +82,13 @@ function org_shaolin_vogerp_ecommercial_form_InterestSettings(json)
 
     Form.machiningListUI=machiningListUI;
 
-    Form.selectedMachiningListUI=selectedMachiningListUI;
-
     Form.buttonPanel=buttonPanel;
 
     Form.moveToRightBtn=moveToRightBtn;
 
     Form.removeSelectedBtn=removeSelectedBtn;
+
+    Form.selectedMachiningListUI=selectedMachiningListUI;
 
     Form.buttonPanel=buttonPanel;
 

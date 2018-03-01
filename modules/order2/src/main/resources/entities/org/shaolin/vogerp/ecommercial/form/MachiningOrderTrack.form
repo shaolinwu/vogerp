@@ -114,7 +114,7 @@
                        $tableCondition.addOrder("createDate", false);
                     }
                     MachiningOrderImpl condition = (MachiningOrderImpl)$tableCondition.getCondition();
-                    //condition.setPublishedCustomerId(UserContext.getUserContext().getUserId());
+                    condition.setPublishedCustomerId(UserContext.getUserContext().getUserId());
                     condition.setTakenCustomerId(UserContext.getUserContext().getUserId());
                     condition.setStatus(OrderStatusType.TAKEN);
                     List result = EOrderModel.INSTANCE.searchMachiningOrder(condition,

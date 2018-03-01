@@ -7,11 +7,9 @@ function org_shaolin_vogerp_ecommercial_page_TakenOrderManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "takenMOrderInfoPanel",prefix + "takenGOrderInfoPanel",prefix + "takenROrderInfoPanel"]
+        ,subComponents: [prefix + "takenMOrderInfoPanel",prefix + "takenROrderInfoPanel"]
     });
     var takenMOrderInfoPanel = new org_shaolin_vogerp_ecommercial_form_MachiningOrderTrack({"prefix":prefix + "takenMOrderInfoPanel."});
-
-    var takenGOrderInfoPanel = new org_shaolin_vogerp_ecommercial_form_GoldenOrderTrack({"prefix":prefix + "takenGOrderInfoPanel."});
 
     var takenROrderInfoPanel = new org_shaolin_vogerp_ecommercial_form_RentOrLoanOrderTrack({"prefix":prefix + "takenROrderInfoPanel."});
 
@@ -26,8 +24,6 @@ function org_shaolin_vogerp_ecommercial_page_TakenOrderManagement(json)
     Form.functionsTab=functionsTab;
 
     Form.takenMOrderInfoPanel=takenMOrderInfoPanel;
-
-    Form.takenGOrderInfoPanel=takenGOrderInfoPanel;
 
     Form.takenROrderInfoPanel=takenROrderInfoPanel;
 

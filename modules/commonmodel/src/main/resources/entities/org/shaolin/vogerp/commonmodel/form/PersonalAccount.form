@@ -41,8 +41,6 @@
             if (constraint_result != true && constraint_result != null) {
                 return false;
             }
-            UIMaster.ui.sync.set({_uiid:UIMaster.getUIID(this.orgPasswordUI),_valueName:"value",_value:md5(this.orgPasswordUI.getValue()).toUpperCase(),_framePrefix:UIMaster.getFramePrefix(this.orgPasswordUI)});
-            UIMaster.ui.sync.set({_uiid:UIMaster.getUIID(this.passwordUI),_valueName:"value",_value:md5(this.passwordUI.getValue()).toUpperCase(),_framePrefix:UIMaster.getFramePrefix(this.passwordUI)});
         }
         ]]></ns2:expressionString>
     </ns2:ops>
@@ -69,13 +67,16 @@
             IUserService moduleService = (IUserService)AppContext.get().getService(IUserService.class);
             PersonalAccountImpl personalAccount = (PersonalAccountImpl)moduleService.getPersonalAccount(userContext.getUserId());
 
-            String orgPwd = @page.getTextField("orgPasswordUI").getValue();
+            String orgPwd = @page.getPasswordField("orgPasswordUI").getValue();
             PersonalAccountImpl user = (PersonalAccountImpl)input.get("beObject");
             if (moduleService.changePassword(user, orgPwd, user.getPassword())) {
 	            Dialog.showMessageDialog("更新成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
             } else {
                 Dialog.showMessageDialog("更新失败，当前密码错误！", "Error", Dialog.ERROR_MESSAGE, null);
             }
+            @page.getPasswordField("orgPasswordUI").setValue("");
+            @page.getPasswordField("passwordUI").setValue("");
+            @page.getPasswordField("password1UI").setValue("");
         }
         ]]></expressionString>
       </ns2:exp>

@@ -402,14 +402,10 @@
 				                 if (tab.getSelectedIndex() == 0) {
 				                    tableUiid = "machingOrderTable";
 				                 } else if (tab.getSelectedIndex() == 1) {
-				                    tableUiid = "goldenOrderTable";
-				                 } else if (tab.getSelectedIndex() == 2) {
-				                    tableUiid = "gsaleOrderTable";
-				                 } else if (tab.getSelectedIndex() == 3) {
 				                    tableUiid = "rentOrderTable";
-				                 } else if (tab.getSelectedIndex() == 4) {
+				                 } else if (tab.getSelectedIndex() == 2) {
 				                    tableUiid = "loanOrderTable";
-				                 } else if (tab.getSelectedIndex() == 5) {
+				                 } else if (tab.getSelectedIndex() == 3) {
 				                    tableUiid = "loanMasterTable";
 				                 } 
 				                 Table t = (Table)@page.getElement(tableUiid);
@@ -526,7 +522,7 @@
 		                </ns2:layoutConstraint>
                     </ns2:panel>
                 </ns2:tab>
-                
+                <!-- 
                 <ns2:tab uiid="goldenOrderInfoPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
                         <ns2:value>采购订单</ns2:value>
@@ -796,7 +792,7 @@
                         </ns2:layoutConstraint>
                     </ns2:panel>
                 </ns2:tab>
-                
+                 -->
                 <ns2:tab uiid="rentOrderInfoPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
                         <ns2:value>出租设备</ns2:value>

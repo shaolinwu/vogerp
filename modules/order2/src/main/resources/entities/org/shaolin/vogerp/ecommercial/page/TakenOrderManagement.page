@@ -29,6 +29,7 @@
                        <ns2:referenceEntity entityName="org.shaolin.vogerp.ecommercial.form.MachiningOrderTrack" />
                     </ns2:refEntity>
                   </ns2:tab>
+                  <!-- 
                   <ns2:tab uiid="takenGOrderInfoPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
                         <ns2:value>拍下的抢购单</ns2:value>
@@ -46,6 +47,7 @@
 			          </ns2:DataComponent>
 			        </ns2:odmapping>
                   </ns2:tab>
+                   -->
                   <ns2:tab uiid="takenROrderInfoPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
                         <ns2:value>拍下的租赁单</ns2:value>

@@ -40,6 +40,8 @@ public interface IUserService {
 	
 	public boolean checkVerifiAnswer(String answer, HttpServletRequest request);
 	
+	public boolean resetPassword(String phoneNumber);
+	
 	/**
 	 * User login
 	 * 
@@ -58,6 +60,13 @@ public interface IUserService {
 
 	public String getErrorInfo(String errorCode);
 	
+	/**
+	 * 
+	 * @param user
+	 * @param origiPassword
+	 * @param newPassword
+	 * @return
+	 */
 	boolean changePassword(IPersonalAccount user, String origiPassword, String newPassword);
 	
 	public IPersonalAccount getPersonalAccount(long userId);
