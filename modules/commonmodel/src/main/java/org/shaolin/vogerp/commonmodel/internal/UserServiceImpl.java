@@ -71,48 +71,48 @@ import org.slf4j.LoggerFactory;
 public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUserChecker, Runnable {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-	
+
 	private static Localizer LOCALIZER = new Localizer("org_shaolin_vogerp_commonmodel_i18n");
-	
+
 	private List<UserActionListener> listeners = new ArrayList<UserActionListener>();
-	
+
 	private static final String CACHE_NAME = "__app_users_secondarycache";
-	
+
 	// for boosting the user login speed and getting hot user details.
     private final ICache<Long, PersonalInfoImpl> userSecondaryCache;
-	
+
     // IP filter of preventing attacker!
     private final ConcurrentHashMap<String, Integer> ipAttackFilter = new ConcurrentHashMap<String, Integer>(256);
-    
+
     private static ScheduledExecutorService scheduler;
-    
+
 	public UserServiceImpl() {
 		UserContext.setOnlineUserChecker(this);
-		userSecondaryCache = CacheManager.getInstance().getCache(CACHE_NAME, 100, false, Long.class, 
+		userSecondaryCache = CacheManager.getInstance().getCache(CACHE_NAME, 100, false, Long.class,
 				PersonalInfoImpl.class);
 		scheduler = IServerServiceManager.INSTANCE.getSchedulerService()
 				.createScheduler("system", "wf-coordinator", Runtime.getRuntime().availableProcessors());
 		scheduler.scheduleAtFixedRate(this, 1, 1, TimeUnit.DAYS);
 	}
-	
+
 	public void run() {
 		userSecondaryCache.clear();
 		ipAttackFilter.clear();
 		scheduler.scheduleAtFixedRate(this, 1, 1, TimeUnit.DAYS);
 	}
-	
+
 	public void addListener(UserActionListener listener) {
 		this.listeners.add(listener);
 	}
 
 	public static synchronized String genOrgCode() {
 		DateParser parse = new DateParser(new Date());
-		return "ORGCode-" + parse.getCNDateString() 
-				+ "-" + parse.format(parse.getHours(), 2) 
-				+ "" + parse.format(parse.getSeconds(), 2) 
+		return "ORGCode-" + parse.getCNDateString()
+				+ "-" + parse.format(parse.getHours(), 2)
+				+ "" + parse.format(parse.getSeconds(), 2)
 				+ "-" + (((int)(Math.random() * 1000)) + 1);
 	}
-	
+
 	public void updateUserCache(IPersonalInfo user) {
 		if (userSecondaryCache.containsKey(user.getId())) {
 			userSecondaryCache.put(user.getId(), (PersonalInfoImpl)user);
@@ -120,7 +120,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
             userSecondaryCache.put(user.getId(), (PersonalInfoImpl)user);
         }
 	}
-	
+
 	public boolean checkNewAccount(String userAccount) {
 		PersonalAccountImpl account = new PersonalAccountImpl();
 		account.setUserName(userAccount);
@@ -135,10 +135,10 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			return false;
 		}
 	}
-	
+
 	/**
 	 * this method must be synchronized!
-	 * 
+	 *
 	 * @param registerInfo
 	 */
 	public synchronized boolean register(final IRegisterInfo registerInfo, HttpServletRequest request) {
@@ -162,16 +162,16 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 		// one ip only allows to register 3 users per day.
 		if (ipAttackFilter.containsKey(userIPAddress) && ipAttackFilter.get(userIPAddress).intValue() > 3) {
-			logger.warn("IP Filter detected potential IP attacker!!! ip address: " + userIPAddress 
+			logger.warn("IP Filter detected potential IP attacker!!! ip address: " + userIPAddress
 					+ ", register account: " + registerInfo.getPhoneNumber());
 			return false;
 		}
-		if (registerInfo.getRecommandUserName() != null 
+		if (registerInfo.getRecommandUserName() != null
 				&& (registerInfo.getPhoneNumber().equals(registerInfo.getRecommandUserName().trim())
 					|| registerInfo.getRecommandUserName().trim().length() == 0)) {
-			registerInfo.setRecommandUserName(null);	
+			registerInfo.setRecommandUserName(null);
 		}
-		
+
 		PersonalAccountImpl account = new PersonalAccountImpl();
 		account.setUserName(registerInfo.getPhoneNumber());
 		List<IPersonalAccount> result = CommonModel.INSTANCE.searchUserAccount(account, null, 0, 1);
@@ -179,7 +179,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			return false;
 		}
 		CommonModel.INSTANCE.create(registerInfo);
-		
+
 		// create organization
 		OrganizationImpl org = new OrganizationImpl();
 		org.setName(registerInfo.getOrgName());
@@ -194,7 +194,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 		CommonModel.INSTANCE.create(org);
 		registerInfo.setOrgId(org.getId());
-		
+
 		// create user info.
 		PersonalInfoImpl userInfo = new PersonalInfoImpl();
 		userInfo.setOrgCode(org.getOrgCode());
@@ -209,7 +209,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		userInfo.setBirthday(new Date());
 		userInfo.setEmpLevel(EmployeeLevel.SENIOR);
 		userInfo.setEmpId("000001");
-		
+
 		if (registerInfo.getUserType() == OrgType.COMPANY) {
 			registerInfo.getAddress().setName(registerInfo.getOrgName());
 			registerInfo.getAddress().setMobile(registerInfo.getPhoneNumber());
@@ -217,11 +217,11 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			addresses.add(registerInfo.getAddress());
 			userInfo.setAddresses(addresses);
 		}
-		// userInfo.setp registerInfo.getPhoneNumber() 
+		// userInfo.setp registerInfo.getPhoneNumber()
 		// registerInfo.getAddress();
 		CommonModel.INSTANCE.create(userInfo);
 		registerInfo.setUserId(userInfo.getId());
-		
+
 		// create account.
 		PersonalAccountImpl newAccount = new PersonalAccountImpl();
 		newAccount.setPersonalId(userInfo.getId());
@@ -240,7 +240,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			newAccount.setLocationInfo("CityShanghai0,310100");//default location is Shanghai.
 		}
 		CommonModel.INSTANCE.create(newAccount);
-		
+
 		AssignedMemberImpl assignedMember = new AssignedMemberImpl();
 		assignedMember.setOrgId(org.getId());
 		assignedMember.setType(AMemberType.GENERAL);
@@ -250,13 +250,13 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		assignedMember.setEndtime(assingedDate);
 		assignedMember.setStarttime(new Date());
 		CommonModel.INSTANCE.create(assignedMember);
-		
+
 		if (IServerServiceManager.INSTANCE.getRunningEnv() == Env.Production) {
 			// assign modules
 			IModuleService moduleService = AppContext.get().getService(IModuleService.class);
 			moduleService.newAppModules(IModuleService.DEFAULT_USER_MODULES, org.getId(), org.getOrgCode());
 		}
-		
+
 		IPersonalAccount recommandUserAccount = getPersonalInfoByName(registerInfo.getRecommandUserName());
 		long recommandedUserId = recommandUserAccount == null? 0 : recommandUserAccount.getPersonalId();
 		AccountingServiceImpl.notifyRegistered(userInfo.getId(), recommandedUserId);
@@ -271,10 +271,10 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		// manually commit the transaction.
 		HibernateUtil.releaseSession(true);
 		// the rollback operation is performed outside.
-		
+
 		// rebuild transaction again.
 		HibernateUtil.getSession();
-		
+
 		// send notification.
 		return true;
 	}
@@ -296,7 +296,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			logger.warn("Failed to access user Location info: " + e.getMessage());
 		}
 	}
-	
+
 	public String getUserCityInfo(HttpServletRequest request) {
 		try {
 			return WebConfig.getUserCityInfo(request.getRemoteAddr());
@@ -305,21 +305,21 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 		return "";
 	}
-	
+
 	public PasswordCheckResult checkPasswordPattern(String password) {
 		return PasswordVerifier.checkPasswordPolicy(password);
 	}
-	
+
 	@Override
 	public String preLogin(HttpServletRequest request) {
 		ICaptcherService service = IServerServiceManager.INSTANCE.getService(ICaptcherService.class);
 		ICaptcha captcha = service.getItem(service.generateOne());
-		
+
 		HttpSession session = request.getSession();
 		session.setAttribute(WebflowConstants.USER_TOKEN, captcha.getAnswer());
 		return captcha.getQuestion();
 	}
-	
+
 	@Override
 	public boolean checkVerifiAnswer(String answer, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -334,9 +334,9 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 		return value.toString().equalsIgnoreCase(answer);
 	}
-	
+
 	/**
-	 * Login Requirements: 
+	 * Login Requirements:
 	 * 1. the password must be encryted in the client before sending.
 	 * 2. MD5 supported and time expiration supported for auto login.
 	 */
@@ -352,7 +352,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		List<IPersonalAccount> result = CommonModel.INSTANCE.authenticateUserInfo((PersonalAccountImpl)user, null, 0, -1);
 		if (result.size() == 1) {
 			IPersonalAccount matchedUser = result.get(0);
-			
+
 			long now = System.currentTimeMillis();
 			Date lastLoginTime = matchedUser.getLastLogin();
 			if (lastLoginTime == null) {
@@ -365,7 +365,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 				if(matchedUser.getIsLocked()){
 		        	return USER_LOGIN_PASSWORDRULES_ACCOUNTLOCKED;
 		        }
-				
+
 				if (matchedUser.getAttempt() >= 5)
 				{
 					matchedUser.setIsLocked(true);
@@ -382,16 +382,16 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			// auto login check!
 			String userIP = HttpUserUtil.getIP(request);
 			String autosumcheck = request.getParameter("autosumcheck");
-			if (autosumcheck != null && autosumcheck.length() > 0 
+			if (autosumcheck != null && autosumcheck.length() > 0
 					&& matchedUser.getAutoLoginSumCheck() != null && matchedUser.getAutoLoginSumCheck().length() > 0) {
-				Date expiredDate = new Date(); 
+				Date expiredDate = new Date();
 				DateUtil.increaseDays(expiredDate, 7);// auto login must be cancelled after 7 days.
 				if (!(matchedUser.getAutoLoginSumCheck().equals(autosumcheck) && matchedUser.getLoginIP().equals(userIP))) {
 					return USER_LOGIN_PASSWORDRULES_EXPIRED;
 				} else if ((System.currentTimeMillis() - matchedUser.getLastLogin().getTime()) > expiredDate.getTime()) {
 					return USER_LOGIN_PASSWORDRULES_EXPIRED;
 				}
-			} 
+			}
 			// the auto sumcheck will be generated and updated by server side.
 			matchedUser.setAutoLoginSumCheck(Math.random() + "");
 			matchedUser.setLastLogin(new Date());
@@ -408,11 +408,11 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 				this.setLocationInfo((PersonalAccountImpl)matchedUser);
 			}
 			CommonModel.INSTANCE.update(matchedUser);
-			
+
 			HttpSession session = request.getSession(true);
 			session.removeAttribute(WebflowConstants.USER_TOKEN);
 			session.removeAttribute("has_first_token");
-			
+
 			PersonalInfoImpl userInfo = matchedUser.getInfo();
 			Long userId = userInfo.getId();
 			if (userSecondaryCache.containsKey(userId)) {
@@ -420,7 +420,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	        } else {
 	        	    userSecondaryCache.put(userId, userInfo);
 	        }
-			
+
 			UserContext userContext = new UserContext();
 			userContext.setUserId(userInfo.getId());
 			userContext.setUserAccount(matchedUser.getUserName());
@@ -437,8 +437,8 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			userContext.setUserRoles(CEOperationUtil.toCElist(userInfo.getType()));
 			if (matchedUser.getLastLogin() != null) {
 				DateParser parse = new DateParser(matchedUser.getLastLogin());
-				userContext.setLastLoginDate(parse.getCNDateString() 
-						+ "-" + parse.format(parse.getHours(), 2) 
+				userContext.setLastLoginDate(parse.getCNDateString()
+						+ "-" + parse.format(parse.getHours(), 2)
 						+ ":" + parse.format(parse.getSeconds(), 2) );
 			}
 			OrganizationImpl organization = userInfo.getOrganization();
@@ -452,7 +452,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			session.setAttribute(WebflowConstants.USER_ROLE_KEY, userRoles);
 			session.setAttribute(WebflowConstants.USER_SESSION_KEY, userContext);
 			session.setAttribute(WebflowConstants.USER_LOCALE_KEY, matchedUser.getLocale());
-			
+
 			String userLocale = WebConfig.getUserLocale(request);
 			String userAgent = request.getHeader("user-agent");
 			boolean isMobile = MobilitySupport.isMobileRequest(userAgent);
@@ -466,7 +466,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	    			listener.loggedIn(matchedUser, userInfo);
 	    		}
             registerOnlineUser(userContext);
-            
+
 			boolean hasCookie = false;
 			Cookie[] cookies = request.getCookies();
 			if (cookies != null) {
@@ -479,7 +479,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 					}
 				}
 			}
-			
+
 			if (!hasCookie) {
 				Cookie cookie1 = new Cookie(WebflowConstants.USER_LOCALE_KEY, matchedUser.getLocale());
 				//response.addCookie(cookie1);
@@ -489,7 +489,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			return USER_LOGIN_PASSWORDRULES_PASSWORDINCORRECT;
 		}
 	}
-	
+
 	@Override
 	public void logout(HttpSession session) {
 		Object userContext = session.getAttribute(WebflowConstants.USER_SESSION_KEY);
@@ -510,7 +510,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		session.removeAttribute(WebflowConstants.USER_SESSION_KEY);
 		session.removeAttribute(WebflowConstants.USER_LOCALE_KEY);
 		session.removeAttribute(WebflowConstants.USER_ROLE_KEY);
-		
+
 		for (UserActionListener listener: listeners) {
 			listener.loggedOut();
 		}
@@ -524,7 +524,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 		return false;
 	}
-	
+
 	public boolean isIndividualUser(long userId) {
 		IPersonalInfo personInfo = getPersonalInfo(userId);
 		if (personInfo != null && personInfo.getOrganization() != null) {
@@ -532,10 +532,10 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 		return true; //by default
 	}
-	
+
 	private HttpSender sender = new HttpSender();
 	private String websocketServer = WebConfig.getWebSocketServer();
-	
+
 	private void registerOnlineUser(final UserContext userContext) {
 		if (websocketServer == null || websocketServer.length() == 0) {
 			logger.info("Websocker server is not configured!");
@@ -552,7 +552,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			logger.warn("Fail to register online user info!", e);
 		}
 	}
-	
+
 	/**
 	 * all online user ids stored in node.js for distribution.
 	 */
@@ -573,7 +573,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			return false;
 		}
 	}
-	
+
 	public int getOnlineUsers() {
 		if (websocketServer == null || websocketServer.length() == 0) {
 			logger.info("Websocker server is not configured!");
@@ -590,14 +590,14 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 		return 0;
 	}
-	
+
 	private static final String USER_LOCATION_SQL = "SELECT LOCATIONINFO from comm_personalaccount a where a.PERSONALID=?";
-	
+
 	public String getUserLocation(long userId) {
 		if (userId < 1) {
 			return "";
 		}
-		
+
 		Session session = HibernateUtil.getSession();
 		final List<String> rows = session.createSQLQuery(USER_LOCATION_SQL).setLong(0, userId).list();
 		if (rows != null && rows.size() > 0) {
@@ -605,17 +605,17 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 		return "";
 	}
-	
+
 	@Override
 	public String getUserOrganizationType() {
 		return UserContext.getUserContext().getOrgType();
 	}
-	
+
 	@Override
 	public long getUserId() {
 		return UserContext.getUserContext().getUserId();
 	}
-	
+
 	@Override
 	public JSONObject getOnlineUserAsJSON() {
 		try {
@@ -627,13 +627,13 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			json.put("city", UserContext.getUserContext().getCity());
 			json.put("locale", UserContext.getUserContext().getLocale());
 			json.put("sumCheck", UserContext.getUserContext().getAutoLoginSumCheck());
-			
+
 			return json;
 		} catch (Exception e) {
 			return new JSONObject();
 		}
 	}
-	
+
 	@Override
 	public boolean checkUserOnline(HttpSession session) {
 		if (session.getAttribute(WebflowConstants.USER_SESSION_KEY) == null) {
@@ -642,7 +642,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		UserContext context = (UserContext)session.getAttribute(WebflowConstants.USER_SESSION_KEY);
 		return  context.getUserId() > 0;
 	}
-	
+
 	@Override
 	public String getErrorInfo(String errorCode) {
 		return ResourceUtil.getResource("zh_CN", LOCALIZER.getName(), errorCode);
@@ -657,7 +657,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		List<IPersonalAccount> result = CommonModel.INSTANCE.searchUserAccount(account, null, 0, 1);
 		return result.get(0);
 	}
-	
+
 	@Override
 	public IPersonalAccount getPersonalInfoByName(String mobilePhone) {
 		if (mobilePhone == null || mobilePhone.trim().length() == 0) {
@@ -671,7 +671,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 		return result.get(0);
 	}
-	
+
 	@Override
 	public IPersonalInfo getPersonalInfo(long userId) {
 		if (userSecondaryCache.containsKey(userId)) {
@@ -679,13 +679,13 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 		return CommonModel.INSTANCE.get(userId, PersonalInfoImpl.class);
 	}
-	
+
 	@Override
 	public IPersonalInfo getPersonalInfo(long userId, boolean freshObject) {
 		userSecondaryCache.remove(userId);
 		return CommonModel.INSTANCE.get(userId, PersonalInfoImpl.class);
 	}
-	
+
 	@Override
 	public List<IPersonalInfo> getPersonalInfos(Set<Long> userIds) {
 		if (userIds == null || userIds.size() == 0) {
@@ -698,34 +698,41 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		criteria.add(Restrictions.in("pinfo.id", values));
 		return criteria.list();
 	}
-	
+
 	@Override
 	public String getUserName(long userId) {
 		return CustomerInfoUtil.getCustomerEnterpriseBasicInfo(getPersonalInfo(userId));
 	}
-	
+
 	@Override
 	public Class<?> getServiceInterface() {
 		return IUserService.class;
 	}
 
 	@Override
-	public void changePassword(IPersonalAccount user, String newPassword) {
-		if (newPassword == null || newPassword.length() <= 6) {
-			throw new IllegalArgumentException("The new password is illegal pattern!");
+	public boolean changePassword(IPersonalAccount user, String origiPassword, String newPassword) {
+		if (newPassword == null || newPassword.length() < 6) {
+			//throw new IllegalArgumentException("The new password is illegal pattern!");
+			return false;
 		}
-		
-		if (user.getPassword() != null) {
-			user.setPassword(newPassword.toUpperCase());
-			CommonModel.INSTANCE.update(user);
+		MD5Util instance = new MD5Util();
+		PersonalAccountImpl sc = new PersonalAccountImpl();
+		sc.setUserName(user.getUserName());
+		sc.setPassword(instance.md5(origiPassword));
+		List<IPersonalAccount> result = CommonModel.INSTANCE.authenticateUserInfo(sc, null, 0, -1);
+		if (result.size() == 0) {
+			return false;
 		}
+		user.setPassword(instance.md5(newPassword).toUpperCase());
+		CommonModel.INSTANCE.update(user);
+		return true;
 	}
 
 	public boolean hasAddressConfigured(long userId) {
 		Set<IAddressInfo> addressInfo = getPersonalInfo(userId).getAddresses();
 		return (addressInfo != null && addressInfo.size() > 0);
 	}
-	
+
 	public void addAddressInfo(String json) throws JSONException {
 		if (json == null || json.trim().length() == 0) {
 			logger.warn("Address info cannot be empty");
@@ -747,13 +754,13 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		info.setTelephone(jsonObject.getString("mobile"));
 		info.setName(jsonObject.getString("name"));
         CustCommonModel.INSTANCE.updateAddresse(userId, info);
-        
+
         //TODO: update account location.
         IPersonalAccount account = getPersonalAccount(userId);
         account.setLocationInfo(jsonObject.getString("city"));
         CommonModel.INSTANCE.update(account);
 	}
-	
+
 	public boolean resetPassword(String phoneNumber) {
 		PersonalAccountImpl account = new PersonalAccountImpl();
 		account.setUserName(phoneNumber);
@@ -761,10 +768,10 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		if (result.size() > 0) {
 			MD5Util instance = new MD5Util();
 			String password = StringUtil.genRandomAlphaBits(6);
-			result.get(0).setPassword(instance.md5(password));
+			result.get(0).setPassword(instance.md5(password).toUpperCase());
 			CommonModel.INSTANCE.update(result.get(0));
 			IShortMsgService msgService = AppContext.get().getService(IShortMsgService.class);
-	        return msgService.sendFindPassword(phoneNumber, password);
+	    return ((ShortMsgServiceImpl)msgService).sendFindPassword(phoneNumber, password);
 		}
 		return false;
 	}

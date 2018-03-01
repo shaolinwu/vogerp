@@ -109,7 +109,7 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
         {
             func: function() {
                 
-                    { 
+                    {
                     return this.value == passwordUI.value;
                     }
             }
@@ -224,7 +224,7 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
         var o = this;
         var UIEntity = this;
 
-        {   
+        {
             var constraint_result = this.Form.validate();
             if (constraint_result != true && constraint_result != null) {
                 return false;
@@ -242,7 +242,7 @@ function org_shaolin_vogerp_commonmodel_form_PersonalAccount(json)
         var o = this;
         var UIEntity = this;
 
-        {   
+        {
             var constraint_result = this.Form.validate();
             if (constraint_result != true && constraint_result != null) {
                 return false;

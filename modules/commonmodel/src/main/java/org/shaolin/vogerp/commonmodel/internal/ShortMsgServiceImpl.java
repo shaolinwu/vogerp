@@ -24,7 +24,7 @@ import com.aliyuncs.profile.IClientProfile;
 public class ShortMsgServiceImpl implements IShortMsgService, IServiceProvider {
 
 	private static final Logger logger = LoggerFactory.getLogger(ShortMsgServiceImpl.class);
-	
+
 	//产品名称:云通信短信API产品,开发者无需替换
 	private static final String product = "Dysmsapi";
     //产品域名,开发者无需替换
@@ -33,7 +33,7 @@ public class ShortMsgServiceImpl implements IShortMsgService, IServiceProvider {
     private final String accessKeyId;
     private final String accessKeySecret;
     private final String signName;
-	
+
 	public ShortMsgServiceImpl() {
 		//可自助调整超时时间
 //        System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
@@ -42,26 +42,26 @@ public class ShortMsgServiceImpl implements IShortMsgService, IServiceProvider {
 		accessKeySecret = Registry.getInstance().getValue("/System/sms/appsecret");
 		signName = Registry.getInstance().getValue("/System/sms/signName");
 	}
-	
+
 	public boolean sendMsgToEmail(String content, String tempId, String email) {
 		return false;
 	}
-	
+
 	public boolean sendFindPassword(String phoneNumber, String password) {
 		return sendMsgToPhone("SMS_53880118", "{'password':'"+password+"'}", phoneNumber);
 	}
-	
+
 	public boolean sendRegistryCode(String phoneNumber, String code) {
 		return sendMsgToPhone("SMS_126351070", "{'code':'"+code+"'}", phoneNumber);
 	}
 
-	private boolean sendMsgToPhone(String tempId, String jsonParam, String phoneNumber) {
+	public boolean sendMsgToPhone(String tempId, String jsonParam, String phoneNumber) {
 		try {
 			//初始化acsClient,暂不支持region化
 	        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
 	        DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain);
 	        IAcsClient acsClient = new DefaultAcsClient(profile);
-	
+
 	        //组装请求对象-具体描述见控制台-文档部分内容
 	        SendSmsRequest request = new SendSmsRequest();
 	        //必填:待发送手机号
@@ -72,12 +72,12 @@ public class ShortMsgServiceImpl implements IShortMsgService, IServiceProvider {
 	        request.setTemplateCode(tempId);
 	        //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
 	        request.setTemplateParam(jsonParam);
-	        
+
 	        //选填-上行短信扩展码(无特殊需求用户请忽略此字段)
 	        //request.setSmsUpExtendCode("90997");
 	        //可选:outId为提供给业务方扩展字段,最终在短信回执消息中将此值带回给调用者
 	        //request.setOutId("yourOutId");
-	        
+
 	        //hint 此处可能会抛出异常，注意catch
 	        SendSmsResponse response = acsClient.getAcsResponse(request);
 	        logger.info("SendSmsResponse Code=" + response.getCode() + ", Message=" + response.getMessage() +", RequestId="
@@ -90,7 +90,7 @@ public class ShortMsgServiceImpl implements IShortMsgService, IServiceProvider {
 		}
 		return false;
 	}
-	
+
 	public QuerySendDetailsResponse querySendDetails(String phoneNumber, String bizId) throws ClientException {
 
         //初始化acsClient,暂不支持region化

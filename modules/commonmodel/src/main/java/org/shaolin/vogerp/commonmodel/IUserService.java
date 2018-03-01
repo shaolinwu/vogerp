@@ -58,7 +58,7 @@ public interface IUserService {
 
 	public String getErrorInfo(String errorCode);
 	
-	void changePassword(IPersonalAccount user, String newPassword);
+	boolean changePassword(IPersonalAccount user, String origiPassword, String newPassword);
 	
 	public IPersonalAccount getPersonalAccount(long userId);
 	

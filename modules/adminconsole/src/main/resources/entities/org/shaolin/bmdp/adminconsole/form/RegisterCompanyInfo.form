@@ -6,7 +6,7 @@
   <ns2:eventHandler functionName="verifiPhoneNumber">
     <ns2:ops xsi:type="ns2:OpExecuteScriptType">
         <ns2:expressionString><![CDATA[
-        {   
+        {
             //if(event.keyCode != 13 || event.keyCode != 9) {
                //return;
             //}
@@ -24,7 +24,7 @@
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.commonmodel.IUserService;
         import org.shaolin.bmdp.runtime.AppContext;
-        { 
+        {
             TextField p = @page.getTextField("phoneNumberUI");
             String phoneNumber = p.getValue();
             IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
@@ -121,7 +121,7 @@
         </ns2:allowBlankText>
         <ns2:maxLength xsi:type="ns2:NumericPropertyType">
             <type>int</type>
-            <value>30</value>
+            <value>10</value>
         </ns2:maxLength>
         <ns2:validator xsi:type="ns2:ValidatorsPropertyType">
             <ns2:validator xsi:type="ns2:ValidatorPropertyType">
@@ -157,7 +157,7 @@
         </ns2:allowBlankText>
         <ns2:maxLength xsi:type="ns2:NumericPropertyType">
             <type>int</type>
-            <value>30</value>
+            <value>10</value>
         </ns2:maxLength>
         <ns2:validator xsi:type="ns2:ValidatorsPropertyType">
             <ns2:validator xsi:type="ns2:ValidatorPropertyType">
@@ -174,7 +174,7 @@
             <ns2:validator xsi:type="ns2:ValidatorPropertyType">
                     <isFuncRef>false</isFuncRef>
                     <funcCode><![CDATA[
-                    { 
+                    {
                     return this.value == passwordUI.value;
                     }]]></funcCode>
                     <!-- 密码不匹配！ -->
@@ -217,7 +217,7 @@
             <ns2:value>行业类型不能为空！</ns2:value>
         </ns2:allowBlankText>
       </ns2:component>
-      
+
       <ns2:layoutConstraint>
         <ns2:componentId>phoneNumberUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="0" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
@@ -321,15 +321,15 @@
       {
           ArrayList values = new ArrayList();
           ArrayList displayItems = new ArrayList();
-          CEOperationUtil.getCEComboBox(values, displayItems, 
+          CEOperationUtil.getCEComboBox(values, displayItems,
                AppContext.get().getConstantService().getConstantEntity("org.shaolin.vogerp.productmodel.ce.ProductType"));
           $beObject.setOrgType("org.shaolin.vogerp.productmodel.ce.ProductType,1");
           $values = values;
           $displayItems = displayItems;
-          
+
           $beObject.setAddress(new AddressInfoImpl());
           @odContext.executeAllMappings();
-      }   
+      }
     ]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>

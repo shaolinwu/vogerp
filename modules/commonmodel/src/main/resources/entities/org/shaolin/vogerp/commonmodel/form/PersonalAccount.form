@@ -5,7 +5,7 @@
   <ns2:eventHandler functionName="Save">
     <ns2:ops xsi:type="ns2:OpExecuteScriptType">
         <ns2:expressionString><![CDATA[
-        {   
+        {
             var constraint_result = this.Form.validate();
             if (constraint_result != true && constraint_result != null) {
                 return false;
@@ -26,8 +26,8 @@
         import org.shaolin.vogerp.commonmodel.IUserService;
         import org.shaolin.vogerp.commonmodel.internal.PasswordCheckResult;
         import org.shaolin.vogerp.commonmodel.internal.PasswordVerifier;
-        { 
-           
+        {
+
         }
         ]]></expressionString>
       </ns2:exp>
@@ -36,7 +36,7 @@
   <ns2:eventHandler functionName="ResetPassword">
     <ns2:ops xsi:type="ns2:OpExecuteScriptType">
         <ns2:expressionString><![CDATA[
-        {   
+        {
             var constraint_result = this.Form.validate();
             if (constraint_result != true && constraint_result != null) {
                 return false;
@@ -61,20 +61,17 @@
         import org.shaolin.vogerp.commonmodel.internal.PasswordVerifier;
         import org.shaolin.vogerp.commonmodel.util.MD5Util;
         import org.shaolin.uimaster.page.flow.WebflowConstants;
-        { 
-            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+        {
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid());
             HashMap input = (HashMap)form.ui2Data();
-            
+
             UserContext userContext = UserContext.getUserContext();
             IUserService moduleService = (IUserService)AppContext.get().getService(IUserService.class);
             PersonalAccountImpl personalAccount = (PersonalAccountImpl)moduleService.getPersonalAccount(userContext.getUserId());
-            
-            MD5Util instance = new MD5Util();
+
             String orgPwd = @page.getTextField("orgPasswordUI").getValue();
-            if (personalAccount.getPassword().equals(instance.md5(orgPwd))) {
-	            PersonalAccountImpl tempData = (PersonalAccountImpl)input.get("beObject");
-	            personalAccount.setPassword(instance.md5(tempData.getPassword()));
-	            CommonModel.INSTANCE.update(personalAccount);
+            PersonalAccountImpl user = (PersonalAccountImpl)input.get("beObject");
+            if (moduleService.changePassword(user, orgPwd, user.getPassword())) {
 	            Dialog.showMessageDialog("更新成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
             } else {
                 Dialog.showMessageDialog("更新失败，当前密码错误！", "Error", Dialog.ERROR_MESSAGE, null);
@@ -90,11 +87,11 @@
         <expressionString>
         import org.shaolin.uimaster.page.AjaxContext;
         import org.shaolin.uimaster.page.ajax.*;
-        { 
-            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
+        {
+            RefForm form = (RefForm)@page.getElement(@page.getEntityUiid());
             if (form.isInWindows()) {
                 form.closeIfinWindows(true);
-                @page.removeForm(@page.getEntityUiid()); 
+                @page.removeForm(@page.getEntityUiid());
             }
         }
         </expressionString>
@@ -146,7 +143,7 @@
         </ns2:allowBlankText>
         <ns2:maxLength xsi:type="ns2:NumericPropertyType">
             <type>int</type>
-            <value>30</value>
+            <value>10</value>
         </ns2:maxLength>
         <ns2:validator xsi:type="ns2:ValidatorsPropertyType">
             <ns2:validator xsi:type="ns2:ValidatorPropertyType">
@@ -187,7 +184,7 @@
         </ns2:allowBlankText>
         <ns2:maxLength xsi:type="ns2:NumericPropertyType">
             <type>int</type>
-            <value>30</value>
+            <value>10</value>
         </ns2:maxLength>
         <ns2:validator xsi:type="ns2:ValidatorsPropertyType">
             <ns2:validator xsi:type="ns2:ValidatorPropertyType">
@@ -228,7 +225,7 @@
         </ns2:allowBlankText>
         <ns2:maxLength xsi:type="ns2:NumericPropertyType">
             <type>int</type>
-            <value>30</value>
+            <value>10</value>
         </ns2:maxLength>
         <ns2:validator xsi:type="ns2:ValidatorsPropertyType">
             <ns2:validator xsi:type="ns2:ValidatorPropertyType">
@@ -245,7 +242,7 @@
             <ns2:validator xsi:type="ns2:ValidatorPropertyType">
                     <isFuncRef>false</isFuncRef>
                     <funcCode><![CDATA[
-                    { 
+                    {
                     return this.value == passwordUI.value;
                     }]]></funcCode>
                     <errMsg>\u5BC6\u7801\u4E0D\u4E00\u81F4!</errMsg>
@@ -259,7 +256,7 @@
             </ns2:validator>
         </ns2:validator>
       </ns2:component>
-      <!-- 
+      <!--
       <ns2:component xsi:type="ns2:UILabelType" UIID="localeUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
@@ -311,7 +308,7 @@
         <ns2:componentId>password1UI</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
-      <!-- 
+      <!--
       <ns2:layoutConstraint>
         <ns2:componentId>localeUILabel</ns2:componentId>
         <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass="uimaster_leftform_cell"></ns2:constraint>
@@ -421,9 +418,9 @@
 	  UserContext userContext = UserContext.getUserContext();
 	  IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
 	  $beObject = (PersonalAccountImpl)userService.getPersonalAccount(userContext.getUserId());
-	  
+
 	  @odContext.executeAllMappings();
-	}   
+	}
       ]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>

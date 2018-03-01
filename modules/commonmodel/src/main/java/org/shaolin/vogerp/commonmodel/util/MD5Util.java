@@ -62,13 +62,11 @@ public class MD5Util {
 	    public int[] binl_md5(int x[], int len) {
 	        /* append padding */
 	    		int end = (((len + 64) >>> 9) << 4) + 14;
-	    		if (x.length < end) {
-	    			int temp[] = new int[end + 1];
-	    			
-	    			
-	    		}
+    			int temp[] = new int[15];
+    			System.arraycopy(x, 0, temp, 0, (x.length <= 15 ? x.length : 15));
+    			x = temp;
 	        x[len >> 5] |= 0x80 << (len % 32);
-	        x[(((len + 64) >>> 9) << 4) + 14] = len;
+	        x[end] = len;
 	        
 	        int i, olda, oldb, oldc, oldd,
 	            a =  1732584193,
@@ -83,72 +81,72 @@ public class MD5Util {
 	            oldd = d;
 
 	            a = md5_ff(a, b, c, d, x[i],       7, -680876936);
-	            d = md5_ff(d, a, b, c, x[i +  1], 12, -389564586);
-	            c = md5_ff(c, d, a, b, x[i +  2], 17,  606105819);
-	            b = md5_ff(b, c, d, a, x[i +  3], 22, -1044525330);
-	            a = md5_ff(a, b, c, d, x[i +  4],  7, -176418897);
-	            d = md5_ff(d, a, b, c, x[i +  5], 12,  1200080426);
-	            c = md5_ff(c, d, a, b, x[i +  6], 17, -1473231341);
-	            b = md5_ff(b, c, d, a, x[i +  7], 22, -45705983);
-	            a = md5_ff(a, b, c, d, x[i +  8],  7,  1770035416);
-	            d = md5_ff(d, a, b, c, x[i +  9], 12, -1958414417);
-	            c = md5_ff(c, d, a, b, x[i + 10], 17, -42063);
-	            b = md5_ff(b, c, d, a, x[i + 11], 22, -1990404162);
-	            a = md5_ff(a, b, c, d, x[i + 12],  7,  1804603682);
-	            d = md5_ff(d, a, b, c, x[i + 13], 12, -40341101);
-	            c = md5_ff(c, d, a, b, x[i + 14], 17, -1502002290);
-	            b = md5_ff(b, c, d, a, x[i + 15], 22,  1236535329);
+	            d = md5_ff(d, a, b, c, ((i +  1) < x.length) ? x[i +  1] : 0, 12, -389564586);
+	            c = md5_ff(c, d, a, b, ((i +  2) < x.length) ? x[i +  2] : 0, 17,  606105819);
+	            b = md5_ff(b, c, d, a, ((i +  3) < x.length) ? x[i +  3] : 0, 22, -1044525330);
+	            a = md5_ff(a, b, c, d, ((i +  4) < x.length) ? x[i +  4] : 0,  7, -176418897);
+	            d = md5_ff(d, a, b, c, ((i +  5) < x.length) ? x[i +  5] : 0, 12,  1200080426);
+	            c = md5_ff(c, d, a, b, ((i +  6) < x.length) ? x[i +  6] : 0, 17, -1473231341);
+	            b = md5_ff(b, c, d, a, ((i +  7) < x.length) ? x[i +  7] : 0, 22, -45705983);
+	            a = md5_ff(a, b, c, d, ((i +  8) < x.length) ? x[i +  8] : 0,  7,  1770035416);
+	            d = md5_ff(d, a, b, c, ((i +  9) < x.length) ? x[i +  9] : 0, 12, -1958414417);
+	            c = md5_ff(c, d, a, b, ((i +  10) < x.length) ? x[i + 10] : 0, 17, -42063);
+	            b = md5_ff(b, c, d, a, ((i +  11) < x.length) ? x[i + 11] : 0, 22, -1990404162);
+	            a = md5_ff(a, b, c, d, ((i +  12) < x.length) ? x[i + 12] : 0,  7,  1804603682);
+	            d = md5_ff(d, a, b, c, ((i +  13) < x.length) ? x[i + 13] : 0, 12, -40341101);
+	            c = md5_ff(c, d, a, b, ((i +  14) < x.length) ? x[i + 14] : 0, 17, -1502002290);
+	            b = md5_ff(b, c, d, a, ((i +  15) < x.length) ? x[i + 15] : 0, 22,  1236535329);
 
-	            a = md5_gg(a, b, c, d, x[i +  1],  5, -165796510);
-	            d = md5_gg(d, a, b, c, x[i +  6],  9, -1069501632);
-	            c = md5_gg(c, d, a, b, x[i + 11], 14,  643717713);
-	            b = md5_gg(b, c, d, a, x[i],      20, -373897302);
-	            a = md5_gg(a, b, c, d, x[i +  5],  5, -701558691);
-	            d = md5_gg(d, a, b, c, x[i + 10],  9,  38016083);
-	            c = md5_gg(c, d, a, b, x[i + 15], 14, -660478335);
-	            b = md5_gg(b, c, d, a, x[i +  4], 20, -405537848);
-	            a = md5_gg(a, b, c, d, x[i +  9],  5,  568446438);
-	            d = md5_gg(d, a, b, c, x[i + 14],  9, -1019803690);
-	            c = md5_gg(c, d, a, b, x[i +  3], 14, -187363961);
-	            b = md5_gg(b, c, d, a, x[i +  8], 20,  1163531501);
-	            a = md5_gg(a, b, c, d, x[i + 13],  5, -1444681467);
-	            d = md5_gg(d, a, b, c, x[i +  2],  9, -51403784);
-	            c = md5_gg(c, d, a, b, x[i +  7], 14,  1735328473);
-	            b = md5_gg(b, c, d, a, x[i + 12], 20, -1926607734);
+	            a = md5_gg(a, b, c, d, ((i +  1) < x.length) ? x[i +  1] : 0,  5, -165796510);
+	            d = md5_gg(d, a, b, c, ((i +  6) < x.length) ? x[i +  6] : 0,  9, -1069501632);
+	            c = md5_gg(c, d, a, b, ((i +  11) < x.length) ? x[i + 11] : 0, 14,  643717713);
+	            b = md5_gg(b, c, d, a, ((i) < x.length) ? x[i] : 0,      20, -373897302);
+	            a = md5_gg(a, b, c, d, ((i +  5) < x.length) ? x[i +  5] : 0,  5, -701558691);
+	            d = md5_gg(d, a, b, c, ((i +  10) < x.length) ? x[i + 10] : 0,  9,  38016083);
+	            c = md5_gg(c, d, a, b, ((i +  15) < x.length) ? x[i + 15] : 0, 14, -660478335);
+	            b = md5_gg(b, c, d, a, ((i +  4) < x.length) ? x[i +  4] : 0, 20, -405537848);
+	            a = md5_gg(a, b, c, d, ((i +  9) < x.length) ? x[i +  9] : 0,  5,  568446438);
+	            d = md5_gg(d, a, b, c, ((i +  14) < x.length) ? x[i + 14] : 0,  9, -1019803690);
+	            c = md5_gg(c, d, a, b, ((i +  3) < x.length) ? x[i +  3] : 0, 14, -187363961);
+	            b = md5_gg(b, c, d, a, ((i +  8) < x.length) ? x[i +  8] : 0, 20,  1163531501);
+	            a = md5_gg(a, b, c, d, ((i +  13) < x.length) ? x[i + 13] : 0,  5, -1444681467);
+	            d = md5_gg(d, a, b, c, ((i +  2) < x.length) ? x[i +  2] : 0,  9, -51403784);
+	            c = md5_gg(c, d, a, b, ((i +  7) < x.length) ? x[i +  7] : 0, 14,  1735328473);
+	            b = md5_gg(b, c, d, a, ((i +  12) < x.length) ? x[i + 12] : 0, 20, -1926607734);
 
-	            a = md5_hh(a, b, c, d, x[i +  5],  4, -378558);
-	            d = md5_hh(d, a, b, c, x[i +  8], 11, -2022574463);
-	            c = md5_hh(c, d, a, b, x[i + 11], 16,  1839030562);
-	            b = md5_hh(b, c, d, a, x[i + 14], 23, -35309556);
-	            a = md5_hh(a, b, c, d, x[i +  1],  4, -1530992060);
-	            d = md5_hh(d, a, b, c, x[i +  4], 11,  1272893353);
-	            c = md5_hh(c, d, a, b, x[i +  7], 16, -155497632);
-	            b = md5_hh(b, c, d, a, x[i + 10], 23, -1094730640);
-	            a = md5_hh(a, b, c, d, x[i + 13],  4,  681279174);
-	            d = md5_hh(d, a, b, c, x[i],      11, -358537222);
-	            c = md5_hh(c, d, a, b, x[i +  3], 16, -722521979);
-	            b = md5_hh(b, c, d, a, x[i +  6], 23,  76029189);
-	            a = md5_hh(a, b, c, d, x[i +  9],  4, -640364487);
-	            d = md5_hh(d, a, b, c, x[i + 12], 11, -421815835);
-	            c = md5_hh(c, d, a, b, x[i + 15], 16,  530742520);
-	            b = md5_hh(b, c, d, a, x[i +  2], 23, -995338651);
+	            a = md5_hh(a, b, c, d, ((i +  5) < x.length) ? x[i +  5] : 0,  4, -378558);
+	            d = md5_hh(d, a, b, c, ((i +  8) < x.length) ? x[i +  8] : 0, 11, -2022574463);
+	            c = md5_hh(c, d, a, b, ((i +  11) < x.length) ? x[i + 11] : 0, 16,  1839030562);
+	            b = md5_hh(b, c, d, a, ((i +  14) < x.length) ? x[i + 14] : 0, 23, -35309556);
+	            a = md5_hh(a, b, c, d, ((i +  1) < x.length) ? x[i +  1] : 0,  4, -1530992060);
+	            d = md5_hh(d, a, b, c, ((i +  4) < x.length) ? x[i +  4] : 0, 11,  1272893353);
+	            c = md5_hh(c, d, a, b, ((i +  7) < x.length) ? x[i +  7] : 0, 16, -155497632);
+	            b = md5_hh(b, c, d, a, ((i +  10) < x.length) ? x[i + 10] : 0, 23, -1094730640);
+	            a = md5_hh(a, b, c, d, ((i +  13) < x.length) ? x[i + 13] : 0,  4,  681279174);
+	            d = md5_hh(d, a, b, c, ((i) < x.length) ? x[i] : 0,      11, -358537222);
+	            c = md5_hh(c, d, a, b, ((i +  3) < x.length) ? x[i +  3] : 0, 16, -722521979);
+	            b = md5_hh(b, c, d, a, ((i +  6) < x.length) ? x[i +  6] : 0, 23,  76029189);
+	            a = md5_hh(a, b, c, d, ((i +  9) < x.length) ? x[i +  9] : 0,  4, -640364487);
+	            d = md5_hh(d, a, b, c, ((i +  12) < x.length) ? x[i + 12] : 0, 11, -421815835);
+	            c = md5_hh(c, d, a, b, ((i +  15) < x.length) ? x[i + 15] : 0, 16,  530742520);
+	            b = md5_hh(b, c, d, a, ((i +  2) < x.length) ? x[i +  2] : 0, 23, -995338651);
 
-	            a = md5_ii(a, b, c, d, x[i],       6, -198630844);
-	            d = md5_ii(d, a, b, c, x[i +  7], 10,  1126891415);
-	            c = md5_ii(c, d, a, b, x[i + 14], 15, -1416354905);
-	            b = md5_ii(b, c, d, a, x[i +  5], 21, -57434055);
-	            a = md5_ii(a, b, c, d, x[i + 12],  6,  1700485571);
-	            d = md5_ii(d, a, b, c, x[i +  3], 10, -1894986606);
-	            c = md5_ii(c, d, a, b, x[i + 10], 15, -1051523);
-	            b = md5_ii(b, c, d, a, x[i +  1], 21, -2054922799);
-	            a = md5_ii(a, b, c, d, x[i +  8],  6,  1873313359);
-	            d = md5_ii(d, a, b, c, x[i + 15], 10, -30611744);
-	            c = md5_ii(c, d, a, b, x[i +  6], 15, -1560198380);
-	            b = md5_ii(b, c, d, a, x[i + 13], 21,  1309151649);
-	            a = md5_ii(a, b, c, d, x[i +  4],  6, -145523070);
-	            d = md5_ii(d, a, b, c, x[i + 11], 10, -1120210379);
-	            c = md5_ii(c, d, a, b, x[i +  2], 15,  718787259);
-	            b = md5_ii(b, c, d, a, x[i +  9], 21, -343485551);
+	            a = md5_ii(a, b, c, d, ((i) < x.length) ? x[i] : 0,       6, -198630844);
+	            d = md5_ii(d, a, b, c, ((i +  7) < x.length) ? x[i +  7] : 0, 10,  1126891415);
+	            c = md5_ii(c, d, a, b, ((i +  14) < x.length) ? x[i + 14] : 0, 15, -1416354905);
+	            b = md5_ii(b, c, d, a, ((i +  5) < x.length) ? x[i +  5] : 0, 21, -57434055);
+	            a = md5_ii(a, b, c, d, ((i +  12) < x.length) ? x[i + 12] : 0,  6,  1700485571);
+	            d = md5_ii(d, a, b, c, ((i +  3) < x.length) ? x[i +  3] : 0, 10, -1894986606);
+	            c = md5_ii(c, d, a, b, ((i +  10) < x.length) ? x[i + 10] : 0, 15, -1051523);
+	            b = md5_ii(b, c, d, a, ((i +  1) < x.length) ? x[i +  1] : 0, 21, -2054922799);
+	            a = md5_ii(a, b, c, d, ((i +  8) < x.length) ? x[i +  8] : 0,  6,  1873313359);
+	            d = md5_ii(d, a, b, c, ((i +  15) < x.length) ? x[i + 15] : 0, 10, -30611744);
+	            c = md5_ii(c, d, a, b, ((i +  6) < x.length) ? x[i +  6] : 0, 15, -1560198380);
+	            b = md5_ii(b, c, d, a, ((i +  13) < x.length) ? x[i + 13] : 0, 21,  1309151649);
+	            a = md5_ii(a, b, c, d, ((i +  4) < x.length) ? x[i +  4] : 0,  6, -145523070);
+	            d = md5_ii(d, a, b, c, ((i +  11) < x.length) ? x[i + 11] : 0, 10, -1120210379);
+	            c = md5_ii(c, d, a, b, ((i +  2) < x.length) ? x[i +  2] : 0, 15,  718787259);
+	            b = md5_ii(b, c, d, a, ((i +  9) < x.length) ? x[i +  9] : 0, 21, -343485551);
 
 	            a = safe_add(a, olda);
 	            b = safe_add(b, oldb);
@@ -221,7 +219,7 @@ public class MD5Util {
 	        }
 	        int[] rstr2binl = rstr2binl(data);
 	        int[] ipads = new int[ipad.length + rstr2binl.length];
-	        System.arraycopy(ipad.length, 0, ipads, 0, ipad.length);
+	        System.arraycopy(ipad, 0, ipads, 0, ipad.length);
 	        System.arraycopy(rstr2binl, 0, ipads, ipad.length, rstr2binl.length);
 	        int[] hash = binl_md5(ipads, 512 + data.length() * 8);
 	        
@@ -236,14 +234,12 @@ public class MD5Util {
 	    */
 	    public String rstr2hex(String input) {
 	        String hex_tab = "0123456789abcdef";
-	        String output = "";
-	        int x;
+	        StringBuffer output = new StringBuffer();
 	        for (int i = 0; i < input.length(); i += 1) {
-	            x = input.charAt(i);
-	            output += hex_tab.charAt((x >>> 4) & 0x0F) +
-	                hex_tab.charAt(x & 0x0F);
+	        		int x = input.charAt(i);
+	            output.append(hex_tab.charAt((x >>> 4) & 0x0F)).append(hex_tab.charAt(x & 0x0F));
 	        }
-	        return output;
+	        return output.toString();
 	    }
 
 	    /*
@@ -288,8 +284,13 @@ public class MD5Util {
 	
 	    public static void main(String[] args) {
 	    		MD5Util instance = new MD5Util();
-	    		System.out.println(instance.md5("123456"));
-	    		//E10ADC3949BA59ABBE56E057F20F883E
+	    		System.out.println(instance.md5("123456").equals("e10adc3949ba59abbe56e057f20f883e"));
+	    		System.out.println(instance.md5("654321").equals("c33367701511b4f6020ec61ded352059"));
+	    		System.out.println(instance.md5("abdcef").equals("37220eebb4b544705b49f200e7ef7ad7"));
+	    		System.out.println(instance.md5("FWERfdfdsf@#$%&&1043243").equals("80e645484b3a7feafec2663822fe23bb"));
+	    		System.out.println(instance.md5("TEGFD!@#234").equals("8c86ddc33847351e94a73358fd769eaa"));
+	    		System.out.println(instance.md5("FWERfdfdsf@1043").equals("f211fa9758fef529fba8b98984704428"));
+	    		
 	    }
 	    
 }

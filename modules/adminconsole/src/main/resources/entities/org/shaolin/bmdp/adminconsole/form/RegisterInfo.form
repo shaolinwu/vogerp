@@ -6,7 +6,7 @@
   <ns2:eventHandler functionName="verifiPhoneNumber">
     <ns2:ops xsi:type="ns2:OpExecuteScriptType">
         <ns2:expressionString><![CDATA[
-        {   
+        {
             //if(event.keyCode != 13 || event.keyCode != 9) {
                //return;
             //}
@@ -24,7 +24,7 @@
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.commonmodel.IUserService;
         import org.shaolin.bmdp.runtime.AppContext;
-        { 
+        {
             TextField p = @page.getTextField("phoneNumberUI");
             String phoneNumber = p.getValue();
             IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
@@ -49,7 +49,7 @@
   <ns2:eventHandler functionName="verifiRecommandPhoneNumber">
     <ns2:ops xsi:type="ns2:OpExecuteScriptType">
         <ns2:expressionString><![CDATA[
-        {   
+        {
             if(this.recommandUserNameUI.getValue() == ""
               || this.recommandUserNameUI.getValue().trim() == "") {
                return;
@@ -68,7 +68,7 @@
         import org.shaolin.uimaster.page.ajax.*;
         import org.shaolin.vogerp.commonmodel.IUserService;
         import org.shaolin.bmdp.runtime.AppContext;
-        { 
+        {
             TextField p = @page.getTextField("recommandUserNameUI");
             String phoneNumber = p.getValue();
             IUserService userService = (IUserService)AppContext.get().getService(IUserService.class);
@@ -164,7 +164,7 @@
         </ns2:allowBlankText>
         <ns2:maxLength xsi:type="ns2:NumericPropertyType">
             <type>int</type>
-            <value>30</value>
+            <value>10</value>
         </ns2:maxLength>
         <ns2:validator xsi:type="ns2:ValidatorsPropertyType">
             <ns2:validator xsi:type="ns2:ValidatorPropertyType">
@@ -200,7 +200,7 @@
         </ns2:allowBlankText>
         <ns2:maxLength xsi:type="ns2:NumericPropertyType">
             <type>int</type>
-            <value>30</value>
+            <value>10</value>
         </ns2:maxLength>
         <ns2:validator xsi:type="ns2:ValidatorsPropertyType">
             <ns2:validator xsi:type="ns2:ValidatorPropertyType">
@@ -217,7 +217,7 @@
             <ns2:validator xsi:type="ns2:ValidatorPropertyType">
                     <isFuncRef>false</isFuncRef>
                     <funcCode><![CDATA[
-                    { 
+                    {
                     return this.value == passwordUI.value;
                     }]]></funcCode>
                     <!-- 密码不匹配！ -->
@@ -346,7 +346,7 @@
       import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
       {
           @odContext.executeAllMappings();
-      }   
+      }
     ]]></expressionString>
     </ns2:DataToUIMappingOperation>
     <ns2:UIToDataMappingOperation>
