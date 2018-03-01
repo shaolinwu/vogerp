@@ -59,6 +59,7 @@
         import org.shaolin.vogerp.commonmodel.IUserService;
         import org.shaolin.vogerp.commonmodel.internal.PasswordCheckResult;
         import org.shaolin.vogerp.commonmodel.internal.PasswordVerifier;
+        import org.shaolin.vogerp.commonmodel.util.MD5Util;
         import org.shaolin.uimaster.page.flow.WebflowConstants;
         { 
             RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
@@ -68,9 +69,11 @@
             IUserService moduleService = (IUserService)AppContext.get().getService(IUserService.class);
             PersonalAccountImpl personalAccount = (PersonalAccountImpl)moduleService.getPersonalAccount(userContext.getUserId());
             
-            if (personalAccount.getPassword().equals(@page.getTextField("orgPasswordUI").getValue())) {
+            MD5Util instance = new MD5Util();
+            String orgPwd = @page.getTextField("orgPasswordUI").getValue();
+            if (personalAccount.getPassword().equals(instance.md5(orgPwd))) {
 	            PersonalAccountImpl tempData = (PersonalAccountImpl)input.get("beObject");
-	            personalAccount.setPassword(tempData.getPassword());
+	            personalAccount.setPassword(instance.md5(tempData.getPassword()));
 	            CommonModel.INSTANCE.update(personalAccount);
 	            Dialog.showMessageDialog("更新成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
             } else {

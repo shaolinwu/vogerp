@@ -33,10 +33,12 @@ import org.shaolin.bmdp.runtime.security.UserContext.OnlineUserChecker;
 import org.shaolin.bmdp.runtime.spi.IAppServiceManager.Env;
 import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
 import org.shaolin.bmdp.runtime.spi.IServiceProvider;
+import org.shaolin.bmdp.runtime.spi.IShortMsgService;
 import org.shaolin.bmdp.utils.DateParser;
 import org.shaolin.bmdp.utils.DateUtil;
 import org.shaolin.bmdp.utils.HttpSender;
 import org.shaolin.bmdp.utils.HttpUserUtil;
+import org.shaolin.bmdp.utils.StringUtil;
 import org.shaolin.uimaster.page.MobilitySupport;
 import org.shaolin.uimaster.page.WebConfig;
 import org.shaolin.uimaster.page.flow.WebflowConstants;
@@ -62,6 +64,7 @@ import org.shaolin.vogerp.commonmodel.dao.CommonModel;
 import org.shaolin.vogerp.commonmodel.dao.CustCommonModel;
 import org.shaolin.vogerp.commonmodel.util.CEOperationUtil;
 import org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil;
+import org.shaolin.vogerp.commonmodel.util.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -162,6 +165,11 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			logger.warn("IP Filter detected potential IP attacker!!! ip address: " + userIPAddress 
 					+ ", register account: " + registerInfo.getPhoneNumber());
 			return false;
+		}
+		if (registerInfo.getRecommandUserName() != null 
+				&& (registerInfo.getPhoneNumber().equals(registerInfo.getRecommandUserName().trim())
+					|| registerInfo.getRecommandUserName().trim().length() == 0)) {
+			registerInfo.setRecommandUserName(null);	
 		}
 		
 		PersonalAccountImpl account = new PersonalAccountImpl();
@@ -652,6 +660,9 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	
 	@Override
 	public IPersonalAccount getPersonalInfoByName(String mobilePhone) {
+		if (mobilePhone == null || mobilePhone.trim().length() == 0) {
+			return null;
+		}
 		PersonalAccountImpl account = new PersonalAccountImpl();
 		account.setUserName(mobilePhone);
 		List<IPersonalAccount> result = CommonModel.INSTANCE.searchUserAccount(account, null, 0, 1);
@@ -741,5 +752,20 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
         IPersonalAccount account = getPersonalAccount(userId);
         account.setLocationInfo(jsonObject.getString("city"));
         CommonModel.INSTANCE.update(account);
+	}
+	
+	public boolean resetPassword(String phoneNumber) {
+		PersonalAccountImpl account = new PersonalAccountImpl();
+		account.setUserName(phoneNumber);
+		List<IPersonalAccount> result = CommonModel.INSTANCE.searchUserAccount(account, null, 0, 1);
+		if (result.size() > 0) {
+			MD5Util instance = new MD5Util();
+			String password = StringUtil.genRandomAlphaBits(6);
+			result.get(0).setPassword(instance.md5(password));
+			CommonModel.INSTANCE.update(result.get(0));
+			IShortMsgService msgService = AppContext.get().getService(IShortMsgService.class);
+	        return msgService.sendFindPassword(phoneNumber, password);
+		}
+		return false;
 	}
 }
