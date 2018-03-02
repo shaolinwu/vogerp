@@ -83,6 +83,7 @@
 			           IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
 			           IPayOrder payOrder = accountingService.createPayAdminOrder(PayBusinessType.TESTBUSI, 
 			                       UserContext.getUserContext().getUserId(), PaymentUtil.genTestSerialNumber(), 1.0);
+			           payOrder.setDescription("test payment");
 			           AccountingModel.INSTANCE.create(payOrder);
 			           
 			           HashMap input = new HashMap();

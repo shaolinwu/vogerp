@@ -97,6 +97,7 @@
            PayOrderStatusType porderStatus = accountingService.queryForPayOrderState("AM-"+templLegalInfo.getId());
            IPayOrder payOrder = accountingService.createPayAdminOrder(PayBusinessType.MEMBERBUSI, 
                        UserContext.getUserContext().getUserId(), "AM-"+templLegalInfo.getId(), price);
+           payOrder.setDescription("加工达人商户验证费用");
            CommonModel.INSTANCE.create(payOrder);
            
            HashMap input = new HashMap();

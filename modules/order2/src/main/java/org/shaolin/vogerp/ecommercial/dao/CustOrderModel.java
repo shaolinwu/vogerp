@@ -154,6 +154,72 @@ public class CustOrderModel extends BEEntityDaoObject {
          return result;
      }
 
+    public List<org.shaolin.vogerp.ecommercial.be.IMachiningOrder> searchMachiningOrder(org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl scObject,
+            List<Order> orders, int offset, int count) {
+             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl.class, "inObject");
+             if (orders == null) {
+             } else {
+                 this._addOrders(inObjectCriteria, orders);
+             }
+
+             if (scObject.getId() > 0) {
+                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.id", scObject.getId()));
+             }
+             if (scObject.getOrgId() > 0) {
+                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+             }
+             ArrayList<Criterion> junctions = null; 
+             if (scObject.getPublishedCustomerId() > 0) {
+                 Criterion c = createCriterion(Operator.EQUALS, "inObject.publishedCustomerId", scObject.getPublishedCustomerId());
+                if (junctions == null) {junctions = new ArrayList<Criterion>();}
+                junctions.add(c);
+            }
+            if (scObject.getTakenCustomerId() > 0) {
+                 Criterion c = createCriterion(Operator.EQUALS, "inObject.takenCustomerId", scObject.getTakenCustomerId());
+                 if (junctions != null) {
+               	  inObjectCriteria.add(Restrictions.or(junctions.remove(0), c));
+                 } else {
+               	  inObjectCriteria.add(c);
+                 }
+            } else {
+           	 if (junctions != null) {
+           		 inObjectCriteria.add(junctions.remove(0));
+           	 }
+            }
+             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+             }
+             if (scObject.getStartCreateDate() != null) {
+                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getStartCreateDate()));
+             }
+             if (scObject.getEndCreateDate() != null) {
+                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
+             }
+             if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.ecommercial.ce.OrderStatusType.NOT_SPECIFIED) {
+                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
+             }
+             if (scObject.getCity() != null && scObject.getCity().trim().length() > 0) {
+                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
+             }
+             if (scObject.getMaxLongitude() > 0) {
+                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.longitude", scObject.getMaxLongitude()));
+             }
+             if (scObject.getMinLongitude() > 0) {
+                 inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.longitude", scObject.getMinLongitude()));
+             }
+             if (scObject.getMaxLatitude() > 0) {
+                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.latitude", scObject.getMaxLatitude()));
+             }
+             if (scObject.getMinLatitude() > 0) {
+                 inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.latitude", scObject.getMinLatitude()));
+             }
+
+         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+         List result = this._list(offset, count, inObjectCriteria);
+         return result;
+     }
+    
     public static void joinPublishedUserInfo(List<IEOrder> orders) {
     	if (orders == null || orders.size() == 0) {
     		return;

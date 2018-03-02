@@ -98,7 +98,7 @@
               import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
               import org.shaolin.vogerp.ecommercial.be.IMachiningOrder;
               import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
-              import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
+              import org.shaolin.vogerp.ecommercial.dao.CustOrderModel;
               import org.shaolin.bmdp.runtime.AppContext; 
               import org.shaolin.vogerp.commonmodel.IUserService;
               import org.shaolin.bmdp.runtime.security.UserContext;
@@ -117,7 +117,7 @@
                     condition.setPublishedCustomerId(UserContext.getUserContext().getUserId());
                     condition.setTakenCustomerId(UserContext.getUserContext().getUserId());
                     condition.setStatus(OrderStatusType.TAKEN);
-                    List result = EOrderModel.INSTANCE.searchMachiningOrder(condition,
+                    List result = CustOrderModel.INSTANCE.searchMachiningOrder(condition,
                                   $tableCondition.getOrders(),
                                   $tableCondition.getOffset(), 
                                   $tableCondition.getCount());
@@ -145,8 +145,10 @@
           <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
               <ns2:expression xsi:type="ns2:ExpressionType">
                   <ns2:expressionString><![CDATA[
+                  import org.shaolin.vogerp.ecommercial.util.OrderUtil;
                   {
-                      return $rowBE.getSerialNumber() + $rowBE.getPayStatus();
+                      return OrderUtil.getOrderStatusInfo($rowBE);
+                      //return $rowBE.getSerialNumber() + $rowBE.getPayStatus();
                   }]]></ns2:expressionString>
               </ns2:expression>
           </ns2:rowExpression>

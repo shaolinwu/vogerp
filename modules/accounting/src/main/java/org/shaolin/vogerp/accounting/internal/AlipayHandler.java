@@ -348,6 +348,9 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 			// already notified.
 			return SUCCESS;
 		}
+		if (order.getOutTradeNo() == null) {
+			return FAIL;
+		}
 		try {
 			AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
 			request.setBizContent("{\"out_trade_no\":\""+order.getOutTradeNo()+"\"}");

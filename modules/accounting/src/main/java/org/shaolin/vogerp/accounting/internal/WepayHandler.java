@@ -186,6 +186,9 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 		try {
 			payOrder.setCustomerAPaymentMethod(SettlementMethodType.WEIXI);
 			payOrder.setOutTradeNo(PaymentUtil.genOutTradeNumber());
+			if (payOrder.getDescription() == null) {
+				payOrder.setDescription(payOrder.getPayBusinessType().getDisplayName());
+			}
 			AccountingModel.INSTANCE.update(payOrder);
 			
 			HashMap<String, Object> values = new HashMap<String, Object>();
@@ -224,8 +227,11 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 			keyValues.append("&key=").append(MCH_APISECURE_KEY);
 			// take this link for verification. https://pay.weixin.qq.com/wiki/tools/signverify/
 			values.put("sign", encodeMD5(keyValues.toString(), "UTF-8").toUpperCase());
+			
+			logger.info("Wepay.prepay post: " + values.toString());
+			
 			String result = sender.doPostSSL(UNIFIEDPAY_URL, StringUtil.convertMapToXML(values, "xml"), "UTF-8", "text/xml");
-			//logger.info("Wepay.prepay result: " + result);
+			logger.info("Wepay.prepay result: " + result);
 			//xml format
 			Map resultMap = StringUtil.xml2map(result);
 			// invoke result
@@ -357,6 +363,9 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 		if (payOrder.getStatus() == PayOrderStatusType.PAYED) {
 			// already notified.
 			return SUCCESS;
+		}
+		if (payOrder.getOutTradeNo() == null) {
+			return FAIL;
 		}
 		try {
 			HashMap<String, Object> values = new HashMap<String, Object>();
