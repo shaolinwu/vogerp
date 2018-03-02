@@ -130,7 +130,7 @@ function org_shaolin_vogerp_bbs_form_ComplainingTopic(json)
 
         // cal ajax function. 
 
-        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20170609-122142",UIMaster.getValue(eventsource),o.__entityName);
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"cancelDetail-20170609-122122",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_bbs_form_ComplainingTopic_Cancel */
 
 

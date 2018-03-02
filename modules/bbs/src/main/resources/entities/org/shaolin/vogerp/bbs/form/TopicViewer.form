@@ -42,6 +42,19 @@
       </ns2:exp>
     </ns2:ops>
   </ns2:eventHandler>
+  <ns2:eventHandler functionName="shareTopic">
+    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
+        <ns2:expressionString><![CDATA[
+        {  
+           var title = "测试";
+           var link = this.staticlinkUI.getValue();
+           var shareCode = "<div style='float:right; margin-top:10px;'><div class='datasetconfig' data-title='"+title+"' data-url='"+link+"' data-pic='' data-sites='weibo,weixin,qzone'></div></div>";
+           $(this.fieldPanel).append($(shareCode));
+           sosh('.datasetconfig', { sites: ['weixin,','weibo', 'qzone'] });
+        }
+        ]]></ns2:expressionString>
+    </ns2:ops>
+  </ns2:eventHandler>
   
   <ns2:eventHandler functionName="Cancel">
     <ns2:ops xsi:type="ns2:OpCallAjaxType" name="cancelDetail-20170609-122142">
@@ -73,6 +86,19 @@
         <ns2:secure>
           <ns2:value>true</ns2:value>
         </ns2:secure>
+      </ns2:component>
+      <ns2:component xsi:type="ns2:UIHiddenType" UIID="staticlinkUI">
+        <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:Property name="value">
+          <ns2:value xsi:type="ns2:ExpressionPropertyType">
+	         <ns2:expression>
+	           <expressionString><![CDATA[
+	           { 
+	               return $beObject.getContentLink();
+	           }]]></expressionString>
+	         </ns2:expression>
+	       </ns2:value>
+	      </ns2:Property>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextAreaType" UIID="contentUI">
       <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
@@ -165,6 +191,14 @@
                   </ns2:title>
                   <ns2:icon>ui-icon-note</ns2:icon>
                   <ns2:function>replyComment</ns2:function>
+              </ns2:action>
+              <ns2:action>
+                  <ns2:uiid>shareTopic</ns2:uiid>
+                  <ns2:title xsi:type="ns2:StringPropertyType">
+                      <ns2:value>分享帖子</ns2:value>
+                  </ns2:title>
+                  <ns2:icon>ui-icon-note</ns2:icon>
+                  <ns2:function>shareTopic</ns2:function>
               </ns2:action>
           </ns2:actionGroup>
       </ns2:component>

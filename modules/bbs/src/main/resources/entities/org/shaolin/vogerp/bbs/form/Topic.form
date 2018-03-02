@@ -124,18 +124,25 @@
            <ns2:value>false</ns2:value>
         </ns2:allowBlank>
       </ns2:component>
-      <!-- 
       <ns2:component xsi:type="ns2:UILabelType" UIID="iconLinkUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
-        <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-          <ns2:bundle>org_shaolin_vogerp_bbs_i18n</ns2:bundle>
-          <ns2:key>org.shaolin.vogerp.bbs.be.Topic.iconLink</ns2:key>
+        <ns2:text xsi:type="ns2:StringPropertyType">
+          <ns2:value>静态连接</ns2:value>
         </ns2:text>
       </ns2:component>
-      <ns2:component xsi:type="ns2:UITextFieldType" UIID="iconLinkUI">
+      <ns2:component xsi:type="ns2:UILabelType" UIID="staticlinkUI">
         <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+        <ns2:Property name="text">
+          <ns2:value xsi:type="ns2:ExpressionPropertyType">
+	         <ns2:expression>
+	           <expressionString><![CDATA[
+	           { 
+	               return $beObject.getContentLink();
+	           }]]></expressionString>
+	         </ns2:expression>
+	       </ns2:value>
+	      </ns2:Property>
       </ns2:component>
-       -->
       <ns2:component xsi:type="ns2:UILabelType" UIID="contentLinkUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
