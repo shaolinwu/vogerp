@@ -150,6 +150,8 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin(json)
 
     Form.openRufundPayOrder = org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_openRufundPayOrder;
 
+    Form.testPayOrder = org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_testPayOrder;
+
     Form.initPageJs = org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_initPageJs;
 
     Form.finalizePageJs = org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_finalizePageJs;
@@ -186,6 +188,17 @@ function org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"openRufundPayOrder-20160115-1135",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_openRufundPayOrder */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_testPayOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_testPayOrder */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"testPayOrder-20180202-1135",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_testPayOrder */
 
 
     function org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_initPageJs(){/* Gen_First:org_shaolin_vogerp_accounting_page_PaymentOrderManagementByAdmin_initPageJs */

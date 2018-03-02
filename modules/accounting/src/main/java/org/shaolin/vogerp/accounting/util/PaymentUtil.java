@@ -41,6 +41,14 @@ public class PaymentUtil {
 				+ "-" + (int)(Math.random() * 10000);
 	}
 	
+	public synchronized static String genTestSerialNumber() {
+		DateParser parse = new DateParser(new Date());
+		return "TEST-" + parse.getCNDateString() 
+				+ "-" + parse.format(parse.getHours(), 2) 
+				+ "" + parse.format(parse.getMilliSeconds(), 5)
+				+ "-" + (int)(Math.random() * 10000);
+	}
+	
 	public synchronized static String genWithdrawSerialNumber() {
 		DateParser parse = new DateParser(new Date());
 		return parse.getCNDateString() 

@@ -65,6 +65,37 @@
                 </ns2:exp>
             </ns2:ops>
         </ns2:eventHandler>
+        <ns2:eventHandler functionName="testPayOrder">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="testPayOrder-20180202-1135">
+                <ns2:exp>
+                    <ns2:expressionString><![CDATA[
+			        import java.util.HashMap;
+			        import org.shaolin.bmdp.runtime.AppContext; 
+			        import org.shaolin.bmdp.runtime.security.UserContext;
+			        import org.shaolin.uimaster.page.AjaxContext;
+			        import org.shaolin.uimaster.page.ajax.*;
+			        import org.shaolin.vogerp.accounting.be.*;
+			        import org.shaolin.vogerp.accounting.ce.*;
+			        import org.shaolin.vogerp.accounting.dao.AccountingModel;
+			        import org.shaolin.vogerp.accounting.IPaymentService;
+			        import org.shaolin.vogerp.accounting.util.PaymentUtil;
+			        {
+			           IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
+			           IPayOrder payOrder = accountingService.createPayAdminOrder(PayBusinessType.TESTBUSI, 
+			                       UserContext.getUserContext().getUserId(), PaymentUtil.genTestSerialNumber(), 1.0);
+			           AccountingModel.INSTANCE.create(payOrder);
+			           
+			           HashMap input = new HashMap();
+			           input.put("beObject", payOrder);
+			           input.put("editable", new Boolean(true));
+			           RefForm form2 = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PaymentMethod", input);
+			           @page.addElement(form2);
+			           form2.openInWindows("支付方式选择", null, true);
+			        }
+			        ]]></ns2:expressionString>
+                </ns2:exp>
+            </ns2:ops>
+        </ns2:eventHandler>
 		<ns2:body UIID="Form" xsi:type="ns2:UIPanelType">
 			<ns2:UISkin xsi:type="ns2:UISkinType">
 				<ns2:skinName>org.shaolin.uimaster.page.skin.TitlePanel
@@ -519,6 +550,17 @@
                             </ns2:column>
                             <ns2:defaultActions>
                             </ns2:defaultActions>
+                            <ns2:actionGroup>
+		                       <ns2:type>radio</ns2:type>
+		                       <ns2:action>
+		                           <ns2:uiid>testPayOrder</ns2:uiid>
+		                           <ns2:title xsi:type="ns2:StringPropertyType">
+		                               <ns2:value>测试支付</ns2:value>
+		                           </ns2:title>
+		                           <ns2:icon>ui-icon-note</ns2:icon>
+		                           <ns2:function>testPayOrder</ns2:function>
+		                       </ns2:action>
+		                   </ns2:actionGroup>
                         </ns2:component>
                         <ns2:layoutConstraint>
                             <ns2:componentId>receivepayOrderRequestTable</ns2:componentId>

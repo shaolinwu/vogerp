@@ -802,6 +802,11 @@
             <bediagram:intValue>50</bediagram:intValue>
             <bediagram:description>在线会计业务</bediagram:description>
         </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>TestBusi</bediagram:value>
+            <bediagram:intValue>60</bediagram:intValue>
+            <bediagram:description>测试业务</bediagram:description>
+        </bediagram:constantValue>
     </bediagram:ceEntity>
     
     <bediagram:ceEntity>
