@@ -28,6 +28,16 @@ function org_shaolin_vogerp_bbs_form_Topic(json)
         ui: elementList[prefix + "descriptionUI"]
     });
 
+    var iconLinkUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "iconLinkUILabel"]
+    });
+
+    var staticlinkUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "staticlinkUI"]
+    });
+
     var contentLinkUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "contentLinkUILabel"]
@@ -67,13 +77,13 @@ function org_shaolin_vogerp_bbs_form_Topic(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "contentLinkUILabel",prefix + "contentLinkUI"]
+        ,subComponents: [prefix + "idUI",prefix + "nameUILabel",prefix + "nameUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "iconLinkUILabel",prefix + "staticlinkUI",prefix + "contentLinkUILabel",prefix + "contentLinkUI"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,nameUILabel,nameUI,descriptionUILabel,descriptionUI,contentLinkUILabel,contentLinkUI,verifiedbtn,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,nameUILabel,nameUI,descriptionUILabel,descriptionUI,iconLinkUILabel,staticlinkUI,contentLinkUILabel,contentLinkUI,verifiedbtn,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
@@ -85,6 +95,10 @@ function org_shaolin_vogerp_bbs_form_Topic(json)
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
+
+    Form.iconLinkUILabel=iconLinkUILabel;
+
+    Form.staticlinkUI=staticlinkUI;
 
     Form.contentLinkUILabel=contentLinkUILabel;
 
@@ -107,6 +121,10 @@ function org_shaolin_vogerp_bbs_form_Topic(json)
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
+
+    Form.iconLinkUILabel=iconLinkUILabel;
+
+    Form.staticlinkUI=staticlinkUI;
 
     Form.contentLinkUILabel=contentLinkUILabel;
 

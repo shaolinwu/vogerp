@@ -8,6 +8,11 @@ function org_shaolin_vogerp_bbs_form_TopicViewer(json)
         ui: elementList[prefix + "idUI"]
     });
 
+    var staticlinkUI = new UIMaster.ui.hidden
+    ({
+        ui: elementList[prefix + "staticlinkUI"]
+    });
+
     var contentUI = new UIMaster.ui.textarea
     ({
         ui: elementList[prefix + "contentUI"]
@@ -38,16 +43,18 @@ function org_shaolin_vogerp_bbs_form_TopicViewer(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "idUI",prefix + "contentUI",prefix + "commentsTable"]
+        ,subComponents: [prefix + "idUI",prefix + "staticlinkUI",prefix + "contentUI",prefix + "commentsTable"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [idUI,contentUI,commentsTable,cancelbtn,fieldPanel,actionPanel]
+        ,items: [idUI,staticlinkUI,contentUI,commentsTable,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.idUI=idUI;
+
+    Form.staticlinkUI=staticlinkUI;
 
     Form.contentUI=contentUI;
 
@@ -58,6 +65,8 @@ function org_shaolin_vogerp_bbs_form_TopicViewer(json)
     Form.fieldPanel=fieldPanel;
 
     Form.idUI=idUI;
+
+    Form.staticlinkUI=staticlinkUI;
 
     Form.contentUI=contentUI;
 
@@ -76,6 +85,8 @@ function org_shaolin_vogerp_bbs_form_TopicViewer(json)
     Form.replyTopic = org_shaolin_vogerp_bbs_form_TopicViewer_replyTopic;
 
     Form.replyComment = org_shaolin_vogerp_bbs_form_TopicViewer_replyComment;
+
+    Form.shareTopic = org_shaolin_vogerp_bbs_form_TopicViewer_shareTopic;
 
     Form.Cancel = org_shaolin_vogerp_bbs_form_TopicViewer_Cancel;
 
@@ -111,6 +122,21 @@ function org_shaolin_vogerp_bbs_form_TopicViewer(json)
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"replyComment-20170609-122142",UIMaster.getValue(eventsource),o.__entityName);
     }/* Gen_Last:org_shaolin_vogerp_bbs_form_TopicViewer_replyComment */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_vogerp_bbs_form_TopicViewer_shareTopic(eventsource,event) {/* Gen_First:org_shaolin_vogerp_bbs_form_TopicViewer_shareTopic */
+        var o = this;
+        var UIEntity = this;
+
+        {  
+           var title = "测试";
+           var link = this.staticlinkUI.getValue();
+           var shareCode = "<div style='float:right; margin-top:10px;'><div class='datasetconfig' data-title='"+title+"' data-url='"+link+"' data-pic='' data-sites='weibo,weixin,qzone'></div></div>";
+           $(this.fieldPanel).append($(shareCode));
+           sosh('.datasetconfig', { sites: ['weixin,','weibo', 'qzone'] });
+        }
+            }/* Gen_Last:org_shaolin_vogerp_bbs_form_TopicViewer_shareTopic */
 
 
     /* auto generated eventlistener function declaration */
