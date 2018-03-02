@@ -151,6 +151,9 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 		try {
 			payOrder.setCustomerAPaymentMethod(SettlementMethodType.ALIPAY);
 			payOrder.setOutTradeNo(PaymentUtil.genOutTradeNumber());
+			if (payOrder.getDescription() == null) {
+				payOrder.setDescription(payOrder.getPayBusinessType().getDisplayName());
+			}
 			AccountingModel.INSTANCE.update(payOrder);
 			
 			if (UserContext.isMobileRequest() && UserContext.isAppClient()) {
