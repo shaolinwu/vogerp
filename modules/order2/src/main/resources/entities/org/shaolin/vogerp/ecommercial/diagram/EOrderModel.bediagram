@@ -675,7 +675,7 @@
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Taken</bediagram:value>
-            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:intValue>20</bediagram:intValue>
             <bediagram:description>拍下</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
@@ -695,13 +695,13 @@
         </bediagram:constantValue>
         <bediagram:constantValue>
             <bediagram:value>Cancelled</bediagram:value>
-            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:intValue>30</bediagram:intValue>
             <bediagram:description>取消</bediagram:description>
         </bediagram:constantValue>
         <bediagram:constantValue>
             <!-- illegal order -->
             <bediagram:value>Forbidden</bediagram:value>
-            <bediagram:intValue>4</bediagram:intValue>
+            <bediagram:intValue>31</bediagram:intValue>
             <bediagram:description>禁止</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>

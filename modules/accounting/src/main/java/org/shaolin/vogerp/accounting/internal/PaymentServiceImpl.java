@@ -106,8 +106,8 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		order.setStatus(PayOrderStatusType.NOTPAYED);
 		order.setOrderSerialNumber(orderSerialNumber);
 		order.setAmount(amount * 100); //round up to fen as required.
-		if (amount >= 50000) { // single payment order must be less then 50000 RMB.
-			throw new IllegalArgumentException("Single payment order must be less then 50000 RMB. current amount is " + amount);
+		if (amount >= 100_000) { // single payment order must be less then 100,000 RMB.
+			throw new IllegalArgumentException("Single payment order must be less then 100,000 RMB. current amount is " + amount);
 		}
 		ServiceChargeTemplateImpl scObject = new ServiceChargeTemplateImpl();
 		scObject.setPayBusinessType(type);
@@ -139,8 +139,8 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		order.setStatus(PayOrderStatusType.NOTPAYED);
 		order.setOrderSerialNumber(orderSerialNumber);
 		order.setAmount(amount * 100); //round up fen.
-		if (amount >= 50000) { // single payment order must be less then 50000 RMB.
-			throw new IllegalArgumentException("Single payment order must be less then 50000 RMB. current amount is " + amount);
+		if (amount >= 100_000) { //TODO: single payment order must be less then 100,000 RMB.
+			throw new IllegalArgumentException("Single payment order must be less then 100,000 RMB. current amount is " + amount);
 		}
 		ServiceChargeTemplateImpl scObject = new ServiceChargeTemplateImpl();
 		scObject.setPayBusinessType(type);
@@ -174,8 +174,8 @@ public class PaymentServiceImpl implements ILifeCycleProvider, IServiceProvider,
 		order.setStatus(PayOrderStatusType.NOTPAYED);
 		order.setOrderSerialNumber(orderSerialNumber);
 		order.setAmount(amount * 100); //round up fen.
-		if (amount >= 50000) { // single payment order must be less then 50000 RMB.
-			throw new IllegalArgumentException("Single payment order must be less then 50000 RMB. current amount is " + amount);
+		if (amount >= 100_000) { //TODO: single payment order must be less then 100,000 RMB.
+			throw new IllegalArgumentException("Single payment order must be less then 100,000 RMB. current amount is " + amount);
 		}
 		ServiceChargeTemplateImpl scObject = new ServiceChargeTemplateImpl();
 		scObject.setPayBusinessType(type);

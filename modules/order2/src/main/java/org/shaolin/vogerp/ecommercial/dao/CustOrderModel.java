@@ -15,6 +15,7 @@ import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
 import org.shaolin.vogerp.ecommercial.be.IEOrder;
+import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
 
 public class CustOrderModel extends BEEntityDaoObject {
 
@@ -198,6 +199,52 @@ public class CustOrderModel extends BEEntityDaoObject {
              if (scObject.getStatus() != null && scObject.getStatus() != org.shaolin.vogerp.ecommercial.ce.OrderStatusType.NOT_SPECIFIED) {
                  inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.statusInt", scObject.getStatus().getIntValue()));
              }
+             if (scObject.getCity() != null && scObject.getCity().trim().length() > 0) {
+                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
+             }
+             if (scObject.getMaxLongitude() > 0) {
+                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.longitude", scObject.getMaxLongitude()));
+             }
+             if (scObject.getMinLongitude() > 0) {
+                 inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.longitude", scObject.getMinLongitude()));
+             }
+             if (scObject.getMaxLatitude() > 0) {
+                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.latitude", scObject.getMaxLatitude()));
+             }
+             if (scObject.getMinLatitude() > 0) {
+                 inObjectCriteria.add(createCriterion(Operator.GREATER_THAN_OR_EQUALS, "inObject.latitude", scObject.getMinLatitude()));
+             }
+
+         inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject._enable", scObject.isEnabled()));
+
+         List result = this._list(offset, count, inObjectCriteria);
+         return result;
+     }
+    
+    public List<org.shaolin.vogerp.ecommercial.be.IMachiningOrder> searchPublishedMachiningOrder(org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl scObject,
+            List<Order> orders, int offset, int count) {
+             Criteria inObjectCriteria = this._createCriteria(org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl.class, "inObject");
+             if (orders == null) {
+             } else {
+                 this._addOrders(inObjectCriteria, orders);
+             }
+
+             if (scObject.getId() > 0) {
+                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.id", scObject.getId()));
+             }
+             if (scObject.getOrgId() > 0) {
+                 inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.orgId", scObject.getOrgId()));
+             }
+             if (scObject.getSerialNumber() != null && scObject.getSerialNumber().length() > 0) {
+                 inObjectCriteria.add(createCriterion(Operator.START_WITH_RIGHT, "inObject.serialNumber", scObject.getSerialNumber()));
+             }
+             if (scObject.getStartCreateDate() != null) {
+                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getStartCreateDate()));
+             }
+             if (scObject.getEndCreateDate() != null) {
+                 inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.createDate", scObject.getEndCreateDate()));
+             }
+             inObjectCriteria.add(createCriterion(Operator.LESS_THAN_OR_EQUALS, "inObject.statusInt", OrderStatusType.PUBLISHED.getIntValue()));
              if (scObject.getCity() != null && scObject.getCity().trim().length() > 0) {
                  inObjectCriteria.add(createCriterion(Operator.EQUALS, "inObject.city", scObject.getCity()));
              }

@@ -1005,7 +1005,7 @@
                                     import java.util.List;
                                     import org.shaolin.uimaster.page.ajax.TableConditions;
                                     import org.shaolin.vogerp.ecommercial.be.MachiningOrderImpl;
-                                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
+                                    import org.shaolin.vogerp.ecommercial.dao.CustOrderModel;
                                     import org.shaolin.bmdp.runtime.AppContext; 
                                     import org.shaolin.vogerp.commonmodel.IUserService;
                                     import org.shaolin.bmdp.runtime.security.UserContext;
@@ -1019,7 +1019,7 @@
                                           $tableCondition.addOrder("statusInt", false);
                                           MachiningOrderImpl condition = (MachiningOrderImpl)$tableCondition.getCondition();
                                           condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
-                                          return EOrderModel.INSTANCE.searchMachiningOrder(condition,
+                                          return CustOrderModel.INSTANCE.searchPublishedMachiningOrder(condition,
                                                         $tableCondition.getOrders(),
                                                         $tableCondition.getOffset(), 
                                                         $tableCondition.getCount());
