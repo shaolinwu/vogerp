@@ -761,11 +761,15 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
         CommonModel.INSTANCE.update(account);
 	}
 
-	public boolean resetPassword(String phoneNumber) {
+	public boolean resetPassword(HttpSession session, String phoneNumber) {
 		PersonalAccountImpl account = new PersonalAccountImpl();
 		account.setUserName(phoneNumber);
 		List<IPersonalAccount> result = CommonModel.INSTANCE.searchUserAccount(account, null, 0, 1);
 		if (result.size() > 0) {
+			if (session.getAttribute("ForgetPassword") != null) {
+				return false;//try once per session only!
+			}
+			session.setAttribute("ForgetPassword", phoneNumber);
 			MD5Util instance = new MD5Util();
 			String password = StringUtil.genRandomAlphaBits(6);
 			result.get(0).setPassword(instance.md5(password).toUpperCase());

@@ -40,7 +40,7 @@ public interface IUserService {
 	
 	public boolean checkVerifiAnswer(String answer, HttpServletRequest request);
 	
-	public boolean resetPassword(String phoneNumber);
+	public boolean resetPassword(HttpSession session, String phoneNumber);
 	
 	/**
 	 * User login
