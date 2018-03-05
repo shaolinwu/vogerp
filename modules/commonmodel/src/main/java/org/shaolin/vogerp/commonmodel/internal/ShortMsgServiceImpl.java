@@ -30,17 +30,12 @@ public class ShortMsgServiceImpl implements IShortMsgService, IServiceProvider {
     //产品域名,开发者无需替换
 	private static final String domain = "dysmsapi.aliyuncs.com";
     // 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
-    private final String accessKeyId;
-    private final String accessKeySecret;
-    private final String signName;
+    private String accessKeyId;
+    private String accessKeySecret;
+    private String signName;
 
 	public ShortMsgServiceImpl() {
-		//可自助调整超时时间
-//        System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
-//        System.setProperty("sun.net.client.defaultReadTimeout", "10000");
-		accessKeyId = Registry.getInstance().getValue("/System/sms/appkey");
-		accessKeySecret = Registry.getInstance().getValue("/System/sms/appsecret");
-		signName = Registry.getInstance().getValue("/System/sms/signName");
+
 	}
 
 	public boolean sendMsgToEmail(String content, String tempId, String email) {
@@ -57,6 +52,12 @@ public class ShortMsgServiceImpl implements IShortMsgService, IServiceProvider {
 
 	public boolean sendMsgToPhone(String tempId, String jsonParam, String phoneNumber) {
 		try {
+			if (accessKeyId == null) {
+				accessKeyId = Registry.getInstance().getValue("/System/sms/appkey");
+				accessKeySecret = Registry.getInstance().getValue("/System/sms/appsecret");
+				signName = Registry.getInstance().getValue("/System/sms/signName");
+			}
+			//logger.info("accessKeyId: " + accessKeyId + ", accessKeySecret: " + accessKeySecret);
 			//初始化acsClient,暂不支持region化
 	        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
 	        DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain);

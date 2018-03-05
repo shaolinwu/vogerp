@@ -8,6 +8,17 @@ function org_shaolin_bmdp_adminconsole_form_ForgetPassword(json)
         ui: elementList[prefix + "phoneNumberUI"]
     });
 
+    var veriCodeQuestion = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "veriCodeQuestion"]
+        ,needAjaxSupport: true
+    });
+
+    var veriCode = new UIMaster.ui.textfield
+    ({
+        ui: elementList[prefix + "veriCode"]
+    });
+
     var okbtn = new UIMaster.ui.button
     ({
         ui: elementList[prefix + "okbtn"]
@@ -29,16 +40,20 @@ function org_shaolin_bmdp_adminconsole_form_ForgetPassword(json)
     ({
         ui: elementList[prefix + "fieldPanel"]
         ,items: []
-        ,subComponents: [prefix + "phoneNumberUI"]
+        ,subComponents: [prefix + "phoneNumberUI",prefix + "veriCodeQuestion",prefix + "veriCode"]
     });
 
     var Form = new UIMaster.ui.panel
     ({
         ui: elementList[prefix + "Form"]
-        ,items: [phoneNumberUI,okbtn,cancelbtn,fieldPanel,actionPanel]
+        ,items: [phoneNumberUI,veriCodeQuestion,veriCode,okbtn,cancelbtn,fieldPanel,actionPanel]
     });
 
     Form.phoneNumberUI=phoneNumberUI;
+
+    Form.veriCodeQuestion=veriCodeQuestion;
+
+    Form.veriCode=veriCode;
 
     Form.okbtn=okbtn;
 
@@ -47,6 +62,10 @@ function org_shaolin_bmdp_adminconsole_form_ForgetPassword(json)
     Form.fieldPanel=fieldPanel;
 
     Form.phoneNumberUI=phoneNumberUI;
+
+    Form.veriCodeQuestion=veriCodeQuestion;
+
+    Form.veriCode=veriCode;
 
     Form.actionPanel=actionPanel;
 
@@ -59,6 +78,10 @@ function org_shaolin_bmdp_adminconsole_form_ForgetPassword(json)
         /* Construct_FIRST:org_shaolin_bmdp_adminconsole_form_ForgetPassword */
         /* Construct_LAST:org_shaolin_bmdp_adminconsole_form_ForgetPassword */
     };
+
+    Form.genVerifiCode = org_shaolin_bmdp_adminconsole_form_ForgetPassword_genVerifiCode;
+
+    Form.verifiCode = org_shaolin_bmdp_adminconsole_form_ForgetPassword_verifiCode;
 
     Form.sendPassword = org_shaolin_bmdp_adminconsole_form_ForgetPassword_sendPassword;
 
@@ -75,6 +98,35 @@ function org_shaolin_bmdp_adminconsole_form_ForgetPassword(json)
     /* EventHandler Functions */
 /* Other_Func_FIRST:org_shaolin_bmdp_adminconsole_form_ForgetPassword */
 /* Other_Func_LAST:org_shaolin_bmdp_adminconsole_form_ForgetPassword */
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_form_ForgetPassword_genVerifiCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_form_ForgetPassword_genVerifiCode */
+        var o = this;
+        var UIEntity = this;
+
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"genVerifiCode-20180127-1839",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_form_ForgetPassword_genVerifiCode */
+
+
+    /* auto generated eventlistener function declaration */
+    function org_shaolin_bmdp_adminconsole_form_ForgetPassword_verifiCode(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_form_ForgetPassword_verifiCode */
+        var o = this;
+        var UIEntity = this;
+
+          {   
+              var constraint_result = this.Form.validate();
+              if (constraint_result != true && constraint_result != null) {
+                  return false;
+              }
+          }
+          
+        // cal ajax function. 
+
+        UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"verifiCode-20180127-1839",UIMaster.getValue(eventsource),o.__entityName);
+    }/* Gen_Last:org_shaolin_bmdp_adminconsole_form_ForgetPassword_verifiCode */
+
 
     /* auto generated eventlistener function declaration */
     function org_shaolin_bmdp_adminconsole_form_ForgetPassword_sendPassword(eventsource,event) {/* Gen_First:org_shaolin_bmdp_adminconsole_form_ForgetPassword_sendPassword */

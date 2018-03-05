@@ -13,10 +13,6 @@
 		/System/Vogerp/UserMemberRule/DefaultMemberAfterVerified	Silver
 		/System/Vogerp/UserMemberRule/DefaultMonth 12
          -->
-         <node name="sms">
-             <item name="appkey" value="" />
-             <item name="appsecret" value="" />
-         </node>
          <node name="Vogerp">
 	        	<node name="Notification">
 	        		<node name="Common">
