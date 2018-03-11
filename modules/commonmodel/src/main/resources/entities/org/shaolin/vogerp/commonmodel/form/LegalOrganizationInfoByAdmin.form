@@ -127,7 +127,7 @@
            // check whether is payed or not.
            IPaymentService accountingService = (IPaymentService)AppContext.get().getService(IPaymentService.class);
            PayOrderStatusType porderStatus = accountingService.queryForPayStatus("AM-"+defaultUser.getId());
-           if (payOrder.getStatus() != PayOrderStatusType.PAYED) {
+           if (porderStatus != PayOrderStatusType.PAYED) {
                Dialog.showMessageDialog("商户未支付完成！", "", Dialog.WARNING_MESSAGE, null);
                return;
            }
