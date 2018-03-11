@@ -195,7 +195,7 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 		CoinPolicyTemplateImpl condition1 = new CoinPolicyTemplateImpl();
 		condition1.setReason(reason);
 		List<ICoinPolicyTemplate> result = AccountingModel.INSTANCE.searchCoinPolicy(condition1, null, 0, 1);
-		if (result == null || result.size() == 0) {
+		if (result == null || result.size() == 0 || result.get(0).getRewardScore() <= 0) {
 			return false;
 		}
 		
@@ -216,7 +216,7 @@ public class AccountingServiceImpl implements IAccountingService, IServiceProvid
 		CoinPolicyTemplateImpl condition1 = new CoinPolicyTemplateImpl();
 		condition1.setReason(reason);
 		List<ICoinPolicyTemplate> result = AccountingModel.INSTANCE.searchCoinPolicy(condition1, null, 0, 1);
-		if (result == null || result.size() == 0) {
+		if (result == null || result.size() == 0 || result.get(0).getRewardCoin() <= 0) {
 			return false;
 		}
 		
