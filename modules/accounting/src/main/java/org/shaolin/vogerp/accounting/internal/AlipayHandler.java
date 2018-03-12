@@ -426,8 +426,8 @@ public class AlipayHandler extends HttpServlet implements PaymentHandler {
 					translog.setIsCorrect(true);
 					
 					String out_trade_no = params.get("out_trade_no");
-					JSONObject jsonObj = new JSONObject(new HashMap(requestParams));
-					jsonObj.put("transaction_fee", jsonObj.get("total_amount"));
+					JSONObject jsonObj = new JSONObject(params);
+					jsonObj.put("transaction_fee", jsonObj.getDouble("total_amount"));
 					jsonObj.put("trade_success", true);
 					jsonObj.put("transaction_id", out_trade_no);
 					jsonObj.put("message_detail", "");

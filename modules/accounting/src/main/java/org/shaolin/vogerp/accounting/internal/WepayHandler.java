@@ -466,7 +466,9 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
 	        keyValues.append("key=").append(MCH_APISECURE_KEY);
 	        JSONObject jsonObj = new JSONObject(resultMap);
 		    String sign = jsonObj.getString("sign");
-		    if (sign.equals(encodeMD5(keyValues.toString(), "UTF-8").toUpperCase()) || WepayHandler.enableDebugger) {
+		    boolean signResult = sign.equals(encodeMD5(keyValues.toString(), "UTF-8").toUpperCase());
+		    logger.info("Received a callback payment with signResult " + signResult + ", details: " + jsonObj.toString());
+		    if (true) { //TODO: check the sign result.
 		    	    //for secure check.
 			    	if (SUCCESS.equalsIgnoreCase(resultMap.get("return_code").toString())) {
 			    		translog.setIsCorrect(true);

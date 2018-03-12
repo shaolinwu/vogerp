@@ -5,7 +5,7 @@ import org.shaolin.vogerp.accounting.be.IPayOrderRequest;
 
 public interface PaymentHandler {
 
-	public static final String SUCCESS = "success";
+	public static final String SUCCESS = "success";//SUCCESS
 	public static final String FAIL = "failure";
 	
 	public String prepay(IPayOrder payOrder) throws PaymentException;
