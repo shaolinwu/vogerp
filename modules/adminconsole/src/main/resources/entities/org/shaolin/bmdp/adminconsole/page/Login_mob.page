@@ -95,9 +95,10 @@
 		  <ns2:ops xsi:type="ns2:OpExecuteScriptType">
                 <ns2:expressionString><![CDATA[
 		      {
-		        this.password.setValue(md5(this.password.getValue()).toUpperCase());
+		        UIMaster.setCookie("userPDA", this.password.getValue());
 		        UIMaster.setCookie("userName", this.userName.getValue());
-		        //UIMaster.setCookie("password", this.password.getValue());
+		        
+		        this.password.setValue(md5(this.password.getValue()).toUpperCase());
 		      }
 		      ]]></ns2:expressionString>
           </ns2:ops>
@@ -328,6 +329,10 @@
 		            if (tempUserName != null) {
 		               this.userName.setValue(tempUserName);
 		            }
+		            var tempUserPda = UIMaster.getCookie("userPDA");
+                    if (tempUserPda != null) {
+                       this.password.setValue(tempUserPda);
+                    }
 		            // notify user open up the GPS.
 		            $("<div style='display:none;' id='mapcontainer'><div>").appendTo($(document.forms[0]));
 				    var map = new AMap.Map('mapcontainer');

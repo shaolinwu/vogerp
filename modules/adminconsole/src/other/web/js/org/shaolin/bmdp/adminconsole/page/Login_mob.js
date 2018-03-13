@@ -179,6 +179,10 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
 		            if (tempUserName != null) {
 		               this.userName.setValue(tempUserName);
 		            }
+		            var tempUserPda = UIMaster.getCookie("userPDA");
+                    if (tempUserPda != null) {
+                       this.password.setValue(tempUserPda);
+                    }
 		            // notify user open up the GPS.
 		            $("<div style='display:none;' id='mapcontainer'><div>").appendTo($(document.forms[0]));
 				    var map = new AMap.Map('mapcontainer');
@@ -298,9 +302,10 @@ function org_shaolin_bmdp_adminconsole_page_Login_mob(json)
         var UIEntity = this;
 
 		      {
-		        this.password.setValue(md5(this.password.getValue()).toUpperCase());
+		        UIMaster.setCookie("userPDA", this.password.getValue());
 		        UIMaster.setCookie("userName", this.userName.getValue());
-		        //UIMaster.setCookie("password", this.password.getValue());
+		        
+		        this.password.setValue(md5(this.password.getValue()).toUpperCase());
 		      }
 		      
         o.Submit_OutFunctionName(eventsource);
