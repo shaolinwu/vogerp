@@ -602,7 +602,7 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.legalPhoto" paramName="imagePath"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="sampleImagePath">
          <ns2:expression>
-          <expressionString>{return org.shaolin.uimaster.page.WebConfig.getWebContextRoot() + "/images/usersample/person.png";}</expressionString>
+          <expressionString>{return org.shaolin.uimaster.page.WebConfig.getResourceContextRoot() + "/images/usersample/person.png";}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
@@ -617,7 +617,7 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.legalIdentifierPhoto" paramName="imagePath"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="sampleImagePath">
          <ns2:expression>
-          <expressionString>{return org.shaolin.uimaster.page.WebConfig.getWebContextRoot() + "/images/usersample/identicard.jpg";}</expressionString>
+          <expressionString>{return org.shaolin.uimaster.page.WebConfig.getResourceContextRoot() + "/images/usersample/identicard.jpg";}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
@@ -632,7 +632,7 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.busiLicensePhoto" paramName="imagePath"></ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="sampleImagePath">
          <ns2:expression>
-          <expressionString>{return org.shaolin.uimaster.page.WebConfig.getWebContextRoot() + "/images/usersample/businesspepar.jpg";}</expressionString>
+          <expressionString>{return org.shaolin.uimaster.page.WebConfig.getResourceContextRoot() + "/images/usersample/businesspepar.jpg";}</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
       <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="editable">
