@@ -130,7 +130,7 @@
       </ns2:component>
       <ns2:component xsi:type="ns2:UIFileType" UIID="uploadFile">
 	        <ns2:text xsi:type="ns2:StringPropertyType">
-	         <ns2:value>只能上传后缀为：*.jpg;*.jpeg;*.png;*.gif的图片文件，且以拼音命名。</ns2:value>
+	         <ns2:value>只能上传后缀为：*.jpg;*.jpeg;*.png;*.gif的图片文件，且以字母数字命名。</ns2:value>
 	        </ns2:text>
 	        <ns2:suffix xsi:type="ns2:StringPropertyType">
 	         <ns2:value>*.jpg;*.jpeg;*.png;*.gif</ns2:value>

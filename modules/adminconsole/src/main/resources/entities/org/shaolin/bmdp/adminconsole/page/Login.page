@@ -275,7 +275,7 @@
 							<ns2:value>false</ns2:value>
 						</ns2:allowBlank>
 						<ns2:allowBlankText xsi:type="ns2:StringPropertyType">
-							<ns2:value>The user name must not be null.</ns2:value>
+							<ns2:value>用户名/手机号不能为空！</ns2:value>
 						</ns2:allowBlankText>
 					</ns2:component>
 					<ns2:component xsi:type="ns2:UIPasswordFieldType" UIID="password">
@@ -289,7 +289,7 @@
 							<ns2:value>false</ns2:value>
 						</ns2:allowBlank>
 						<ns2:allowBlankText xsi:type="ns2:StringPropertyType">
-							<ns2:value>The password must not be null.</ns2:value>
+							<ns2:value>密码不能为空！</ns2:value>
 						</ns2:allowBlankText>
 					</ns2:component>
 	                <ns2:component xsi:type="ns2:UILabelType" UIID="veriCodeQuestion">

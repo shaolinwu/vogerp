@@ -52,14 +52,14 @@
 		           input.put("editable", new Boolean(true));
 		           RefForm form2 = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PaymentMethod", input);
 		           @page.addElement(form2);
-		           form2.openInWindows("商户认证支付方式选择", null, true);
+		           form2.openInWindows("   商户认证支付方式选择   ", null, true);
 	           } else {
-                   Dialog.showMessageDialog("管理员审核中，请耐心等待。谢谢！", "", Dialog.INFORMATION_MESSAGE, null);
+                   Dialog.showMessageDialog("   管理员审核中，请耐心等待。谢谢！  ", "", Dialog.INFORMATION_MESSAGE, null);
                }
                return;
            }
            if (orgInfo.getVeriState() == OrgVerifyStatusType.VERIFIED) {
-               Dialog.showMessageDialog("您已是我们的认证商户，无需再次认证。谢谢！", "", Dialog.INFORMATION_MESSAGE, null);
+               Dialog.showMessageDialog("    您已是我们的认证商户，无需再次认证。谢谢！   ", "", Dialog.INFORMATION_MESSAGE, null);
                return;
            }
            orgInfo.setOrgType(OrgType.COMPANY);
@@ -106,7 +106,7 @@
            RefForm form2 = new RefForm("payorderForm", "org.shaolin.vogerp.accounting.form.PaymentMethod", input);
            @page.addElement(form2);
            form2.openInWindows("商户认证支付方式选择", null, true);
-           Dialog.showMessageDialog("提交审核中...请您支付("+price+")元商户认证费用, 谢谢！", "", Dialog.INFORMATION_MESSAGE, null);
+           Dialog.showMessageDialog("    提交审核中...请您支付("+price+")元商户认证费用, 谢谢！   ", "", Dialog.INFORMATION_MESSAGE, null);
            
        }]]></expressionString>
       </ns2:exp>
