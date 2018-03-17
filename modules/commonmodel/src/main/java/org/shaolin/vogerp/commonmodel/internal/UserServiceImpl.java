@@ -415,11 +415,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 
 			PersonalInfoImpl userInfo = matchedUser.getInfo();
 			Long userId = userInfo.getId();
-			if (userSecondaryCache.containsKey(userId)) {
-				userInfo = userSecondaryCache.get(userId);
-	        } else {
-	        	    userSecondaryCache.put(userId, userInfo);
-	        }
+	        	userSecondaryCache.put(userId, userInfo);
 
 			UserContext userContext = new UserContext();
 			userContext.setUserId(userInfo.getId());
@@ -466,7 +462,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	    			listener.loggedIn(matchedUser, userInfo);
 	    		}
             registerOnlineUser(userContext);
-
+            		
 			boolean hasCookie = false;
 			Cookie[] cookies = request.getCookies();
 			if (cookies != null) {
@@ -725,6 +721,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 		result.get(0).setPassword(instance.md5(newPassword).toUpperCase());
 		CommonModel.INSTANCE.update(result.get(0));
+		userSecondaryCache.remove(result.get(0).getPersonalId());
 		return true;
 	}
 
@@ -759,6 +756,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
         IPersonalAccount account = getPersonalAccount(userId);
         account.setLocationInfo(jsonObject.getString("city"));
         CommonModel.INSTANCE.update(account);
+        userSecondaryCache.remove(userId);
 	}
 
 	public boolean resetPassword(HttpSession session, String phoneNumber) {
@@ -774,6 +772,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			String password = StringUtil.genRandomAlphaBits(6);
 			result.get(0).setPassword(instance.md5(password).toUpperCase());
 			CommonModel.INSTANCE.update(result.get(0));
+			userSecondaryCache.remove(result.get(0).getPersonalId());
 			IShortMsgService msgService = AppContext.get().getService(IShortMsgService.class);
 			return ((ShortMsgServiceImpl)msgService).sendFindPassword(phoneNumber, password);
 		}

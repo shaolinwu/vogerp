@@ -108,6 +108,7 @@
        import org.shaolin.vogerp.commonmodel.ce.*;
        import org.shaolin.vogerp.commonmodel.IMemberService;
        import org.shaolin.vogerp.commonmodel.IOrganizationService;
+       import org.shaolin.vogerp.commonmodel.IUserService;
        import org.shaolin.vogerp.commonmodel.dao.CommonModel;
        import org.shaolin.vogerp.accounting.util.PaymentUtil;
        import org.shaolin.vogerp.accounting.ce.CoinOrScoreReasonType;
@@ -136,6 +137,9 @@
            orgInfo.setVerifierId(UserContext.getUserContext().getUserId());
            orgInfo.setOrgType(OrgType.COMPANY);
            CommonModel.INSTANCE.update(orgInfo);
+           
+           IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
+           service.getPersonalInfo(UserContext.getUserContext().getUserId(), true);//refresh user cache.
            
            // add reward.
            IOrganizationService orgService = (IOrganizationService)AppContext.get().getService(IOrganizationService.class);
