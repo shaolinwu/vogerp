@@ -98,7 +98,6 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 	public void run() {
 		userSecondaryCache.clear();
 		ipAttackFilter.clear();
-		scheduler.scheduleAtFixedRate(this, 1, 1, TimeUnit.DAYS);
 	}
 
 	public void addListener(UserActionListener listener) {
@@ -161,7 +160,7 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 			return false;
 		}
 		// one ip only allows to register 3 users per day.
-		if (ipAttackFilter.containsKey(userIPAddress) && ipAttackFilter.get(userIPAddress).intValue() > 3) {
+		if (ipAttackFilter.containsKey(userIPAddress) && ipAttackFilter.get(userIPAddress).intValue() > 10) {
 			logger.warn("IP Filter detected potential IP attacker!!! ip address: " + userIPAddress
 					+ ", register account: " + registerInfo.getPhoneNumber());
 			return false;
