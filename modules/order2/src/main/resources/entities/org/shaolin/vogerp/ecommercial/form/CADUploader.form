@@ -265,7 +265,7 @@
        </ns2:component>
        <ns2:component xsi:type="ns2:UIButtonType" UIID="downloadBtn">
 		<ns2:text xsi:type="ns2:StringPropertyType">
-			<ns2:value>显示模型文件并下载</ns2:value>
+			<ns2:value>模型附件下载</ns2:value>
 		</ns2:text>
 		<ns2:EventListener xsi:type="ns2:ClickListenerType">
 			<ns2:handler functionName="Download" />

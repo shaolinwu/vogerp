@@ -368,9 +368,28 @@
 			<ns2:layout xsi:type="ns2:TableLayoutType">
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+				<ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
 				<ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
 			</ns2:layout>
 			<ns2:component xsi:type="ns2:UIHiddenType" UIID="defaultAction">
+            </ns2:component>
+            <ns2:component xsi:type="ns2:UILabelType" UIID="tradedDailyRecords">
+                <ns2:Property name="htmlValue">
+		            <ns2:value xsi:type="ns2:ExpressionPropertyType">
+		                 <ns2:expression>
+		                   <expressionString><![CDATA[
+		                   import org.shaolin.vogerp.ecommercial.dao.CustOrderModel;
+		                   { 
+		                       return CustOrderModel.getMOrderDailyRecords();
+		                   }]]></expressionString>
+		                 </ns2:expression>
+		            </ns2:value>
+		          </ns2:Property>
+		          <ns2:Property name="style">
+                    <ns2:value xsi:type="ns2:StringPropertyType">
+                        <ns2:value>display:none</ns2:value>
+                    </ns2:value>
+                  </ns2:Property>
             </ns2:component>
             <ns2:component xsi:type="ns2:UIPanelType" UIID="searchConditionPanel">
               <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -522,277 +541,6 @@
 		                </ns2:layoutConstraint>
                     </ns2:panel>
                 </ns2:tab>
-                <!-- 
-                <ns2:tab uiid="goldenOrderInfoPanel">
-                    <ns2:title xsi:type="ns2:StringPropertyType">
-                        <ns2:value>采购订单</ns2:value>
-                    </ns2:title>
-                    <ns2:panel UIID="goldenOrderInfoPanel">
-                        <ns2:layout xsi:type="ns2:TableLayoutType">
-                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-                        </ns2:layout>
-		                <ns2:component xsi:type="ns2:UITableType" UIID="goldenOrderTable">
-		                    <ns2:beElement>org.shaolin.vogerp.ecommercial.be.GoldenOrder</ns2:beElement>
-		                    <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Normal</ns2:selectMode>
-		                    <ns2:defaultRowSize>5</ns2:defaultRowSize>
-		                    <ns2:showActionBar>true</ns2:showActionBar>
-		                    <ns2:showFilter>true</ns2:showFilter>
-		                    <ns2:query xsi:type="ns2:ExpressionPropertyType">
-		                        <ns2:expression xsi:type="ns2:ExpressionType">
-		                            <ns2:expressionString><![CDATA[
-		                            import java.util.List;
-		                            import org.shaolin.uimaster.page.AjaxContext;
-                                    import org.shaolin.uimaster.page.ajax.*;
-									import org.shaolin.bmdp.runtime.security.UserContext;
-		                            import org.shaolin.vogerp.ecommercial.be.*;
-		                            import org.shaolin.vogerp.ecommercial.ce.*;
-		                            import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
-		                            import org.shaolin.vogerp.ecommercial.util.OrderUtil;
-		                            import org.shaolin.bmdp.runtime.AppContext;
-									import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
-									import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
-									import org.shaolin.vogerp.ecommercial.ce.*;
-		                            {
-		                                  if ($tableCondition == null) {
-		                                     $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
-		                                     $tableCondition.setCount(5);
-		                                     $tableCondition.addOrder("createDate", false);
-		                                  }
-		                                  $tableCondition.addOrder("statusInt", false);
-		                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
-		                                  condition.setStatus(OrderStatusType.PUBLISHED);
-		                                  condition.setType(GoldenOrderType.PURCHASE);
-		                                  OrderUtil.updateSearchCriteria($page, condition);
-		                                  
-		                                  return EOrderModel.INSTANCE.searchGoldenOrder(condition,
-	                                                $tableCondition.getOrders(),
-	                                                $tableCondition.getOffset(), 
-	                                                $tableCondition.getCount());
-		                            }]]></ns2:expressionString>
-		                        </ns2:expression>
-		                    </ns2:query>
-		                    <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>小图标</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.photos</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
-                                    <ns2:type>Image</ns2:type>
-                                </ns2:uiType>
-                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-					                    import org.shaolin.bmdp.runtime.Registry;
-					                    import org.shaolin.uimaster.page.WebConfig;
-					                    import org.shaolin.uimaster.page.widgets.HTMLImageType;
-					                    { 
-					                        return HTMLImageType.getFirst($rowBE.getPhotos()); 
-					                    }
-                                        ]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:rowExpression>
-                            </ns2:column>
-		                    <ns2:column xsi:type="ns2:UITableColumnType">
-			                    <ns2:title xsi:type="ns2:StringPropertyType">
-			                        <ns2:value></ns2:value>
-			                    </ns2:title>
-			                    <ns2:beFieldId>rowBE.description</ns2:beFieldId>
-			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
-			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-			                        <ns2:expression xsi:type="ns2:ExpressionType">
-			                            <ns2:expressionString><![CDATA[
-			                           import org.shaolin.bmdp.utils.StringUtil;
-							           { 
-							               return StringUtil.escape(StringUtil.getAbbreviatoryString($rowBE.getDescription()+"(" 
-					                           + $rowBE.getStatus().getDisplayName() +")", 30)); 
-							           }]]></ns2:expressionString>
-			                        </ns2:expression>
-			                    </ns2:rowExpression>
-			                </ns2:column>
-			                <ns2:column xsi:type="ns2:UITableColumnType">
-			                    <ns2:title xsi:type="ns2:StringPropertyType">
-			                        <ns2:value>估价</ns2:value>
-			                    </ns2:title>
-			                    <ns2:beFieldId>rowBE.estimatedPrice</ns2:beFieldId>
-			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
-			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-			                        <ns2:expression xsi:type="ns2:ExpressionType">
-			                            <ns2:expressionString><![CDATA[
-			                           import org.shaolin.bmdp.utils.StringUtil;
-							           import org.shaolin.uimaster.page.od.formats.FormatUtil;
-							           { 
-							               return FormatUtil.getCurrency($rowBE.getEstimatedPrice(), null, true); 
-							           }]]></ns2:expressionString>
-			                        </ns2:expression>
-			                    </ns2:rowExpression>
-			                </ns2:column>
-			                <ns2:column xsi:type="ns2:UITableColumnType">
-			                    <ns2:title xsi:type="ns2:StringPropertyType">
-			                        <ns2:value></ns2:value>
-			                    </ns2:title>
-			                    <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
-			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
-			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-			                        <ns2:expression xsi:type="ns2:ExpressionType">
-			                            <ns2:expressionString><![CDATA[
-			                           import org.shaolin.bmdp.utils.StringUtil;
-							           import org.shaolin.bmdp.runtime.ce.CEUtil;
-							           import org.shaolin.uimaster.page.od.formats.FormatUtil;
-							           { 
-							               return CEUtil.getValue($rowBE.getCity()) + "["+FormatUtil.formatDateTime($rowBE.getCreateDate())+"]"; 
-							           }]]></ns2:expressionString>
-			                        </ns2:expression>
-			                    </ns2:rowExpression>
-			                </ns2:column>
-		                    <ns2:defaultActions>
-		                       <ns2:defaultOpenAction>openGoldenOrder</ns2:defaultOpenAction>
-		                    </ns2:defaultActions>
-		                </ns2:component>
-		                <ns2:layoutConstraint>
-		                    <ns2:componentId>goldenOrderTable</ns2:componentId>
-		                    <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-		                        x="0" y="0" align="FULL"></ns2:constraint>
-		                </ns2:layoutConstraint>
-                    </ns2:panel>
-                </ns2:tab>
-                
-                <ns2:tab uiid="gsaleOrderInfoPanel">
-                    <ns2:title xsi:type="ns2:StringPropertyType">
-                        <ns2:value>销售订单</ns2:value>
-                    </ns2:title>
-                    <ns2:panel UIID="gsaleOrderInfoPanel">
-                        <ns2:layout xsi:type="ns2:TableLayoutType">
-                            <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
-                            <ns2:columnWidthWeight>1.0</ns2:columnWidthWeight>
-                        </ns2:layout>
-                        <ns2:component xsi:type="ns2:UITableType" UIID="gsaleOrderTable">
-                            <ns2:beElement>org.shaolin.vogerp.ecommercial.be.GoldenOrder</ns2:beElement>
-                            <ns2:selectMode xsi:type="ns2:UITableSelectModeType">Single</ns2:selectMode>
-                            <ns2:defaultRowSize>10</ns2:defaultRowSize>
-                            <ns2:showActionBar>true</ns2:showActionBar>
-                            <ns2:showFilter>true</ns2:showFilter>
-                            <ns2:query xsi:type="ns2:ExpressionPropertyType">
-                                <ns2:expression xsi:type="ns2:ExpressionType">
-                                    <ns2:expressionString><![CDATA[
-                                    import java.util.List;
-                                    import org.shaolin.uimaster.page.AjaxContext;
-                                    import org.shaolin.uimaster.page.ajax.*;
-									import org.shaolin.bmdp.runtime.security.UserContext;
-                                    import org.shaolin.vogerp.ecommercial.be.*;
-                                    import org.shaolin.vogerp.ecommercial.ce.*;
-                                    import org.shaolin.vogerp.ecommercial.dao.EOrderModel;
-                                    import org.shaolin.vogerp.ecommercial.util.OrderUtil;
-                                    import org.shaolin.bmdp.runtime.AppContext;
-                                    import org.shaolin.bmdp.runtime.spi.IAppServiceManager;
-                                    import org.shaolin.bmdp.runtime.spi.IServerServiceManager;
-                                    import org.shaolin.vogerp.ecommercial.ce.*;
-                                    {
-                                          if ($tableCondition == null) {
-                                             $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
-                                             $tableCondition.setCount(10);
-                                             $tableCondition.addOrder("createDate", false);
-                                          }
-                                          $tableCondition.addOrder("statusInt", false);
-                                          GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
-                                          condition.setStatus(OrderStatusType.PUBLISHED);
-                                          condition.setType(GoldenOrderType.SALE);
-                                          OrderUtil.updateSearchCriteria($page, condition);
-		                                  
-                                          return EOrderModel.INSTANCE.searchGoldenOrder(condition,
-                                                    $tableCondition.getOrders(),
-                                                    $tableCondition.getOffset(), 
-                                                    $tableCondition.getCount());
-                                    }]]></ns2:expressionString>
-                                </ns2:expression>
-                            </ns2:query>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-                                <ns2:title xsi:type="ns2:StringPropertyType">
-                                    <ns2:value>小图标</ns2:value>
-                                </ns2:title>
-                                <ns2:beFieldId>rowBE.photos</ns2:beFieldId>
-                                <ns2:uiType xsi:type="ns2:UITableColHTMLType">
-                                    <ns2:type>Image</ns2:type>
-                                </ns2:uiType>
-                                <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-                                    <ns2:expression xsi:type="ns2:ExpressionType">
-                                        <ns2:expressionString><![CDATA[
-                                        import org.shaolin.bmdp.runtime.AppContext;
-                                        import org.shaolin.bmdp.runtime.Registry;
-                                        import org.shaolin.uimaster.page.WebConfig;
-                                        import org.shaolin.uimaster.page.widgets.HTMLImageType;
-                                        { 
-                                            return HTMLImageType.getFirst($rowBE.getPhotos()); 
-                                        }
-                                        ]]></ns2:expressionString>
-                                    </ns2:expression>
-                                </ns2:rowExpression>
-                            </ns2:column>
-                            <ns2:column xsi:type="ns2:UITableColumnType">
-			                    <ns2:title xsi:type="ns2:StringPropertyType">
-			                        <ns2:value></ns2:value>
-			                    </ns2:title>
-			                    <ns2:beFieldId>rowBE.description</ns2:beFieldId>
-			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
-			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-			                        <ns2:expression xsi:type="ns2:ExpressionType">
-			                            <ns2:expressionString><![CDATA[
-			                           import org.shaolin.bmdp.utils.StringUtil;
-							           { 
-							               return StringUtil.escape(StringUtil.getAbbreviatoryString($rowBE.getDescription()+"(" 
-					                           + $rowBE.getStatus().getDisplayName() +")", 30)); 
-							           }]]></ns2:expressionString>
-			                        </ns2:expression>
-			                    </ns2:rowExpression>
-			                </ns2:column>
-			                <ns2:column xsi:type="ns2:UITableColumnType">
-			                    <ns2:title xsi:type="ns2:StringPropertyType">
-			                        <ns2:value>估价</ns2:value>
-			                    </ns2:title>
-			                    <ns2:beFieldId>rowBE.estimatedPrice</ns2:beFieldId>
-			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
-			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-			                        <ns2:expression xsi:type="ns2:ExpressionType">
-			                            <ns2:expressionString><![CDATA[
-			                           import org.shaolin.bmdp.utils.StringUtil;
-							           import org.shaolin.uimaster.page.od.formats.FormatUtil;
-							           { 
-							               return FormatUtil.getCurrency($rowBE.getEstimatedPrice(), null, true); 
-							           }]]></ns2:expressionString>
-			                        </ns2:expression>
-			                    </ns2:rowExpression>
-			                </ns2:column>
-			                <ns2:column xsi:type="ns2:UITableColumnType">
-			                    <ns2:title xsi:type="ns2:StringPropertyType">
-			                        <ns2:value></ns2:value>
-			                    </ns2:title>
-			                    <ns2:beFieldId>rowBE.createDate</ns2:beFieldId>
-			                    <ns2:uiType xsi:type="ns2:UITableColHTMLType"><ns2:type>Label</ns2:type></ns2:uiType>
-			                    <ns2:rowExpression xsi:type="ns2:ExpressionPropertyType">
-			                        <ns2:expression xsi:type="ns2:ExpressionType">
-			                            <ns2:expressionString><![CDATA[
-			                           import org.shaolin.bmdp.utils.StringUtil;
-							           import org.shaolin.bmdp.runtime.ce.CEUtil;
-							           import org.shaolin.uimaster.page.od.formats.FormatUtil;
-							           { 
-							               return CEUtil.getValue($rowBE.getCity()) + "["+FormatUtil.formatDateTime($rowBE.getCreateDate())+"]"; 
-							           }]]></ns2:expressionString>
-			                        </ns2:expression>
-			                    </ns2:rowExpression>
-			                </ns2:column>
-                            <ns2:defaultActions>
-                                <ns2:defaultOpenAction>openSaleGoldenOrder</ns2:defaultOpenAction>
-                            </ns2:defaultActions>
-                        </ns2:component>
-                        <ns2:layoutConstraint>
-                            <ns2:componentId>gsaleOrderTable</ns2:componentId>
-                            <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
-                                x="0" y="0" align="FULL"></ns2:constraint>
-                        </ns2:layoutConstraint>
-                    </ns2:panel>
-                </ns2:tab>
-                 -->
                 <ns2:tab uiid="rentOrderInfoPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
                         <ns2:value>出租设备</ns2:value>
@@ -1185,14 +933,55 @@
              <ns2:componentId>searchConditionPanel</ns2:componentId>
              <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                  x="0" y="0" align="FULL"></ns2:constraint>
-             </ns2:layoutConstraint>
+          </ns2:layoutConstraint>
 	      <ns2:layoutConstraint>
              <ns2:componentId>functionsTab</ns2:componentId>
              <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
                  x="0" y="1" align="FULL"></ns2:constraint>
-         </ns2:layoutConstraint>
+          </ns2:layoutConstraint>
+          <ns2:layoutConstraint>
+             <ns2:componentId>tradedDailyRecords</ns2:componentId>
+             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType"
+                 x="0" y="2" align="FULL"></ns2:constraint>
+          </ns2:layoutConstraint>
          <ns2:constructorCode><![CDATA[
 	          {
+	          
+	          (function($){
+				 $.fn.scrollText = function(options){
+				      var defaults = {
+				       speed:30
+				 }
+				  var opts = $.extend(defaults,options);
+				  this.each(function(){
+				       var $timer;
+				       var scroll_top=0;
+				       var obj = $(this);
+				       var $height = obj.find("ul").height();
+				       obj.find("ul").clone().appendTo(obj);
+				       obj.hover(function(){
+				       clearInterval($timer);
+				   },function(){
+				    $timer = setInterval(function(){
+				       scroll_top++;
+				       if(scroll_top > $height){
+				         scroll_top = 0;
+				       }
+				       obj.find("ul").first().css("margin-top",-scroll_top);
+				    },opts.speed);
+				    }).trigger("mouseleave");
+				   })
+				}
+			})(jQuery)
+	          
+	          var htmlCode = "<div class='box'><ul>";
+	          var morderRecords = JSON.parse($("#tradedDailyRecords_Label").text());
+	          for (var i=0; i<morderRecords.length; i++) {
+	             htmlCode += "<li>" + morderRecords[i] + "</li>";
+	          }
+	          htmlCode += "</ul></div>";
+	          $(htmlCode).prependTo($("#searchConditionPanel"));
+	          $(".box").scrollText({ speed:40 });
 			}
 	         ]]></ns2:constructorCode>
 		</ns2:body>

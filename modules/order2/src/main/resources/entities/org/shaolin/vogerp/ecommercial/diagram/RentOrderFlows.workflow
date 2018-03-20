@@ -57,7 +57,7 @@
                         gorder.setType(RentOrLoanOrderType.RENT);
                         gorder.setStatus(OrderStatusType.VERIFYING);
                         if (gorder.getDeliveryInfo() == null) {
-			                Dialog.showMessageDialog("您没有配制地址信息！", "", Dialog.WARNING_MESSAGE, null);
+			                Dialog.showMessageDialog("    您没有配制地址信息！   ", "", Dialog.WARNING_MESSAGE, null);
 			                return;
 			            }
 		                if (gorder.getDeliveryInfo().getId() > 0) {
@@ -115,7 +115,7 @@
                         gorder.setType(RentOrLoanOrderType.LOAN);
                         gorder.setStatus(OrderStatusType.VERIFYING);
                         if (gorder.getDeliveryInfo() == null) {
-			                Dialog.showMessageDialog("您没有配制地址信息！", "", Dialog.WARNING_MESSAGE, null);
+			                Dialog.showMessageDialog("   您没有配制地址信息！   ", "", Dialog.WARNING_MESSAGE, null);
 			                return;
 			            }
 		                if (gorder.getDeliveryInfo().getId() > 0) {
@@ -173,7 +173,7 @@
                         gorder.setType(RentOrLoanOrderType.FINDMASTER);
                         gorder.setStatus(OrderStatusType.VERIFYING);
                         if (gorder.getDeliveryInfo() == null) {
-			                Dialog.showMessageDialog("您没有配制地址信息！", "", Dialog.WARNING_MESSAGE, null);
+			                Dialog.showMessageDialog("   您没有配制地址信息！  ", "", Dialog.WARNING_MESSAGE, null);
 			                return;
 			            }
 		                if (gorder.getDeliveryInfo().getId() > 0) {
@@ -487,10 +487,10 @@
                      {
                           int state = OrderUtil.addAPrice($goldenOrder, $offerPrice);
 			              if (state == -1) {
-			                 Dialog.showMessageDialog("竞价失败，请刷新订单状态！", "提醒", Dialog.WARNING_MESSAGE, null);
+			                 Dialog.showMessageDialog("    竞价失败，请刷新订单状态！   ", "提醒", Dialog.WARNING_MESSAGE, null);
 			                 return;
 			              } else if (state == -2) {
-			                 Dialog.showMessageDialog("您的出价次数已满，不可重复竞价！", "提醒", Dialog.WARNING_MESSAGE, null);
+			                 Dialog.showMessageDialog("    您的出价次数已满，不可重复竞价！   ", "提醒", Dialog.WARNING_MESSAGE, null);
 			                 return;
 			              } 
                           
@@ -518,7 +518,7 @@
 	                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
 	                      service.addNotification(message, true);
 	                      
-	                      Dialog.showMessageDialog("出价操作成功！您可以在 发布订单-》我的出价历史 列表功能中继续回复咨询。", "", Dialog.INFORMATION_MESSAGE, null);
+	                      Dialog.showMessageDialog("     出价操作成功！您可以在  发布订单-》我的出价历史  列表功能中继续回复咨询。    ", "", Dialog.INFORMATION_MESSAGE, null);
                      }
                      ]]></expressionString>
                 </ns2:expression>
@@ -557,13 +557,13 @@
                         HashMap out = (HashMap)form.ui2Data();
                         RentOrLoanOrderImpl gorder = (RentOrLoanOrderImpl)out.get("beObject");
                         if (out.get("selectedPrice") == null) {
-                            Dialog.showMessageDialog("请选择一个客户出价单。", "", Dialog.WARNING_MESSAGE, null);
+                            Dialog.showMessageDialog("    请选择一个客户出价单。   ", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         ROOfferPriceImpl selectedPrice= (ROOfferPriceImpl)out.get("selectedPrice");
                         IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
                         if (!service.hasAddressConfigured(selectedPrice.getTakenCustomerId())) {
-                            Dialog.showMessageDialog("无法成交，因竟价客户没有配置默认地址！", "", Dialog.WARNING_MESSAGE, null);
+                            Dialog.showMessageDialog("    无法成交，因竟价客户没有配置默认地址！   ", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         
@@ -693,7 +693,7 @@
 	                         
 	                         ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
 	                         service.addNotification(message, true);
-	                         Dialog.showMessageDialog("我们已通知对方尽快确认您的订单，请您耐心等待对方确认付款。", "", Dialog.INFORMATION_MESSAGE, null);
+	                         Dialog.showMessageDialog("   我们已通知对方尽快确认您的订单，请您耐心等待对方确认付款。   ", "", Dialog.INFORMATION_MESSAGE, null);
                          }
                          
                     }
@@ -805,7 +805,7 @@
                          
                          ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
                          service.addNotification(message, true);
-			             Dialog.showMessageDialog("订单成交成功！", "", Dialog.INFORMATION_MESSAGE, null);
+			             Dialog.showMessageDialog("   订单成交成功！  ", "", Dialog.INFORMATION_MESSAGE, null);
                     }
                      ]]></expressionString>
                 </ns2:expression>
@@ -974,12 +974,12 @@
                     { 
                         Table orderInfoTable = (Table)@page.getElement("rentOrderTable");
                         if (orderInfoTable.getSelectedRow() == null) {
-                            Dialog.showMessageDialog("没有订单选中！", "Error", Dialog.ERROR_MESSAGE, null);
+                            Dialog.showMessageDialog("    没有订单选中！   ", "Error", Dialog.ERROR_MESSAGE, null);
                             return;
                         }
                         IEOrder order = (IEOrder)orderInfoTable.getSelectedRow();
                         if (order.getStatus() != OrderStatusType.PUBLISHED) {
-                           Dialog.showMessageDialog("只有处于发布状态的订单可以禁用！", "Error", Dialog.ERROR_MESSAGE, null);
+                           Dialog.showMessageDialog("    只有处于发布状态的订单可以禁用！   ", "Error", Dialog.ERROR_MESSAGE, null);
                            return;
                         }
                         

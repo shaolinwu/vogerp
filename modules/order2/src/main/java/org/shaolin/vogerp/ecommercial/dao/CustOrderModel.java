@@ -1,16 +1,22 @@
 package org.shaolin.vogerp.ecommercial.dao;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.shaolin.bmdp.json.JSONArray;
 import org.shaolin.bmdp.persistence.BEEntityDaoObject;
+import org.shaolin.bmdp.persistence.HibernateUtil;
 import org.shaolin.bmdp.persistence.query.operator.Operator;
 import org.shaolin.bmdp.runtime.AppContext;
+import org.shaolin.bmdp.runtime.ce.CEUtil;
+import org.shaolin.uimaster.page.od.formats.FormatUtil;
 import org.shaolin.vogerp.commonmodel.IUserService;
 import org.shaolin.vogerp.commonmodel.be.IPersonalInfo;
 import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
@@ -19,6 +25,7 @@ import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
 
 public class CustOrderModel extends BEEntityDaoObject {
 
+	private static final String DAO_PACKAGE = "org.shaolin.vogerp.ecommercial.dao";
 	public static final CustOrderModel INSTANCE = new CustOrderModel();
 
     private CustOrderModel() {
@@ -268,26 +275,52 @@ public class CustOrderModel extends BEEntityDaoObject {
      }
     
     public static void joinPublishedUserInfo(List<IEOrder> orders) {
-    	if (orders == null || orders.size() == 0) {
-    		return;
-    	}
-    	HashSet<Long> userIds = new HashSet<Long>();
-    	for (IEOrder order : orders) {
-    		userIds.add(order.getPublishedCustomerId());
-    	}
-    	List<IPersonalInfo> userInfoList = AppContext.get().getService(IUserService.class).getPersonalInfos(userIds);
-    	for (IEOrder order : orders) {
-    		order.setPublishedCustomer(selectAUser(order.getPublishedCustomerId(), userInfoList));
-    	}
+	    	if (orders == null || orders.size() == 0) {
+	    		return;
+	    	}
+	    	HashSet<Long> userIds = new HashSet<Long>();
+	    	for (IEOrder order : orders) {
+	    		userIds.add(order.getPublishedCustomerId());
+	    	}
+	    	List<IPersonalInfo> userInfoList = AppContext.get().getService(IUserService.class).getPersonalInfos(userIds);
+	    	for (IEOrder order : orders) {
+	    		order.setPublishedCustomer(selectAUser(order.getPublishedCustomerId(), userInfoList));
+	    	}
+	    }
+	    
+	    private static PersonalInfoImpl selectAUser(long userId, List<IPersonalInfo> userInfoList) {
+	    	for (IPersonalInfo info : userInfoList) {
+	    		if (userId == info.getId()) {
+	    			return (PersonalInfoImpl)info;
+	    		}
+	    	}
+	    	return null;
     }
     
-    private static PersonalInfoImpl selectAUser(long userId, List<IPersonalInfo> userInfoList) {
-    	for (IPersonalInfo info : userInfoList) {
-    		if (userId == info.getId()) {
-    			return (PersonalInfoImpl)info;
-    		}
-    	}
-    	return null;
+    public static String getMOrderDailyRecords() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT t.CITY , t.ENDPRICE , t.DESCRIPTION FROM ecom_machiningorder t where t.STATE>= 20 && t.STATE<= 23 and t._enable= 1 order by t.CREATEDATE desc limit 0, 50;");
+		Session session = HibernateUtil.getSession(DAO_PACKAGE);
+		try {
+			final List<Object[]> rows = session.createSQLQuery(sb.toString()).list();
+			if (rows == null || rows.size() == 0) {
+				return "[]";
+			}
+			List<String> result = new ArrayList<String>(rows.size());
+			for (Object[] row : rows) {
+				StringBuilder item = new StringBuilder();
+				item.append("[").append(CEUtil.toCEValue(row[0].toString()).getDisplayName()).append("]");
+				item.append("\u6210\u4EA4\u4EF7\u683C\uFF1A").append(FormatUtil.getCurrency(Double.parseDouble(row[1].toString()), null, false));
+				item.append("--").append(row[2]);
+				result.add(item.toString());
+			}
+			return (new JSONArray(result)).toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "[]";
+		} finally {
+			HibernateUtil.releaseSession(session, true);
+		}
     }
     
 }

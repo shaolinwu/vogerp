@@ -152,19 +152,9 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     });
     var deliveryInfoUI = new org_shaolin_vogerp_ecommercial_form_DeliveryInfoSimpleView({"prefix":prefix + "deliveryInfoUI."});
 
-    var invoiceTypeUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "invoiceTypeUILabel"]
-    });
-
     var invoiceTypeUI = new UIMaster.ui.combobox
     ({
         ui: elementList[prefix + "invoiceTypeUI"]
-    });
-
-    var invoiceSignUILabel = new UIMaster.ui.label
-    ({
-        ui: elementList[prefix + "invoiceSignUILabel"]
     });
 
     var invoiceSignUI = new UIMaster.ui.textarea
@@ -176,7 +166,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     ({
         ui: elementList[prefix + "deliveryInfoPanel"]
         ,items: []
-        ,subComponents: [prefix + "deliveryInfoUI",prefix + "invoiceTypeUILabel",prefix + "invoiceTypeUI",prefix + "invoiceSignUILabel",prefix + "invoiceSignUI"]
+        ,subComponents: [prefix + "deliveryInfoUI",prefix + "invoiceTypeUI",prefix + "invoiceSignUI"]
     });
 
     var savebtn = new UIMaster.ui.button
@@ -259,11 +249,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.deliveryInfoUI=deliveryInfoUI;
 
-    Form.invoiceTypeUILabel=invoiceTypeUILabel;
-
     Form.invoiceTypeUI=invoiceTypeUI;
-
-    Form.invoiceSignUILabel=invoiceSignUILabel;
 
     Form.invoiceSignUI=invoiceSignUI;
 
@@ -321,11 +307,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
 
     Form.deliveryInfoUI=deliveryInfoUI;
 
-    Form.invoiceTypeUILabel=invoiceTypeUILabel;
-
     Form.invoiceTypeUI=invoiceTypeUI;
-
-    Form.invoiceSignUILabel=invoiceSignUILabel;
 
     Form.invoiceSignUI=invoiceSignUI;
 

@@ -4,3 +4,5 @@
 #div-searchBar-firstRow-0_0{width: 160px;float: left;}
 #div-searchBar-firstRow-1_0{float: right;}
 .uimaster_container_cell{float:none;}
+.box{ ;border:1px solid #ddd; height:30px; overflow:hidden;}
+.box ul li{line-height:25px; list-style:none;}

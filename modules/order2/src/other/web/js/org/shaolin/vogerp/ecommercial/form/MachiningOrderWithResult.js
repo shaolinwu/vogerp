@@ -219,7 +219,15 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult(json)
     Form.user_constructor = function()
     {
         /* Construct_FIRST:org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult */
-        /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult */
+
+        
+       {
+          //TODO：追加加工文件
+          
+       }
+    
+    
+            /* Construct_LAST:org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult */
     };
 
     Form.Cancel = org_shaolin_vogerp_ecommercial_form_MachiningOrderWithResult_Cancel;

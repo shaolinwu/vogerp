@@ -8,6 +8,12 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob(json)
         ui: elementList[prefix + "defaultAction"]
     });
 
+    var tradedDailyRecords = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "tradedDailyRecords"]
+        ,style: "display:none"
+    });
+
     var functionsTab = new UIMaster.ui.tab
     ({
         ui: elementList[prefix + "functionsTab"]
@@ -72,10 +78,12 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob(json)
     ({
         ui: elementList[prefix + "Form"]
         ,uiskin: "org.shaolin.uimaster.page.skin.TitlePanel"
-        ,items: [defaultAction,functionsTab,searchBar,searchConditionPanel]
+        ,items: [defaultAction,tradedDailyRecords,functionsTab,searchBar,searchConditionPanel]
     });
 
     Form.defaultAction=defaultAction;
+
+    Form.tradedDailyRecords=tradedDailyRecords;
 
     Form.functionsTab=functionsTab;
 
@@ -107,6 +115,42 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob(json)
 
         
 	          {
+	          
+	          (function($){
+				 $.fn.scrollText = function(options){
+				      var defaults = {
+				       speed:30
+				 }
+				  var opts = $.extend(defaults,options);
+				  this.each(function(){
+				       var $timer;
+				       var scroll_top=0;
+				       var obj = $(this);
+				       var $height = obj.find("ul").height();
+				       obj.find("ul").clone().appendTo(obj);
+				       obj.hover(function(){
+				       clearInterval($timer);
+				   },function(){
+				    $timer = setInterval(function(){
+				       scroll_top++;
+				       if(scroll_top > $height){
+				         scroll_top = 0;
+				       }
+				       obj.find("ul").first().css("margin-top",-scroll_top);
+				    },opts.speed);
+				    }).trigger("mouseleave");
+				   })
+				}
+			})(jQuery)
+	          
+	          var htmlCode = "<div class='box'><ul>";
+	          var morderRecords = JSON.parse($("#tradedDailyRecords_Label").text());
+	          for (var i=0; i<morderRecords.length; i++) {
+	             htmlCode += "<li>" + morderRecords[i] + "</li>";
+	          }
+	          htmlCode += "</ul></div>";
+	          $(htmlCode).prependTo($("#searchConditionPanel"));
+	          $(".box").scrollText({ speed:40 });
 			}
 	         
             /* Construct_LAST:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob */

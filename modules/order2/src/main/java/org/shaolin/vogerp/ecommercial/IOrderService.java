@@ -1,5 +1,7 @@
 package org.shaolin.vogerp.ecommercial;
 
+import java.util.List;
+
 public interface IOrderService {
 
 	public void accessedGOrder(long orderId);

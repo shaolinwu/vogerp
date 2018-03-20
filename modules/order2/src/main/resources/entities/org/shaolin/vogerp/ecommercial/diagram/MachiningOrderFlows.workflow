@@ -55,7 +55,7 @@
                         HashMap out = (HashMap)form.ui2Data();
                         MachiningOrderImpl morder = (MachiningOrderImpl)out.get("beObject");
 			            if (morder.getDeliveryInfo() == null) {
-			                Dialog.showMessageDialog("您没有配制地址信息！", "", Dialog.WARNING_MESSAGE, null);
+			                Dialog.showMessageDialog("    您没有配制地址信息！   ", "", Dialog.WARNING_MESSAGE, null);
 			                return;
 			            }
 		                if (morder.getDeliveryInfo().getId() > 0) {
@@ -127,7 +127,7 @@
                          ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
                          service.addNotificationToAdmin(message, true);
                          
-                         Dialog.showMessageDialog("您的加工订单已发送给管理员做全面评估，我们将尽快给您回复！", "", Dialog.INFORMATION_MESSAGE, null);
+                         Dialog.showMessageDialog("   您的加工订单已发送给管理员做全面评估，我们将尽快给您回复！  ", "", Dialog.INFORMATION_MESSAGE, null);
                      }
                      ]]></expressionString>
                 </ns2:expression>
@@ -315,7 +315,7 @@
 			        { 
 			            // only enterprised user allows to give a price.
 			            if (!UserContext.getUserContext().isVerified()) {
-			               Dialog.showMessageDialog("只能验证过的 加工商户 才可竟价。同时，个人用户不能参与竟价。", "提醒", Dialog.WARNING_MESSAGE, null);
+			               Dialog.showMessageDialog("    只能验证过的 加工商户 才可竟价。同时，个人用户不能参与竟价。   ", "提醒", Dialog.WARNING_MESSAGE, null);
 			               return ;
 			            }
 			            
@@ -379,10 +379,10 @@
                      {
 			            int state = OrderUtil.addAPrice($goldenOrder, $offerPrice);
 			            if (state == -1) {
-			                Dialog.showMessageDialog("竞价失败，请刷新订单状态！", "提醒", Dialog.WARNING_MESSAGE, null);
+			                Dialog.showMessageDialog("   竞价失败，请刷新订单状态！  ", "提醒", Dialog.WARNING_MESSAGE, null);
 			                return;
 			            } else if (state == -2) {
-			                Dialog.showMessageDialog("您的出价次数已满，不可重复竞价！", "提醒", Dialog.WARNING_MESSAGE, null);
+			                Dialog.showMessageDialog("   您的出价次数已满，不可重复竞价！   ", "提醒", Dialog.WARNING_MESSAGE, null);
 			                return;
 			            } 
                           
@@ -410,7 +410,7 @@
 	                      ICoordinatorService service = (ICoordinatorService)AppContext.get().getService(ICoordinatorService.class);
 	                      service.addNotification(message, true);
 	                      
-	                      Dialog.showMessageDialog("出价成功！您可以在 发布订单-》我的出价历史 列表功能中继续回复咨询。", "", Dialog.INFORMATION_MESSAGE, null);
+	                      Dialog.showMessageDialog("   出价成功！您可以在  发布订单 -》我的出价历史  列表功能中继续回复咨询。   ", "", Dialog.INFORMATION_MESSAGE, null);
                      }
                      ]]></expressionString>
                 </ns2:expression>
@@ -447,13 +447,13 @@
                         RefForm form = (RefForm)@page.getElement(@page.getEntityUiid()); 
                         HashMap out = (HashMap)form.ui2Data();
                         if (out.get("selectedPrice") == null) {
-                            Dialog.showMessageDialog("请选择一个客户出价单。", "", Dialog.WARNING_MESSAGE, null);
+                            Dialog.showMessageDialog("   请选择一个客户出价单。   ", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         MOOfferPriceImpl selectedPrice= (MOOfferPriceImpl)out.get("selectedPrice");
                         IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
                         if (!service.hasAddressConfigured(selectedPrice.getTakenCustomerId())) {
-                            Dialog.showMessageDialog("无法成交，因竟价客户没有配置默认地址！", "", Dialog.WARNING_MESSAGE, null);
+                            Dialog.showMessageDialog("    无法成交，因竟价客户没有配置默认地址！   ", "", Dialog.WARNING_MESSAGE, null);
                             return;
                         }
                         
@@ -616,7 +616,7 @@
 	                    import org.shaolin.bmdp.runtime.security.UserContext;
 	                    import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
 	                    {
-	                       return $beObject.getStatus() == OrderStatusType.PUBLISHED 
+	                       return ($beObject.getStatus() == OrderStatusType.VERIFYING || $beObject.getStatus() == OrderStatusType.PUBLISHED) 
 	                              && UserContext.getUserContext().getOrgId() == $beObject.getOrgId();
 	                    }
 	                ]]></expressionString>
@@ -826,12 +826,12 @@
                     { 
                         Table orderInfoTable = (Table)@page.getElement("machiningTable");
                         if (orderInfoTable.getSelectedRow() == null) {
-                            Dialog.showMessageDialog("没有订单选中！", "Error", Dialog.ERROR_MESSAGE, null);
+                            Dialog.showMessageDialog("   没有订单选中！  ", "Error", Dialog.ERROR_MESSAGE, null);
                             return;
                         }
                         IEOrder order = (IEOrder)orderInfoTable.getSelectedRow();
                         if (order.getStatus() != OrderStatusType.PUBLISHED) {
-                           Dialog.showMessageDialog("只有处于发布状态的订单可以禁用！", "Error", Dialog.ERROR_MESSAGE, null);
+                           Dialog.showMessageDialog("   只有处于发布状态的订单可以禁用！   ", "Error", Dialog.ERROR_MESSAGE, null);
                            return;
                         }
                         

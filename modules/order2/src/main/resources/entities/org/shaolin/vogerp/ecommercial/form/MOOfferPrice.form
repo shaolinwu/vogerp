@@ -126,7 +126,7 @@
       <ns2:component xsi:type="ns2:UILabelType" UIID="priceUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>出价（必须小于当前价格！）</ns2:value>
+          <ns2:value>出价</ns2:value>
         </ns2:text>
       </ns2:component>
       <ns2:component xsi:type="ns2:UITextFieldType" UIID="priceUI">
@@ -181,7 +181,7 @@
       <ns2:component xsi:type="ns2:UILabelType" UIID="samplePhotoUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>添加样品(最多三张)</ns2:value>
+          <ns2:value>竞价理由做过实例(最多三张)</ns2:value>
         </ns2:text>
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="showSimplePanel"></ns2:handler>
