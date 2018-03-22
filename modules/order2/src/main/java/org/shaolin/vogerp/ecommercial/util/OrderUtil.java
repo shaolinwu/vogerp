@@ -314,6 +314,10 @@ public class OrderUtil {
         }
         String state = "<span style='color:"+color+";'>" + order.getStatus().getDisplayName() + "</span>";
         sb.append("(").append(state).append(")");
+        IUserService userService = AppContext.get().getService(IUserService.class); 
+        if (userService.isEnterpriseVerifiedUser(order.getPublishedCustomerId())) {
+        		sb.append("(<span class='verifieduser' style='color:green'>\u8BA4\u8BC1\u5546\u6237</span>)");
+        }
         
 		sb.append("</div>");
 		sb.append("<div class='vogerp_desc'>").append(order.getDescription()).append("</div>");

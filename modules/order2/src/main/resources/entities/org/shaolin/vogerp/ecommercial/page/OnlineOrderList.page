@@ -359,7 +359,7 @@
                       }
                       IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
                       if (!service.isEnterpriseUser(UserContext.getUserContext().getUserId())) {
-                          Dialog.showMessageDialog("只有企业用户参与竞价加工订单!", "", Dialog.WARNING_MESSAGE, null);
+                          Dialog.showMessageDialog("只有 加工商户 才能参与竞价加工订单!", "", Dialog.WARNING_MESSAGE, null);
                           return;
                       }
                       MachiningOrderImpl order = (MachiningOrderImpl)personalInfoTable.getSelectedRow();
@@ -495,6 +495,7 @@
 			                            {
 			                                StringBuffer sb = new StringBuffer();
 			                                sb.append(OrderUtil.getOrderHTMLInfo($rowBE));
+			                                sb.append("<div>数量：<span style='color:blue'>").append($rowBE.getCount()).append("</span></div>");
 			                                sb.append("<div>").append(FormatUtil.formatDateTime($rowBE.getCreateDate())).append("</div>");
 			                                return sb.toString();
 			                            }]]></ns2:expressionString>

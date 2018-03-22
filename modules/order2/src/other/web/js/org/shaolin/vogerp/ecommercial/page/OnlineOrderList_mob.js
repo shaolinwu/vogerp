@@ -150,7 +150,7 @@ function org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob(json)
 	          }
 	          htmlCode += "</ul></div>";
 	          $(htmlCode).prependTo($("#searchConditionPanel"));
-	          $(".box").scrollText({ speed:40 });
+	          $(".box").scrollText({ speed:30 });
 			}
 	         
             /* Construct_LAST:org_shaolin_vogerp_ecommercial_page_OnlineOrderList_mob */

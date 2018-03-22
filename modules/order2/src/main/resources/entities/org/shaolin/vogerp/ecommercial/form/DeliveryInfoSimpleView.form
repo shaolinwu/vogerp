@@ -23,8 +23,7 @@
             
             RefForm addressListFrom = new RefForm("addressListFrom", "org.shaolin.vogerp.commonmodel.form.CEHierarchyWithDeliveryInfo", input);
             @page.addElement(addressListFrom);
-            
-            RefForm thisform = (RefForm)@page.getElement(@page.getEntityUiid()); 
+            addressListFrom.openInBottomDialog();
             addressListFrom.openInWindows("地址列表", new FunctionCallBack(@page, "refershSelectedAddress-20161216"), true);
         }]]></expressionString>
       </ns2:exp>

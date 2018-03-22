@@ -33,7 +33,7 @@
 	              input.put("editable", new Boolean(true));
 	              RefForm form = new RefForm("cityListForm", "org.shaolin.vogerp.commonmodel.form.CitySelelctor_mob", input);
 	              @page.addElement(form);
-	              
+	              form.openInBottomDialog();
 	              form.openInWindows("选择城市", new FunctionCallBack(@page, "selectedCity-201604102211"), true);
              } else if ("2".equals(buttonGroup.getValue())) {
                 //TODO: allow to set a scope of longtitude and lantitudu.

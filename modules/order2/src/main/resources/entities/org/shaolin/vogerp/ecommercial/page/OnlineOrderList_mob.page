@@ -335,7 +335,7 @@
                       }
                       IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
                       if (!service.isEnterpriseUser(UserContext.getUserContext().getUserId())) {
-                          Dialog.showMessageDialog("只有企业用户参与竞价加工订单!", "", Dialog.WARNING_MESSAGE, null);
+                          Dialog.showMessageDialog("只有 加工商户 才能参与竞价加工订单! 请前往（基本信息--> 商户验证）页面认证。", "", Dialog.WARNING_MESSAGE, null);
                           return;
                       }
                       MachiningOrderImpl order = (MachiningOrderImpl)personalInfoTable.getSelectedRow();
@@ -524,6 +524,7 @@
 			                            {
 			                                StringBuffer sb = new StringBuffer();
 			                                sb.append(OrderUtil.getOrderHTMLInfo($rowBE));
+			                                sb.append("<div>数量：<span style='color:blue'>").append($rowBE.getCount()).append("</span></div>");
 			                                sb.append("<div>").append(FormatUtil.formatDateTime($rowBE.getCreateDate())).append("</div>");
 			                                return sb.toString();
 			                            }]]></ns2:expressionString>
@@ -981,7 +982,7 @@
 	          }
 	          htmlCode += "</ul></div>";
 	          $(htmlCode).prependTo($("#searchConditionPanel"));
-	          $(".box").scrollText({ speed:40 });
+	          $(".box").scrollText({ speed:30 });
 			}
 	         ]]></ns2:constructorCode>
 		</ns2:body>

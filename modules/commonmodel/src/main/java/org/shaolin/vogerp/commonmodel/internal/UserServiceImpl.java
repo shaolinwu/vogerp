@@ -527,6 +527,16 @@ public class UserServiceImpl implements IServiceProvider, IUserService, OnlineUs
 		}
 		return true; //by default
 	}
+	
+	public boolean isEnterpriseVerifiedUser(long userId) {
+		IPersonalInfo personInfo = getPersonalInfo(userId);
+		if (personInfo != null && personInfo.getOrganization() != null) {
+			return personInfo.getOrganization().getOrgType() == OrgType.COMPANY
+					&& personInfo.getOrganization().getVeriState() == OrgVerifyStatusType.VERIFIED;
+		}
+		return false;
+	}
+
 
 	private HttpSender sender = new HttpSender();
 	private String websocketServer = WebConfig.getWebSocketServer();

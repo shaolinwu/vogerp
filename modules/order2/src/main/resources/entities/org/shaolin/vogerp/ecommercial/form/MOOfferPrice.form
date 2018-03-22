@@ -93,6 +93,7 @@
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
+        <ns2:rowHeightWeight>0.0</ns2:rowHeightWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
         <ns2:columnWidthWeight>0.0</ns2:columnWidthWeight>
       </ns2:layout>
@@ -113,11 +114,16 @@
          <ns2:expression>
            <expressionString><![CDATA[
            { 
+               double price = 1.0;
                if ($beObject.getEndPrice() > 0) {
-                  return $beObject.getEndPrice();
+                  price = $beObject.getEndPrice();
                } else { 
-                  return $beObject.getEstimatedPrice();
+                  price = $beObject.getEstimatedPrice();
                }
+               if (price > 0) {
+                  return price;
+               }
+               return 1;
            }]]></expressionString>
          </ns2:expression>
        </ns2:value>
@@ -181,7 +187,7 @@
       <ns2:component xsi:type="ns2:UILabelType" UIID="samplePhotoUILabel">
         <ns2:UIStyle>uimaster_leftform_widget</ns2:UIStyle>
         <ns2:text xsi:type="ns2:StringPropertyType">
-          <ns2:value>竞价理由做过实例(最多三张)</ns2:value>
+          <ns2:value>添加己做过实例(最多三张)</ns2:value>
         </ns2:text>
         <ns2:EventListener xsi:type="ns2:ClickListenerType">
           <ns2:handler functionName="showSimplePanel"></ns2:handler>
@@ -227,15 +233,15 @@
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>samplePhotoUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="3" align="FULL" cellUIClass=""></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass=""></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>samplePhotoUI</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="3" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
       <ns2:layoutConstraint>
         <ns2:componentId>resultUILabel</ns2:componentId>
-        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="4" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
+        <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="5" align="FULL" cellUIClass="uimaster_rightform_cell"></ns2:constraint>
       </ns2:layoutConstraint>
     </ns2:component>
     <!-- 
