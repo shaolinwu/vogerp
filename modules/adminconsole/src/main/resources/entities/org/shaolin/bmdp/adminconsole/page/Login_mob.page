@@ -7,7 +7,7 @@
 	<description>个人用户登录</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 	    <ns2:eventHandler functionName="genVerifiCode">
-            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="genVerifiCode-20151227-1839">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="genrVerifiCode-20151227-1839">
                 <ns2:exp>
                     <expressionString><![CDATA[
                 import org.shaolin.uimaster.page.AjaxContext;
@@ -35,7 +35,7 @@
 		        }
 		        ]]></ns2:expressionString>
 		    </ns2:ops>
-            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="verifiCode-20151227-1839">
+            <ns2:ops xsi:type="ns2:OpCallAjaxType" name="rverifiCode-20151227-1839">
                 <ns2:exp>
                     <expressionString><![CDATA[
                 import org.shaolin.uimaster.page.AjaxContext;

@@ -202,7 +202,7 @@
 			           <expressionString><![CDATA[
 			           import org.shaolin.uimaster.page.WebConfig;
 			           { 
-			               String websocketServer = WebConfig.getWebSocketServer();
+			               String websocketServer = WebConfig.getJsWebSocketServer();
 						   if (websocketServer == null || websocketServer.trim().length() == 0) {
 						   	  return "";
 						   }

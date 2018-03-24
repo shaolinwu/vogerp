@@ -64,8 +64,8 @@
                     String value = @page.getTextArea("scriptCodeUI").getValue();
                     if (value != null && value.trim().length() > 0) {
                        CompilationUnit unit = StatementParser.parse(value);
-                       StatementEvaluator.evaluate(unit);
-					   Dialog.showMessageDialog("Finished", "Information", Dialog.INFORMATION_MESSAGE, null);
+                       Object result = StatementEvaluator.evaluate(unit);
+					  Dialog.showMessageDialog("Finished with result: " + result, "Information", Dialog.INFORMATION_MESSAGE, null);
                     }
 				}
 				]]></ns2:expressionString>
