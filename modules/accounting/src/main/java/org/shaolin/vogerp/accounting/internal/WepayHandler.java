@@ -623,5 +623,35 @@ public class WepayHandler extends HttpServlet implements PaymentHandler {
         int d2 = n % 16;  
         return hexDigits[d1] + hexDigits[d2];  
     }
+    
+    //https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=23_4
+    private String testSSLCertificate0() throws Exception {
+    		String url = "https://apitest.mch.weixin.qq.com/sandboxnew/pay/getsignkey";
+    		HashMap<String, Object> values = new HashMap<String, Object>();
+		values.put("mch_id", MCH_ID);
+		values.put("nonce_str", StringUtil.genRandomAlphaBits(32));
+		
+		StringBuffer keyValues = new StringBuffer();
+		keyValues.append("mch_id=").append(values.get("mch_id"));
+		keyValues.append("&nonce_str=").append(values.get("nonce_str"));
+	    //key setting path ：pay.weixin.qq.com-->API security-->password	
+		keyValues.append("&key=").append(MCH_APISECURE_KEY);
+		// take this link for verification. https://pay.weixin.qq.com/wiki/tools/signverify/
+		values.put("sign", encodeMD5(keyValues.toString(), "UTF-8").toUpperCase());
+    		String result = sender.doPostSSL(url, StringUtil.convertMapToXML(values, "xml"), "UTF-8", "text/xml");
+    		return result;
+    }
 
+	public String testSSLCertificate() {
+		String result = "";
+		WepayHandler wepayHandler = new WepayHandler();
+		try {
+			result = wepayHandler.testSSLCertificate0();
+		} catch (Exception e) {
+			result = e.getMessage();
+		}
+		logger.info("testSSLCertificate: " + result);
+		return result;
+	}
+    
 }

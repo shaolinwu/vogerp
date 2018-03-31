@@ -42,8 +42,9 @@
 	               } else {
 		               @page.getRequest().getSession().setAttribute("__htmlform", htmlform);
 		               @page.executeJavaScript("UIMaster.util.forwardToPage('/uimaster/jsp/alipaywindow.jsp', true)");
-		               Dialog.showMessageDialog("如您支付完成，请点击“刷新”按钮查看支付是否成功。", "Information", Dialog.INFORMATION_MESSAGE, null);
 	               }
+	               
+	               Dialog.showConfirmDialog("支付完成了吗?", "支付结果确认", null);
 	            } catch (Exception e) {
 	               Dialog.showMessageDialog("支付异常，请刷新页面，重新支付！", "", Dialog.WARNING_MESSAGE, null);
 	            }
@@ -116,7 +117,20 @@
             UIMaster.require("/js/qrcode.min.js");
             var qrcode = new QRCode(this.wepayQRCodeUI, {width:150, height:150});
             qrcode.makeCode(eventsource);
-            $(this.wepayQRCodeUI).dialog();
+            $(this.wepayQRCodeUI).dialog({
+              title: "微信二维码支付",
+              modal: true,
+		      buttons: {
+		        "支付完成": function() {
+		          $(this).dialog( "close" );
+		          UIEntity.Cancel(UIEntity.cancelbtn);
+		        },
+		        "取消": function() {
+		          $(this).dialog( "close" );
+		          UIEntity.Cancel(UIEntity.cancelbtn);
+		        }
+		      }
+            });
         }
         ]]></ns2:expressionString>
     </ns2:ops>
@@ -132,7 +146,7 @@
             form.closeIfinWindows(true);
             @page.removeForm(@page.getEntityUiid()); 
             
-            Dialog.showMessageDialog("如果您已支付完成，请刷新页面更新您的支付状态，谢谢！", "", Dialog.INFORMATION_MESSAGE, null);
+            //Dialog.showMessageDialog("如果您已支付完成，请刷新页面更新您的支付状态，谢谢！", "", Dialog.INFORMATION_MESSAGE, null);
         }]]></expressionString>
       </ns2:exp>
     </ns2:ops>
