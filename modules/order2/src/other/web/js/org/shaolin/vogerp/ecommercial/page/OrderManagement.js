@@ -12,7 +12,7 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     ({
         ui: elementList[prefix + "functionsTab"]
         ,items: []
-        ,subComponents: [prefix + "machiningInfoPanel",prefix + "rentOrderInfoPanel",prefix + "interestEOrderPanel"]
+        ,subComponents: [prefix + "machiningInfoPanel",prefix + "goldenOrderInfoPanel",prefix + "rentOrderInfoPanel",prefix + "interestEOrderPanel"]
     });
     var machiningTable = new UIMaster.ui.objectlist
     ({
@@ -24,6 +24,17 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         ui: elementList[prefix + "machiningInfoPanel"]
         ,items: []
         ,subComponents: [prefix + "machiningTable"]
+    });
+    var goldenOrderTable = new UIMaster.ui.objectlist
+    ({
+        ui: elementList[prefix + "goldenOrderTable"]
+    });
+
+    var goldenOrderInfoPanel = new UIMaster.ui.panel
+    ({
+        ui: elementList[prefix + "goldenOrderInfoPanel"]
+        ,items: []
+        ,subComponents: [prefix + "goldenOrderTable"]
     });
     var rentOrderTable = new UIMaster.ui.objectlist
     ({
@@ -105,6 +116,10 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
 
     Form.machiningTable=machiningTable;
 
+    Form.goldenOrderInfoPanel=goldenOrderInfoPanel;
+
+    Form.goldenOrderTable=goldenOrderTable;
+
     Form.rentOrderInfoPanel=rentOrderInfoPanel;
 
     Form.rentOrderTable=rentOrderTable;
@@ -144,8 +159,6 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
     };
 
     Form.createGOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_createGOrder;
-
-    Form.selectedPurchaseOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_selectedPurchaseOrder;
 
     Form.selectedSaleOrder = org_shaolin_vogerp_ecommercial_page_OrderManagement_selectedSaleOrder;
 
@@ -200,47 +213,13 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         var o = this;
         var UIEntity = this;
 
-	        {   
-	          var o = this;
-	          if (this.goldenOrderTable.selectedIndex >= 0) {
-		          new UIMaster.ui.dialog({
-		              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
-		              message:'\u662F\u5426\u6309\u7167\u9009\u4E2D\u8BA2\u5355\u590D\u5236\u4E00\u6761\u5417?',
-		              messageType:UIMaster.ui.dialog.Information,
-		              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
-		              title:'',
-		              height:150,
-		              width:300,
-		              handler: function() {
-		                  UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createCopyGOrder-20160602",UIMaster.getValue(eventsource),o.__entityName);
-		              },
-		              noHandler: function() {
-		                  $(o.selectGTypePanel).css("display", "block");
-	                      $(o.selectGTypePanel).dialog();
-		              },
-		          }).open();
-		          return;
-	          } else {
-	              $(this.selectGTypePanel).css("display", "block");
-	              $(this.selectGTypePanel).dialog();
-	          }
-	        }
-	            }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_createGOrder */
-
-
-    /* auto generated eventlistener function declaration */
-    function org_shaolin_vogerp_ecommercial_page_OrderManagement_selectedPurchaseOrder(eventsource,event) {/* Gen_First:org_shaolin_vogerp_ecommercial_page_OrderManagement_selectedPurchaseOrder */
-        var o = this;
-        var UIEntity = this;
-
 		        {   
-		           $(this.selectGTypePanel).dialog("close");
 		        }
 		        
         // cal ajax function. 
 
         UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"selectedPurchaseOrder-20170106-214008",UIMaster.getValue(eventsource),o.__entityName);
-    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_selectedPurchaseOrder */
+    }/* Gen_Last:org_shaolin_vogerp_ecommercial_page_OrderManagement_createGOrder */
 
 
     /* auto generated eventlistener function declaration */
@@ -249,7 +228,6 @@ function org_shaolin_vogerp_ecommercial_page_OrderManagement(json)
         var UIEntity = this;
 
 		        {   
-		           $(this.selectGTypePanel).dialog("close");
 		        }
 		        
         // cal ajax function. 

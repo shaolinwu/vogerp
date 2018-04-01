@@ -32,6 +32,16 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
         ,showMaxLength: 100
     });
 
+    var countUILabel = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "countUILabel"]
+    });
+
+    var countUI = new UIMaster.ui.label
+    ({
+        ui: elementList[prefix + "countUI"]
+    });
+
     var estimatedPriceUILabel = new UIMaster.ui.label
     ({
         ui: elementList[prefix + "estimatedPriceUILabel"]
@@ -66,7 +76,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "createDateUILabel",prefix + "createDateUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "createDateUILabel",prefix + "createDateUI"]
     });
     var photoPanel = new UIMaster.ui.panel
     ({
@@ -137,6 +147,10 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
 
     Form.descriptionUI=descriptionUI;
 
+    Form.countUILabel=countUILabel;
+
+    Form.countUI=countUI;
+
     Form.estimatedPriceUILabel=estimatedPriceUILabel;
 
     Form.estimatedPriceUI=estimatedPriceUI;
@@ -174,6 +188,10 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrder(json)
     Form.descriptionUILabel=descriptionUILabel;
 
     Form.descriptionUI=descriptionUI;
+
+    Form.countUILabel=countUILabel;
+
+    Form.countUI=countUI;
 
     Form.estimatedPriceUILabel=estimatedPriceUILabel;
 

@@ -7,74 +7,9 @@
 	<description>抢单管理</description>
 	<ns2:UIEntity xsi:type="ns2:UIEntityType">
 	    <ns2:eventHandler functionName="createGOrder">
-	    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
-	        <ns2:expressionString><![CDATA[
-	        {   
-	          var o = this;
-	          if (this.goldenOrderTable.selectedIndex >= 0) {
-		          new UIMaster.ui.dialog({
-		              dialogType: UIMaster.ui.dialog.CONFIRM_DIALOG,
-		              message:'\u662F\u5426\u6309\u7167\u9009\u4E2D\u8BA2\u5355\u590D\u5236\u4E00\u6761\u5417?',
-		              messageType:UIMaster.ui.dialog.Information,
-		              optionType:UIMaster.ui.dialog.YES_NO_OPTION,
-		              title:'',
-		              height:150,
-		              width:300,
-		              handler: function() {
-		                  UIMaster.triggerServerEvent(UIMaster.getUIID(eventsource),"createCopyGOrder-20160602",UIMaster.getValue(eventsource),o.__entityName);
-		              },
-		              noHandler: function() {
-		                  $(o.selectGTypePanel).css("display", "block");
-	                      $(o.selectGTypePanel).dialog();
-		              },
-		          }).open();
-		          return;
-	          } else {
-	              $(this.selectGTypePanel).css("display", "block");
-	              $(this.selectGTypePanel).dialog();
-	          }
-	        }
-	        ]]></ns2:expressionString>
-	    </ns2:ops>
-	    <!-- 
-          <ns2:ops xsi:type="ns2:OpCallAjaxType" name="createGOrder-20160602">
-              <ns2:exp>
-                  <ns2:expressionString><![CDATA[
-                  import java.util.HashMap;
-                  import org.shaolin.uimaster.page.AjaxContext;
-                  import org.shaolin.uimaster.page.ajax.*;
-                  import org.shaolin.bmdp.runtime.AppContext;
-                  import org.shaolin.bmdp.runtime.security.UserContext;
-                  import org.shaolin.bmdp.workflow.coordinator.ICoordinatorService;
-                  import org.shaolin.vogerp.commonmodel.IUserService; 
-                  import org.shaolin.vogerp.ecommercial.be.GoldenOrderImpl;
-                  import org.shaolin.vogerp.ecommercial.ce.OrderStatusType;
-                  import org.shaolin.vogerp.ecommercial.util.OrderUtil;
-                  import org.shaolin.vogerp.commonmodel.be.PersonalInfoImpl;
-                  {
-                      IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
-                      if (!service.hasAddressConfigured(UserContext.getUserContext().getUserId())) {
-                          Dialog.showMessageDialog("您没有配置默认地址！请到基本信息模块中添加您的地址信息。", "", Dialog.WARNING_MESSAGE, null);
-                          return;
-                      }
-                  
-                      HashMap input = new HashMap();
-                      input.put("editable", new Boolean(true));
-                      RefForm form = new RefForm("goldenOrderForm", "org.shaolin.vogerp.ecommercial.form.GoldenOrderPreEditor", input);
-                      @page.addElement(form);
-                      
-                      form.openInWindows("新建抢购订单", new TableCallBack("goldenOrderTable"), true);
-                  }
-                  ]]></ns2:expressionString>
-              </ns2:exp>
-          </ns2:ops>
-           -->
-        </ns2:eventHandler>
-        <ns2:eventHandler functionName="selectedPurchaseOrder">
 		    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
 		        <ns2:expressionString><![CDATA[
 		        {   
-		           $(this.selectGTypePanel).dialog("close");
 		        }
 		        ]]></ns2:expressionString>
 		    </ns2:ops>
@@ -97,7 +32,7 @@
 		        { 
 		            IUserService service = (IUserService)AppContext.get().getService(IUserService.class); 
 		            if (!service.hasAddressConfigured(UserContext.getUserContext().getUserId())) {
-                        Dialog.showMessageDialog("您没有配置默认地址！请到基本信息模块中添加您的地址信息。", "", Dialog.WARNING_MESSAGE, null);
+                        Dialog.showMessageDialog("您没有配置默认地址！请到 基本信息 页面中添加您的地址信息。", "", Dialog.WARNING_MESSAGE, null);
                         return;
                     }
 		            
@@ -132,11 +67,12 @@
 		      </ns2:exp>
 		    </ns2:ops>
 		  </ns2:eventHandler>
+		  
+		  
 		  <ns2:eventHandler functionName="selectedSaleOrder">
 		    <ns2:ops xsi:type="ns2:OpExecuteScriptType">
 		        <ns2:expressionString><![CDATA[
 		        {   
-		           $(this.selectGTypePanel).dialog("close");
 		        }
 		        ]]></ns2:expressionString>
 		    </ns2:ops>
@@ -1132,10 +1068,10 @@
                         </ns2:layoutConstraint>
                     </ns2:panel>
                 </ns2:tab>
-			    <!-- 
+                
                 <ns2:tab uiid="goldenOrderInfoPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
-                        <ns2:value>我的抢购单</ns2:value>
+                        <ns2:value>我的采购单</ns2:value>
                     </ns2:title>
                     <ns2:panel UIID="goldenOrderInfoPanel">
 		                <ns2:layout xsi:type="ns2:TableLayoutType">
@@ -1159,6 +1095,7 @@
                                     import org.shaolin.vogerp.commonmodel.IUserService;
                                     import org.shaolin.bmdp.runtime.security.UserContext;
                                     import org.shaolin.vogerp.ecommercial.ce.GOrderType;
+                                    import org.shaolin.vogerp.ecommercial.ce.GoldenOrderType;
 		                            {
 		                                  if ($tableCondition == null) {
 		                                     $tableCondition = TableConditions.createCondition(new GoldenOrderImpl());
@@ -1168,6 +1105,7 @@
 	                                      $tableCondition.addOrder("statusInt", false);
 		                                  GoldenOrderImpl condition = (GoldenOrderImpl)$tableCondition.getCondition();
 			                              condition.setOrgId((Long)UserContext.getUserData(UserContext.CURRENT_USER_ORGID));
+			                              condition.setType(GoldenOrderType.PURCHASE);
 		                                  return EOrderModel.INSTANCE.searchGoldenOrder(condition,
 		                                                $tableCondition.getOrders(),
 		                                                $tableCondition.getOffset(), 
@@ -1268,7 +1206,6 @@
 		                    <ns2:defaultActions>
 		                        <ns2:defaultNewAction>createGOrder</ns2:defaultNewAction>
 		                        <ns2:defaultOpenAction>openGoldenOrder</ns2:defaultOpenAction>
-		                        <ns2:defaultDisableAction>disableProduct</ns2:defaultDisableAction>
 		                    </ns2:defaultActions>
 		                    <ns2:actionGroup>
                                 <ns2:type>radio</ns2:type>
@@ -1289,7 +1226,7 @@
 		                </ns2:layoutConstraint>
                     </ns2:panel>
                   </ns2:tab>
-                   -->
+                   
                   <ns2:tab uiid="rentOrderInfoPanel">
                     <ns2:title xsi:type="ns2:StringPropertyType">
                         <ns2:value>我的租赁单</ns2:value>

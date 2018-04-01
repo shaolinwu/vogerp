@@ -28,14 +28,15 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
         ui: elementList[prefix + "serialNumberUI"]
     });
 
-    var publishedCustomerIdUILabel = new UIMaster.ui.label
+    var purchaseTypeUILabel = new UIMaster.ui.label
     ({
-        ui: elementList[prefix + "publishedCustomerIdUILabel"]
+        ui: elementList[prefix + "purchaseTypeUILabel"]
     });
 
-    var publishedCustomerIdUI = new UIMaster.ui.label
+    var purchaseTypeUI = new UIMaster.ui.combobox
     ({
-        ui: elementList[prefix + "publishedCustomerIdUI"]
+        ui: elementList[prefix + "purchaseTypeUI"]
+      ,allowBlank:false
     });
 
     var descriptionUILabel = new UIMaster.ui.label
@@ -103,7 +104,7 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
     ({
         ui: elementList[prefix + "attributePanel"]
         ,items: []
-        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "publishedCustomerIdUILabel",prefix + "publishedCustomerIdUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI"]
+        ,subComponents: [prefix + "serialNumberUILabel",prefix + "serialNumberUI",prefix + "purchaseTypeUILabel",prefix + "purchaseTypeUI",prefix + "descriptionUILabel",prefix + "descriptionUI",prefix + "countUILabel",prefix + "countUI",prefix + "estimatedPriceUILabel",prefix + "estimatedPriceUI"]
     });
     var photoPanel = new UIMaster.ui.panel
     ({
@@ -184,9 +185,9 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.serialNumberUI=serialNumberUI;
 
-    Form.publishedCustomerIdUILabel=publishedCustomerIdUILabel;
+    Form.purchaseTypeUILabel=purchaseTypeUILabel;
 
-    Form.publishedCustomerIdUI=publishedCustomerIdUI;
+    Form.purchaseTypeUI=purchaseTypeUI;
 
     Form.descriptionUILabel=descriptionUILabel;
 
@@ -232,9 +233,9 @@ function org_shaolin_vogerp_ecommercial_form_GoldenOrderEditor(json)
 
     Form.serialNumberUI=serialNumberUI;
 
-    Form.publishedCustomerIdUILabel=publishedCustomerIdUILabel;
+    Form.purchaseTypeUILabel=purchaseTypeUILabel;
 
-    Form.publishedCustomerIdUI=publishedCustomerIdUI;
+    Form.purchaseTypeUI=purchaseTypeUI;
 
     Form.descriptionUILabel=descriptionUILabel;
 

@@ -133,7 +133,7 @@ function org_shaolin_vogerp_ecommercial_form_MachiningOrder(json)
     var termsUI = new UIMaster.ui.checkbox
     ({
         ui: elementList[prefix + "termsUI"]
-        ,label: "我仔细看过协议，同意《加工协议书》"
+        ,label: "我已仔细阅读过协议，同意《加工协议书》并愿意承担相关法律责任。"
         ,mustCheck: true
         ,checked: true
     });

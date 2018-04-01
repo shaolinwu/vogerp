@@ -235,6 +235,12 @@
             </bediagram:type>
         </bediagram:member>
         <bediagram:member>
+            <bediagram:name>purchaseType</bediagram:name>
+            <bediagram:type xsi:type="bediagram:CEObjRefType">
+                <bediagram:targetEntity entityName="GOrderPurchaseType" />
+            </bediagram:type>
+        </bediagram:member>
+        <bediagram:member>
             <bediagram:name>orderId</bediagram:name>
             <bediagram:type xsi:type="bediagram:LongType" />
         </bediagram:member>
@@ -735,6 +741,40 @@
             <bediagram:value>Sale</bediagram:value>
             <bediagram:intValue>1</bediagram:intValue>
             <bediagram:description>销售订单</bediagram:description>
+        </bediagram:constantValue>
+    </bediagram:ceEntity>
+    
+    <bediagram:ceEntity>
+        <common:entityName>GOrderPurchaseType</common:entityName>
+        <bediagram:constantValue>
+            <bediagram:value>TYPE1</bediagram:value>
+            <bediagram:intValue>1</bediagram:intValue>
+            <bediagram:description>机械设备</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>TYPE2</bediagram:value>
+            <bediagram:intValue>2</bediagram:intValue>
+            <bediagram:description>五金工具</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>TYPE3</bediagram:value>
+            <bediagram:intValue>3</bediagram:intValue>
+            <bediagram:description>电子配件</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>TYPE4</bediagram:value>
+            <bediagram:intValue>4</bediagram:intValue>
+            <bediagram:description>纺织原料</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>TYPE5</bediagram:value>
+            <bediagram:intValue>5</bediagram:intValue>
+            <bediagram:description>建住材料</bediagram:description>
+        </bediagram:constantValue>
+        <bediagram:constantValue>
+            <bediagram:value>TYPE100</bediagram:value>
+            <bediagram:intValue>100</bediagram:intValue>
+            <bediagram:description>其它</bediagram:description>
         </bediagram:constantValue>
     </bediagram:ceEntity>
     

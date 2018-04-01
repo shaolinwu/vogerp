@@ -491,7 +491,7 @@
             <ns2:UIStyle></ns2:UIStyle>
             <ns2:Property name="label">
 	           <ns2:value xsi:type="ns2:StringPropertyType">
-	               <value>我仔细看过协议，同意《加工协议书》</value>
+	               <value>我已仔细阅读过协议，同意《加工协议书》并愿意承担相关法律责任。</value>
 	           </ns2:value>
 	       </ns2:Property>
 	       <ns2:Property name="mustCheck">
@@ -505,7 +505,7 @@
 	           </ns2:value>
 	       </ns2:Property>
            <ns2:text xsi:type="ns2:StringPropertyType">
-              <ns2:value>我仔细看过协议，同意《加工协议书》</ns2:value>
+              <ns2:value>我已仔细阅读过协议，同意《加工协议书》并愿意承担相关法律责任。</ns2:value>
            </ns2:text>
            <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
               <ns2:value>false</ns2:value>

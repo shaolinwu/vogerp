@@ -147,15 +147,17 @@
           <ns2:component xsi:type="ns2:UILabelType" UIID="serialNumberUI">
             <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
           </ns2:component>
-          <ns2:component xsi:type="ns2:UILabelType" UIID="publishedCustomerIdUILabel">
+          <ns2:component xsi:type="ns2:UILabelType" UIID="purchaseTypeUILabel">
             <ns2:UIStyle></ns2:UIStyle>
-            <ns2:text xsi:type="ns2:ResourceBundlePropertyType">
-              <ns2:bundle>org_shaolin_vogerp_ecommercial_i18n</ns2:bundle>
-              <ns2:key>org.shaolin.vogerp.ecommercial.be.GoldenOrder.publishedCustomerId</ns2:key>
+            <ns2:text xsi:type="ns2:StringPropertyType">
+              <ns2:value>采购类型</ns2:value>
             </ns2:text>
           </ns2:component>
-          <ns2:component xsi:type="ns2:UILabelType" UIID="publishedCustomerIdUI">
-            <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+          <ns2:component xsi:type="ns2:UIComboBoxType" UIID="purchaseTypeUI">
+             <ns2:UIStyle>uimaster_rightform_widget</ns2:UIStyle>
+             <ns2:allowBlank xsi:type="ns2:BooleanPropertyType">
+               <ns2:value>false</ns2:value>
+             </ns2:allowBlank>
           </ns2:component>
           <ns2:component xsi:type="ns2:UILabelType" UIID="descriptionUILabel">
 	        <ns2:UIStyle></ns2:UIStyle>
@@ -253,11 +255,11 @@
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="0" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>publishedCustomerIdUILabel</ns2:componentId>
+            <ns2:componentId>purchaseTypeUILabel</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="0" y="1" align="FULL" cellUIClass="uimaster_leftform_cell gorder_attr_title"></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
-            <ns2:componentId>publishedCustomerIdUI</ns2:componentId>
+            <ns2:componentId>purchaseTypeUI</ns2:componentId>
             <ns2:constraint xsi:type="ns2:TableLayoutConstraintType" x="1" y="1" align="FULL" cellUIClass=""></ns2:constraint>
           </ns2:layoutConstraint>
           <ns2:layoutConstraint>
@@ -484,11 +486,12 @@
       <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.estimatedPrice" paramName="Currency"></ns2:DataComponent>
     </ns2:ComponentMapping>
     <ns2:ComponentMapping xsi:type="ns2:SimpleComponentMappingType" name="simpleMapping5">
-      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UIText"></ns2:mappingRule>
-      <ns2:UIComponent componentPath="publishedCustomerIdUI" paramName="UIWidgetType"></ns2:UIComponent>
-      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="StringData">
+      <ns2:mappingRule entityName="org.shaolin.uimaster.page.od.rules.UISingleChoiceAndCE"></ns2:mappingRule>
+      <ns2:UIComponent componentPath="purchaseTypeUI" paramName="UIWidgetType"></ns2:UIComponent>
+      <ns2:DataComponent xsi:type="ns2:ComponentParamType" componentPath="beObject.purchaseType" paramName="CEValue"></ns2:DataComponent>
+      <ns2:DataComponent xsi:type="ns2:ExpressionParamType" paramName="CEType">
         <ns2:expression>
-          <expressionString>org.shaolin.vogerp.commonmodel.util.CustomerInfoUtil.getCustomerEnterpriseBasicInfo($beObject.getPublishedCustomerId())</expressionString>
+          <expressionString>"org.shaolin.vogerp.ecommercial.ce.GOrderPurchaseType"</expressionString>
         </ns2:expression>
       </ns2:DataComponent>
     </ns2:ComponentMapping>

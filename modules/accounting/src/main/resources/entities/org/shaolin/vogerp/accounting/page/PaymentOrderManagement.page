@@ -251,7 +251,7 @@
 		            input.put("editable", new Boolean(true));
 		            RefForm form = new RefForm("settingsForm", "org.shaolin.vogerp.accounting.form.CustomerAccount", input);
 		            @page.addElement(form);
-		            
+		            form.openInBottomDialog();
 		            form.openInWindows("提现帐号设置", null, true);
                  }
                  ]]></ns2:expressionString>
