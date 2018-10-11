@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.wallet.dao.AccountDao">
+
+	<select id="get" resultType="com.bootdo.wallet.domain.AccountDO">
+		select `id`,`userId`,`account`,`tokenid`,`balance`,`bindethaddress`,`bindethpwd`,`type`,`state`,`version`,`createdate` from wallet_account where id = #{value} and state=1
+	</select>
+	
+	<select id="getByUserId" resultType="com.bootdo.wallet.domain.AccountDO">
+        select `id`,`userId`,`account`,`tokenid`,`balance`,`bindethaddress`,`bindethpwd`,`type`,`state`,`version`,`createdate` from wallet_account where userId = #{id} and tokenId = #{tokenId} and state=1
+    </select>
+    
+    <select id="getAllByUserId" resultType="com.bootdo.wallet.domain.AccountDO">
+        select a.id as `id`, a.userId as `userId`, a.tokenid as `tokenid`, a.balance as `balance`, b.name as `tokensymbol`, b.icon as `tokenicon`, b.enablecharge as `enablecharge`, b.enablewithdraw as `enablewithdraw` from wallet_account a left join wallet_tokenmgmt b on a.tokenId=b.id where a.userId = #{value} and a.state=1
+    </select>
+    
+    <select id="getByAccId" resultType="com.bootdo.wallet.domain.AccountDO">
+        select `id`,`userId`,`account`,`tokenid`,`balance`,`bindethaddress`,`bindethpwd`,`type`,`state`,`version`,`createdate` from wallet_account where account = #{value} and state=1
+    </select>
+
+	<select id="list" resultType="com.bootdo.wallet.domain.AccountDO">
+		select `id`,`userId`,`account`,`tokenid`,`balance`,`bindethaddress`,`bindethpwd`,`type`,`state`,`version`,`createdate` from wallet_account
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="userId != null and userId != ''"> and userId = #{userId} </if>
+		  		  <if test="tokenId != null and tokenId != ''"> and tokenId = #{tokenId} </if>
+		  		  <if test="account != null and account != ''"> and account = #{account} </if>
+		  		  <if test="balance != null and balance != ''"> and balance = #{balance} </if>
+		  		  <if test="bindethaddress != null and bindethaddress != ''"> and bindethaddress = #{bindethaddress} </if>
+		  		  <if test="bindethpwd != null and bindethpwd != ''"> and bindethpwd = #{bindethpwd} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
+		  		  <if test="createdate != null and createdate != ''"> and createdate = #{createdate} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from wallet_account
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="userId != null and userId != ''"> and userId = #{userId} </if>
+		  		  <if test="tokenId != null and tokenId != ''"> and tokenId = #{tokenId} </if>
+		  		  <if test="account != null and account != ''"> and account = #{account} </if>
+		  		  <if test="balance != null and balance != ''"> and balance = #{balance} </if>
+		  		  <if test="bindethaddress != null and bindethaddress != ''"> and bindethaddress = #{bindethaddress} </if>
+		  		  <if test="bindethpwd != null and bindethpwd != ''"> and bindethpwd = #{bindethpwd} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
+		  		  <if test="createdate != null and createdate != ''"> and createdate = #{createdate} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.wallet.domain.AccountDO" useGeneratedKeys="true" keyProperty="id">
+		insert into wallet_account
+		(
+			`id`, 
+			`userId`, 
+			`tokenId`, 
+			`account`, 
+			`balance`, 
+			`bindethaddress`, 
+			`bindethpwd`, 
+			`type`, 
+			`state`, 
+			`version`, 
+			`createdate`
+		)
+		values
+		(
+			#{id}, 
+			#{userId}, 
+			#{tokenId}, 
+			#{account}, 
+			#{balance}, 
+			#{bindethaddress}, 
+			#{bindethpwd}, 
+			#{type}, 
+			#{state}, 
+			#{version}, 
+			#{createdate}
+		)
+	</insert>
+	 
+	<update id="personalTransfer" parameterType="com.bootdo.wallet.domain.AccountDO">
+	  update wallet_account 
+		<set>
+			balance = #{balance}, version = #{version}
+		</set>
+	  where id = #{id} and type = 1 and state = 1 and version = #{lockedVersion}
+	</update>
+	
+	<delete id="remove">
+		delete from wallet_account where id = #{value}
+	</delete>
+
+</mapper>

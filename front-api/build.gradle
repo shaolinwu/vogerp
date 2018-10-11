@@ -1,0 +1,111 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'application'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.bootdo'
+
+description = "jgdr-front-api"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+task wrapper(type: Wrapper){
+    gradleVersion = '4.4.1'
+}
+
+applicationDefaultJvmArgs=["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5505"]
+
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+mainClassName="com.bootdo.BootdoApplication"
+
+buildscript{
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url "http://repo.maven.apache.org/maven2" }
+    }
+    dependencies {
+        //使用1.4.2.RELEASE版本的Spring框架
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.6.RELEASE")
+    }
+
+}
+
+repositories {
+
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    maven { url "http://repo.maven.apache.org/maven2" }
+}
+
+dependencies {
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter', version: '1.5.6.RELEASE') {
+        exclude(module: 'commons-logging')
+    }
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '1.5.6.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.5.6.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-cache', version: '1.5.6.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '1.5.6.RELEASE'
+    compile group: 'org.springframework', name: 'spring-context-support', version: '4.3.10.RELEASE'
+    compile group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    compile group: 'net.sourceforge.nekohtml', name: 'nekohtml', version: '1.9.22'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.8-dmr'
+    compile group: 'org.mybatis', name: 'mybatis', version: '3.4.4'
+    compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '1.1.1'
+    compile group: 'com.alibaba', name: 'druid', version: '1.0.28'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
+    compile group: 'commons-configuration', name: 'commons-configuration', version: '1.10'
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.31'
+    compile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.9.2'
+    	compile group: 'org.tuckey', name: 'urlrewritefilter', version: '4.0.4'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.2'
+    
+    compile group: 'com.aliyun', name: 'aliyun-java-sdk-core', version: '3.3.1'
+    compile group: 'com.aliyun', name: 'aliyun-java-sdk-dysmsapi', version: '1.0.0'
+    compile group: 'com.google.zxing', name: 'core', version: '3.3.3'
+	compile group: 'org.glassfish', name: 'javax.mail', version: '10.0-b28'
+	compile group: 'dom4j', name: 'dom4j', version: '1.6.1'
+	// https://mvnrepository.com/artifact/net.coobird/thumbnailator
+	compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
+    
+    compile fileTree(dir:'libs',include:['*.jar'])
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.5.6.RELEASE') {
+        exclude(module: 'commons-logging')
+    }
+    
+    // use the encrypto only.
+    compile group: 'org.apache.shiro', name: 'shiro-core', version: '1.3.2'
+}
+
+def env = System.getProperty("env") ?: "dev"
+
+jar{
+    doFirst {
+        copy {
+            from "build/resources/main/env/${env}"
+            into "build/resources/main"
+        }
+        delete("build/resources/main/env")
+    }
+}
+
+compileJava(){
+    println("env:[${env}]")
+    doLast {
+        copy {
+            from "build/resources/main/env/${env}"
+            into "build/resources/main"
+        }
+        delete("build/resources/main/env")
+    }
+}

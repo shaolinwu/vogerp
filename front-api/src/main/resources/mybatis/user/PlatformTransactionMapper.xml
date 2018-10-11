@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.wallet.dao.PlatformTransactionDao">
+
+	<select id="get" resultType="com.bootdo.wallet.domain.PlatformTransactionDO">
+		select `id`,`accountid`,`accountVersion`,`toAccountId`,`toAccountVersion`,`tokentype`,`amount`,`frombalance`,`tobalance`,`fee`,`state`,`opstype`,`remark`,`json`,`createdate` from wallet_plattransaction where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.wallet.domain.PlatformTransactionDO">
+		select `id`,`accountid`,`accountVersion`,`toAccountId`,`toAccountVersion`,`tokentype`,`amount`,`frombalance`,`tobalance`,`fee`,`state`,`opstype`,`remark`,`json`,`createdate` from wallet_plattransaction
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="accountid != null and accountid != ''"> and accountid = #{accountid} </if>
+		  		  <if test="accountVersion != null and accountVersion != ''"> and accountVersion = #{accountVersion} </if>
+		  		  <if test="toAccountId != null and toAccountId != ''"> and toAccountId = #{toAccountId} </if>
+		  		  <if test="toAccountVersion != null and toAccountVersion != ''"> and toAccountVersion = #{toAccountVersion} </if>
+		  		  <if test="tokentype != null and tokentype != ''"> and tokentype = #{tokentype} </if>
+		  		  <if test="amount != null and amount != ''"> and amount = #{amount} </if>
+		  		  <if test="fee != null and fee != ''"> and fee = #{fee} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		  <if test="opstype != null and opstype != ''"> and opstype = #{opstype} </if>
+		  		  <if test="createdate != null and createdate != ''"> and createdate = #{createdate} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from wallet_plattransaction
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="accountid != null and accountid != ''"> and accountid = #{accountid} </if>
+		  		  <if test="accountVersion != null and accountVersion != ''"> and accountVersion = #{accountVersion} </if>
+                  <if test="toAccountId != null and toAccountId != ''"> and toAccountId = #{toAccountId} </if>
+                  <if test="toAccountVersion != null and toAccountVersion != ''"> and toAccountVersion = #{toAccountVersion} </if>
+		  		  <if test="tokentype != null and tokentype != ''"> and tokentype = #{tokentype} </if>
+		  		  <if test="amount != null and amount != ''"> and amount = #{amount} </if>
+		  		  <if test="fee != null and fee != ''"> and fee = #{fee} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		  <if test="opstype != null and opstype != ''"> and opstype = #{opstype} </if>
+		  		  <if test="createdate != null and createdate != ''"> and createdate = #{createdate} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.wallet.domain.PlatformTransactionDO" useGeneratedKeys="true" keyProperty="id">
+		insert into wallet_plattransaction
+		(
+			`id`, 
+			`accountid`,`accountVersion`,`toAccountId`,`toAccountVersion`, 
+			`tokentype`, 
+			`amount`, 
+            `frombalance`, 
+            `tobalance`, 
+			`fee`, 
+			`state`, 
+			`opstype`, 
+			`remark`, 
+			`json`, 
+			`createdate`
+		)
+		values
+		(
+			#{id}, 
+			#{accountid},#{accountVersion},#{toAccountId},#{toAccountVersion},
+			#{tokentype}, 
+			#{amount}, 
+            #{frombalance}, 
+			#{tobalance}, 
+			#{fee}, 
+			#{state}, 
+			#{opstype}, 
+			#{remark}, 
+			#{json}, 
+			#{createdate}
+		)
+	</insert>
+
+</mapper>

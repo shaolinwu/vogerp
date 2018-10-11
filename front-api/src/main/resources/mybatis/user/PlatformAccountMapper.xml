@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.wallet.dao.PlatformAccountDao">
+
+	<select id="get" resultType="com.bootdo.wallet.domain.PlatformAccountDO">
+		select `id`,`parentid`,`tokenid`,`balance`,`type`,`state`,`version`,`desc`,`createdate` from wallet_plataccount where id = #{value} and state=1
+	</select>
+	
+    <select id="getByAccId" resultType="com.bootdo.wallet.domain.PlatformAccountDO">
+        select `id`,`parentid`,`tokenid`,`balance`,`type`,`state`,`version`,`desc`,`createdate` from wallet_plataccount where account = #{value} and state=1
+    </select>
+
+	<select id="list" resultType="com.bootdo.wallet.domain.PlatformAccountDO">
+		select `id`,`parentid`,`tokenid`,`balance`,`type`,`state`,`version`,`createdate` from wallet_plataccount
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="parentId != null and parentId != ''"> and parentId = #{parentId} </if>
+		  		  <if test="tokenId != null and tokenId != ''"> and tokenId = #{tokenId} </if>
+		  		  <if test="balance != null and balance != ''"> and balance = #{balance} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
+		  		  <if test="createdate != null and createdate != ''"> and createdate = #{createdate} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from wallet_plataccount
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="parentId != null and parentId != ''"> and parentId = #{parentId} </if>
+		  		  <if test="balance != null and balance != ''"> and balance = #{balance} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
+		  		  <if test="createdate != null and createdate != ''"> and createdate = #{createdate} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.wallet.domain.PlatformAccountDO" useGeneratedKeys="true" keyProperty="id">
+		insert into wallet_plataccount
+		(
+			`id`, 
+			`parentId`, 
+			`tokenId`, 
+			`balance`, 
+			`type`, 
+			`state`, 
+			`version`, 
+			`desc`, 
+			`createdate`
+		)
+		values
+		(
+			#{id}, 
+			#{parentId}, 
+			#{tokenId}, 
+			#{balance}, 
+			#{type}, 
+			#{state}, 
+			#{version}, 
+			#{desc}, 
+			#{createdate}
+		)
+	</insert>
+	 
+	<update id="personalTransfer" parameterType="com.bootdo.wallet.domain.PlatformAccountDO">
+	  update wallet_plataccount 
+		<set>
+			balance = #{balance}, version = #{version}
+		</set>
+	  where id = #{id} and state = 1 and version = #{lockedVersion}
+	</update>
+	
+	<update id="platToPlatTransfer" parameterType="com.bootdo.wallet.domain.PlatformAccountTransferDto">
+      update wallet_plataccount a, wallet_plataccount b 
+        <set>
+            a.balance = #{frombalance}, a.version = #{accountVersion}, b.balance = #{tobalance}, b.version = #{toAccountVersion}
+        </set>
+      where a.id = #{accountid} and a.version = #{lockedVersion} and b.id = #{toAccountId} and b.version = #{toLockedVersion} and a.tokenid = #{tokenId} and b.tokenid=#{tokenId} and a.state = 1 and b.state=1
+    </update>
+	
+	<delete id="remove">
+		delete from wallet_plataccount where id = #{value}
+	</delete>
+
+</mapper>

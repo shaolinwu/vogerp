@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.wallet.dao.ReqwithdrawDao">
+
+	<select id="get" resultType="com.bootdo.wallet.domain.ReqwithdrawDO">
+		select `id`,`accountid`,`tokentype`,`fromaddress`,`toaddress`,`amount`,`fee`,`transid`,`state`,`description`,`createdate` from wallet_reqwithdraw where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.wallet.domain.ReqwithdrawDO">
+		select `id`,`accountid`,`tokentype`,`fromaddress`,`toaddress`,`amount`,`fee`,`transid`,`state`,`description`,`createdate` from wallet_reqwithdraw
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="accountid != null and accountid != ''"> and accountid = #{accountid} </if>
+		  		  <if test="tokentype != null and tokentype != ''"> and tokentype = #{tokentype} </if>
+		  		  <if test="fromaddress != null and fromaddress != ''"> and fromaddress = #{fromaddress} </if>
+		  		  <if test="toaddress != null and toaddress != ''"> and toaddress = #{toaddress} </if>
+		  		  <if test="amount != null and amount != ''"> and amount = #{amount} </if>
+		  		  <if test="fee != null and fee != ''"> and fee = #{fee} </if>
+		  		  <if test="transid != null and transid != ''"> and transid = #{transid} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		  <if test="createdate != null and createdate != ''"> and createdate = #{createdate} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from wallet_reqwithdraw
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="accountid != null and accountid != ''"> and accountid = #{accountid} </if>
+		  		  <if test="tokentype != null and tokentype != ''"> and tokentype = #{tokentype} </if>
+		  		  <if test="fromaddress != null and fromaddress != ''"> and fromaddress = #{fromaddress} </if>
+		  		  <if test="toaddress != null and toaddress != ''"> and toaddress = #{toaddress} </if>
+		  		  <if test="amount != null and amount != ''"> and amount = #{amount} </if>
+		  		  <if test="fee != null and fee != ''"> and fee = #{fee} </if>
+		  		  <if test="transid != null and transid != ''"> and transid = #{transid} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		  <if test="createdate != null and createdate != ''"> and createdate = #{createdate} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.wallet.domain.ReqwithdrawDO">
+		insert into wallet_reqwithdraw
+		(
+			`id`, 
+			`accountid`, 
+			`accountVersion`, 
+			`tokentype`, 
+			`fromaddress`, 
+			`toaddress`, 
+			`amount`, 
+			`fee`, 
+			`transid`, 
+			`state`, 
+			`createdate`
+		)
+		values
+		(
+			#{id}, 
+			#{accountid}, 
+			#{accountVersion}, 
+			#{tokentype}, 
+			#{fromaddress}, 
+			#{toaddress}, 
+			#{amount}, 
+			#{fee}, 
+			#{transid}, 
+			#{state}, 
+			#{createdate}
+		)
+	</insert>
+	 
+	<update id="updateSuccess" parameterType="com.bootdo.wallet.domain.ReqwithdrawDO">
+		update wallet_reqwithdraw 
+		<set>
+			<if test="fromaddress != null">`fromaddress` = #{fromaddress}, </if>
+			<if test="toaddress != null">`toaddress` = #{toaddress}, </if>
+			<if test="fee != null">`fee` = #{fee}, </if>
+			<if test="transid != null">`transid` = #{transid}, </if>
+			<if test="state != null">`state` = 2</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<update id="updateFailed" parameterType="com.bootdo.wallet.domain.ReqwithdrawDO">
+        update wallet_reqwithdraw 
+        <set>
+            <if test="fromaddress != null">`fromaddress` = #{fromaddress}, </if>
+            <if test="toaddress != null">`toaddress` = #{toaddress}, </if>
+            <if test="fee != null">`fee` = #{fee}, </if>
+            <if test="transid != null">`transid` = #{transid}, </if>
+            <if test="state != null">`state` = 3, </if>
+            <if test="description != null">`description` = #{description}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>

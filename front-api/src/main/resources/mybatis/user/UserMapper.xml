@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.user.dao.UserDao">
+
+	<select id="get" resultType="com.bootdo.user.domain.UserDO">
+		select `user_id`,`username`,`name`,`nickname`,`password`,`invitedCode`,`myInvitedCode`,`authCode`,`wechatOpenId`,`wechatUnionId`,`lastLoginTime`,`dept_id`,`email`,`mobile`,`idNumber`,`idCard`,`idCardBackside`,`idCardWithHuman`,`status`,`kycStatus`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`headImgUrl`,`live_address`,`hobby`,`province`,`city`,`district` from sys_user where user_id = #{userId} and authCode = #{authCode}
+	</select>
+
+	<select id="list" resultType="com.bootdo.user.domain.UserDO">
+		select `user_id`,`username`,`name`,`nickname`,`password`,`invitedCode`,`myInvitedCode`,`authCode`,`wechatOpenId`,`wechatUnionId`,`lastLoginTime`,`dept_id`,`email`,`mobile`,`idNumber`,`idCard`,`idCardBackside`,`idCardWithHuman`,`status`,`kycStatus`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`headImgUrl`,`live_address`,`hobby`,`province`,`city`,`district` from sys_user
+        <where>  
+		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="username != null and username != ''"> and username = #{username} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="password != null and password != ''"> and password = #{password} </if>
+		  		  <if test="invitedCode != null and invitedCode != ''"> and invitedCode = #{invitedCode} </if>
+		  		  <if test="myInvitedCode != null and myInvitedCode != ''"> and myInvitedCode = #{myInvitedCode} </if>
+		  		  <if test="wechatOpenId != null and wechatOpenId != ''"> and wechatOpenId = #{wechatOpenId} </if>
+		  		  <if test="deptId != null and deptId != ''"> and dept_id = #{deptId} </if>
+		  		  <if test="email != null and email != ''"> and email = #{email} </if>
+		  		  <if test="mobile != null and mobile != ''"> and mobile = #{mobile} </if>
+		  		  <if test="idNumber != null and idNumber != ''"> and idNumber = #{idNumber} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="kycStatus != null and kycStatus != ''"> and kycStatus = #{kycStatus} </if>
+		  		  <if test="authCode != null and authCode != ''"> and authCode = #{authCode} </if>
+		  		  <if test="userIdCreate != null and userIdCreate != ''"> and user_id_create = #{userIdCreate} </if>
+		  		  <if test="gmtCreate != null and gmtCreate != ''"> and gmt_create = #{gmtCreate} </if>
+		  		  <if test="gmtModified != null and gmtModified != ''"> and gmt_modified = #{gmtModified} </if>
+		  		  <if test="sex != null and sex != ''"> and sex = #{sex} </if>
+		  		  <if test="birth != null and birth != ''"> and birth = #{birth} </if>
+		  		  <if test="picId != null and picId != ''"> and pic_id = #{picId} </if>
+		  		  <if test="liveAddress != null and liveAddress != ''"> and live_address = #{liveAddress} </if>
+		  		  <if test="hobby != null and hobby != ''"> and hobby = #{hobby} </if>
+		  		  <if test="province != null and province != ''"> and province = #{province} </if>
+		  		  <if test="city != null and city != ''"> and city = #{city} </if>
+		  		  <if test="district != null and district != ''"> and district = #{district} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by user_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from sys_user
+		 <where>  
+		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="username != null and username != ''"> and username = #{username} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="password != null and password != ''"> and password = #{password} </if>
+		  		  <if test="invitedCode != null and invitedCode != ''"> and invitedCode = #{invitedCode} </if>
+		  		  <if test="myInvitedCode != null and myInvitedCode != ''"> and myInvitedCode = #{myInvitedCode} </if>
+		  		  <if test="deptId != null and deptId != ''"> and dept_id = #{deptId} </if>
+		  		  <if test="email != null and email != ''"> and email = #{email} </if>
+		  		  <if test="mobile != null and mobile != ''"> and mobile = #{mobile} </if>
+		  		  <if test="idNumber != null and idNumber != ''"> and idNumber = #{idNumber} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="kycStatus != null and kycStatus != ''"> and kycStatus = #{kycStatus} </if>
+		  		  <if test="userIdCreate != null and userIdCreate != ''"> and user_id_create = #{userIdCreate} </if>
+		  		  <if test="gmtCreate != null and gmtCreate != ''"> and gmt_create = #{gmtCreate} </if>
+		  		  <if test="gmtModified != null and gmtModified != ''"> and gmt_modified = #{gmtModified} </if>
+		  		  <if test="sex != null and sex != ''"> and sex = #{sex} </if>
+		  		  <if test="birth != null and birth != ''"> and birth = #{birth} </if>
+		  		  <if test="picId != null and picId != ''"> and pic_id = #{picId} </if>
+		  		  <if test="liveAddress != null and liveAddress != ''"> and live_address = #{liveAddress} </if>
+		  		  <if test="hobby != null and hobby != ''"> and hobby = #{hobby} </if>
+		  		  <if test="province != null and province != ''"> and province = #{province} </if>
+		  		  <if test="city != null and city != ''"> and city = #{city} </if>
+		  		  <if test="district != null and district != ''"> and district = #{district} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.user.domain.UserDO" useGeneratedKeys="true" keyProperty="userId">
+		insert into sys_user
+		(
+			`username`, 
+			`name`, 
+			`password`, 
+			`invitedCode`, 
+			`myInvitedCode`, 
+			`nickname`, 
+			`dept_id`, 
+			`email`, 
+			`mobile`, 
+			`status`, 
+			`kycStatus`,
+			`user_id_create`, 
+			`gmt_create`, 
+			`gmt_modified`, 
+			`sex`, 
+			`birth`, 
+			`pic_id`, 
+			`live_address`, 
+			`hobby`, 
+			`province`, 
+			`city`, 
+			`district`,
+			`reg_ip`
+		)
+		values
+		(
+			#{username}, 
+			#{name},
+			#{password}, 
+			#{invitedCode}, 
+			#{myInvitedCode}, 
+			#{nickname},
+			#{deptId}, 
+			#{email}, 
+			#{mobile}, 
+			#{status}, 
+			#{kycStatus}, 
+			#{userIdCreate}, 
+			#{gmtCreate}, 
+			#{gmtModified}, 
+			#{sex}, 
+			#{birth}, 
+			#{picId}, 
+			#{liveAddress}, 
+			#{hobby}, 
+			#{province}, 
+			#{city}, 
+			#{district},
+			#{regIp}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.user.domain.UserDO">
+		update sys_user 
+		<set>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="nickname != null">`nickname` = #{nickname}, </if>
+			<if test="myInvitedCode != null">`myInvitedCode` = #{myInvitedCode}, </if>
+			<if test="authCode != null">`authCode` = #{authCode}, </if>
+			<if test="lastLoginTime != null">`lastLoginTime` = #{lastLoginTime}, </if>
+			<if test="deptId != null">`dept_id` = #{deptId}, </if>
+			<if test="idNumber != null">`idNumber` = #{idNumber}, </if>
+			<if test="idCard != null">`idCard` = #{idCard}, </if>
+            <if test="idCardBackside != null">`idCardBackside` = #{idCardBackside}, </if>
+            <if test="idCardWithHuman != null">`idCardWithHuman` = #{idCardWithHuman}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="kycStatus != null">`kycStatus` = #{kycStatus}, </if>
+			<if test="gmtModified != null">`gmt_modified` = #{gmtModified}, </if>
+			<if test="wechatOpenId != null">`wechatOpenId` = #{wechatOpenId}, </if>
+			<if test="wechatUnionId != null">`wechatUnionId` = #{wechatUnionId}, </if>
+			<if test="sex != null">`sex` = #{sex}, </if>
+			<if test="headImgUrl != null">`headImgUrl` = #{headImgUrl}, </if>
+			<if test="birth != null">`birth` = #{birth}, </if>
+			<if test="picId != null">`pic_id` = #{picId}, </if>
+			<if test="liveAddress != null">`live_address` = #{liveAddress}, </if>
+			<if test="hobby != null">`hobby` = #{hobby}, </if>
+			<if test="province != null">`province` = #{province}, </if>
+			<if test="city != null">`city` = #{city}, </if>
+			<if test="district != null">`district` = #{district}</if>
+		</set>
+		where user_id = #{userId}
+	</update>
+	
+	
+	<update id="updatePassword" parameterType="com.bootdo.user.domain.UserDO">
+        update sys_user 
+        <set>
+            <if test="password != null">`password` = #{password} </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+	
+	<select id="listAllDept" resultType="long">
+		select DISTINCT dept_id from sys_user
+	</select>
+</mapper>
